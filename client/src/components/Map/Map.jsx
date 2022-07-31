@@ -1,5 +1,6 @@
 // main libraries
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, Text, Platform, View, StatusBar, Dimensions, SafeAreaView, TouchableOpacity } from 'react-native';
 import MapView from 'react-native-maps';
 
@@ -7,6 +8,9 @@ import MapView from 'react-native-maps';
 // import { Button, ButtonGroup, withTheme } from '@rneui/themed';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import { Button, Icon } from 'react-native-elements';
+
+// ac
+import { countUp } from '../../redux/actionCreators/dummy';
 
 const Map = (props) => {
   const [region, setRegion] = useState(null);
@@ -46,7 +50,8 @@ const Map = (props) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={{ position: 'absolute', right: 20, top: 100, zIndex: 10 }}
-            onPress={() => props.navigation.navigate('LogIn')}
+            // onPress={() => props.navigation.navigate('LogIn')}
+            onPress={() => props.countUp()}
           >
             <Text>Log in</Text>
           </TouchableOpacity>
@@ -90,4 +95,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Map;
+export default connect(null, { countUp })(Map);

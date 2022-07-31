@@ -3,6 +3,8 @@
 import { StyleSheet, Text, View, StatusBar, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Provider } from 'react-redux';
+import store from './src/redux/store';
 
 // components
 import Map from './src/components/Map/Map';
@@ -14,8 +16,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <>
-      {/* <StatusBar barStyle='dark-content' hidden={false} backgroundColor='#00BCD4' translucent={true} /> */}
+    <Provider store={store}>
       <StatusBar hidden={false} translucent={true} />
       <NavigationContainer>
         <Stack.Navigator>
@@ -25,7 +26,7 @@ export default function App() {
           <Stack.Screen name='LogIn' component={LogIn} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
-    </>
+    </Provider>
   );
 }
 
