@@ -41,23 +41,21 @@ const Map = (props) => {
           /> */}
           {/* <Button icon={<Icon name='mail' size={50} type='entypo' color='white' />} iconRight style={styles.button} /> */}
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={{ position: 'absolute', right: 20, top: 85, zIndex: 10 }}
             onPress={() => props.navigation.navigate('SignUp')}
           >
-            {/* <Icon color='#f50' name='login' /> */}
+            <Icon color='#f50' name='login' />
             <Text>Sign up</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{ position: 'absolute', right: 20, top: 100, zIndex: 10 }}
-            // onPress={() => props.navigation.navigate('LogIn')}
+            onPress={() => props.navigation.navigate('LogIn')}
             onPress={() => props.countUp()}
           >
             <Text>Log in</Text>
           </TouchableOpacity>
-          {/* <Icon style={styles.button} name='facebook' onPress={() => props.navigation.navigate('SignUp')} />
-          <Icon style={styles.button2} name='facebook' onPress={() => props.navigation.navigate('Login')} /> */}
-          <Text style={styles.text}>Hello</Text>
+          <Text style={styles.text}>Hello</Text> */}
         </MapView>
       </View>
     </>

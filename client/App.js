@@ -11,6 +11,8 @@ import Map from './src/components/Map/Map';
 import Post from './src/components/Post/Post';
 import SignUp from './src/components/Auth/SignUp';
 import LogIn from './src/components/Auth/LogIn';
+import BottomTabs from './src/components/Tabs/BottomTabs';
+import LogInOrSignUp from './src/components/Auth/LogInOrSignUp';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,12 +21,18 @@ export default function App() {
     <Provider store={store}>
       <StatusBar hidden={false} translucent={true} />
       <NavigationContainer>
-        <Stack.Navigator>
+        {/* <Stack.Navigator>
           <Stack.Screen name='Map' component={Map} options={{ headerShown: false }} />
           <Stack.Screen name='Post' component={Post} options={{ headerShown: false }} />
           <Stack.Screen name='SignUp' component={SignUp} options={{ headerShown: false }} />
           <Stack.Screen name='LogIn' component={LogIn} options={{ headerShown: false }} />
-        </Stack.Navigator>
+        </Stack.Navigator> */}
+        <BottomTabs />
+        {/* <Stack.Navigator>
+          <Stack.Screen name='SignUp' component={SignUp} />
+          <Stack.Screen name='LogIn' component={LogIn} />
+
+        </Stack.Navigator> */}
       </NavigationContainer>
     </Provider>
   );

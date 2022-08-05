@@ -1,6 +1,6 @@
 // main libraries
-import { StyleSheet, View, Text, SafeAreaView, StatusBar, Platform } from 'react-native';
 import React from 'react';
+import { StyleSheet, View, Text, SafeAreaView, StatusBar, Platform } from 'react-native';
 
 const Post = () => {
   return (
