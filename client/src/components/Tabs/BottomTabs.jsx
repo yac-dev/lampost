@@ -10,7 +10,8 @@ import AntIcon from 'react-native-vector-icons/AntDesign';
 import Map from '../Map/Map';
 import SignUp from '../Auth/SignUp';
 import Post from '../Post/Post';
-import LogInOrSignUp from '../Auth/LogInOrSignUp';
+import Auth from '../Auth/Auth';
+// import LogInOrSignUp from '../Auth/LogInOrSignUp';
 
 const Tab = createBottomTabNavigator();
 
@@ -29,8 +30,8 @@ const BottomTabs = () => {
         }}
       />
       <Tab.Screen
-        name='My page'
-        component={LogInOrSignUp}
+        name='Auth'
+        component={Auth}
         options={{
           headerShown: false,
           tabBarIcon: ({ size, color }) => <FA5Icon name={'user-ninja'} color={color} size={size} />,
