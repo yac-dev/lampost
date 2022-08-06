@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 
 // react native elements
-import { Button as ButtonRNE, Icon } from 'react-native-elements';
+// import { Button as ButtonRNE, Icon } from 'react-native-elements';
 
 import Map from '../Map/Map';
 
@@ -102,13 +102,13 @@ const SignUp = (props) => {
         </TouchableOpacity> */}
       </View>
 
-      <ButtonRNE
+      {/* <ButtonRNE
         icon={<Icon name='mail' size={50} type='entypo' color='white' />}
         iconRight
         onPress={() => {
           onPressSubmit();
         }}
-      />
+      /> */}
     </SafeAreaView>
   );
 };

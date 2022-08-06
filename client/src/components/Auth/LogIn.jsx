@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, Button, SafeAreaView, StyleSheet, TextInput } from 'react-native';
 
-import { Button as ButtonRNE, Icon } from 'react-native-elements';
+// import { Button as ButtonRNE, Icon } from 'react-native-elements';
 
 // ac
 import { logIn } from '../../redux/actionCreators/auth';
@@ -67,13 +67,13 @@ const Login = (props) => {
         />
       </View>
 
-      <ButtonRNE
+      {/* <ButtonRNE
         icon={<Icon name='mail' size={50} type='entypo' color='white' />}
         iconRight
         onPress={() => {
           onPressSubmit();
         }}
-      />
+      /> */}
     </SafeAreaView>
   );
 };

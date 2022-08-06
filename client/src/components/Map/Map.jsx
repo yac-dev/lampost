@@ -2,13 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, Platform, View, StatusBar, Dimensions, SafeAreaView, TouchableOpacity } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import * as SecureStore from 'expo-secure-store';
+import * as Location from 'expo-location';
 
 // rnelements
 // import { Button, ButtonGroup, withTheme } from '@rneui/themed';
 // import Icon from 'react-native-vector-icons/FontAwesome';
-import { Button, Icon } from 'react-native-elements';
+// import { Button, Icon } from 'react-native-elements';
 
 // ac
 import { countUp } from '../../redux/actionCreators/dummy';
@@ -16,24 +17,42 @@ import { loadMe } from '../../redux/actionCreators/auth';
 
 const Map = (props) => {
   const [region, setRegion] = useState(null);
+  const [position, setPosition] = useState({
+    latitude: 10,
+    longitude: 10,
+    latitudeDelta: 0.001,
+    longitudeDelta: 0.001,
+  });
   const [a, d] = useState(null);
 
   console.log('Map is rendered');
+
   useEffect(() => {
-    const getJWTToken = async () => {
-      const jwtToken = await SecureStore.getItemAsync('secure_token');
-      if (jwtToken) {
-        console.log(jwtToken);
-        props.loadMe(jwtToken);
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
       }
-    };
-    getJWTToken();
+
+      let location = await Location.getCurrentPositionAsync({});
+      console.log(location);
+    })();
   }, []);
+
   return (
     <>
       {/* <Text style={styles.textStyle}>Here is the map component</Text> */}
       <View style={styles.container}>
-        <MapView style={styles.map}>
+        <MapView
+          style={styles.map}
+          showsUserLocation={true}
+          showsMyLocationButton={true}
+          followsUserLocation={true}
+          showsCompass={true}
+          scrollEnabled={true}
+          zoomEnabled={true}
+        >
           {/* <Button
             title='Log in'
             loading={false}
@@ -69,6 +88,11 @@ const Map = (props) => {
             <Text>Log in</Text>
           </TouchableOpacity>
           <Text style={styles.text}>Hello</Text> */}
+          {/* <Marker
+            title='Yor are here'
+            //  description='This is a description'
+            coordinate={position}
+          /> */}
         </MapView>
       </View>
     </>
