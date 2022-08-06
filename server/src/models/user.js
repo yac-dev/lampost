@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  currentAddress: {
+  address: {
     type: {
       type: String,
       enum: ['Point'],

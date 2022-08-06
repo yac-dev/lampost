@@ -16,6 +16,8 @@ import {
 // react native elements
 import { Button as ButtonRNE, Icon } from 'react-native-elements';
 
+import Map from '../Map/Map';
+
 // ac
 import { signUp } from '../../redux/actionCreators/auth';
 
@@ -31,7 +33,8 @@ const SignUp = (props) => {
       password,
     };
     console.log(formData);
-    // props.signUp(formData);
+    // props.navigation.navigate('LogInOrSignUp', { screen: 'Map' });
+    props.signUp(formData);
   };
 
   return (

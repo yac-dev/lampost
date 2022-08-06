@@ -1,6 +1,6 @@
 import axios from 'axios';
 const lampostAPI = axios.create({
-  baseURL: process.env.REACT_APP_BASE_API_URL,
+  baseURL: 'http://localhost:3500/api',
   mode: 'cors',
 });
 

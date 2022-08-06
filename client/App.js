@@ -1,10 +1,13 @@
 // main libraries
 // import { StatusBar } from 'expo-status-bar';
+import React, { useEffect } from 'react';
+import {connect} from 'react-redux';
 import { StyleSheet, Text, View, StatusBar, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';
 import store from './src/redux/store';
+import * as SecureStore from 'expo-secure-store';
 
 // components
 import Map from './src/components/Map/Map';
@@ -14,9 +17,20 @@ import LogIn from './src/components/Auth/LogIn';
 import BottomTabs from './src/components/Tabs/BottomTabs';
 import LogInOrSignUp from './src/components/Auth/LogInOrSignUp';
 
+// ac
+import { loadMe } from './src/redux/actionCreators/auth';
+
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+const App = ()=> {
+
+  useEffect(() => {
+     const jwtToken = await SecureStore.getItemAsync('secure_token');
+     if(jwtToken){
+      props.loadMe(jwtToken);
+     }
+  }, []);
+
   return (
     <Provider store={store}>
       <StatusBar hidden={false} translucent={true} />
@@ -37,6 +51,8 @@ export default function App() {
     </Provider>
   );
 }
+
+export default connect(null, loadMe)(App)
 
 const styles = StyleSheet.create({
   container: {
