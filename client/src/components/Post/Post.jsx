@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, View, Text, SafeAreaView, StatusBar, Platform } from 'react-native';
 
 const Post = () => {
+  console.log('post is rendered');
   return (
     // <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
     //   <View style={styles.container}>

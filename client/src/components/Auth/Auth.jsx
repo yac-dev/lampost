@@ -12,7 +12,24 @@ import SignUp from './SignUp';
 import LogIn from './LogIn';
 
 const Auth = (props) => {
-  if (props.auth.data) {
+  console.log('Auth is rendered');
+  // const render = () => {
+  //   if (props.auth.isAuthenticated) {
+  //     return (
+  //       <UserPage />
+  //     );
+  //   } else {
+  //     return (
+  //       <Stack.Navigator>
+  //         <Stack.Screen name='LogInOrSignUp' component={LogInOrSignUp} options={{ headerShown: false }} />
+  //         <Stack.Screen name='SignUp' component={SignUp} />
+  //         {/* <Stack.Screen name='LogIn' component={LogIn} /> */}
+  //         <Stack.Screen name='LogIn' component={LogIn} />
+  //       </Stack.Navigator>
+  //     );
+  //   }
+  // };
+  if (props.auth.isAuthenticated) {
     return <UserPage />;
   } else {
     return (

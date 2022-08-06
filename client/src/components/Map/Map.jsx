@@ -1,8 +1,9 @@
 // main libraries
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, Platform, View, StatusBar, Dimensions, SafeAreaView, TouchableOpacity } from 'react-native';
 import MapView from 'react-native-maps';
+import * as SecureStore from 'expo-secure-store';
 
 // rnelements
 // import { Button, ButtonGroup, withTheme } from '@rneui/themed';
@@ -11,11 +12,23 @@ import { Button, Icon } from 'react-native-elements';
 
 // ac
 import { countUp } from '../../redux/actionCreators/dummy';
+import { loadMe } from '../../redux/actionCreators/auth';
 
 const Map = (props) => {
   const [region, setRegion] = useState(null);
   const [a, d] = useState(null);
 
+  console.log('Map is rendered');
+  useEffect(() => {
+    const getJWTToken = async () => {
+      const jwtToken = await SecureStore.getItemAsync('secure_token');
+      if (jwtToken) {
+        console.log(jwtToken);
+        props.loadMe(jwtToken);
+      }
+    };
+    getJWTToken();
+  }, []);
   return (
     <>
       {/* <Text style={styles.textStyle}>Here is the map component</Text> */}
@@ -93,4 +106,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, { countUp })(Map);
+export default connect(null, { loadMe })(Map);

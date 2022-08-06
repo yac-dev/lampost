@@ -18,7 +18,13 @@ export const signUp = (formData) => async (dispatch, getState) => {
 
 export const logIn = (formData) => async (dispatch, getState) => {
   try {
-    console.log('login');
+    const result = await lampostAPI.post('/auth/login', formData);
+    const { user, jwtToken } = result.data;
+    await SecureStore.setItemAsync('secure_token', jwtToken);
+    dispatch({
+      type: 'LOG_IN',
+      payload: user,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -26,7 +32,7 @@ export const logIn = (formData) => async (dispatch, getState) => {
 
 export const loadMe = (jwtToken) => async (dispatch, getState) => {
   try {
-    const result = await lampostAPI.get('/users/loadMe', {
+    const result = await lampostAPI.get('/auth/loadMe', {
       headers: {
         authorization: `Bearer ${jwtToken}`,
       },
