@@ -15,33 +15,33 @@ import {
 import MapView, { Callout, Marker, Circle } from 'react-native-maps';
 import * as SecureStore from 'expo-secure-store';
 import * as Location from 'expo-location';
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+// import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+
+import { IconButton, Center, VStack, NativeBaseProvider, TextArea, Box, Button, Stack } from 'native-base';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 
-// rnelements
-// import { Button, ButtonGroup, withTheme } from '@rneui/themed';
-// import Icon from 'react-native-vector-icons/FontAwesome';
-// import { Button, Icon } from 'react-native-elements';
+// components
+import BottomSheet from './BottomSheet/BottomSheet';
+import MapMarkers from './MapMarkers/MapMarkers';
 
 // ac
 import { countUp } from '../../redux/actionCreators/dummy';
 import { loadMe } from '../../redux/actionCreators/auth';
+import { setIsBottomSheetOpen } from '../../redux/actionCreators/modal';
 
 const Map = (props) => {
   const [region, setRegion] = useState(null);
-  const [position, setPosition] = useState({ latitude: 37.78825, longitude: -122.4324 });
-
-  const [isOpen, setIsOpen] = useState(false);
+  const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
   const bottomSheetRef = useRef(null);
-  const snapPoints = ['60%'];
-
+  const mapRef = useRef(null);
   console.log('Map is rendered');
 
   const handleSheetChanges = useCallback((index) => {
+    props.setIsBottomSheetOpen(true);
     bottomSheetRef.current?.snapToIndex(index);
     // console.log('handleSheetChanges', index);
-    setIsOpen(true);
   }, []);
 
   useEffect(() => {
@@ -62,13 +62,28 @@ const Map = (props) => {
     })();
   }, []);
 
+  // これめっちゃ動く。直さないと。
+  useEffect(() => {
+    if (props.modal.bottomSheet.isOpen && position.latitude && position.longitude) {
+      console.log(props.modal.bottomSheet.isOpen);
+      const newLat = position.latitude - 0.005;
+      console.log(newLat);
+      mapRef.current.animateToRegion({
+        latitude: newLat,
+        longitude: position.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      });
+    }
+  }, [props.modal.bottomSheet.isOpen]);
+
   console.log(position);
 
   return (
     <>
-      {/* <Text style={styles.textStyle}>Here is the map component</Text> */}
       <View style={styles.container}>
         <MapView
+          ref={mapRef}
           style={styles.map}
           showsUserLocation={true}
           showsMyLocationButton={true}
@@ -78,8 +93,8 @@ const Map = (props) => {
           zoomEnabled={true}
           // initial regionっていうのは、最初に地図がloadされたときに画面の中心にどのlatitudeとlongitudeを映すかって言うことね。
           initialRegion={{
-            latitude: position.latitude,
-            longitude: position.longitude,
+            latitude: 37.78825,
+            longitude: -122.4324,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
@@ -126,34 +141,9 @@ const Map = (props) => {
             <Text>Log in</Text>
           </TouchableOpacity>
           <Text style={styles.text}>Hello</Text> */}
-          <Marker
-            title='Yor are here'
-            //  description='This is a description'
-            coordinate={position}
-          />
-          <Marker coordinate={{ latitude: position.latitude, longitude: position.longitude }}>
-            {/* <FA5Icon name={'stamp'} size={50} color='blue' /> */}
-            <Callout>
-              <Text>I'm here</Text>
-            </Callout>
-          </Marker>
-          {/* <Circle center={{ latitude: 37.78825, longitude: -122.4324 }} radius={2000} /> */}
-          <Marker coordinate={{ latitude: 37.68825, longitude: -122.4324 }} pinColor='black'>
-            <Callout>
-              <Text>Yeeees</Text>
-            </Callout>
-          </Marker>
+          <MapMarkers />
         </MapView>
-        <BottomSheet
-          ref={bottomSheetRef}
-          snapPoints={snapPoints}
-          enablePanDownToClose={true}
-          onClose={() => setIsOpen(false)}
-        >
-          <BottomSheetView>
-            <Text>What's going on here??</Text>
-          </BottomSheetView>
-        </BottomSheet>
+        <BottomSheet bottomSheetRef={bottomSheetRef} />
       </View>
     </>
   );
@@ -172,22 +162,26 @@ const styles = StyleSheet.create({
     right: 100,
     top: 400,
   },
-  button: {
-    position: 'absolute',
-    right: 60,
-    top: 70,
-    size: 50,
-  },
-  button2: {
-    position: 'absolute',
-    right: 60,
-    top: 90,
-    size: 50,
-  },
+  // button: {
+  //   position: 'absolute',
+  //   right: 60,
+  //   top: 70,
+  //   size: 50,
+  // },
+  // button2: {
+  //   position: 'absolute',
+  //   right: 60,
+  //   top: 90,
+  //   size: 50,
+  // },
   map: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
 });
 
-export default connect(null, { loadMe })(Map);
+const mapStateToProps = (state) => {
+  return { modal: state.modal };
+};
+
+export default connect(mapStateToProps, { loadMe, setIsBottomSheetOpen })(Map);
