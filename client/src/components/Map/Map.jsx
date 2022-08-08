@@ -102,7 +102,7 @@ const Map = (props) => {
         >
           <TouchableOpacity
             style={{ position: 'absolute', right: 20, top: 100 }}
-            onPress={() => handleSheetChanges(0)} //  ここで、bottom sheetを出すようにすればいいや。
+            onPress={() => handleSheetChanges(1)} //  ここで、bottom sheetを出すようにすればいいや。
           >
             <Text>Post to press</Text>
           </TouchableOpacity>
