@@ -30,31 +30,44 @@ const MapMarkers = (props) => {
     );
   };
 
+  // flatlistsなんで動かねーんだろ。
   const render = () => {
     if (props.posts.length) {
-      return (
-        <FlatList
-          data={props.posts}
-          renderItem={({ item }) => (
-            <Marker coordinate={{ latitude: item.place.coordinates[1], longitude: item.place.coordinates[0] }}>
+      console.log(props.posts);
+      const li = props.posts.map((post) => {
+        return (
+          <View key={post._id}>
+            <Marker coordinate={{ latitude: post.place.coordinates[1], longitude: post.place.coordinates[0] }}>
               <Callout>
                 <Text>Yessssss</Text>
               </Callout>
             </Marker>
-          )}
-          keyExtractor={(item) => item._id}
-        />
-      );
+          </View>
+        );
+      });
+
+      return <View>{li}</View>;
+      // return (
+      //   <FlatList
+      //     data={props.posts}
+      //     renderItem={({ item }) => (
+      //       <Marker coordinate={{ latitude: item.place.coordinates[1], longitude: item.place.coordinates[0] }} />
+      //     )}
+      //     keyExtractor={(item) => item._id}
+      //   />
+      // );
+    } else {
+      return null;
     }
   };
 
   return (
     <>
-      {/* <Marker coordinate={{ latitude: 37.78825, longitude: -122.4324 }}>
+      <Marker coordinate={{ latitude: 37.78825, longitude: -122.4324 }}>
         <Callout>
           <Text>Yessssss</Text>
         </Callout>
-      </Marker> */}
+      </Marker>
       {/* <Circle center={{ latitude: 37.78825, longitude: -122.4324 }} radius={2000} /> */}
       {/* <FlatList
         data={props.posts}
