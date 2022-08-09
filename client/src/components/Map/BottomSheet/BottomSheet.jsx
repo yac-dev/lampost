@@ -3,6 +3,7 @@ import React, { useState, useRef, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView, TextInput } from 'react-native';
 import BS, { BottomSheetView, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { Picker } from '@react-native-picker/picker';
 
 // components
 import NativeBaseProvider from '../../Utils/NativeBaseProvider';
@@ -13,7 +14,7 @@ import { setIsBottomSheetOpen } from '../../../redux/actionCreators/modal';
 
 const BottomSheet = (props) => {
   // const bottomSheetRef = useRef(null);
-  const snapPoints = ['10%', '50%'];
+  const snapPoints = ['10%', '75%'];
 
   return (
     <BS
@@ -24,65 +25,7 @@ const BottomSheet = (props) => {
       onClose={() => props.setIsBottomSheetOpen(false)}
     >
       <BottomSheetView>
-        {/* <NativeBaseProvider>
-          <Form />
-        </NativeBaseProvider> */}
-        <ScrollView>
-          <TextInput
-            style={{ height: 200, borderWidth: 1 }}
-            multiline={true}
-            numberOfLines={10}
-            // onChangeText={onChangeNumber}
-            // value={number}
-            placeholder='useless placeholder'
-            keyboardType='numeric'
-          />
-          <View>
-            <Text>HIHI</Text>
-          </View>
-          <View>
-            <Text>HIHI</Text>
-          </View>
-          <View>
-            <Text>HIHI</Text>
-          </View>
-          <View>
-            <Text>HIHI</Text>
-          </View>
-          <View>
-            <Text>HIHI</Text>
-          </View>
-          <View>
-            <Text>HIHI</Text>
-          </View>
-          <View>
-            <Text>HIHI</Text>
-          </View>
-          <View>
-            <Text>HIHI</Text>
-          </View>
-          <View>
-            <Text>HIHI</Text>
-          </View>
-          <View>
-            <Text>HIHI</Text>
-          </View>
-          <View>
-            <Text>HIHI</Text>
-          </View>
-          <View>
-            <Text>HIHI</Text>
-          </View>
-          <View>
-            <Text>HIHI</Text>
-          </View>
-          <View>
-            <Text>HIHI</Text>
-          </View>
-          <View>
-            <Text>HIHI</Text>
-          </View>
-        </ScrollView>
+        <Form />
       </BottomSheetView>
     </BS>
   );

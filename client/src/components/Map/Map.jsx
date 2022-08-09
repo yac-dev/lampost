@@ -66,7 +66,7 @@ const Map = (props) => {
   useEffect(() => {
     if (props.modal.bottomSheet.isOpen && position.latitude && position.longitude) {
       console.log(props.modal.bottomSheet.isOpen);
-      const newLat = position.latitude - 0.005;
+      const newLat = position.latitude - 0.027;
       console.log(newLat);
       mapRef.current.animateToRegion({
         latitude: newLat,
