@@ -34,7 +34,7 @@ import { getCurrentLocation } from '../../redux/actionCreators/auth';
 
 const Map = (props) => {
   const [region, setRegion] = useState(null);
-  const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
+  const [currentSnap, setCurrentSnap] = useState();
   const bottomSheetRef = useRef(null);
   const mapRef = useRef(null);
   console.log('Map is rendered');
@@ -64,7 +64,6 @@ const Map = (props) => {
     props.getCurrentLocation();
   }, []);
 
-  // これめっちゃ動く。直さないと。
   useEffect(() => {
     if (props.modal.bottomSheet.isOpen && props.auth.currentLocation.latitude && props.auth.currentLocation.longitude) {
       console.log(props.modal.bottomSheet.isOpen);
@@ -79,8 +78,6 @@ const Map = (props) => {
     }
   }, [props.modal.bottomSheet.isOpen]);
 
-  console.log(position);
-
   return (
     <>
       <View style={styles.container}>
@@ -88,7 +85,7 @@ const Map = (props) => {
           ref={mapRef}
           style={styles.map}
           showsUserLocation={true}
-          showsMyLocationButton={true}
+          // showsMyLocationButton={true}
           followsUserLocation={true}
           showsCompass={true}
           scrollEnabled={true}
@@ -104,7 +101,7 @@ const Map = (props) => {
         >
           <TouchableOpacity
             style={{ position: 'absolute', right: 20, top: 100 }}
-            onPress={() => handleSheetChanges(1)} //  ここで、bottom sheetを出すようにすればいいや。
+            onPress={() => handleSheetChanges(0)} //  ここで、bottom sheetを出すようにすればいいや。
           >
             <Text>Post to press</Text>
           </TouchableOpacity>

@@ -14,15 +14,23 @@ import { setIsBottomSheetOpen } from '../../../redux/actionCreators/modal';
 
 const BottomSheet = (props) => {
   // const bottomSheetRef = useRef(null);
-  const snapPoints = ['10%', '75%'];
+  const snapPoints = ['75%'];
+  console.log(props.bottomSheetRef.current);
+
+  const close = () => {
+    if (props.modal.bottomSheet.isOpen) {
+      props.setIsBottomSheetOpen(false);
+    }
+  };
 
   return (
     <BS
+      index={-1}
       enableOverDrag={true}
       ref={props.bottomSheetRef}
       snapPoints={snapPoints}
       enablePanDownToClose={true}
-      onClose={() => props.setIsBottomSheetOpen(false)}
+      onClose={() => close()}
     >
       <BottomSheetView>
         <Form />
