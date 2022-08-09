@@ -15,9 +15,8 @@ import { setIsBottomSheetOpen } from '../../../redux/actionCreators/modal';
 const BottomSheet = (props) => {
   // const bottomSheetRef = useRef(null);
   const snapPoints = ['75%'];
-  console.log(props.bottomSheetRef.current);
 
-  const close = () => {
+  const onBottomSheetClose = () => {
     if (props.modal.bottomSheet.isOpen) {
       props.setIsBottomSheetOpen(false);
     }
@@ -30,7 +29,7 @@ const BottomSheet = (props) => {
       ref={props.bottomSheetRef}
       snapPoints={snapPoints}
       enablePanDownToClose={true}
-      onClose={() => close()}
+      onClose={() => onBottomSheetClose()}
     >
       <BottomSheetView>
         <Form />

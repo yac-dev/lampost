@@ -22,3 +22,18 @@ export const createPost = async (request, response) => {
     console.log(error);
   }
 };
+
+export const getPosts = async (request, response) => {
+  try {
+    const posts = await Post.find().populate({
+      path: 'user',
+      model: 'User',
+    });
+
+    response.status(200).json({
+      posts,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

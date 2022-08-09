@@ -1,9 +1,9 @@
 import express from 'express';
 const router = express.Router();
-import { createPost } from '../controllers/posts';
+import { createPost, getPosts } from '../controllers/posts';
 import { authorization } from '../middlewares/authorization';
 
-router.post('/', createPost);
+router.route('/').post(createPost).get(getPosts);
 // router.post('/login', login);
 // router.get('/loadMe', authorization, loadMe);
 

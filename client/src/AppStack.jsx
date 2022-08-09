@@ -12,16 +12,16 @@ import BottomTabs from './components/Tabs/BottomTabs';
 import { loadMe } from './redux/actionCreators/auth';
 
 const AppStack = (props) => {
-  useEffect(() => {
-    const getJWTToken = async () => {
-      const jwtToken = await SecureStore.getItemAsync('secure_token');
-      if (jwtToken) {
-        console.log(jwtToken);
-        props.loadMe(jwtToken);
-      }
-    };
-    getJWTToken();
-  }, []);
+  // useEffect(() => {
+  //   const getJWTToken = async () => {
+  //     const jwtToken = await SecureStore.getItemAsync('secure_token');
+  //     if (jwtToken) {
+  //       console.log(jwtToken);
+  //       props.loadMe(jwtToken);
+  //     }
+  //   };
+  //   getJWTToken();
+  // }, []);
 
   return (
     <NavigationContainer>

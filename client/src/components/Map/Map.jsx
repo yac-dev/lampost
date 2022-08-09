@@ -13,16 +13,14 @@ import {
   TextInput,
 } from 'react-native';
 import MapView, { Callout, Marker, Circle } from 'react-native-maps';
-import * as SecureStore from 'expo-secure-store';
-import * as Location from 'expo-location';
-// import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 
-import { IconButton, Center, VStack, NativeBaseProvider, TextArea, Box, Button, Stack } from 'native-base';
+import { IconButton, Center, VStack, NativeBaseProvider, TextArea, Box, Button, Stack, Fab, Icon } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
-
-import FA5Icon from 'react-native-vector-icons/FontAwesome5';
+import { Entypo } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 // components
+import NBProvider from '../Utils/NativeBaseProvider';
 import BottomSheet from './BottomSheet/BottomSheet';
 import MapMarkers from './MapMarkers/MapMarkers';
 
@@ -80,32 +78,52 @@ const Map = (props) => {
 
   return (
     <>
-      <View style={styles.container}>
-        <MapView
-          ref={mapRef}
-          style={styles.map}
-          showsUserLocation={true}
-          // showsMyLocationButton={true}
-          followsUserLocation={true}
-          showsCompass={true}
-          scrollEnabled={true}
-          zoomEnabled={true}
-          // initial regionっていうのは、最初に地図がloadされたときに画面の中心にどのlatitudeとlongitudeを映すかって言うことね。
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-          provider='google'
-        >
-          <TouchableOpacity
-            style={{ position: 'absolute', right: 20, top: 100 }}
-            onPress={() => handleSheetChanges(0)} //  ここで、bottom sheetを出すようにすればいいや。
+      <NBProvider>
+        <View style={styles.container}>
+          <MapView
+            ref={mapRef}
+            style={styles.map}
+            showsUserLocation={true}
+            // showsMyLocationButton={true}
+            followsUserLocation={true}
+            showsCompass={true}
+            scrollEnabled={true}
+            zoomEnabled={true}
+            // initial regionっていうのは、最初に地図がloadされたときに画面の中心にどのlatitudeとlongitudeを映すかって言うことね。
+            initialRegion={{
+              latitude: 37.78825,
+              longitude: -122.4324,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+            provider='google'
           >
-            <Text>Post to press</Text>
-          </TouchableOpacity>
-          {/* <Button
+            <View
+              style={{
+                position: 'absolute',
+                right: (Dimensions.get('window').width / 100) * 5,
+                top: (Dimensions.get('window').height / 100) * 20,
+                borderRadius: 50,
+              }}
+            >
+              <IconButton
+                style={{ backgroundColor: 'white' }}
+                icon={<Icon as={Entypo} name='keyboard' />}
+                borderRadius='full'
+                _icon={{
+                  color: 'black',
+                  size: 'md',
+                }}
+                onPress={() => handleSheetChanges(0)}
+              />
+            </View>
+            {/* <TouchableOpacity
+              style={{ position: 'absolute', right: 20, top: 100 }}
+              onPress={() => handleSheetChanges(0)} //  ここで、bottom sheetを出すようにすればいいや。
+            >
+              <Text>Post to press</Text>
+            </TouchableOpacity> */}
+            {/* <Button
             title='Log in'
             loading={false}
             loadingProps={{ size: 'small', color: 'white' }}
@@ -123,9 +141,9 @@ const Map = (props) => {
               props.navigation.navigate('Post', { name: 'Jane' });
             }}
           /> */}
-          {/* <Button icon={<Icon name='mail' size={50} type='entypo' color='white' />} iconRight style={styles.button} /> */}
+            {/* <Button icon={<Icon name='mail' size={50} type='entypo' color='white' />} iconRight style={styles.button} /> */}
 
-          {/* <TouchableOpacity
+            {/* <TouchableOpacity
             style={{ position: 'absolute', right: 20, top: 85, zIndex: 10 }}
             onPress={() => props.navigation.navigate('SignUp')}
           >
@@ -140,10 +158,11 @@ const Map = (props) => {
             <Text>Log in</Text>
           </TouchableOpacity>
           <Text style={styles.text}>Hello</Text> */}
-          <MapMarkers />
-        </MapView>
-        <BottomSheet bottomSheetRef={bottomSheetRef} />
-      </View>
+            <MapMarkers />
+          </MapView>
+          <BottomSheet bottomSheetRef={bottomSheetRef} />
+        </View>
+      </NBProvider>
     </>
   );
 };
@@ -176,6 +195,7 @@ const styles = StyleSheet.create({
   map: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+    position: 'relative',
   },
 });
 
