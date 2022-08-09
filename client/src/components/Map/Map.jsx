@@ -30,6 +30,7 @@ import MapMarkers from './MapMarkers/MapMarkers';
 import { countUp } from '../../redux/actionCreators/dummy';
 import { loadMe } from '../../redux/actionCreators/auth';
 import { setIsBottomSheetOpen } from '../../redux/actionCreators/modal';
+import { getCurrentLocation } from '../../redux/actionCreators/auth';
 
 const Map = (props) => {
   const [region, setRegion] = useState(null);
@@ -45,32 +46,33 @@ const Map = (props) => {
   }, []);
 
   useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        // you cannot post any contentって書けばいいかね。
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
+    // (async () => {
+    //   let { status } = await Location.requestForegroundPermissionsAsync();
+    //   if (status !== 'granted') {
+    //     // you cannot post any contentって書けばいいかね。
+    //     setErrorMsg('Permission to access location was denied');
+    //     return;
+    //   }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setPosition((previous) => ({
-        ...previous,
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      }));
-    })();
+    //   let location = await Location.getCurrentPositionAsync({});
+    //   setPosition((previous) => ({
+    //     ...previous,
+    //     latitude: location.coords.latitude,
+    //     longitude: location.coords.longitude,
+    //   }));
+    // })();
+    props.getCurrentLocation();
   }, []);
 
   // これめっちゃ動く。直さないと。
   useEffect(() => {
-    if (props.modal.bottomSheet.isOpen && position.latitude && position.longitude) {
+    if (props.modal.bottomSheet.isOpen && props.auth.currentLocation.latitude && props.auth.currentLocation.longitude) {
       console.log(props.modal.bottomSheet.isOpen);
-      const newLat = position.latitude - 0.027;
+      const newLat = props.auth.currentLocation.latitude - 0.027;
       console.log(newLat);
       mapRef.current.animateToRegion({
         latitude: newLat,
-        longitude: position.longitude,
+        longitude: props.auth.currentLocation.longitude,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       });
@@ -181,7 +183,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  return { modal: state.modal };
+  return { modal: state.modal, auth: state.auth };
 };
 
-export default connect(mapStateToProps, { loadMe, setIsBottomSheetOpen })(Map);
+export default connect(mapStateToProps, { loadMe, setIsBottomSheetOpen, getCurrentLocation })(Map);

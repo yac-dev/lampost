@@ -9,8 +9,8 @@ import NBProvider from '../../Utils/NativeBaseProvider';
 
 const Form = () => {
   const [textAreaValue, setTextAreaValue] = useState('');
-  const [postType, setPostType] = useState('food');
-  const [hour, setHour] = useState('1');
+  const [genre, setGenre] = useState('food');
+  const [limit, setLimit] = useState('1');
 
   return (
     <ScrollView>
@@ -23,7 +23,7 @@ const Form = () => {
         placeholder="What's going on around you?"
       />
       <NBProvider>
-        <Buttons textAreaValue={textAreaValue} postType={postType} hour={hour} />
+        <Buttons textAreaValue={textAreaValue} genre={genre} limit={limit} />
       </NBProvider>
     </ScrollView>
   );

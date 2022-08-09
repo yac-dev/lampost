@@ -1,5 +1,6 @@
 import lampostAPI from '../../apis/lampost';
 import * as SecureStore from 'expo-secure-store';
+import * as Location from 'expo-location';
 
 export const signUp = (formData) => async (dispatch, getState) => {
   try {
@@ -41,6 +42,35 @@ export const loadMe = (jwtToken) => async (dispatch, getState) => {
     dispatch({
       type: 'LOAD_ME',
       payload: user,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getCurrentLocation = () => async (dispatch, getState) => {
+  try {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      // you cannot post any contentって書けばいいかね。
+      // setErrorMsg('Permission to access location was denied');
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    const coordsData = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    };
+    //   setPosition((previous) => ({
+    //     ...previous,
+    //     latitude: location.coords.latitude,
+    //     longitude: location.coords.longitude,
+    //   }));
+    // })
+    dispatch({
+      type: 'GET_CURRENT_LOCATION',
+      payload: coordsData,
     });
   } catch (error) {
     console.log(error);

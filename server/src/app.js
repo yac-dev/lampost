@@ -4,6 +4,7 @@ import './databases/mongoose';
 
 // routers
 import authRouter from './routers/auth';
+import postRouter from './routers/posts';
 // import usersRouter from './routers/users';
 
 const app = express();
@@ -15,6 +16,7 @@ app.get('/', (request, response) => {
 });
 
 app.use('/api/auth', authRouter);
+app.use('/api/posts', postRouter);
 // app.use('/api/users', usersRouter);
 // app.use('/api/polls', pollsRouter);
 // app.use('/api/votes', votesRouter);

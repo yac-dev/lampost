@@ -1,5 +1,6 @@
 // main libraries
 import React from 'react';
+import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 import { IconButton, Icon, Box, Center, NativeBaseProvider, Stack, Button } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
@@ -7,8 +8,7 @@ import { Fontisto } from '@expo/vector-icons';
 
 const Buttons = (props) => {
   const onPressButton = () => {
-    // text value, post type, hour, userId, userの現在地をpostする。
-    console.log(props.textAreaValue, props.postType, props.hour);
+    console.log(props.textAreaValue, props.genre, props.limit, props.auth.currentLocation);
   };
 
   return (
@@ -17,7 +17,7 @@ const Buttons = (props) => {
         direction={{
           base: 'row',
         }}
-        space={3}
+        space={10}
       >
         <IconButton
           style={{ backgroundColor: 'rgb(54, 100, 207)' }}
@@ -45,4 +45,8 @@ const Buttons = (props) => {
   );
 };
 
-export default Buttons;
+const mapStateToProps = (state) => {
+  return { auth: state.auth };
+};
+
+export default connect(mapStateToProps)(Buttons);
