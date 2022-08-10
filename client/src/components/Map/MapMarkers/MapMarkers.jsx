@@ -6,6 +6,7 @@ import { Callout, Marker, Circle } from 'react-native-maps';
 
 // ac
 import { getPosts } from '../../../redux/actionCreators/posts';
+import { selectPost } from '../../../redux/actionCreators/selectItem';
 
 const Item = ({ title }) => {
   return (
@@ -37,7 +38,10 @@ const MapMarkers = (props) => {
       const li = props.posts.map((post) => {
         return (
           <View key={post._id}>
-            <Marker coordinate={{ latitude: post.place.coordinates[1], longitude: post.place.coordinates[0] }}>
+            <Marker
+              coordinate={{ latitude: post.place.coordinates[1], longitude: post.place.coordinates[0] }}
+              onPress={() => props.selectPost(post)}
+            >
               <Callout>
                 <Text>Yessssss</Text>
               </Callout>
@@ -89,4 +93,4 @@ const mapStateToProps = (state) => {
   return { posts: Object.values(state.posts) };
 };
 
-export default connect(mapStateToProps, { getPosts })(MapMarkers);
+export default connect(mapStateToProps, { getPosts, selectPost })(MapMarkers);

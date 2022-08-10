@@ -33,15 +33,35 @@ import { getCurrentLocation } from '../../redux/actionCreators/auth';
 const Map = (props) => {
   const [region, setRegion] = useState(null);
   const [currentSnap, setCurrentSnap] = useState();
+
   const bottomSheetRef = useRef(null);
   const mapRef = useRef(null);
   console.log('Map is rendered');
 
-  const handleSheetChanges = useCallback((index) => {
-    props.setIsBottomSheetOpen(true);
-    bottomSheetRef.current?.snapToIndex(index);
-    // console.log('handleSheetChanges', index);
-  }, []);
+  // const handleSheetChanges = useCallback((index) => {
+  //   if (!props.modal.bottomSheet.isOpen) {
+  //     props.setIsBottomSheetOpen(true);
+  //     bottomSheetRef.current?.snapToIndex(index);
+  //     // console.log('handleSheetChanges', index);
+  //   } else {
+  //     props.setIsBottomSheetOpen(false);
+  //     bottomSheetRef.current?.snapToIndex(-1);
+  //   }
+  // }, []);
+
+  const handleSheetChanges = (index) => {
+    if (!props.modal.bottomSheet.isOpen) {
+      console.log('opeing');
+      props.setIsBottomSheetOpen(true);
+      bottomSheetRef.current?.snapToIndex(0);
+      // console.log('handleSheetChanges', index);
+    } else if (props.modal.bottomSheet.isOpen) {
+      console.log('closing');
+      props.setIsBottomSheetOpen(false);
+      // bottomSheetRef.current?.snapToIndex(-1);
+      bottomSheetRef.current.close();
+    }
+  };
 
   useEffect(() => {
     // (async () => {
@@ -98,25 +118,6 @@ const Map = (props) => {
             }}
             provider='google'
           >
-            <View
-              style={{
-                position: 'absolute',
-                right: (Dimensions.get('window').width / 100) * 5,
-                top: (Dimensions.get('window').height / 100) * 20,
-                borderRadius: 50,
-              }}
-            >
-              <IconButton
-                style={{ backgroundColor: 'white' }}
-                icon={<Icon as={Entypo} name='keyboard' />}
-                borderRadius='full'
-                _icon={{
-                  color: 'black',
-                  size: 'md',
-                }}
-                onPress={() => handleSheetChanges(0)}
-              />
-            </View>
             {/* <TouchableOpacity
               style={{ position: 'absolute', right: 20, top: 100 }}
               onPress={() => handleSheetChanges(0)} //  ここで、bottom sheetを出すようにすればいいや。
@@ -160,6 +161,25 @@ const Map = (props) => {
           <Text style={styles.text}>Hello</Text> */}
             <MapMarkers />
           </MapView>
+          <View
+            style={{
+              position: 'absolute',
+              right: (Dimensions.get('window').width / 100) * 5,
+              top: (Dimensions.get('window').height / 100) * 15,
+              // borderRadius: 50,
+            }}
+          >
+            <IconButton
+              style={{ backgroundColor: 'white' }}
+              icon={<Icon as={Entypo} name='keyboard' />}
+              borderRadius='full'
+              _icon={{
+                color: 'black',
+                size: 'md',
+              }}
+              onPress={() => handleSheetChanges()}
+            />
+          </View>
           <BottomSheet bottomSheetRef={bottomSheetRef} />
         </View>
       </NBProvider>
