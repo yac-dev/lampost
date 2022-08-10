@@ -1,6 +1,13 @@
-export const setIsBottomSheetOpen = (bool) => {
+export const setIsFormBottomSheetOpen = (bool) => {
   return {
-    type: 'SET_BOTTOM_SHEET',
+    type: 'SET_FORM_BOTTOM_SHEET',
+    payload: bool,
+  };
+};
+
+export const setIsPostBottomSheetOpen = (bool) => {
+  return {
+    type: 'SET_POST_BOTTOM_SHEET',
     payload: bool,
   };
 };

@@ -1,12 +1,18 @@
 const INITIAL_STATE = {
-  bottomSheet: {
+  formBottomSheet: {
+    isOpen: false,
+  },
+  postBottomSheet: {
     isOpen: false,
   },
 };
+
 const modalReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case 'SET_BOTTOM_SHEET':
-      return { ...state, bottomSheet: { isOpen: action.payload } };
+    case 'SET_FORM_BOTTOM_SHEET':
+      return { ...state, formBottomSheet: { isOpen: action.payload } };
+    case 'SET_POST_BOTTOM_SHEET':
+      return { ...state, postBottomSheet: { isOpen: action.payload } };
     default:
       return { ...state };
   }

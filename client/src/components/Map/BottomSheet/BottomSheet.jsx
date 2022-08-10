@@ -10,15 +10,15 @@ import NativeBaseProvider from '../../Utils/NativeBaseProvider';
 import Form from './Form';
 
 // ac
-import { setIsBottomSheetOpen } from '../../../redux/actionCreators/modal';
+import { setIsFormBottomSheetOpen } from '../../../redux/actionCreators/modal';
 
-const BottomSheet = (props) => {
+const FormBottomSheet = (props) => {
   // const bottomSheetRef = useRef(null);
   const snapPoints = ['75%'];
 
-  const onBottomSheetClose = () => {
-    if (props.modal.bottomSheet.isOpen) {
-      props.setIsBottomSheetOpen(false);
+  const onFormBottomSheetClose = () => {
+    if (props.modal.formBottomSheet.isOpen) {
+      props.setIsFormBottomSheetOpen(false);
     }
   };
 
@@ -26,10 +26,10 @@ const BottomSheet = (props) => {
     <BS
       index={-1}
       enableOverDrag={true}
-      ref={props.bottomSheetRef}
+      ref={props.formBottomSheetRef}
       snapPoints={snapPoints}
       enablePanDownToClose={true}
-      onClose={() => onBottomSheetClose()}
+      onClose={() => onFormBottomSheetClose()}
     >
       <BottomSheetView>
         <Form />
@@ -42,4 +42,4 @@ const mapStateToProps = (state) => {
   return { modal: state.modal };
 };
 
-export default connect(mapStateToProps, { setIsBottomSheetOpen })(BottomSheet);
+export default connect(mapStateToProps, { setIsFormBottomSheetOpen })(FormBottomSheet);
