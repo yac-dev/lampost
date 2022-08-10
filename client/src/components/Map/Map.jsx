@@ -21,15 +21,17 @@ import { Ionicons } from '@expo/vector-icons';
 
 // components
 import NBProvider from '../Utils/NativeBaseProvider';
-import BottomSheet from './BottomSheet/BottomSheet';
 import MapMarkers from './MapMarkers/MapMarkers';
-import PostBottomSheet from './BottomSheet/Post/BottomSheet';
+import FormBottomSheet from './BottomSheet/Form/FormBottomSheet';
+import PostBottomSheet from './BottomSheet/Post/PostBottomSheet';
 
 // ac
 import { countUp } from '../../redux/actionCreators/dummy';
 import { loadMe } from '../../redux/actionCreators/auth';
-import { setIsFormBottomSheetOpen } from '../../redux/actionCreators/modal';
 import { getCurrentLocation } from '../../redux/actionCreators/auth';
+import { setIsFormBottomSheetOpen } from '../../redux/actionCreators/modal';
+import { setIsPostBottomSheetOpen } from '../../redux/actionCreators/modal';
+import { selectPost } from '../../redux/actionCreators/selectItem';
 
 const Map = (props) => {
   const [region, setRegion] = useState(null);
@@ -51,9 +53,10 @@ const Map = (props) => {
   //   }
   // }, []);
 
-  const handleSheetChanges = (index) => {
+  const handleFormBottomSheetChanges = (index) => {
     if (!props.modal.formBottomSheet.isOpen) {
-      console.log('opeing');
+      props.setIsPostBottomSheetOpen(false);
+      postBottomSheetRef.current.close();
       props.setIsFormBottomSheetOpen(true);
       formBottomSheetRef.current?.snapToIndex(0);
       // console.log('handleSheetChanges', index);
@@ -65,7 +68,19 @@ const Map = (props) => {
     }
   };
 
-  const handlePostSheetChanges = () => {};
+  const handlePostBottomSheetChanges = (post) => {
+    if (!props.modal.postBottomSheet.isOpen) {
+      props.selectPost(post);
+      props.setIsFormBottomSheetOpen(false);
+      formBottomSheetRef.current.close();
+      props.setIsPostBottomSheetOpen(true);
+      postBottomSheetRef.current?.snapToIndex(0);
+    } else if (props.modal.postBottomSheet.isOpen) {
+      props.setIsPostBottomSheetOpen(false);
+      // bottomSheetRef.current?.snapToIndex(-1);
+      postBottomSheetRef.current.close();
+    }
+  };
 
   useEffect(() => {
     // (async () => {
@@ -167,7 +182,7 @@ const Map = (props) => {
             <Text>Log in</Text>
           </TouchableOpacity>
           <Text style={styles.text}>Hello</Text> */}
-            <MapMarkers />
+            <MapMarkers handlePostBottomSheetChanges={handlePostBottomSheetChanges} />
           </MapView>
           <View
             style={{
@@ -185,10 +200,10 @@ const Map = (props) => {
                 color: 'black',
                 size: 'md',
               }}
-              onPress={() => handleSheetChanges()}
+              onPress={() => handleFormBottomSheetChanges()}
             />
           </View>
-          <BottomSheet formBottomSheetRef={formBottomSheetRef} />
+          <FormBottomSheet formBottomSheetRef={formBottomSheetRef} />
           <PostBottomSheet postBottomSheetRef={postBottomSheetRef} />
         </View>
       </NBProvider>
@@ -232,4 +247,10 @@ const mapStateToProps = (state) => {
   return { modal: state.modal, auth: state.auth };
 };
 
-export default connect(mapStateToProps, { loadMe, setIsFormBottomSheetOpen, getCurrentLocation })(Map);
+export default connect(mapStateToProps, {
+  loadMe,
+  setIsFormBottomSheetOpen,
+  setIsPostBottomSheetOpen,
+  selectPost,
+  getCurrentLocation,
+})(Map);

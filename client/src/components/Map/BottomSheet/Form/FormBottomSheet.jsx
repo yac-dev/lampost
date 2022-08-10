@@ -6,11 +6,11 @@ import BS, { BottomSheetView, BottomSheetScrollView } from '@gorhom/bottom-sheet
 import { Picker } from '@react-native-picker/picker';
 
 // components
-import NativeBaseProvider from '../../Utils/NativeBaseProvider';
+import NativeBaseProvider from '../../../Utils/NativeBaseProvider';
 import Form from './Form';
 
 // ac
-import { setIsFormBottomSheetOpen } from '../../../redux/actionCreators/modal';
+import { setIsFormBottomSheetOpen } from '../../../../redux/actionCreators/modal';
 
 const FormBottomSheet = (props) => {
   // const bottomSheetRef = useRef(null);
