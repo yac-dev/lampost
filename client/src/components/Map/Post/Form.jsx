@@ -5,7 +5,7 @@ import { IconButton, Center, VStack, TextArea, Box, Button, Select, CheckIcon } 
 
 // components
 import Buttons from './Buttons';
-import NBProvider from '../../../Utils/NativeBaseProvider';
+import NBProvider from '../../Utils/NativeBaseProvider';
 
 const Form = () => {
   const [textAreaValue, setTextAreaValue] = useState('');

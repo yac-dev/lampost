@@ -24,23 +24,23 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 // components
 import NBProvider from '../Utils/NativeBaseProvider';
 import MapMarkers from './MapMarkers/MapMarkers';
-import FormBottomSheet from './BottomSheet/Form/FormBottomSheet';
-import PostBottomSheet from './BottomSheet/Post/PostBottomSheet';
+import PostBottomSheet from './Post/PostBottomSheet';
+// import PostBottomSheet from './BottomSheet/Post/PostBottomSheet';
 
 // ac
 import { countUp } from '../../redux/actionCreators/dummy';
 import { loadMe } from '../../redux/actionCreators/auth';
 import { getCurrentLocation } from '../../redux/actionCreators/auth';
-import { setIsFormBottomSheetOpen } from '../../redux/actionCreators/modal';
 import { setIsPostBottomSheetOpen } from '../../redux/actionCreators/modal';
+import { setIsSelectedItemBottomSheetOpen } from '../../redux/actionCreators/modal';
 import { selectPost } from '../../redux/actionCreators/selectItem';
 
 const Map = (props) => {
   const [region, setRegion] = useState(null);
   const [currentSnap, setCurrentSnap] = useState();
 
-  const formBottomSheetRef = useRef(null);
   const postBottomSheetRef = useRef(null);
+  const selectedItemBottomSheetRef = useRef(null);
   const mapRef = useRef(null);
   console.log('Map is rendered');
 
@@ -55,34 +55,34 @@ const Map = (props) => {
   //   }
   // }, []);
 
-  const handleFormBottomSheetChanges = (index) => {
-    if (!props.modal.formBottomSheet.isOpen) {
-      props.setIsPostBottomSheetOpen(false);
-      postBottomSheetRef.current.close();
-      props.setIsFormBottomSheetOpen(true);
-      formBottomSheetRef.current?.snapToIndex(0);
+  const handlePostBottomSheetChanges = (index) => {
+    if (!props.modal.postBottomSheet.isOpen) {
+      props.setIsSelectedItemBottomSheetOpen(false);
+      selectedItemBottomSheetRef.current?.close();
+      props.setIsPostBottomSheetOpen(true);
+      postBottomSheetRef.current?.snapToIndex(0);
       // console.log('handleSheetChanges', index);
-    } else if (props.modal.formBottomSheet.isOpen) {
+    } else if (props.modal.postBottomSheet.isOpen) {
       console.log('closing');
-      props.setIsFormBottomSheetOpen(false);
+      props.setIsPostBottomSheetOpen(false);
       // bottomSheetRef.current?.snapToIndex(-1);
-      formBottomSheetRef.current.close();
+      postBottomSheetRef.current.close();
     }
   };
 
-  const handlePostBottomSheetChanges = (post) => {
-    if (!props.modal.postBottomSheet.isOpen) {
-      props.selectPost(post);
-      props.setIsFormBottomSheetOpen(false);
-      formBottomSheetRef.current.close();
-      props.setIsPostBottomSheetOpen(true);
-      postBottomSheetRef.current?.snapToIndex(0);
-    } else if (props.modal.postBottomSheet.isOpen) {
-      props.setIsPostBottomSheetOpen(false);
-      // bottomSheetRef.current?.snapToIndex(-1);
-      postBottomSheetRef.current.close();
-    }
-  };
+  // const handlePostBottomSheetChanges = (post) => {
+  //   if (!props.modal.postBottomSheet.isOpen) {
+  //     props.selectPost(post);
+  //     props.setIsFormBottomSheetOpen(false);
+  //     formBottomSheetRef.current.close();
+  //     props.setIsPostBottomSheetOpen(true);
+  //     postBottomSheetRef.current?.snapToIndex(0);
+  //   } else if (props.modal.postBottomSheet.isOpen) {
+  //     props.setIsPostBottomSheetOpen(false);
+  //     // bottomSheetRef.current?.snapToIndex(-1);
+  //     postBottomSheetRef.current.close();
+  //   }
+  // };
 
   useEffect(() => {
     // (async () => {
@@ -105,11 +105,10 @@ const Map = (props) => {
 
   useEffect(() => {
     if (
-      props.modal.formBottomSheet.isOpen &&
+      props.modal.postBottomSheet.isOpen &&
       props.auth.currentLocation.latitude &&
       props.auth.currentLocation.longitude
     ) {
-      console.log(props.modal.formBottomSheet.isOpen);
       const newLat = props.auth.currentLocation.latitude - 0.027;
       console.log(newLat);
       mapRef.current.animateToRegion({
@@ -119,7 +118,7 @@ const Map = (props) => {
         longitudeDelta: 0.0421,
       });
     }
-  }, [props.modal.formBottomSheet.isOpen]);
+  }, [props.modal.postBottomSheet.isOpen]);
 
   return (
     <>
@@ -184,7 +183,8 @@ const Map = (props) => {
             <Text>Log in</Text>
           </TouchableOpacity>
           <Text style={styles.text}>Hello</Text> */}
-            <MapMarkers handlePostBottomSheetChanges={handlePostBottomSheetChanges} />
+            {/* <MapMarkers handlePostBottomSheetChanges={handlePostBottomSheetChanges} /> */}
+            <MapMarkers />
           </MapView>
           <View
             style={{
@@ -202,7 +202,7 @@ const Map = (props) => {
                 color: 'black',
                 size: 'md',
               }}
-              onPress={() => handleFormBottomSheetChanges()}
+              onPress={() => handlePostBottomSheetChanges()}
             />
           </View>
           <View
@@ -221,7 +221,7 @@ const Map = (props) => {
                 color: 'black',
                 size: 'md',
               }}
-              onPress={() => handleFormBottomSheetChanges()}
+              onPress={() => handlePostBottomSheetChanges()}
             />
           </View>
           <View
@@ -240,11 +240,11 @@ const Map = (props) => {
                 color: 'black',
                 size: 'md',
               }}
-              onPress={() => handleFormBottomSheetChanges()}
+              onPress={() => handlePostBottomSheetChanges()}
             />
           </View>
-          <FormBottomSheet formBottomSheetRef={formBottomSheetRef} />
           <PostBottomSheet postBottomSheetRef={postBottomSheetRef} />
+          {/* <PostBottomSheet postBottomSheetRef={postBottomSheetRef} /> */}
         </View>
       </NBProvider>
     </>
@@ -289,8 +289,8 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   loadMe,
-  setIsFormBottomSheetOpen,
   setIsPostBottomSheetOpen,
+  setIsSelectedItemBottomSheetOpen,
   selectPost,
   getCurrentLocation,
 })(Map);

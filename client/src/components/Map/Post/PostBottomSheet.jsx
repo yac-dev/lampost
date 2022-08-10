@@ -2,31 +2,31 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView, TextInput } from 'react-native';
-import BS, { BottomSheetView, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import GorhomBottomSheet, { BottomSheetView, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { Picker } from '@react-native-picker/picker';
 
 // components
-import NativeBaseProvider from '../../../Utils/NativeBaseProvider';
+// import NativeBaseProvider from '../../../Utils/NativeBaseProvider';
 import Form from './Form';
 
 // ac
-import { setIsFormBottomSheetOpen } from '../../../../redux/actionCreators/modal';
+import { setIsPostBottomSheetOpen } from '../../../redux/actionCreators/modal';
 
-const FormBottomSheet = (props) => {
+const PostBottomSheet = (props) => {
   // const bottomSheetRef = useRef(null);
   const snapPoints = ['80%'];
 
   const onFormBottomSheetClose = () => {
-    if (props.modal.formBottomSheet.isOpen) {
-      props.setIsFormBottomSheetOpen(false);
+    if (props.modal.postBottomSheet.isOpen) {
+      props.setIsPostBottomSheetOpen(false);
     }
   };
 
   return (
-    <BS
+    <GorhomBottomSheet
       index={-1}
       enableOverDrag={true}
-      ref={props.formBottomSheetRef}
+      ref={props.postBottomSheetRef}
       snapPoints={snapPoints}
       enablePanDownToClose={true}
       onClose={() => onFormBottomSheetClose()}
@@ -34,7 +34,7 @@ const FormBottomSheet = (props) => {
       <BottomSheetView>
         <Form />
       </BottomSheetView>
-    </BS>
+    </GorhomBottomSheet>
   );
 };
 
@@ -42,4 +42,4 @@ const mapStateToProps = (state) => {
   return { modal: state.modal };
 };
 
-export default connect(mapStateToProps, { setIsFormBottomSheetOpen })(FormBottomSheet);
+export default connect(mapStateToProps, { setIsPostBottomSheetOpen })(PostBottomSheet);
