@@ -40,7 +40,7 @@ const MapMarkers = (props) => {
           <View key={post._id}>
             <Marker
               coordinate={{ latitude: post.place.coordinates[1], longitude: post.place.coordinates[0] }}
-              onPress={() => props.handlePostBottomSheetChanges(post)}
+              onPress={() => props.handleSelectedItemBottomSheetChanges(post)}
             >
               <Callout>
                 <Text>Yessssss</Text>

@@ -25,7 +25,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import NBProvider from '../Utils/NativeBaseProvider';
 import MapMarkers from './MapMarkers/MapMarkers';
 import PostBottomSheet from './Post/PostBottomSheet';
-// import PostBottomSheet from './BottomSheet/Post/PostBottomSheet';
+import SelectedItemBottomSheet from './SelectedItem/SelectedItemBottomSheet';
 
 // ac
 import { countUp } from '../../redux/actionCreators/dummy';
@@ -70,19 +70,19 @@ const Map = (props) => {
     }
   };
 
-  // const handlePostBottomSheetChanges = (post) => {
-  //   if (!props.modal.postBottomSheet.isOpen) {
-  //     props.selectPost(post);
-  //     props.setIsFormBottomSheetOpen(false);
-  //     formBottomSheetRef.current.close();
-  //     props.setIsPostBottomSheetOpen(true);
-  //     postBottomSheetRef.current?.snapToIndex(0);
-  //   } else if (props.modal.postBottomSheet.isOpen) {
-  //     props.setIsPostBottomSheetOpen(false);
-  //     // bottomSheetRef.current?.snapToIndex(-1);
-  //     postBottomSheetRef.current.close();
-  //   }
-  // };
+  const handleSelectedItemBottomSheetChanges = (post) => {
+    if (!props.modal.selectedItemBottomSheet.isOpen) {
+      props.selectPost(post);
+      props.setIsPostBottomSheetOpen(false);
+      postBottomSheetRef.current?.close();
+      props.setIsSelectedItemBottomSheetOpen(true);
+      selectedItemBottomSheetRef.current?.snapToIndex(0);
+    } else if (props.modal.selectedItemBottomSheet.isOpen) {
+      props.setIsSelectedItemBottomSheetOpen(false);
+      // bottomSheetRef.current?.snapToIndex(-1);
+      selectedItemBottomSheetRef.current.close();
+    }
+  };
 
   useEffect(() => {
     // (async () => {
@@ -183,8 +183,8 @@ const Map = (props) => {
             <Text>Log in</Text>
           </TouchableOpacity>
           <Text style={styles.text}>Hello</Text> */}
-            {/* <MapMarkers handlePostBottomSheetChanges={handlePostBottomSheetChanges} /> */}
-            <MapMarkers />
+            <MapMarkers handleSelectedItemBottomSheetChanges={handleSelectedItemBottomSheetChanges} />
+            {/* <MapMarkers /> */}
           </MapView>
           <View
             style={{
@@ -244,6 +244,7 @@ const Map = (props) => {
             />
           </View>
           <PostBottomSheet postBottomSheetRef={postBottomSheetRef} />
+          <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} />
           {/* <PostBottomSheet postBottomSheetRef={postBottomSheetRef} /> */}
         </View>
       </NBProvider>

@@ -6,9 +6,9 @@ import { View, Text } from 'react-native';
 // ac
 
 // utils
-import { timeSince } from '../../../../utils/timeSince';
+import { timeSince } from '../../../utils/timeSince';
 
-const Post = (props) => {
+const SelectedItem = (props) => {
   if (props.selectedItem.post) {
     return (
       <View>
@@ -27,4 +27,4 @@ const mapStateToProps = (state) => {
   return { selectedItem: state.selectedItem };
 };
 
-export default connect(mapStateToProps)(Post);
+export default connect(mapStateToProps)(SelectedItem);

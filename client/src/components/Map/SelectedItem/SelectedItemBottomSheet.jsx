@@ -5,17 +5,17 @@ import { View, Text } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 // components
-import Post from './Post';
+import SelectedItem from './SelectedItem';
 
 // ac
-import { setIsPostBottomSheetOpen } from '../../../../redux/actionCreators/modal';
+import { setIsSelectedItemBottomSheetOpen } from '../../../redux/actionCreators/modal';
 
-const BottomSheet = (props) => {
+const SelectedItemBottomSheet = (props) => {
   const snapPoints = ['50%'];
 
-  const onPostBottomSheetClose = () => {
-    if (props.modal.postBottomSheet.isOpen) {
-      props.setIsPostBottomSheetOpen(false);
+  const onSelectedItemBottomSheetClose = () => {
+    if (props.modal.selectedItemBottomSheet.isOpen) {
+      props.setIsSelectedItemBottomSheetOpen(false);
     }
   };
 
@@ -23,13 +23,13 @@ const BottomSheet = (props) => {
     <GorhomBottomSheet
       index={-1}
       enableOverDrag={true}
-      ref={props.postBottomSheetRef}
+      ref={props.selectedItemBottomSheetRef}
       snapPoints={snapPoints}
       enablePanDownToClose={true}
-      onClose={() => onPostBottomSheetClose()}
+      onClose={() => onSelectedItemBottomSheetClose()}
     >
       <BottomSheetView>
-        <Post />
+        <SelectedItem />
       </BottomSheetView>
     </GorhomBottomSheet>
   );
@@ -39,4 +39,4 @@ const mapStateToProps = (state) => {
   return { modal: state.modal };
 };
 
-export default connect(mapStateToProps, { setIsPostBottomSheetOpen })(BottomSheet);
+export default connect(mapStateToProps, { setIsSelectedItemBottomSheetOpen })(SelectedItemBottomSheet);
