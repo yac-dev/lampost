@@ -10,6 +10,7 @@ export const createPost = async (request, response) => {
       limit,
       user: userId,
       place,
+      createdAt: new Date(),
     });
     if (pics) {
       post.pics = pics;

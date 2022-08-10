@@ -18,6 +18,8 @@ import { IconButton, Center, VStack, NativeBaseProvider, TextArea, Box, Button, 
 import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // components
 import NBProvider from '../Utils/NativeBaseProvider';
@@ -188,13 +190,51 @@ const Map = (props) => {
             style={{
               position: 'absolute',
               right: (Dimensions.get('window').width / 100) * 5,
+              top: (Dimensions.get('window').height / 100) * 8,
+              // borderRadius: 50,
+            }}
+          >
+            <IconButton
+              style={{ backgroundColor: 'white' }}
+              icon={<Icon as={AntDesign} name='plus' />}
+              borderRadius='full'
+              _icon={{
+                color: 'black',
+                size: 'md',
+              }}
+              onPress={() => handleFormBottomSheetChanges()}
+            />
+          </View>
+          <View
+            style={{
+              position: 'absolute',
+              right: (Dimensions.get('window').width / 100) * 5,
               top: (Dimensions.get('window').height / 100) * 15,
               // borderRadius: 50,
             }}
           >
             <IconButton
               style={{ backgroundColor: 'white' }}
-              icon={<Icon as={Entypo} name='keyboard' />}
+              icon={<Icon as={MaterialCommunityIcons} name='party-popper' />}
+              borderRadius='full'
+              _icon={{
+                color: 'black',
+                size: 'md',
+              }}
+              onPress={() => handleFormBottomSheetChanges()}
+            />
+          </View>
+          <View
+            style={{
+              position: 'absolute',
+              right: (Dimensions.get('window').width / 100) * 5,
+              top: (Dimensions.get('window').height / 100) * 22,
+              // borderRadius: 50,
+            }}
+          >
+            <IconButton
+              style={{ backgroundColor: 'white' }}
+              icon={<Icon as={MaterialIcons} name='live-tv' />}
               borderRadius='full'
               _icon={{
                 color: 'black',
