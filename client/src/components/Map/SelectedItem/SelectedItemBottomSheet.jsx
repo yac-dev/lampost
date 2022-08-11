@@ -8,13 +8,13 @@ import GorhomBottomSheet, { BottomSheetView, BottomSheetScrollView } from '@gorh
 import SelectedItem from './SelectedItem';
 
 // ac
-import { setIsSelectedItemBottomSheetOpen } from '../../../redux/actionCreators/modal';
+import { setIsSelectedItemBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
 
 const SelectedItemBottomSheet = (props) => {
   const snapPoints = ['50%'];
 
   const onSelectedItemBottomSheetClose = () => {
-    if (props.modal.selectedItemBottomSheet.isOpen) {
+    if (props.bottomSheet.selectedItem.isOpen) {
       props.setIsSelectedItemBottomSheetOpen(false);
     }
   };
@@ -36,7 +36,7 @@ const SelectedItemBottomSheet = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { modal: state.modal };
+  return { bottomSheet: state.bottomSheet };
 };
 
 export default connect(mapStateToProps, { setIsSelectedItemBottomSheetOpen })(SelectedItemBottomSheet);

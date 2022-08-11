@@ -31,8 +31,8 @@ import SelectedItemBottomSheet from './SelectedItem/SelectedItemBottomSheet';
 import { countUp } from '../../redux/actionCreators/dummy';
 import { loadMe } from '../../redux/actionCreators/auth';
 import { getCurrentLocation } from '../../redux/actionCreators/auth';
-import { setIsPostBottomSheetOpen } from '../../redux/actionCreators/modal';
-import { setIsSelectedItemBottomSheetOpen } from '../../redux/actionCreators/modal';
+import { setIsPostBottomSheetOpen } from '../../redux/actionCreators/bottomSheet';
+import { setIsSelectedItemBottomSheetOpen } from '../../redux/actionCreators/bottomSheet';
 import { selectPost } from '../../redux/actionCreators/selectItem';
 
 const Map = (props) => {
@@ -56,13 +56,13 @@ const Map = (props) => {
   // }, []);
 
   const handlePostBottomSheetChanges = (index) => {
-    if (!props.modal.postBottomSheet.isOpen) {
+    if (!props.bottomSheet.post.isOpen) {
       props.setIsSelectedItemBottomSheetOpen(false);
       selectedItemBottomSheetRef.current?.close();
       props.setIsPostBottomSheetOpen(true);
       postBottomSheetRef.current?.snapToIndex(0);
       // console.log('handleSheetChanges', index);
-    } else if (props.modal.postBottomSheet.isOpen) {
+    } else if (props.bottomSheet.post.isOpen) {
       console.log('closing');
       props.setIsPostBottomSheetOpen(false);
       // bottomSheetRef.current?.snapToIndex(-1);
@@ -71,13 +71,13 @@ const Map = (props) => {
   };
 
   const handleSelectedItemBottomSheetChanges = (post) => {
-    if (!props.modal.selectedItemBottomSheet.isOpen) {
+    if (!props.bottomSheet.selectedItem.isOpen) {
       props.selectPost(post);
       props.setIsPostBottomSheetOpen(false);
       postBottomSheetRef.current?.close();
       props.setIsSelectedItemBottomSheetOpen(true);
       selectedItemBottomSheetRef.current?.snapToIndex(0);
-    } else if (props.modal.selectedItemBottomSheet.isOpen) {
+    } else if (props.bottomSheet.selectedItem.isOpen) {
       props.setIsSelectedItemBottomSheetOpen(false);
       // bottomSheetRef.current?.snapToIndex(-1);
       selectedItemBottomSheetRef.current.close();
@@ -104,11 +104,7 @@ const Map = (props) => {
   }, []);
 
   useEffect(() => {
-    if (
-      props.modal.postBottomSheet.isOpen &&
-      props.auth.currentLocation.latitude &&
-      props.auth.currentLocation.longitude
-    ) {
+    if (props.bottomSheet.post.isOpen && props.auth.currentLocation.latitude && props.auth.currentLocation.longitude) {
       const newLat = props.auth.currentLocation.latitude - 0.027;
       console.log(newLat);
       mapRef.current.animateToRegion({
@@ -118,7 +114,7 @@ const Map = (props) => {
         longitudeDelta: 0.0421,
       });
     }
-  }, [props.modal.postBottomSheet.isOpen]);
+  }, [props.bottomSheet.post.isOpen]);
 
   return (
     <>
@@ -286,7 +282,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  return { modal: state.modal, auth: state.auth };
+  return { bottomSheet: state.bottomSheet, auth: state.auth };
 };
 
 export default connect(mapStateToProps, {

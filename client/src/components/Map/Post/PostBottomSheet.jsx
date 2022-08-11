@@ -10,14 +10,14 @@ import { Picker } from '@react-native-picker/picker';
 import Form from './Form';
 
 // ac
-import { setIsPostBottomSheetOpen } from '../../../redux/actionCreators/modal';
+import { setIsPostBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
 
 const PostBottomSheet = (props) => {
   // const bottomSheetRef = useRef(null);
   const snapPoints = ['70%'];
 
   const onFormBottomSheetClose = () => {
-    if (props.modal.postBottomSheet.isOpen) {
+    if (props.bottomSheet.post.isOpen) {
       props.setIsPostBottomSheetOpen(false);
     }
   };
@@ -39,7 +39,7 @@ const PostBottomSheet = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { modal: state.modal };
+  return { bottomSheet: state.bottomSheet };
 };
 
 export default connect(mapStateToProps, { setIsPostBottomSheetOpen })(PostBottomSheet);
