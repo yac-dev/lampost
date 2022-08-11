@@ -14,7 +14,7 @@ import { setIsPostBottomSheetOpen } from '../../../redux/actionCreators/modal';
 
 const PostBottomSheet = (props) => {
   // const bottomSheetRef = useRef(null);
-  const snapPoints = ['80%'];
+  const snapPoints = ['70%'];
 
   const onFormBottomSheetClose = () => {
     if (props.modal.postBottomSheet.isOpen) {

@@ -236,6 +236,7 @@ const Map = (props) => {
               style={{ backgroundColor: 'white' }}
               icon={<Icon as={MaterialIcons} name='live-tv' />}
               borderRadius='full'
+              isDisabled
               _icon={{
                 color: 'black',
                 size: 'md',

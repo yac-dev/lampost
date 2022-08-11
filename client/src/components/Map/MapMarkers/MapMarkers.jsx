@@ -34,7 +34,6 @@ const MapMarkers = (props) => {
   // flatlistsなんで動かねーんだろ。
   const render = () => {
     if (props.posts.length) {
-      console.log(props.posts);
       const li = props.posts.map((post) => {
         return (
           <View key={post._id}>
