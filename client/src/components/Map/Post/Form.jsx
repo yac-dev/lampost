@@ -7,8 +7,8 @@ import { IconButton, Center, VStack, TextArea, Box, Button, Select, CheckIcon } 
 // components
 import Buttons from './Buttons';
 import NBProvider from '../../Utils/NativeBaseProvider';
-import NativeBaseModal from '../../Utils/NativeBaseModal';
-
+// import NativeBaseModal from '../../Utils/NativeBaseModal';
+import BaseModal from '../../Utils/BaseModal';
 // ac
 import { setIsSelectGenreModalOpen } from '../../../redux/actionCreators/modal';
 import { setIsSelectLimitHourModalOpen } from '../../../redux/actionCreators/modal';
@@ -27,18 +27,18 @@ const Form = (props) => {
     props.setIsSelectLimitHourModalOpen(false);
   };
 
-  const renderModal = () => {
-    if (props.modal.selectGenre.isOpen) {
-      return (
-        <NativeBaseModal
-          modalOpen={props.modal.selectGenre.isOpen}
-          title='Post genre'
-          description='What are you gonna post about?'
-          onClose={onSelectGenreModalClose}
-        />
-      );
-    }
-  };
+  // const renderModal = () => {
+  //   if (props.modal.selectGenre.isOpen) {
+  //     return (
+  //       <NativeBaseModal
+  //         modalOpen={props.modal.selectGenre.isOpen}
+  //         title='Post genre'
+  //         description='What are you gonna post about?'
+  //         onClose={onSelectGenreModalClose}
+  //       />
+  //     );
+  //   }
+  // };
 
   return (
     <ScrollView>
@@ -63,7 +63,8 @@ const Form = (props) => {
       <TouchableOpacity style={styles.genre}>
         <Text style={styles.text}>Post</Text>
       </TouchableOpacity>
-      {renderModal()}
+      {/* {renderModal()} */}
+      <BaseModal modalOpen={props.modal.selectGenre.isOpen} />
 
       {/* <NativeBaseModal
         modalOpen={props.modal.selectGenre.isOpen}

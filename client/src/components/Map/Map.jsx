@@ -26,6 +26,7 @@ import NBProvider from '../Utils/NativeBaseProvider';
 import MapMarkers from './MapMarkers/MapMarkers';
 import PostBottomSheet from './Post/PostBottomSheet';
 import SelectedItemBottomSheet from './SelectedItem/SelectedItemBottomSheet';
+import BaseModal from '../Utils/BaseModal';
 
 // ac
 import { countUp } from '../../redux/actionCreators/dummy';
