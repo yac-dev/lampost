@@ -258,14 +258,14 @@ const Map = (props) => {
                   },
                   {
                     icon: 'video',
-                    label: 'Live',
+                    label: 'Street Live',
                     onPress: () => console.log('Presse Live'),
                   },
-                  {
-                    icon: 'music',
-                    label: 'Shared music',
-                    onPress: () => console.log('Presse Live'),
-                  },
+                  // {
+                  //   icon: 'music',
+                  //   label: 'Shared music',
+                  //   onPress: () => console.log('Presse Live'),
+                  // },
                 ]}
                 onStateChange={onStateChange}
                 onPress={() => {
