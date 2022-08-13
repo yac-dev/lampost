@@ -4,6 +4,7 @@ import postsReducer from './posts';
 import selectedItemReducer from './selectedItem';
 import bottomSheetReducer from './bottomSheet';
 import modalReducer from './modal';
+import dialogReducer from './dialog';
 // import dummy from './dummy';
 
 const rootReducer = combineReducers({
@@ -12,5 +13,6 @@ const rootReducer = combineReducers({
   posts: postsReducer,
   selectedItem: selectedItemReducer,
   modal: modalReducer,
+  dialog: dialogReducer,
 });
 export default rootReducer;

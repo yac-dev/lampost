@@ -27,7 +27,7 @@ import NBProvider from '../Utils/NativeBaseProvider';
 import MapMarkers from './MapMarkers/MapMarkers';
 import PostBottomSheet from './Post/PostBottomSheet';
 import SelectedItemBottomSheet from './SelectedItem/SelectedItemBottomSheet';
-import BaseModal from '../Utils/BaseModal';
+import RNPDialog from '../Utils/RNPDialog';
 
 // ac
 import { countUp } from '../../redux/actionCreators/dummy';
@@ -36,6 +36,7 @@ import { getCurrentLocation } from '../../redux/actionCreators/auth';
 import { setIsPostBottomSheetOpen } from '../../redux/actionCreators/bottomSheet';
 import { setIsSelectedItemBottomSheetOpen } from '../../redux/actionCreators/bottomSheet';
 import { selectPost } from '../../redux/actionCreators/selectItem';
+import { confirmCreateMeetup } from '../../redux/actionCreators/dialog';
 
 const Map = (props) => {
   const [region, setRegion] = useState(null);
@@ -47,6 +48,7 @@ const Map = (props) => {
   console.log('Map is rendered');
 
   const [state, setState] = React.useState({ open: false });
+  const [tapped, setTapped] = useState(null);
 
   const onStateChange = ({ open }) => setState({ open });
 
@@ -86,14 +88,6 @@ const Map = (props) => {
         },
       ],
     },
-    // {
-    //   featureType: 'administrative.neighborhood',
-    //   stylers: [
-    //     {
-    //       visibility: 'on',
-    //     },
-    //   ],
-    // },
   ];
 
   // const handleSheetChanges = useCallback((index) => {
@@ -136,6 +130,14 @@ const Map = (props) => {
     }
   };
 
+  const renderTapped = () => {
+    if (tapped) {
+      return <Marker coordinate={{ latitude: tapped.latitude, longitude: tapped.longitude }} />;
+    } else {
+      return null;
+    }
+  };
+
   useEffect(() => {
     // (async () => {
     //   let { status } = await Location.requestForegroundPermissionsAsync();
@@ -154,6 +156,8 @@ const Map = (props) => {
     // })();
     props.getCurrentLocation();
   }, []);
+
+  // tappingMeetupの時だけね。
 
   useEffect(() => {
     if (props.bottomSheet.post.isOpen && props.auth.currentLocation.latitude && props.auth.currentLocation.longitude) {
@@ -182,6 +186,7 @@ const Map = (props) => {
             showsCompass={true}
             scrollEnabled={true}
             zoomEnabled={true}
+            onPress={(event) => setTapped(event.nativeEvent.coordinate)}
             // initial regionっていうのは、最初に地図がloadされたときに画面の中心にどのlatitudeとlongitudeを映すかって言うことね。
             initialRegion={{
               latitude: 37.78825,
@@ -191,49 +196,8 @@ const Map = (props) => {
             }}
             provider='google'
           >
-            {/* <TouchableOpacity
-              style={{ position: 'absolute', right: 20, top: 100 }}
-              onPress={() => handleSheetChanges(0)} //  ここで、bottom sheetを出すようにすればいいや。
-            >
-              <Text>Post to press</Text>
-            </TouchableOpacity> */}
-            {/* <Button
-            title='Log in'
-            loading={false}
-            loadingProps={{ size: 'small', color: 'white' }}
-            buttonStyle={{
-              backgroundColor: 'rgba(111, 202, 186, 1)',
-              borderRadius: 5,
-            }}
-            containerStyle={{
-              marginHorizontal: 50,
-              height: 50,
-              width: 200,
-              marginVertical: 10,
-            }}
-            onPress={() => {
-              props.navigation.navigate('Post', { name: 'Jane' });
-            }}
-          /> */}
-            {/* <Button icon={<Icon name='mail' size={50} type='entypo' color='white' />} iconRight style={styles.button} /> */}
-
-            {/* <TouchableOpacity
-            style={{ position: 'absolute', right: 20, top: 85, zIndex: 10 }}
-            onPress={() => props.navigation.navigate('SignUp')}
-          >
-            <Icon color='#f50' name='login' />
-            <Text>Sign up</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ position: 'absolute', right: 20, top: 100, zIndex: 10 }}
-            onPress={() => props.navigation.navigate('LogIn')}
-            onPress={() => props.countUp()}
-          >
-            <Text>Log in</Text>
-          </TouchableOpacity>
-          <Text style={styles.text}>Hello</Text> */}
             <MapMarkers handleSelectedItemBottomSheetChanges={handleSelectedItemBottomSheetChanges} />
-            {/* <MapMarkers /> */}
+            {renderTapped()}
           </MapView>
           <Provider>
             <Portal>
@@ -254,18 +218,13 @@ const Map = (props) => {
                   {
                     icon: 'account-group',
                     label: 'Hold Meetup',
-                    onPress: () => console.log('Pressed notifications'),
+                    onPress: () => props.confirmCreateMeetup(true),
                   },
                   {
                     icon: 'video',
-                    label: 'Street Live',
-                    onPress: () => console.log('Presse Live'),
+                    label: 'Start Live',
+                    onPress: () => console.log('Live'),
                   },
-                  // {
-                  //   icon: 'music',
-                  //   label: 'Shared music',
-                  //   onPress: () => console.log('Presse Live'),
-                  // },
                 ]}
                 onStateChange={onStateChange}
                 onPress={() => {
@@ -276,66 +235,16 @@ const Map = (props) => {
               />
             </Portal>
           </Provider>
-          {/* <View
-            style={{
-              position: 'absolute',
-              right: (Dimensions.get('window').width / 100) * 5,
-              top: (Dimensions.get('window').height / 100) * 8,
-              // borderRadius: 50,
-            }}
-          >
-            <IconButton
-              style={{ backgroundColor: 'white' }}
-              icon={<Icon as={AntDesign} name='plus' />}
-              borderRadius='full'
-              _icon={{
-                color: 'black',
-                size: 'md',
-              }}
-              onPress={() => handlePostBottomSheetChanges()}
-            />
-          </View>
-          <View
-            style={{
-              position: 'absolute',
-              right: (Dimensions.get('window').width / 100) * 5,
-              top: (Dimensions.get('window').height / 100) * 15,
-              // borderRadius: 50,
-            }}
-          >
-            <IconButton
-              style={{ backgroundColor: 'white' }}
-              icon={<Icon as={MaterialCommunityIcons} name='party-popper' />}
-              borderRadius='full'
-              _icon={{
-                color: 'black',
-                size: 'md',
-              }}
-              onPress={() => handlePostBottomSheetChanges()}
-            />
-          </View>
-          <View
-            style={{
-              position: 'absolute',
-              right: (Dimensions.get('window').width / 100) * 5,
-              top: (Dimensions.get('window').height / 100) * 22,
-              // borderRadius: 50,
-            }}
-          >
-            <IconButton
-              style={{ backgroundColor: 'white' }}
-              icon={<Icon as={MaterialIcons} name='live-tv' />}
-              borderRadius='full'
-              isDisabled
-              _icon={{
-                color: 'black',
-                size: 'md',
-              }}
-              onPress={() => handlePostBottomSheetChanges()}
-            />
-          </View> */}
           <PostBottomSheet postBottomSheetRef={postBottomSheetRef} />
           <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} />
+          <RNPDialog
+            openDialogOf={props.dialog.confirmCreateMeetup.isOpen}
+            title='Please tap the location where you wanna hold your meetup!'
+          >
+            <View>
+              <Text>Heeey!</Text>
+            </View>
+          </RNPDialog>
           {/* <PostBottomSheet postBottomSheetRef={postBottomSheetRef} /> */}
         </View>
       </NBProvider>
@@ -376,7 +285,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  return { bottomSheet: state.bottomSheet, auth: state.auth };
+  return { bottomSheet: state.bottomSheet, auth: state.auth, dialog: state.dialog };
 };
 
 export default connect(mapStateToProps, {
@@ -385,4 +294,5 @@ export default connect(mapStateToProps, {
   setIsSelectedItemBottomSheetOpen,
   selectPost,
   getCurrentLocation,
+  confirmCreateMeetup,
 })(Map);

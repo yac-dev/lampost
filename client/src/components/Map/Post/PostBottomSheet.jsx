@@ -3,7 +3,6 @@ import React, { useState, useRef, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView, TextInput } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { Picker } from '@react-native-picker/picker';
 
 // components
 // import NativeBaseProvider from '../../../Utils/NativeBaseProvider';
