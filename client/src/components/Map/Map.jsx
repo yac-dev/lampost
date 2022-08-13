@@ -238,7 +238,7 @@ const Map = (props) => {
           <PostBottomSheet postBottomSheetRef={postBottomSheetRef} />
           <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} />
           <RNPDialog
-            openDialogOf={props.dialog.confirmCreateMeetup.isOpen}
+            dialogState={props.dialog.confirmCreateMeetup.isOpen}
             title='Please tap the location where you wanna hold your meetup!'
           >
             <View>

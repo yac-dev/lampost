@@ -11,7 +11,7 @@ const BottomSheet = () => {
   const snapPoints = ['20%', '70%'];
   return (
     <GorhomBottomSheet
-      index={-1}
+      index={1}
       enableOverDrag={true}
       ref={props.postBottomSheetRef}
       snapPoints={snapPoints}

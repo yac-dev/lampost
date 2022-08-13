@@ -7,7 +7,7 @@ const BaseRNPModal = (props) => {
   return (
     <Provider>
       <Portal>
-        <Dialog visible={props.openDialogOf} onDismiss={() => props.onCloseModal()}>
+        <Dialog visible={props.dialogState} onDismiss={() => props.onCloseModal()}>
           <Dialog.Title>{props.title}</Dialog.Title>
           <Dialog.Content>{props.children}</Dialog.Content>
           <Dialog.Actions>

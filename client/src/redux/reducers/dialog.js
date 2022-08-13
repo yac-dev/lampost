@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 const dialogReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case 'CONFIRM_CREATE_MEETUP':
-      return { ...state, confirmCreateMeetup: { isOpen: true } };
+      return { ...state, confirmationOfCreateMeetup: { isOpen: true } };
     default:
       return { ...state };
   }
