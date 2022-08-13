@@ -15,6 +15,7 @@ import {
 import MapView, { Callout, Marker, Circle } from 'react-native-maps';
 
 import { IconButton, Center, VStack, NativeBaseProvider, TextArea, Box, Button, Stack, Fab, Icon } from 'native-base';
+import { FAB, Portal, Provider } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -44,6 +45,12 @@ const Map = (props) => {
   const selectedItemBottomSheetRef = useRef(null);
   const mapRef = useRef(null);
   console.log('Map is rendered');
+
+  const [state, setState] = React.useState({ open: false });
+
+  const onStateChange = ({ open }) => setState({ open });
+
+  const { open } = state;
 
   const mapStyle = [
     {
@@ -228,7 +235,48 @@ const Map = (props) => {
             <MapMarkers handleSelectedItemBottomSheetChanges={handleSelectedItemBottomSheetChanges} />
             {/* <MapMarkers /> */}
           </MapView>
-          <View
+          <Provider>
+            <Portal>
+              <FAB.Group
+                open={open}
+                icon={open ? 'chevron-up' : 'apps'}
+                actions={[
+                  {
+                    icon: 'plus',
+                    label: 'Post',
+                    onPress: () => handlePostBottomSheetChanges(),
+                  },
+                  {
+                    icon: 'head-question',
+                    label: 'Ask',
+                    onPress: () => console.log('Pressed email'),
+                  },
+                  {
+                    icon: 'account-group',
+                    label: 'Hold Meetup',
+                    onPress: () => console.log('Pressed notifications'),
+                  },
+                  {
+                    icon: 'video',
+                    label: 'Live',
+                    onPress: () => console.log('Presse Live'),
+                  },
+                  {
+                    icon: 'music',
+                    label: 'Shared music',
+                    onPress: () => console.log('Presse Live'),
+                  },
+                ]}
+                onStateChange={onStateChange}
+                onPress={() => {
+                  if (open) {
+                    // do something if the speed dial is open
+                  }
+                }}
+              />
+            </Portal>
+          </Provider>
+          {/* <View
             style={{
               position: 'absolute',
               right: (Dimensions.get('window').width / 100) * 5,
@@ -285,7 +333,7 @@ const Map = (props) => {
               }}
               onPress={() => handlePostBottomSheetChanges()}
             />
-          </View>
+          </View> */}
           <PostBottomSheet postBottomSheetRef={postBottomSheetRef} />
           <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} />
           {/* <PostBottomSheet postBottomSheetRef={postBottomSheetRef} /> */}

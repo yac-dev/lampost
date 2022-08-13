@@ -6,6 +6,7 @@ import { StyleSheet, Text, View, StatusBar, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';
+import { Provider as PaperProvider } from 'react-native-paper';
 import store from './src/redux/store';
 import * as SecureStore from 'expo-secure-store';
 
@@ -36,22 +37,24 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <StatusBar hidden={false} translucent={true} />
-      {/* <NavigationContainer> */}
-      {/* <Stack.Navigator>
+      <PaperProvider>
+        <StatusBar hidden={false} translucent={true} />
+        {/* <NavigationContainer> */}
+        {/* <Stack.Navigator>
           <Stack.Screen name='Map' component={Map} options={{ headerShown: false }} />
           <Stack.Screen name='Post' component={Post} options={{ headerShown: false }} />
           <Stack.Screen name='SignUp' component={SignUp} options={{ headerShown: false }} />
           <Stack.Screen name='LogIn' component={LogIn} options={{ headerShown: false }} />
         </Stack.Navigator> */}
-      {/* <BottomTabs /> */}
-      {/* <Stack.Navigator>
+        {/* <BottomTabs /> */}
+        {/* <Stack.Navigator>
           <Stack.Screen name='SignUp' component={SignUp} />
           <Stack.Screen name='LogIn' component={LogIn} />
 
         </Stack.Navigator> */}
-      {/* </NavigationContainer> */}
-      <AppStack />
+        {/* </NavigationContainer> */}
+        <AppStack />
+      </PaperProvider>
     </Provider>
   );
 };
