@@ -11,10 +11,9 @@ const postSchema = new mongoose.Schema({
       ref: 'Pic',
     },
   ],
-  genre: {
-    // type: mongoose.Schema.ObjectId,
-    // ref: 'Genre',
-    type: String,
+  type: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'PostType',
   },
   limit: {
     type: Number,
@@ -22,6 +21,13 @@ const postSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
+  },
+  views: {
+    type: Number,
+    default: 0,
+  },
+  isPublic: {
+    type: Boolean,
   },
   place: {
     type: {

@@ -32,7 +32,7 @@ const PostBottomSheet = (props) => {
       onClose={() => onFormBottomSheetClose()}
     >
       <BottomSheetView>
-        <Form />
+        <Form postBottomSheetRef={props.postBottomSheetRef} />
       </BottomSheetView>
     </GorhomBottomSheet>
   );

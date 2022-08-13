@@ -8,6 +8,8 @@ const postsReducer = (state = INITIAL_STATE, action) => {
         posts[post._id] = post;
       });
       return { ...state, ...posts };
+    case 'CREATE_POST':
+      return { ...state, [action.payload._id]: action.payload };
     default:
       return { ...state };
   }

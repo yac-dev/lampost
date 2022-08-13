@@ -45,6 +45,50 @@ const Map = (props) => {
   const mapRef = useRef(null);
   console.log('Map is rendered');
 
+  const mapStyle = [
+    {
+      elementType: 'labels',
+      stylers: [
+        {
+          visibility: 'off',
+        },
+      ],
+    },
+
+    {
+      featureType: 'administrative.country',
+      stylers: [
+        {
+          visibility: 'on',
+        },
+      ],
+    },
+    {
+      featureType: 'administrative.province',
+      stylers: [
+        {
+          visibility: 'on',
+        },
+      ],
+    },
+    {
+      featureType: 'administrative.locality',
+      stylers: [
+        {
+          visibility: 'on',
+        },
+      ],
+    },
+    // {
+    //   featureType: 'administrative.neighborhood',
+    //   stylers: [
+    //     {
+    //       visibility: 'on',
+    //     },
+    //   ],
+    // },
+  ];
+
   // const handleSheetChanges = useCallback((index) => {
   //   if (!props.modal.bottomSheet.isOpen) {
   //     props.setIsBottomSheetOpen(true);
@@ -125,6 +169,7 @@ const Map = (props) => {
             ref={mapRef}
             style={styles.map}
             showsUserLocation={true}
+            customMapStyle={mapStyle}
             // showsMyLocationButton={true}
             followsUserLocation={true}
             showsCompass={true}

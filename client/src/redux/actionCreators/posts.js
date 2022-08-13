@@ -12,3 +12,16 @@ export const getPosts = () => async (dispatch, getState) => {
     console.log(error);
   }
 };
+
+export const createPost = (formData) => async (dispatch, getState) => {
+  try {
+    const result = await lampostAPI.post('/posts', formData);
+    const { post } = result.data;
+    dispatch({
+      type: 'CREATE_POST',
+      payload: post,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

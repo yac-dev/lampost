@@ -2,14 +2,15 @@ import Post from '../models/post';
 
 export const createPost = async (request, response) => {
   try {
-    const { content, genre, pics, limit, userId, place } = request.body;
+    const { content, postType, pics, userId, place } = request.body;
     const post = new Post({
       content,
       pics,
-      genre,
-      limit,
+      type: postType,
+      // limit,
       user: userId,
       place,
+      isPublic: true,
       createdAt: new Date(),
     });
     if (pics) {
