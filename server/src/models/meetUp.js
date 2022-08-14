@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const meetUpSchema = new mongoose.Schema({
+const meetupSchema = new mongoose.Schema({
   title: {
     type: String,
   },
@@ -11,17 +11,16 @@ const meetUpSchema = new mongoose.Schema({
   date: {
     type: Date,
   },
-  prerequisite: [String],
   fee: {
     type: String,
   },
-  participants: [
+  attendees: [
     {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
     },
   ],
-  participantLimit: {
+  attendeesLimit: {
     type: Number,
   },
   pics: [
@@ -64,5 +63,5 @@ const meetUpSchema = new mongoose.Schema({
   },
 });
 
-const MeetUp = mongoose.model('MeetUp', meetUpSchema);
-export default MeetUp;
+const Meetup = mongoose.model('Meetup', meetupSchema);
+export default Meetup;
