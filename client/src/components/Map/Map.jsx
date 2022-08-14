@@ -28,6 +28,9 @@ import MapMarkers from './MapMarkers/MapMarkers';
 import PostBottomSheet from './Post/PostBottomSheet';
 import SelectedItemBottomSheet from './SelectedItem/SelectedItemBottomSheet';
 import RNPDialog from '../Utils/RNPDialog';
+import CancelHostMeetupButton from './HostMeetup/CancelHostMeetupButton';
+import SetMeetupLocation from './HostMeetup/SetMeetupLocation';
+import HostMeetupBottomSheet from './HostMeetup/BottomSheet';
 
 // ac
 import { countUp } from '../../redux/actionCreators/dummy';
@@ -36,7 +39,8 @@ import { getCurrentLocation } from '../../redux/actionCreators/auth';
 import { setIsPostBottomSheetOpen } from '../../redux/actionCreators/bottomSheet';
 import { setIsSelectedItemBottomSheetOpen } from '../../redux/actionCreators/bottomSheet';
 import { selectPost } from '../../redux/actionCreators/selectItem';
-import { confirmCreateMeetup } from '../../redux/actionCreators/dialog';
+import { setIsHostMeetupOpen } from '../../redux/actionCreators/hostMeetup';
+import { setMeetupLocation } from '../../redux/actionCreators/hostMeetup';
 
 const Map = (props) => {
   const [region, setRegion] = useState(null);
@@ -130,9 +134,9 @@ const Map = (props) => {
     }
   };
 
-  const renderTapped = () => {
-    if (tapped) {
-      return <Marker coordinate={{ latitude: tapped.latitude, longitude: tapped.longitude }} />;
+  const setMeetupLocation = (event) => {
+    if (props.hostMeetup.isOpen) {
+      props.setMeetupLocation(event.nativeEvent.coordinate);
     } else {
       return null;
     }
@@ -186,7 +190,7 @@ const Map = (props) => {
             showsCompass={true}
             scrollEnabled={true}
             zoomEnabled={true}
-            onPress={(event) => setTapped(event.nativeEvent.coordinate)}
+            onPress={(event) => setMeetupLocation(event)}
             // initial regionっていうのは、最初に地図がloadされたときに画面の中心にどのlatitudeとlongitudeを映すかって言うことね。
             initialRegion={{
               latitude: 37.78825,
@@ -196,8 +200,8 @@ const Map = (props) => {
             }}
             provider='google'
           >
+            <SetMeetupLocation />
             <MapMarkers handleSelectedItemBottomSheetChanges={handleSelectedItemBottomSheetChanges} />
-            {renderTapped()}
           </MapView>
           <Provider>
             <Portal>
@@ -217,12 +221,13 @@ const Map = (props) => {
                   },
                   {
                     icon: 'account-group',
-                    label: 'Hold Meetup',
-                    onPress: () => props.confirmCreateMeetup(true),
+                    label: 'Host Meetup',
+                    onPress: () => props.setIsHostMeetupOpen(true),
                   },
                   {
                     icon: 'video',
                     label: 'Start Live',
+                    disabled: true,
                     onPress: () => console.log('Live'),
                   },
                 ]}
@@ -237,6 +242,8 @@ const Map = (props) => {
           </Provider>
           <PostBottomSheet postBottomSheetRef={postBottomSheetRef} />
           <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} />
+          <CancelHostMeetupButton />
+          <HostMeetupBottomSheet />
           <RNPDialog
             dialogState={props.dialog.confirmCreateMeetup.isOpen}
             title='Please tap the location where you wanna hold your meetup!'
@@ -285,7 +292,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  return { bottomSheet: state.bottomSheet, auth: state.auth, dialog: state.dialog };
+  return { bottomSheet: state.bottomSheet, auth: state.auth, dialog: state.dialog, hostMeetup: state.hostMeetup };
 };
 
 export default connect(mapStateToProps, {
@@ -294,5 +301,6 @@ export default connect(mapStateToProps, {
   setIsSelectedItemBottomSheetOpen,
   selectPost,
   getCurrentLocation,
-  confirmCreateMeetup,
+  setIsHostMeetupOpen,
+  setMeetupLocation,
 })(Map);

@@ -5,6 +5,7 @@ import selectedItemReducer from './selectedItem';
 import bottomSheetReducer from './bottomSheet';
 import modalReducer from './modal';
 import dialogReducer from './dialog';
+import hostMeetupReducer from './hostMeetup';
 // import dummy from './dummy';
 
 const rootReducer = combineReducers({
@@ -14,5 +15,6 @@ const rootReducer = combineReducers({
   selectedItem: selectedItemReducer,
   modal: modalReducer,
   dialog: dialogReducer,
+  hostMeetup: hostMeetupReducer,
 });
 export default rootReducer;
