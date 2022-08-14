@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { Button } from 'react-native';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 const Form = () => {
   // ここ多分useReducerを使えそうだよな。
@@ -12,8 +13,22 @@ const Form = () => {
   const [fee, setFee] = useState('');
   const [attendeesLimit, setAttendeesLimit] = useState('');
 
-  const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
+  const [isStartDatePickerVisible, setStartDatePickerVisibility] = useState(false);
+  const [startDate, setStartDate] = useState('');
+  const [isEndDatePickerVisible, setEndDatePickerVisibility] = useState(false);
+  const [endDate, setEndDate] = useState('');
+
+  const handleStartDateConfirm = (date) => {
+    console.log('start date is', date);
+    setStartDate(date);
+    setStartDatePickerVisibility(false);
+  };
+
+  const handleEndDateConfirm = (date) => {
+    console.log('end date is', date);
+    setEndDate(date);
+    setEndDatePickerVisibility(false);
+  };
 
   return (
     <View>
@@ -64,20 +79,34 @@ const Form = () => {
             mode='outlined'
           />
         </View>
-        <Button title='Open' onPress={() => setOpen(true)} />
-        <DatePicker
-          modal
+        <Text>Date & time</Text>
+        <Button title='Start' onPress={() => setStartDatePickerVisibility(true)} />
+        <DateTimePickerModal
+          isVisible={isStartDatePickerVisible}
           mode='datetime'
-          open={open}
-          date={date}
-          onConfirm={(date) => {
-            setOpen(false);
-            setDate(date);
-          }}
-          onCancel={() => {
-            setOpen(false);
-          }}
+          onConfirm={(date) => handleStartDateConfirm(date)}
+          onCancel={() => setStartDatePickerVisibility(false)}
+          is24Hour={true}
         />
+        <Text>{`${new Date(startDate)}`}</Text>
+
+        <Button title='End' onPress={() => setEndDatePickerVisibility(true)} />
+        <DateTimePickerModal
+          isVisible={isEndDatePickerVisible}
+          mode='datetime'
+          onConfirm={(date) => handleEndDateConfirm(date)}
+          onCancel={() => setEndDatePickerVisibility(false)}
+          is24Hour={true}
+        />
+        <Text>{`${new Date(endDate)}`}</Text>
+        {/* <Button title='Show Date Picker' onPress={showDatePicker} />
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode='datetime'
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+          is24Hour={true}
+        /> */}
       </View>
     </View>
   );
