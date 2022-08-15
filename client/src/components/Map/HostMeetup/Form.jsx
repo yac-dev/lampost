@@ -1,9 +1,19 @@
 // main libraries
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
-import { TextInput } from 'react-native-paper';
-import { Button } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
+import { TextInput, Divider, IconButton, Button } from 'react-native-paper';
+// import { Button } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+
+import { MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
+// components
+import HostMeetupHeader from '../../Utils/Header';
 
 const Form = () => {
   // ここ多分useReducerを使えそうだよな。
@@ -31,12 +41,43 @@ const Form = () => {
   };
 
   return (
-    <View>
-      <View>
-        <Text>Header</Text>
+    <ScrollView>
+      <HostMeetupHeader title='Host Meetup' />
+      <View style={{ paddingLeft: 20, paddingRight: 20 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <FontAwesome name='calendar' size={24} />
+          <Text style={{ fontSize: 17, color: 'rgb(135, 135, 135)', marginLeft: 10 }}>Date & Time</Text>
+        </View>
+        <View style={{ flexDirection: 'row' }}>
+          <Button mode='contained' onPress={() => setStartDatePickerVisibility(true)}>
+            Start
+          </Button>
+          <Text>{`${new Date(startDate)}`}</Text>
+        </View>
+        <DateTimePickerModal
+          isVisible={isStartDatePickerVisible}
+          mode='datetime'
+          onConfirm={(date) => handleStartDateConfirm(date)}
+          onCancel={() => setStartDatePickerVisibility(false)}
+          is24Hour={true}
+        />
+        <View style={{ flexDirection: 'row' }}>
+          <Button mode='contained' onPress={() => setEndDatePickerVisibility(true)}>
+            end
+          </Button>
+          <Text>{`${new Date(endDate)}`}</Text>
+        </View>
+        <DateTimePickerModal
+          isVisible={isEndDatePickerVisible}
+          mode='datetime'
+          onConfirm={(date) => handleEndDateConfirm(date)}
+          onCancel={() => setEndDatePickerVisibility(false)}
+          is24Hour={true}
+        />
       </View>
-      <View style={{ padding: 20 }}>
+      <View style={{ paddingLeft: 20, paddingRight: 20 }}>
         <TextInput
+          style={{ marginTop: 10 }}
           label='Title'
           value={title}
           onChangeText={(text) => setTitle(text)}
@@ -46,7 +87,7 @@ const Form = () => {
         />
         <View style={{ height: 250 }}>
           <TextInput
-            style={{ flex: 1 }}
+            style={{ flex: 1, marginTop: 10 }}
             // style={{ height: '100%' }} にすると、bug waringが出る。しかし、一応使える。ただ、left iconありにすると。エラーが出て無理。なんだろうな。このflex: 1って一体。。。もっと精査しないとな。
             mode='outlined'
             value={detail}
@@ -58,18 +99,7 @@ const Form = () => {
             // numberOfLines={10}
           />
         </View>
-        {/* <View style={{ width: 160 }}>
-        <TextInput
-          // style={{ flex: 1 }}
-          label='Entrance fee'
-          placeholder='e.g.) free, $10'
-          value={fee}
-          // onChangeText={text => setText(text)}
-          left={<TextInput.Icon name='eye' />}
-          mode='outlined'
-        />
-      </View> */}
-        <View style={{ width: 160 }}>
+        <View style={{ width: 160, marginTop: 10 }}>
           <TextInput
             label='Attendees limit'
             placeholder='e.g) 10, 15'
@@ -79,36 +109,18 @@ const Form = () => {
             mode='outlined'
           />
         </View>
-        <Text>Date & time</Text>
-        <Button title='Start' onPress={() => setStartDatePickerVisibility(true)} />
-        <DateTimePickerModal
-          isVisible={isStartDatePickerVisible}
-          mode='datetime'
-          onConfirm={(date) => handleStartDateConfirm(date)}
-          onCancel={() => setStartDatePickerVisibility(false)}
-          is24Hour={true}
-        />
-        <Text>{`${new Date(startDate)}`}</Text>
-
-        <Button title='End' onPress={() => setEndDatePickerVisibility(true)} />
-        <DateTimePickerModal
-          isVisible={isEndDatePickerVisible}
-          mode='datetime'
-          onConfirm={(date) => handleEndDateConfirm(date)}
-          onCancel={() => setEndDatePickerVisibility(false)}
-          is24Hour={true}
-        />
-        <Text>{`${new Date(endDate)}`}</Text>
-        {/* <Button title='Show Date Picker' onPress={showDatePicker} />
-        <DateTimePickerModal
-          isVisible={isDatePickerVisible}
-          mode='datetime'
-          onConfirm={handleConfirm}
-          onCancel={hideDatePicker}
-          is24Hour={true}
-        /> */}
+        <View style={{ width: 160, marginTop: 10 }}>
+          <TextInput
+            label='Attendees limit'
+            placeholder='e.g) 10, 15'
+            value={attendeesLimit}
+            // onChangeText={text => setText(text)}
+            left={<TextInput.Icon name='eye' />}
+            mode='outlined'
+          />
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

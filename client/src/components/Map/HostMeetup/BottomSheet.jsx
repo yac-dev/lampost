@@ -1,11 +1,12 @@
 // main libraries
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 // components
-import Form from './Form';
+// import Form from './Form';
+import FormContainer from './Form/Container';
 
 const BottomSheet = (props) => {
   const snapPoints = ['20%', '80%'];
@@ -21,7 +22,7 @@ const BottomSheet = (props) => {
         onClose={() => onFormBottomSheetClose()}
       >
         <BottomSheetView>
-          <Form />
+          <FormContainer />
         </BottomSheetView>
       </GorhomBottomSheet>
     );
