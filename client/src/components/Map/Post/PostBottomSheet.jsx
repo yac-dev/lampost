@@ -6,7 +6,8 @@ import GorhomBottomSheet, { BottomSheetView, BottomSheetScrollView } from '@gorh
 
 // components
 // import NativeBaseProvider from '../../../Utils/NativeBaseProvider';
-import Form from './Form';
+// import Form from './Form';
+import FormContainer from '../Post/Form/Container';
 
 // ac
 import { setIsPostBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
@@ -31,7 +32,8 @@ const PostBottomSheet = (props) => {
       onClose={() => onFormBottomSheetClose()}
     >
       <BottomSheetView>
-        <Form postBottomSheetRef={props.postBottomSheetRef} />
+        {/* <Form postBottomSheetRef={props.postBottomSheetRef} /> */}
+        <FormContainer />
       </BottomSheetView>
     </GorhomBottomSheet>
   );
