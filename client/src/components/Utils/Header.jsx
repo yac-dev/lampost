@@ -21,16 +21,24 @@ const Header = (props) => {
         <View>
           <IconButton
             icon='close'
-            // iconColor={MD3Colors.error50}
+            iconColor={'white'}
             size={20}
             onPress={() => console.log('Pressed')}
+            containerColor='red'
           />
         </View>
         <View>
           <Text style={{ fontSize: 20 }}>{props.title}</Text>
         </View>
         <View>
-          <IconButton icon='check' iconColor='green' size={20} disabled onPress={() => console.log('Pressed')} />
+          <IconButton
+            icon='check'
+            iconColor={'white'}
+            containerColor='green'
+            size={20}
+            onPress={() => console.log('Pressed')}
+            // disabled={true}
+          />
         </View>
       </View>
       {/* <Divider style={{ fontWeight: 10 }} /> */}

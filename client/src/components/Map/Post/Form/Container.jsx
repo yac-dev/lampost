@@ -8,13 +8,24 @@ import Body from './Body';
 
 const Container = () => {
   const [content, setContent] = useState('');
-  const [postType, setPostType] = useState('');
-  const [limit, setLimit] = useState('1');
+  const [selectedPostType, setSelectedPostType] = useState('');
+  const [selectedPostLength, setSelectedPostLength] = useState('');
+  const [isPostTypeMenuVisible, setIsPostTypeMenuVisible] = useState('');
+  const [isPostLengthMenuVisible, setIsPostLengthMenuVisible] = useState('');
 
   return (
     <View>
       <Header title='Post' />
-      <Body />
+      <Body
+        selectedPostType={selectedPostType}
+        setSelectedPostType={setSelectedPostType}
+        isPostTypeMenuVisible={isPostTypeMenuVisible}
+        setIsPostTypeMenuVisible={setIsPostTypeMenuVisible}
+        selectedPostLength={selectedPostLength}
+        setSelectedPostLength={setSelectedPostLength}
+        isPostLengthMenuVisible={isPostLengthMenuVisible}
+        setIsPostLengthMenuVisible={setIsPostLengthMenuVisible}
+      />
     </View>
   );
 };
