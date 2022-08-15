@@ -15,7 +15,10 @@ const Container = () => {
   const [detail, setDetail] = useState('');
   const [meetupType, setMeetupType] = useState('');
   const [attendeesLimit, setAttendeesLimit] = useState('');
+  const [isMeetupTypeMenuVisible, setIsMeetupTypeMenuVisible] = useState(false);
   const [isAttendeesMenuVisible, setIsAttendeesMenuVisible] = useState(false);
+  const [selectedMeetupType, setSelectedMeetupType] = useState('');
+  const [selectedAttendeesLimit, setSelectedAttendeesLimit] = useState('');
 
   return (
     <View>
@@ -35,8 +38,14 @@ const Container = () => {
         setDetail={setDetail}
         attendeesLimit={attendeesLimit}
         setAttendeesLimit={setAttendeesLimit}
+        isMeetupTypeMenuVisible={isMeetupTypeMenuVisible}
+        setIsMeetupTypeMenuVisible={setIsMeetupTypeMenuVisible}
         isAttendeesMenuVisible={isAttendeesMenuVisible}
         setIsAttendeesMenuVisible={setIsAttendeesMenuVisible}
+        selectedMeetupType={selectedMeetupType}
+        setSelectedMeetupType={setSelectedMeetupType}
+        selectedAttendeesLimit={selectedAttendeesLimit}
+        setSelectedAttendeesLimit={setSelectedAttendeesLimit}
       />
     </View>
   );

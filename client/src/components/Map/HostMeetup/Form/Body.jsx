@@ -1,5 +1,5 @@
 // main libraries
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { TextInput, Divider, IconButton, Button, Menu } from 'react-native-paper';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -10,9 +10,105 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
+// glass-mug-variant
+// head
+// kabaddi
+// karate
+// skateboarding
+// soccer-field
+// basketball-hoop-outline
+const meetupTypes = [
+  { value: 'Bar', id: '62fa40ebd38fd116e2c9045b', iconName: 'glass-mug-variant' },
+  { value: 'Food & Drink', id: '62f717747f3b648f706bed1b', iconName: 'food-fork-drink' },
+  { value: 'Shopping', id: '62f717c67f3b648f706bed1c', iconName: 'shopping-outline' },
+  { value: 'Party', id: '62f718337f3b648f706bed1d', iconName: 'party-popper' },
+  { value: 'Travel', id: '62f718627f3b648f706bed1e', iconName: 'airplane' },
+  { value: 'Amazing', id: '62f718b17f3b648f706bed20', iconName: 'head-lightbulb' },
+  { value: 'Sports match', id: '62f718c77f3b648f706bed21', iconName: 'soccer-field' },
+  { value: 'Art', id: '62f718f87f3b648f706bed23', iconName: 'image-frame' },
+  { value: 'Business', id: '62f7190e7f3b648f706bed24', iconName: 'account-tie' },
+  { value: 'Sports', id: '62f719207f3b648f706bed25', iconName: 'tennis-ball' },
+  { value: 'Weather & Disaster', id: '62f719347f3b648f706bed26', iconName: 'weather-lightning-rainy' },
+  { value: 'Traffic', id: '62f7194a7f3b648f706bed27', iconName: 'car-multiple' },
+];
+
+const attendeesOptions = ['3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', 'Free'];
+
 const Body = (props) => {
+  const renderMeetupTypeMenus = () => {
+    const options = meetupTypes.map((meetupType, index) => {
+      return (
+        <Menu.Item
+          key={index}
+          leadingIcon={meetupType.iconName}
+          onPress={() => {
+            props.setSelectedMeetupType(meetupType);
+            props.setIsMeetupTypeMenuVisible(false);
+          }}
+          title={meetupType.value}
+        />
+      );
+    });
+
+    return <>{options}</>;
+  };
+
+  const renderAttendeesLimitMenus = () => {
+    const options = attendeesOptions.map((value, index) => {
+      return (
+        <Menu.Item
+          key={index}
+          onPress={() => {
+            props.setSelectedAttendeesLimit(value);
+            props.setIsAttendeesMenuVisible(false);
+          }}
+          title={value}
+        />
+      );
+    });
+
+    return <>{options}</>;
+  };
+
+  const renderAttendeesLimit = () => {
+    if (!props.selectedAttendeesLimit) {
+      return null;
+    } else if (props.selectedAttendeesLimit === 'Free') {
+      return <Text style={{ fontSize: 17, textAlign: 'center' }}>{props.selectedAttendeesLimit}</Text>;
+    } else {
+      return <Text style={{ fontSize: 17, textAlign: 'center' }}>{`${props.selectedAttendeesLimit} people`}</Text>;
+    }
+  };
+
+  const onStartDateConfirm = (date) => {
+    props.setStartDate(date);
+    props.setIsStartDatePickerVisible(false);
+  };
+
+  const onEndDateConfirm = (date) => {
+    props.setEndDate(date);
+    props.setIsEndDatePickerVisible(false);
+  };
+
+  const renderDate = (date) => {
+    if (date) {
+      return (
+        <Text>{`${new Date(date).toLocaleString('en-US', {
+          weekday: 'long',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          year: 'numeric',
+        })}`}</Text>
+      );
+    } else {
+      return null;
+    }
+  };
+
   return (
-    <ScrollView contentContainerStyle={{ paddingLeft: 20, paddingRight: 20, paddingTop: 20, paddingBottom: 100 }}>
+    <ScrollView contentContainerStyle={{ paddingLeft: 20, paddingRight: 20, paddingTop: 20, paddingBottom: 150 }}>
       {/* date and time */}
       <View style={styles.bodyDateAndTime}>
         <View style={styles.bodyDateAndTime.header}>
@@ -29,7 +125,7 @@ const Body = (props) => {
               Start
             </Button>
             {/* <Text>{`${new Date(startDate)}`}</Text> */}
-            <Text>startDate</Text>
+            {renderDate(props.startDate)}
           </View>
           <View style={styles.bodyDateAndTime.startEndWrapper.date}>
             <Button
@@ -40,20 +136,20 @@ const Body = (props) => {
               end
             </Button>
             {/* <Text>{`${new Date(endDate)}`}</Text> */}
-            <Text>endDate</Text>
+            {renderDate(props.endDate)}
           </View>
         </View>
         <DateTimePickerModal
           isVisible={props.isStartDatePickerVisible}
           mode='datetime'
-          onConfirm={(date) => handleStartDateConfirm(date)}
-          onCancel={() => setStartDatePickerVisibility(false)}
+          onConfirm={(date) => onStartDateConfirm(date)}
+          onCancel={() => props.setIsStartDatePickerVisible(false)}
           is24Hour={true}
         />
         <DateTimePickerModal
           isVisible={props.isEndDatePickerVisible}
           mode='datetime'
-          onConfirm={(date) => handleEndDateConfirm(date)}
+          onConfirm={(date) => onEndDateConfirm(date)}
           onCancel={() => setEndDatePickerVisibility(false)}
           is24Hour={true}
         />
@@ -101,70 +197,30 @@ const Body = (props) => {
           <Text style={{ fontSize: 17, color: 'rgb(135, 135, 135)', marginLeft: 10 }}>Meetup type</Text>
         </View>
         <Menu
-          visible={props.isAttendeesMenuVisible}
-          onDismiss={() => props.setIsAttendeesMenuVisible(false)}
-          anchor={<Button onPress={() => props.setIsAttendeesMenuVisible(true)}>Show menu</Button>}
+          visible={props.isMeetupTypeMenuVisible}
+          onDismiss={() => props.setIsMeetupTypeMenuVisible(false)}
+          anchor={<Button onPress={() => props.setIsMeetupTypeMenuVisible(true)}>Select</Button>}
         >
-          <Menu.Item onPress={() => {}} title='3' />
-          <Menu.Item onPress={() => {}} title='4' />
-          <Menu.Item onPress={() => {}} title='5' />
-          <Menu.Item onPress={() => {}} title='6' />
-          <Menu.Item onPress={() => {}} title='7' />
-          <Menu.Item onPress={() => {}} title='8' />
-          <Menu.Item onPress={() => {}} title='9' />
-          <Menu.Item onPress={() => {}} title='10' />
-          <Menu.Item onPress={() => {}} title='11' />
-          <Menu.Item onPress={() => {}} title='12' />
-          <Menu.Item onPress={() => {}} title='13' />
-          <Menu.Item onPress={() => {}} title='14' />
-          <Menu.Item onPress={() => {}} title='15' />
-          <Menu.Item onPress={() => {}} title='Free' />
+          {renderMeetupTypeMenus()}
         </Menu>
-        {/* <TextInput
-          // label='Attendees limit'
-          placeholder='How many people can attend? e.g) free, 10'
-          value={props.attendeesLimit}
-          // onChangeText={text => setText(text)}
-          // left={<TextInput.Icon name='eye' />}
-          mode='outlined'
-        /> */}
       </View>
-      {/* footer */}
+      <Text style={{ fontSize: 17, textAlign: 'center' }}>{props.selectedMeetupType.value}</Text>
+
       <View style={styles.bodyAttendees}>
         <View style={styles.bodyAttendees.header}>
           <MaterialCommunityIcons name='account-group' size={24} />
           <Text style={{ fontSize: 17, color: 'rgb(135, 135, 135)', marginLeft: 10 }}>Attendees limit</Text>
           <AntDesign name='questioncircle' size={15} />
         </View>
-        {/* <TextInput
-          // label='Attendees limit'
-          placeholder='How many people can attend? e.g) free, 10'
-          value={props.attendeesLimit}
-          // onChangeText={text => setText(text)}
-          // left={<TextInput.Icon name='eye' />}
-          mode='outlined'
-        /> */}
         <Menu
           visible={props.isAttendeesMenuVisible}
           onDismiss={() => props.setIsAttendeesMenuVisible(false)}
-          anchor={<Button onPress={() => props.setIsAttendeesMenuVisible(true)}>Show menu</Button>}
+          anchor={<Button onPress={() => props.setIsAttendeesMenuVisible(true)}>Select</Button>}
         >
-          <Menu.Item onPress={() => {}} title='3' />
-          <Menu.Item onPress={() => {}} title='4' />
-          <Menu.Item onPress={() => {}} title='5' />
-          <Menu.Item onPress={() => {}} title='6' />
-          <Menu.Item onPress={() => {}} title='7' />
-          <Menu.Item onPress={() => {}} title='8' />
-          <Menu.Item onPress={() => {}} title='9' />
-          <Menu.Item onPress={() => {}} title='10' />
-          <Menu.Item onPress={() => {}} title='11' />
-          <Menu.Item onPress={() => {}} title='12' />
-          <Menu.Item onPress={() => {}} title='13' />
-          <Menu.Item onPress={() => {}} title='14' />
-          <Menu.Item onPress={() => {}} title='15' />
-          <Menu.Item onPress={() => {}} title='Free' />
+          {renderAttendeesLimitMenus()}
         </Menu>
       </View>
+      {renderAttendeesLimit()}
     </ScrollView>
   );
 };
