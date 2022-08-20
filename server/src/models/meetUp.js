@@ -1,28 +1,49 @@
 import mongoose from 'mongoose';
 
 const meetupSchema = new mongoose.Schema({
+  // max80字ね。
+  place: {
+    type: {
+      type: String,
+      enum: ['Point'],
+      default: 'Point',
+    },
+    coordinates: [Number],
+  },
   title: {
     type: String,
   },
-  content: {
-    type: String,
-    required: true,
+  // 最大で3つまで
+  genres: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'PostType',
+    },
+  ],
+  startDateAndTime: {
+    type: Date,
   },
-  date: {
+  endDateAndTime: {
     type: Date,
   },
   fee: {
     type: String,
   },
+  isPublic: {
+    type: Boolean,
+  },
+  // hostが入力するのはここまで！
+  host: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+  },
+  // limitは8!!
   attendees: [
     {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
     },
   ],
-  attendeesLimit: {
-    type: Number,
-  },
   pics: [
     {
       type: mongoose.Schema.ObjectId,
@@ -35,29 +56,6 @@ const meetupSchema = new mongoose.Schema({
       ref: 'Video',
     },
   ],
-  type: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'PostType',
-  },
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User',
-  },
-  views: {
-    type: Number,
-    default: 0,
-  },
-  isPublic: {
-    type: Boolean,
-  },
-  place: {
-    type: {
-      type: String,
-      enum: ['Point'],
-      default: 'Point',
-    },
-    coordinates: [Number],
-  },
   createdAt: {
     type: Date,
   },

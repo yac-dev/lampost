@@ -97,6 +97,7 @@ const Body = (props) => {
           <Text style={{ fontSize: 17, color: 'rgb(135, 135, 135)', marginLeft: 10 }}>Post length</Text>
         </View>
         <AntDesign name='questioncircle' size={15} />
+        {/* what do you post about? */}
         <Menu
           visible={props.isPostLengthMenuVisible}
           onDismiss={() => props.setIsPostLengthMenuVisible(false)}

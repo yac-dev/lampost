@@ -2,7 +2,12 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema({
-  name: {
+  firstName: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  lastName: {
     type: String,
     required: true,
     unique: true,
@@ -16,18 +21,46 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  address: {
-    type: {
-      type: String,
-      enum: ['Point'],
-      default: 'Point',
-    },
-    coordinates: [Number],
+  photo: {
+    type: String,
   },
-  photo: String,
+  currentJob: {
+    type: String,
+  },
+  // up to 3 items 一つ15字以下かな
+  enthusiasms: [{ type: String }],
+  // up to 3 items
+  interestedGenre: [{ type: String }],
+  // cityのschemaが必要になるな。気になる街よ、要は。
+  oftenGoTo: {
+    type: String,
+  },
+  skills: [
+    {
+      type: String,
+    },
+  ],
+  // 120字にしようか
+  bio: {
+    type: String,
+  },
   createdAt: {
     type: Date,
   },
+  // address: {
+  //   type: {
+  //     type: String,
+  //     enum: ['Point'],
+  //     default: 'Point',
+  //   },
+  //   coordinates: [Number],
+  // },
+  // // languageのschemaを入れるか後で。
+  // languages: [
+  //   {
+  //     type: String
+  //   }
+  // ],
 });
 
 userSchema.set('toJSON', { virtuals: true });
