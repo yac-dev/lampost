@@ -20,6 +20,8 @@ const Container = () => {
   const [selectedMeetupType, setSelectedMeetupType] = useState('');
   const [selectedAttendeesLimit, setSelectedAttendeesLimit] = useState('');
 
+  const [isSwitchOn, setIsSwitchOn] = useState(true);
+
   return (
     <View>
       <Header title='Host Meetup' />
@@ -46,6 +48,8 @@ const Container = () => {
         setSelectedMeetupType={setSelectedMeetupType}
         selectedAttendeesLimit={selectedAttendeesLimit}
         setSelectedAttendeesLimit={setSelectedAttendeesLimit}
+        isSwitchOn={isSwitchOn}
+        setIsSwitchOn={setIsSwitchOn}
       />
     </View>
   );

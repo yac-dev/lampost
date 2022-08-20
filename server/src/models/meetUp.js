@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
 const meetupSchema = new mongoose.Schema({
-  // max80字ね。
   place: {
     type: {
       type: String,
@@ -11,13 +10,15 @@ const meetupSchema = new mongoose.Schema({
     coordinates: [Number],
   },
   title: {
+    // max80字ね。
     type: String,
+    maxLength: 80,
   },
   // 最大で3つまで
-  genres: [
+  interests: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: 'PostType',
+      ref: 'Interest',
     },
   ],
   startDateAndTime: {
@@ -37,7 +38,7 @@ const meetupSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
-  // limitは8!!
+  // limitは7!!
   attendees: [
     {
       type: mongoose.Schema.ObjectId,

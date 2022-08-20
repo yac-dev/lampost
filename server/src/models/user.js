@@ -28,21 +28,30 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   // up to 3 items 一つ15字以下かな
-  enthusiasms: [{ type: String }],
-  // up to 3 items
-  interestedGenre: [{ type: String }],
-  // cityのschemaが必要になるな。気になる街よ、要は。
-  oftenGoTo: {
-    type: String,
+  enthusiasms: {
+    type: [{ type: String, maxLength: 20 }],
+    validate: [arrayLimit, 'Limited 3 items in enthusiasms field'],
   },
+  // up to 3 items
+  interests: {
+    type: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Interest',
+      },
+    ],
+    validate: [arrayLimit, 'Limited 3 items in interests  field'],
+  },
+  // cityのschemaが必要になるな。気になる街よ、要は。
+  oftenGoTo: [String],
   skills: [
     {
       type: String,
     },
   ],
-  // 120字にしようか
   bio: {
     type: String,
+    maxLength: 120,
   },
   createdAt: {
     type: Date,
@@ -62,6 +71,10 @@ const userSchema = new mongoose.Schema({
   //   }
   // ],
 });
+
+function arrayLimit(val) {
+  return val.length <= 3;
+}
 
 userSchema.set('toJSON', { virtuals: true });
 userSchema.set('toObject', { virtuals: true });
