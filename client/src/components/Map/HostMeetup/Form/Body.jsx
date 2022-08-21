@@ -107,6 +107,8 @@ const meetupTypes = [
   { value: '🧹 Volunteer', id: '62f7194a7f3b648f706bed27', iconName: 'car-multiple' },
 ];
 
+const currencyOptions = ['$USD', '£GBP', '€EUR', '¥JPY', '$CAD'];
+
 const attendeesOptions = ['3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', 'Free'];
 
 const Body = (props) => {
@@ -130,8 +132,24 @@ const Body = (props) => {
 
   // ここのmeetupGenre menuに関してcomponentを別で持ってないといけないわ。refactoringだな。
 
+  const renderCurrencies = () => {
+    const currencies = currencyOptions.map((element, index) => {
+      return (
+        <Menu.Item
+          key={index}
+          onPress={() => {
+            props.dispatch({ type: 'SET_CURRENCY', payload: element });
+            props.dispatch({ type: 'SET_IS_CURRENCY_MENU_VISIBLE', payload: false });
+          }}
+          title={element}
+        />
+      );
+    });
+    return <>{currencies}</>;
+  };
+
   const renderAddMoreMenu = () => {
-    if (props.state.meetupGenres.length >= 1 && props.state.meetupGenres[0] && props.state.meetupGenres.length <= 3) {
+    if (props.state.meetupGenres.length >= 1 && props.state.meetupGenres[0] && props.state.meetupGenres.length <= 2) {
       return (
         <Button
           icon='plus'
@@ -140,7 +158,7 @@ const Body = (props) => {
             props.dispatch({ type: 'ADD_MORE_MEETUP_GENRE', payload: '' });
           }}
         >
-          Add more
+          Add
         </Button>
       );
     }
@@ -221,29 +239,41 @@ const Body = (props) => {
     }
   };
 
-  const onToggleSwitch = () => {
-    props.setIsSwitchOn(!props.isSwitchOn);
-  };
-
   const renderSwitchState = () => {
-    if (props.isSwitchOn) {
+    if (props.state.isMeetupFree) {
       return <Text style={{ marginRight: 5, fontSize: 15 }}>Yes</Text>;
     } else {
       return <Text style={{ marginRight: 5, fontSize: 15 }}>No</Text>;
     }
   };
 
+  const onToggleSwitch = () => {
+    props.dispatch({ type: 'SET_IS_MEETUP_FREE', payload: '' });
+  };
+
   const renderFeeForm = () => {
-    if (!props.isSwitchOn) {
+    if (!props.state.isMeetupFree) {
       return (
-        <View>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Menu
-            visible={props.isMeetupTypeMenuVisible}
-            // onDismiss={() => props.setIsMeetupTypeMenuVisible(false)}
-            anchor={<Button onPress={() => props.setIsMeetupTypeMenuVisible(true)}>Select</Button>}
+            visible={props.state.isCurrencyMenuVisible}
+            onDismiss={() => props.dispatch({ type: 'SET_IS_CURRENCY_MENU_VISIBLE', payload: false })}
+            anchor={
+              <Button onPress={() => props.dispatch({ type: 'SET_IS_CURRENCY_MENU_VISIBLE', payload: true })}>
+                Select
+              </Button>
+            }
           >
-            {renderMeetupTypeMenus()}
+            {renderCurrencies()}
           </Menu>
+          <Text style={{ marginLeft: 5 }}>{props.state.currency}</Text>
+          <TextInput
+            style={{ width: 150, marginLeft: 10 }}
+            mode='outlined'
+            label='How much?'
+            value={props.state.fee}
+            onChangeText={(text) => props.dispatch({ type: 'SET_MEETUP_FEE', payload: text })}
+          />
         </View>
       );
     } else {
@@ -341,7 +371,9 @@ const Body = (props) => {
         <View style={styles.bodyInterests.header}>
           <View style={styles.bodyInterests.header.title}>
             <MaterialIcons name='sports-bar' size={24} />
-            <Text style={{ fontSize: 17, color: 'rgb(135, 135, 135)', marginLeft: 10 }}>What is it about?</Text>
+            <Text style={{ fontSize: 17, color: 'rgb(135, 135, 135)', marginLeft: 10 }}>
+              What is your meetup about?
+            </Text>
           </View>
           {renderAddMoreMenu()}
         </View>
@@ -359,26 +391,26 @@ const Body = (props) => {
       </View>
 
       {/* fee select */}
-      {/* <View style={styles.bodyFeeSelect}>
+      <View style={styles.bodyFeeSelect}>
         <View style={styles.bodyFeeSelect.header}>
           <FontAwesome5 name='money-bill-alt' size={24} />
           <Text style={{ fontSize: 17, color: 'rgb(135, 135, 135)', marginLeft: 10 }}>Is it free to join?</Text>
         </View>
-        <Menu
+        {/* <Menu
           visible={props.isAttendeesMenuVisible}
           onDismiss={() => props.setIsAttendeesMenuVisible(false)}
           anchor={<Button onPress={() => props.setIsAttendeesMenuVisible(true)}>Select</Button>}
         >
           {renderAttendeesLimitMenus()}
-        </Menu>
+        </Menu> */}
         <View style={styles.bodyFeeSelect.switchMenu}>
           {renderSwitchState()}
-          <Switch value={props.isSwitchOn} onValueChange={onToggleSwitch} />
+          <Switch value={props.state.isMeetupFree} onValueChange={onToggleSwitch} />
         </View>
-      </View> */}
+      </View>
 
       {/* fee form */}
-      {/* {renderFeeForm()} */}
+      {renderFeeForm()}
     </ScrollView>
   );
 };

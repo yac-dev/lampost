@@ -15,6 +15,7 @@ const INITIAL_STATE = {
   meetupGenres: [''],
   isMeetupGenreMenuVisible: false,
   isMeetupFree: true,
+  isCurrencyMenuVisible: false,
   currency: '',
   meetupFee: 0,
   isMeetupPublic: true,
@@ -41,7 +42,9 @@ const reducer = (state, action) => {
     case 'SET_IS_MEETUP_GENRE_MENU_VISIBLE':
       return { ...state, isMeetupGenreMenuVisible: action.payload };
     case 'SET_IS_MEETUP_FREE':
-      return { ...state, isMeetupFree: action.payload };
+      return { ...state, isMeetupFree: !state.isMeetupFree };
+    case 'SET_IS_CURRENCY_MENU_VISIBLE':
+      return { ...state, isCurrencyMenuVisible: action.payload };
     case 'SET_CURRENCY':
       return { ...state, currency: action.payload };
     case 'SET_MEETUP_FEE':
