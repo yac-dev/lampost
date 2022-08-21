@@ -36,7 +36,7 @@ const Header = (props) => {
             iconColor={'white'}
             containerColor='green'
             size={20}
-            onPress={() => console.log('Pressed')}
+            onPress={() => props.onSubmit()}
             // disabled={true}
           />
         </View>

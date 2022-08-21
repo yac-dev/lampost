@@ -15,10 +15,10 @@ const meetupSchema = new mongoose.Schema({
     maxLength: 80,
   },
   // 最大で3つまで
-  interests: [
+  meetupGenres: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: 'Interest',
+      ref: 'MeetupGenre',
     },
   ],
   startDateAndTime: {
@@ -27,7 +27,12 @@ const meetupSchema = new mongoose.Schema({
   endDateAndTime: {
     type: Date,
   },
+  // 0 or > 0になる
   fee: {
+    type: Number,
+  },
+  // usd, gbp, jpy等
+  currency: {
     type: String,
   },
   isPublic: {
@@ -45,6 +50,11 @@ const meetupSchema = new mongoose.Schema({
       ref: 'User',
     },
   ],
+  state: {
+    type: String,
+    default: 'notYet',
+    // notYet, nowOn, done
+  },
   pics: [
     {
       type: mongoose.Schema.ObjectId,

@@ -33,11 +33,11 @@ const userSchema = new mongoose.Schema({
     validate: [arrayLimit, 'Limited 3 items in enthusiasms field'],
   },
   // up to 3 items
-  interests: {
+  meetupGenres: {
     type: [
       {
         type: mongoose.Schema.ObjectId,
-        ref: 'Interest',
+        ref: 'MeetupGenre',
       },
     ],
     validate: [arrayLimit, 'Limited 3 items in interests  field'],

@@ -1,6 +1,6 @@
 // main libraries
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, FlatList, SafeAreaView } from 'react-native';
 import { TextInput, Divider, IconButton, Button, Menu, Switch } from 'react-native-paper';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
@@ -10,6 +10,9 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+
+// components
+import MeetupGenreMenu from './MeetupGenreMenu';
 
 // glass-mug-variant
 // head
@@ -41,8 +44,21 @@ const meetupTypes = [
   { value: '🥕 Vegetarian', id: '62f7194a7f3b648f706bed27', iconName: 'car-multiple' },
   { value: '✈️ Travel', id: '62f718627f3b648f706bed1e', iconName: 'airplane' },
   { value: '🖼 Art', id: '62f718f87f3b648f706bed23', iconName: 'image-frame' },
+  { value: '✍️ Drawing', id: '62f718f87f3b648f706bed23', iconName: 'image-frame' },
+  { value: '🏺 Pottery', id: '62f718f87f3b648f706bed23', iconName: 'image-frame' },
+  { value: '🪀 Toy', id: '62f718f87f3b648f706bed23', iconName: 'image-frame' },
+  { value: '🎬 YouTube', id: '62f718f87f3b648f706bed23', iconName: 'image-frame' },
+  { value: '🂠 Trading Card', id: '62f718f87f3b648f706bed23', iconName: 'image-frame' },
+  { value: '👨‍👩‍👧‍👦 Family', id: '62f718f87f3b648f706bed23', iconName: 'image-frame' },
+  { value: '🏖 Beach', id: '62f718f87f3b648f706bed23', iconName: 'image-frame' },
+  { value: '🎲 Board game', id: '62f718f87f3b648f706bed23', iconName: 'image-frame' },
+  { value: '🪂 Adrenaline junkie', id: '62f718f87f3b648f706bed23', iconName: 'image-frame' },
+  { value: '🎨 Painting', id: '62f718f87f3b648f706bed23', iconName: 'image-frame' },
+  { value: '🪴 Gardening', id: '62f718f87f3b648f706bed23', iconName: 'image-frame' },
+  { value: '🥋 Martial arts', id: '62f718f87f3b648f706bed23', iconName: 'image-frame' },
   { value: '🏟 Watching game', id: '62f718c77f3b648f706bed21', iconName: 'soccer-field' },
   { value: '🏀 Ball sports', id: '62f718b17f3b648f706bed20', iconName: 'head-lightbulb' },
+  { value: '⛳️ Golf', id: '62f7194a7f3b648f706bed27', iconName: 'car-multiple' },
   { value: '💪 Workout', id: '62f7194a7f3b648f706bed27', iconName: 'car-multiple' },
   { value: '🏃‍♀️ Running', id: '62f718c77f3b648f706bed21', iconName: 'soccer-field' },
   { value: '🧘‍♀️ Yoga', id: '62f718c77f3b648f706bed21', iconName: 'soccer-field' },
@@ -50,7 +66,7 @@ const meetupTypes = [
   { value: '🏂 Snow sports', id: '62f7194a7f3b648f706bed27', iconName: 'car-multiple' },
   { value: '🏄‍♂️ Surf', id: '62f7194a7f3b648f706bed27', iconName: 'car-multiple' },
   { value: '🗻 Hiking', id: '62f7194a7f3b648f706bed27', iconName: 'car-multiple' },
-  { value: '🚴‍♂️ Bike', id: '62f719207f3b648f706bed25', iconName: 'tennis-ball' },
+  { value: '🚴‍♂️ Cycling', id: '62f719207f3b648f706bed25', iconName: 'tennis-ball' },
   { value: '🚘 Cars', id: '62f7194a7f3b648f706bed27', iconName: 'car-multiple' },
   { value: '🏍 Motorcycle', id: '62f719207f3b648f706bed25', iconName: 'tennis-ball' },
   { value: '💻 Tech', id: '62f7190e7f3b648f706bed24', iconName: 'account-tie' },
@@ -73,7 +89,7 @@ const meetupTypes = [
   { value: '🦒 Zoo', id: '62f719347f3b648f706bed26', iconName: 'weather-lightning-rainy' },
   { value: '🛠 DIY', id: '62f7194a7f3b648f706bed27', iconName: 'car-multiple' },
   { value: '🎯 Darts', id: '62f7194a7f3b648f706bed27', iconName: 'car-multiple' },
-  { value: '🎧 Listening Music', id: '62f7194a7f3b648f706bed27', iconName: 'car-multiple' },
+  { value: '🎧 Listening music', id: '62f7194a7f3b648f706bed27', iconName: 'car-multiple' },
   { value: '🎹 Playing music', id: '62f7194a7f3b648f706bed27', iconName: 'car-multiple' },
   { value: '🎸 Guitar', id: '62f7194a7f3b648f706bed27', iconName: 'car-multiple' },
   { value: '♟ Chess', id: '62f7194a7f3b648f706bed27', iconName: 'car-multiple' },
@@ -94,22 +110,61 @@ const meetupTypes = [
 const attendeesOptions = ['3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', 'Free'];
 
 const Body = (props) => {
-  const renderMeetupTypeMenus = () => {
-    const options = meetupTypes.map((meetupType, index) => {
+  // const renderMeetupTypeMenus = () => {
+  //   const options = meetupTypes.map((meetupType, index) => {
+  //     return (
+  //       <Menu.Item
+  //         key={index}
+  //         // leadingIcon={meetupType.iconName}
+  //         onPress={() => {
+  //           props.setSelectedMeetupType(meetupType);
+  //           props.setIsMeetupTypeMenuVisible(false);
+  //         }}
+  //         title={meetupType.value}
+  //       />
+  //     );
+  //   });
+
+  //   return <>{options}</>;
+  // };
+
+  // ここのmeetupGenre menuに関してcomponentを別で持ってないといけないわ。refactoringだな。
+
+  const renderAddMoreMenu = () => {
+    if (props.state.meetupGenres.length >= 1 && props.state.meetupGenres[0] && props.state.meetupGenres.length <= 3) {
       return (
-        <Menu.Item
-          key={index}
-          // leadingIcon={meetupType.iconName}
+        <Button
+          icon='plus'
+          mode='contained'
           onPress={() => {
-            props.setSelectedMeetupType(meetupType);
-            props.setIsMeetupTypeMenuVisible(false);
+            props.dispatch({ type: 'ADD_MORE_MEETUP_GENRE', payload: '' });
           }}
-          title={meetupType.value}
-        />
+        >
+          Add more
+        </Button>
+      );
+    }
+  };
+
+  const renderMeetupGenresMenu = () => {
+    // meetupGenres　[''];
+    const meetupGenresMenu = props.state.meetupGenres.map((value, index) => {
+      return (
+        // <View style={styles.bodyInterests.menu}>
+        //   <Menu
+        //     visible={props.state.isMeetupGenreMenuVisible}
+        //     onDismiss={() => props.setIsMeetupTypeMenuVisible(false)}
+        //     anchor={<Button onPress={() => props.setIsMeetupTypeMenuVisible(true)}>Select</Button>}
+        //   >
+        //     {renderMeetupTypeMenus()}
+        //   </Menu>
+        //   <Text style={{ fontSize: 17, textAlign: 'center' }}>{props.selectedMeetupType.value}</Text>
+        // </View>
+        <MeetupGenreMenu key={index} index={index} meetupGenres={props.state.meetupGenres} dispatch={props.dispatch} />
       );
     });
 
-    return <>{options}</>;
+    return <>{meetupGenresMenu}</>;
   };
 
   const renderAttendeesLimitMenus = () => {
@@ -140,13 +195,13 @@ const Body = (props) => {
   };
 
   const onStartDateConfirm = (date) => {
-    props.setStartDate(date);
-    props.setIsStartDatePickerVisible(false);
+    props.dispatch({ type: 'SET_START_DATE_AND_TIME', payload: date });
+    props.dispatch({ type: 'SET_IS_START_DATE_PICKER_VISIBLE', payload: false });
   };
 
   const onEndDateConfirm = (date) => {
-    props.setEndDate(date);
-    props.setIsEndDatePickerVisible(false);
+    props.dispatch({ type: 'SET_END_DATE_AND_TIME', payload: date });
+    props.dispatch({ type: 'SET_IS_END_DATE_PICKER_VISIBLE', payload: false });
   };
 
   const renderDate = (date) => {
@@ -170,70 +225,97 @@ const Body = (props) => {
     props.setIsSwitchOn(!props.isSwitchOn);
   };
 
+  const renderSwitchState = () => {
+    if (props.isSwitchOn) {
+      return <Text style={{ marginRight: 5, fontSize: 15 }}>Yes</Text>;
+    } else {
+      return <Text style={{ marginRight: 5, fontSize: 15 }}>No</Text>;
+    }
+  };
+
+  const renderFeeForm = () => {
+    if (!props.isSwitchOn) {
+      return (
+        <View>
+          <Menu
+            visible={props.isMeetupTypeMenuVisible}
+            // onDismiss={() => props.setIsMeetupTypeMenuVisible(false)}
+            anchor={<Button onPress={() => props.setIsMeetupTypeMenuVisible(true)}>Select</Button>}
+          >
+            {renderMeetupTypeMenus()}
+          </Menu>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={{ paddingLeft: 20, paddingRight: 20, paddingTop: 20, paddingBottom: 150 }}>
+      {/* title */}
+      <View style={styles.bodyTitle}>
+        <View style={styles.bodyTitle.header}>
+          <AntDesign name='edit' size={24} />
+          <Text style={{ fontSize: 17, color: 'rgb(135, 135, 135)', marginLeft: 10 }}>
+            Please write the meetup title.
+          </Text>
+        </View>
+        <TextInput
+          // style={{ marginTop: 10 }}
+          // label='Meetup title'
+          value={props.state.title}
+          onChangeText={(text) => props.dispatch({ type: 'SET_TITLE', payload: text })}
+          // left={<TextInput.Icon name='eye' />}
+          mode='outlined'
+          right={<TextInput.Affix text={`${props.state.title.length}/80`} />}
+        />
+      </View>
+
       {/* date and time */}
       <View style={styles.bodyDateAndTime}>
         <View style={styles.bodyDateAndTime.header}>
           <FontAwesome name='calendar' size={24} />
-          <Text style={{ fontSize: 17, color: 'rgb(135, 135, 135)', marginLeft: 10 }}>Date & Time</Text>
+          <Text style={{ fontSize: 17, color: 'rgb(135, 135, 135)', marginLeft: 10 }}>When do you host it?</Text>
         </View>
         <View style={styles.bodyDateAndTime.startEndWrapper}>
           <View style={styles.bodyDateAndTime.startEndWrapper.date}>
             <Button
               style={styles.bodyDateAndTime.startEndWrapper.date.button}
               mode='outlined'
-              onPress={() => props.setIsStartDatePickerVisible(true)}
+              onPress={() => props.dispatch({ type: 'SET_IS_START_DATE_PICKER_VISIBLE', payload: true })}
             >
               Start
             </Button>
-            {/* <Text>{`${new Date(startDate)}`}</Text> */}
-            {renderDate(props.startDate)}
+            {renderDate(props.state.startDateAndTime)}
           </View>
           <View style={styles.bodyDateAndTime.startEndWrapper.date}>
             <Button
               style={styles.bodyDateAndTime.startEndWrapper.date.button}
               mode='outlined'
-              onPress={() => props.setIsEndDatePickerVisible(true)}
+              onPress={() => props.dispatch({ type: 'SET_IS_END_DATE_PICKER_VISIBLE', payload: true })}
             >
               end
             </Button>
-            {/* <Text>{`${new Date(endDate)}`}</Text> */}
-            {renderDate(props.endDate)}
+            {renderDate(props.state.endDateAndTime)}
           </View>
         </View>
         <DateTimePickerModal
-          isVisible={props.isStartDatePickerVisible}
+          isVisible={props.state.isStartDatePickerVisible}
           mode='datetime'
           onConfirm={(date) => onStartDateConfirm(date)}
-          onCancel={() => props.setIsStartDatePickerVisible(false)}
+          onCancel={() => props.dispatch({ type: 'SET_IS_START_DATE_PICKER_VISIBLE', payload: false })}
           is24Hour={true}
         />
         <DateTimePickerModal
-          isVisible={props.isEndDatePickerVisible}
+          isVisible={props.state.isEndDatePickerVisible}
           mode='datetime'
           onConfirm={(date) => onEndDateConfirm(date)}
           onCancel={() => setEndDatePickerVisibility(false)}
           is24Hour={true}
         />
       </View>
-      {/* title */}
-      <View style={styles.bodyTitle}>
-        <View style={styles.bodyTitle.header}>
-          <AntDesign name='edit' size={24} />
-          <Text style={{ fontSize: 17, color: 'rgb(135, 135, 135)', marginLeft: 10 }}>Meetup title</Text>
-        </View>
-        <TextInput
-          // style={{ marginTop: 10 }}
-          // label='Meetup title'
-          // placeholder='Please write about your meetup'
-          value={props.title}
-          onChangeText={(text) => props.setTitle(text)}
-          // left={<TextInput.Icon name='eye' />}
-          mode='outlined'
-          right={<TextInput.Affix text='/80' />}
-        />
-      </View>
+
       {/* detail */}
       {/* <View style={styles.bodyDetail}>
         <View style={styles.bodyTitle.header}>
@@ -254,44 +336,56 @@ const Body = (props) => {
         />
       </View> */}
 
-      <View style={styles.bodyAttendees}>
-        <View style={styles.bodyAttendees.header}>
-          <MaterialIcons name='sports-bar' size={24} />
-          <Text style={{ fontSize: 17, color: 'rgb(135, 135, 135)', marginLeft: 10 }}>What is this meetup about?</Text>
+      {/* meetupgenres */}
+      <View style={styles.bodyInterests}>
+        <View style={styles.bodyInterests.header}>
+          <View style={styles.bodyInterests.header.title}>
+            <MaterialIcons name='sports-bar' size={24} />
+            <Text style={{ fontSize: 17, color: 'rgb(135, 135, 135)', marginLeft: 10 }}>What is it about?</Text>
+          </View>
+          {renderAddMoreMenu()}
         </View>
-        <Menu
-          visible={props.isMeetupTypeMenuVisible}
-          onDismiss={() => props.setIsMeetupTypeMenuVisible(false)}
-          anchor={<Button onPress={() => props.setIsMeetupTypeMenuVisible(true)}>Select</Button>}
-        >
-          {renderMeetupTypeMenus()}
-        </Menu>
+        {/* <View style={styles.bodyInterests.menu}>
+          <Menu
+            visible={props.isMeetupTypeMenuVisible}
+            onDismiss={() => props.setIsMeetupTypeMenuVisible(false)}
+            anchor={<Button onPress={() => props.setIsMeetupTypeMenuVisible(true)}>Select</Button>}
+          >
+            {renderMeetupTypeMenus()}
+          </Menu>
+          <Text style={{ fontSize: 17, textAlign: 'center' }}>{props.selectedMeetupType.value}</Text>
+        </View> */}
+        {renderMeetupGenresMenu()}
       </View>
-      <Text style={{ fontSize: 17, textAlign: 'center' }}>{props.selectedMeetupType.value}</Text>
 
-      {/* fee */}
-      <View style={styles.bodyAttendees}>
-        <View style={styles.bodyAttendees.header}>
+      {/* fee select */}
+      {/* <View style={styles.bodyFeeSelect}>
+        <View style={styles.bodyFeeSelect.header}>
           <FontAwesome5 name='money-bill-alt' size={24} />
           <Text style={{ fontSize: 17, color: 'rgb(135, 135, 135)', marginLeft: 10 }}>Is it free to join?</Text>
-          {/* <AntDesign name='questioncircle' size={15} /> */}
         </View>
-        {/* <Menu
+        <Menu
           visible={props.isAttendeesMenuVisible}
           onDismiss={() => props.setIsAttendeesMenuVisible(false)}
           anchor={<Button onPress={() => props.setIsAttendeesMenuVisible(true)}>Select</Button>}
         >
           {renderAttendeesLimitMenus()}
-        </Menu> */}
-        <Switch value={props.isSwitchOn} onValueChange={onToggleSwitch} />
-      </View>
-      {renderAttendeesLimit()}
+        </Menu>
+        <View style={styles.bodyFeeSelect.switchMenu}>
+          {renderSwitchState()}
+          <Switch value={props.isSwitchOn} onValueChange={onToggleSwitch} />
+        </View>
+      </View> */}
+
+      {/* fee form */}
+      {/* {renderFeeForm()} */}
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   bodyDateAndTime: {
+    marginTop: 30,
     header: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -310,7 +404,6 @@ const styles = StyleSheet.create({
     },
   },
   bodyTitle: {
-    marginTop: 30,
     header: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -332,16 +425,38 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  bodyAttendees: {
+  bodyInterests: {
     marginTop: 30,
-    flexDirection: 'row',
-    alignItems: 'center',
     // justifyContent: 'space-between',
     header: {
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'space-between',
+      title: {
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
+    },
+    menu: {
+      flexDirection: 'row',
+      alignItems: 'center',
     },
   },
+  bodyFeeSelect: {
+    marginTop: 30,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    switchMenu: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+  },
+  bodyFeeForm: {},
 });
 
 export default Body;
