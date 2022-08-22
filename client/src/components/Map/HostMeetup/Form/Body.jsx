@@ -1,6 +1,6 @@
 // main libraries
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, FlatList, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, FlatList, SafeAreaView, Image } from 'react-native';
 import { TextInput, Divider, IconButton, Button, Menu, Switch } from 'react-native-paper';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
@@ -13,29 +13,6 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 // components
 import MeetupGenreMenu from './MeetupGenreMenu';
-
-// glass-mug-variant
-// head
-// kabaddi
-// karate
-// skateboarding
-// soccer-field
-// basketball-hoop-outline
-
-// const meetupTypes = [
-//   { value: 'Bar', id: '62fa40ebd38fd116e2c9045b', iconName: 'glass-mug-variant' },
-//   { value: 'Food & Drink', id: '62f717747f3b648f706bed1b', iconName: 'food-fork-drink' },
-//   { value: 'Shopping', id: '62f717c67f3b648f706bed1c', iconName: 'shopping-outline' },
-//   { value: 'Party', id: '62f718337f3b648f706bed1d', iconName: 'party-popper' },
-//   { value: 'Travel', id: '62f718627f3b648f706bed1e', iconName: 'airplane' },
-//   { value: 'Amazing', id: '62f718b17f3b648f706bed20', iconName: 'head-lightbulb' },
-//   { value: 'Sports match', id: '62f718c77f3b648f706bed21', iconName: 'soccer-field' },
-//   { value: 'Art', id: '62f718f87f3b648f706bed23', iconName: 'image-frame' },
-//   { value: 'Business', id: '62f7190e7f3b648f706bed24', iconName: 'account-tie' },
-//   { value: 'Sports', id: '62f719207f3b648f706bed25', iconName: 'tennis-ball' },
-//   { value: 'Weather & Disaster', id: '62f719347f3b648f706bed26', iconName: 'weather-lightning-rainy' },
-//   { value: 'Traffic', id: '62f7194a7f3b648f706bed27', iconName: 'car-multiple' },
-// ];
 
 const meetupTypes = [
   { value: '🍺 Bar', id: '62fa40ebd38fd116e2c9045b', iconName: 'glass-mug-variant' },
@@ -112,26 +89,6 @@ const currencyOptions = ['$USD', '£GBP', '€EUR', '¥JPY', '$CAD'];
 const attendeesOptions = ['3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', 'Free'];
 
 const Body = (props) => {
-  // const renderMeetupTypeMenus = () => {
-  //   const options = meetupTypes.map((meetupType, index) => {
-  //     return (
-  //       <Menu.Item
-  //         key={index}
-  //         // leadingIcon={meetupType.iconName}
-  //         onPress={() => {
-  //           props.setSelectedMeetupType(meetupType);
-  //           props.setIsMeetupTypeMenuVisible(false);
-  //         }}
-  //         title={meetupType.value}
-  //       />
-  //     );
-  //   });
-
-  //   return <>{options}</>;
-  // };
-
-  // ここのmeetupGenre menuに関してcomponentを別で持ってないといけないわ。refactoringだな。
-
   const renderCurrencies = () => {
     const currencies = currencyOptions.map((element, index) => {
       return (
@@ -165,51 +122,13 @@ const Body = (props) => {
   };
 
   const renderMeetupGenresMenu = () => {
-    // meetupGenres　[''];
     const meetupGenresMenu = props.state.meetupGenres.map((value, index) => {
       return (
-        // <View style={styles.bodyInterests.menu}>
-        //   <Menu
-        //     visible={props.state.isMeetupGenreMenuVisible}
-        //     onDismiss={() => props.setIsMeetupTypeMenuVisible(false)}
-        //     anchor={<Button onPress={() => props.setIsMeetupTypeMenuVisible(true)}>Select</Button>}
-        //   >
-        //     {renderMeetupTypeMenus()}
-        //   </Menu>
-        //   <Text style={{ fontSize: 17, textAlign: 'center' }}>{props.selectedMeetupType.value}</Text>
-        // </View>
         <MeetupGenreMenu key={index} index={index} meetupGenres={props.state.meetupGenres} dispatch={props.dispatch} />
       );
     });
 
     return <>{meetupGenresMenu}</>;
-  };
-
-  const renderAttendeesLimitMenus = () => {
-    const options = attendeesOptions.map((value, index) => {
-      return (
-        <Menu.Item
-          key={index}
-          onPress={() => {
-            props.setSelectedAttendeesLimit(value);
-            props.setIsAttendeesMenuVisible(false);
-          }}
-          title={value}
-        />
-      );
-    });
-
-    return <>{options}</>;
-  };
-
-  const renderAttendeesLimit = () => {
-    if (!props.selectedAttendeesLimit) {
-      return null;
-    } else if (props.selectedAttendeesLimit === 'Free') {
-      return <Text style={{ fontSize: 17, textAlign: 'center' }}>{props.selectedAttendeesLimit}</Text>;
-    } else {
-      return <Text style={{ fontSize: 17, textAlign: 'center' }}>{`${props.selectedAttendeesLimit} people`}</Text>;
-    }
   };
 
   const onStartDateConfirm = (date) => {
@@ -285,11 +204,35 @@ const Body = (props) => {
     <ScrollView contentContainerStyle={{ paddingLeft: 20, paddingRight: 20, paddingTop: 20, paddingBottom: 150 }}>
       {/* title */}
       <View style={styles.bodyTitle}>
-        <View style={styles.bodyTitle.header}>
-          <AntDesign name='edit' size={24} />
-          <Text style={{ fontSize: 17, color: 'rgb(135, 135, 135)', marginLeft: 10 }}>
-            Please write the meetup title.
-          </Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <View style={styles.bodyTitle.header}>
+            <AntDesign name='edit' size={24} />
+            <Text style={{ fontSize: 17, color: 'rgb(135, 135, 135)', marginLeft: 10 }}>Meetup title</Text>
+          </View>
+          <Menu
+            visible={props.state.isMeetupPrivacyMenuVisible}
+            onDismiss={() => props.dispatch({ type: 'SET_IS_MEETUP_PRIVACY_MENU_VISIBLE', payload: false })}
+            anchor={
+              <Button onPress={() => props.dispatch({ type: 'SET_IS_MEETUP_PRIVACY_MENU_VISIBLE', payload: true })}>
+                public
+              </Button>
+            }
+          >
+            <Menu.Item
+              onPress={() => {
+                props.dispatch({ type: 'SET_IS_MEETUP_PUBLIC', payload: true });
+                props.dispatch({ type: 'SET_IS_MEETUP_PRIVACY_MENU_VISIBLE', payload: false });
+              }}
+              title={'public'}
+            />
+            {/* <Menu.Item
+              onPress={() => {
+                props.dispatch({ type: 'SET_IS_MEETUP_PUBLIC', payload: false });
+                props.dispatch({ type: 'SET_IS_MEETUP_PRIVACY_MENU_VISIBLE', payload: false });
+              }}
+              title={'private'}
+            /> */}
+          </Menu>
         </View>
         <TextInput
           // style={{ marginTop: 10 }}

@@ -15,12 +15,13 @@ const meetupSchema = new mongoose.Schema({
     maxLength: 80,
   },
   // 最大で3つまで
-  meetupGenres: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'MeetupGenre',
-    },
-  ],
+  // genres: [
+  //   {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'MeetupGenre',
+  //   },
+  // ],
+  genres: [String],
   startDateAndTime: {
     type: Date,
   },
@@ -52,8 +53,8 @@ const meetupSchema = new mongoose.Schema({
   ],
   state: {
     type: String,
-    default: 'notYet',
-    // notYet, nowOn, done
+    default: '',
+    // '', started, done
   },
   pics: [
     {

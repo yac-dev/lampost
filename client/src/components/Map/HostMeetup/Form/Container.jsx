@@ -1,10 +1,14 @@
 // main libraries
 import React, { useState, useReducer } from 'react';
+import { connect } from 'react-redux';
 import { View, Text, StyleSheet } from 'react-native';
 
 // components
 import Header from '../../../Utils/Header';
 import Body from './Body';
+
+// ac
+import { createMeetup } from '../../../../redux/actionCreators/meetups';
 
 const INITIAL_STATE = {
   title: '',
@@ -19,6 +23,7 @@ const INITIAL_STATE = {
   currency: '',
   meetupFee: 0,
   isMeetupPublic: true,
+  isMeetupPrivacyMenuVisible: false,
 };
 
 const reducer = (state, action) => {
@@ -49,6 +54,8 @@ const reducer = (state, action) => {
       return { ...state, currency: action.payload };
     case 'SET_MEETUP_FEE':
       return { ...state, meetupFee: action.payload };
+    case 'SET_IS_MEETUP_PRIVACY_MENU_VISIBLE':
+      return { ...state, isMeetupPrivacyMenuVisible: action.payload };
     case 'SET_IS_MEETUP_PUBLIC':
       return { ...state, isMeetupPublic: action.payload };
     default:
@@ -56,85 +63,43 @@ const reducer = (state, action) => {
   }
 };
 
-const Container = () => {
+const Container = (props) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-  const [title, setTitle] = useState('');
-  const [startDate, setStartDate] = useState(null);
-  const [isStartDatePickerVisible, setIsStartDatePickerVisible] = useState(false);
-  const [endDate, setEndDate] = useState(null);
-  const [isEndDatePickerVisible, setIsEndDatePickerVisible] = useState(false);
-  const [detail, setDetail] = useState('');
-  const [meetupType, setMeetupType] = useState('');
-  const [attendeesLimit, setAttendeesLimit] = useState('');
-  const [isMeetupTypeMenuVisible, setIsMeetupTypeMenuVisible] = useState(false);
-  const [isAttendeesMenuVisible, setIsAttendeesMenuVisible] = useState(false);
-  const [selectedMeetupType, setSelectedMeetupType] = useState('');
-  const [selectedAttendeesLimit, setSelectedAttendeesLimit] = useState('');
-
-  const [isMeetupFree, setIsMeetupFree] = useState(true);
-  const [meetupFee, setMeetupFee] = useState(0);
-  const [currency, setCurrency] = useState('USD');
-  const [isMeetupPublic, setIsMeetupPublic] = useState(true);
-
-  const [isSwitchOn, setIsSwitchOn] = useState(true);
-
-  const onSubmit = () => {
-    //
-    // const formData = {
-    //   place: {
-    //     type: 'Point',
-    //     coordinates: [props.hostMeetup.setLocation.longitude, props.hostMeetup.setLocation.latitude],
-    //   },
-    //   title,
-    //   meetupGenres,
-    //   startDateAndTime,
-    //   endDateAndTime,
-    //   fee,
-    //   currency,
-    //   isPublic,
-    //   host: '74814',
-    // };
-    console.log(state);
-  };
-
   const enableSubmitButton = () => {
     // formのvalidationをここに書いていくことになる。
     return true;
   };
 
+  const onSubmit = () => {
+    const genres = state.meetupGenres.map((el) => el.value);
+    const formData = {
+      place: {
+        type: 'Point',
+        coordinates: [props.hostMeetup.setLocation.longitude, props.hostMeetup.setLocation.latitude],
+      },
+      title: state.title,
+      genres: genres,
+      startDateAndTime: state.startDateAndTime,
+      endDateAndTime: state.endDateAndTime,
+      isFree: state.isMeetupFree,
+      fee: state.meetupFee,
+      currency: state.currency,
+      isPublic: state.isMeetupPublic,
+      host: '62edfa7578dc6a45c95f3ef6',
+    };
+    props.createMeetup(formData);
+  };
+
   return (
     <View>
-      <Header title='Host Meetup' onSubmit={onSubmit} />
-      <Body
-        // startDate={startDate}
-        // setStartDate={setStartDate}
-        // endDate={endDate}
-        // setEndDate={setEndDate}
-        // isStartDatePickerVisible={isStartDatePickerVisible}
-        // setIsStartDatePickerVisible={setIsStartDatePickerVisible}
-        // isEndDatePickerVisible={isEndDatePickerVisible}
-        // setIsEndDatePickerVisible={setIsEndDatePickerVisible}
-        // title={title}
-        // setTitle={setTitle}
-        // detail={detail}
-        // setDetail={setDetail}
-        // attendeesLimit={attendeesLimit}
-        // setAttendeesLimit={setAttendeesLimit}
-        // isMeetupTypeMenuVisible={isMeetupTypeMenuVisible}
-        // setIsMeetupTypeMenuVisible={setIsMeetupTypeMenuVisible}
-        // isAttendeesMenuVisible={isAttendeesMenuVisible}
-        // setIsAttendeesMenuVisible={setIsAttendeesMenuVisible}
-        // selectedMeetupType={selectedMeetupType}
-        // setSelectedMeetupType={setSelectedMeetupType}
-        // selectedAttendeesLimit={selectedAttendeesLimit}
-        // setSelectedAttendeesLimit={setSelectedAttendeesLimit}
-        // isSwitchOn={isSwitchOn}
-        // setIsSwitchOn={setIsSwitchOn}
-        state={state}
-        dispatch={dispatch}
-      />
+      <Header title='Host Meetup!' onSubmit={onSubmit} />
+      <Body state={state} dispatch={dispatch} />
     </View>
   );
 };
 
-export default Container;
+const mapStateToProps = (state) => {
+  return { hostMeetup: state.hostMeetup };
+};
+
+export default connect(mapStateToProps, { createMeetup })(Container);
