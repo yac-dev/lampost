@@ -7,6 +7,7 @@ import { Callout, Marker, Circle } from 'react-native-maps';
 // ac
 import { getPosts } from '../../../redux/actionCreators/posts';
 import { selectPost } from '../../../redux/actionCreators/selectItem';
+import { getMeetups } from '../../../redux/actionCreators/meetups';
 
 const Item = ({ title }) => {
   return (
@@ -18,7 +19,7 @@ const Item = ({ title }) => {
 
 const MapMarkers = (props) => {
   useEffect(() => {
-    props.getPosts();
+    props.getMeetups();
   }, []);
 
   const renderItem = () => {
@@ -33,13 +34,13 @@ const MapMarkers = (props) => {
 
   // flatlistsなんで動かねーんだろ。
   const render = () => {
-    if (props.posts.length) {
-      const li = props.posts.map((post) => {
+    if (props.meetups.length) {
+      const li = props.meetups.map((meetup) => {
         return (
-          <View key={post._id}>
+          <View key={meetup._id}>
             <Marker
-              coordinate={{ latitude: post.place.coordinates[1], longitude: post.place.coordinates[0] }}
-              onPress={() => props.handleSelectedItemBottomSheetChanges(post)}
+              coordinate={{ latitude: meetup.place.coordinates[1], longitude: meetup.place.coordinates[0] }}
+              // onPress={() => props.handleSelectedItemBottomSheetChanges(post)}
             >
               <Callout>
                 <Text>Yessssss</Text>
@@ -66,11 +67,11 @@ const MapMarkers = (props) => {
 
   return (
     <>
-      <Marker coordinate={{ latitude: 37.78825, longitude: -122.4324 }}>
+      {/* <Marker coordinate={{ latitude: 37.78825, longitude: -122.4324 }}>
         <Callout>
           <Text>Yessssss</Text>
         </Callout>
-      </Marker>
+      </Marker> */}
       {/* <Circle center={{ latitude: 37.78825, longitude: -122.4324 }} radius={2000} /> */}
       {/* <FlatList
         data={props.posts}
@@ -89,7 +90,7 @@ const MapMarkers = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { posts: Object.values(state.posts) };
+  return { meetups: Object.values(state.meetups) };
 };
 
-export default connect(mapStateToProps, { getPosts, selectPost })(MapMarkers);
+export default connect(mapStateToProps, { getPosts, selectPost, getMeetups })(MapMarkers);

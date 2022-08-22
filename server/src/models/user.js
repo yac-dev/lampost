@@ -2,15 +2,19 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema({
-  firstName: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-    unique: true,
+  // firstName: {
+  //   type: String,
+  //   required: true,
+  //   unique: true,
+  // },
+  // lastName: {
+  //   type: String,
+  //   required: true,
+  //   unique: true,
+  // },
+  name: {
+    firstName: String,
+    lastName: String,
   },
   email: {
     type: String,
@@ -86,6 +90,18 @@ userSchema.methods.isPasswordCorrect = async (enteredPassword, actualPassword) =
 userSchema.virtual('posts', {
   ref: 'Post',
   foreignField: 'user',
+  localField: '_id',
+});
+
+userSchema.virtual('meetups', {
+  ref: 'Meetup',
+  foreignField: 'host',
+  localField: '_id',
+});
+
+userSchema.virtual('meetups', {
+  ref: 'Meetup',
+  foreignField: 'attendees',
   localField: '_id',
 });
 

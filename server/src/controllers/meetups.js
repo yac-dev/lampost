@@ -4,7 +4,6 @@ export const createMeetup = async (request, response) => {
   try {
     const { place, title, genres, startDateAndTime, endDateAndTime, isFree, currency, fee, isPublic, host } =
       request.body;
-    console.log('requestes');
     const meetup = new Meetup({
       place,
       title,
@@ -24,6 +23,29 @@ export const createMeetup = async (request, response) => {
 
     response.status(201).json({
       meetup,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getMeetups = async (request, response) => {
+  try {
+    const meetups = await Meetup.find()
+      .populate({
+        path: 'genres',
+        model: 'MeetupGenre',
+      })
+      .populate({
+        path: 'host',
+        model: 'User',
+      })
+      .populate({
+        path: 'attendees',
+        model: 'User',
+      });
+    response.status(200).json({
+      meetups,
     });
   } catch (error) {
     console.log(error);

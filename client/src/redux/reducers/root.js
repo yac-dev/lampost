@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import authReducer from './auth';
-import postsReducer from './posts';
+import meetupsReducer from './meetups';
 import selectedItemReducer from './selectedItem';
 import bottomSheetReducer from './bottomSheet';
 import modalReducer from './modal';
@@ -11,7 +11,7 @@ import hostMeetupReducer from './hostMeetup';
 const rootReducer = combineReducers({
   auth: authReducer,
   bottomSheet: bottomSheetReducer,
-  posts: postsReducer,
+  meetups: meetupsReducer,
   selectedItem: selectedItemReducer,
   modal: modalReducer,
   dialog: dialogReducer,

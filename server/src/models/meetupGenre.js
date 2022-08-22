@@ -1,7 +1,10 @@
 import mongoose from 'mongoose';
 
 const meetupGenreSchema = new mongoose.Schema({
-  name: {
+  value: {
+    type: String,
+  },
+  icon: {
     type: String,
   },
 });

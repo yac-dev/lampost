@@ -10,51 +10,56 @@ const meetupSchema = new mongoose.Schema({
     coordinates: [Number],
   },
   title: {
-    // max80字ね。
     type: String,
     maxLength: 80,
   },
   // 最大で3つまで
-  // genres: [
-  //   {
-  //     type: mongoose.Schema.ObjectId,
-  //     ref: 'MeetupGenre',
-  //   },
-  // ],
-  genres: [String],
+  genres: {
+    type: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'MeetupGenre',
+      },
+    ],
+    validate: [genresLimit, 'OOPS! It is allowed to register at most 3 items.'],
+  },
   startDateAndTime: {
     type: Date,
   },
   endDateAndTime: {
     type: Date,
   },
-  // 0 or > 0になる
   fee: {
     type: Number,
   },
-  // usd, gbp, jpy等
   currency: {
     type: String,
   },
   isPublic: {
     type: Boolean,
   },
-  // hostが入力するのはここまで！
+  // hostが入力するのはここまで
   host: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
   // limitは7!!
-  attendees: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'User',
-    },
-  ],
+  attendees: {
+    type: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+      },
+    ],
+    validate: [attendeesLimit, 'OOPS! This meetup is full now.'],
+  },
   state: {
     type: String,
     default: '',
     // '', started, done
+  },
+  numberOfComments: {
+    type: Number,
   },
   pics: [
     {
@@ -71,6 +76,20 @@ const meetupSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
   },
+});
+
+function genresLimit(val) {
+  return val.length <= 3;
+}
+
+function attendeesLimit(val) {
+  return val.length <= 7;
+}
+
+meetupSchema.virtual('comments', {
+  ref: 'Comment',
+  foreignField: 'meetup',
+  localField: '_id',
 });
 
 const Meetup = mongoose.model('Meetup', meetupSchema);

@@ -71,7 +71,7 @@ const Container = (props) => {
   };
 
   const onSubmit = () => {
-    const genres = state.meetupGenres.map((el) => el.value);
+    const genres = state.meetupGenres.map((el) => el.id);
     const formData = {
       place: {
         type: 'Point',
