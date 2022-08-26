@@ -1,11 +1,11 @@
 const INITIAL_STATE = {
-  post: null,
+  meetup: null,
   user: null,
 };
 const selectedItemReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case 'SELECT_POST':
-      return { ...state, post: action.payload };
+    case 'SELECT_MEETUP':
+      return { ...state, meetup: action.payload };
     default:
       return { ...state };
   }

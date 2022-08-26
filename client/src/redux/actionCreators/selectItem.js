@@ -1,6 +1,6 @@
-export const selectPost = (post) => {
+export const selectMeetup = (meetup) => {
   return {
-    type: 'SELECT_POST',
-    payload: post,
+    type: 'SELECT_MEETUP',
+    payload: meetup,
   };
 };

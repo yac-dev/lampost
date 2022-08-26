@@ -33,7 +33,6 @@ import SetMeetupLocation from './HostMeetup/SetMeetupLocation';
 import HostMeetupBottomSheet from './HostMeetup/BottomSheet';
 
 // ac
-import { countUp } from '../../redux/actionCreators/dummy';
 import { loadMe } from '../../redux/actionCreators/auth';
 import { getCurrentLocation } from '../../redux/actionCreators/auth';
 import { setIsPostBottomSheetOpen } from '../../redux/actionCreators/bottomSheet';

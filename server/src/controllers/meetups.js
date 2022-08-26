@@ -1,4 +1,6 @@
 import Meetup from '../models/meetup';
+import MeetupGenre from '../models/meetupGenre';
+import User from '../models/user';
 
 export const createMeetup = async (request, response) => {
   try {
@@ -34,15 +36,17 @@ export const getMeetups = async (request, response) => {
     const meetups = await Meetup.find()
       .populate({
         path: 'genres',
-        model: 'MeetupGenre',
+        model: MeetupGenre,
       })
       .populate({
         path: 'host',
-        model: 'User',
+        model: User,
+        select: 'name photo',
       })
       .populate({
         path: 'attendees',
-        model: 'User',
+        model: User,
+        select: 'name photo',
       });
     response.status(200).json({
       meetups,
