@@ -7,7 +7,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import Header from '../../../Utils/Header';
 import Body from './Body';
 
-import MeetupBadge from './CreateMeetupBadge/CreateMeetupBadge';
+import MeetupBadge from './CreateMeetupBadge';
 import MeetupDates from './MeetupDates';
 import MeetupDetail from './MeetupDetail';
 

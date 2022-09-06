@@ -10,7 +10,7 @@ import MeetupBadges from './MeetupBadges';
 // ac
 import { setIsSelectMeetupBadgeElementsModalOpen } from '../../../../../redux/actionCreators/modal';
 
-const MeetupBadgeModal = (props) => {
+const Container = (props) => {
   if (props.modal.selectMeetupBadgeElements.isOpen) {
     return (
       <Portal>
@@ -33,4 +33,4 @@ const mapStateToProps = (state) => {
   return { modal: state.modal };
 };
 
-export default connect(mapStateToProps, { setIsSelectMeetupBadgeElementsModalOpen })(MeetupBadgeModal);
+export default connect(mapStateToProps, { setIsSelectMeetupBadgeElementsModalOpen })(Container);
