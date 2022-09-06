@@ -4,16 +4,13 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { IconButton, Button, Searchbar, Dialog, Portal, Provider } from 'react-native-paper';
 
 // components
-import MeetupBadgeElementsModal from './MeetupBadgeElementsModal';
+// import MeetupBadgeElementsModal from './MeetupBadgesModal';
 import MeetupBadges from './MeetupBadges';
 
 //ac
 import { setIsSelectMeetupBadgeElementsModalOpen } from '../../../../../redux/actionCreators/modal';
 
 // assets
-import { foodAndBeverage } from '../../../../../../assets/images';
-import { appsAndProducts } from '../../../../../../assets/images';
-import { all } from '../../../../../../assets/images';
 
 // iconを全部ぴっぱってきて、それをlistでrenderすればいい。
 const MeetupBadge = (props) => {
@@ -26,15 +23,24 @@ const MeetupBadge = (props) => {
         onPress={() => props.dispatch({ type: 'GO_TO_MEETUP_DATES', payload: '' })}
       />
       <View style={{ paddingRight: 15, paddingLeft: 15 }}>
-        <Text style={{ fontSize: 15, fontWeight: 'bold' }}>What kind of meetup are you gonna host? (Up to 4 tags)</Text>
+        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>What kind of meetup are you gonna host? (Up to 4 tags)</Text>
         <View>
-          <Text>Selected badges</Text>
+          <Text>Render Selected badges here</Text>
         </View>
-        <Searchbar placeholder='Search' style={{ height: 30, marginTop: 10 }} />
+        <Button
+          icon='plus'
+          mode='outlined'
+          onPress={() => props.setIsSelectMeetupBadgeElementsModalOpen(true)}
+          style={{ width: 200 }}
+        >
+          Add badge
+        </Button>
+
+        {/* <Searchbar placeholder='Search' style={{ height: 30, marginTop: 10 }} />
 
         <View style={{ marginTop: 10 }}>
           <MeetupBadges />
-        </View>
+        </View> */}
       </View>
     </View>
   );

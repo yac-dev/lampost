@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { Searchbar } from 'react-native-paper';
 
-// import { all } from '../../../../../../assets/images';
 import foodAndBeverage from '../../../../../../assets/badgeObjects/foodAndBeverage';
 import appsAndProducts from '../../../../../../assets/badgeObjects/appsAndProducts';
 // for each badge
@@ -59,6 +59,7 @@ const MeetupBadges = () => {
 
   return (
     <View>
+      <Searchbar placeholder='Search' style={{ height: 40 }} />
       {renderBadges(foodAndBeverage, 'Food & Beverage')}
       {renderBadges(appsAndProducts, 'Apps & Products')}
     </View>

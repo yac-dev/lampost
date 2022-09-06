@@ -31,7 +31,7 @@ import RNPDialog from '../Utils/RNPDialog';
 import CancelHostMeetupButton from './HostMeetup/CancelHostMeetupButton';
 import SetMeetupLocation from './HostMeetup/SetMeetupLocation';
 import HostMeetupBottomSheet from './HostMeetup/BottomSheet';
-import MeetupBadgeElementsModal from './HostMeetup/Form/Body/MeetupBadgeElementsModal';
+import MeetupBadgeElementsModal from './HostMeetup/Form/Body/MeetupBadgesModal';
 
 // ac
 import { loadMe } from '../../redux/actionCreators/auth';
