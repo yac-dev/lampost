@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 
 import foodAndBeverage from '../../../../../../assets/badgeObjects/foodAndBeverage';
 import appsAndProducts from '../../../../../../assets/badgeObjects/appsAndProducts';
+
 // for each badge
 const MeetupBadge = (props) => {
   const [selected, setSelected] = useState(false);
@@ -45,8 +46,8 @@ const MeetupBadge = (props) => {
 
 const MeetupBadges = () => {
   const renderBadges = (badgeObjects, title) => {
-    const badgeObjs = badgeObjects.map((badge) => {
-      return <MeetupBadge badge={badge} />;
+    const badgeObjs = badgeObjects.map((badge, index) => {
+      return <MeetupBadge key={index} badge={badge} />;
     });
 
     return (
@@ -60,8 +61,10 @@ const MeetupBadges = () => {
   return (
     <View>
       <Searchbar placeholder='Search' style={{ height: 40 }} />
-      {renderBadges(foodAndBeverage, 'Food & Beverage')}
-      {renderBadges(appsAndProducts, 'Apps & Products')}
+      <ScrollView style={{ maxHeight: 500, addingBottom: 150 }}>
+        {renderBadges(foodAndBeverage, 'Food & Beverage')}
+        {renderBadges(appsAndProducts, 'Apps & Products')}
+      </ScrollView>
     </View>
   );
 };

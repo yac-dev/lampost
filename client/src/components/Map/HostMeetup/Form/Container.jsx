@@ -7,9 +7,9 @@ import { View, Text, StyleSheet } from 'react-native';
 import Header from '../../../Utils/Header';
 import Body from './Body';
 
-import MeetupBadge from './Body/CreateMeetupBadge';
-import MeetupDates from './Body/MeetupDates';
-import MeetupDetail from './Body/MeetupDetail';
+import MeetupBadge from './CreateMeetupBadge/CreateMeetupBadge';
+import MeetupDates from './MeetupDates';
+import MeetupDetail from './MeetupDetail';
 
 // ac
 import { createMeetup } from '../../../../redux/actionCreators/meetups';

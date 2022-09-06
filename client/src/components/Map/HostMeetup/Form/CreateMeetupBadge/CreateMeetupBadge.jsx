@@ -4,8 +4,6 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { IconButton, Button, Searchbar, Dialog, Portal, Provider } from 'react-native-paper';
 
 // components
-// import MeetupBadgeElementsModal from './MeetupBadgesModal';
-import MeetupBadges from './MeetupBadges';
 
 //ac
 import { setIsSelectMeetupBadgeElementsModalOpen } from '../../../../../redux/actionCreators/modal';
@@ -35,12 +33,6 @@ const MeetupBadge = (props) => {
         >
           Add badge
         </Button>
-
-        {/* <Searchbar placeholder='Search' style={{ height: 30, marginTop: 10 }} />
-
-        <View style={{ marginTop: 10 }}>
-          <MeetupBadges />
-        </View> */}
       </View>
     </View>
   );

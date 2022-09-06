@@ -15,7 +15,7 @@ import * as AllSolid from '@fortawesome/free-solid-svg-icons';
 import * as AllBrands from '@fortawesome/free-brands-svg-icons';
 
 // components
-import MeetupGenreMenu from './MeetupGenreMenu';
+// import MeetupGenreMenu from './MeetupGenreMenu';
 
 const currencyOptions = ['$USD', '£GBP', '€EUR', '¥JPY', '$CAD'];
 
@@ -36,31 +36,31 @@ const Body = (props) => {
     return <>{currencies}</>;
   };
 
-  const renderAddMoreMenu = () => {
-    if (props.state.meetupGenres.length >= 1 && props.state.meetupGenres[0] && props.state.meetupGenres.length <= 2) {
-      return (
-        <Button
-          icon='plus'
-          mode='contained'
-          onPress={() => {
-            props.dispatch({ type: 'ADD_MORE_MEETUP_GENRE', payload: '' });
-          }}
-        >
-          Add
-        </Button>
-      );
-    }
-  };
+  // const renderAddMoreMenu = () => {
+  //   if (props.state.meetupGenres.length >= 1 && props.state.meetupGenres[0] && props.state.meetupGenres.length <= 2) {
+  //     return (
+  //       <Button
+  //         icon='plus'
+  //         mode='contained'
+  //         onPress={() => {
+  //           props.dispatch({ type: 'ADD_MORE_MEETUP_GENRE', payload: '' });
+  //         }}
+  //       >
+  //         Add
+  //       </Button>
+  //     );
+  //   }
+  // };
 
-  const renderMeetupGenresMenu = () => {
-    const meetupGenresMenu = props.state.meetupGenres.map((value, index) => {
-      return (
-        <MeetupGenreMenu key={index} index={index} meetupGenres={props.state.meetupGenres} dispatch={props.dispatch} />
-      );
-    });
+  // const renderMeetupGenresMenu = () => {
+  //   const meetupGenresMenu = props.state.meetupGenres.map((value, index) => {
+  //     return (
+  //       <MeetupGenreMenu key={index} index={index} meetupGenres={props.state.meetupGenres} dispatch={props.dispatch} />
+  //     );
+  //   });
 
-    return <>{meetupGenresMenu}</>;
-  };
+  //   return <>{meetupGenresMenu}</>;
+  // };
 
   const onStartDateConfirm = (date) => {
     props.dispatch({ type: 'SET_START_DATE_AND_TIME', payload: date });
@@ -324,7 +324,7 @@ const Body = (props) => {
               What is your meetup about?
             </Text>
           </View>
-          {renderAddMoreMenu()}
+          {/* {renderAddMoreMenu()} */}
         </View>
         {/* <View style={styles.bodyInterests.menu}>
           <Menu
@@ -336,7 +336,7 @@ const Body = (props) => {
           </Menu>
           <Text style={{ fontSize: 17, textAlign: 'center' }}>{props.selectedMeetupType.value}</Text>
         </View> */}
-        {renderMeetupGenresMenu()}
+        {/* {renderMeetupGenresMenu()} */}
       </View>
 
       {/* fee select */}
