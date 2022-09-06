@@ -6,6 +6,7 @@ import bottomSheetReducer from './bottomSheet';
 import modalReducer from './modal';
 import dialogReducer from './dialog';
 import hostMeetupReducer from './hostMeetup';
+import badgeElementsReducer from './badgeElements';
 // import dummy from './dummy';
 
 const rootReducer = combineReducers({
@@ -16,5 +17,6 @@ const rootReducer = combineReducers({
   modal: modalReducer,
   dialog: dialogReducer,
   hostMeetup: hostMeetupReducer,
+  badgeElements: badgeElementsReducer,
 });
 export default rootReducer;

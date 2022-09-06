@@ -1,5 +1,5 @@
 // main libraries
-import React, { useState, useReducer } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, StyleSheet } from 'react-native';
 
@@ -7,10 +7,17 @@ import { View, Text, StyleSheet } from 'react-native';
 import Header from '../../../Utils/Header';
 import Body from './Body';
 
+import MeetupBadge from './Body/CreateMeetupBadge';
+import MeetupDates from './Body/MeetupDates';
+import MeetupDetail from './Body/MeetupDetail';
+
 // ac
 import { createMeetup } from '../../../../redux/actionCreators/meetups';
+import { getBadgeElements } from '../../../../redux/actionCreators/badgeElements';
 
 const INITIAL_STATE = {
+  component: 'MeetupBadge',
+  badgeElements: [],
   title: '',
   startDateAndTime: null,
   isStartDatePickerVisible: false,
@@ -28,6 +35,18 @@ const INITIAL_STATE = {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'GO_TO_MEETUP_DATES':
+      return { ...state, component: 'MeetupDates' };
+    case 'BACK_TO_MEETUP_BADGE':
+      return { ...state, component: 'MeetupBadge' };
+    case 'GO_TO_MEETUP_DETAIL':
+      return { ...state, component: 'MeetupDetail' };
+    case 'BACK_TO_MEETUP_DATES':
+      return { ...state, component: 'MeetupDates' };
+    case 'ADD_BADGE_ELEMENTS':
+      return { ...state, badgeElements: [...state.badgeElements, action.payload] };
+    case 'REMOVE_BADGE_ELEMENT':
+      return { ...state }; // 後でやりましょう。
     case 'SET_TITLE':
       return { ...state, title: action.payload };
     case 'SET_START_DATE_AND_TIME':
@@ -70,6 +89,10 @@ const Container = (props) => {
     return true;
   };
 
+  useEffect(() => {
+    getBadgeElements();
+  }, []);
+
   const onSubmit = () => {
     const genres = state.meetupGenres.map((el) => el.id);
     const formData = {
@@ -90,12 +113,22 @@ const Container = (props) => {
     props.createMeetup(formData);
   };
 
-  return (
-    <View>
-      <Header title='Host Meetup!' onSubmit={onSubmit} />
-      <Body state={state} dispatch={dispatch} />
-    </View>
-  );
+  // return (
+  //   <View>
+  //     <Header title='Host Meetup!' onSubmit={onSubmit} />
+  //     <Body state={state} dispatch={dispatch} />
+  //   </View>
+  // );
+  switch (state.component) {
+    case 'MeetupBadge':
+      return <MeetupBadge state={state} dispatch={dispatch} />;
+    case 'MeetupDates':
+      return <MeetupDates state={state} dispatch={dispatch} />;
+    case 'MeetupDetail':
+      return <MeetupDetail state={state} dispatch={dispatch} />;
+    default:
+      return null;
+  }
 };
 
 const mapStateToProps = (state) => {

@@ -31,6 +31,7 @@ import RNPDialog from '../Utils/RNPDialog';
 import CancelHostMeetupButton from './HostMeetup/CancelHostMeetupButton';
 import SetMeetupLocation from './HostMeetup/SetMeetupLocation';
 import HostMeetupBottomSheet from './HostMeetup/BottomSheet';
+import MeetupBadgeElementsModal from './HostMeetup/Form/Body/MeetupBadgeElementsModal';
 
 // ac
 import { loadMe } from '../../redux/actionCreators/auth';
@@ -179,6 +180,7 @@ const Map = (props) => {
     <>
       <NBProvider>
         <View style={styles.container}>
+          <MeetupBadgeElementsModal />
           <MapView
             ref={mapRef}
             style={styles.map}

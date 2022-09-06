@@ -9,7 +9,7 @@ import GorhomBottomSheet, { BottomSheetView, BottomSheetScrollView } from '@gorh
 import FormContainer from './Form/Container';
 
 const BottomSheet = (props) => {
-  const snapPoints = ['20%', '80%'];
+  const snapPoints = ['20%', '87%'];
 
   if (props.hostMeetup.isOpen && props.hostMeetup.setLocation) {
     return (

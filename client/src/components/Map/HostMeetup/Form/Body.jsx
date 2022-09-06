@@ -10,6 +10,9 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import * as AllSolid from '@fortawesome/free-solid-svg-icons';
+import * as AllBrands from '@fortawesome/free-brands-svg-icons';
 
 // components
 import MeetupGenreMenu from './MeetupGenreMenu';
@@ -129,7 +132,7 @@ const Body = (props) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={{ paddingLeft: 20, paddingRight: 20, paddingTop: 20, paddingBottom: 150 }}>
+    <ScrollView contentContainerStyle={{ paddingLeft: 25, paddingRight: 25, paddingTop: 25, paddingBottom: 150 }}>
       {/* title */}
       <View style={styles.bodyTitle}>
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -172,6 +175,81 @@ const Body = (props) => {
           right={<TextInput.Affix text={`${props.state.title.length}/80`} />}
         />
       </View>
+
+      {/* <View>
+        <FontAwesomeIcon style={{ color: 'red' }} size={25} icon={AllSolid.faMugSaucer} />
+      </View>
+      <View>
+        <FontAwesomeIcon style={{ color: 'rgb(214, 217, 25)' }} size={25} icon={AllBrands.faSquareJs} />
+      </View>
+      <View style={{ flexDirection: 'row' }}>
+        <Image
+          source={require('../../../../../assets/badgeElements/icons8-ruby-programming-language-100.png')}
+          style={{ tintColor: 'red', width: 25, height: 25 }}
+        />
+        <Image
+          source={require('../../../../../assets/badgeElements/icons8-express-js-100.png')}
+          style={{ tintColor: 'red', width: 25, height: 25 }}
+        />
+        <Image
+          source={require('../../../../../assets/badgeElements/icons8-leg-100.png')}
+          style={{ tintColor: 'red', width: 25, height: 25 }}
+        />
+        <Image
+          source={require('../../../../../assets/badgeElements/icons8-redux-100.png')}
+          style={{ tintColor: 'red', width: 25, height: 25 }}
+        />
+        <Image
+          source={require('../../../../../assets/badgeElements/icons8-trading-card-100.png')}
+          style={{ tintColor: 'red', width: 25, height: 25 }}
+        />
+        <Image
+          source={require('../../../../../assets/badgeElements/icons8-toyota-100.png')}
+          style={{ tintColor: 'red', width: 25, height: 25 }}
+        />
+        <Image
+          source={require('../../../../../assets/badgeElements/icons8-super-smash-bros-100.png')}
+          style={{ tintColor: 'red', width: 25, height: 25 }}
+        />
+        <View>
+          <FontAwesomeIcon style={{ color: 'red' }} size={25} icon={AllSolid.faMugSaucer} />
+        </View>
+        <View>
+          <FontAwesomeIcon style={{ color: 'rgb(214, 217, 25)' }} size={25} icon={AllBrands.faSquareJs} />
+        </View>
+        <Image
+          source={require('../../../../../assets/badgeElements/icons8-javascript-100.png')}
+          style={{ tintColor: 'rgb(81, 128, 196)', width: 25, height: 25 }}
+        />
+        <Image
+          source={require('../../../../../assets/badgeElements/icons8-nft-100.png')}
+          style={{ tintColor: 'rgb(81, 128, 196)', width: 25, height: 25 }}
+        />
+        <Image
+          source={require('../../../../../assets/badgeElements/icons8-typescript-100.png')}
+          style={{ tintColor: 'rgb(81, 128, 196)', width: 25, height: 25 }}
+        />
+        <Image
+          source={require('../../../../../assets/badgeElements/icons8-typescript-100-2.png')}
+          style={{ tintColor: 'red', width: 25, height: 25 }}
+        />
+        <Image
+          source={require('../../../../../assets/badgeElements/icons8-typescript-100-2.png')}
+          style={{ tintColor: 'red', width: 25, height: 25 }}
+        />
+        <Image
+          source={require('../../../../../assets/badgeElements/icons8-nintendo-switch-logo-100.png')}
+          style={{ tintColor: 'rgb(81, 128, 196)', width: 25, height: 25 }}
+        />
+
+        <Image
+          source={require('../../../../../assets/badgeElements/icons8-steve-jobs-100.png')}
+          style={{ tintColor: 'blue', width: 25, height: 25 }}
+        />
+        <View>
+          <FontAwesomeIcon style={{ color: 'rgb(214, 217, 25)' }} size={25} icon={AllBrands.faSquareJs} />
+        </View>
+      </View> */}
 
       {/* date and time */}
       <View style={styles.bodyDateAndTime}>
@@ -288,13 +366,13 @@ const Body = (props) => {
 
 const styles = StyleSheet.create({
   bodyDateAndTime: {
-    marginTop: 30,
+    marginTop: 25,
     header: {
       flexDirection: 'row',
       alignItems: 'center',
     },
     startEndWrapper: {
-      paddingTop: 20,
+      paddingTop: 25,
       date: {
         paddingTop: 5,
         paddingBottom: 5,
@@ -313,7 +391,7 @@ const styles = StyleSheet.create({
     },
   },
   bodyDetail: {
-    marginTop: 30,
+    marginTop: 25,
     height: 250,
     header: {
       flexDirection: 'row',
@@ -329,7 +407,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   bodyInterests: {
-    marginTop: 30,
+    marginTop: 25,
     // justifyContent: 'space-between',
     header: {
       flexDirection: 'row',
@@ -346,7 +424,7 @@ const styles = StyleSheet.create({
     },
   },
   bodyFeeSelect: {
-    marginTop: 30,
+    marginTop: 25,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

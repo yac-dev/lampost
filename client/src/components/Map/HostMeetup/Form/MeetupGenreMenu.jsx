@@ -227,8 +227,8 @@ const meetupGenreOptions = [
   },
   {
     id: '63033746c16e5130852c3771',
-    value: '👩‍🎤 Anime',
-    icon: '👩‍🎤',
+    value: '🍥 Anime',
+    icon: '🍥',
   },
   {
     id: '63033746c16e5130852c3772',
