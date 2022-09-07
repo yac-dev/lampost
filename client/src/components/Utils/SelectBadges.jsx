@@ -59,12 +59,13 @@ const MeetupBadges = () => {
   };
 
   return (
-    <View>
+    <View style={{ minHeight: '90%' }}>
       <Searchbar placeholder='Search' style={{ height: 40 }} />
       <ScrollView style={{ maxHeight: 500, addingBottom: 150 }}>
         {renderBadges(foodAndBeverage, 'Food & Beverage')}
         {renderBadges(appsAndProducts, 'Apps & Products')}
       </ScrollView>
+      <Text>Bottom menu</Text>
     </View>
   );
 };

@@ -12,13 +12,6 @@ export const setIsSelectLimitHourModalOpen = (bool) => {
   };
 };
 
-export const setIsSelectMeetupBadgeElementsModalOpen = (bool) => {
-  return {
-    type: 'SET_SELECT_MEETUP_BADGE_ELEMENTS_MODAL',
-    payload: bool,
-  };
-};
-
 export const setIsSelectMeetupBadgesModalOpen = (bool) => {
   return {
     type: 'SET_IS_SELECT_MEETUP_BADGES_MODAL',

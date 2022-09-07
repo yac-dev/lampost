@@ -6,7 +6,6 @@ import { IconButton, Button, Searchbar, Dialog, Portal, Provider } from 'react-n
 // components
 
 //ac
-import { setIsSelectMeetupBadgeElementsModalOpen } from '../../../../redux/actionCreators/modal';
 import { setIsSelectMeetupBadgesModalOpen } from '../../../../redux/actionCreators/modal';
 
 // assets

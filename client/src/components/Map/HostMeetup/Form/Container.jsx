@@ -7,9 +7,9 @@ import { View, Text, StyleSheet } from 'react-native';
 import Header from '../../../Utils/Header';
 import Body from './Body';
 
-import MeetupBadge from './CreateMeetupBadge';
-import MeetupDates from './MeetupDates';
-import MeetupDetail from './MeetupDetail';
+import CreateMeetupBadge from './CreateMeetupBadge';
+import CreateMeetupDates from './CreateMeetupDates';
+import CreateMeetupDetail from './CreateMeetupDetail';
 
 // ac
 import { createMeetup } from '../../../../redux/actionCreators/meetups';
@@ -121,11 +121,11 @@ const Container = (props) => {
   // );
   switch (state.component) {
     case 'MeetupBadge':
-      return <MeetupBadge state={state} dispatch={dispatch} />;
+      return <CreateMeetupBadge state={state} dispatch={dispatch} />;
     case 'MeetupDates':
-      return <MeetupDates state={state} dispatch={dispatch} />;
+      return <CreateMeetupDates state={state} dispatch={dispatch} />;
     case 'MeetupDetail':
-      return <MeetupDetail state={state} dispatch={dispatch} />;
+      return <CreateMeetupDetail state={state} dispatch={dispatch} />;
     default:
       return null;
   }

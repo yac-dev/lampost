@@ -31,7 +31,8 @@ import RNPDialog from '../Utils/RNPDialog';
 import CancelHostMeetupButton from './HostMeetup/CancelHostMeetupButton';
 import SetMeetupLocation from './HostMeetup/SetMeetupLocation';
 import HostMeetupBottomSheet from './HostMeetup/BottomSheet';
-import MeetupBadgesModal from './HostMeetup/Form/MeetupBadgesModal/Container';
+import MeetupBadgesModalContainer from '../Utils/ModalContainer';
+import SelectBadges from '../Utils/SelectBadges';
 
 // ac
 import { loadMe } from '../../redux/actionCreators/auth';
@@ -41,6 +42,7 @@ import { setIsSelectedItemBottomSheetOpen } from '../../redux/actionCreators/bot
 import { selectPost } from '../../redux/actionCreators/selectItem';
 import { setIsHostMeetupOpen } from '../../redux/actionCreators/hostMeetup';
 import { setMeetupLocation } from '../../redux/actionCreators/hostMeetup';
+import { setIsSelectMeetupBadgesModalOpen } from '../../redux/actionCreators/modal';
 
 const Map = (props) => {
   const [region, setRegion] = useState(null);
@@ -142,6 +144,10 @@ const Map = (props) => {
     }
   };
 
+  const onPressModalOpen = () => {
+    props.setIsSelectMeetupBadgesModalOpen(false);
+  };
+
   useEffect(() => {
     // (async () => {
     //   let { status } = await Location.requestForegroundPermissionsAsync();
@@ -180,7 +186,13 @@ const Map = (props) => {
     <>
       <NBProvider>
         <View style={styles.container}>
-          <MeetupBadgesModal />
+          {/* <MeetupBadgesModal /> */}
+          <MeetupBadgesModalContainer
+            modalOpen={props.modal.selectMeetupBadges.isOpen}
+            onPressModalOpen={onPressModalOpen}
+          >
+            <SelectBadges />
+          </MeetupBadgesModalContainer>
           <MapView
             ref={mapRef}
             style={styles.map}
@@ -293,7 +305,13 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  return { bottomSheet: state.bottomSheet, auth: state.auth, dialog: state.dialog, hostMeetup: state.hostMeetup };
+  return {
+    bottomSheet: state.bottomSheet,
+    auth: state.auth,
+    dialog: state.dialog,
+    hostMeetup: state.hostMeetup,
+    modal: state.modal,
+  };
 };
 
 export default connect(mapStateToProps, {
@@ -304,4 +322,5 @@ export default connect(mapStateToProps, {
   getCurrentLocation,
   setIsHostMeetupOpen,
   setMeetupLocation,
+  setIsSelectMeetupBadgesModalOpen,
 })(Map);
