@@ -32,7 +32,7 @@ import CancelHostMeetupButton from './HostMeetup/CancelHostMeetupButton';
 import SetMeetupLocation from './HostMeetup/SetMeetupLocation';
 import HostMeetupBottomSheet from './HostMeetup/BottomSheet';
 import MeetupBadgesModalContainer from '../Utils/ModalContainer';
-import Badges from '../Utils/SelectBadge/Badges';
+import Badges from '../Utils/SelectBadges/Badges';
 
 // ac
 import { loadMe } from '../../redux/actionCreators/auth';

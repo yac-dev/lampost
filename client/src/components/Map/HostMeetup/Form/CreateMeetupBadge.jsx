@@ -12,7 +12,7 @@ const selectedMeetupBadges = () => {
   return <View></View>;
 };
 
-const MeetupBadge = (props) => {
+const CreateMeetupBadge = (props) => {
   return (
     <View>
       <IconButton
@@ -37,10 +37,4 @@ const MeetupBadge = (props) => {
   );
 };
 
-// selected badgeを別で作ろうか。
-
-const mapStateToProps = (state) => {
-  return { selectedItem: state.selectedItem };
-};
-
-export default connect(null, { setIsSelectMeetupBadgesModalOpen })(MeetupBadge);
+export default connect(null, { setIsSelectMeetupBadgesModalOpen })(CreateMeetupBadge);

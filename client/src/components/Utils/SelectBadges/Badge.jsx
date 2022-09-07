@@ -5,14 +5,28 @@ import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 
 // ac
 import { selectBadge } from '../../../redux/actionCreators/selectItem';
-// icons
-import foodAndBeverage from '../../../../assets/badgeObjects/foodAndBeverage';
-import appsAndProducts from '../../../../assets/badgeObjects/appsAndProducts';
+import { removeBadge } from '../../../redux/actionCreators/selectItem';
 
 const Badge = (props) => {
   const [selected, setSelected] = useState(false);
 
-  const renderBadge = (tintColor, backgroundColor, textColor = 'black', borderColor = 'rgba(148, 148, 148, 0.85)') => {
+  const selectBadge = () => {
+    setSelected(true);
+    props.selectBadge(props.badge);
+  };
+
+  const removeBadge = () => {
+    setSelected(false);
+    props.removeBadge(props.badge);
+  };
+
+  const renderBadge = (
+    onPressBadge,
+    tintColor,
+    backgroundColor,
+    textColor = 'black',
+    borderColor = 'rgba(148, 148, 148, 0.85)'
+  ) => {
     return (
       <TouchableOpacity
         style={{
@@ -29,10 +43,7 @@ const Badge = (props) => {
           marginTop: 5,
         }}
         onPress={() => {
-          setSelected((previousState) => {
-            return !previousState;
-          });
-          props.selectBadge(props.badge);
+          onPressBadge();
         }}
       >
         <Image source={props.badge.source} style={{ height: 20, width: 20, tintColor: tintColor }} />
@@ -42,10 +53,10 @@ const Badge = (props) => {
   };
 
   if (!selected) {
-    return <>{renderBadge(props.badge.color, 'white')}</>;
+    return <>{renderBadge(selectBadge, props.badge.color, 'white')}</>;
   } else {
-    return <>{renderBadge('white', props.badge.color, 'white', props.badge.color)}</>;
+    return <>{renderBadge(removeBadge, 'white', props.badge.color, 'white', props.badge.color)}</>;
   }
 };
 
-export default connect(null, { selectBadge })(Badge);
+export default connect(null, { selectBadge, removeBadge })(Badge);

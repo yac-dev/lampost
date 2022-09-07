@@ -13,6 +13,11 @@ const selectedItemReducer = (state = INITIAL_STATE, action) => {
       const selectedBadges = { ...state.badges };
       selectedBadges[action.payload.id] = action.payload;
       return { ...state, badges: selectedBadges };
+    case 'REMOVE_BADGE':
+      const removingBadges = { ...state.badges };
+      const badgeId = action.payload.id;
+      delete removingBadges[badgeId];
+      return { ...state, badges: removingBadges };
     default:
       return { ...state };
   }

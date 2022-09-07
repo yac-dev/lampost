@@ -3,6 +3,9 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { connect } from 'react-redux';
 
+// ac
+import { removeBadge } from '../../../redux/actionCreators/selectItem';
+
 const Badge = (props) => {
   return (
     <TouchableOpacity
@@ -30,19 +33,4 @@ const Badge = (props) => {
   );
 };
 
-const SelectedBadges = (props) => {
-  const renderSelectedBadges = () => {
-    const selectedBadgesList = props.selectedBadges.map((badge) => {
-      return <Badge badge={badge} />;
-    });
-
-    return <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{selectedBadgesList}</View>;
-  };
-  return <>{renderSelectedBadges()}</>;
-};
-
-const mapStateToProps = (state) => {
-  return { selectedBadges: Object.values(state.selectedItem.badges) };
-};
-
-export default connect(mapStateToProps)(SelectedBadges);
+export default connect(null, { removeBadge })(Badge);
