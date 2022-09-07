@@ -4,13 +4,10 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { IconButton, Button, Searchbar, Dialog, Portal, Provider } from 'react-native-paper';
 
 // components
+import SelectedBadges from '../../../Utils/SelectedBadges/Badges';
 
 //ac
 import { setIsSelectMeetupBadgesModalOpen } from '../../../../redux/actionCreators/modal';
-
-const selectedMeetupBadges = () => {
-  return <View></View>;
-};
 
 const CreateMeetupBadge = (props) => {
   return (
@@ -31,7 +28,7 @@ const CreateMeetupBadge = (props) => {
         >
           Add badges
         </Button>
-        <View></View>
+        <SelectedBadges />
       </View>
     </View>
   );

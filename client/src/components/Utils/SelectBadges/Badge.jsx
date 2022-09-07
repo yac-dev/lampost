@@ -20,13 +20,7 @@ const Badge = (props) => {
     props.removeBadge(props.badge);
   };
 
-  const renderBadge = (
-    onPressBadge,
-    tintColor,
-    backgroundColor,
-    textColor = 'black',
-    borderColor = 'rgba(148, 148, 148, 0.85)'
-  ) => {
+  const renderBadge = (onPressBadge, tintColor, backgroundColor, textColor, borderColor) => {
     return (
       <TouchableOpacity
         style={{
@@ -53,7 +47,7 @@ const Badge = (props) => {
   };
 
   if (!selected) {
-    return <>{renderBadge(selectBadge, props.badge.color, 'white')}</>;
+    return <>{renderBadge(selectBadge, props.badge.color, 'white', 'black', 'rgba(148, 148, 148, 0.85)')}</>;
   } else {
     return <>{renderBadge(removeBadge, 'white', props.badge.color, 'white', props.badge.color)}</>;
   }
