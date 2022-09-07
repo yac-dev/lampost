@@ -8,9 +8,10 @@ import { IconButton, Button, Searchbar, Dialog, Portal, Provider } from 'react-n
 //ac
 import { setIsSelectMeetupBadgesModalOpen } from '../../../../redux/actionCreators/modal';
 
-// assets
+const selectedMeetupBadges = () => {
+  return <View></View>;
+};
 
-// iconを全部ぴっぱってきて、それをlistでrenderすればいい。
 const MeetupBadge = (props) => {
   return (
     <View>
@@ -22,9 +23,6 @@ const MeetupBadge = (props) => {
       />
       <View style={{ paddingRight: 15, paddingLeft: 15 }}>
         <Text style={{ fontSize: 20, fontWeight: 'bold' }}>What kind of meetup are you gonna host? (Up to 4 tags)</Text>
-        <View>
-          <Text>Render Selected badges here</Text>
-        </View>
         <Button
           icon='plus'
           mode='outlined'
@@ -33,9 +31,16 @@ const MeetupBadge = (props) => {
         >
           Add badges
         </Button>
+        <View></View>
       </View>
     </View>
   );
+};
+
+// selected badgeを別で作ろうか。
+
+const mapStateToProps = (state) => {
+  return { selectedItem: state.selectedItem };
 };
 
 export default connect(null, { setIsSelectMeetupBadgesModalOpen })(MeetupBadge);

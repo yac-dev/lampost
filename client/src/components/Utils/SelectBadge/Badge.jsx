@@ -1,12 +1,15 @@
+// main libraries
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
-import { Searchbar } from 'react-native-paper';
 
-import foodAndBeverage from '../../../assets/badgeObjects/foodAndBeverage';
-import appsAndProducts from '../../../assets/badgeObjects/appsAndProducts';
+// ac
+import { selectBadge } from '../../../redux/actionCreators/selectItem';
+// icons
+import foodAndBeverage from '../../../../assets/badgeObjects/foodAndBeverage';
+import appsAndProducts from '../../../../assets/badgeObjects/appsAndProducts';
 
-// for each badge
-const MeetupBadge = (props) => {
+const Badge = (props) => {
   const [selected, setSelected] = useState(false);
 
   const renderBadge = (tintColor, backgroundColor, textColor = 'black', borderColor = 'rgba(148, 148, 148, 0.85)') => {
@@ -25,11 +28,12 @@ const MeetupBadge = (props) => {
           marginLeft: 5,
           marginTop: 5,
         }}
-        onPress={() =>
+        onPress={() => {
           setSelected((previousState) => {
             return !previousState;
-          })
-        }
+          });
+          props.selectBadge(props.badge);
+        }}
       >
         <Image source={props.badge.source} style={{ height: 20, width: 20, tintColor: tintColor }} />
         <Text style={{ color: textColor, fontWeight: 'bold', marginLeft: 10 }}>{props.badge.value}</Text>
@@ -44,30 +48,4 @@ const MeetupBadge = (props) => {
   }
 };
 
-const MeetupBadges = () => {
-  const renderBadges = (badgeObjects, title) => {
-    const badgeObjs = badgeObjects.map((badge, index) => {
-      return <MeetupBadge key={index} badge={badge} />;
-    });
-
-    return (
-      <View style={{ marginTop: 10 }}>
-        <Text style={{ fontWeight: 'bold' }}>{title}</Text>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{badgeObjs}</View>
-      </View>
-    );
-  };
-
-  return (
-    <View style={{ minHeight: '90%' }}>
-      <Searchbar placeholder='Search' style={{ height: 40 }} />
-      <ScrollView style={{ maxHeight: 500, addingBottom: 150 }}>
-        {renderBadges(foodAndBeverage, 'Food & Beverage')}
-        {renderBadges(appsAndProducts, 'Apps & Products')}
-      </ScrollView>
-      <Text>Bottom menu</Text>
-    </View>
-  );
-};
-
-export default MeetupBadges;
+export default connect(null, { selectBadge })(Badge);

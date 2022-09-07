@@ -4,3 +4,17 @@ export const selectMeetup = (meetup) => {
     payload: meetup,
   };
 };
+
+export const selectBadge = (badge) => {
+  return {
+    type: 'SELECT_BADGE',
+    payload: badge,
+  };
+};
+
+export const removeBadge = (badge) => {
+  return {
+    type: 'REMOVE_BADGE',
+    payload: badge,
+  };
+};

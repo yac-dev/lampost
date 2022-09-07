@@ -32,7 +32,7 @@ import CancelHostMeetupButton from './HostMeetup/CancelHostMeetupButton';
 import SetMeetupLocation from './HostMeetup/SetMeetupLocation';
 import HostMeetupBottomSheet from './HostMeetup/BottomSheet';
 import MeetupBadgesModalContainer from '../Utils/ModalContainer';
-import SelectBadges from '../Utils/SelectBadges';
+import Badges from '../Utils/SelectBadge/Badges';
 
 // ac
 import { loadMe } from '../../redux/actionCreators/auth';
@@ -191,7 +191,7 @@ const Map = (props) => {
             modalOpen={props.modal.selectMeetupBadges.isOpen}
             onPressModalOpen={onPressModalOpen}
           >
-            <SelectBadges />
+            <Badges />
           </MeetupBadgesModalContainer>
           <MapView
             ref={mapRef}
