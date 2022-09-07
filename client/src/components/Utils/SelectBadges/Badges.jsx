@@ -14,25 +14,50 @@ import foodAndBeverage from '../../../../assets/badgeObjects/foodAndBeverage';
 import appsAndProducts from '../../../../assets/badgeObjects/appsAndProducts';
 
 const SelectBadges = () => {
-  const renderBadges = (badgeObjects, title) => {
-    const badgeObjs = badgeObjects.map((badge, index) => {
-      return <Badge key={index} badge={badge} />;
-    });
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const onChangeSearch = (query) => {
+    setSearchQuery(query);
+  };
+
+  // console.log(searchQuery);
+
+  const renderFilteredBadges = (badgeObjects, title) => {
+    const filteredBadgesList = badgeObjects
+      .filter((object) => {
+        if (!searchQuery) {
+          return object;
+        } else if (object.value.toLowerCase().includes(searchQuery.toLowerCase())) {
+          return object;
+        }
+      })
+      .map((badge, index) => {
+        return <Badge key={index} badge={badge} />;
+      });
 
     return (
       <View style={{ marginTop: 10 }}>
         <Text style={{ fontWeight: 'bold' }}>{title}</Text>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{badgeObjs}</View>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{filteredBadgesList}</View>
       </View>
     );
   };
 
   return (
     <View style={{ minHeight: '90%' }}>
-      <Searchbar placeholder='Search' style={{ height: 40 }} />
+      <Searchbar
+        placeholder='Search'
+        style={{ height: 40 }}
+        value={searchQuery}
+        onChangeText={(query) => {
+          onChangeSearch(query);
+        }}
+        autoCapitalize='none'
+        keyboardType={'visible-password'}
+      />
       <ScrollView style={{ maxHeight: 500, addingBottom: 150 }}>
-        {renderBadges(foodAndBeverage, 'Food & Beverage')}
-        {renderBadges(appsAndProducts, 'Apps & Products')}
+        {renderFilteredBadges(foodAndBeverage, 'Food & Beverage')}
+        {renderFilteredBadges(appsAndProducts, 'Apps & Products')}
       </ScrollView>
       <Text>Bottom menu</Text>
     </View>
