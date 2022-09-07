@@ -23,7 +23,7 @@ const SelectBadges = () => {
   // console.log(searchQuery);
 
   const renderFilteredBadges = (badgeObjects, title) => {
-    const filteredBadgesList = badgeObjects
+    const filteredBadgesList = Object.values(badgeObjects)
       .filter((object) => {
         if (!searchQuery) {
           return object;

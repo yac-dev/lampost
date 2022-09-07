@@ -46,11 +46,23 @@ const Badge = (props) => {
     );
   };
 
-  if (!selected) {
-    return <>{renderBadge(selectBadge, props.badge.color, 'white', 'black', 'rgba(148, 148, 148, 0.85)')}</>;
-  } else {
+  if (props.selectedBadges[props.badge.id]) {
     return <>{renderBadge(removeBadge, 'white', props.badge.color, 'white', props.badge.color)}</>;
+  } else if (!selected) {
+    return <>{renderBadge(selectBadge, props.badge.color, 'white', 'black', 'rgba(148, 148, 148, 0.85)')}</>;
   }
+
+  // if (!selected) {
+  //   return <>{renderBadge(selectBadge, props.badge.color, 'white', 'black', 'rgba(148, 148, 148, 0.85)')}</>;
+  // } else if (selected) {
+  //   return <>{renderBadge(removeBadge, 'white', props.badge.color, 'white', props.badge.color)}</>;
+  // } else if (props.badge.id in props.selectedBadges) {
+  //   return <>{renderBadge(removeBadge, 'white', props.badge.color, 'white', props.badge.color)}</>;
+  // }
 };
 
-export default connect(null, { selectBadge, removeBadge })(Badge);
+const mapStateToProps = (state) => {
+  return { selectedBadges: state.selectedItem.badges };
+};
+
+export default connect(mapStateToProps, { selectBadge, removeBadge })(Badge);
