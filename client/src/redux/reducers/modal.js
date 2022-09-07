@@ -8,6 +8,9 @@ const INITIAL_STATE = {
   selectMeetupBadgeElements: {
     isOpen: false,
   },
+  selectMeetupBadges: {
+    isOpen: false,
+  },
 };
 
 const modalReducer = (state = INITIAL_STATE, action) => {
@@ -18,6 +21,8 @@ const modalReducer = (state = INITIAL_STATE, action) => {
       return { ...state, selectLimitHour: { isOpen: action.payload } };
     case 'SET_SELECT_MEETUP_BADGE_ELEMENTS_MODAL':
       return { ...state, selectMeetupBadgeElements: { isOpen: action.payload } };
+    case 'SET_IS_SELECT_MEETUP_BADGES_MODAL':
+      return { ...state, selectMeetupBadges: { isOpen: action.payload } };
     default:
       return { ...state };
   }

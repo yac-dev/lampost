@@ -5,21 +5,22 @@ import { View, Text, ScrollView, Image } from 'react-native';
 import { Button, Dialog, Portal, Provider } from 'react-native-paper';
 
 // components
-import MeetupBadges from './MeetupBadges';
+import SelectBadges from '../../../../Utils/SelectBadges';
 
 // ac
 import { setIsSelectMeetupBadgeElementsModalOpen } from '../../../../../redux/actionCreators/modal';
+import { setIsSelectMeetupBadgesModalOpen } from '../../../../../redux/actionCreators/modal';
 
 const Container = (props) => {
-  if (props.modal.selectMeetupBadgeElements.isOpen) {
+  if (props.modal.selectMeetupBadges.isOpen) {
     return (
       <Portal>
-        <Dialog visible={props.modal.selectMeetupBadgeElements.isOpen}>
+        <Dialog visible={props.modal.selectMeetupBadges.isOpen}>
           <Dialog.Content>
-            <MeetupBadges />
+            <SelectBadges />
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={() => props.setIsSelectMeetupBadgeElementsModalOpen(false)}>Done</Button>
+            <Button onPress={() => props.setIsSelectMeetupBadgesModalOpen(false)}>Done</Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>
@@ -33,4 +34,4 @@ const mapStateToProps = (state) => {
   return { modal: state.modal };
 };
 
-export default connect(mapStateToProps, { setIsSelectMeetupBadgeElementsModalOpen })(Container);
+export default connect(mapStateToProps, { setIsSelectMeetupBadgesModalOpen })(Container);

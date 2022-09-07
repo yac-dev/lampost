@@ -7,6 +7,7 @@ import { IconButton, Button, Searchbar, Dialog, Portal, Provider } from 'react-n
 
 //ac
 import { setIsSelectMeetupBadgeElementsModalOpen } from '../../../../redux/actionCreators/modal';
+import { setIsSelectMeetupBadgesModalOpen } from '../../../../redux/actionCreators/modal';
 
 // assets
 
@@ -28,14 +29,14 @@ const MeetupBadge = (props) => {
         <Button
           icon='plus'
           mode='outlined'
-          onPress={() => props.setIsSelectMeetupBadgeElementsModalOpen(true)}
+          onPress={() => props.setIsSelectMeetupBadgesModalOpen(true)}
           style={{ width: 200 }}
         >
-          Add badge
+          Add badges
         </Button>
       </View>
     </View>
   );
 };
 
-export default connect(null, { setIsSelectMeetupBadgeElementsModalOpen })(MeetupBadge);
+export default connect(null, { setIsSelectMeetupBadgesModalOpen })(MeetupBadge);

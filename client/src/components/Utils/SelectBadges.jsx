@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 
-import foodAndBeverage from '../../../../../../assets/badgeObjects/foodAndBeverage';
-import appsAndProducts from '../../../../../../assets/badgeObjects/appsAndProducts';
+import foodAndBeverage from '../../../assets/badgeObjects/foodAndBeverage';
+import appsAndProducts from '../../../assets/badgeObjects/appsAndProducts';
 
 // for each badge
 const MeetupBadge = (props) => {

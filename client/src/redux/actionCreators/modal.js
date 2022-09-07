@@ -18,3 +18,10 @@ export const setIsSelectMeetupBadgeElementsModalOpen = (bool) => {
     payload: bool,
   };
 };
+
+export const setIsSelectMeetupBadgesModalOpen = (bool) => {
+  return {
+    type: 'SET_IS_SELECT_MEETUP_BADGES_MODAL',
+    payload: bool,
+  };
+};
