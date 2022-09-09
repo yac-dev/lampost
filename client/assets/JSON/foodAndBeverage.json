@@ -1,0 +1,800 @@
+[
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206746" },
+    "label": "apple",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 51, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206747" },
+    "label": "applePie",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206748" },
+    "label": "avocado",
+    "type": "foodAndBeverage",
+    "color": "rgba(45, 209, 40, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206749" },
+    "label": "bacon",
+    "type": "foodAndBeverage",
+    "color": "rgba(242, 126, 164, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120674a" },
+    "label": "bagel",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120674b" },
+    "label": "baguette",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120674c" },
+    "label": "banana",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120674d" },
+    "label": "baskinRobbins",
+    "type": "foodAndBeverage",
+    "color": "rgba(242, 126, 164, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120674e" },
+    "label": "beer",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120674f" },
+    "label": "bento",
+    "type": "foodAndBeverage",
+    "color": "rgba(50,50,50, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206750" },
+    "label": "biryani",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206751" },
+    "label": "blt",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 51, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206752" },
+    "label": "buffetBreakfast",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 51, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206753" },
+    "label": "burgerKing",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206754" },
+    "label": "burrito",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206755" },
+    "label": "butterChicken",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206756" },
+    "label": "cake",
+    "type": "foodAndBeverage",
+    "color": "rgba(242, 126, 164, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206757" },
+    "label": "cereal",
+    "type": "foodAndBeverage",
+    "color": "rgba(242, 126, 164, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206758" },
+    "label": "champagne",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206759" },
+    "label": "cheese",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120675a" },
+    "label": "chickenTender",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 139, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120675b" },
+    "label": "chineseFriedRice",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 139, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120675c" },
+    "label": "chineseNoodle",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120675d" },
+    "label": "chipotle",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 51, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120675e" },
+    "label": "chocolate",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120675f" },
+    "label": "chopSuey",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206760" },
+    "label": "cocaCola",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 51, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206761" },
+    "label": "coffee",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206762" },
+    "label": "coffeeToGo",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206763" },
+    "label": "cookies",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206764" },
+    "label": "croissant",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206765" },
+    "label": "cupWithStraw",
+    "type": "foodAndBeverage",
+    "color": "rgba(39, 201, 204, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206766" },
+    "label": "cupcake",
+    "type": "foodAndBeverage",
+    "color": "rgba(242, 126, 164, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206767" },
+    "label": "desiFood",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206768" },
+    "label": "dessert",
+    "type": "foodAndBeverage",
+    "color": "rgba(242, 126, 164, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206769" },
+    "label": "dinner",
+    "type": "foodAndBeverage",
+    "color": "rgba(156, 156, 156, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120676a" },
+    "label": "dominosPizza",
+    "type": "foodAndBeverage",
+    "color": "rgba(39, 80, 204, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120676b" },
+    "label": "doughnut",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120676c" },
+    "label": "drPepper",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 51, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120676d" },
+    "label": "dunkinDonuts",
+    "type": "foodAndBeverage",
+    "color": "rgba(242, 126, 164, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120676e" },
+    "label": "edamame",
+    "type": "foodAndBeverage",
+    "color": "rgba(45, 209, 40, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120676f" },
+    "label": "eggs",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206770" },
+    "label": "enchilada",
+    "type": "foodAndBeverage",
+    "color": "rgba(45, 209, 40, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206771" },
+    "label": "fanta",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 139, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206772" },
+    "label": "fishAndChips",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206773" },
+    "label": "fishAndVegetables",
+    "type": "foodAndBeverage",
+    "color": "rgba(45, 209, 40, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206774" },
+    "label": "fishFood",
+    "type": "foodAndBeverage",
+    "color": "rgba(39, 201, 204, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206775" },
+    "label": "foodBar",
+    "type": "foodAndBeverage",
+    "color": "rgba(156, 156, 156, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206776" },
+    "label": "frenchFries",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206777" },
+    "label": "friedChicken",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206778" },
+    "label": "glassOfWhiskey",
+    "type": "foodAndBeverage",
+    "color": "rgba(147, 38, 201, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206779" },
+    "label": "guacamole",
+    "type": "foodAndBeverage",
+    "color": "rgba(45, 209, 40, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120677a" },
+    "label": "gulabjam",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120677b" },
+    "label": "gyoza",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120677c" },
+    "label": "hamburger",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120677d" },
+    "label": "healthyFood",
+    "type": "foodAndBeverage",
+    "color": "rgba(45, 209, 40, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120677e" },
+    "label": "hotDog",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120677f" },
+    "label": "iceCreamCone",
+    "type": "foodAndBeverage",
+    "color": "rgba(242, 126, 164, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206780" },
+    "label": "indianCurry",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206781" },
+    "label": "japaneseCurry",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206782" },
+    "label": "kebab",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206783" },
+    "label": "ketchup",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 51, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206784" },
+    "label": "kfc",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206785" },
+    "label": "lasagna",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206786" },
+    "label": "mashedPotato",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206787" },
+    "label": "mayonnaise",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206788" },
+    "label": "mcdonalds",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206789" },
+    "label": "meat",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120678a" },
+    "label": "melon",
+    "type": "foodAndBeverage",
+    "color": "rgba(45, 209, 40, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120678b" },
+    "label": "milkCarton",
+    "type": "foodAndBeverage",
+    "color": "rgba(39, 80, 204, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120678c" },
+    "label": "misoSoup",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120678d" },
+    "label": "mtndew",
+    "type": "foodAndBeverage",
+    "color": "rgba(45, 209, 40, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120678e" },
+    "label": "mustard",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120678f" },
+    "label": "naan",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206790" },
+    "label": "nachos",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206791" },
+    "label": "naturalFood",
+    "type": "foodAndBeverage",
+    "color": "rgba(45, 209, 40, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206792" },
+    "label": "nissin",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 51, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206793" },
+    "label": "nonVegetarianFoodSymbol",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 51, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206794" },
+    "label": "noodles",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206795" },
+    "label": "omlette",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206796" },
+    "label": "orange",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 139, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206797" },
+    "label": "organicFood",
+    "type": "foodAndBeverage",
+    "color": "rgba(45, 209, 40, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206798" },
+    "label": "paella",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 51, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab1206799" },
+    "label": "paleoDiet",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120679a" },
+    "label": "pancakeStack",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120679b" },
+    "label": "pandaExpress",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 51, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120679c" },
+    "label": "papaJohns",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 51, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120679d" },
+    "label": "peach",
+    "type": "foodAndBeverage",
+    "color": "rgba(242, 126, 164, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120679e" },
+    "label": "peanutButter",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab120679f" },
+    "label": "pear",
+    "type": "foodAndBeverage",
+    "color": "rgba(242, 126, 164, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067a0" },
+    "label": "pelmeni",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067a1" },
+    "label": "pineapple",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067a2" },
+    "label": "pizza",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 51, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067a3" },
+    "label": "pizzaHut",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 51, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067a4" },
+    "label": "popcorn",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067a5" },
+    "label": "potato",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067a6" },
+    "label": "potatoChips",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067a7" },
+    "label": "protein",
+    "type": "foodAndBeverage",
+    "color": "rgba(242, 126, 164, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067a8" },
+    "label": "quesadilla",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067a9" },
+    "label": "ramen",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067aa" },
+    "label": "redbull",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 51, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067ab" },
+    "label": "refreshments",
+    "type": "foodAndBeverage",
+    "color": "rgba(39, 201, 204, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067ac" },
+    "label": "restaurant",
+    "type": "foodAndBeverage",
+    "color": "rgba(45, 209, 40, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067ad" },
+    "label": "riceBowl",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067ae" },
+    "label": "risottto",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067af" },
+    "label": "salad",
+    "type": "foodAndBeverage",
+    "color": "rgba(45, 209, 40, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067b0" },
+    "label": "samosa",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067b1" },
+    "label": "sandwich",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067b2" },
+    "label": "sashimi",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 51, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067b3" },
+    "label": "sausage",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067b4" },
+    "label": "seafood",
+    "type": "foodAndBeverage",
+    "color": "rgba(242, 126, 164, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067b5" },
+    "label": "sevenUp",
+    "type": "foodAndBeverage",
+    "color": "rgba(45, 209, 40, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067b6" },
+    "label": "shrimpAndLobster",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 51, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067b7" },
+    "label": "softDrink",
+    "type": "foodAndBeverage",
+    "color": "rgba(39, 201, 204, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067b8" },
+    "label": "spaghetti",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 51, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067b9" },
+    "label": "starBucks",
+    "type": "foodAndBeverage",
+    "color": "rgba(45, 209, 40, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067ba" },
+    "label": "subway",
+    "type": "foodAndBeverage",
+    "color": "rgba(45, 209, 40, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067bb" },
+    "label": "sushi",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 51, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067bc" },
+    "label": "taco",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067bd" },
+    "label": "tacobell",
+    "type": "foodAndBeverage",
+    "color": "rgba(147, 38, 201, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067be" },
+    "label": "takeAwayFood",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 139, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067bf" },
+    "label": "tandooriChicken",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067c0" },
+    "label": "tapas",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 139, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067c1" },
+    "label": "taterTots",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067c2" },
+    "label": "tea",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067c3" },
+    "label": "tempura",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067c4" },
+    "label": "thali",
+    "type": "foodAndBeverage",
+    "color": "rgba(255, 139, 51, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067c5" },
+    "label": "tortilla",
+    "type": "foodAndBeverage",
+    "color": "rgba(219, 184, 42, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067c6" },
+    "label": "veganFood",
+    "type": "foodAndBeverage",
+    "color": "rgba(45, 209, 40, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067c7" },
+    "label": "vegetarianMark",
+    "type": "foodAndBeverage",
+    "color": "rgba(45, 209, 40, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067c8" },
+    "label": "wineBar",
+    "type": "foodAndBeverage",
+    "color": "rgba(147, 38, 201, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067c9" },
+    "label": "wrap",
+    "type": "foodAndBeverage",
+    "color": "rgba(45, 209, 40, 0.85)"
+  },
+  {
+    "_id": { "$oid": "631af23e4b3d613ab12067ca" },
+    "label": "yakitori",
+    "type": "foodAndBeverage",
+    "color": "rgba(120, 70, 24, 0.85)"
+  }
+]

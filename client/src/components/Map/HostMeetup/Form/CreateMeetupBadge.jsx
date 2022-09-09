@@ -10,14 +10,24 @@ import SelectedBadges from '../../../Utils/SelectedBadges/Badges';
 import { setIsSelectMeetupBadgesModalOpen } from '../../../../redux/actionCreators/modal';
 
 const CreateMeetupBadge = (props) => {
+  const disableIconButton = () => {
+    if (!props.selectedBadges.length) {
+      return true;
+    } else {
+      return false;
+    }
+  };
   return (
     <View>
-      <IconButton
-        icon='arrow-right'
-        iconColor={'blue'}
-        size={20}
-        onPress={() => props.dispatch({ type: 'GO_TO_MEETUP_DATES', payload: '' })}
-      />
+      <View style={{ alignItems: 'flex-end' }}>
+        <IconButton
+          icon='arrow-right'
+          iconColor={'blue'}
+          size={20}
+          disabled={disableIconButton()}
+          onPress={() => props.dispatch({ type: 'GO_TO_MEETUP_DATES', payload: '' })}
+        />
+      </View>
       <View style={{ paddingRight: 15, paddingLeft: 15 }}>
         <Text style={{ fontSize: 20, fontWeight: 'bold' }}>What kind of meetup are you gonna host? (Up to 4 tags)</Text>
         <Button
@@ -26,7 +36,7 @@ const CreateMeetupBadge = (props) => {
           onPress={() => props.setIsSelectMeetupBadgesModalOpen(true)}
           style={{ width: 200 }}
         >
-          Add badges
+          Add
         </Button>
         <SelectedBadges />
       </View>
@@ -34,4 +44,8 @@ const CreateMeetupBadge = (props) => {
   );
 };
 
-export default connect(null, { setIsSelectMeetupBadgesModalOpen })(CreateMeetupBadge);
+const mapStateToProps = (state) => {
+  return { selectedBadges: Object.values(state.selectedItem.badges) };
+};
+
+export default connect(mapStateToProps, { setIsSelectMeetupBadgesModalOpen })(CreateMeetupBadge);

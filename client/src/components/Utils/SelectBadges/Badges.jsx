@@ -9,6 +9,7 @@ import Badge from './Badge';
 
 // ac
 import { selectBadge } from '../../../redux/actionCreators/selectItem';
+
 // icons
 import foodAndBeverage from '../../../../assets/badgeObjects/foodAndBeverage';
 import appsAndProducts from '../../../../assets/badgeObjects/appsAndProducts';
@@ -19,8 +20,6 @@ const SelectBadges = () => {
   const onChangeSearch = (query) => {
     setSearchQuery(query);
   };
-
-  // console.log(searchQuery);
 
   const renderFilteredBadges = (badgeObjects, title) => {
     const filteredBadgesList = Object.values(badgeObjects)
