@@ -35,6 +35,7 @@ import SetMeetupLocation from './HostMeetup/SetMeetupLocation';
 import HostMeetupBottomSheet from './HostMeetup/BottomSheet';
 import MeetupBadgesModalContainer from '../Utils/ModalContainer';
 import Badges from '../Utils/SelectBadges/Badges';
+import SnackBar from '../Utils/SnackBar';
 
 // ac
 import { loadMe } from '../../redux/actionCreators/auth';
@@ -259,6 +260,7 @@ const Map = (props) => {
           </Provider>
 
           {/* <IconButton icon='plus' style={{ position: 'absolute', top: 10, right: 10 }} /> 多分、user pageはbottom tabにするかもね。*/}
+          <SnackBar />
           <PostBottomSheet postBottomSheetRef={postBottomSheetRef} />
           <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} />
           <CancelHostMeetupButton />

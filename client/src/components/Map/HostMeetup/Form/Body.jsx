@@ -172,7 +172,7 @@ const Body = (props) => {
           onChangeText={(text) => props.dispatch({ type: 'SET_TITLE', payload: text })}
           // left={<TextInput.Icon name='eye' />}
           mode='outlined'
-          right={<TextInput.Affix text={`${props.state.title.length}/80`} />}
+          right={<TextInput.Affix text={`${props.state.title.length}/300`} />}
         />
       </View>
 

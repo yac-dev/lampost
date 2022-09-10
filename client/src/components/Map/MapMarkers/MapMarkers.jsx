@@ -9,8 +9,6 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
 // ac
-import { getPosts } from '../../../redux/actionCreators/posts';
-import { selectPost } from '../../../redux/actionCreators/selectItem';
 import { getMeetups } from '../../../redux/actionCreators/meetups';
 import { selectMeetup } from '../../../redux/actionCreators/selectItem';
 
@@ -100,4 +98,4 @@ const mapStateToProps = (state) => {
   return { meetups: Object.values(state.meetups) };
 };
 
-export default connect(mapStateToProps, { getPosts, selectPost, getMeetups, selectMeetup })(MapMarkers);
+export default connect(mapStateToProps, { getMeetups, selectMeetup })(MapMarkers);

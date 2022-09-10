@@ -6,8 +6,7 @@ import bottomSheetReducer from './bottomSheet';
 import modalReducer from './modal';
 import dialogReducer from './dialog';
 import hostMeetupReducer from './hostMeetup';
-import badgeElementsReducer from './badgeElements';
-// import dummy from './dummy';
+import snackBarReducer from './snackBar';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -17,6 +16,6 @@ const rootReducer = combineReducers({
   modal: modalReducer,
   dialog: dialogReducer,
   hostMeetup: hostMeetupReducer,
-  badgeElements: badgeElementsReducer,
+  snackBar: snackBarReducer,
 });
 export default rootReducer;

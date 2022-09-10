@@ -23,7 +23,7 @@ const MeetupFee = (props) => {
   };
 
   const renderSwitchState = () => {
-    if (props.state.isMeetupFree) {
+    if (props.state.isMeetupFeeFree) {
       return <Text style={{ marginRight: 5, fontSize: 15 }}>Yes</Text>;
     } else {
       return <Text style={{ marginRight: 5, fontSize: 15 }}>No</Text>;
@@ -31,7 +31,7 @@ const MeetupFee = (props) => {
   };
 
   const renderFeeForm = () => {
-    if (!props.state.isMeetupFree) {
+    if (!props.state.isMeetupFeeFree) {
       return (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Menu
@@ -63,8 +63,8 @@ const MeetupFee = (props) => {
     <View style={{ marginTop: 20 }}>
       {renderSwitchState()}
       <Switch
-        value={props.state.isMeetupFree}
-        onValueChange={() => props.dispatch({ type: 'SET_IS_MEETUP_FREE', payload: '' })}
+        value={props.state.isMeetupFeeFree}
+        onValueChange={() => props.dispatch({ type: 'SET_IS_MEETUP_FEE_FREE', payload: '' })}
       />
       {renderFeeForm()}
     </View>
