@@ -14,13 +14,15 @@ import {
 } from 'react-native';
 import MapView, { Callout, Marker, Circle } from 'react-native-maps';
 
-import { IconButton, Center, VStack, NativeBaseProvider, TextArea, Box, Button, Stack, Fab, Icon } from 'native-base';
-import { FAB, Portal, Provider } from 'react-native-paper';
+// import { IconButton, Center, VStack, NativeBaseProvider, TextArea, Box, Button, Stack, Fab, Icon } from 'native-base';
+import { FAB, Portal, Provider, IconButton } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
 
 // components
 import NBProvider from '../Utils/NativeBaseProvider';
@@ -43,6 +45,7 @@ import { selectPost } from '../../redux/actionCreators/selectItem';
 import { setIsHostMeetupOpen } from '../../redux/actionCreators/hostMeetup';
 import { setMeetupLocation } from '../../redux/actionCreators/hostMeetup';
 import { setIsSelectMeetupBadgesModalOpen } from '../../redux/actionCreators/modal';
+import { Icon } from 'native-base';
 
 const Map = (props) => {
   const [region, setRegion] = useState(null);
@@ -220,28 +223,29 @@ const Map = (props) => {
             <Portal>
               <FAB.Group
                 open={open}
-                icon={open ? 'chevron-up' : 'apps'}
+                icon={open ? 'close' : 'account-group'}
                 actions={[
                   {
+                    icon: (props) => <FontAwesome {...props} name='search' />,
+                    label: 'Search',
+                    disabled: true,
+                    onPress: () => console.log('Search engine'),
+                  },
+
+                  {
+                    icon: (props) => <FontAwesome {...props} name='calendar' />,
+                    label: 'Schedule',
+                    onPress: () => console.log('Schedule component'),
+                  },
+                  {
                     icon: 'plus',
-                    label: 'Post',
-                    onPress: () => handlePostBottomSheetChanges(),
-                  },
-                  {
-                    icon: 'head-question',
-                    label: 'Ask',
-                    onPress: () => console.log('Pressed email'),
-                  },
-                  {
-                    icon: 'account-group',
-                    label: 'Host Meetup',
+                    label: 'Host',
                     onPress: () => props.setIsHostMeetupOpen(true),
                   },
                   {
-                    icon: 'video',
-                    label: 'Start Live',
-                    disabled: true,
-                    onPress: () => console.log('Live'),
+                    icon: (props) => <FontAwesome {...props} name='camera' />,
+                    label: 'Camera/Live',
+                    onPress: () => props.navigation.navigate('Camera'),
                   },
                 ]}
                 onStateChange={onStateChange}
@@ -253,6 +257,8 @@ const Map = (props) => {
               />
             </Portal>
           </Provider>
+
+          {/* <IconButton icon='plus' style={{ position: 'absolute', top: 10, right: 10 }} /> 多分、user pageはbottom tabにするかもね。*/}
           <PostBottomSheet postBottomSheetRef={postBottomSheetRef} />
           <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} />
           <CancelHostMeetupButton />

@@ -24,6 +24,7 @@ const AppStack = (props) => {
   // }, []);
 
   return (
+    // navigation containerに、どのrouteでどのcomponentを表示するかを書くのね。
     <NavigationContainer>
       {/* <Stack.Navigator>
           <Stack.Screen name='Map' component={Map} options={{ headerShown: false }} />

@@ -7,8 +7,11 @@ import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 
 // components
+import MapNavigator from '../Navigator/MapNavigator';
 import Map from '../Map/Map';
 import SignUp from '../Auth/SignUp';
 import Post from '../Post/Post';
@@ -27,7 +30,7 @@ const BottomTabs = () => {
     <Tab.Navigator>
       <Tab.Screen
         name='Explore'
-        component={Map}
+        component={MapNavigator}
         options={{
           headerShown: false,
           tabBarIcon: ({ size, color }) => <MCIcon name={'routes'} color={color} size={size} />,
@@ -58,7 +61,8 @@ const BottomTabs = () => {
             //   style={{ width: 24, height: 24 }}
             //   source={require('../../../assets/app/timeMachine.png')}
             // />
-            <MaterialIcons name='video-library' color={color} size={size} />
+            <MaterialCommunityIcons name='party-popper' color={color} size={size} />
+            // 本当はtime machineのiconにしたい。
           ),
           tabBarLabel: () => {
             return null;
@@ -66,6 +70,63 @@ const BottomTabs = () => {
         }}
       />
       <Tab.Screen
+        name='Notifications'
+        component={TimeMachine}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ size, color }) => (
+            // <Image
+            //   color={color}
+            //   style={{ width: 24, height: 24 }}
+            //   source={require('../../../assets/app/timeMachine.png')}
+            // />
+            <Entypo name='bell' color={color} size={size} />
+            // 本当はtime machineのiconにしたい。
+          ),
+          tabBarLabel: () => {
+            return null;
+          },
+        }}
+      />
+      <Tab.Screen
+        name='Chat'
+        component={TimeMachine}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ size, color }) => (
+            // <Image
+            //   color={color}
+            //   style={{ width: 24, height: 24 }}
+            //   source={require('../../../assets/app/timeMachine.png')}
+            // />
+            <MaterialIcons name='chat' color={color} size={size} />
+            // 本当はtime machineのiconにしたい。
+          ),
+          tabBarLabel: () => {
+            return null;
+          },
+        }}
+      />
+      <Tab.Screen
+        name='User'
+        component={TimeMachine}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ size, color }) => (
+            // <Image
+            //   color={color}
+            //   style={{ width: 24, height: 24 }}
+            //   source={require('../../../assets/app/timeMachine.png')}
+            // />
+            <FontAwesome name='user' color={color} size={size} />
+            // 本当はtime machineのiconにしたい。
+          ),
+          tabBarLabel: () => {
+            return null;
+          },
+        }}
+      />
+      {/* <Tab.Screen
         name='Auth'
         component={Auth}
         options={{
@@ -75,8 +136,8 @@ const BottomTabs = () => {
             return null;
           },
         }}
-      />
-      <Tab.Screen
+      /> */}
+      {/* <Tab.Screen
         name='Hot'
         component={Post}
         options={{
@@ -86,7 +147,7 @@ const BottomTabs = () => {
             return null;
           },
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };
