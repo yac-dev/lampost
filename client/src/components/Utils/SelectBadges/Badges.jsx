@@ -11,8 +11,8 @@ import Badge from './Badge';
 import { selectBadge } from '../../../redux/actionCreators/selectItem';
 
 // icons
-import foodAndBeverage from '../../../../assets/badgeObjects/foodAndBeverage';
-import appsAndProducts from '../../../../assets/badgeObjects/appsAndProducts';
+import foodAndBeverage from '../../../../assets/badgeCollection/foodAndBeverage';
+// import appsAndProducts from '../../../../assets/badgeCollection/appsAndProducts';
 
 const SelectBadges = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -56,7 +56,7 @@ const SelectBadges = () => {
       />
       <ScrollView style={{ maxHeight: 500, addingBottom: 150 }}>
         {renderFilteredBadges(foodAndBeverage, 'Food & Beverage')}
-        {renderFilteredBadges(appsAndProducts, 'Apps & Products')}
+        {/* {renderFilteredBadges(appsAndProducts, 'Apps & Products')} */}
       </ScrollView>
       <Text>Bottom menu</Text>
     </View>

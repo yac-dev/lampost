@@ -40,13 +40,13 @@ const Badge = (props) => {
           onPressBadge();
         }}
       >
-        <Image source={props.badge.source} style={{ height: 20, width: 20, tintColor: tintColor }} />
+        <Image source={props.badge.source} style={{ width: 30, height: 30, tintColor: tintColor }} />
         <Text style={{ color: textColor, fontWeight: 'bold', marginLeft: 10 }}>{props.badge.value}</Text>
       </TouchableOpacity>
     );
   };
 
-  if (props.selectedBadges[props.badge.id]) {
+  if (props.selectedBadges[props.badge._id]) {
     return <>{renderBadge(removeBadge, 'white', props.badge.color, 'white', props.badge.color)}</>;
   } else if (!selected) {
     return <>{renderBadge(selectBadge, props.badge.color, 'white', 'black', 'rgba(148, 148, 148, 0.85)')}</>;
