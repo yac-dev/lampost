@@ -223,7 +223,7 @@ const Map = (props) => {
             <Portal>
               <FAB.Group
                 open={open}
-                icon={open ? 'close' : 'account-group'}
+                icon={open ? 'close' : 'party-popper'}
                 actions={[
                   {
                     icon: (props) => <FontAwesome {...props} name='search' />,

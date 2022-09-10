@@ -61,7 +61,7 @@ const BottomTabs = () => {
             //   style={{ width: 24, height: 24 }}
             //   source={require('../../../assets/app/timeMachine.png')}
             // />
-            <MaterialCommunityIcons name='party-popper' color={color} size={size} />
+            <MaterialIcons name='video-library' color={color} size={size} />
             // 本当はtime machineのiconにしたい。
           ),
           tabBarLabel: () => {

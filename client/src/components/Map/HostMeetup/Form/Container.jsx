@@ -8,8 +8,10 @@ import Header from '../../../Utils/Header';
 import Body from './Body';
 
 import CreateMeetupBadge from './CreateMeetupBadge';
-import CreateMeetupDates from './CreateMeetupDates';
-import CreateMeetupDetail from './CreateMeetupDetail';
+import CreateMeetupDetail from './CreateMeetupDetail/Container';
+import CreateMeetupDescription from './CreateMeetupDescription';
+// import CreateMeetupDates from './CreateMeetupDescription';
+// import CreateMeetupDetail from './CreateMeetupDetail';
 
 // ac
 import { createMeetup } from '../../../../redux/actionCreators/meetups';
@@ -17,14 +19,13 @@ import { getBadgeElements } from '../../../../redux/actionCreators/badgeElements
 
 const INITIAL_STATE = {
   component: 'MeetupBadge',
-  badgeElements: [],
-  title: '',
   startDateAndTime: null,
   isStartDatePickerVisible: false,
   endDateAndTime: null,
   isEndDatePickerVisible: false,
-  meetupGenres: [''],
   isMeetupGenreMenuVisible: false,
+  isMeetupAttendeesLimitFree: true,
+  attendeesLimit: 10,
   isMeetupFree: true,
   isCurrencyMenuVisible: false,
   currency: '',
@@ -35,20 +36,18 @@ const INITIAL_STATE = {
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'GO_TO_MEETUP_DATES':
-      return { ...state, component: 'MeetupDates' };
-    case 'BACK_TO_MEETUP_BADGE':
-      return { ...state, component: 'MeetupBadge' };
     case 'GO_TO_MEETUP_DETAIL':
       return { ...state, component: 'MeetupDetail' };
-    case 'BACK_TO_MEETUP_DATES':
-      return { ...state, component: 'MeetupDates' };
+    case 'BACK_TO_MEETUP_BADGE':
+      return { ...state, component: 'MeetupBadge' };
+    case 'GO_TO_MEETUP_DESCRIPTION':
+      return { ...state, component: 'MeetupDescription' };
+    case 'BACK_TO_MEETUP_DETAIL':
+      return { ...state, component: 'MeetupDetail' };
     case 'ADD_BADGE_ELEMENTS':
       return { ...state, badgeElements: [...state.badgeElements, action.payload] };
     case 'REMOVE_BADGE_ELEMENT':
       return { ...state }; // 後でやりましょう。
-    case 'SET_TITLE':
-      return { ...state, title: action.payload };
     case 'SET_START_DATE_AND_TIME':
       return { ...state, startDateAndTime: action.payload };
     case 'SET_IS_START_DATE_PICKER_VISIBLE':
@@ -61,10 +60,8 @@ const reducer = (state, action) => {
       const newArr = [...state.meetupGenres];
       newArr[action.payload.meetupGenresIndex] = action.payload.optionObject;
       return { ...state, meetupGenres: newArr };
-    case 'ADD_MORE_MEETUP_GENRE':
-      return { ...state, meetupGenres: [...state.meetupGenres, ''] };
-    case 'SET_IS_MEETUP_GENRE_MENU_VISIBLE':
-      return { ...state, isMeetupGenreMenuVisible: action.payload };
+    case 'SET_IS_MEETUP_ATTENDEES_LIMIT_FREE':
+      return { ...state, isMeetupAttendeesLimitFree: !state.isMeetupAttendeesLimitFree };
     case 'SET_IS_MEETUP_FREE':
       return { ...state, isMeetupFree: !state.isMeetupFree };
     case 'SET_IS_CURRENCY_MENU_VISIBLE':
@@ -100,8 +97,7 @@ const Container = (props) => {
         type: 'Point',
         coordinates: [props.hostMeetup.setLocation.longitude, props.hostMeetup.setLocation.latitude],
       },
-      title: state.title,
-      genres: genres,
+      badges: props.selectedBadges,
       startDateAndTime: state.startDateAndTime,
       endDateAndTime: state.endDateAndTime,
       isFree: state.isMeetupFree,
@@ -122,17 +118,17 @@ const Container = (props) => {
   switch (state.component) {
     case 'MeetupBadge':
       return <CreateMeetupBadge state={state} dispatch={dispatch} />;
-    case 'MeetupDates':
-      return <CreateMeetupDates state={state} dispatch={dispatch} />;
     case 'MeetupDetail':
       return <CreateMeetupDetail state={state} dispatch={dispatch} />;
+    case 'MeetupDescription':
+      return <CreateMeetupDescription state={state} dispatch={dispatch} />;
     default:
       return null;
   }
 };
 
 const mapStateToProps = (state) => {
-  return { hostMeetup: state.hostMeetup };
+  return { hostMeetup: state.hostMeetup, selectedBadges: state.selectedItem.badges };
 };
 
 export default connect(mapStateToProps, { createMeetup })(Container);

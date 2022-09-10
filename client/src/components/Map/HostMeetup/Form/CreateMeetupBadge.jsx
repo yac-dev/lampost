@@ -17,6 +17,7 @@ const CreateMeetupBadge = (props) => {
       return false;
     }
   };
+
   return (
     <View>
       <View style={{ alignItems: 'flex-end' }}>
@@ -25,7 +26,7 @@ const CreateMeetupBadge = (props) => {
           iconColor={'blue'}
           size={20}
           disabled={disableIconButton()}
-          onPress={() => props.dispatch({ type: 'GO_TO_MEETUP_DATES', payload: '' })}
+          onPress={() => props.dispatch({ type: 'GO_TO_MEETUP_DETAIL', payload: '' })}
         />
       </View>
       <View style={{ paddingRight: 15, paddingLeft: 15 }}>
