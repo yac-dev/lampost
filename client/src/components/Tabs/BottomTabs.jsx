@@ -1,24 +1,16 @@
 // main libraries
 import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import AntIcon from 'react-native-vector-icons/AntDesign';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
 // components
-import MapNavigator from '../Navigator/MapNavigator';
-import Map from '../Map/Map';
-import SignUp from '../Auth/SignUp';
-import Post from '../Post/Post';
-import Auth from '../Auth/Auth';
+import MapNavigator from '../Navigator/Map';
+import AuthNavigator from '../Navigator/Auth';
 import Feed from '../Feed/Container';
 import TimeMachine from '../TimeMachine/Container';
-// import LogInOrSignUp from '../Auth/LogInOrSignUp';
 
 // asset
 import timeMachine from '../../../assets/app/timeMachine.png';
@@ -74,15 +66,7 @@ const BottomTabs = () => {
         component={TimeMachine}
         options={{
           headerShown: false,
-          tabBarIcon: ({ size, color }) => (
-            // <Image
-            //   color={color}
-            //   style={{ width: 24, height: 24 }}
-            //   source={require('../../../assets/app/timeMachine.png')}
-            // />
-            <Entypo name='bell' color={color} size={size} />
-            // 本当はtime machineのiconにしたい。
-          ),
+          tabBarIcon: ({ size, color }) => <Entypo name='bell' color={color} size={size} />,
           tabBarLabel: () => {
             return null;
           },
@@ -93,15 +77,7 @@ const BottomTabs = () => {
         component={TimeMachine}
         options={{
           headerShown: false,
-          tabBarIcon: ({ size, color }) => (
-            // <Image
-            //   color={color}
-            //   style={{ width: 24, height: 24 }}
-            //   source={require('../../../assets/app/timeMachine.png')}
-            // />
-            <MaterialIcons name='chat' color={color} size={size} />
-            // 本当はtime machineのiconにしたい。
-          ),
+          tabBarIcon: ({ size, color }) => <MaterialIcons name='chat' color={color} size={size} />,
           tabBarLabel: () => {
             return null;
           },
@@ -109,26 +85,7 @@ const BottomTabs = () => {
       />
       <Tab.Screen
         name='User'
-        component={TimeMachine}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ size, color }) => (
-            // <Image
-            //   color={color}
-            //   style={{ width: 24, height: 24 }}
-            //   source={require('../../../assets/app/timeMachine.png')}
-            // />
-            <FontAwesome name='user' color={color} size={size} />
-            // 本当はtime machineのiconにしたい。
-          ),
-          tabBarLabel: () => {
-            return null;
-          },
-        }}
-      />
-      {/* <Tab.Screen
-        name='Auth'
-        component={Auth}
+        component={AuthNavigator}
         options={{
           headerShown: false,
           tabBarIcon: ({ size, color }) => <FontAwesome name='user' color={color} size={size} />,
@@ -136,18 +93,7 @@ const BottomTabs = () => {
             return null;
           },
         }}
-      /> */}
-      {/* <Tab.Screen
-        name='Hot'
-        component={Post}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ size, color }) => <AntIcon name={'setting'} color={color} size={size} />,
-          tabBarLabel: () => {
-            return null;
-          },
-        }}
-      /> */}
+      />
     </Tab.Navigator>
   );
 };

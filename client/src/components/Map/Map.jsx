@@ -13,7 +13,7 @@ import SelectedItemBottomSheet from './SelectedItem/SelectedItemBottomSheet';
 import FABMenu from './Utils/FABMenu';
 import ModalContainer from '../Utils/ModalContainer';
 import ConfirmHostMeetup from './HostMeetup/ConfirmHostMeetup';
-import CancelHostMeetupButton from './HostMeetup/CancelHostMeetupButton';
+// import CancelHostMeetupButton from './HostMeetup/CancelHostMeetupButton';
 import SetMeetupLocation from './HostMeetup/SetMeetupLocation';
 import HostMeetupBottomSheet from './HostMeetup/BottomSheet';
 import Badges from '../Utils/SelectBadges/Badges';
@@ -200,7 +200,7 @@ const Map = (props) => {
           <SnackBar />
           <PostBottomSheet postBottomSheetRef={postBottomSheetRef} />
           <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} />
-          <CancelHostMeetupButton />
+          {/* <CancelHostMeetupButton /> */}
           <HostMeetupBottomSheet />
         </View>
       </NBProvider>
