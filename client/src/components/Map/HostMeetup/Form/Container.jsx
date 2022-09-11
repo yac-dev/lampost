@@ -1,17 +1,11 @@
 // main libraries
 import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, StyleSheet } from 'react-native';
 
 // components
-import Header from '../../../Utils/Header';
-import Body from './Body';
-
 import CreateMeetupBadge from './CreateMeetupBadge';
 import CreateMeetupDetail from './CreateMeetupDetail/Container';
 import CreateMeetupDescription from './CreateMeetupDescription';
-// import CreateMeetupDates from './CreateMeetupDescription';
-// import CreateMeetupDetail from './CreateMeetupDetail';
 
 // ac
 import { createMeetup } from '../../../../redux/actionCreators/meetups';
@@ -44,10 +38,6 @@ const reducer = (state, action) => {
       return { ...state, component: 'MeetupDescription' };
     case 'BACK_TO_MEETUP_DETAIL':
       return { ...state, component: 'MeetupDetail' };
-    case 'ADD_BADGE_ELEMENTS':
-      return { ...state, badgeElements: [...state.badgeElements, action.payload] };
-    case 'REMOVE_BADGE_ELEMENT':
-      return { ...state }; // 後でやりましょう。
     case 'SET_START_DATE_AND_TIME':
       return { ...state, startDateAndTime: action.payload };
     case 'SET_IS_START_DATE_PICKER_VISIBLE':
@@ -104,7 +94,7 @@ const Container = (props) => {
     console.log(formData);
     props.setIsHostMeetupOpen(false);
     props.setMeetupLocation('');
-    props.addSnackBar('Meetup created successfully!', 'success', 10000);
+    props.addSnackBar('Meetup was created successfully! Please check your schedule.', 'success', 7000);
     // props.createMeetup(formData);
   };
 

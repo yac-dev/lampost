@@ -9,7 +9,8 @@ const ModalContainer = (props) => {
         <Dialog visible={props.modalOpen}>
           <Dialog.Content>{props.children}</Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={() => props.onPressModalOpen()}>Done</Button>
+            <Button onPress={() => props.onPressCancel()}>Cancel</Button>
+            <Button onPress={() => props.onPressOk()}>{props.okText}</Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>

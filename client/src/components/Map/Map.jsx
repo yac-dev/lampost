@@ -12,17 +12,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import MapView, { Callout, Marker, Circle } from 'react-native-maps';
-
-// import { IconButton, Center, VStack, NativeBaseProvider, TextArea, Box, Button, Stack, Fab, Icon } from 'native-base';
-import { FAB, Portal, Provider, IconButton } from 'react-native-paper';
-import { MaterialIcons } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
-import { Foundation } from '@expo/vector-icons';
+import MapView from 'react-native-maps';
 
 // components
 import NBProvider from '../Utils/NativeBaseProvider';
@@ -30,12 +20,17 @@ import MapMarkers from './MapMarkers/MapMarkers';
 import PostBottomSheet from './Post/PostBottomSheet';
 import SelectedItemBottomSheet from './SelectedItem/SelectedItemBottomSheet';
 import RNPDialog from '../Utils/RNPDialog';
+import FABMenu from './Utils/FABMenu';
+import ModalContainer from '../Utils/ModalContainer';
+import ConfirmHostMeetup from './HostMeetup/ConfirmHostMeetup';
 import CancelHostMeetupButton from './HostMeetup/CancelHostMeetupButton';
 import SetMeetupLocation from './HostMeetup/SetMeetupLocation';
 import HostMeetupBottomSheet from './HostMeetup/BottomSheet';
-import MeetupBadgesModalContainer from '../Utils/ModalContainer';
 import Badges from '../Utils/SelectBadges/Badges';
 import SnackBar from '../Utils/SnackBar';
+
+// utils
+import { mapStyle } from './Utils/mapStyle';
 
 // ac
 import { loadMe } from '../../redux/actionCreators/auth';
@@ -46,7 +41,7 @@ import { selectPost } from '../../redux/actionCreators/selectItem';
 import { setIsHostMeetupOpen } from '../../redux/actionCreators/hostMeetup';
 import { setMeetupLocation } from '../../redux/actionCreators/hostMeetup';
 import { setIsSelectMeetupBadgesModalOpen } from '../../redux/actionCreators/modal';
-import { Icon } from 'native-base';
+import { setIsConfirmHostMeetupModalOpen } from '../../redux/actionCreators/modal';
 
 const Map = (props) => {
   const [region, setRegion] = useState(null);
@@ -55,50 +50,8 @@ const Map = (props) => {
   const postBottomSheetRef = useRef(null);
   const selectedItemBottomSheetRef = useRef(null);
   const mapRef = useRef(null);
-  console.log('Map is rendered');
-
-  const [state, setState] = React.useState({ open: false });
   const [tapped, setTapped] = useState(null);
-
-  const onStateChange = ({ open }) => setState({ open });
-
-  const { open } = state;
-
-  const mapStyle = [
-    {
-      elementType: 'labels',
-      stylers: [
-        {
-          visibility: 'off',
-        },
-      ],
-    },
-
-    {
-      featureType: 'administrative.country',
-      stylers: [
-        {
-          visibility: 'on',
-        },
-      ],
-    },
-    {
-      featureType: 'administrative.province',
-      stylers: [
-        {
-          visibility: 'on',
-        },
-      ],
-    },
-    {
-      featureType: 'administrative.locality',
-      stylers: [
-        {
-          visibility: 'on',
-        },
-      ],
-    },
-  ];
+  console.log('Map is rendered');
 
   // const handleSheetChanges = useCallback((index) => {
   //   if (!props.modal.bottomSheet.isOpen) {
@@ -148,8 +101,21 @@ const Map = (props) => {
     }
   };
 
-  const onPressModalOpen = () => {
+  const onPressOkSelectBadge = () => {
     props.setIsSelectMeetupBadgesModalOpen(false);
+  };
+
+  const onPressCancelSelectBadge = () => {
+    props.setIsSelectMeetupBadgesModalOpen(false);
+  };
+
+  const onPressOkConfirmHostMeetup = () => {
+    props.setIsHostMeetupOpen(true);
+    props.setIsConfirmHostMeetupModalOpen(false); // modalを閉じるからね。
+  };
+
+  const onPressCancelConfirmHostMeetup = () => {
+    props.setIsConfirmHostMeetupModalOpen(false);
   };
 
   useEffect(() => {
@@ -190,13 +156,22 @@ const Map = (props) => {
     <>
       <NBProvider>
         <View style={styles.container}>
-          {/* <MeetupBadgesModal /> */}
-          <MeetupBadgesModalContainer
+          <ModalContainer
             modalOpen={props.modal.selectMeetupBadges.isOpen}
-            onPressModalOpen={onPressModalOpen}
+            onPressOk={onPressOkSelectBadge}
+            onPressCancel={onPressCancelSelectBadge}
+            okText={'Done'}
           >
             <Badges />
-          </MeetupBadgesModalContainer>
+          </ModalContainer>
+          <ModalContainer
+            modalOpen={props.modal.confirmHostMeetup.isOpen}
+            onPressOk={onPressOkConfirmHostMeetup}
+            onPressCancel={onPressCancelConfirmHostMeetup}
+            okText={'Ok'}
+          >
+            <ConfirmHostMeetup />
+          </ModalContainer>
           <MapView
             ref={mapRef}
             style={styles.map}
@@ -220,44 +195,7 @@ const Map = (props) => {
             <SetMeetupLocation />
             <MapMarkers handleSelectedItemBottomSheetChanges={handleSelectedItemBottomSheetChanges} />
           </MapView>
-          <Provider>
-            <Portal>
-              <FAB.Group
-                open={open}
-                icon={open ? 'close' : 'party-popper'}
-                actions={[
-                  {
-                    icon: (props) => <FontAwesome {...props} name='search' />,
-                    label: 'Search',
-                    disabled: true,
-                    onPress: () => console.log('Search engine'),
-                  },
-
-                  {
-                    icon: (props) => <FontAwesome {...props} name='calendar' />,
-                    label: 'Schedule',
-                    onPress: () => console.log('Schedule component'),
-                  },
-                  {
-                    icon: 'plus',
-                    label: 'Host',
-                    onPress: () => props.setIsHostMeetupOpen(true),
-                  },
-                  {
-                    icon: (props) => <FontAwesome {...props} name='camera' />,
-                    label: 'Camera/Live',
-                    onPress: () => props.navigation.navigate('Camera'),
-                  },
-                ]}
-                onStateChange={onStateChange}
-                onPress={() => {
-                  if (open) {
-                    // do something if the speed dial is open
-                  }
-                }}
-              />
-            </Portal>
-          </Provider>
+          <FABMenu navigation={props.navigation} />
 
           {/* <IconButton icon='plus' style={{ position: 'absolute', top: 10, right: 10 }} /> 多分、user pageはbottom tabにするかもね。*/}
           <SnackBar />
@@ -330,5 +268,6 @@ export default connect(mapStateToProps, {
   getCurrentLocation,
   setIsHostMeetupOpen,
   setMeetupLocation,
+  setIsConfirmHostMeetupModalOpen,
   setIsSelectMeetupBadgesModalOpen,
 })(Map);
