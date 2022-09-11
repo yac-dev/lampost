@@ -32,7 +32,7 @@ const FABMenu = (props) => {
               {
                 icon: (props) => <FontAwesome {...props} name='calendar' />,
                 label: 'Schedule',
-                onPress: () => console.log('Schedule component'),
+                onPress: () => props.navigation.navigate('CalendarNavigator'),
               },
               {
                 icon: 'plus',

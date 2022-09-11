@@ -6,6 +6,7 @@ const Stack = createNativeStackNavigator();
 
 // components
 import Map from '../Map/Map';
+import CalendarNavigator from './Calendar';
 import Camera from '../Camera/Container';
 
 const MapNavigator = () => {
@@ -14,7 +15,7 @@ const MapNavigator = () => {
     <Stack.Navigator>
       <Stack.Screen name='Map' component={Map} options={{ headerShown: false }} />
       <Stack.Screen name='Camera' component={Camera} options={{ headerShown: false }} />
-      {/* <Stack.Screen name='LogIn' component={LogIn} /> */}
+      <Stack.Screen name='CalendarNavigator' component={CalendarNavigator} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };
