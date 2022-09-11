@@ -4,7 +4,6 @@ import meetupsReducer from './meetups';
 import selectedItemReducer from './selectedItem';
 import bottomSheetReducer from './bottomSheet';
 import modalReducer from './modal';
-import dialogReducer from './dialog';
 import hostMeetupReducer from './hostMeetup';
 import snackBarReducer from './snackBar';
 
@@ -14,7 +13,6 @@ const rootReducer = combineReducers({
   meetups: meetupsReducer,
   selectedItem: selectedItemReducer,
   modal: modalReducer,
-  dialog: dialogReducer,
   hostMeetup: hostMeetupReducer,
   snackBar: snackBarReducer,
 });

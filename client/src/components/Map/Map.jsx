@@ -1,17 +1,7 @@
 // main libraries
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { connect } from 'react-redux';
-import {
-  StyleSheet,
-  Text,
-  Platform,
-  View,
-  StatusBar,
-  Dimensions,
-  SafeAreaView,
-  TouchableOpacity,
-  TextInput,
-} from 'react-native';
+import { StyleSheet, Platform, View, StatusBar, Dimensions } from 'react-native';
 import MapView from 'react-native-maps';
 
 // components
@@ -19,7 +9,7 @@ import NBProvider from '../Utils/NativeBaseProvider';
 import MapMarkers from './MapMarkers/MapMarkers';
 import PostBottomSheet from './Post/PostBottomSheet';
 import SelectedItemBottomSheet from './SelectedItem/SelectedItemBottomSheet';
-import RNPDialog from '../Utils/RNPDialog';
+
 import FABMenu from './Utils/FABMenu';
 import ModalContainer from '../Utils/ModalContainer';
 import ConfirmHostMeetup from './HostMeetup/ConfirmHostMeetup';
@@ -50,7 +40,6 @@ const Map = (props) => {
   const postBottomSheetRef = useRef(null);
   const selectedItemBottomSheetRef = useRef(null);
   const mapRef = useRef(null);
-  const [tapped, setTapped] = useState(null);
   console.log('Map is rendered');
 
   // const handleSheetChanges = useCallback((index) => {
@@ -111,7 +100,7 @@ const Map = (props) => {
 
   const onPressOkConfirmHostMeetup = () => {
     props.setIsHostMeetupOpen(true);
-    props.setIsConfirmHostMeetupModalOpen(false); // modalを閉じるからね。
+    props.setIsConfirmHostMeetupModalOpen(false);
   };
 
   const onPressCancelConfirmHostMeetup = () => {
@@ -137,8 +126,6 @@ const Map = (props) => {
     props.getCurrentLocation();
   }, []);
 
-  // tappingMeetupの時だけね。
-
   useEffect(() => {
     if (props.bottomSheet.post.isOpen && props.auth.currentLocation.latitude && props.auth.currentLocation.longitude) {
       const newLat = props.auth.currentLocation.latitude - 0.027;
@@ -152,26 +139,23 @@ const Map = (props) => {
     }
   }, [props.bottomSheet.post.isOpen]);
 
+  // これが、hostMeetupでbottomSheetが開いた時の自動map移動。
+  useEffect(() => {
+    if (props.hostMeetup.isOpen && props.hostMeetup.setLocation) {
+      const newLat = props.hostMeetup.setLocation.latitude - 0.021;
+      mapRef.current.animateToRegion({
+        latitude: newLat,
+        longitude: props.hostMeetup.setLocation.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      });
+    }
+  }, [props.hostMeetup]);
+
   return (
     <>
       <NBProvider>
         <View style={styles.container}>
-          <ModalContainer
-            modalOpen={props.modal.selectMeetupBadges.isOpen}
-            onPressOk={onPressOkSelectBadge}
-            onPressCancel={onPressCancelSelectBadge}
-            okText={'Done'}
-          >
-            <Badges />
-          </ModalContainer>
-          <ModalContainer
-            modalOpen={props.modal.confirmHostMeetup.isOpen}
-            onPressOk={onPressOkConfirmHostMeetup}
-            onPressCancel={onPressCancelConfirmHostMeetup}
-            okText={'Ok'}
-          >
-            <ConfirmHostMeetup />
-          </ModalContainer>
           <MapView
             ref={mapRef}
             style={styles.map}
@@ -195,23 +179,29 @@ const Map = (props) => {
             <SetMeetupLocation />
             <MapMarkers handleSelectedItemBottomSheetChanges={handleSelectedItemBottomSheetChanges} />
           </MapView>
-          <FABMenu navigation={props.navigation} />
+          <ModalContainer
+            modalOpen={props.modal.selectMeetupBadges.isOpen}
+            onPressOk={onPressOkSelectBadge}
+            onPressCancel={onPressCancelSelectBadge}
+            okText={'Done'}
+          >
+            <Badges />
+          </ModalContainer>
+          <ModalContainer
+            modalOpen={props.modal.confirmHostMeetup.isOpen}
+            onPressOk={onPressOkConfirmHostMeetup}
+            onPressCancel={onPressCancelConfirmHostMeetup}
+            okText={'Ok'}
+          >
+            <ConfirmHostMeetup />
+          </ModalContainer>
 
-          {/* <IconButton icon='plus' style={{ position: 'absolute', top: 10, right: 10 }} /> 多分、user pageはbottom tabにするかもね。*/}
+          <FABMenu navigation={props.navigation} />
           <SnackBar />
           <PostBottomSheet postBottomSheetRef={postBottomSheetRef} />
           <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} />
           <CancelHostMeetupButton />
           <HostMeetupBottomSheet />
-          <RNPDialog
-            dialogState={props.dialog.confirmCreateMeetup.isOpen}
-            title='Please tap the location where you wanna hold your meetup!'
-          >
-            <View>
-              <Text>Heeey!</Text>
-            </View>
-          </RNPDialog>
-          {/* <PostBottomSheet postBottomSheetRef={postBottomSheetRef} /> */}
         </View>
       </NBProvider>
     </>
@@ -231,18 +221,6 @@ const styles = StyleSheet.create({
     right: 100,
     top: 400,
   },
-  // button: {
-  //   position: 'absolute',
-  //   right: 60,
-  //   top: 70,
-  //   size: 50,
-  // },
-  // button2: {
-  //   position: 'absolute',
-  //   right: 60,
-  //   top: 90,
-  //   size: 50,
-  // },
   map: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
