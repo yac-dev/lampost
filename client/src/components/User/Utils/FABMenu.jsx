@@ -5,6 +5,7 @@ import { FAB, Portal, Provider, IconButton } from 'react-native-paper';
 
 // icon
 import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 //ac
 import { setIsConfirmHostMeetupModalOpen } from '../../../redux/actionCreators/modal';
@@ -14,13 +15,21 @@ const FABMenu = (props) => {
   const onStateChange = ({ open }) => setState({ open });
   const { open } = state;
 
+  const renderMenuIcon = () => {
+    if (open) {
+      return <FontAwesome5 {...props} name='user-ninja' size={24} />;
+    } else {
+      return <FontAwesome5 {...props} name='user-astronaut' size={24} />;
+    }
+  };
+
   // if (!props.hostMeetup.isOpen) {
   return (
     <Provider>
       <Portal>
         <FAB.Group
           open={open}
-          icon={open ? 'close' : 'party-popper'}
+          icon={() => renderMenuIcon()}
           actions={[
             {
               icon: (props) => <FontAwesome {...props} name='search' />,

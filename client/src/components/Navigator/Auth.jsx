@@ -5,7 +5,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 
 // components
-import UserPage from '../Auth/UserPage';
 import LogInOrSignUp from '../Auth/LogInOrSignUp';
 import SignUp from '../Auth/SignUp';
 import LogIn from '../Auth/LogIn';
@@ -17,7 +16,14 @@ const Auth = (props) => {
     // ここも、多分user pageにかんするnavigatorを使うことになるだろう。今はこれで置いておくけど。
     return (
       <Stack.Navigator>
-        <Stack.Screen name='Welcome' component={UserHome} options={{ headerShown: false }} />
+        <Stack.Screen
+          name='My page'
+          component={UserHome}
+          initialParams={{ _id: props.auth.data._id }}
+          options={{ headerShown: false }}
+        >
+          {/* {(props) => <UserHome {...props} user={props.auth.data} />} */}
+        </Stack.Screen>
       </Stack.Navigator>
     );
   } else {

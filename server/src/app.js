@@ -4,6 +4,7 @@ import './databases/mongoose';
 
 // routers
 import authRouter from './routers/auth';
+import usersRouter from './routers/users';
 import meetupsRouter from './routers/meetups';
 import badgesRouter from './routers/badges';
 // import postsRouter from './routers/posts';
@@ -18,6 +19,7 @@ app.get('/', (request, response) => {
 });
 
 app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter);
 app.use('/api/meetups', meetupsRouter);
 app.use('/api/badges', badgesRouter);
 // app.use('/api/posts', postsRouter);
