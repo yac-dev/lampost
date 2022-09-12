@@ -10,10 +10,16 @@ import LogInOrSignUp from '../Auth/LogInOrSignUp';
 import SignUp from '../Auth/SignUp';
 import LogIn from '../Auth/LogIn';
 
+import UserHome from '../User/Home/Container';
+
 const Auth = (props) => {
   if (props.auth.isAuthenticated) {
     // ここも、多分user pageにかんするnavigatorを使うことになるだろう。今はこれで置いておくけど。
-    return <UserPage />;
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name='Welcome' component={UserHome} options={{ headerShown: false }} />
+      </Stack.Navigator>
+    );
   } else {
     return (
       <Stack.Navigator>

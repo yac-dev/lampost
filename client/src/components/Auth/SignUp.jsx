@@ -22,11 +22,16 @@ import Map from '../Map/Map';
 import { signUp } from '../../redux/actionCreators/auth';
 
 const SignUp = (props) => {
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const onPressSubmit = () => {
+    const name = {
+      firstName,
+      lastName,
+    };
     const formData = {
       name,
       email,
@@ -48,11 +53,26 @@ const SignUp = (props) => {
       /> */}
       <View style={styles.formContainer}>
         <Text>Welcome to Lampost</Text>
-        <Text>Name</Text>
+        <Text>First name</Text>
         <TextInput
-          placeholder='name'
-          onChangeText={(text) => setName(text)}
-          value={name}
+          placeholder='first name'
+          onChangeText={(text) => setFirstName(text)}
+          value={firstName}
+          style={{
+            borderColor: 'skyblue',
+            borderWidth: 1,
+            borderRadius: 5,
+            margin: 12,
+            padding: 10,
+            height: 40,
+            width: 200,
+          }}
+        />
+        <Text>Last name</Text>
+        <TextInput
+          placeholder='last name'
+          onChangeText={(text) => setLastName(text)}
+          value={lastName}
           style={{
             borderColor: 'skyblue',
             borderWidth: 1,
@@ -94,6 +114,9 @@ const SignUp = (props) => {
             width: 200,
           }}
         />
+        <TouchableOpacity onPress={() => onPressSubmit()}>
+          <Text>Press</Text>
+        </TouchableOpacity>
         {/* <TouchableOpacity
           style={{ position: 'absolute', right: 20, top: 45, zIndex: 10 }}
           onPress={() => props.navigation.navigate('LogIn')}

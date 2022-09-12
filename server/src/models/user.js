@@ -2,16 +2,6 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema({
-  // firstName: {
-  //   type: String,
-  //   required: true,
-  //   unique: true,
-  // },
-  // lastName: {
-  //   type: String,
-  //   required: true,
-  //   unique: true,
-  // },
   name: {
     firstName: String,
     lastName: String,
@@ -28,29 +18,10 @@ const userSchema = new mongoose.Schema({
   photo: {
     type: String,
   },
-  currentJob: {
-    type: String,
-  },
-  // up to 3 items 一つ15字以下かな
-  enthusiasms: {
-    type: [{ type: String, maxLength: 20 }],
-    validate: [arrayLimit, 'Limited 3 items in enthusiasms field'],
-  },
-  // up to 3 items
-  meetupGenres: {
-    type: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: 'MeetupGenre',
-      },
-    ],
-    validate: [arrayLimit, 'Limited 3 items in interests  field'],
-  },
-  // cityのschemaが必要になるな。気になる街よ、要は。
-  oftenGoTo: [String],
-  skills: [
+  badges: [
     {
-      type: String,
+      type: mongoose.Schema.ObjectId,
+      ref: 'Badge',
     },
   ],
   bio: {
@@ -87,23 +58,23 @@ userSchema.methods.isPasswordCorrect = async (enteredPassword, actualPassword) =
   return await bcrypt.compare(enteredPassword, actualPassword);
 };
 
-userSchema.virtual('posts', {
-  ref: 'Post',
-  foreignField: 'user',
-  localField: '_id',
-});
+// userSchema.virtual('joinedMeetups', {
+//   ref: 'Meetup',
+//   foreignField: 'users',
+//   localField: '_id',
+// });
 
-userSchema.virtual('meetups', {
-  ref: 'Meetup',
-  foreignField: 'host',
-  localField: '_id',
-});
+// userSchema.virtual('meetups', {
+//   ref: 'Meetup',
+//   foreignField: 'host',
+//   localField: '_id',
+// });
 
-userSchema.virtual('meetups', {
-  ref: 'Meetup',
-  foreignField: 'attendees',
-  localField: '_id',
-});
+// userSchema.virtual('meetups', {
+//   ref: 'Meetup',
+//   foreignField: 'attendees',
+//   localField: '_id',
+// });
 
 const User = mongoose.model('User', userSchema);
 export default User;

@@ -4,34 +4,15 @@ import { connect } from 'react-redux';
 import { View, Text, SafeAreaView } from 'react-native';
 
 const UserPage = (props) => {
-  // const render = () => {
-  //   if (props.auth.isAuthenticated) {
-  //     return (
-  //       <SafeAreaView style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
-  //         <Text>{props.auth.data.name}</Text>
-  //       </SafeAreaView>
-  //     );
-  //   } else {
-  //     return (
-  //       <View>
-  //         <Text>Nooooo data</Text>
-  //       </View>
-  //     );
-  //   }
-  // };
-  if (props.auth.isAuthenticated) {
-    return (
-      <SafeAreaView style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
-        <Text>{props.auth.data.name}</Text>
-      </SafeAreaView>
-    );
-  } else {
-    return (
-      <View>
-        <Text>Nooooo data</Text>
-      </View>
-    );
-  }
+  console.log('heeeey');
+  return (
+    <SafeAreaView>
+      <Text>{props.auth.data.name.firstName}</Text>
+      <Text>{props.auth.data.name.firstName}</Text>
+      <Text>{props.auth.data.name.firstName}</Text>
+      <Text>{props.auth.data.name.firstName}</Text>
+    </SafeAreaView>
+  );
 };
 
 const mapStateToProps = (state) => {
