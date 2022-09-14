@@ -1,16 +1,20 @@
 // main libraries
 import React from 'react';
-import { Button, Dialog, Portal, Provider } from 'react-native-paper';
+import { Button, Dialog, Portal, Provider, withTheme } from 'react-native-paper';
 
 const ModalContainer = (props) => {
   if (props.modalOpen) {
     return (
       <Portal>
-        <Dialog visible={props.modalOpen}>
+        <Dialog visible={props.modalOpen} style={{ backgroundColor: 'white' }}>
           <Dialog.Content>{props.children}</Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={() => props.onPressCancel()}>Cancel</Button>
-            <Button onPress={() => props.onPressOk()}>{props.okText}</Button>
+            <Button textColor='rgb(58, 126, 224)' onPress={() => props.onPressCancel()}>
+              Cancel
+            </Button>
+            <Button textColor='rgb(58, 126, 224)' onPress={() => props.onPressOk()}>
+              {props.okText}
+            </Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>
@@ -20,4 +24,4 @@ const ModalContainer = (props) => {
   }
 };
 
-export default ModalContainer;
+export default withTheme(ModalContainer);
