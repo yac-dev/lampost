@@ -13,13 +13,51 @@ const FABMenu = (props) => {
   const onStateChange = ({ open }) => setState({ open });
   const { open } = state;
 
+  const createIconObject = (icon, label, onPress) => {
+    return {
+      icon,
+      // (props) => (
+      //   <Image
+      //     source={require('../../../../assets/badgeIcons/foodAndBeverage/baskinRobbins.pk.png')}
+      //     style={{ width: 25, height: 25, tintColor: 'white' }}
+      //   /> // これ、カメラのコンポーネントではこれでいい。ここでは、通常どおりmatrrialのiconを使う。
+      // ),
+      label,
+      onPress,
+      color: 'white',
+      labelTextColor: 'black',
+      style: {
+        backgroundColor: 'rgb(58, 126, 224)',
+      },
+    };
+  };
+
+  const renderFABGroupIcon = () => {
+    if (props.mode === 'photo') {
+      if (open) {
+        return 'camera';
+      } else {
+        return 'camera-image';
+      }
+    } else if (props.mode === 'video') {
+      if (open) {
+        return 'video';
+      } else {
+        return 'video-image';
+      }
+    }
+  };
+
   if (!props.hostMeetup.isOpen) {
     return (
       <Provider>
         <Portal>
           <FAB.Group
+            fabStyle={{ backgroundColor: 'rgb(58, 126, 224)' }}
+            color={'white'}
+            backdropColor={'white'}
             open={open}
-            icon={open ? 'close' : 'party-popper'}
+            icon={renderFABGroupIcon()}
             actions={[
               {
                 icon: (props) => <FontAwesome {...props} name='search' />,
