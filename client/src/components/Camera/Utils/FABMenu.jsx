@@ -1,6 +1,8 @@
 // main libraries
 import React, { useState } from 'react';
+import { View, Image } from 'react-native';
 import { connect } from 'react-redux';
+
 import { FAB, Portal, Provider, IconButton } from 'react-native-paper';
 
 // icon
@@ -13,15 +15,13 @@ const FABMenu = (props) => {
   const onStateChange = ({ open }) => setState({ open });
   const { open } = state;
 
-  const createIconObject = (icon, label, onPress) => {
+  const createIconObject = (params) => {
+    const { icon } = params;
+    const { ImageComponent } = params;
+    const { label } = params;
+    const { onPress } = params;
     return {
-      icon,
-      // (props) => (
-      //   <Image
-      //     source={require('../../../../assets/badgeIcons/foodAndBeverage/baskinRobbins.pk.png')}
-      //     style={{ width: 25, height: 25, tintColor: 'white' }}
-      //   /> // これ、カメラのコンポーネントではこれでいい。ここでは、通常どおりmatrrialのiconを使う。
-      // ),
+      icon: ImageComponent ? ImageComponent : icon,
       label,
       onPress,
       color: 'white',
@@ -33,69 +33,110 @@ const FABMenu = (props) => {
   };
 
   const renderFABGroupIcon = () => {
-    if (props.mode === 'photo') {
+    if (props.mode === 'Photo') {
       if (open) {
+        return 'close';
+      } else {
         return 'camera';
-      } else {
-        return 'camera-image';
       }
-    } else if (props.mode === 'video') {
+    } else if (props.mode === 'Video') {
       if (open) {
-        return 'video';
+        return 'close';
       } else {
-        return 'video-image';
+        return 'video';
       }
     }
   };
 
-  if (!props.hostMeetup.isOpen) {
-    return (
-      <Provider>
-        <Portal>
-          <FAB.Group
-            fabStyle={{ backgroundColor: 'rgb(58, 126, 224)' }}
-            color={'white'}
-            backdropColor={'white'}
-            open={open}
-            icon={renderFABGroupIcon()}
-            actions={[
-              {
-                icon: (props) => <FontAwesome {...props} name='search' />,
-                label: 'Search',
-                disabled: true,
-                onPress: () => console.log('Search engine'),
-              },
+  // 後でやる{
+  //   icon: 'camera-timer',
+  //   label: 'Timer setting',
+  //   color: 'white',
+  //   labelTextColor: 'black',
+  //   style: {
+  //     backgroundColor: 'rgb(58, 126, 224)',
+  //   },
+  //   // onPress: () => props.setIsHostMeetupOpen(true),
+  //   onPress: () => console.log('camera component'),
+  // },
 
-              {
-                icon: (props) => <FontAwesome {...props} name='calendar' />,
-                label: 'Schedule',
-                onPress: () => props.navigation.navigate('CalendarNavigator'),
-              },
-              {
-                icon: 'plus',
-                label: 'Host',
-                // onPress: () => props.setIsHostMeetupOpen(true),
-                onPress: () => console.log('camera component'),
-              },
-              {
-                icon: (props) => <FontAwesome {...props} name='camera' />,
-                label: 'Camera/Live',
-                onPress: () => props.navigation.navigate('Camera'),
-              },
-            ]}
-            onStateChange={onStateChange}
-            onPress={() => {
-              if (open) {
-                // do something if the speed dial is open
-              }
-            }}
-          />
-        </Portal>
-      </Provider>
-    );
-  } else {
-    return null;
-  }
+  const fabActions = () => {
+    if (props.mode === 'Photo') {
+      return [
+        createIconObject({ icon: 'flash', label: 'Set flash', onPress: () => console.log('flash setting') }),
+        createIconObject({ icon: 'camera-flip', label: 'Set flip', onPress: () => console.log('set flip') }),
+        createIconObject({
+          icon: 'lightbulb-fluorescent-tube-outline',
+          label: 'Fluorescent',
+          onPress: () => console.log('fluorescent'),
+        }),
+        createIconObject({
+          icon: 'lightbulb-on-outline',
+          label: 'Incandescent',
+          onPress: () => console.log('Incandescent'),
+        }),
+        createIconObject({
+          icon: (props) => (
+            <Image
+              source={require('../../../../assets/app/icons8-yin-yang-100.png')}
+              style={{ width: 25, height: 25, tintColor: 'white' }}
+            />
+          ),
+          label: 'Black and White',
+          onPress: () => console.log('black and white'),
+        }),
+        createIconObject({ icon: 'weather-cloudy', label: 'Cloudy', onPress: () => console.log('cloudy') }),
+        createIconObject({ icon: 'weather-sunny', label: 'Sunny', onPress: () => console.log('sunny') }),
+        createIconObject({ icon: 'camera', label: 'Original', onPress: () => console.log('original') }),
+      ];
+    } else if (props.mode === 'Video') {
+      return [
+        createIconObject({ icon: 'camera-flip', label: 'Set flip', onPress: () => console.log('set flip') }),
+        createIconObject({
+          icon: (props) => (
+            <Image
+              source={require('../../../../assets/app/icons8-vintage-camera-100.png')}
+              style={{ width: 25, height: 25, tintColor: 'white' }}
+            />
+          ),
+          label: "80's vintage film",
+          onPress: () => console.log('80s vintage'),
+        }),
+        createIconObject({
+          icon: (props) => (
+            <Image
+              source={require('../../../../assets/app/icons8-film-roll-100.png')}
+              style={{ width: 25, height: 25, tintColor: 'white' }}
+            />
+          ),
+          label: '8mm',
+          onPress: () => console.log('8mm'),
+        }),
+        createIconObject({ icon: 'video', label: 'Original', onPress: () => console.log('normal vid') }),
+      ];
+    }
+  };
+
+  return (
+    <Provider>
+      <Portal>
+        <FAB.Group
+          fabStyle={{ backgroundColor: 'rgb(58, 126, 224)' }}
+          color={'white'}
+          backdropColor={'white'}
+          open={open}
+          icon={renderFABGroupIcon()}
+          actions={fabActions()}
+          onStateChange={onStateChange}
+          onPress={() => {
+            if (open) {
+              // do something if the speed dial is open
+            }
+          }}
+        />
+      </Portal>
+    </Provider>
+  );
 };
 
 const mapStateToProps = (state) => {

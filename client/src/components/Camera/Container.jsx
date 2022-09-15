@@ -15,9 +15,7 @@ import FABMenu from './Utils/FABMenu';
 export default function App(props) {
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
-  const [cameraMode, setCameraMode] = useState('photo');
-  const [photo, setPhoto] = useState();
-  const [value, setValue] = useState('Photo');
+  const [cameraMode, setCameraMode] = useState('Photo');
 
   useEffect(() => {
     (async () => {
@@ -65,9 +63,8 @@ export default function App(props) {
   //   );
   // }
 
+  // 基本的に、10秒以内の動画は保存しないようにする。そのためにサーバー動かすのめんどくさいから。
   return (
-    // <View style={{ backgroundColor: 'red' }}>
-    // <SafeAreaView style={styles.container} onPress={() => console.log('Take the shot!!')}>
     <TouchableOpacity style={{ flex: 1 }} onPress={() => console.log('took a shot')}>
       <Camera style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} ref={cameraRef}>
         <StatusBar hidden={true} style='auto' />
@@ -79,8 +76,8 @@ export default function App(props) {
               inactiveBackgroundColor={'transparent'}
               inactiveTextColor={'white'}
               values={['Photo', 'Video']}
-              value={value}
-              onSelect={(val) => setValue(val)}
+              value={cameraMode}
+              onSelect={(val) => setCameraMode(val)}
             />
           </View>
         </View>
@@ -88,25 +85,12 @@ export default function App(props) {
         <IconButton
           icon='close'
           iconColor='white'
-          containerColor='rgb(58, 126, 224)'
+          containerColor='rgb(74, 74, 74)'
           style={{ position: 'absolute', top: 35, left: 10 }}
           onPress={() => props.navigation.navigate('Map')}
         />
       </Camera>
     </TouchableOpacity>
-    // <View style={{ position: 'absolute', bottom: 30, backgroundColor: 'red' }}>
-    //   <Entypo name='camera' onPress={() => setCameraMode('photo')} />
-    //   <Entypo name='video-camera' onPress={() => setCameraMode('video')} />
-    //   <Text>Hi there!!!</Text>
-    // </View>
-    // <Text>{cameraMode}</Text>
-    // <FABMenu mode={cameraMode} />
-    // <IconButton
-    //   icon='close'
-    //   style={{ position: 'absolute', top: 15, left: 10 }}
-    //   onPress={() => props.navigation.navigate('Map')}
-    // />
-    // </SafeAreaView>
   );
 }
 
