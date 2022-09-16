@@ -44,7 +44,7 @@ const FABMenu = (props) => {
             color={'white'}
             backdropColor={'white'}
             open={open}
-            icon={open ? 'map' : 'party-popper'}
+            icon={open ? 'close' : 'party-popper'}
             actions={[
               createIconObject('map-search', 'Search', () => console.log('Search engine')),
               createIconObject('calendar', 'Schedule', () => props.navigation.navigate('CalendarNavigator')),

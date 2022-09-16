@@ -9,31 +9,40 @@ const meetupSchema = new mongoose.Schema({
     },
     coordinates: [Number],
   },
+  badges: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Badge',
+    },
+  ],
   title: {
     type: String,
-    maxLength: 80,
-  },
-  // 最大で3つまで
-  genres: {
-    type: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: 'MeetupGenre',
-      },
-    ],
-    validate: [genresLimit, 'OOPS! It is allowed to register at most 3 items.'],
+    maxLength: 40,
   },
   startDateAndTime: {
     type: Date,
   },
+  isStartDateAndTimeUpdated: {
+    type: Boolean,
+  },
   endDateAndTime: {
     type: Date,
+  },
+  isEndDateAndTimeUpdated: {
+    type: Boolean,
   },
   fee: {
     type: Number,
   },
   currency: {
     type: String,
+  },
+  attendeesLimit: {
+    type: Number,
+  },
+  description: {
+    type: String,
+    maxLength: 300,
   },
   isPublic: {
     type: Boolean,
@@ -51,7 +60,7 @@ const meetupSchema = new mongoose.Schema({
         ref: 'User',
       },
     ],
-    validate: [attendeesLimit, 'OOPS! This meetup is full now.'],
+    // validate: [attendeesLimit, 'OOPS! This meetup is full now.'],
   },
   state: {
     type: String,
@@ -78,13 +87,13 @@ const meetupSchema = new mongoose.Schema({
   },
 });
 
-function genresLimit(val) {
-  return val.length <= 3;
-}
+// function genresLimit(val) {
+//   return val.length <= 3;
+// }
 
-function attendeesLimit(val) {
-  return val.length <= 7;
-}
+// function attendeesLimit(val) {
+//   return val.length <= 7;
+// }
 
 meetupSchema.virtual('comments', {
   ref: 'Comment',

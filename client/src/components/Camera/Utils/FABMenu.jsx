@@ -64,15 +64,14 @@ const FABMenu = (props) => {
     if (props.mode === 'Photo') {
       return [
         createIconObject({ icon: 'flash', label: 'Set flash', onPress: () => console.log('flash setting') }),
-        createIconObject({ icon: 'camera-flip', label: 'Set flip', onPress: () => console.log('set flip') }),
         createIconObject({
           icon: 'lightbulb-fluorescent-tube-outline',
-          label: 'Fluorescent',
+          label: 'Fluorescent cam',
           onPress: () => console.log('fluorescent'),
         }),
         createIconObject({
           icon: 'lightbulb-on-outline',
-          label: 'Incandescent',
+          label: 'Incandescent cam',
           onPress: () => console.log('Incandescent'),
         }),
         createIconObject({
@@ -82,12 +81,13 @@ const FABMenu = (props) => {
               style={{ width: 25, height: 25, tintColor: 'white' }}
             />
           ),
-          label: 'Black and White',
+          label: 'Black and White cam',
           onPress: () => console.log('black and white'),
         }),
-        createIconObject({ icon: 'weather-cloudy', label: 'Cloudy', onPress: () => console.log('cloudy') }),
-        createIconObject({ icon: 'weather-sunny', label: 'Sunny', onPress: () => console.log('sunny') }),
-        createIconObject({ icon: 'camera', label: 'Original', onPress: () => console.log('original') }),
+        createIconObject({ icon: 'weather-cloudy', label: 'Cloudy cam', onPress: () => console.log('cloudy') }),
+        createIconObject({ icon: 'weather-sunny', label: 'Sunny cam', onPress: () => console.log('sunny') }),
+        createIconObject({ icon: 'camera', label: 'Original cam', onPress: () => console.log('original') }),
+        createIconObject({ icon: 'camera-flip', label: 'Set flip', onPress: () => console.log('set flip') }),
       ];
     } else if (props.mode === 'Video') {
       return [

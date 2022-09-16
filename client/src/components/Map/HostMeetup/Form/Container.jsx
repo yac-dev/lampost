@@ -89,13 +89,14 @@ const Container = (props) => {
       isMeetupFeeFree: state.isMeetupFeeFree,
       currency: state.currency,
       fee: state.meetupFee,
+      description: state.description,
       host: '62edfa7578dc6a45c95f3ef6',
     };
     console.log(formData);
     props.setIsHostMeetupOpen(false);
     props.setMeetupLocation('');
     props.addSnackBar('Meetup was created successfully! Please check your schedule.', 'success', 7000);
-    // props.createMeetup(formData);
+    props.createMeetup(formData);
   };
 
   // return (

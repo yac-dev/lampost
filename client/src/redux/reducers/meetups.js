@@ -10,7 +10,8 @@ const meetupsReducer = (state = INITIAL_STATE, action) => {
       return { ...state, ...meetups };
     // 新しくできたmeetupを足していく感じ。
     case 'CREATE_MEETUP':
-      return { ...state };
+      // ここで,作ったmeetupを足さないといけない。
+      return { ...state, [action.payload._id]: action.payload };
     default:
       return { ...state };
   }
