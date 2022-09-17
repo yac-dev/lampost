@@ -18,19 +18,77 @@ const userSchema = new mongoose.Schema({
   photo: {
     type: String,
   },
-  badges: [
+  skills: [
     {
       type: mongoose.Schema.ObjectId,
       ref: 'Badge',
     },
   ],
+  badges: [
+    {
+      badge: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Badge',
+      },
+      detail: [
+        {
+          type: mongoose.Schema.ObjectId,
+          ref: 'BadgeDetail',
+        },
+      ],
+    },
+  ],
   bio: {
     type: String,
-    maxLength: 120,
+    maxLength: 50,
   },
+  socials: [
+    {
+      name: String,
+      url: String, // ここさ、urlの方がいいのかね。。。それとも、mobile appへ遷移させるか。まあ、後でいいや。
+    },
+  ],
+  upcomingJoinedMeetups: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Meetup',
+    },
+  ],
+  upcomingHostedMeetups: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Meetup',
+    },
+  ],
   createdAt: {
     type: Date,
   },
+  // ここから下はサイズが大きくなる。
+  subscribed: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+    },
+  ],
+  // 人によっては、ここは0になるだろね。
+  pastHostedMeetups: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Meetup',
+    },
+  ],
+  pastJoinedMeetups: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Meetup',
+    },
+  ],
+  connections: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+    },
+  ],
   // address: {
   //   type: {
   //     type: String,

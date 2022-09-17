@@ -45,7 +45,7 @@ export const login = async (request, response) => {
     }
 
     // 基本、10dayにしましょう。expirationは。
-    const jwtToken = jwt.sign({ id: user._id }, process.env.JWT_PRIVATE_KEY, { expiresIn: '120s' });
+    const jwtToken = jwt.sign({ id: user._id }, process.env.JWT_PRIVATE_KEY);
     response.json({
       user,
       jwtToken,

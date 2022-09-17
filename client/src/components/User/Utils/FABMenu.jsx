@@ -8,7 +8,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 //ac
-import { setIsConfirmHostMeetupModalOpen } from '../../../redux/actionCreators/modal';
+import { logout } from '../../../redux/actionCreators/auth';
 
 const FABMenu = (props) => {
   const [state, setState] = React.useState({ open: false });
@@ -31,6 +31,12 @@ const FABMenu = (props) => {
           open={open}
           icon={() => renderMenuIcon()}
           actions={[
+            {
+              icon: 'logout',
+              label: 'Logout',
+              disabled: true,
+              onPress: () => props.logout(),
+            },
             {
               icon: (props) => <FontAwesome {...props} name='search' />,
               label: 'Search',
@@ -74,4 +80,4 @@ const mapStateToProps = (state) => {
   return { hostMeetup: state.hostMeetup };
 };
 
-export default connect(mapStateToProps, { setIsConfirmHostMeetupModalOpen })(FABMenu);
+export default connect(mapStateToProps, { logout })(FABMenu);

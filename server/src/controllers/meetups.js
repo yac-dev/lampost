@@ -1,5 +1,4 @@
 import Meetup from '../models/meetup';
-import MeetupGenre from '../models/meetupGenre';
 import User from '../models/user';
 import schedule from 'node-schedule';
 
@@ -37,7 +36,7 @@ const scheduleEndMeetup = async (endDateAndTime, meetupId) => {
       if (meetup.isEndDateAndTimeUpdated) {
         scheduleStartMeetup(meetup.endDateAndTime, meetup._id);
       } else {
-        meetup.state = 'started';
+        meetup.state = 'end';
         console.log('finished schedule');
         meetup.save();
         return;
@@ -88,6 +87,11 @@ export const createMeetup = async (request, response) => {
       meetup.attendeesLimit = meetupAttendeesLimit;
     }
 
+    const user = await User.findById(host);
+    user.upcomingHostedMeetups.push(meetup._id);
+    user.upcomingJoinedMeetups.push(meetup._id);
+    user.save();
+
     meetup.attendees.push(host);
     meetup.save();
 
@@ -123,6 +127,19 @@ export const getMeetups = async (request, response) => {
   }
 };
 
+export const getUpcomingJoinedMeetups = async (request, response) => {
+  try {
+    // meetupのidは、arrayで全部もっている。それで検索かければいい。
+    const { upcomingJoinedMeetupIds } = request.body;
+    const upcomingJoinedMeetups = await Meetup.find({ _id: { $in: upcomingJoinedMeetupIds } });
+    response.status(200).json({
+      upcomingJoinedMeetups,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const joinMeetup = async (request, response) => {
   try {
     const meetup = await Meetup.findById(request.params.id);
@@ -131,6 +148,14 @@ export const joinMeetup = async (request, response) => {
     response.status(200).json({
       meetup,
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateMeetup = async (request, response) => {
+  try {
+    // ここでmeetupをupdateして、かつそのmeetupにisUpdatedの印をつけて、ここでscheduleのprocessを始める。この流れでいいはず。
   } catch (error) {
     console.log(error);
   }

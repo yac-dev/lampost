@@ -90,7 +90,7 @@ const Container = (props) => {
       currency: state.currency,
       fee: state.meetupFee,
       description: state.description,
-      host: '62edfa7578dc6a45c95f3ef6',
+      host: props.auth.data._id,
     };
     console.log(formData);
     props.setIsHostMeetupOpen(false);
@@ -118,7 +118,7 @@ const Container = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { hostMeetup: state.hostMeetup, selectedBadges: Object.values(state.selectedItem.badges) };
+  return { hostMeetup: state.hostMeetup, selectedBadges: Object.values(state.selectedItem.badges), auth: state.auth };
 };
 
 export default connect(mapStateToProps, { createMeetup, setIsHostMeetupOpen, setMeetupLocation, addSnackBar })(

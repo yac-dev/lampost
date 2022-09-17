@@ -25,12 +25,3 @@ export const getMeetups = () => async (dispatch, getState) => {
     console.log(error);
   }
 };
-
-export const startMeetup = async (meetupId) => {
-  await lampostAPI.patch(`/meetups/${meetupId}/start`);
-  // とりあえず、patch requestを送るだけでいいと思う。
-};
-
-export const endMeetup = async (meetupId) => {
-  await lampostAPI.patch(`/meetups/${meetupId}/end`);
-};

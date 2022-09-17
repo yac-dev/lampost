@@ -1,5 +1,6 @@
 // main libraries
 import React, { useState, useEffect } from 'react';
+import lampostAPI from '../../apis/lampost';
 import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Agenda } from 'react-native-calendars';
 
@@ -31,6 +32,19 @@ const Container = () => {
   //   console.log(td);
   //   setToday(td);
   // }, []);
+
+  useEffect(() => {
+    // ここで、upcomingのmeetupを全部撮ってくる。
+    // const getUpcomingJoinedMeetups = async() => {
+    //   const list = await lampostAPI.get('/upcoming/joined', {upcomingJoinedMeetupIds: props.auth.data.upcomingJoinedMeetups});
+    //   // [{_id: '999',startDateAndTime: '2022-09-22T13:10:57.000z',...}]
+    //   setItems((previous) => {
+    //     return {
+    //       ...previous,
+    //     }
+    //   })
+    // }
+  }, []);
 
   const renderItem = (item) => {
     return (

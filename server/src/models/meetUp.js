@@ -44,6 +44,13 @@ const meetupSchema = new mongoose.Schema({
     type: String,
     maxLength: 300,
   },
+  agenda: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'MeetupAgenda', // agendaのdocumentがqueueで溜まっていく感じ。
+    },
+    // {meetup: '20391390138', title: 'eat', from:'3/15/2022 16:00', to: '3/15/2022 17:00' }みたいな感じかね。ただ、これは最後でいいし、そもそも必要かも分からん。
+  ],
   isPublic: {
     type: Boolean,
   },
@@ -52,7 +59,6 @@ const meetupSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
-  // limitは7!!
   attendees: {
     type: [
       {
@@ -70,6 +76,7 @@ const meetupSchema = new mongoose.Schema({
   numberOfComments: {
     type: Number,
   },
+  chats: [],
   pics: [
     {
       type: mongoose.Schema.ObjectId,

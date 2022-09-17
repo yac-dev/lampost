@@ -48,6 +48,19 @@ export const loadMe = (jwtToken) => async (dispatch, getState) => {
   }
 };
 
+export const logout = () => async (dispatch, getState) => {
+  try {
+    const id = getState().auth.data._id;
+    await SecureStore.deleteItemAsync('secure_token');
+    dispatch({
+      type: 'LOG_OUT',
+      payload: '',
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getCurrentLocation = () => async (dispatch, getState) => {
   try {
     let { status } = await Location.requestForegroundPermissionsAsync();

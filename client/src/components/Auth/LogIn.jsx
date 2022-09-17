@@ -1,7 +1,8 @@
 // main libraries
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, Button, SafeAreaView, StyleSheet, TextInput } from 'react-native';
+import { View, Text, SafeAreaView, StyleSheet, TextInput } from 'react-native';
+import { Button } from 'react-native-paper';
 
 // import { Button as ButtonRNE, Icon } from 'react-native-elements';
 
@@ -74,6 +75,7 @@ const Login = (props) => {
           onPressSubmit();
         }}
       /> */}
+      <Button onPress={() => onPressSubmit()}>Submit</Button>
     </SafeAreaView>
   );
 };

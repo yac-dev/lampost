@@ -26,9 +26,12 @@ const FABMenu = (props) => {
       //   /> // これ、カメラのコンポーネントではこれでいい。ここでは、通常どおりmatrrialのiconを使う。
       // ),
       label,
+      labelStyle: {
+        backgroundColor: 'rgb(58, 126, 224)',
+      },
       onPress,
       color: 'white',
-      labelTextColor: 'black',
+      labelTextColor: 'white',
       style: {
         backgroundColor: 'rgb(58, 126, 224)',
       },
@@ -42,7 +45,7 @@ const FABMenu = (props) => {
           <FAB.Group
             fabStyle={{ backgroundColor: 'rgb(58, 126, 224)' }}
             color={'white'}
-            backdropColor={'white'}
+            backdropColor={'transparent'}
             open={open}
             icon={open ? 'close' : 'party-popper'}
             actions={[

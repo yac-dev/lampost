@@ -12,7 +12,14 @@ const badgeSchema = new mongoose.Schema({
   color: {
     type: String,
   },
+  value: {
+    type: String,
+  },
+  creator: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+  },
 });
 
-const Badge = mongoose.model('BadgeElement', badgeSchema);
+const Badge = mongoose.model('Badge', badgeSchema);
 export default Badge;
