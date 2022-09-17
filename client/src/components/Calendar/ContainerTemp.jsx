@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import lampostAPI from '../../apis/lampost';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 
 // ac
 import { getUpcomingJoinedMeetup } from '../../redux/actionCreators/meetups';
 
-const ContainerTemp = () => {
+const ContainerTemp = (props) => {
   const [upcomingMeetups, setUpcomingMeetups] = useState([]);
 
   const fetch = async () => {
@@ -15,20 +15,30 @@ const ContainerTemp = () => {
       upcomingJoinedMeetupIds: props.auth.data.upcomingJoinedMeetups,
     });
     const { upcomingJoinedMeetups } = result.data;
+    console.log(upcomingJoinedMeetups);
     setUpcomingMeetups((previous) => {
-      return [...previous, upcomingJoinedMeetups];
+      return [...previous, ...upcomingJoinedMeetups];
     });
   };
+
   useEffect(() => {
     fetch();
   }, []);
 
+  const renderList = () => {
+    const list = upcomingMeetups.map((meetup, index) => {
+      return (
+        <TouchableOpacity key={index}>
+          <Text>{meetup.startDateAndTime}</Text>
+        </TouchableOpacity>
+      );
+    });
+
+    return <View>{list}</View>;
+  };
+
   if (upcomingMeetups.length) {
-    return (
-      <View>
-        <Text>here is gonna be listItme</Text>
-      </View>
-    );
+    return <>{renderList()}</>;
   } else {
     return (
       <View>

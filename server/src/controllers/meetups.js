@@ -131,6 +131,7 @@ export const getUpcomingJoinedMeetups = async (request, response) => {
   try {
     // meetupのidは、arrayで全部もっている。それで検索かければいい。
     const { upcomingJoinedMeetupIds } = request.body;
+    console.log(upcomingJoinedMeetupIds);
     const upcomingJoinedMeetups = await Meetup.find({ _id: { $in: upcomingJoinedMeetupIds } });
     response.status(200).json({
       upcomingJoinedMeetups,

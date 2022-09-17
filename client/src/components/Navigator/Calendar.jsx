@@ -6,6 +6,7 @@ const Stack = createNativeStackNavigator();
 
 // components
 import CalendarContainer from '../Calendar/Container';
+import TempCalendarContainer from '../Calendar/ContainerTemp';
 
 const CalendarNavigator = (props) => {
   return (
@@ -13,7 +14,7 @@ const CalendarNavigator = (props) => {
     <Stack.Navigator>
       <Stack.Screen
         name='Calendar'
-        component={CalendarContainer}
+        component={TempCalendarContainer}
         options={{
           headerTitle: 'Meetup Schedule',
           headerLeft: () => <Button onPress={() => props.navigation.navigate('Map')} title='Back' color='blue' />,
