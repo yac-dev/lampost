@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import lampostAPI from '../../apis/lampost';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 
 // ac
 import { getUpcomingJoinedMeetup } from '../../redux/actionCreators/meetups';
@@ -28,7 +28,7 @@ const ContainerTemp = (props) => {
   const renderList = () => {
     const list = upcomingMeetups.map((meetup, index) => {
       return (
-        <TouchableOpacity key={index}>
+        <TouchableOpacity key={index} onPress={() => props.navigation.navigate('Dummy')}>
           <Text>{meetup.startDateAndTime}</Text>
         </TouchableOpacity>
       );
@@ -38,7 +38,7 @@ const ContainerTemp = (props) => {
   };
 
   if (upcomingMeetups.length) {
-    return <>{renderList()}</>;
+    return <SafeAreaView>{renderList()}</SafeAreaView>;
   } else {
     return (
       <View>

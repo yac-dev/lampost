@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import { MD3LightTheme as DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import store from './src/redux/store';
 import * as SecureStore from 'expo-secure-store';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 // components
 import Map from './src/components/Map/Map';

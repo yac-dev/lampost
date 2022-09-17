@@ -1,6 +1,7 @@
 // main libraries
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -17,19 +18,51 @@ import timeMachine from '../../../assets/app/timeMachine.png';
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabs = () => {
+const BottomTabs = (props) => {
+  // const getTabBarVisibility = (route) => {
+  //   const routeName = route.state ? route.state.routes[route.state.index].name : '';
+  //   if (routeName === 'Dummy') {
+  //     return false;
+  //   }
+  //   return true;
+  // };
+
+  console.log(props.routeName);
+  const hide = props.routeName === 'Camera' || props.routeName === 'Dummy' || props.routeName === 'Dummy2';
+
+  const kk = () => {
+    switch (props.routeName) {
+      case 'Camera':
+        return { display: 'none' };
+      case 'Dummy':
+        return { display: 'none' };
+      default:
+        return { display: 'flex' };
+    }
+  };
+
   return (
     <Tab.Navigator>
       <Tab.Screen
         name='Explore'
         component={MapNavigator}
-        options={{
+        options={({ route }) => ({
           headerShown: false,
           tabBarIcon: ({ size, color }) => <MCIcon name={'routes'} color={color} size={size} />,
           tabBarLabel: () => {
             return null;
           },
-        }}
+          tabBarStyle: { display: hide ? 'none' : 'flex' },
+          // tabBarVisible: ((route) => {
+          //   const routeName = getFocusedRouteNameFromRoute(route) ?? '';
+
+          //   if (routeName === 'Camera') {
+          //     return false;
+          //   }
+
+          //   return true;
+          // })(route),
+        })}
       />
       <Tab.Screen
         name='Feed'
