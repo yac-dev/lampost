@@ -49,7 +49,7 @@ const FABMenu = (props) => {
             open={open}
             icon={open ? 'close' : 'party-popper'}
             actions={[
-              createIconObject('map-search', 'Search', () => console.log('search map')),
+              createIconObject('map-search', 'Search', () => props.navigation.navigate('ModalExample')),
               createIconObject('calendar', 'Schedule', () => props.navigation.navigate('Calendar')),
               createIconObject('plus', 'Host', () => props.setIsConfirmHostMeetupModalOpen(true)),
               createIconObject('camera', 'Camera', () => props.navigation.navigate('Camera')),

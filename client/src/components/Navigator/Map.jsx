@@ -15,13 +15,18 @@ const MapNavigator = () => {
   // mapの画面から、どんなcomponentへの遷移があるか、それが重要なのかもな。mainのmapはもちろん、そっからカメラのcomponent, 各userのpage, chat component、、、ここは色々多くなるはず。
   return (
     <Stack.Navigator>
-      <Stack.Screen name='Map' component={Map} options={{ headerShown: false }} />
-      <Stack.Screen name='Camera' component={Camera} options={{ headerShown: false }} />
-      {/* <Stack.Screen name='CalendarNavigator' component={CalendarNavigator} options={{ headerShown: false }} /> */}
-      <Stack.Screen name='Calendar' component={CalendarTemp} options={{ headerShown: false }} />
-      {/* <Stack.Screen name='Meetup' component={Calendar} options={{ headerShown: false }} /> */}
-      <Stack.Screen name='Dummy' component={Dummy} options={{ headerShown: false }} />
-      <Stack.Screen name='Dummy2' component={Dummy2} options={{ headerShown: false }} />
+      <Stack.Group>
+        <Stack.Screen name='Map' component={Map} options={{ headerShown: false }} />
+        <Stack.Screen name='Camera' component={Camera} options={{ headerShown: false }} />
+        {/* <Stack.Screen name='CalendarNavigator' component={CalendarNavigator} options={{ headerShown: false }} /> */}
+        <Stack.Screen name='Calendar' component={CalendarTemp} options={{ headerShown: false }} />
+        {/* <Stack.Screen name='Meetup' component={Calendar} options={{ headerShown: false }} /> */}
+        <Stack.Screen name='Dummy' component={Dummy} options={{ headerShown: false }} />
+        <Stack.Screen name='Dummy2' component={Dummy2} options={{ headerShown: false }} />
+      </Stack.Group>
+      <Stack.Group screenOptions={{ presentation: 'modal' }}>
+        <Stack.Screen name='ModalExample' component={Dummy} />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };

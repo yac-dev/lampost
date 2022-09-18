@@ -26,20 +26,7 @@ const BottomTabs = (props) => {
   //   }
   //   return true;
   // };
-
-  console.log(props.routeName);
   const hide = props.routeName === 'Camera' || props.routeName === 'Dummy' || props.routeName === 'Dummy2';
-
-  const kk = () => {
-    switch (props.routeName) {
-      case 'Camera':
-        return { display: 'none' };
-      case 'Dummy':
-        return { display: 'none' };
-      default:
-        return { display: 'flex' };
-    }
-  };
 
   return (
     <Tab.Navigator>
