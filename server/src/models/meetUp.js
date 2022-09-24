@@ -76,7 +76,12 @@ const meetupSchema = new mongoose.Schema({
   numberOfComments: {
     type: Number,
   },
-  chats: [],
+  chats: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Chat',
+    },
+  ],
   pics: [
     {
       type: mongoose.Schema.ObjectId,

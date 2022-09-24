@@ -1,5 +1,6 @@
 import Meetup from '../models/meetup';
 import User from '../models/user';
+import Chat from '../models/chat';
 import schedule from 'node-schedule';
 
 // この二つも、さらに一つのfunctionにまとめるべき。後で。
@@ -132,9 +133,41 @@ export const getUpcomingJoinedMeetups = async (request, response) => {
     // meetupのidは、arrayで全部もっている。それで検索かければいい。
     const { upcomingJoinedMeetupIds } = request.body;
     console.log(upcomingJoinedMeetupIds);
-    const upcomingJoinedMeetups = await Meetup.find({ _id: { $in: upcomingJoinedMeetupIds } });
+    const upcomingJoinedMeetups = await Meetup.find({ _id: { $in: upcomingJoinedMeetupIds } }).select({
+      _id: 1,
+
+      host: 1,
+      startDateAndTime: 1,
+      state: 1,
+      endDateAndTime: 1,
+    });
     response.status(200).json({
       upcomingJoinedMeetups,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getMeetup = async (request, response) => {
+  try {
+    const meetup = await Meetup.findById(request.params.id)
+      .populate({
+        path: 'attendees',
+        model: User,
+      })
+      .populate({
+        path: 'chats',
+        model: Chat,
+        populate: {
+          path: 'user',
+          model: User,
+          select: 'name _id',
+        },
+      });
+    console.log(meetup);
+    response.status(200).json({
+      meetup,
     });
   } catch (error) {
     console.log(error);

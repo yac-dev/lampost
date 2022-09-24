@@ -26,7 +26,11 @@ const BottomTabs = (props) => {
   //   }
   //   return true;
   // };
-  const hide = props.routeName === 'Camera' || props.routeName === 'Dummy' || props.routeName === 'Dummy2';
+  const hide =
+    props.routeName === 'Camera' ||
+    props.routeName === 'Crew' ||
+    props.routeName === 'Meetup' ||
+    props.routeName === 'Dummy2';
 
   return (
     <Tab.Navigator>

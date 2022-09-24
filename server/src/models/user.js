@@ -116,6 +116,8 @@ userSchema.methods.isPasswordCorrect = async (enteredPassword, actualPassword) =
   return await bcrypt.compare(enteredPassword, actualPassword);
 };
 
+// virtualで、subscribersを用意しないといかんな。
+
 // userSchema.virtual('joinedMeetups', {
 //   ref: 'Meetup',
 //   foreignField: 'users',

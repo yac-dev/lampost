@@ -28,7 +28,7 @@ const ContainerTemp = (props) => {
   const renderList = () => {
     const list = upcomingMeetups.map((meetup, index) => {
       return (
-        <TouchableOpacity key={index} onPress={() => props.navigation.navigate('Dummy')}>
+        <TouchableOpacity key={index} onPress={() => props.navigation.navigate('Meetup', { meetupId: meetup._id })}>
           <Text>{meetup.startDateAndTime}</Text>
         </TouchableOpacity>
       );

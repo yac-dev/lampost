@@ -8,7 +8,6 @@ import { FAB, Portal, Provider, IconButton, withTheme } from 'react-native-paper
 import { FontAwesome } from '@expo/vector-icons';
 
 //ac
-import { setIsConfirmHostMeetupModalOpen } from '../../../redux/actionCreators/modal';
 
 const FABMenu = (props) => {
   // const [state, setState] = React.useState({ open: false });
@@ -75,7 +74,7 @@ const FABMenu = (props) => {
           >
             <FAB
               visible={open ? true : false}
-              icon={'map-search'}
+              icon={'text-long'} // detail
               size='small'
               color={'white'}
               style={{
@@ -83,11 +82,11 @@ const FABMenu = (props) => {
                 marginBottom: 20,
                 backgroundColor: 'rgb(58, 126, 224)',
               }}
-              onPress={() => props.navigation.navigate('ModalExample')}
+              onPress={() => console.log('hey detail')}
             />
             <FAB
               visible={open ? true : false}
-              icon={'rocket-launch'}
+              icon={'map-marker-outline'} // locationっていう感じ。
               size='small'
               color={'white'}
               style={{
@@ -99,7 +98,7 @@ const FABMenu = (props) => {
             />
             <FAB
               visible={open ? true : false}
-              icon={'calendar-clock'}
+              icon={'comment-edit-outline'}
               size='small'
               color={'white'}
               style={{
@@ -107,11 +106,11 @@ const FABMenu = (props) => {
                 marginBottom: 20,
                 backgroundColor: 'rgb(58, 126, 224)',
               }}
-              onPress={() => props.navigation.navigate('Calendar')}
+              onPress={() => props.navigation.navigate('Add comment')}
             />
             <FAB
               visible={open ? true : false}
-              icon={'camera'}
+              icon={'account-group'}
               size='small'
               color={'white'}
               style={{
@@ -122,7 +121,7 @@ const FABMenu = (props) => {
               onPress={() => console.log('camera component')}
             />
             <FAB
-              icon={open ? 'close' : 'party-popper'}
+              icon={open ? 'close' : 'account-question'}
               color={'white'}
               style={{
                 backgroundColor: 'rgb(58, 126, 224)',
@@ -146,4 +145,4 @@ const mapStateToProps = (state) => {
   return { hostMeetup: state.hostMeetup };
 };
 
-export default connect(mapStateToProps, { setIsConfirmHostMeetupModalOpen })(withTheme(FABMenu));
+export default connect(mapStateToProps)(withTheme(FABMenu));

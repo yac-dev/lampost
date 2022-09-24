@@ -1,13 +1,12 @@
-// main libraries
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const Container = () => {
+const AddComment = () => {
   return (
     <View>
-      <Text>Chat component here!!</Text>
+      <Text>Add comment in here!</Text>
     </View>
   );
 };
 
-export default Container;
+export default AddComment;
