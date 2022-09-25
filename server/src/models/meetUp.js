@@ -55,7 +55,7 @@ const meetupSchema = new mongoose.Schema({
     type: Boolean,
   },
   // hostが入力するのはここまで
-  host: {
+  launcher: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },

@@ -12,6 +12,7 @@ import LogIn from '../Auth/LogIn';
 import UserHome from '../User/Home/Container';
 
 const Auth = (props) => {
+  // ここ注目ね。sighup後、page遷移する感じになる。
   if (props.auth.isAuthenticated) {
     // ここも、多分user pageにかんするnavigatorを使うことになるだろう。今はこれで置いておくけど。
     return (

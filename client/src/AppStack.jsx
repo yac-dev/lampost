@@ -16,14 +16,16 @@ import { loadMe } from './redux/actionCreators/auth';
 
 const AppStack = (props) => {
   const [routeName, setRouteName] = useState();
+
+  const getJWTToken = async () => {
+    const jwtToken = await SecureStore.getItemAsync('secure_token');
+    if (jwtToken) {
+      console.log(jwtToken);
+      props.loadMe(jwtToken);
+    }
+  };
+
   useEffect(() => {
-    const getJWTToken = async () => {
-      const jwtToken = await SecureStore.getItemAsync('secure_token');
-      if (jwtToken) {
-        console.log(jwtToken);
-        props.loadMe(jwtToken);
-      }
-    };
     getJWTToken();
   }, []);
 

@@ -3,8 +3,8 @@ import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema({
   name: {
-    firstName: String,
-    lastName: String,
+    type: String,
+    unique: true,
   },
   email: {
     type: String,
@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema({
   },
   photo: {
     type: String,
+  },
+  bio: {
+    type: String,
+    maxLength: 50,
   },
   skills: [
     {
@@ -38,10 +42,6 @@ const userSchema = new mongoose.Schema({
       ],
     },
   ],
-  bio: {
-    type: String,
-    maxLength: 50,
-  },
   socials: [
     {
       name: String,
@@ -54,7 +54,7 @@ const userSchema = new mongoose.Schema({
       ref: 'Meetup',
     },
   ],
-  upcomingHostedMeetups: [
+  upcomingLaunchedMeetups: [
     {
       type: mongoose.Schema.ObjectId,
       ref: 'Meetup',
@@ -70,8 +70,7 @@ const userSchema = new mongoose.Schema({
       ref: 'User',
     },
   ],
-  // 人によっては、ここは0になるだろね。
-  pastHostedMeetups: [
+  pastLaunchedMeetups: [
     {
       type: mongoose.Schema.ObjectId,
       ref: 'Meetup',

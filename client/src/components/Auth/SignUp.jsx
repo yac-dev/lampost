@@ -28,10 +28,7 @@ const SignUp = (props) => {
   const [password, setPassword] = useState('');
 
   const onPressSubmit = () => {
-    const name = {
-      firstName,
-      lastName,
-    };
+    const name = `${firstName} ${lastName}`;
     const formData = {
       name,
       email,

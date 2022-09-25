@@ -65,7 +65,7 @@ export const createMeetup = async (request, response) => {
       fee,
       description,
       isPublic,
-      host,
+      launcher,
     } = request.body;
 
     const meetup = new Meetup({
@@ -76,7 +76,7 @@ export const createMeetup = async (request, response) => {
       endDateAndTime,
       isPublic,
       description,
-      host,
+      launcher,
     });
 
     if (!isMeetupFeeFree) {
@@ -89,11 +89,11 @@ export const createMeetup = async (request, response) => {
     }
 
     const user = await User.findById(host);
-    user.upcomingHostedMeetups.push(meetup._id);
+    user.upcomingLaunchedMeetups.push(meetup._id);
     user.upcomingJoinedMeetups.push(meetup._id);
     user.save();
 
-    meetup.attendees.push(host);
+    meetup.attendees.push(launcher);
     meetup.save();
 
     scheduleStartMeetup(meetup.startDateAndTime, meetup._id);

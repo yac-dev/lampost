@@ -90,7 +90,7 @@ const Container = (props) => {
       currency: state.currency,
       fee: state.meetupFee,
       description: state.description,
-      host: props.auth.data._id,
+      launcher: props.auth.data._id,
     };
     console.log(formData);
     props.setIsHostMeetupOpen(false);

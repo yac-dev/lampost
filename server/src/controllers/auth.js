@@ -7,13 +7,12 @@ import bcrypt from 'bcrypt';
 export const signup = async (request, response) => {
   try {
     console.log(request.body);
-    const { name, email, password, address } = request.body;
+    const { name, email, password } = request.body;
 
     const user = new User({
       name,
       email,
       password,
-      address,
       createdAt: new Date(),
     });
 
