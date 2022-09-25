@@ -8,6 +8,7 @@ import { FAB, Portal, Provider, IconButton, withTheme } from 'react-native-paper
 import { FontAwesome } from '@expo/vector-icons';
 
 //ac
+// import { logout } from '../../../redux/actionCreators/auth';
 
 const FABMenu = (props) => {
   // const [state, setState] = React.useState({ open: false });

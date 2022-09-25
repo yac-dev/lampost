@@ -6,10 +6,12 @@ import lampostAPI from '../../../apis/lampost';
 
 // components
 import Header from './Header';
+import ActionButtons from './ActionButtons';
 import Badges from './Badges';
 import Bio from './Bio';
 import FABMenu from '../Utils/FABMenu';
 
+// badgeを取ってきて、skillも取ってくる。subscriberの数も返すし、connectionの数も返す。
 const Container = (props) => {
   const [user, setUser] = useState(null);
   console.log(props.route.params._id); // このidを使って、backendのapiでuser情報をとってくればいいだけだからね。
@@ -28,8 +30,9 @@ const Container = (props) => {
     return (
       <SafeAreaView style={styles.container}>
         <Header user={user} />
-        <Badges user={user} />
+        <ActionButtons user={user} />
         <Bio user={user} />
+        <Badges user={user} />
         <FABMenu user={user} />
       </SafeAreaView>
     );

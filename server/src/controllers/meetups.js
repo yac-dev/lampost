@@ -111,7 +111,7 @@ export const getMeetups = async (request, response) => {
   try {
     const meetups = await Meetup.find()
       .populate({
-        path: 'host',
+        path: 'launcher',
         model: User,
         select: 'name photo',
       })

@@ -1,6 +1,8 @@
 // main libraries
 import React from 'react';
-import { View, Text } from 'react-native';
+import { connect } from 'react-redux';
+import { View, Text, TouchableOpacity } from 'react-native';
+
 import { Avatar } from 'react-native-paper';
 
 const Header = (props) => {
@@ -8,12 +10,19 @@ const Header = (props) => {
     <View style={{ flexDirection: 'row' }}>
       <Avatar.Text size={60} label='JI' />
       <View>
-        <Text>
-          {props.user.name.firstName} {props.user.name.lastName}
-        </Text>
+        <Text>{props.user.name}</Text>
+        {props.auth.data._id === props.user._id ? (
+          <TouchableOpacity>
+            <Text>Edit</Text>
+          </TouchableOpacity>
+        ) : null}
       </View>
     </View>
   );
 };
 
-export default Header;
+const mapStateToProps = (state) => {
+  return { auth: state.auth };
+};
+
+export default connect(mapStateToProps, {})(Header);

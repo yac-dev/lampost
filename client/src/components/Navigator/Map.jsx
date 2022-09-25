@@ -14,13 +14,30 @@ import Crew from '../Meetup/Crew/Container';
 import AddComment from '../GroupChat/AddComment';
 import Dummy from '../Dummy/Dummy';
 import Dummy2 from '../Dummy/Dummy2';
+import AuthNavigator from './Auth';
 
 const MapNavigator = () => {
   // mapの画面から、どんなcomponentへの遷移があるか、それが重要なのかもな。mainのmapはもちろん、そっからカメラのcomponent, 各userのpage, chat component、、、ここは色々多くなるはず。
+  // 基本、map画面における全てのroutingをここに登録しておく。
   return (
     <Stack.Navigator>
       <Stack.Group>
-        <Stack.Screen name='Map' component={Map} options={{ headerShown: false }} />
+        <Stack.Screen
+          name='Map'
+          component={Map}
+          options={{
+            headerShown: true,
+            title: '',
+            headerTransparent: true,
+            // headerLeft: () => (
+            //   <Button onPress={() => navigation.navigate('Auth')} va title='Info' color='blue'>
+            //     user icon
+            //   </Button>
+            // ),
+          }}
+        />
+
+        <Stack.Screen name='Auth' component={AuthNavigator} />
         <Stack.Screen name='Camera' component={Camera} options={{ headerShown: false }} />
         {/* <Stack.Screen name='CalendarNavigator' component={CalendarNavigator} options={{ headerShown: false }} /> */}
         <Stack.Screen name='Calendar' component={CalendarTemp} options={{ headerShown: false }} />
