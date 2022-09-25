@@ -25,40 +25,35 @@ const MapNavigator = () => {
         <Stack.Screen
           name='Map'
           component={Map}
-          options={{
+          options={({ navigation }) => ({
             headerShown: true,
             title: '',
             headerTransparent: true,
-            // headerLeft: () => (
-            //   <Button onPress={() => navigation.navigate('Auth')} va title='Info' color='blue'>
-            //     user icon
-            //   </Button>
-            // ),
-          }}
+            headerLeft: () => <Button onPress={() => navigation.navigate('Add comment')}>User page</Button>,
+          })}
         />
-
-        <Stack.Screen name='Auth' component={AuthNavigator} />
         <Stack.Screen name='Camera' component={Camera} options={{ headerShown: false }} />
         {/* <Stack.Screen name='CalendarNavigator' component={CalendarNavigator} options={{ headerShown: false }} /> */}
-        <Stack.Screen name='Calendar' component={CalendarTemp} options={{ headerShown: false }} />
+        <Stack.Screen name='Calendar' component={CalendarTemp} />
         {/* <Stack.Screen name='Meetup' component={Calendar} options={{ headerShown: false }} /> */}
-        <Stack.Screen name='Meetup' component={Meetup} />
+        <Stack.Screen
+          name='Meetup'
+          component={Meetup}
+          options={({ navigation }) => ({
+            headerRight: () => <Button onPress={() => navigation.navigate('Add comment')}>Add comment</Button>,
+          })}
+        />
         <Stack.Screen name='Crew' component={Crew} />
-
         <Stack.Screen name='Dummy' component={Dummy} options={{ headerShown: false }} />
         <Stack.Screen name='Dummy2' component={Dummy2} options={{ headerShown: false }} />
       </Stack.Group>
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
+      <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
         <Stack.Screen
           name='Add comment'
           component={AddComment}
-          options={{
-            headerRight: () => (
-              <Button onPress={() => alert('This is a button!')} va title='Info' color='blue'>
-                red
-              </Button>
-            ),
-          }}
+          options={({ navigation }) => ({
+            headerLeft: () => <Button onPress={() => navigation.goBack()}>Cancel</Button>,
+          })}
         />
       </Stack.Group>
     </Stack.Navigator>

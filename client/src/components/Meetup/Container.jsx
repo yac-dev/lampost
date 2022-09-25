@@ -63,7 +63,12 @@ const Container = (props) => {
       </View>
     );
   } else {
-    return null;
+    return (
+      <View style={{ flex: 1, backgroundColor: 'red' }}>
+        <Text>No comments yet.</Text>
+        <FABMenu navigation={props.navigation} meetup={meetup} />
+      </View>
+    );
   }
 };
 

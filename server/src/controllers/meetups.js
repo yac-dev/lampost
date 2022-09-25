@@ -88,7 +88,7 @@ export const createMeetup = async (request, response) => {
       meetup.attendeesLimit = meetupAttendeesLimit;
     }
 
-    const user = await User.findById(host);
+    const user = await User.findById(launcher);
     user.upcomingLaunchedMeetups.push(meetup._id);
     user.upcomingJoinedMeetups.push(meetup._id);
     user.save();

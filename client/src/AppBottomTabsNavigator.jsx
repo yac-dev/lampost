@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, StatusBar, SafeAreaView } from 'react-native';
+import { Button } from 'react-native-paper';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -86,24 +87,44 @@ const AppStack = (props) => {
             },
           }}
         /> */}
+        {/* 全てのcomponent、navigatorを足さないといけないわ。Mapと全く同じように。この状態だと。mapの方のuser page routeに行く。*/}
         <Tab.Screen
           name='News'
           component={TimeMachine}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({ size, color }) => (
-              // <Image
-              //   color={color}
-              //   style={{ width: 24, height: 24 }}
-              //   source={require('../../../assets/app/timeMachine.png')}
-              // />
-              <MaterialCommunityIcons name='newspaper' color={color} size={size} />
-              // 本当はtime machineのiconにしたい。
-            ),
-            tabBarLabel: () => {
-              return null;
-            },
-          }}
+          options={
+            ({ navigation }) => ({
+              headerShown: true,
+              title: '',
+              // headerTransparent: true,
+              headerLeft: () => <Button onPress={() => navigation.navigate('Add comment')}>User page</Button>,
+              tabBarIcon: ({ size, color }) => (
+                // <Image
+                //   color={color}
+                //   style={{ width: 24, height: 24 }}
+                //   source={require('../../../assets/app/timeMachine.png')}
+                // />
+                <MaterialCommunityIcons name='clock-alert-outline' color={color} size={size} />
+                // 本当はtime machineのiconにしたい。
+              ),
+              tabBarLabel: () => {
+                return null;
+              },
+            })
+            //   {
+            //   tabBarIcon: ({ size, color }) => (
+            //     // <Image
+            //     //   color={color}
+            //     //   style={{ width: 24, height: 24 }}
+            //     //   source={require('../../../assets/app/timeMachine.png')}
+            //     // />
+            //     <MaterialCommunityIcons name='newspaper' color={color} size={size} />
+            //     // 本当はtime machineのiconにしたい。
+            //   ),
+            //   tabBarLabel: () => {
+            //     return null;
+            //   },
+            // }
+          }
         />
         <Tab.Screen
           name='Notifications'

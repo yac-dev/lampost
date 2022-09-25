@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 
 const AddComment = () => {
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <Text>Add comment in here!</Text>
     </View>
   );
