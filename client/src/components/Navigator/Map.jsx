@@ -29,7 +29,8 @@ const MapNavigator = () => {
             headerShown: true,
             title: '',
             headerTransparent: true,
-            headerLeft: () => <Button onPress={() => navigation.navigate('Add comment')}>User page</Button>,
+            // reduxのdata._idを使えばいいだけか。
+            headerLeft: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
           })}
         />
         <Stack.Screen name='Camera' component={Camera} options={{ headerShown: false }} />
@@ -49,10 +50,10 @@ const MapNavigator = () => {
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
         <Stack.Screen
-          name='Add comment'
-          component={AddComment}
+          name='My page'
+          component={AuthNavigator}
           options={({ navigation }) => ({
-            headerLeft: () => <Button onPress={() => navigation.goBack()}>Cancel</Button>,
+            headerLeft: () => <Button onPress={() => navigation.goBack()}>Close</Button>,
           })}
         />
       </Stack.Group>

@@ -13,6 +13,7 @@ import { createNavigationContainerRef } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import MapNavigator from './components/Navigator/Map';
+import MemoirsNavigator from './components/Navigator/Memoirs';
 import AuthNavigator from './components/Navigator/Auth';
 import TimeMachine from './components/TimeMachine/Container';
 
@@ -24,6 +25,11 @@ import BottomTabs from './components/Tabs/BottomTabs';
 
 // ac
 import { loadMe } from './redux/actionCreators/auth';
+// const theme = {
+//   colors: {
+//     background: 'transparent',
+//   },
+// };
 
 const AppStack = (props) => {
   const [routeName, setRouteName] = useState();
@@ -61,9 +67,10 @@ const AppStack = (props) => {
           options={({ route }) => ({
             headerShown: false,
             tabBarIcon: ({ size, color }) => <MCIcon name={'routes'} color={color} size={size} />,
-            tabBarLabel: () => {
-              return null;
-            },
+            tabBarLabel: 'Explore',
+            // () => {
+            //   return null;
+            // },
             tabBarStyle: { display: hide ? 'none' : 'flex' },
             // tabBarVisible: ((route) => {
             //   const routeName = getFocusedRouteNameFromRoute(route) ?? '';
@@ -89,14 +96,13 @@ const AppStack = (props) => {
         /> */}
         {/* 全てのcomponent、navigatorを足さないといけないわ。Mapと全く同じように。この状態だと。mapの方のuser page routeに行く。*/}
         <Tab.Screen
-          name='News'
-          component={TimeMachine}
+          name='MemoirsNavigator'
+          component={MemoirsNavigator}
           options={
             ({ navigation }) => ({
-              headerShown: true,
-              title: '',
+              headerShown: false,
               // headerTransparent: true,
-              headerLeft: () => <Button onPress={() => navigation.navigate('Add comment')}>User page</Button>,
+              // headerLeft: () => <Button onPress={() => navigation.navigate('Add comment')}>User page</Button>,
               tabBarIcon: ({ size, color }) => (
                 // <Image
                 //   color={color}
@@ -106,9 +112,10 @@ const AppStack = (props) => {
                 <MaterialCommunityIcons name='clock-alert-outline' color={color} size={size} />
                 // 本当はtime machineのiconにしたい。
               ),
-              tabBarLabel: () => {
-                return null;
-              },
+              tabBarLabel: 'Memoirs',
+              // () => {
+              //   return null;
+              // },
             })
             //   {
             //   tabBarIcon: ({ size, color }) => (
@@ -132,9 +139,10 @@ const AppStack = (props) => {
           options={{
             headerShown: false,
             tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name='paper-roll' color={color} size={size} />,
-            tabBarLabel: () => {
-              return null;
-            },
+            tabBarLabel: 'Rolls',
+            // () => {
+            //   return null;
+            // },
           }}
         />
         <Tab.Screen
@@ -143,12 +151,13 @@ const AppStack = (props) => {
           options={{
             headerShown: false,
             tabBarIcon: ({ size, color }) => <MaterialIcons name='local-airport' color={color} size={size} />,
-            tabBarLabel: () => {
-              return null;
-            },
+            tabBarLabel: 'Ports',
+            // () => {
+            //   return null;
+            // },
           }}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name='User'
           component={AuthNavigator}
           options={{
@@ -158,7 +167,7 @@ const AppStack = (props) => {
               return null;
             },
           }}
-        />
+        /> */}
       </Tab.Navigator>
     </NavigationContainer>
   );
