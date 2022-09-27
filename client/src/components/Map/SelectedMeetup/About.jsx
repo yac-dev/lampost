@@ -23,16 +23,6 @@ const About = (props) => {
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
       <View style={{ marginBottom: 15 }}>
-        <Text style={{ marginBottom: 5, fontWeight: 'bold' }}>Title</Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Octicons name='id-badge' size={25} style={{ marginRight: 40 }} />
-          <Text style={{ fontWeight: 'bold' }}>{props.selectedMeetup.title}</Text>
-        </View>
-      </View>
-      {/* {renderBadges()} */}
-
-      <View style={{ marginBottom: 15 }}>
-        <Text style={{ marginBottom: 5, fontWeight: 'bold' }}>Date</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <MaterialCommunityIcons name='clock' size={25} style={{ marginRight: 40, fontWeight: 'bold' }} />
           <View>
@@ -60,7 +50,6 @@ const About = (props) => {
       </View>
 
       <View style={{ marginBottom: 15 }}>
-        <Text style={{ marginBottom: 5, fontWeight: 'bold' }}>Fee</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <FontAwesome name='money' size={25} style={{ marginRight: 40 }} />
           {props.selectedMeetup.isFeeFree ? (
@@ -71,29 +60,14 @@ const About = (props) => {
         </View>
       </View>
 
-      {/* <View style={{ marginBottom: 15 }}>
-        <Text style={{ marginBottom: 5 }}>Crew</Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <MaterialCommunityIcons name='account-group' size={25} style={{ marginRight: 40 }} />
-          {props.selectedMeetup.isAttendeesLimitFree ? (
-            <Text style={{ marginRight: 40 }}>{props.selectedMeetup.totalAttendees}/infi</Text>
-          ) : (
-            <Text style={{ marginRight: 40 }}>{props.selectedMeetup.totalAttendees}/limit</Text>
-          )}
-          <TouchableOpacity>
-            <Text>See detail</Text>
-          </TouchableOpacity>
-        </View>
-      </View> */}
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+        <MaterialCommunityIcons name='office-building-marker' size={20} style={{ marginRight: 40 }} />
+        <Text style={{ fontWeight: 'bold' }}>We work office south 3f</Text>
+      </View>
 
-      <View>
-        <Text style={{ marginBottom: 5, fontWeight: 'bold' }}>Launcher</Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <MaterialCommunityIcons name='rocket-launch' size={25} style={{ marginRight: 35 }} />
-          <TouchableOpacity>
-            <Text style={{ fontWeight: 'bold' }}>{props.selectedMeetup.launcher.name}</Text>
-          </TouchableOpacity>
-        </View>
+      <View style={{ flexDirection: 'row' }}>
+        <MaterialCommunityIcons name={'file-document-edit'} size={20} style={{ marginRight: 40 }} />
+        <Text style={{ flex: 1, flexWrap: 'wrap', fontWeight: 'bold' }}>{props.selectedMeetup.description}</Text>
       </View>
     </ScrollView>
   );

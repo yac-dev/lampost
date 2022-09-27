@@ -8,8 +8,8 @@ import GorhomBottomSheet, { BottomSheetView, BottomSheetScrollView } from '@gorh
 import { setIsSelectedItemBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
 
 import Header from './Header';
-import Body from './Body/Container';
 import ActionButtons from './ActionButtons';
+import About from './About';
 
 const Container = (props) => {
   const [component, setComponent] = useState('about');
@@ -27,7 +27,7 @@ const Container = (props) => {
         <View>
           <Header component={component} setComponent={setComponent} />
           <ActionButtons />
-          <Body component={component} />
+          <About />
         </View>
       );
     } else {

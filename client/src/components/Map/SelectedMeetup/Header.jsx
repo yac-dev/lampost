@@ -5,36 +5,22 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
 
 const Header = (props) => {
+  // titleとuser情報の間に、meetupのbadgeが入ることになる。
   return (
-    <View style={{ flexDirection: 'row', marginBottom: 30 }}>
-      <TouchableOpacity
-        // mode={props.component === 'overview' ? 'contained' : 'outlined'}
-        onPress={() => props.setComponent('about')}
-        style={{
-          borderBottomWidth: props.component === 'about' ? 2 : 0,
-          paddingBottom: 10,
-          paddingTop: 10,
-          paddingLeft: 20,
-          paddingRight: 20,
-          marginRight: 10,
-        }}
-        // style={{ backgroundColor: props.component === 'overview' ? 'red' : 'transparent', padding: 10 }}
-      >
-        <Text style={{ fontWeight: 'bold' }}>About</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        // mode={props.component === 'description' ? 'contained' : 'outlined'}
-        onPress={() => props.setComponent('description')}
-        style={{
-          borderBottomWidth: props.component === 'description' ? 2 : 0,
-          paddingBottom: 10,
-          paddingTop: 10,
-          paddingLeft: 20,
-          paddingRight: 20,
-        }}
-      >
-        <Text style={{ fontWeight: 'bold' }}>Description</Text>
-      </TouchableOpacity>
+    <View style={{ marginBottom: 30 }}>
+      <Text style={{ fontWeight: 'bold', marginBottom: 20, fontSize: 25 }}>{props.selectedMeetup.title}</Text>
+
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{ width: 50, height: 50, backgroundColor: 'red', borderRadius: 5, marginRight: 20 }}>
+          <Text>Pic</Text>
+        </View>
+        <View>
+          <TouchableOpacity>
+            <Text style={{ fontWeight: 'bold' }}>{props.selectedMeetup.launcher.name}</Text>
+          </TouchableOpacity>
+          <Text>Skills here</Text>
+        </View>
+      </View>
     </View>
   );
 };
