@@ -9,6 +9,7 @@ import NBProvider from '../Utils/NativeBaseProvider';
 import MapMarkers from './MapMarkers/MapMarkers';
 import PostBottomSheet from './Post/PostBottomSheet';
 import SelectedItemBottomSheet from './SelectedItem/SelectedItemBottomSheet';
+import SelectedMeetup from './SelectedMeetup/Container';
 
 import FABMenu from './Utils/FABMenu';
 import ModalContainer from '../Utils/ModalContainer';
@@ -28,6 +29,7 @@ import { getCurrentLocation } from '../../redux/actionCreators/auth';
 import { setIsPostBottomSheetOpen } from '../../redux/actionCreators/bottomSheet';
 import { setIsSelectedItemBottomSheetOpen } from '../../redux/actionCreators/bottomSheet';
 import { selectPost } from '../../redux/actionCreators/selectItem';
+import { selectMeetup } from '../../redux/actionCreators/selectItem';
 import { setIsHostMeetupOpen } from '../../redux/actionCreators/hostMeetup';
 import { setMeetupLocation } from '../../redux/actionCreators/hostMeetup';
 import { setIsSelectMeetupBadgesModalOpen } from '../../redux/actionCreators/modal';
@@ -68,17 +70,21 @@ const Map = (props) => {
     }
   };
 
-  const handleSelectedItemBottomSheetChanges = (post) => {
+  // 手動で閉じたらおかしくなる。。。
+  const handleSelectedItemBottomSheetChanges = (meetupId) => {
     if (!props.bottomSheet.selectedItem.isOpen) {
-      props.selectPost(post);
-      props.setIsPostBottomSheetOpen(false);
-      postBottomSheetRef.current?.close();
+      console.log(meetupId);
+      props.selectMeetup(meetupId);
+      // props.setIsPostBottomSheetOpen(false);
+      // postBottomSheetRef.current?.close();
       props.setIsSelectedItemBottomSheetOpen(true);
       selectedItemBottomSheetRef.current?.snapToIndex(0);
     } else if (props.bottomSheet.selectedItem.isOpen) {
-      props.setIsSelectedItemBottomSheetOpen(false);
+      console.log(meetupId);
+      props.selectMeetup(meetupId);
+      // props.setIsSelectedItemBottomSheetOpen(false);
+      // selectedItemBottomSheetRef.current.close();
       // bottomSheetRef.current?.snapToIndex(-1);
-      selectedItemBottomSheetRef.current.close();
     }
   };
 
@@ -199,7 +205,8 @@ const Map = (props) => {
           <FABMenu navigation={props.navigation} />
           <SnackBar />
           <PostBottomSheet postBottomSheetRef={postBottomSheetRef} />
-          <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} />
+          {/* <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} /> */}
+          <SelectedMeetup selectedItemBottomSheetRef={selectedItemBottomSheetRef} />
           {/* <CancelHostMeetupButton /> */}
           <HostMeetupBottomSheet />
         </View>
@@ -243,6 +250,7 @@ export default connect(mapStateToProps, {
   setIsPostBottomSheetOpen,
   setIsSelectedItemBottomSheetOpen,
   selectPost,
+  selectMeetup,
   getCurrentLocation,
   setIsHostMeetupOpen,
   setMeetupLocation,

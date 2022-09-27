@@ -1,4 +1,8 @@
-export const selectMeetup = (meetup) => {
+import lampostAPI from '../../apis/lampost';
+// ここ、毎回http requestするようにした方がいいよな。
+export const selectMeetup = (id) => async (dispatch, getState) => {
+  const result = await lampostAPI.get(`/meetups/${id}/selected`);
+  const { meetup } = result.data;
   return {
     type: 'SELECT_MEETUP',
     payload: meetup,

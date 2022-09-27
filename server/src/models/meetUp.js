@@ -19,31 +19,33 @@ const meetupSchema = new mongoose.Schema({
     type: String,
     maxLength: 40,
   },
-  startDateAndTime: {
-    type: Date,
-  },
-  isStartDateAndTimeUpdated: {
-    type: Boolean,
-  },
-  endDateAndTime: {
-    type: Date,
-  },
-  isEndDateAndTimeUpdated: {
-    type: Boolean,
-  },
-  fee: {
-    type: Number,
-  },
-  currency: {
-    type: String,
-  },
-  attendeesLimit: {
-    type: Number,
-  },
+  startDateAndTime: Date,
+  isStartDateAndTimeUpdated: Boolean,
+  endDateAndTime: Date,
+  isEndDateAndTimeUpdated: Boolean,
+  isFeeFree: Boolean,
+  fee: Number,
+  currency: String,
+  isAttendeesLimitFree: Boolean,
+  attendeesLimit: Number,
   description: {
     type: String,
     maxLength: 300,
   },
+  isPublic: Boolean,
+  totalQuestions: Number,
+  discussion: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Comment',
+    },
+  ],
+  comments: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Comment',
+    },
+  ],
   agenda: [
     {
       type: mongoose.Schema.ObjectId,
@@ -51,14 +53,12 @@ const meetupSchema = new mongoose.Schema({
     },
     // {meetup: '20391390138', title: 'eat', from:'3/15/2022 16:00', to: '3/15/2022 17:00' }みたいな感じかね。ただ、これは最後でいいし、そもそも必要かも分からん。
   ],
-  isPublic: {
-    type: Boolean,
-  },
   // hostが入力するのはここまで
   launcher: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
+  totalAttendees: Number,
   attendees: {
     type: [
       {
@@ -73,9 +73,6 @@ const meetupSchema = new mongoose.Schema({
     default: '',
     // '', started, done
   },
-  numberOfComments: {
-    type: Number,
-  },
   chats: [
     {
       type: mongoose.Schema.ObjectId,
@@ -86,12 +83,6 @@ const meetupSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.ObjectId,
       ref: 'Pic',
-    },
-  ],
-  videos: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Video',
     },
   ],
   createdAt: {
@@ -107,11 +98,11 @@ const meetupSchema = new mongoose.Schema({
 //   return val.length <= 7;
 // }
 
-meetupSchema.virtual('comments', {
-  ref: 'Comment',
-  foreignField: 'meetup',
-  localField: '_id',
-});
+// meetupSchema.virtual('comments', {
+//   ref: 'Comment',
+//   foreignField: 'meetup',
+//   localField: '_id',
+// });
 
 const Meetup = mongoose.model('Meetup', meetupSchema);
 export default Meetup;

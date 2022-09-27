@@ -1,7 +1,8 @@
 // main libraries
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, FlatList } from 'react-native';
+import lampostAPI from '../../../apis/lampost';
+import { View, Text, FlatList, Image } from 'react-native';
 import { Callout, Marker, Circle } from 'react-native-maps';
 import { Avatar, Button } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -12,6 +13,8 @@ import { FontAwesome } from '@expo/vector-icons';
 import { getMeetups } from '../../../redux/actionCreators/meetups';
 import { selectMeetup } from '../../../redux/actionCreators/selectItem';
 
+import foodAndBeverage from '../../../../assets/badgeCollection/foodAndBeverage';
+
 const Item = ({ title }) => {
   return (
     <View>
@@ -21,8 +24,17 @@ const Item = ({ title }) => {
 };
 
 const MapMarkers = (props) => {
+  const [meetups, setMeetups] = useState([]);
+
+  const getMeetups = async () => {
+    const result = await lampostAPI.get('/meetups');
+    const { meetups } = result.data;
+    setMeetups((previous) => [...previous, ...meetups]);
+  };
+
   useEffect(() => {
-    props.getMeetups();
+    // props.getMeetups();
+    getMeetups();
   }, []);
 
   const renderItem = () => {
@@ -37,19 +49,35 @@ const MapMarkers = (props) => {
 
   // flatlistsなんで動かねーんだろ。
   const render = () => {
-    if (props.meetups.length) {
-      const li = props.meetups.map((meetup) => {
+    if (meetups.length) {
+      const meetupsList = meetups.map((meetup, index) => {
         return (
-          <View key={meetup._id}>
+          <View key={index}>
             <Marker
               coordinate={{ latitude: meetup.place.coordinates[1], longitude: meetup.place.coordinates[0] }}
               // onPress={() => props.handleSelectedItemBottomSheetChanges(post)}
               pinColor='black'
               onPress={() => {
-                console.log('select item');
-                props.selectMeetup(meetup);
+                // console.log('select item');
+                // props.selectMeetup(meetup);
+                props.handleSelectedItemBottomSheetChanges(meetup._id);
               }}
             >
+              <View>
+                <View style={{ backgroundColor: 'red', borderRadius: 5 }}>
+                  <Image
+                    source={foodAndBeverage[meetup.badges[0].label].source}
+                    style={{ width: 30, height: 30, tintColor: meetup.badges[0].color }}
+                  />
+                </View>
+                {/* <Text style={{ fontWeight: 'bold' }}>
+                  {new Date(meetup.startDateAndTime).toLocaleDateString('en-US', {
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                  })}
+                </Text> */}
+              </View>
               {/* <Button
                 mode='contained'
                 onPress={() => {
@@ -64,7 +92,7 @@ const MapMarkers = (props) => {
         );
       });
 
-      return <View>{li}</View>;
+      return <View>{meetupsList}</View>;
     } else {
       return null;
     }

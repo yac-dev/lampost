@@ -1,6 +1,7 @@
 import Meetup from '../models/meetup';
 import User from '../models/user';
 import Chat from '../models/chat';
+import Badge from '../models/badge';
 import schedule from 'node-schedule';
 
 // この二つも、さらに一つのfunctionにまとめるべき。後で。
@@ -64,7 +65,7 @@ export const createMeetup = async (request, response) => {
       currency,
       fee,
       description,
-      isPublic,
+      isMeetupPublic,
       launcher,
     } = request.body;
 
@@ -74,18 +75,31 @@ export const createMeetup = async (request, response) => {
       title,
       startDateAndTime,
       endDateAndTime,
-      isPublic,
       description,
       launcher,
+      totalQuestions: 0,
+      totalAttendees: 0,
     });
 
-    if (!isMeetupFeeFree) {
+    if (isMeetupFeeFree) {
+      meetup.isFeeFree = true;
+    } else {
+      meetup.isFeeFree = false;
       meetup.currency = currency;
       meetup.fee = fee;
     }
 
-    if (!isMeetupAttendeesLimitFree) {
+    if (isMeetupAttendeesLimitFree) {
+      meetup.isAttendeesLimitFree = true;
+    } else {
+      meetup.isAttendeesLimitFree = false;
       meetup.attendeesLimit = meetupAttendeesLimit;
+    }
+
+    if (isMeetupPublic) {
+      meetup.isPublic = true;
+    } else {
+      meetup.isPublic = false;
     }
 
     const user = await User.findById(launcher);
@@ -109,17 +123,24 @@ export const createMeetup = async (request, response) => {
 
 export const getMeetups = async (request, response) => {
   try {
-    const meetups = await Meetup.find()
-      .populate({
-        path: 'launcher',
-        model: User,
-        select: 'name photo',
-      })
-      .populate({
-        path: 'attendees',
-        model: User,
-        select: 'name photo',
-      });
+    const meetups = await Meetup.find().select({ _id: 1, place: 1, badges: 1, startDateAndTime: 1 }).populate({
+      path: 'badges',
+      model: Badge,
+    });
+    // .populate({
+    //   path: 'launcher',
+    //   model: User,
+    //   select: 'name photo',
+    // })
+    // .populate({
+    //   path: 'attendees',
+    //   model: User,
+    //   select: 'name photo',
+    // })
+    // .populate({
+    //   path: 'badges',
+    //   model: Badge,
+    // });
     response.status(200).json({
       meetups,
     });
@@ -135,7 +156,6 @@ export const getUpcomingJoinedMeetups = async (request, response) => {
     console.log(upcomingJoinedMeetupIds);
     const upcomingJoinedMeetups = await Meetup.find({ _id: { $in: upcomingJoinedMeetupIds } }).select({
       _id: 1,
-
       host: 1,
       startDateAndTime: 1,
       state: 1,
@@ -143,6 +163,34 @@ export const getUpcomingJoinedMeetups = async (request, response) => {
     });
     response.status(200).json({
       upcomingJoinedMeetups,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// attendeesは、link clickしたら出してあげる。
+export const getSelectedMeetup = async (request, response) => {
+  try {
+    const meetup = await Meetup.findById(request.params.id)
+      .select({
+        title: 1,
+        place: 1,
+        badges: 1,
+        startDateAndTime: 1,
+        endDateAndTime: 1,
+        fee: 1,
+        description: 1,
+        launcher: 1,
+      })
+      .populate({
+        path: 'launcher',
+        model: User,
+        select: 'name photo',
+      });
+    console.log('meetup selected!', meetup);
+    response.status(200).json({
+      meetup,
     });
   } catch (error) {
     console.log(error);
