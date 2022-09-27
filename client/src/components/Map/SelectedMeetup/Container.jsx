@@ -12,7 +12,7 @@ import Body from './Body/Container';
 import ActionButtons from './ActionButtons';
 
 const Container = (props) => {
-  const [component, setComponent] = useState('overview');
+  const [component, setComponent] = useState('about');
   const snapPoints = ['60%'];
 
   const onSelectedItemBottomSheetClose = () => {
@@ -24,7 +24,7 @@ const Container = (props) => {
   const renderSelectedMeetup = () => {
     if (props.selectedMeetup) {
       return (
-        <View style={{ position: 'relative' }}>
+        <View>
           <Header component={component} setComponent={setComponent} />
           <ActionButtons />
           <Body component={component} />
@@ -46,7 +46,7 @@ const Container = (props) => {
       enablePanDownToClose={true}
       onClose={() => onSelectedItemBottomSheetClose()}
     >
-      <BottomSheetView style={{ padding: 20 }}>{renderSelectedMeetup()}</BottomSheetView>
+      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20 }}>{renderSelectedMeetup()}</BottomSheetView>
     </GorhomBottomSheet>
   );
 };

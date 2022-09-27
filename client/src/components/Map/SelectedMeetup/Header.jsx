@@ -6,12 +6,12 @@ import { Button } from 'react-native-paper';
 
 const Header = (props) => {
   return (
-    <View style={{ flexDirection: 'row', marginBottom: 20 }}>
+    <View style={{ flexDirection: 'row', marginBottom: 30 }}>
       <TouchableOpacity
         // mode={props.component === 'overview' ? 'contained' : 'outlined'}
-        onPress={() => props.setComponent('overview')}
+        onPress={() => props.setComponent('about')}
         style={{
-          borderBottomWidth: props.component === 'overview' ? 2 : 0,
+          borderBottomWidth: props.component === 'about' ? 2 : 0,
           paddingBottom: 10,
           paddingTop: 10,
           paddingLeft: 20,
@@ -20,7 +20,7 @@ const Header = (props) => {
         }}
         // style={{ backgroundColor: props.component === 'overview' ? 'red' : 'transparent', padding: 10 }}
       >
-        <Text style={{ fontWeight: 'bold' }}>Overview</Text>
+        <Text style={{ fontWeight: 'bold' }}>About</Text>
       </TouchableOpacity>
       <TouchableOpacity
         // mode={props.component === 'description' ? 'contained' : 'outlined'}
@@ -31,7 +31,6 @@ const Header = (props) => {
           paddingTop: 10,
           paddingLeft: 20,
           paddingRight: 20,
-          marginRight: 10,
         }}
       >
         <Text style={{ fontWeight: 'bold' }}>Description</Text>
