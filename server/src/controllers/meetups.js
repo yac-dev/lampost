@@ -179,14 +179,23 @@ export const getSelectedMeetup = async (request, response) => {
         badges: 1,
         startDateAndTime: 1,
         endDateAndTime: 1,
+        isFeeFree: 1,
+        isAttendeesLimitFree: 1,
         fee: 1,
+        currency: 1,
         description: 1,
         launcher: 1,
+        totalQuestions: 1,
+        totalAttendees: 1,
       })
       .populate({
         path: 'launcher',
         model: User,
         select: 'name photo',
+      })
+      .populate({
+        path: 'badges',
+        model: Badge,
       });
     console.log('meetup selected!', meetup);
     response.status(200).json({

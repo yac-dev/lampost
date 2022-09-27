@@ -77,6 +77,7 @@ const Container = (props) => {
       return badge._id;
     });
     const formData = {
+      title: `Example ${Math.random(0, 9)}`,
       place: {
         type: 'Point',
         coordinates: [props.hostMeetup.setLocation.longitude, props.hostMeetup.setLocation.latitude],

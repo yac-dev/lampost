@@ -3,10 +3,10 @@ import lampostAPI from '../../apis/lampost';
 export const selectMeetup = (id) => async (dispatch, getState) => {
   const result = await lampostAPI.get(`/meetups/${id}/selected`);
   const { meetup } = result.data;
-  return {
+  dispatch({
     type: 'SELECT_MEETUP',
     payload: meetup,
-  };
+  });
 };
 
 export const selectBadge = (badge) => {

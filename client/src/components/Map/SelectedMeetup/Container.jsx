@@ -9,14 +9,31 @@ import { setIsSelectedItemBottomSheetOpen } from '../../../redux/actionCreators/
 
 import Header from './Header';
 import Body from './Body/Container';
-import Footer from './Footer';
+import ActionButtons from './ActionButtons';
 
 const Container = (props) => {
+  const [component, setComponent] = useState('overview');
   const snapPoints = ['60%'];
 
   const onSelectedItemBottomSheetClose = () => {
     if (props.bottomSheet.selectedItem.isOpen) {
       props.setIsSelectedItemBottomSheetOpen(false);
+    }
+  };
+
+  const renderSelectedMeetup = () => {
+    if (props.selectedMeetup) {
+      return (
+        <View style={{ position: 'relative' }}>
+          <Header component={component} setComponent={setComponent} />
+          <ActionButtons />
+          <Body component={component} />
+        </View>
+      );
+    } else {
+      <View>
+        <Text>Loading</Text>
+      </View>;
     }
   };
 
@@ -29,13 +46,13 @@ const Container = (props) => {
       enablePanDownToClose={true}
       onClose={() => onSelectedItemBottomSheetClose()}
     >
-      <BottomSheetView>
-        <Header />
-        <Body />
-        <Footer />
-      </BottomSheetView>
+      <BottomSheetView style={{ padding: 20 }}>{renderSelectedMeetup()}</BottomSheetView>
     </GorhomBottomSheet>
   );
 };
 
-export default Container;
+const mapStateToProps = (state) => {
+  return { selectedMeetup: state.selectedItem.meetup };
+};
+
+export default connect(mapStateToProps)(Container);
