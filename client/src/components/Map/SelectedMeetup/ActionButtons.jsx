@@ -7,7 +7,12 @@ import { Button } from 'react-native-paper';
 const ActionButtons = (props) => {
   return (
     <ScrollView horizontal={true} style={{ flexDirection: 'row', marginBottom: 30 }}>
-      <Button mode='outlined' icon={'account-group'} onPress={() => console.log('Pressed')} style={{ marginRight: 10 }}>
+      <Button
+        mode='outlined'
+        icon={'account-group'}
+        onPress={() => props.navigation.navigate('Crew', { meetupId: props.selectedMeetup._id })}
+        style={{ marginRight: 10 }}
+      >
         {props.selectedMeetup.isAttendeesLimitFree ? (
           <Text style={{ marginRight: 40 }}>{props.selectedMeetup.totalAttendees}/&infin;&nbsp;</Text>
         ) : (
@@ -18,7 +23,7 @@ const ActionButtons = (props) => {
       <Button
         mode='outlined'
         icon={'comment-question'}
-        onPress={() => console.log('Pressed')}
+        onPress={() => console.log('pressed qa')}
         style={{ marginRight: 10 }}
       >
         {props.selectedMeetup.totalQuestions}&nbsp;QA

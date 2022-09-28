@@ -10,7 +10,7 @@ import Map from '../Map/Map';
 import Camera from '../Camera/Container';
 import CalendarTemp from '../Calendar/ContainerTemp';
 import Meetup from '../Meetup/Container';
-import Crew from '../Meetup/Crew/Container';
+import Crew from '../Crew/Container';
 import AddComment from '../GroupChat/AddComment';
 import Dummy from '../Dummy/Dummy';
 import Dummy2 from '../Dummy/Dummy2';

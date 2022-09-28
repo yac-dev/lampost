@@ -153,7 +153,6 @@ export const getUpcomingJoinedMeetups = async (request, response) => {
   try {
     // meetupのidは、arrayで全部もっている。それで検索かければいい。
     const { upcomingJoinedMeetupIds } = request.body;
-    console.log(upcomingJoinedMeetupIds);
     const upcomingJoinedMeetups = await Meetup.find({ _id: { $in: upcomingJoinedMeetupIds } }).select({
       _id: 1,
       host: 1,
@@ -223,6 +222,21 @@ export const getMeetup = async (request, response) => {
         },
       });
     console.log(meetup);
+    response.status(200).json({
+      meetup,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getMeetupCrew = async (request, response) => {
+  try {
+    const meetup = await Meetup.findById(request.params.id).select({ attendees: 1 }).populate({
+      path: 'attendees',
+      model: User,
+    });
+    console.log(meetup, 'getting crew');
     response.status(200).json({
       meetup,
     });

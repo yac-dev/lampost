@@ -206,7 +206,7 @@ const Map = (props) => {
           <SnackBar />
           <PostBottomSheet postBottomSheetRef={postBottomSheetRef} />
           {/* <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} /> */}
-          <SelectedMeetup selectedItemBottomSheetRef={selectedItemBottomSheetRef} />
+          <SelectedMeetup navigation={props.navigation} selectedItemBottomSheetRef={selectedItemBottomSheetRef} />
           {/* <CancelHostMeetupButton /> */}
           <HostMeetupBottomSheet />
         </View>

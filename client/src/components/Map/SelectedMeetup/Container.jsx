@@ -26,7 +26,7 @@ const Container = (props) => {
       return (
         <View>
           <Header component={component} setComponent={setComponent} />
-          <ActionButtons />
+          <ActionButtons navigation={props.navigation} />
           <About />
         </View>
       );
