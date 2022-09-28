@@ -11,6 +11,7 @@ import Camera from '../Camera/Container';
 import CalendarTemp from '../Calendar/ContainerTemp';
 import Meetup from '../Meetup/Container';
 import Crew from '../Crew/Container';
+import User from '../User/Container';
 import AddComment from '../GroupChat/AddComment';
 import Dummy from '../Dummy/Dummy';
 import Dummy2 from '../Dummy/Dummy2';
@@ -45,6 +46,7 @@ const MapNavigator = () => {
           })}
         />
         <Stack.Screen name='Crew' component={Crew} />
+        <Stack.Screen name='User' component={User} />
         <Stack.Screen name='Dummy' component={Dummy} options={{ headerShown: false }} />
         <Stack.Screen name='Dummy2' component={Dummy2} options={{ headerShown: false }} />
       </Stack.Group>

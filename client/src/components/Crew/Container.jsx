@@ -30,8 +30,7 @@ const Container = (props) => {
             borderBottomWidth: 1,
             borderBottomColor: 'red',
           }}
-          onPress={() => console.log('go to user page')}
-          // props.navigation.navigate('User', { userId: '1111' })
+          onPress={() => props.navigation.navigate('User', { userId: user._id })}
         >
           <View style={{ width: 50, height: 50, backgroundColor: 'blue', marginRight: 20, borderRadius: 5 }}></View>
           <View>

@@ -8,8 +8,11 @@ const ActionButtons = (props) => {
   if (props.auth.data._id === props.user._id) {
     return (
       <View style={{ flexDirection: 'row' }}>
-        <Button>Subscribe</Button>
-        <Button>Connect</Button>
+        <Button mode='outlined'>Subscribe</Button>
+        <Button mode='outlined'>Connect</Button>
+        <Button mode='outlined' disabled={true}>
+          Invite
+        </Button>
       </View>
     );
   } else {

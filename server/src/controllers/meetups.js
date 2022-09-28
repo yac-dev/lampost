@@ -232,10 +232,17 @@ export const getMeetup = async (request, response) => {
 
 export const getMeetupCrew = async (request, response) => {
   try {
-    const meetup = await Meetup.findById(request.params.id).select({ attendees: 1 }).populate({
-      path: 'attendees',
-      model: User,
-    });
+    const meetup = await Meetup.findById(request.params.id)
+      .select({ attendees: 1 })
+      .populate({
+        path: 'attendees',
+        model: User,
+        select: 'name skills bio',
+        populate: {
+          path: 'skills',
+          model: Badge,
+        },
+      });
     console.log(meetup, 'getting crew');
     response.status(200).json({
       meetup,

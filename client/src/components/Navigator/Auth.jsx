@@ -9,7 +9,7 @@ import LogInOrSignUp from '../Auth/LogInOrSignUp';
 import SignUp from '../Auth/SignUp';
 import LogIn from '../Auth/LogIn';
 
-import UserHome from '../User/Home/Container';
+import UserHome from '../User/Container';
 
 const Auth = (props) => {
   // ここ注目ね。sighup後、page遷移する感じになる。
@@ -20,7 +20,7 @@ const Auth = (props) => {
         <Stack.Screen
           name='My page'
           component={UserHome}
-          initialParams={{ _id: props.auth.data._id }}
+          initialParams={{ userId: props.auth.data._id }}
           options={{ headerShown: false }}
         >
           {/* {(props) => <UserHome {...props} user={props.auth.data} />} */}
