@@ -26,7 +26,7 @@ const ActionButtons = (props) => {
         onPress={() => console.log('pressed qa')}
         style={{ marginRight: 10 }}
       >
-        {props.selectedMeetup.totalQuestions}&nbsp;QA
+        {props.selectedMeetup.totalQuestions}&nbsp;Q&A
       </Button>
       <Button mode='outlined' icon={'run'} onPress={() => console.log('Pressed')} style={{ marginRight: 10 }}>
         Join!

@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const Dummy2 = () => {
+const Container = () => {
   return (
     <View>
-      <Text>Dummy22222222222222222</Text>
+      <Text>Rolls container</Text>
     </View>
   );
 };
 
-export default Dummy2;
+export default Container;

@@ -15,13 +15,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MapNavigator from './components/Navigator/Map';
 import MemoirsNavigator from './components/Navigator/Memoirs';
 import AuthNavigator from './components/Navigator/Auth';
-import TimeMachine from './components/TimeMachine/Container';
+import RollsNavigator from './components/Rolls/Container';
 
 const ref = createNavigationContainerRef();
 const Tab = createBottomTabNavigator();
 
 // components
-import BottomTabs from './components/Tabs/BottomTabs';
 
 // ac
 import { loadMe } from './redux/actionCreators/auth';
@@ -59,7 +58,6 @@ const AppStack = (props) => {
         setRouteName(currentRouteName);
       }}
     >
-      {/* <BottomTabs routeName={routeName} /> */}
       <Tab.Navigator>
         <Tab.Screen
           name='Explore'
@@ -134,8 +132,8 @@ const AppStack = (props) => {
           }
         />
         <Tab.Screen
-          name='Notifications'
-          component={TimeMachine}
+          name='RollsNavigator'
+          component={RollsNavigator}
           options={{
             headerShown: false,
             tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name='paper-roll' color={color} size={size} />,
@@ -145,29 +143,6 @@ const AppStack = (props) => {
             // },
           }}
         />
-        <Tab.Screen
-          name='Port'
-          component={TimeMachine}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({ size, color }) => <MaterialIcons name='local-airport' color={color} size={size} />,
-            tabBarLabel: 'Ports',
-            // () => {
-            //   return null;
-            // },
-          }}
-        />
-        {/* <Tab.Screen
-          name='User'
-          component={AuthNavigator}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({ size, color }) => <FontAwesome name='user' color={color} size={size} />,
-            tabBarLabel: () => {
-              return null;
-            },
-          }}
-        /> */}
       </Tab.Navigator>
     </NavigationContainer>
   );

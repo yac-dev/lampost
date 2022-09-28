@@ -19,7 +19,6 @@ import SignUp from './src/components/Auth/SignUp';
 import LogIn from './src/components/Auth/LogIn';
 import LogInOrSignUp from './src/components/Auth/LogInOrSignUp';
 import AppBottomTabsNavigator from './src/AppBottomTabsNavigator';
-import BottomTabs from './src/components/Tabs/BottomTabs';
 
 // ac
 import { loadMe } from './src/redux/actionCreators/auth';
