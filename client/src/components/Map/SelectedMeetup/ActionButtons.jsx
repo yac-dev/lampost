@@ -11,30 +11,45 @@ import { leaveMeetup } from '../../../redux/actionCreators/meetups';
 
 const ActionButtons = (props) => {
   const renderJoinOrLeave = () => {
-    for (let i = 0; i < props.auth.data.upcomingJoinedMeetups.length; i++) {
-      if (props.selectedMeetup._id === props.auth.data.upcomingJoinedMeetups[i]) {
+    for (let i = 0; i < props.auth.data.upcomingLaunchedMeetups.length; i++) {
+      if (props.selectedMeetup._id === props.auth.data.upcomingLaunchedMeetups[i]) {
         return (
           <Button
             mode='outlined'
-            icon={'exit-to-app'}
+            icon={'plus'}
             onPress={() => props.leaveMeetup(props.selectedMeetup._id)}
             style={{ marginRight: 10 }}
           >
-            Leave
+            Recruit
+          </Button>
+        );
+      } else {
+        for (let i = 0; i < props.auth.data.upcomingJoinedMeetups.length; i++) {
+          if (props.selectedMeetup._id === props.auth.data.upcomingJoinedMeetups[i]) {
+            return (
+              <Button
+                mode='outlined'
+                icon={'exit-run'}
+                onPress={() => props.leaveMeetup(props.selectedMeetup._id)}
+                style={{ marginRight: 10 }}
+              >
+                Get off
+              </Button>
+            );
+          }
+        }
+        return (
+          <Button
+            mode='outlined'
+            icon={'rocket'}
+            onPress={() => props.joinMeetup(props.selectedMeetup._id)}
+            style={{ marginRight: 10 }}
+          >
+            I'm in!
           </Button>
         );
       }
     }
-    return (
-      <Button
-        mode='outlined'
-        icon={'rocket'}
-        onPress={() => props.joinMeetup(props.selectedMeetup._id)}
-        style={{ marginRight: 10 }}
-      >
-        Join!
-      </Button>
-    );
   };
 
   return (
@@ -67,9 +82,6 @@ const ActionButtons = (props) => {
     </ScrollView>
   );
 };
-
-// 自分の、selectedなmeetupに対してどんな状態か、そのためにもselectedmeetupで、fieldが足りないと思う。meetupのtitleとfeeとだけでは足りない。あと、その場で,renderの状態を変えるようにしなきゃだよね。meetup作ったらすぐmapに反映させて、そしてcalendarに反映させたり、joinしたらすぐbuttonがcancel(leaveかな)に変わって、かつ参加者の人数も+1されてuiに反映させる。これらがないと、userは困るよね。
-//、、、、そこを見直そう。あと、bottomsheetがだめだ。手動で閉じるとバグる。それを直そおう。
 
 const mapStateToProps = (state) => {
   return { selectedMeetup: state.selectedItem.meetup, auth: state.auth };

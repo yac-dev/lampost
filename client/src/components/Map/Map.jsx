@@ -158,6 +158,18 @@ const Map = (props) => {
     }
   }, [props.hostMeetup]);
 
+  useEffect(() => {
+    if (props.bottomSheet.selectedItem.isOpen && props.selectedMeetup) {
+      const newLat = props.selectedMeetup.place.coordinates[1] - 0.017;
+      mapRef.current.animateToRegion({
+        latitude: newLat,
+        longitude: props.selectedMeetup.place.coordinates[0],
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      });
+    }
+  }, [props.bottomSheet.selectedItem, props.selectedMeetup]);
+
   return (
     <>
       <NBProvider>
@@ -242,6 +254,7 @@ const mapStateToProps = (state) => {
     dialog: state.dialog,
     hostMeetup: state.hostMeetup,
     modal: state.modal,
+    selectedMeetup: state.selectedItem.meetup,
   };
 };
 
