@@ -256,12 +256,35 @@ export const joinMeetup = async (request, response) => {
   try {
     const meetup = await Meetup.findById(request.params.id);
     meetup.attendees.push(request.body.user);
+    meetup.totalAttendees++;
     meetup.save();
-    // userの方も、dataを変更しないといけない。
     const user = await User.findById(request.body.user);
     user.upcomingJoinedMeetups.push(meetup._id);
+    user.save();
     response.status(200).json({
-      meetup,
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const leaveMeetup = async (request, response) => {
+  try {
+    const meetup = await Meetup.findById(request.params.id);
+    const indexOfUser = meetup.attendees.indexOf(request.body.user);
+    if (indexOfUser > -1) {
+      meetup.attendees.splice(indexOfUser, 1);
+    }
+    meetup.totalAttendees--;
+    meetup.save();
+    const user = await User.findById(request.body.user);
+    const indexOfMeetup = user.upcomingJoinedMeetups.indexOf(meetup._id);
+    if (indexOfMeetup > -1) {
+      user.upcomingJoinedMeetups.splice(indexOfMeetup, 1);
+    }
+    user.save();
+    response.status(200).json({
       user,
     });
   } catch (error) {

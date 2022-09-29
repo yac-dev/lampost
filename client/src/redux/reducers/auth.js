@@ -8,6 +8,8 @@ const authReducer = (state = INITIAL_STATE, action) => {
       return { ...state, data: action.payload, isAuthenticated: true };
     case 'LOG_OUT':
       return { ...state, data: null, isAuthenticated: false };
+    case 'JOIN_MEETUP':
+      return { ...state, data: action.payload };
     case 'GET_CURRENT_LOCATION':
       return { ...state, currentLocation: { latitude: action.payload.latitude, longitude: action.payload.longitude } };
     default:

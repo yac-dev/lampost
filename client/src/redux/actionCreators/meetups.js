@@ -1,4 +1,5 @@
 import lampostAPI from '../../apis/lampost';
+import { addSnackBar } from './snackBar';
 
 export const createMeetup = (formData) => async (dispatch, getState) => {
   try {
@@ -28,13 +29,29 @@ export const getMeetups = () => async (dispatch, getState) => {
 
 export const joinMeetup = (meetupId) => async (dispatch, getState) => {
   try {
-    const result = await lampostAPI.patch(`/meetups/${meetupId}/join`);
+    const userId = getState().auth.data._id;
+    const result = await lampostAPI.patch(`/meetups/${meetupId}/join`, { user: userId });
     const { user } = result.data;
-    const { meetup } = result.data;
     dispatch({
       type: 'JOIN_MEETUP',
-      payload: { user, meetup },
+      payload: user,
     });
+    dispatch(addSnackBar('Joined the meetup!', 'success', 7000));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const leaveMeetup = (meetupId) => async (dispatch, getState) => {
+  try {
+    const userId = getState().auth.data._id;
+    const result = await lampostAPI.patch(`/meetups/${meetupId}/leave`, { user: userId });
+    const { user } = result.data;
+    dispatch({
+      type: 'LEAVE_MEETUP',
+      payload: user,
+    });
+    dispatch(addSnackBar('Left the meetup!', 'success', 7000));
   } catch (error) {
     console.log(error);
   }

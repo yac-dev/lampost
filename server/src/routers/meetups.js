@@ -4,6 +4,7 @@ import {
   createMeetup,
   getMeetups,
   joinMeetup,
+  leaveMeetup,
   getUpcomingJoinedMeetups,
   getMeetup,
   getSelectedMeetup,
@@ -16,5 +17,6 @@ router.route('/:id').get(getMeetup);
 router.route('/:id/crew').get(getMeetupCrew);
 router.route('/:id/selected').get(getSelectedMeetup);
 router.route('/:id/join').patch(joinMeetup);
+router.route('/:id/leave').patch(leaveMeetup);
 
 export default router;

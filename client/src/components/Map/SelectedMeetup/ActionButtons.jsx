@@ -7,8 +7,36 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 // ac
 import { joinMeetup } from '../../../redux/actionCreators/meetups';
+import { leaveMeetup } from '../../../redux/actionCreators/meetups';
 
 const ActionButtons = (props) => {
+  const renderJoinOrLeave = () => {
+    for (let i = 0; i < props.auth.data.upcomingJoinedMeetups.length; i++) {
+      if (props.selectedMeetup._id === props.auth.data.upcomingJoinedMeetups[i]) {
+        return (
+          <Button
+            mode='outlined'
+            icon={'exit-to-app'}
+            onPress={() => props.leaveMeetup(props.selectedMeetup._id)}
+            style={{ marginRight: 10 }}
+          >
+            Leave
+          </Button>
+        );
+      }
+    }
+    return (
+      <Button
+        mode='outlined'
+        icon={'rocket'}
+        onPress={() => props.joinMeetup(props.selectedMeetup._id)}
+        style={{ marginRight: 10 }}
+      >
+        Join!
+      </Button>
+    );
+  };
+
   return (
     <ScrollView horizontal={true} style={{ flexDirection: 'row', marginBottom: 30 }}>
       <Button
@@ -32,14 +60,7 @@ const ActionButtons = (props) => {
       >
         {props.selectedMeetup.totalQuestions}&nbsp;Q&A
       </Button>
-      <Button
-        mode='outlined'
-        icon={'rocket'}
-        onPress={() => props.joinMeetup(props.selectedMeetup._id)}
-        style={{ marginRight: 10 }}
-      >
-        Join!
-      </Button>
+      {renderJoinOrLeave()}
       {/* <Button mode='outlined' icon={'more'} onPress={() => console.log('Pressed')} style={{ marginRight: 10 }}>
         More
       </Button> */}
@@ -51,7 +72,7 @@ const ActionButtons = (props) => {
 //、、、、そこを見直そう。あと、bottomsheetがだめだ。手動で閉じるとバグる。それを直そおう。
 
 const mapStateToProps = (state) => {
-  return { selectedMeetup: state.selectedItem.meetup };
+  return { selectedMeetup: state.selectedItem.meetup, auth: state.auth };
 };
 
-export default connect(mapStateToProps, { joinMeetup })(ActionButtons);
+export default connect(mapStateToProps, { joinMeetup, leaveMeetup })(ActionButtons);
