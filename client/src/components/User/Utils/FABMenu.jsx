@@ -64,7 +64,7 @@ const FABMenu = (props) => {
                 marginBottom: 20,
                 backgroundColor: 'rgb(58, 126, 224)',
               }}
-              onPress={() => console.log('launch event')}
+              onPress={() => props.logout()}
             />
             <FAB
               visible={open ? true : false}

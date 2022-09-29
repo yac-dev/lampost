@@ -3,13 +3,17 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
 import { Button } from 'react-native-paper';
+import { FontAwesome5 } from '@expo/vector-icons';
+
+// ac
+import { joinMeetup } from '../../../redux/actionCreators/meetups';
 
 const ActionButtons = (props) => {
   return (
     <ScrollView horizontal={true} style={{ flexDirection: 'row', marginBottom: 30 }}>
       <Button
         mode='outlined'
-        icon={'account-group'}
+        icon={<FontAwesome5 name='user-astronaut' />}
         onPress={() => props.navigation.navigate('Crew', { meetupId: props.selectedMeetup._id })}
         style={{ marginRight: 10 }}
       >
@@ -28,7 +32,12 @@ const ActionButtons = (props) => {
       >
         {props.selectedMeetup.totalQuestions}&nbsp;Q&A
       </Button>
-      <Button mode='outlined' icon={'run'} onPress={() => console.log('Pressed')} style={{ marginRight: 10 }}>
+      <Button
+        mode='outlined'
+        icon={'rocket'}
+        onPress={() => props.joinMeetup(props.selectedMeetup._id)}
+        style={{ marginRight: 10 }}
+      >
         Join!
       </Button>
       {/* <Button mode='outlined' icon={'more'} onPress={() => console.log('Pressed')} style={{ marginRight: 10 }}>
@@ -38,8 +47,11 @@ const ActionButtons = (props) => {
   );
 };
 
+// 自分の、selectedなmeetupに対してどんな状態か、そのためにもselectedmeetupで、fieldが足りないと思う。meetupのtitleとfeeとだけでは足りない。あと、その場で,renderの状態を変えるようにしなきゃだよね。meetup作ったらすぐmapに反映させて、そしてcalendarに反映させたり、joinしたらすぐbuttonがcancel(leaveかな)に変わって、かつ参加者の人数も+1されてuiに反映させる。これらがないと、userは困るよね。
+//、、、、そこを見直そう。あと、bottomsheetがだめだ。手動で閉じるとバグる。それを直そおう。
+
 const mapStateToProps = (state) => {
   return { selectedMeetup: state.selectedItem.meetup };
 };
 
-export default connect(mapStateToProps, {})(ActionButtons);
+export default connect(mapStateToProps, { joinMeetup })(ActionButtons);

@@ -52,7 +52,7 @@ const Container = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { selectedMeetup: state.selectedItem.meetup };
+  return { selectedMeetup: state.selectedItem.meetup, bottomSheet: state.bottomSheet };
 };
 
-export default connect(mapStateToProps)(Container);
+export default connect(mapStateToProps, { setIsSelectedItemBottomSheetOpen })(Container);

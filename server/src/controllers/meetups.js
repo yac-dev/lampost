@@ -257,8 +257,12 @@ export const joinMeetup = async (request, response) => {
     const meetup = await Meetup.findById(request.params.id);
     meetup.attendees.push(request.body.user);
     meetup.save();
+    // userの方も、dataを変更しないといけない。
+    const user = await User.findById(request.body.user);
+    user.upcomingJoinedMeetups.push(meetup._id);
     response.status(200).json({
       meetup,
+      user,
     });
   } catch (error) {
     console.log(error);

@@ -14,7 +14,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 // components
 import Map from './src/components/Map/Map';
-import Post from './src/components/Post/Post';
 import SignUp from './src/components/Auth/SignUp';
 import LogIn from './src/components/Auth/LogIn';
 import LogInOrSignUp from './src/components/Auth/LogInOrSignUp';

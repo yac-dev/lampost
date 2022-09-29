@@ -58,18 +58,27 @@ const AppStack = (props) => {
         setRouteName(currentRouteName);
       }}
     >
-      <Tab.Navigator>
+      <Tab.Navigator
+        screenOptions={{
+          activeTintColor: 'red',
+          tabBarStyle: {
+            display: hide ? 'none' : 'flex',
+            backgroundColor: '#051561',
+            // borderTopColor: 'transparent',
+          },
+        }}
+      >
         <Tab.Screen
-          name='Explore'
+          name='Meetups'
           component={MapNavigator}
           options={({ route }) => ({
             headerShown: false,
-            tabBarIcon: ({ size, color }) => <MCIcon name={'routes'} color={color} size={size} />,
-            tabBarLabel: 'Explore',
+            tabBarIcon: ({ size, color }) => <MCIcon name={'map'} color={color} size={size} />,
+            tabBarLabel: 'Meetups',
             // () => {
             //   return null;
             // },
-            tabBarStyle: { display: hide ? 'none' : 'flex' },
+            // tabBarStyle: { display: hide ? 'none' : 'flex' },
             // tabBarVisible: ((route) => {
             //   const routeName = getFocusedRouteNameFromRoute(route) ?? '';
 
@@ -92,6 +101,18 @@ const AppStack = (props) => {
             },
           }}
         /> */}
+        <Tab.Screen
+          name='RollsNavigator'
+          component={RollsNavigator}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name='paper-roll' color={color} size={size} />,
+            tabBarLabel: 'Rolls',
+            // () => {
+            //   return null;
+            // },
+          }}
+        />
         {/* 全てのcomponent、navigatorを足さないといけないわ。Mapと全く同じように。この状態だと。mapの方のuser page routeに行く。*/}
         <Tab.Screen
           name='MemoirsNavigator'
@@ -131,18 +152,19 @@ const AppStack = (props) => {
             // }
           }
         />
-        <Tab.Screen
+
+        {/* <Tab.Screen
           name='RollsNavigator'
           component={RollsNavigator}
           options={{
             headerShown: false,
             tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name='paper-roll' color={color} size={size} />,
-            tabBarLabel: 'Rolls',
+            tabBarLabel: 'Ports',
             // () => {
             //   return null;
             // },
           }}
-        />
+        /> */}
       </Tab.Navigator>
     </NavigationContainer>
   );

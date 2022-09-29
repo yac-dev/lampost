@@ -25,3 +25,17 @@ export const getMeetups = () => async (dispatch, getState) => {
     console.log(error);
   }
 };
+
+export const joinMeetup = (meetupId) => async (dispatch, getState) => {
+  try {
+    const result = await lampostAPI.patch(`/meetups/${meetupId}/join`);
+    const { user } = result.data;
+    const { meetup } = result.data;
+    dispatch({
+      type: 'JOIN_MEETUP',
+      payload: { user, meetup },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
