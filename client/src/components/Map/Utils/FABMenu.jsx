@@ -107,7 +107,7 @@ const FABMenu = (props) => {
                 marginBottom: 20,
                 backgroundColor: 'rgb(58, 126, 224)',
               }}
-              onPress={() => props.navigation.navigate('Calendar')}
+              onPress={() => props.navigation.navigate('Schedule')}
             />
             <FAB
               visible={open ? true : false}

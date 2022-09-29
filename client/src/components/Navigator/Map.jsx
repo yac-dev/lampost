@@ -8,7 +8,7 @@ const Stack = createNativeStackNavigator();
 // components
 import Map from '../Map/Map';
 import Camera from '../Camera/Container';
-import CalendarTemp from '../Calendar/ContainerTemp';
+import Schedule from '../Schedule/Container';
 import Meetup from '../Meetup/Container';
 import Crew from '../Crew/Container';
 import User from '../User/Container';
@@ -34,7 +34,7 @@ const MapNavigator = () => {
         />
         <Stack.Screen name='Camera' component={Camera} options={{ headerShown: false }} />
         {/* <Stack.Screen name='CalendarNavigator' component={CalendarNavigator} options={{ headerShown: false }} /> */}
-        <Stack.Screen name='Calendar' component={CalendarTemp} />
+        <Stack.Screen name='Schedule' component={Schedule} />
         {/* <Stack.Screen name='Meetup' component={Calendar} options={{ headerShown: false }} /> */}
         <Stack.Screen
           name='Meetup'
