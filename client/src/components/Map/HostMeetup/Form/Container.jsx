@@ -1,5 +1,6 @@
 // main libraries
 import React, { useState, useEffect, useReducer } from 'react';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 
 // components
@@ -100,22 +101,20 @@ const Container = (props) => {
     props.createMeetup(formData);
   };
 
-  // return (
-  //   <View>
-  //     <Header title='Host Meetup!' onSubmit={onSubmit} />
-  //     <Body state={state} dispatch={dispatch} />
-  //   </View>
-  // );
-  switch (state.component) {
-    case 'MeetupBadge':
-      return <CreateMeetupBadge state={state} dispatch={dispatch} />;
-    case 'MeetupDetail':
-      return <CreateMeetupDetail state={state} dispatch={dispatch} />;
-    case 'MeetupDescription':
-      return <CreateMeetupDescription state={state} dispatch={dispatch} onSubmit={onSubmit} />;
-    default:
-      return null;
-  }
+  const switchComponent = () => {
+    switch (state.component) {
+      case 'MeetupBadge':
+        return <CreateMeetupBadge state={state} dispatch={dispatch} />;
+      case 'MeetupDetail':
+        return <CreateMeetupDetail state={state} dispatch={dispatch} />;
+      case 'MeetupDescription':
+        return <CreateMeetupDescription state={state} dispatch={dispatch} onSubmit={onSubmit} />;
+      default:
+        return null;
+    }
+  };
+
+  return <View style={{ paddingLeft: 30, paddingRight: 30 }}>{switchComponent()}</View>;
 };
 
 const mapStateToProps = (state) => {

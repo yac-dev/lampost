@@ -19,28 +19,37 @@ const CreateMeetupBadge = (props) => {
   };
 
   return (
-    <View>
-      <View style={{ alignItems: 'flex-end' }}>
-        <IconButton
-          icon='arrow-right'
-          iconColor={'blue'}
-          size={20}
-          disabled={disableIconButton()}
+    <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+      {/* <View style={{ alignItems: 'flex-end' }}>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center' }}
           onPress={() => props.dispatch({ type: 'GO_TO_MEETUP_DETAIL', payload: '' })}
-        />
-      </View>
-      <View style={{ paddingRight: 15, paddingLeft: 15 }}>
-        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>What kind of meetup are you gonna host? (Up to 4 tags)</Text>
-        <Button
-          icon='plus'
-          mode='outlined'
-          onPress={() => props.setIsSelectMeetupBadgesModalOpen(true)}
-          style={{ width: 200 }}
         >
-          Add
-        </Button>
+          <Text>Next</Text>
+          <IconButton icon='arrow-right' iconColor={'blue'} size={20} disabled={disableIconButton()} />
+        </TouchableOpacity>
+      </View> */}
+      <View>
+        <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 15 }}>What kind of meetup you'll launch?</Text>
+        <View style={{ alignItems: 'flex-end', marginBottom: 15 }}>
+          <Button
+            icon='plus'
+            mode='outlined'
+            onPress={() => props.setIsSelectMeetupBadgesModalOpen(true)}
+            style={{ width: 150 }}
+          >
+            Add
+          </Button>
+        </View>
         <SelectedBadges />
+
+        <View style={{ alignItems: 'flex-end', marginTop: 15 }}>
+          <Text>{props.selectedBadges.length}/5</Text>
+        </View>
       </View>
+      <Button mode='outlined' onPress={() => props.dispatch({ type: 'GO_TO_MEETUP_DETAIL', payload: '' })}>
+        Next
+      </Button>
     </View>
   );
 };

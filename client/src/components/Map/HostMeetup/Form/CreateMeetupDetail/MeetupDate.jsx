@@ -34,21 +34,15 @@ const MeetupDate = (props) => {
   };
 
   return (
-    <View style={{ paddingRight: 15, paddingLeft: 15 }}>
+    <View>
       {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <FontAwesome name='calendar' size={24} /> */}
-      <Text style={{ fontSize: 17, color: 'rgb(135, 135, 135)', marginLeft: 10 }}>When do you meetup with peers?</Text>
+      <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>When do you meetup?</Text>
       {/* </View> */}
-      <View
-      // style={styles.bodyDateAndTime.startEndWrapper}
-      >
-        <View
-          // style={styles.bodyDateAndTime.startEndWrapper.date}
-          style={{ paddingTop: 5, paddingBottom: 5, flexDirection: 'row', alignItems: 'center' }}
-        >
+      <View>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Button
-            // style={styles.bodyDateAndTime.startEndWrapper.date.button}
-            style={{ marginRight: 5 }}
+            style={{ marginRight: 10, marginBottom: 10 }}
             mode='outlined'
             onPress={() => props.dispatch({ type: 'SET_IS_START_DATE_PICKER_VISIBLE', payload: true })}
           >
@@ -56,13 +50,9 @@ const MeetupDate = (props) => {
           </Button>
           {renderDate(props.state.startDateAndTime)}
         </View>
-        <View
-          // style={styles.bodyDateAndTime.startEndWrapper.date}
-          style={{ paddingTop: 5, paddingBottom: 5, flexDirection: 'row', alignItems: 'center' }}
-        >
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Button
-            // style={styles.bodyDateAndTime.startEndWrapper.date.button}
-            style={{ marginRight: 5 }}
+            style={{ marginRight: 10 }}
             mode='outlined'
             onPress={() => props.dispatch({ type: 'SET_IS_END_DATE_PICKER_VISIBLE', payload: true })}
           >

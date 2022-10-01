@@ -39,13 +39,13 @@ const MeetupFee = (props) => {
             onDismiss={() => props.dispatch({ type: 'SET_IS_CURRENCY_MENU_VISIBLE', payload: false })}
             anchor={
               <Button onPress={() => props.dispatch({ type: 'SET_IS_CURRENCY_MENU_VISIBLE', payload: true })}>
-                Select
+                {props.state.currency ? props.state.currency : 'Select'}
               </Button>
             }
           >
             {renderCurrencies()}
           </Menu>
-          <Text style={{ marginLeft: 5 }}>{props.state.currency}</Text>
+          {/* <Text>{props.state.currency}</Text> */}
           <TextInput
             style={{ width: 150, marginLeft: 10 }}
             mode='outlined'
@@ -61,12 +61,15 @@ const MeetupFee = (props) => {
   };
   return (
     <View style={{ marginTop: 20 }}>
-      {renderSwitchState()}
-      <Switch
-        value={props.state.isMeetupFeeFree}
-        onValueChange={() => props.dispatch({ type: 'SET_IS_MEETUP_FEE_FREE', payload: '' })}
-      />
-      {renderFeeForm()}
+      <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Is this meetup free to join?</Text>
+      <View style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center' }}>
+        {renderSwitchState()}
+        <Switch
+          value={props.state.isMeetupFeeFree}
+          onValueChange={() => props.dispatch({ type: 'SET_IS_MEETUP_FEE_FREE', payload: '' })}
+        />
+        {renderFeeForm()}
+      </View>
     </View>
   );
 };

@@ -2,6 +2,7 @@ import Meetup from '../models/meetup';
 import User from '../models/user';
 import Chat from '../models/chat';
 import Badge from '../models/badge';
+import Comment from '../models/comment';
 import schedule from 'node-schedule';
 
 // この二つも、さらに一つのfunctionにまとめるべき。後で。
@@ -77,8 +78,10 @@ export const createMeetup = async (request, response) => {
       endDateAndTime,
       description,
       launcher,
-      totalQuestions: 0,
+      totalComments: 0,
       totalAttendees: 0,
+      totalImpressions: 0,
+      createdAt: new Date(),
     });
 
     if (isMeetupFeeFree) {
@@ -184,7 +187,7 @@ export const getSelectedMeetup = async (request, response) => {
         currency: 1,
         description: 1,
         launcher: 1,
-        totalQuestions: 1,
+        totalComments: 1,
         totalAttendees: 1,
       })
       .populate({
@@ -218,7 +221,7 @@ export const getMeetup = async (request, response) => {
         populate: {
           path: 'user',
           model: User,
-          select: 'name _id',
+          select: 'name _id ',
         },
       });
     console.log(meetup);
@@ -244,6 +247,34 @@ export const getMeetupCrew = async (request, response) => {
         },
       });
     console.log(meetup, 'getting crew');
+    response.status(200).json({
+      meetup,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getMeetupComments = async (request, response) => {
+  try {
+    const meetup = await Meetup.findById(request.params.id)
+      .select({ comments: 1 })
+      .populate({
+        path: 'comments',
+        model: Comment,
+        populate: [
+          {
+            path: 'user',
+            model: User,
+            select: 'name photo _id',
+          },
+          {
+            path: 'replyTo',
+            model: Comment,
+          },
+        ],
+      });
+
     response.status(200).json({
       meetup,
     });

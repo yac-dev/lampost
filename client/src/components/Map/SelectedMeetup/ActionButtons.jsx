@@ -70,10 +70,10 @@ const ActionButtons = (props) => {
       <Button
         mode='outlined'
         icon={'comment-question'}
-        onPress={() => console.log('pressed qa')}
+        onPress={() => props.navigation.navigate('Q&A', { meetupId: props.selectedMeetup._id })}
         style={{ marginRight: 10 }}
       >
-        {props.selectedMeetup.totalQuestions}&nbsp;Q&A
+        {props.selectedMeetup.totalComments}&nbsp;Q&A
       </Button>
       {renderJoinOrLeave()}
       {/* <Button mode='outlined' icon={'more'} onPress={() => console.log('Pressed')} style={{ marginRight: 10 }}>

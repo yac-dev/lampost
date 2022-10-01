@@ -33,17 +33,18 @@ const meetupSchema = new mongoose.Schema({
     maxLength: 300,
   },
   isPublic: Boolean,
-  totalQuestions: Number,
-  discussion: [
+  totalComments: Number,
+  comments: [
     {
       type: mongoose.Schema.ObjectId,
       ref: 'Comment',
     },
   ],
-  comments: [
+  totalImpressions: Number,
+  impressions: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: 'Comment',
+      ref: 'Impression',
     },
   ],
   agenda: [

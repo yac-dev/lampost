@@ -13,12 +13,15 @@ const chatSchema = new mongoose.Schema({
   content: {
     type: String,
   },
-  reply: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Chat',
-    },
-  ],
+  type: {
+    type: String,
+    // enum: []  // generalかquestionかreplyかhelpかideaか。どれかになる。
+  },
+  reply: {
+    // どのchat objectに対して付随するか、ってだけ。
+    type: mongoose.Schema.ObjectId,
+    ref: 'Chat',
+  },
   createdAt: {
     type: Date,
   },

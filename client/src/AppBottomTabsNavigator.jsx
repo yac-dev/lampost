@@ -32,7 +32,12 @@ import { loadMe } from './redux/actionCreators/auth';
 
 const AppStack = (props) => {
   const [routeName, setRouteName] = useState();
-  const hide = routeName === 'Camera' || routeName === 'Crew' || routeName === 'Meetup' || routeName === 'Dummy2';
+  const hide =
+    routeName === 'Camera' ||
+    routeName === 'Crew' ||
+    routeName === 'Meetup' ||
+    routeName === 'Dummy2' ||
+    routeName === 'Q&A';
 
   const getJWTToken = async () => {
     const jwtToken = await SecureStore.getItemAsync('secure_token');

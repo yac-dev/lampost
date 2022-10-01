@@ -11,6 +11,7 @@ import Camera from '../Camera/Container';
 import Schedule from '../Schedule/Container';
 import Meetup from '../Meetup/Container';
 import Crew from '../Crew/Container';
+import Comments from '../Map/SelectedMeetup/Comments';
 import User from '../User/Container';
 
 import AuthNavigator from './Auth';
@@ -44,6 +45,7 @@ const MapNavigator = () => {
           })}
         />
         <Stack.Screen name='Crew' component={Crew} />
+        <Stack.Screen name='Q&A' component={Comments} />
         <Stack.Screen name='User' component={User} />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>

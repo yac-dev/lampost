@@ -1,5 +1,6 @@
 // main libraries
 import React from 'react';
+import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 
 const ConfirmHostMeetup = () => {
@@ -10,4 +11,8 @@ const ConfirmHostMeetup = () => {
   );
 };
 
-export default ConfirmHostMeetup;
+const mapStateToProps = (state) => {
+  return { auth: state.auth };
+};
+
+export default connect(mapStateToProps)(ConfirmHostMeetup);
