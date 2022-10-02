@@ -116,8 +116,15 @@ export const createMeetup = async (request, response) => {
     scheduleStartMeetup(meetup.startDateAndTime, meetup._id);
     scheduleEndMeetup(meetup.endDateAndTime, meetup._id);
 
+    const populatingBadges = await Badge.find({ _id: { $in: badges } });
+
     response.status(201).json({
-      meetup,
+      meetup: {
+        _id: meetup._id,
+        place: meetup.place,
+        startDateAndTime: meetup.startDateAndTime,
+        badges: populatingBadges,
+      },
     });
   } catch (error) {
     console.log(error);

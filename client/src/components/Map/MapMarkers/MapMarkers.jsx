@@ -33,9 +33,18 @@ const MapMarkers = (props) => {
   };
 
   useEffect(() => {
-    // props.getMeetups();
     getMeetups();
   }, []);
+
+  useEffect(() => {
+    const { socket } = props.auth;
+    if (socket) {
+      socket.on('SEND_NEW_MEETUP', (data) => {
+        console.log(data.meetup);
+        setMeetups((previous) => [...previous, data.meetup]);
+      });
+    }
+  }, [props.auth.socket]);
 
   const renderItem = () => {
     return (
@@ -123,7 +132,7 @@ const MapMarkers = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { meetups: Object.values(state.meetups) };
+  return { meetups: Object.values(state.meetups), auth: state.auth };
 };
 
 export default connect(mapStateToProps, { getMeetups, selectMeetup })(MapMarkers);

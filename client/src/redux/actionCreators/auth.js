@@ -89,3 +89,12 @@ export const getCurrentLocation = () => async (dispatch, getState) => {
     console.log(error);
   }
 };
+
+export const getSocket = (socket) => {
+  return {
+    type: 'GET_SOCKET',
+    payload: socket,
+  };
+};
+
+export const getSocketId = () => {};

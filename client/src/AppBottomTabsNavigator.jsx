@@ -1,6 +1,7 @@
 // main libraries
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { io } from 'socket.io-client';
 import { StyleSheet, Text, View, StatusBar, SafeAreaView } from 'react-native';
 import { Button } from 'react-native-paper';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -24,6 +25,7 @@ const Tab = createBottomTabNavigator();
 
 // ac
 import { loadMe } from './redux/actionCreators/auth';
+import { getSocket } from './redux/actionCreators/auth';
 // const theme = {
 //   colors: {
 //     background: 'transparent',
@@ -46,9 +48,15 @@ const AppStack = (props) => {
       props.loadMe(jwtToken);
     }
   };
-
   useEffect(() => {
     getJWTToken();
+  }, []);
+
+  useEffect(() => {
+    const socket = io('http://192.168.11.17:3500', {
+      path: '/mysocket',
+    });
+    props.getSocket(socket);
   }, []);
 
   return (
@@ -175,4 +183,4 @@ const AppStack = (props) => {
   );
 };
 
-export default connect(null, { loadMe })(AppStack);
+export default connect(null, { loadMe, getSocket })(AppStack);

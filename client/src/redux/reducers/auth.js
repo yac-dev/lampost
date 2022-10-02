@@ -1,4 +1,9 @@
-const INITIAL_STATE = { data: null, isAuthenticated: false, currentLocation: { latitude: null, longitude: null } };
+const INITIAL_STATE = {
+  data: null,
+  isAuthenticated: false,
+  currentLocation: { latitude: null, longitude: null },
+  socket: null,
+};
 // if contitionでは、latitude === nullってかかないとだな。lat 0, lng 0ってあり得るからね。
 const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -7,11 +12,13 @@ const authReducer = (state = INITIAL_STATE, action) => {
     case 'LOAD_ME':
       return { ...state, data: action.payload, isAuthenticated: true };
     case 'LOG_OUT':
-      return { ...state, data: null, isAuthenticated: false };
+      return { ...state, data: null, isAuthenticated: false, currentLocation: null, socketId: null };
     case 'JOIN_MEETUP':
       return { ...state, data: action.payload };
     case 'GET_CURRENT_LOCATION':
       return { ...state, currentLocation: { latitude: action.payload.latitude, longitude: action.payload.longitude } };
+    case 'GET_SOCKET':
+      return { ...state, socket: action.payload };
     default:
       return { ...state };
   }

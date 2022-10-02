@@ -97,7 +97,7 @@ const Container = (props) => {
     console.log(formData);
     props.setIsHostMeetupOpen(false);
     props.setMeetupLocation('');
-    props.addSnackBar('Meetup was created successfully! Please check your schedule.', 'success', 7000);
+    // props.addSnackBar('Meetup was created successfully! Please check your schedule.', 'success', 7000);
     props.createMeetup(formData);
   };
 
