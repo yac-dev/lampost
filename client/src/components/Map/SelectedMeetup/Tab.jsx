@@ -1,5 +1,6 @@
 // main libraries
 import React from 'react';
+import { connect } from 'react-redux';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 
 const Tab = (props) => {
@@ -21,10 +22,14 @@ const Tab = (props) => {
         style={{ padding: 10, borderBottomWidth: props.component === 'qAndA' ? 1 : '' }}
         onPress={() => props.setComponent('qAndA')}
       >
-        <Text>Q&A</Text>
+        <Text>Q&A ({props.selectedMeetup.comments.length})</Text>
       </TouchableOpacity>
     </ScrollView>
   );
 };
 
-export default Tab;
+const mapStateToProps = (state) => {
+  return { selectedMeetup: state.selectedItem.meetup };
+};
+
+export default connect(mapStateToProps)(Tab);

@@ -1,22 +1,14 @@
 // main libraries
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  Keyboard,
-  InputAccessoryView,
-  Button,
-} from 'react-native';
+import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, InputAccessoryView } from 'react-native';
+import { IconButton } from 'react-native-paper';
 import { BottomSheetTextInput, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 const QandA = (props) => {
   // ここで、commentsを全てrenderする。replyも含めてね。
   const inputAccessoryViewID = 'uniqueID';
   const [comments, setComments] = useState(props.selectedMeetup.comments);
-
   // なんで、これでcpuのusageが爆発する？？？
   // useEffect(() => {
   //   setComments((previous) => [...previous, ...props.selectedMeetup.comments]);
@@ -25,7 +17,7 @@ const QandA = (props) => {
   const renderComments = () => {
     if (!comments.length) {
       return (
-        <View>
+        <View style={{ marginTop: 10 }}>
           <Text>No comments added yet.</Text>
         </View>
       );
@@ -38,22 +30,28 @@ const QandA = (props) => {
         );
       });
 
-      return <View>{commentsList}</View>;
+      return <View style={{marginTop: 10}}>{commentsList}</View>;
     }
   };
 
   return (
     <View>
-      <TouchableOpacity>
-        <Text>Add comment</Text>
-      </TouchableOpacity>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View>
-          <BottomSheetTextInput placeholder='add commenty' inputAccessoryViewID={inputAccessoryViewID} />
-          <InputAccessoryView nativeID={inputAccessoryViewID}>
-            <View style={{ alignItems: 'flex-end' }}>
+        <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#000', paddingBottom: 10 }}>
+          <BottomSheetTextInput
+            placeholder='add commenty'
+            inputAccessoryViewID={inputAccessoryViewID}
+            style={{ flex: 1, borderRadius: 10 }}
+          />
+          <IconButton icon='send' size={15} containerColor={'white'} iconColor={'#051561'} onPress={() => {console.log('ask question')}} />
+          <InputAccessoryView
+            nativeID={inputAccessoryViewID}
+            backgroundColor={'#B0B0B0'}
+            style={{ paddingTop: 10, paddingBottom: 10 }}
+          >
+            <View style={{ alignItems: 'flex-end', padding:10 }}>
               <TouchableOpacity onPress={() => Keyboard.dismiss()}>
-                <Text>完了</Text>
+                <Text>Done</Text>
               </TouchableOpacity>
             </View>
           </InputAccessoryView>
