@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
   bio: {
     type: String,
     maxLength: 50,
+    default: 'Just joined!',
   },
   skills: [
     {
@@ -48,40 +49,29 @@ const userSchema = new mongoose.Schema({
       url: String,
     },
   ],
-  upcomingJoinedMeetups: [
+  upcomingMeetups: [
     {
       meetup: {
         type: mongoose.Schema.ObjectId,
         ref: 'Meetup',
       },
+      launched: Boolean,
       viewedChatsLastTime: Date,
     },
   ],
-  upcomingLaunchedMeetups: [
+  pastMeetups: [
     {
       meetup: {
         type: mongoose.Schema.ObjectId,
         ref: 'Meetup',
       },
-      viewedChatsLastTime: Date,
+      launched: Boolean,
     },
   ],
-  createdAt: {
-    type: Date,
+  totalConnections: {
+    type: Number,
+    default: 0,
   },
-  pastLaunchedMeetups: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Meetup',
-    },
-  ],
-  pastJoinedMeetups: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Meetup',
-    },
-  ],
-  totalConnections: Number,
   connections: [
     {
       user: {
@@ -95,6 +85,9 @@ const userSchema = new mongoose.Schema({
       viewedChatsLastTime: Date,
     },
   ],
+  createdAt: {
+    type: Date,
+  },
   // これ多分いらない。代わりにrelationshipのschemaが必要になる。
   // subscribed: [
   //   {

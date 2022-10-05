@@ -78,9 +78,6 @@ export const createMeetup = async (request, response) => {
       endDateAndTime,
       description,
       launcher,
-      totalComments: 0,
-      totalAttendees: 0,
-      totalImpressions: 0,
       createdAt: new Date(),
     });
 
@@ -106,8 +103,12 @@ export const createMeetup = async (request, response) => {
     }
 
     const user = await User.findById(launcher);
-    user.upcomingLaunchedMeetups.push(meetup._id);
-    user.upcomingJoinedMeetups.push(meetup._id);
+    const pushing = {
+      meetup: meetup._id,
+      launched: true,
+      viewedChatsLastTime: new Date(),
+    };
+    user.upcomingMeetups.push(pushing);
     user.save();
 
     meetup.attendees.push(launcher);
@@ -195,6 +196,7 @@ export const getSelectedMeetup = async (request, response) => {
         description: 1,
         launcher: 1,
         totalComments: 1,
+        comments: 1,
         totalAttendees: 1,
       })
       .populate({
@@ -205,6 +207,9 @@ export const getSelectedMeetup = async (request, response) => {
       .populate({
         path: 'badges',
         model: Badge,
+      })
+      .populate({
+        path: 'comments',
       });
     console.log('meetup selected!', meetup);
     response.status(200).json({

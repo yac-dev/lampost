@@ -11,8 +11,8 @@ import { leaveMeetup } from '../../../redux/actionCreators/meetups';
 
 const ActionButtons = (props) => {
   const renderJoinOrLeave = () => {
-    for (let i = 0; i < props.auth.data.upcomingLaunchedMeetups.length; i++) {
-      if (props.selectedMeetup._id === props.auth.data.upcomingLaunchedMeetups[i]) {
+    for (let i = 0; i < props.auth.data.upcomingMeetups.length; i++) {
+      if (props.auth.data.upcomingMeetups[i].launched) {
         return (
           <Button
             mode='outlined'
@@ -23,32 +23,33 @@ const ActionButtons = (props) => {
             Recruit
           </Button>
         );
-      } else {
-        for (let i = 0; i < props.auth.data.upcomingJoinedMeetups.length; i++) {
-          if (props.selectedMeetup._id === props.auth.data.upcomingJoinedMeetups[i]) {
-            return (
-              <Button
-                mode='outlined'
-                icon={'exit-run'}
-                onPress={() => props.leaveMeetup(props.selectedMeetup._id)}
-                style={{ marginRight: 10 }}
-              >
-                Get off
-              </Button>
-            );
-          }
-        }
-        return (
-          <Button
-            mode='outlined'
-            icon={'rocket'}
-            onPress={() => props.joinMeetup(props.selectedMeetup._id)}
-            style={{ marginRight: 10 }}
-          >
-            I'm in!
-          </Button>
-        );
       }
+      // else {
+      //   for (let i = 0; i < props.auth.data.upcomingMeetups.length; i++) {
+      //     if (props.selectedMeetup._id === props.auth.data.upcomingMeetups[i]) {
+      //       return (
+      //         <Button
+      //           mode='outlined'
+      //           icon={'exit-run'}
+      //           onPress={() => props.leaveMeetup(props.selectedMeetup._id)}
+      //           style={{ marginRight: 10 }}
+      //         >
+      //           Get off
+      //         </Button>
+      //       );
+      //     }
+      //   }
+      //   return (
+      //     <Button
+      //       mode='outlined'
+      //       icon={'rocket'}
+      //       onPress={() => props.joinMeetup(props.selectedMeetup._id)}
+      //       style={{ marginRight: 10 }}
+      //     >
+      //       I'm in!
+      //     </Button>
+      //   );
+      // }
     }
   };
 
@@ -67,14 +68,14 @@ const ActionButtons = (props) => {
         )}
         &nbsp;Crew
       </Button>
-      <Button
+      {/* <Button
         mode='outlined'
         icon={'comment-question'}
         onPress={() => props.navigation.navigate('Q&A', { meetupId: props.selectedMeetup._id })}
         style={{ marginRight: 10 }}
       >
         {props.selectedMeetup.totalComments}&nbsp;Q&A
-      </Button>
+      </Button> */}
       {renderJoinOrLeave()}
       {/* <Button mode='outlined' icon={'more'} onPress={() => console.log('Pressed')} style={{ marginRight: 10 }}>
         More
