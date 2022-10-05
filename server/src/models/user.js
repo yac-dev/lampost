@@ -45,31 +45,30 @@ const userSchema = new mongoose.Schema({
   socials: [
     {
       name: String,
-      url: String, // ここさ、urlの方がいいのかね。。。それとも、mobile appへ遷移させるか。まあ、後でいいや。
+      url: String,
     },
   ],
   upcomingJoinedMeetups: [
     {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Meetup',
+      meetup: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Meetup',
+      },
+      viewedChatsLastTime: Date,
     },
   ],
   upcomingLaunchedMeetups: [
     {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Meetup',
+      meetup: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Meetup',
+      },
+      viewedChatsLastTime: Date,
     },
   ],
   createdAt: {
     type: Date,
   },
-  // ここから下はサイズが大きくなる。
-  subscribed: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'User',
-    },
-  ],
   pastLaunchedMeetups: [
     {
       type: mongoose.Schema.ObjectId,
@@ -82,25 +81,35 @@ const userSchema = new mongoose.Schema({
       ref: 'Meetup',
     },
   ],
+  totalConnections: Number,
   connections: [
     {
-      type: mongoose.Schema.ObjectId,
-      ref: 'User',
+      user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+      },
+      chatRoom: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'ChatRoom',
+      },
+      viewedChatsLastTime: Date,
     },
   ],
-  // address: {
-  //   type: {
-  //     type: String,
-  //     enum: ['Point'],
-  //     default: 'Point',
-  //   },
-  //   coordinates: [Number],
-  // },
-  // // languageのschemaを入れるか後で。
-  // languages: [
+  // これ多分いらない。代わりにrelationshipのschemaが必要になる。
+  // subscribed: [
   //   {
-  //     type: String
-  //   }
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'User',
+  //   },
+  // ],
+  // groupChats: [
+  //   {
+  //     chatRoom: {
+  //       type: mongoose.Schema.ObjectId,
+  //       ref: 'ChatRoom',
+  //     },
+  //     lastViewed: Date,
+  //   },
   // ],
 });
 

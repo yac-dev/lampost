@@ -96,5 +96,3 @@ export const getSocket = (socket) => {
     payload: socket,
   };
 };
-
-export const getSocketId = () => {};

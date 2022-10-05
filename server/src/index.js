@@ -13,7 +13,6 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-  socket.emit('GET_SOCKET_ID', socket.id);
   socket.on('CREATE_MEETUP', (data) => {
     io.emit('SEND_NEW_MEETUP', { meetup: data.meetup });
   });

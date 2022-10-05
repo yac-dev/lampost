@@ -10,10 +10,6 @@ const commentSchema = mongoose.Schema({
     ref: 'User',
   },
   content: String, // これはstringか、画像やら動画見たいなbinary dataか。まあ、なんでもあり。
-  type: {
-    type: String,
-    // enum: [] Questionか、replyのどちらか。
-  },
   replyTo: {
     // commentのidが入ることになる。
     type: mongoose.Schema.ObjectId,

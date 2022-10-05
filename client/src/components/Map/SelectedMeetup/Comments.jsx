@@ -1,5 +1,6 @@
 // main libraries
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import lampostAPI from '../../../apis/lampost';
 import { View, Text } from 'react-native';
 
@@ -17,6 +18,11 @@ const Comments = (props) => {
 
   useEffect(() => {
     getMeetupComments();
+  }, []);
+
+  useEffect(() => {
+    const { socket } = props.auth;
+    // socket.on('SEND_COMMENT', ())
   }, []);
 
   const renderSwitch = () => {
@@ -48,4 +54,8 @@ const Comments = (props) => {
   );
 };
 
-export default Comments;
+const mapStateToProps = (state) => {
+  return { auth: state.auth };
+};
+
+export default connect(mapStateToProps)(Comments);

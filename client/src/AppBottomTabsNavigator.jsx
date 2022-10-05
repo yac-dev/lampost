@@ -44,7 +44,6 @@ const AppStack = (props) => {
   const getJWTToken = async () => {
     const jwtToken = await SecureStore.getItemAsync('secure_token');
     if (jwtToken) {
-      console.log(jwtToken);
       props.loadMe(jwtToken);
     }
   };

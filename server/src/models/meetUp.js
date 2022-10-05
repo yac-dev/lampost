@@ -41,20 +41,6 @@ const meetupSchema = new mongoose.Schema({
     },
   ],
   totalImpressions: Number,
-  impressions: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Impression',
-    },
-  ],
-  agenda: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'MeetupAgenda', // agendaのdocumentがqueueで溜まっていく感じ。
-    },
-    // {meetup: '20391390138', title: 'eat', from:'3/15/2022 16:00', to: '3/15/2022 17:00' }みたいな感じかね。ただ、これは最後でいいし、そもそも必要かも分からん。
-  ],
-  // hostが入力するのはここまで
   launcher: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
@@ -69,26 +55,31 @@ const meetupSchema = new mongoose.Schema({
     ],
     // validate: [attendeesLimit, 'OOPS! This meetup is full now.'],
   },
+  chatRoom: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'ChatRoom',
+  },
   state: {
     type: String,
-    default: '',
-    // '', started, done
+    default: '', // '', started, done
   },
-  chats: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Chat',
-    },
-  ],
-  pics: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Pic',
-    },
-  ],
   createdAt: {
     type: Date,
   },
+  // これも、commentをただ集めてくればいいだよな,
+  // agenda: [
+  //   {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'MeetupAgenda', // agendaのdocumentがqueueで溜まっていく感じ。
+  //   },
+  //   // {meetup: '20391390138', title: 'eat', from:'3/15/2022 16:00', to: '3/15/2022 17:00' }みたいな感じかね。ただ、これは最後でいいし、そもそも必要かも分からん。
+  // ],
+  // impressions: [
+  //   {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'Impression',
+  //   },
+  // ], これも多分いらない。impression側でmeetupのidあれば十分。
 });
 
 // function genresLimit(val) {

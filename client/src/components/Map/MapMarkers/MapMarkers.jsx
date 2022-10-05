@@ -63,6 +63,8 @@ const MapMarkers = (props) => {
         return (
           <View key={index}>
             <Marker
+              key={index}
+              tracksViewChanges={false}
               coordinate={{ latitude: meetup.place.coordinates[1], longitude: meetup.place.coordinates[0] }}
               // onPress={() => props.handleSelectedItemBottomSheetChanges(post)}
               pinColor='black'
@@ -74,10 +76,11 @@ const MapMarkers = (props) => {
             >
               <View>
                 <View style={{ backgroundColor: 'red', borderRadius: 5 }}>
-                  <Image
+                  {/* <Image
                     source={foodAndBeverage[meetup.badges[0].label].source}
                     style={{ width: 30, height: 30, tintColor: meetup.badges[0].color }}
-                  />
+                  /> */}
+                  <Text>Hi</Text>
                 </View>
                 {/* <Text style={{ fontWeight: 'bold' }}>
                   {new Date(meetup.startDateAndTime).toLocaleDateString('en-US', {

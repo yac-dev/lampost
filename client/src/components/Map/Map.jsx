@@ -217,10 +217,10 @@ const Map = (props) => {
           <FABMenu navigation={props.navigation} />
           <SnackBar />
           <PostBottomSheet postBottomSheetRef={postBottomSheetRef} />
-          {/* <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} /> */}
           <SelectedMeetup navigation={props.navigation} selectedItemBottomSheetRef={selectedItemBottomSheetRef} />
-          {/* <CancelHostMeetupButton /> */}
           <HostMeetupBottomSheet />
+          {/* <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} /> */}
+          {/* <CancelHostMeetupButton /> */}
         </View>
       </NBProvider>
     </>

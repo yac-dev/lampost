@@ -14,7 +14,6 @@ import FABMenu from './Utils/FABMenu';
 // badgeを取ってきて、skillも取ってくる。subscriberの数も返すし、connectionの数も返す。
 const Container = (props) => {
   const [user, setUser] = useState(null);
-  console.log(props.route.params.userId); // このidを使って、backendのapiでuser情報をとってくればいいだけだからね。
 
   useEffect(() => {
     // ここで、_id使って、user情報をfetchしてくる。

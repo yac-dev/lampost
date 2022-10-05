@@ -2,22 +2,18 @@ import mongoose from 'mongoose';
 
 const chatSchema = new mongoose.Schema({
   // Write your timeline of your hobby!!
-  meetup: {
+  chatRoom: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Meetup',
+    ref: 'ChatRoom',
   },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
   content: {
-    type: String,
+    type: Object, // string, binary data
   },
-  type: {
-    type: String,
-    // enum: []  // generalかquestionかreplyかhelpかideaか。どれかになる。
-  },
-  reply: {
+  replyTo: {
     // どのchat objectに対して付随するか、ってだけ。
     type: mongoose.Schema.ObjectId,
     ref: 'Chat',
@@ -25,6 +21,11 @@ const chatSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
   },
+  // これは、chatにはいらねーや。portsでのchatでこれが必要になるとしよう。
+  // type: {
+  //   type: String,
+  //   // enum: []  // generalかquestionかreplyかhelpかideaか。どれかになる。
+  // },
 });
 
 const chat = mongoose.model('Chat', chatSchema);

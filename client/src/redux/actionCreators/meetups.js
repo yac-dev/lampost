@@ -9,8 +9,7 @@ export const createMeetup = (formData) => async (dispatch, getState) => {
       type: 'CREATE_MEETUP',
       payload: meetup,
     });
-    //  ここ、上のerror handlingないとダメだよな。。。。あれ、それともいんだっけ？apiでerrorがあったら、catchにすぐいくんだっけ？
-    dispatch(addSnackBar('Joined the meetup!', 'success', 7000));
+    dispatch(addSnackBar('Meetup was made successfully!', 'success', 7000));
     const { socket } = getState().auth;
     socket.emit('CREATE_MEETUP', { meetup });
   } catch (error) {

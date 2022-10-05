@@ -19,7 +19,6 @@ const Container = (props) => {
       upcomingJoinedMeetupIds: props.auth.data.upcomingJoinedMeetups,
     });
     const { upcomingJoinedMeetups } = result.data;
-    console.log(upcomingJoinedMeetups);
     setUpcomingMeetups((previous) => {
       return [...previous, ...upcomingJoinedMeetups];
     });

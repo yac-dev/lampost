@@ -4,13 +4,14 @@ import { composeWithDevTools } from 'remote-redux-devtools';
 import reduxThunk from 'redux-thunk';
 import rootReducer from './reducers/root';
 
-const composeEnhancers = composeWithDevTools({ realtime: true, port: 8000 });
+// const composeEnhancers = composeWithDevTools({ realtime: true, port: 8000 });
 const store = createStore(
   rootReducer,
-  composeEnhancers(
-    applyMiddleware(reduxThunk)
-    // other store enhancers if any
-  )
+  applyMiddleware(reduxThunk)
+  // composeEnhancers(
+  //   applyMiddleware(reduxThunk)
+  //   // other store enhancers if any
+  // )
 );
 
 // const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -34,7 +34,6 @@ const SignUp = (props) => {
       email,
       password,
     };
-    console.log(formData);
     // props.navigation.navigate('LogInOrSignUp', { screen: 'Map' });
     props.signUp(formData);
   };
