@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { io } from 'socket.io-client';
-import { StyleSheet, Text, View, StatusBar, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, SafeAreaView, Image } from 'react-native';
 import { Button } from 'react-native-paper';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -118,8 +118,16 @@ const AppStack = (props) => {
           component={RollsNavigator}
           options={{
             headerShown: false,
-            tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name='paper-roll' color={color} size={size} />,
             tabBarLabel: 'Rolls',
+            // tabBarIcon: ({ size, focused, color }) => {
+            //   return (
+            //     <Image
+            //       style={{ width: 60, height: 60, tintColor: 'white' }}
+            //       source={require('../assets/app/astronaut-camera.png')}
+            //     />
+            //   );
+            // },
+            tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name='paper-roll' color={color} size={size} />,
             // () => {
             //   return null;
             // },

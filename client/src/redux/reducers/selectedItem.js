@@ -13,6 +13,8 @@ const selectedItemReducer = (state = INITIAL_STATE, action) => {
     case 'LEAVE_MEETUP':
       return { ...state, meetup: { ...state.meetup, totalAttendees: --state.meetup.totalAttendees } };
     // append
+    case 'ADD_COMMENT':
+      return { ...state, meetup: {...state.meetup, comments: [ ...state.meetup.comments, action.payload ]} };
     case 'SELECT_BADGE':
       const selectedBadges = { ...state.badges };
       selectedBadges[action.payload._id] = action.payload;

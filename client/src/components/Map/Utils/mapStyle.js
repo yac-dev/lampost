@@ -16,6 +16,7 @@ export const mapStyle = [
       },
     ],
   },
+
   {
     featureType: 'administrative.province',
     stylers: [
@@ -24,11 +25,49 @@ export const mapStyle = [
       },
     ],
   },
+
   {
     featureType: 'administrative.locality',
     stylers: [
       {
         visibility: 'on',
+      },
+    ],
+  },
+
+  {
+    featureType: 'all',
+    elementType: 'geometry',
+    stylers: [
+      {
+        color: '#172F51',
+      },
+    ],
+  },
+
+  {
+    featureType: 'landscape',
+    elementType: 'geometry',
+    stylers: [
+      {
+        lightness: 30,
+      },
+      {
+        saturation: '9',
+      },
+      {
+        color: '#29446b',
+      },
+    ],
+  },
+
+  {
+    featureType: 'water',
+    elementType: 'all',
+    stylers: [
+      {
+        lightness: -20,
+        color: '#172F51',
       },
     ],
   },

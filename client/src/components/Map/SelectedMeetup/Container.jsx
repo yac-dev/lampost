@@ -12,7 +12,8 @@ import ActionButtons from './ActionButtons';
 import Tab from './Tab';
 import About from './About';
 import LocationDetail from './LocationDetail';
-import QandA from './QandA';
+import QandA from './QandA/Container';
+// import QandA from './QandA';
 
 const Container = (props) => {
   const [component, setComponent] = useState('about');
@@ -62,7 +63,7 @@ const Container = (props) => {
       ref={props.selectedItemBottomSheetRef}
       snapPoints={snapPoints}
       enablePanDownToClose={true}
-      keyboardBehavior={'extend'}
+      keyboardBehavior={'interactive'}
       onClose={() => onSelectedItemBottomSheetClose()}
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>{renderSelectedMeetup()}</BottomSheetView>

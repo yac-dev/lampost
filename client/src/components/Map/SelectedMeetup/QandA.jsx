@@ -1,5 +1,6 @@
 // main libraries
 import React, { useEffect, useState } from 'react';
+import lampostAPI from '../../../apis/lampost';
 import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, InputAccessoryView } from 'react-native';
 import { IconButton } from 'react-native-paper';
@@ -43,7 +44,8 @@ const QandA = (props) => {
             inputAccessoryViewID={inputAccessoryViewID}
             style={{ flex: 1, borderRadius: 10 }}
           />
-          <IconButton icon='send' size={15} containerColor={'white'} iconColor={'#051561'} onPress={() => {console.log('ask question')}} />
+          <IconButton icon='send' size={15} containerColor={'white'} iconColor={'#051561'}
+            onPress={() => {console.log('ask question')}} />
           <InputAccessoryView
             nativeID={inputAccessoryViewID}
             backgroundColor={'#B0B0B0'}

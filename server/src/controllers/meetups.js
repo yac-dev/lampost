@@ -267,6 +267,24 @@ export const getMeetupCrew = async (request, response) => {
   }
 };
 
+export const addComment = async (request, response) => {
+  try{
+    const { userId, content, replyTo } = request.body;
+    const comment = await Comment.create({
+      meetup: request.params.id,
+      user: userId,
+      content,
+      replyTo,
+      createdAt: new Date(),
+    });
+
+    const meetup = await Meetup.findById(request.params.id);
+    meetup.comments.push(comment._id);
+  } catch(error){
+    console.log(error);
+  }
+}
+
 export const getMeetupComments = async (request, response) => {
   try {
     const meetup = await Meetup.findById(request.params.id)
