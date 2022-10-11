@@ -15,6 +15,8 @@ const authReducer = (state = INITIAL_STATE, action) => {
       return { ...state, data: null, isAuthenticated: false, currentLocation: null, socketId: null };
     case 'JOIN_MEETUP':
       return { ...state, data: action.payload };
+    case 'LEAVE_MEETUP':
+      return { ...state, data: action.payload };
     case 'GET_CURRENT_LOCATION':
       return { ...state, currentLocation: { latitude: action.payload.latitude, longitude: action.payload.longitude } };
     case 'GET_SOCKET':

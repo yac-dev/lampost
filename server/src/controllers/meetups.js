@@ -268,7 +268,7 @@ export const getMeetupCrew = async (request, response) => {
 };
 
 export const addComment = async (request, response) => {
-  try{
+  try {
     const { userId, content, replyTo } = request.body;
     const comment = await Comment.create({
       meetup: request.params.id,
@@ -280,10 +280,10 @@ export const addComment = async (request, response) => {
 
     const meetup = await Meetup.findById(request.params.id);
     meetup.comments.push(comment._id);
-  } catch(error){
+  } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const getMeetupComments = async (request, response) => {
   try {
@@ -320,7 +320,12 @@ export const joinMeetup = async (request, response) => {
     meetup.totalAttendees++;
     meetup.save();
     const user = await User.findById(request.body.user);
-    user.upcomingJoinedMeetups.push(meetup._id);
+    const meetupObj = {
+      meetup: meetup._id,
+      launched: false,
+      viewedChatsLastTime: new Date(),
+    };
+    user.upcomingMeetups.push(meetupObj);
     user.save();
     response.status(200).json({
       user,
@@ -340,9 +345,15 @@ export const leaveMeetup = async (request, response) => {
     meetup.totalAttendees--;
     meetup.save();
     const user = await User.findById(request.body.user);
-    const indexOfMeetup = user.upcomingJoinedMeetups.indexOf(meetup._id);
+    let indexOfMeetup = 0;
+    for (let i = 0; i < user.upcomingMeetups.length; i++) {
+      if (user.upcomingMeetups[i].meetup === meetup._id) {
+        indexOfMeetup = i;
+      }
+    }
+    // const indexOfMeetup = user.upcomingMeetups.indexOf(meetup._id);
     if (indexOfMeetup > -1) {
-      user.upcomingJoinedMeetups.splice(indexOfMeetup, 1);
+      user.upcomingMeetups.splice(indexOfMeetup, 1);
     }
     user.save();
     response.status(200).json({
