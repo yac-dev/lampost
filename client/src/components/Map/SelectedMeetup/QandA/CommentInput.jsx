@@ -7,6 +7,7 @@ import { IconButton } from 'react-native-paper';
 import { BottomSheetTextInput, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 const Container = (props) => {
+  const [content, setContent] = useState('');
   const inputAccessoryViewID = 'uniqueID';
 
   // const addComment = async () => {
@@ -15,18 +16,25 @@ const Container = (props) => {
   //   props.setComments((previous) => [...previous, comment]);
   // };
 
-  const addComment = async () => {
-    if (props.reply.pressed) {
-      const result = await lampostAPI.post('/comments');
-      const { comment } = result.data;
-      props.setComments((previous) => [...previous, comment]);
-    } else {
-      const result = await lampostAPI.post('/comments/reply');
-      const { comment } = result.data;
-      props.setComments((previous) => [...previous, comment]);
-    }
+  const addQuestion = async () => {
+    const formData = {
+      meetupId: props.selectedMeetup._id,
+      userId: props.auth.data._id,
+      content,
+    };
+    // if (props.reply.pressed) {
+    const result = await lampostAPI.post('/comments', formData);
+    const { question } = result.data;
+    props.setComments((previous) => [...previous, question]);
+    setContent('');
+    // } else {
+    //   const result = await lampostAPI.post('/comments/reply');
+    //   const { comment } = result.data;
+    //   props.setComments((previous) => [...previous, comment]);
+    // }
   };
 
+  // replyの時はinputの真下にそのtextを書くようにしよう。
   const renderReplyingTo = () => {
     if (props.reply.pressed) {
       return <Text>{reply.comment.content}</Text>;
@@ -40,10 +48,12 @@ const Container = (props) => {
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#000', paddingBottom: 10 }}>
           <BottomSheetTextInput
-            placeholder='add comment'
+            placeholder='Have any question?'
             inputAccessoryViewID={inputAccessoryViewID}
             style={{ flex: 1, borderRadius: 10 }}
             ref={props.inputRef}
+            value={content}
+            onChangeText={setContent}
           />
           <IconButton
             icon='send'
@@ -51,7 +61,7 @@ const Container = (props) => {
             containerColor={'white'}
             iconColor={'#051561'}
             onPress={() => {
-              console.log('ask question');
+              addQuestion();
             }}
           />
           <InputAccessoryView
@@ -73,7 +83,7 @@ const Container = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { selectedMeetup: state.selectedItem.meetup };
+  return { selectedMeetup: state.selectedItem.meetup, auth: state.auth };
 };
 
 export default connect(mapStateToProps)(Container);

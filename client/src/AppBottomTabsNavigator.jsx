@@ -75,7 +75,7 @@ const AppStack = (props) => {
           activeTintColor: 'red',
           tabBarStyle: {
             display: hide ? 'none' : 'flex',
-            backgroundColor: '#051561',
+            backgroundColor: '#172F51',
             // borderTopColor: 'transparent',
           },
         }}

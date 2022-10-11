@@ -8,7 +8,7 @@ export const createQuestion = async (request, response) => {
       meetup: meetupId,
       user: userId,
       content,
-      type: 'question',
+      // type: 'question',
       createdAt: new Date(),
     });
     const meetup = await Meetup.findById(meetupId);

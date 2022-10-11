@@ -122,7 +122,30 @@ const FABMenu = (props) => {
               onPress={() => console.log('camera component')}
             />
             <FAB
-              icon={open ? 'close' : 'party-popper'}
+              // icon={
+              //   open
+              //     ? 'close'
+              //     : (props) => (
+              //         <Image
+              //           source={require('../../../../assets/app/astro-rocket.png')}
+              //           style={{ width: 50, height: 50, tintColor: 'black' }}
+              //         />
+              //       )
+              // }
+              icon={({ size, color }) => (
+                <Image
+                  source={require('../../../../assets/app/astro-rocket.png')}
+                  style={{
+                    width: 50,
+                    height: 50,
+                    tintColor: 'black',
+                    flex: 1,
+                    alignSelf: 'center',
+                    justifyContent: 'center',
+                  }}
+                />
+              )}
+              // icon={open ? 'close' : 'plus'}
               color={'white'}
               style={{
                 backgroundColor: 'rgb(58, 126, 224)',

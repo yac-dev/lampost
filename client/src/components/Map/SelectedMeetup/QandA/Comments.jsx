@@ -24,7 +24,7 @@ const Comments = (props) => {
     if (!props.comments.length) {
       return (
         <View style={{ marginTop: 10 }}>
-          <Text>No comments added yet.</Text>
+          <Text>No questions asked yet 🤔</Text>
         </View>
       );
     } else {
