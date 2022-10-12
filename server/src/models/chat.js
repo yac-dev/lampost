@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
 const chatSchema = new mongoose.Schema({
-  // Write your timeline of your hobby!!
   chatRoom: {
     type: mongoose.Schema.ObjectId,
     ref: 'ChatRoom',
@@ -18,13 +17,17 @@ const chatSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Chat',
   },
+  type: {
+    type: String,
+    enum: ['general', 'idea', 'questionOrHelp', 'announcement', 'lamnched'], // launchedは、portでのchat用ね。
+  },
   createdAt: {
     type: Date,
   },
   // これは、chatにはいらねーや。portsでのchatでこれが必要になるとしよう。
   // type: {
   //   type: String,
-  //   // enum: []  // generalかquestionかreplyかhelpかideaか。どれかになる。
+  //   // enum: []  // generalかquestionかreplyかhelpかideaか。どれかになる。→replyはいらないや。
   // },
 });
 

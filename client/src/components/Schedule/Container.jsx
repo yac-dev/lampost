@@ -15,17 +15,20 @@ const Container = (props) => {
   const [upcomingMeetups, setUpcomingMeetups] = useState([]);
 
   const getUpcomingJoinedMeetup = async () => {
-    const result = await lampostAPI.post('/meetups/upcoming/joined', {
-      upcomingJoinedMeetupIds: props.auth.data.upcomingJoinedMeetups,
-    });
-    const { upcomingJoinedMeetups } = result.data;
-    setUpcomingMeetups((previous) => {
-      return [...previous, ...upcomingJoinedMeetups];
-    });
-    upcomingJoinedMeetups.map((meetup) => {
+    const upcomingMeetupIds = [];
+    for (let i = 0; i < props.auth.data.upcomingMeetups.length; i++) {
+      upcomingMeetupIds.push(props.auth.data.upcomingMeetups[i].meetup);
+    }
+    console.log(upcomingMeetupIds);
+    const result = await lampostAPI.post('/meetups/upcoming/', { upcomingMeetupIds });
+    const { meetups } = result.data;
+    meetups.map((meetup) => {
       const dateKey = new Date(meetup.startDateAndTime).toISOString().split('T')[0];
       setDates((previous) => {
-        return { ...previous, [dateKey]: { selected: true, marked: true, dotColor: 'white', selectedColor: 'red' } };
+        return {
+          ...previous,
+          [dateKey]: { selected: true, marked: true, dotColor: 'white', selectedColor: 'red', data: meetup },
+        };
       });
     });
   };
@@ -36,8 +39,8 @@ const Container = (props) => {
 
   return (
     <View>
-      <RNCalendars dates={dates} />
-      <SelectedDate />
+      <RNCalendars dates={dates} navigation={props.navigation} />
+      <SelectedDate navigation={props.navigation} />
     </View>
   );
 };

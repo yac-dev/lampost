@@ -18,7 +18,7 @@ const Container = (props) => {
     const { meetup } = result.data;
     console.log(meetup);
     setMeetup(meetup);
-    setChats((previous) => [...previous, ...meetup.chats]);
+    setChats((previous) => [...previous, ...meetup.chatRoom.chats]);
   };
 
   useEffect(() => {

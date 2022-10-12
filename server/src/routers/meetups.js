@@ -5,14 +5,14 @@ import {
   getMeetups,
   joinMeetup,
   leaveMeetup,
-  getUpcomingJoinedMeetups,
+  getUpcomingMeetups,
   getMeetup,
   getSelectedMeetup,
   getMeetupComments,
   getMeetupCrew,
 } from '../controllers/meetups';
 
-router.route('/upcoming/joined').post(getUpcomingJoinedMeetups);
+router.route('/upcoming').post(getUpcomingMeetups);
 router.route('/').post(createMeetup).get(getMeetups);
 router.route('/:id').get(getMeetup);
 router.route('/:id/crew').get(getMeetupCrew);

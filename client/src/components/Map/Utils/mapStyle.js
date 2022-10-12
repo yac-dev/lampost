@@ -61,13 +61,14 @@ export const mapStyle = [
     ],
   },
 
+  // 海の色
   {
     featureType: 'water',
     elementType: 'all',
     stylers: [
       {
         lightness: -20,
-        color: '#172F51',
+        color: '#0B1673',
       },
     ],
   },

@@ -11,16 +11,23 @@ const RNCalendars = (props) => {
   // #d9e1e8この色いいかも
   if (props.dates) {
     // return <SafeAreaView>{renderList()}</SafeAreaView>;
+    // 個々のdate objectをどうすればいいんだろうか？？
     return (
       <Calendar
         markedDates={props.dates}
         style={{ height: 400, padding: 30 }}
+        onDayPress={(day) => {
+          console.log('selected day', day);
+          // tapしたmeetupを別のcomponentで表示する。chat, crew, map, meetup detail等。。。
+          props.navigation.navigate('Meetup', { meetupId: props.dates[day.dateString].data._id });
+        }}
         theme={{
           calendarBackground: '#07175E',
           textSectionTitleColor: 'white',
           textSectionTitleDisabledColor: '#d9e1e8',
           // selectedDayBackgroundColor: '#00adf5',
           // selectedDayTextColor: '#ffffff',
+
           todayTextColor: '#5272FF',
           dayTextColor: 'white',
           textDisabledColor: '#545454',

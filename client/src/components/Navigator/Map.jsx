@@ -41,7 +41,7 @@ const MapNavigator = () => {
           name='Meetup'
           component={Meetup}
           options={({ navigation }) => ({
-            headerRight: () => <Button onPress={() => navigation.navigate('Add comment')}>Add comment</Button>,
+            headerRight: () => <Button onPress={() => navigation.navigate('AddChat')}>Add a chat</Button>,
           })}
         />
         <Stack.Screen name='Crew' component={Crew} />

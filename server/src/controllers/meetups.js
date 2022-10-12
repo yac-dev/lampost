@@ -1,6 +1,7 @@
 import Meetup from '../models/meetup';
 import User from '../models/user';
 import Chat from '../models/chat';
+import ChatRoom from '../models/chatRoom';
 import Badge from '../models/badge';
 import Comment from '../models/comment';
 import schedule from 'node-schedule';
@@ -111,7 +112,15 @@ export const createMeetup = async (request, response) => {
     user.upcomingMeetups.push(pushing);
     user.save();
 
+    // chatroom作成。
+    const chatRoom = new ChatRoom({
+      createdAt: new Date(),
+    });
+    chatRoom.members.push(user._id);
+    chatRoom.save();
+
     meetup.attendees.push(launcher);
+    meetup.chatRoom = chatRoom._id;
     meetup.save();
 
     scheduleStartMeetup(meetup.startDateAndTime, meetup._id);
@@ -160,19 +169,20 @@ export const getMeetups = async (request, response) => {
   }
 };
 
-export const getUpcomingJoinedMeetups = async (request, response) => {
+export const getUpcomingMeetups = async (request, response) => {
   try {
     // meetupのidは、arrayで全部もっている。それで検索かければいい。
-    const { upcomingJoinedMeetupIds } = request.body;
-    const upcomingJoinedMeetups = await Meetup.find({ _id: { $in: upcomingJoinedMeetupIds } }).select({
+    const { upcomingMeetupIds } = request.body;
+    const meetups = await Meetup.find({ _id: { $in: upcomingMeetupIds } }).select({
       _id: 1,
-      host: 1,
+      launcher: 1,
       startDateAndTime: 1,
       state: 1,
       endDateAndTime: 1,
     });
+    console.log(meetups, 'upcoming meetups');
     response.status(200).json({
-      upcomingJoinedMeetups,
+      meetups,
     });
   } catch (error) {
     console.log(error);
@@ -223,17 +233,21 @@ export const getSelectedMeetup = async (request, response) => {
 export const getMeetup = async (request, response) => {
   try {
     const meetup = await Meetup.findById(request.params.id)
+      // .populate({
+      //   path: 'attendees',
+      //   model: User,
+      // })
       .populate({
-        path: 'attendees',
-        model: User,
-      })
-      .populate({
-        path: 'chats',
-        model: Chat,
+        path: 'chatRoom',
+        model: ChatRoom,
         populate: {
-          path: 'user',
-          model: User,
-          select: 'name _id ',
+          path: 'chats',
+          model: Chat,
+          populate: {
+            path: 'user',
+            model: User,
+            select: 'name _id',
+          },
         },
       });
     console.log(meetup);

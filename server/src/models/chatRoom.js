@@ -12,6 +12,15 @@ const chatRoomSchema = new mongoose.Schema({
   },
 });
 
+chatRoomSchema.set('toJSON', { virtuals: true });
+chatRoomSchema.set('toObject', { virtuals: true });
+
+chatRoomSchema.virtual('chats', {
+  ref: 'Chat',
+  foreignField: 'chatRoom',
+  localField: '_id',
+});
+
 // virtualで、chatのarrayを持つ。
 
 const ChatRoom = mongoose.model('ChatRoom', chatRoomSchema);
