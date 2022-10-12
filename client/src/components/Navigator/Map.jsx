@@ -13,6 +13,7 @@ import Meetup from '../Meetup/Container';
 import Crew from '../Crew/Container';
 import Comments from '../Map/SelectedMeetup/Comments';
 import User from '../User/Container';
+import SendChat from '../Meetup/SendChat';
 
 import AuthNavigator from './Auth';
 
@@ -41,7 +42,11 @@ const MapNavigator = () => {
           name='Meetup'
           component={Meetup}
           options={({ navigation }) => ({
-            headerRight: () => <Button onPress={() => navigation.navigate('AddChat')}>Add a chat</Button>,
+            headerRight: () => (
+              <Button icon='camera' onPress={() => navigation.navigate('SendChat')}>
+                Send
+              </Button>
+            ),
           })}
         />
         <Stack.Screen name='Crew' component={Crew} />
@@ -54,6 +59,14 @@ const MapNavigator = () => {
           component={AuthNavigator}
           options={({ navigation }) => ({
             headerLeft: () => <Button onPress={() => navigation.goBack()}>Close</Button>,
+          })}
+        />
+        <Stack.Screen
+          name='SendChat'
+          component={SendChat}
+          options={({ navigation }) => ({
+            headerLeft: () => <Button onPress={() => navigation.goBack()}>Close</Button>,
+            headerRight: () => <Button onPress={() => navigation.goBack()}>Send</Button>,
           })}
         />
       </Stack.Group>

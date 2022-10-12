@@ -65,6 +65,24 @@ const About = (props) => {
         <Text style={{ fontWeight: 'bold' }}>We work office south 3f</Text>
       </View>
 
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+        <MaterialCommunityIcons name='chat-question' size={20} style={{ marginRight: 40 }} />
+        <TouchableOpacity>
+          <Text style={{ fontWeight: 'bold' }}>{props.selectedMeetup.comments.length} comment</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+        <MaterialCommunityIcons name='account-group' size={20} style={{ marginRight: 40 }} />
+        <TouchableOpacity>
+          {props.selectedMeetup.isAttendeesLimitFree ? (
+            <Text style={{ marginRight: 40 }}>{props.selectedMeetup.totalAttendees}/&infin;&nbsp;people</Text>
+          ) : (
+            <Text style={{ marginRight: 40 }}>{props.selectedMeetup.totalAttendees}/limit people</Text>
+          )}
+        </TouchableOpacity>
+      </View>
+
       <View style={{ flexDirection: 'row' }}>
         <MaterialCommunityIcons name={'file-document-edit'} size={20} style={{ marginRight: 40 }} />
         <Text style={{ flex: 1, flexWrap: 'wrap', fontWeight: 'bold' }}>{props.selectedMeetup.description}</Text>

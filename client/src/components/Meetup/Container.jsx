@@ -1,8 +1,18 @@
 // main libraries
 import React, { useEffect, useState } from 'react';
 import lampostAPI from '../../apis/lampost';
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
-import { Avatar } from 'react-native-paper';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
+  InputAccessoryView,
+} from 'react-native';
+import { Avatar, IconButton } from 'react-native-paper';
 
 // components
 import FABMenu from './Utils/FABMenu';
@@ -57,15 +67,16 @@ const Container = (props) => {
   // ここで、chatをズラーとlistで並べていく。
   if (chats.length) {
     return (
-      <View style={{ flex: 1, backgroundColor: 'red' }}>
+      <View style={{ flex: 1 }}>
         <View>{renderChats()}</View>
         <FABMenu navigation={props.navigation} meetup={meetup} />
       </View>
     );
   } else {
     return (
-      <View style={{ flex: 1, backgroundColor: 'red' }}>
+      <View style={{ flex: 1 }}>
         <Text>No comments yet.</Text>
+
         <FABMenu navigation={props.navigation} meetup={meetup} />
       </View>
     );

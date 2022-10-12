@@ -76,9 +76,50 @@ const ActionButtons = (props) => {
     }
   };
 
+  const renderApp = () => {
+    for (let i = 0; i < props.auth.data.upcomingMeetups.length; i++) {
+      if (props.auth.data.upcomingMeetups[i].meetup === props.selectedMeetup._id) {
+        // if (props.auth.data.upcomingMeetups[i].launched) {
+        //   return (
+        //     <View style={{ flexDirection: 'row' }}>
+        //       <Button mode='outlined' icon={'plus'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
+        //         Edit
+        //       </Button>
+        //       <Button mode='outlined' icon={'plus'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
+        //         Scout!
+        //       </Button>
+        //     </View>
+        //   );
+        // } else {
+        //   return (
+        //     <Button mode='outlined' icon={'plus'} onPress={() => console.log('leave')} style={{ marginBottom: 10 }}>
+        //       Leave
+        //     </Button>
+        //   );
+        // }
+        return (
+          <View style={{ flexDirection: 'row' }}>
+            <Button mode='outlined' icon={'chat'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
+              Crew room
+            </Button>
+            <Button mode='outlined' icon={'camera'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
+              Camera
+            </Button>
+            <Button mode='outlined' icon={'map'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
+              Map comm
+            </Button>
+            <Button mode='outlined' icon={'map'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
+              Location detail
+            </Button>
+          </View>
+        );
+      }
+    }
+  };
+
   return (
     <ScrollView horizontal={true} style={{ flexDirection: 'row', marginBottom: 30 }}>
-      <Button
+      {/* <Button
         mode='outlined'
         icon={<FontAwesome5 name='user-astronaut' />}
         onPress={() => props.navigation.navigate('Crew', { meetupId: props.selectedMeetup._id })}
@@ -90,16 +131,8 @@ const ActionButtons = (props) => {
         ) : (
           <Text style={{ marginRight: 40 }}>{props.selectedMeetup.totalAttendees}/limit</Text>
         )}
-      </Button>
-      {/* <Button
-        mode='outlined'
-        icon={'comment-question'}
-        onPress={() => props.navigation.navigate('Q&A', { meetupId: props.selectedMeetup._id })}
-        style={{ marginRight: 10 }}
-      >
-        {props.selectedMeetup.totalComments}&nbsp;Q&A
       </Button> */}
-      {renderJoinOrLeave()}
+      {renderApp()}
       {/* <Button mode='outlined' icon={'more'} onPress={() => console.log('Pressed')} style={{ marginRight: 10 }}>
         More
       </Button> */}

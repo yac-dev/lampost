@@ -28,9 +28,17 @@ const Container = (props) => {
   const switchComponent = () => {
     switch (component) {
       case 'about':
-        return <About />;
-      case 'locationDetail':
-        return <LocationDetail />;
+        return (
+          <View>
+            <Header component={component} setComponent={setComponent} />
+            <ActionButtons navigation={props.navigation} />
+            {/* <Tab component={component} setComponent={setComponent} /> */}
+            <About />
+            {/* {switchComponent()} */}
+          </View>
+        );
+      // case 'locationDetail':
+      //   return <LocationDetail />;
       case 'qAndA':
         return <QandA />;
       default:
@@ -41,13 +49,14 @@ const Container = (props) => {
   const renderSelectedMeetup = () => {
     if (props.selectedMeetup) {
       return (
-        <View>
-          <Header component={component} setComponent={setComponent} />
-          <ActionButtons navigation={props.navigation} />
-          <Tab component={component} setComponent={setComponent} />
-          {/* <About /> */}
-          {switchComponent()}
-        </View>
+        // <View>
+        //   <Header component={component} setComponent={setComponent} />
+        //   <ActionButtons navigation={props.navigation} />
+        //   <Tab component={component} setComponent={setComponent} />
+        //   <About />
+        //   {switchComponent()}
+        // </View>
+        <>{switchComponent()}</>
       );
     } else {
       <View>

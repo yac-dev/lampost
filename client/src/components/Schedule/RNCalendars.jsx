@@ -1,21 +1,22 @@
 // main libraries
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, SafeAreaView, Dimensions } from 'react-native';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 
 // ac
 import { getUpcomingJoinedMeetup } from '../../redux/actionCreators/meetups';
 
 const RNCalendars = (props) => {
+  let ScreenHeight = Dimensions.get('window').height;
   // #d9e1e8この色いいかも
   if (props.dates) {
     // return <SafeAreaView>{renderList()}</SafeAreaView>;
     // 個々のdate objectをどうすればいいんだろうか？？
     return (
-      <Calendar
+      <CalendarList
         markedDates={props.dates}
-        style={{ height: 400, padding: 30 }}
+        style={{ height: ScreenHeight }}
         onDayPress={(day) => {
           console.log('selected day', day);
           // tapしたmeetupを別のcomponentで表示する。chat, crew, map, meetup detail等。。。
