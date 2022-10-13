@@ -14,7 +14,6 @@ const Chats = (props) => {
             <Text>{chat.createdAt}</Text>
           </View>
           <Text>{chat.content}</Text>
-          {/* ここがactionsになるな。*/}
           <View style={{ flexDirection: 'row' }}>
             <TouchableOpacity>
               <Text>icon Reply</Text>
@@ -31,19 +30,16 @@ const Chats = (props) => {
     );
   };
 
-  if (props.chats.length) {
+  if (!props.chats.length) {
     return (
-      <View style={{ flex: 1 }}>
-        <View>{renderChats()}</View>
-        {/* <FABMenu navigation={props.navigation} meetup={meetup} /> */}
+      <View>
+        <Text>No comments yet.</Text>
       </View>
     );
   } else {
     return (
-      <View style={{ flex: 1 }}>
-        <Text>No comments yet.</Text>
-
-        {/* <FABMenu navigation={props.navigation} meetup={meetup} /> */}
+      <View>
+        <View>{renderChats()}</View>
       </View>
     );
   }

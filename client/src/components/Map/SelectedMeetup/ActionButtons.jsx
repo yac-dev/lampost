@@ -99,7 +99,12 @@ const ActionButtons = (props) => {
         // }
         return (
           <View style={{ flexDirection: 'row' }}>
-            <Button mode='outlined' icon={'chat'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
+            <Button
+              mode='outlined'
+              icon={'chat'}
+              onPress={() => props.navigation.navigate('Lounge', { meetupId: props.selectedMeetup._id })}
+              style={{ marginRight: 10 }}
+            >
               Lounge
             </Button>
             <Button mode='outlined' icon={'camera'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
