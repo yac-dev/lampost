@@ -60,10 +60,10 @@ const About = (props) => {
         </View>
       </View>
 
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+      {/* <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
         <MaterialCommunityIcons name='office-building-marker' size={20} style={{ marginRight: 40 }} />
         <Text style={{ fontWeight: 'bold' }}>We work office south 3f</Text>
-      </View>
+      </View> */}
 
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
         <MaterialCommunityIcons name='chat-question' size={20} style={{ marginRight: 40 }} />

@@ -22,16 +22,19 @@ import FABMenu from './FABMenu';
 
 // ac
 import { setIsTextBoxBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
+
 const Container = (props) => {
   // const [meetup, setMeetup] = useState(null);
   const [chats, setChats] = useState([]);
   const textBoxBottomSheetRef = useRef(null);
+  const textInputRef = useRef(null);
 
   const handleTextBoxBottomSheet = () => {
     if (!props.bottomSheet.textBox.isOpen) {
       // props.setIsPostBottomSheetOpen(false);
       // postBottomSheetRef.current?.close();
       props.setIsTextBoxBottomSheetOpen(true);
+      textInputRef.current.focus();
       textBoxBottomSheetRef.current?.snapToIndex(0);
     } else if (props.bottomSheet.selectedItem.isOpen) {
       // 開いている状態なら。
@@ -58,11 +61,19 @@ const Container = (props) => {
     getMeetup();
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if (props.bottomSheet.textBox.isOpen) {
+        props.setIsTextBoxBottomSheetOpen(false);
+      }
+    };
+  });
+
   // fabボタンやらをどっかに置いておいて、それをtapしてtextBoxのbottomSheetを出すようにする感じかな。
   return (
     <View style={{ flex: 1 }}>
       <Chats chats={chats} />
-      <TextBox textBoxBottomSheetRef={textBoxBottomSheetRef} />
+      <TextBox textBoxBottomSheetRef={textBoxBottomSheetRef} textInputRef={textInputRef} />
       <FABMenu handleTextBoxBottomSheet={handleTextBoxBottomSheet} />
     </View>
   );

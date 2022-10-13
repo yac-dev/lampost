@@ -1,20 +1,26 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { View, Text } from 'react-native';
+import { View, Text, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { IconButton, Menu, Provider, Button } from 'react-native-paper';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetTextInput, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 // ac
 import { setIsTextBoxBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
 
 const TextBox = (props) => {
-  const snapPoints = ['65%', '85%', '100%'];
-  const textInputRef = useRef(null);
+  const snapPoints = ['65%', '80%', '100%'];
   const inputAccessoryViewID = '111111111';
   const [content, setContent] = useState('');
+  const [visible, setVisible] = React.useState(false);
+
+  const openMenu = () => setVisible(true);
+
+  const closeMenu = () => setVisible(false);
 
   const onTextBoxBottomSheetClose = () => {
     if (props.bottomSheet.textBox.isOpen) {
       props.setIsTextBoxBottomSheetOpen(false);
+      Keyboard.dismiss();
     }
   };
 
@@ -25,18 +31,38 @@ const TextBox = (props) => {
       ref={props.textBoxBottomSheetRef}
       snapPoints={snapPoints}
       enablePanDownToClose={true}
-      keyboardBehavior={'interactive'}
+      // keyboardBehavior={'extend'}
+      keyboardBehavior='interactive'
       onClose={() => onTextBoxBottomSheetClose()}
     >
-      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
-        <BottomSheetTextInput
-          placeholder='Write your message' // ここを、bottom sheetのmax分に広げる。
+      <BottomSheetView style={{ flex: 1, paddingLeft: 15, paddingRight: 15 }}>
+        {/* <View style={{ flexDirection: 'row' }}>
+            <IconButton icon='chat' size={20} onPress={() => console.log('Pressed')} />
+            <IconButton icon='head-lightbulb-outline' size={20} onPress={() => console.log('Pressed')} />
+            <IconButton icon='head-question' size={20} onPress={() => console.log('Pressed')} />
+            <IconButton icon='announcement' size={20} onPress={() => console.log('Pressed')} />
+            <IconButton icon='rocket-launch' size={20} onPress={() => console.log('Pressed')} />
+          </View> */}
+        {/* <Provider>
+          <View style={{ flexDirection: 'row' }}>
+            <Menu visible={visible} onDismiss={closeMenu} anchor={<Button onPress={openMenu}>Show menu</Button>}>
+              <Menu.Item onPress={() => {}} title='Item 1' />
+              <Menu.Item onPress={() => {}} title='Item 2' />
+              <Menu.Item onPress={() => {}} title='Item 3' />
+            </Menu>
+          </View>
+        </Provider> */}
+        {/* <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}> */}
+        <TextInput
+          multiline={true}
+          placeholder='Write your comment' // ここを、bottom sheetのmax分に広げる。
           inputAccessoryViewID={inputAccessoryViewID}
-          style={{ flex: 1, borderRadius: 10 }}
-          ref={textInputRef}
+          style={{ borderRadius: 10, height: '100%' }}
+          ref={props.textInputRef}
           value={content}
           onChangeText={setContent}
         />
+        {/* </TouchableWithoutFeedback> */}
       </BottomSheetView>
     </GorhomBottomSheet>
   );
