@@ -100,16 +100,16 @@ const ActionButtons = (props) => {
         return (
           <View style={{ flexDirection: 'row' }}>
             <Button mode='outlined' icon={'chat'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
-              Crew room
+              Lounge
             </Button>
             <Button mode='outlined' icon={'camera'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
               Camera
             </Button>
-            <Button mode='outlined' icon={'map'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
-              Map comm
+            <Button mode='outlined' icon={'web'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
+              Location detail
             </Button>
             <Button mode='outlined' icon={'map'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
-              Location detail
+              Map chat
             </Button>
           </View>
         );

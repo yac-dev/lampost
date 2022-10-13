@@ -24,10 +24,30 @@ const Container = (props) => {
     const { meetups } = result.data;
     meetups.map((meetup) => {
       const dateKey = new Date(meetup.startDateAndTime).toISOString().split('T')[0];
+      // if(dates[dateKey]){
+      //   setDates((previous) => {
+      //     return {
+      //       ...previous,
+      //     }
+      //   })
+      // } //ここ後でいい。
+      const time = new Date(meetup.startDateAndTime).toLocaleTimeString('en', { timeStyle: 'short', hour12: false });
+      const eventObj = {};
+      eventObj[time] = meetup.title;
+      const dateValue = {
+        selected: true,
+        marked: true,
+        dotColor: 'white',
+        selectedColor: 'red',
+        meetups: [],
+      };
+      dateValue.meetups.push(eventObj);
+
       setDates((previous) => {
         return {
           ...previous,
-          [dateKey]: { selected: true, marked: true, dotColor: 'white', selectedColor: 'red', data: meetup },
+          [dateKey]: dateValue,
+          // 時間とそのdataって具合でobject dataを持たんといかん。
         };
       });
     });
@@ -40,7 +60,7 @@ const Container = (props) => {
   return (
     <View>
       <RNCalendars dates={dates} navigation={props.navigation} />
-      <SelectedDate navigation={props.navigation} />
+      {/* <SelectedDate navigation={props.navigation} /> */}
     </View>
   );
 };

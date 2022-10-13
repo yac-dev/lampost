@@ -16,18 +16,23 @@ const Header = (props) => {
       if (props.auth.data.upcomingMeetups[i].meetup === props.selectedMeetup._id) {
         if (props.auth.data.upcomingMeetups[i].launched) {
           return (
-            <View style={{ flexDirection: 'row' }}>
-              <Button mode='outlined' icon={'plus'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
+            <View style={{ flex: 3 }}>
+              <Button
+                mode='outlined'
+                icon={'application-edit-outline'}
+                onPress={() => console.log('edit')}
+                style={{ marginBottom: 10 }}
+              >
                 Edit
               </Button>
-              <Button mode='outlined' icon={'plus'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
-                Scout!
+              <Button mode='outlined' icon={'plus'} onPress={() => console.log('edit')}>
+                Scout
               </Button>
             </View>
           );
         } else {
           return (
-            <View style={{ marginBottom: 10, flex: 3 }}>
+            <View style={{ flex: 3 }}>
               <Button
                 mode='outlined'
                 icon={'plus'}
@@ -43,7 +48,7 @@ const Header = (props) => {
     }
     // upcomingMeetupsが全くない場合、ただjoinするかを聞くだけ。
     return (
-      <View style={{ marginBottom: 10, flex: 3 }}>
+      <View style={{ flex: 3 }}>
         <Button
           mode='outlined'
           icon={'plus'}
@@ -58,7 +63,7 @@ const Header = (props) => {
 
   return (
     <View style={{ marginBottom: 30 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
         <View style={{ flex: 7 }}>
           <Text style={{ fontWeight: 'bold', marginBottom: 20, fontSize: 25 }}>{props.selectedMeetup.title}</Text>
         </View>

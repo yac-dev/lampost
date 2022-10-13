@@ -67,18 +67,18 @@ const About = (props) => {
 
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
         <MaterialCommunityIcons name='chat-question' size={20} style={{ marginRight: 40 }} />
-        <TouchableOpacity>
-          <Text style={{ fontWeight: 'bold' }}>{props.selectedMeetup.comments.length} comment</Text>
+        <TouchableOpacity onPress={() => props.navigation.navigate('QandA')}>
+          <Text style={{ fontWeight: 'bold' }}>{props.selectedMeetup.comments.length} (See detail)</Text>
         </TouchableOpacity>
       </View>
 
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
         <MaterialCommunityIcons name='account-group' size={20} style={{ marginRight: 40 }} />
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => props.navigation.navigate('Crew', { meetupId: props.selectedMeetup._id })}>
           {props.selectedMeetup.isAttendeesLimitFree ? (
-            <Text style={{ marginRight: 40 }}>{props.selectedMeetup.totalAttendees}/&infin;&nbsp;people</Text>
+            <Text style={{ marginRight: 40 }}>{props.selectedMeetup.totalAttendees}/&infin;&nbsp;(See detail)</Text>
           ) : (
-            <Text style={{ marginRight: 40 }}>{props.selectedMeetup.totalAttendees}/limit people</Text>
+            <Text style={{ marginRight: 40 }}>{props.selectedMeetup.totalAttendees}/limit (See detail)</Text>
           )}
         </TouchableOpacity>
       </View>

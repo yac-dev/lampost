@@ -11,3 +11,10 @@ export const setIsSelectedItemBottomSheetOpen = (bool) => {
     payload: bool,
   };
 };
+
+export const setIsTextBoxBottomSheetOpen = (bool) => {
+  return {
+    type: 'SET_TEXT_BOX_BOTTOM_SHEET',
+    payload: bool,
+  };
+};

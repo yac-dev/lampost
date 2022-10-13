@@ -11,7 +11,8 @@ import Camera from '../Camera/Container';
 import Schedule from '../Schedule/Container';
 import Meetup from '../Meetup/Container';
 import Crew from '../Crew/Container';
-import Comments from '../Map/SelectedMeetup/Comments';
+import QandA from '../Map/SelectedMeetup/QandA/Container';
+import Lounge from '../Map/SelectedMeetup/Lounge/Container';
 import User from '../User/Container';
 import SendChat from '../Meetup/SendChat';
 
@@ -50,7 +51,8 @@ const MapNavigator = () => {
           })}
         />
         <Stack.Screen name='Crew' component={Crew} />
-        <Stack.Screen name='Q&A' component={Comments} />
+        <Stack.Screen name='QandA' component={QandA} />
+        <Stack.Screen name='Lounge' component={Lounge} />
         <Stack.Screen name='User' component={User} />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>

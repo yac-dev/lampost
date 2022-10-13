@@ -1,5 +1,6 @@
 // main libraries
 import React, { useEffect, useState } from 'react';
+import lampostAPI from '../../apis/lampost';
 import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity, SafeAreaView, Dimensions } from 'react-native';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';

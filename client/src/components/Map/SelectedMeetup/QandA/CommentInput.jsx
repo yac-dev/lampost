@@ -1,7 +1,15 @@
 // main libraries
 import React, { useState, useEffect } from 'react';
 import lampostAPI from '../../../../apis/lampost';
-import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, InputAccessoryView } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+  InputAccessoryView,
+  TextInput,
+} from 'react-native';
 import { connect } from 'react-redux';
 import { IconButton } from 'react-native-paper';
 import { BottomSheetTextInput, BottomSheetScrollView } from '@gorhom/bottom-sheet';
@@ -47,7 +55,7 @@ const Container = (props) => {
     <View>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#000', paddingBottom: 10 }}>
-          <BottomSheetTextInput
+          <TextInput
             placeholder='Have any question?'
             inputAccessoryViewID={inputAccessoryViewID}
             style={{ flex: 1, borderRadius: 10 }}
