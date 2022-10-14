@@ -14,6 +14,9 @@ const INITIAL_STATE = {
   textBox: {
     isOpen: false,
   },
+  crew: {
+    isOpen: false,
+  },
 };
 
 const bottomSheetReducer = (state = INITIAL_STATE, action) => {
@@ -24,6 +27,8 @@ const bottomSheetReducer = (state = INITIAL_STATE, action) => {
       return { ...state, selectedItem: { isOpen: action.payload } };
     case 'SET_TEXT_BOX_BOTTOM_SHEET':
       return { ...state, textBox: { isOpen: action.payload } };
+    case 'SET_CREW_BOTTOM_SHEET':
+      return { ...state, crew: { isOpen: action.payload } };
     default:
       return { ...state };
   }

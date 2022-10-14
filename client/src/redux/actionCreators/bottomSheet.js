@@ -18,3 +18,10 @@ export const setIsTextBoxBottomSheetOpen = (bool) => {
     payload: bool,
   };
 };
+
+export const setIsCrewBottomSheetOpen = (bool) => {
+  return {
+    type: 'SET_CREW_BOTTOM_SHEET',
+    payload: bool,
+  };
+};

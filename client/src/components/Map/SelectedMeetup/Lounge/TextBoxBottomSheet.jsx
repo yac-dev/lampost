@@ -3,7 +3,12 @@ import lampostAPI from '../../../../apis/lampost';
 import { connect } from 'react-redux';
 import { View, Text, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { IconButton, Menu, Provider, Button } from 'react-native-paper';
-import GorhomBottomSheet, { BottomSheetView, BottomSheetTextInput, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import GorhomBottomSheet, {
+  BottomSheetView,
+  BottomSheetTextInput,
+  BottomSheetScrollView,
+  BottomSheetBackdrop,
+} from '@gorhom/bottom-sheet';
 
 // ac
 import { setIsTextBoxBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
@@ -36,11 +41,12 @@ const TextBox = (props) => {
       type: chatType,
     };
     console.log(body);
-    // const result = await lampostAPI.post('/chats', body);
-    // const { chat } = result.data;
-    // props.setChats((previous) => [...previous, chat]);
-    // props.auth.socket.emit('I_SEND_A_CHAT_TO_MY_GROUP', { chat, chatRoom: props.meetup.chatRoom._id });
+    const result = await lampostAPI.post('/chats', body);
+    const { chat } = result.data;
+    props.setChats((previous) => [...previous, chat]);
+    props.auth.socket.emit('I_SEND_A_CHAT_TO_MY_GROUP', { chat, chatRoom: props.meetup.chatRoom._id });
     Keyboard.dismiss();
+    setContent('');
   };
 
   // if (props.bottomSheet.textBox.isOpen) {
@@ -51,28 +57,9 @@ const TextBox = (props) => {
       ref={props.textBoxBottomSheetRef}
       snapPoints={snapPoints}
       enablePanDownToClose={true}
-      // keyboardBehavior={'extend'}
-      // keyboardBehavior='interactive'
       onClose={() => onTextBoxBottomSheetClose()}
     >
       <BottomSheetView style={{ flex: 1, paddingLeft: 15, paddingRight: 15 }}>
-        {/* <View style={{ flexDirection: 'row' }}>
-              <IconButton icon='chat' size={20} onPress={() => console.log('Pressed')} />
-              <IconButton icon='head-lightbulb-outline' size={20} onPress={() => console.log('Pressed')} />
-              <IconButton icon='head-question' size={20} onPress={() => console.log('Pressed')} />
-              <IconButton icon='announcement' size={20} onPress={() => console.log('Pressed')} />
-              <IconButton icon='rocket-launch' size={20} onPress={() => console.log('Pressed')} />
-            </View> */}
-        {/* <Provider>
-            <View style={{ flexDirection: 'row' }}>
-              <Menu visible={visible} onDismiss={closeMenu} anchor={<Button onPress={openMenu}>Show menu</Button>}>
-                <Menu.Item onPress={() => {}} title='Item 1' />
-                <Menu.Item onPress={() => {}} title='Item 2' />
-                <Menu.Item onPress={() => {}} title='Item 3' />
-              </Menu>
-            </View>
-          </Provider> */}
-        {/* <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}> */}
         <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
           <Button icon='send' mode='outlined' onPress={() => onSendPress()}>
             Send
@@ -87,7 +74,6 @@ const TextBox = (props) => {
           value={content}
           onChangeText={setContent}
         />
-        {/* </TouchableWithoutFeedback> */}
       </BottomSheetView>
     </GorhomBottomSheet>
   );

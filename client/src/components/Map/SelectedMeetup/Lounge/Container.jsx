@@ -17,16 +17,18 @@ import lampostAPI from '../../../../apis/lampost';
 
 // components
 import Chats from './Chats';
-import TextBox from './TextBox';
+import TextBoxBottomSheet from './TextBoxBottomSheet';
+import CrewBottomSheet from './CrewBottomSheet/Container';
 import FABMenu from './FABMenu';
 
 // ac
-import { setIsTextBoxBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
+import { setIsCrewBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
 
 const Container = (props) => {
   const [meetup, setMeetup] = useState(null);
   const [chats, setChats] = useState([]);
   const textBoxBottomSheetRef = useRef(null);
+  const crewBottomSheetRef = useRef(null);
   const textInputRef = useRef(null);
 
   const handleTextBoxBottomSheet = () => {
@@ -44,6 +46,11 @@ const Container = (props) => {
       // selectedItemBottomSheetRef.current.close();
       // bottomSheetRef.current?.snapToIndex(-1);
     }
+  };
+
+  const handleCrewBottomSheet = () => {
+    props.setIsCrewBottomSheetOpen(true);
+    crewBottomSheetRef.current?.snapToIndex(0);
   };
 
   const getMeetup = async () => {
@@ -87,13 +94,14 @@ const Container = (props) => {
   return (
     <View style={{ flex: 1 }}>
       <Chats chats={chats} />
-      <TextBox
+      <TextBoxBottomSheet
         meetup={meetup}
         textBoxBottomSheetRef={textBoxBottomSheetRef}
         textInputRef={textInputRef}
         setChats={setChats}
       />
-      <FABMenu handleTextBoxBottomSheet={handleTextBoxBottomSheet} />
+      <CrewBottomSheet crewBottomSheetRef={crewBottomSheetRef} navigation={props.navigation} />
+      <FABMenu handleTextBoxBottomSheet={handleTextBoxBottomSheet} handleCrewBottomSheet={handleCrewBottomSheet} />
     </View>
   );
 };
@@ -102,4 +110,4 @@ const mapStateToProps = (state) => {
   return { bottomSheet: state.bottomSheet, auth: state.auth };
 };
 
-export default connect(mapStateToProps, { setIsTextBoxBottomSheetOpen })(Container);
+export default connect(mapStateToProps, { setIsCrewBottomSheetOpen })(Container);

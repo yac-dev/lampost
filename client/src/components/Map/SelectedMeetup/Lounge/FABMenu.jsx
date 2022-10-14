@@ -11,7 +11,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 const FABMenu = (props) => {
   const [open, setOpen] = useState(false);
-  if (!props.bottomSheet.textBox.isOpen) {
+  if (!props.bottomSheet.textBox.isOpen && !props.bottomSheet.crew.isOpen) {
     return (
       <Provider>
         <Portal>
@@ -36,7 +36,7 @@ const FABMenu = (props) => {
                 marginBottom: 20,
                 backgroundColor: 'rgb(58, 126, 224)',
               }}
-              onPress={() => props.navigation.navigate('Schedule')}
+              onPress={() => props.handleCrewBottomSheet()}
             />
             <FAB
               visible={open ? true : false}
@@ -73,7 +73,7 @@ const FABMenu = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { bottomSheet: state.bottomSheet };
+  return { bottomSheet: state.bottomSheet, selectedMeetup: state.selectedItem.meetup };
 };
 
 export default connect(mapStateToProps, {})(withTheme(FABMenu));

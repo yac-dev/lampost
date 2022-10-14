@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 
 const Chats = (props) => {
   const renderChats = () => {
@@ -7,10 +7,10 @@ const Chats = (props) => {
       return (
         <View key={index} style={{}}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Avatar.Text size={24} label='XD' />
-            <Text style={{ marginLeft: 10 }}>
+            {/* <Avatar.Text size={24} label='XD' /> */}
+            {/* <Text style={{ marginLeft: 10 }}>
               {chat.user.name.firstName} {chat.user.name.lastName}
-            </Text>
+            </Text> */}
             <Text>{chat.createdAt}</Text>
           </View>
           <Text>{chat.content}</Text>
