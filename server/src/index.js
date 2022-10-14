@@ -16,6 +16,15 @@ io.on('connection', (socket) => {
   socket.on('CREATE_MEETUP', (data) => {
     io.emit('SEND_NEW_MEETUP', { meetup: data.meetup });
   });
+  socket.on('JOIN_LOUNGE', (data) => {
+    socket.join(data.chatRoom);
+    // console.log(data.chatRoom);
+  });
+
+  // 自分以外に送る。
+  socket.on('I_SEND_A_CHAT_TO_MY_GROUP', (data) => {
+    io.emit('PEER_SEND_A_CHAT_TO_MY_GROUP', { content: data.content });
+  });
 });
 
 server.listen(3500, () => {
