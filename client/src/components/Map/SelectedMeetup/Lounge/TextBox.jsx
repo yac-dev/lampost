@@ -12,6 +12,7 @@ const TextBox = (props) => {
   const snapPoints = ['65%', '80%', '100%'];
   const inputAccessoryViewID = '111111111';
   const [content, setContent] = useState('');
+  const [chatType, setChatType] = useState('general');
   const [visible, setVisible] = React.useState(false);
 
   const openMenu = () => setVisible(true);
@@ -28,10 +29,17 @@ const TextBox = (props) => {
   const onSendPress = async () => {
     console.log('sending comment');
     // props.setIsTextBoxBottomSheetOpen(false);
-    const result = await lampostAPI.post('/chats', { content });
-    const { chat } = result.data;
-    props.setChats((previous) => [...previous, chat]);
-    props.auth.socket.emit('I_SEND_A_CHAT_TO_MY_GROUP', { content, chatRoom: props.meetup.chatRoom._id });
+    const body = {
+      chatRoomId: props.meetup.chatRoom._id,
+      userId: props.auth.data._id,
+      content,
+      type: chatType,
+    };
+    console.log(body);
+    // const result = await lampostAPI.post('/chats', body);
+    // const { chat } = result.data;
+    // props.setChats((previous) => [...previous, chat]);
+    // props.auth.socket.emit('I_SEND_A_CHAT_TO_MY_GROUP', { chat, chatRoom: props.meetup.chatRoom._id });
     Keyboard.dismiss();
   };
 

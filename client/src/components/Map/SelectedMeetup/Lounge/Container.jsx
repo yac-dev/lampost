@@ -68,12 +68,13 @@ const Container = (props) => {
   }, [meetup]);
 
   useEffect(() => {
-    props.auth.socket.on('PEER_SEND_A_CHAT_TO_MY_GROUP', (data) => {
+    props.auth.socket.on('A_PEER_SEND_A_CHAT_TO_MY_GROUP', (data) => {
       setChats((previous) => [...previous, data.chat]);
     });
   }, []);
 
   useEffect(() => {
+    // lounge出た時の時間をapi request送らないといけない。
     return () => {
       if (props.bottomSheet.textBox.isOpen) {
         props.setIsTextBoxBottomSheetOpen(false);
@@ -86,7 +87,12 @@ const Container = (props) => {
   return (
     <View style={{ flex: 1 }}>
       <Chats chats={chats} />
-      <TextBox textBoxBottomSheetRef={textBoxBottomSheetRef} textInputRef={textInputRef} setChats={setChats} />
+      <TextBox
+        meetup={meetup}
+        textBoxBottomSheetRef={textBoxBottomSheetRef}
+        textInputRef={textInputRef}
+        setChats={setChats}
+      />
       <FABMenu handleTextBoxBottomSheet={handleTextBoxBottomSheet} />
     </View>
   );
