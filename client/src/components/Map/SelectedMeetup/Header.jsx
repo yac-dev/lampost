@@ -12,53 +12,57 @@ const Header = (props) => {
   // titleとuser情報の間に、meetupのbadgeが入ることになる。
   const renderActionButton = () => {
     // まず、自分のupcomingMeetupsの中に、selecedMeetupのidがあるかどうか確認する。そして、それが自分がlaunchしたものであるかを確認する。launchしたものならedit buttonを、launchしていないものであるならleave buttonを表示する。
-    for (let i = 0; i < props.auth.data.upcomingMeetups.length; i++) {
-      if (props.auth.data.upcomingMeetups[i].meetup === props.selectedMeetup._id) {
-        if (props.auth.data.upcomingMeetups[i].launched) {
-          return (
-            <View style={{ flex: 3 }}>
-              <Button
-                mode='outlined'
-                icon={'application-edit-outline'}
-                onPress={() => console.log('edit')}
-                style={{ marginBottom: 10 }}
-              >
-                Edit
-              </Button>
-              <Button mode='outlined' icon={'plus'} onPress={() => console.log('edit')}>
-                Scout
-              </Button>
-            </View>
-          );
-        } else {
-          return (
-            <View style={{ flex: 3 }}>
-              <Button
-                mode='outlined'
-                icon={'plus'}
-                onPress={() => props.leaveMeetup(props.selectedMeetup._id)}
-                style={{ marginBottom: 10 }}
-              >
-                Leave
-              </Button>
-            </View>
-          );
+    if (props.auth.isAuthenticated) {
+      for (let i = 0; i < props.auth.data.upcomingMeetups.length; i++) {
+        if (props.auth.data.upcomingMeetups[i].meetup === props.selectedMeetup._id) {
+          if (props.auth.data.upcomingMeetups[i].launched) {
+            return (
+              <View style={{ flex: 3 }}>
+                <Button
+                  mode='outlined'
+                  icon={'application-edit-outline'}
+                  onPress={() => console.log('edit')}
+                  style={{ marginBottom: 10 }}
+                >
+                  Edit
+                </Button>
+                <Button mode='outlined' icon={'plus'} onPress={() => console.log('edit')}>
+                  Scout
+                </Button>
+              </View>
+            );
+          } else {
+            return (
+              <View style={{ flex: 3 }}>
+                <Button
+                  mode='outlined'
+                  icon={'plus'}
+                  onPress={() => props.leaveMeetup(props.selectedMeetup._id)}
+                  style={{ marginBottom: 10 }}
+                >
+                  Leave
+                </Button>
+              </View>
+            );
+          }
         }
       }
+      // upcomingMeetupsが全くない場合、ただjoinするかを聞くだけ。
+      return (
+        <View style={{ flex: 3 }}>
+          <Button
+            mode='outlined'
+            icon={'plus'}
+            onPress={() => props.joinMeetup(props.selectedMeetup._id)}
+            style={{ alignItems: 'center' }}
+          >
+            I'm in!
+          </Button>
+        </View>
+      );
+    } else {
+      return null;
     }
-    // upcomingMeetupsが全くない場合、ただjoinするかを聞くだけ。
-    return (
-      <View style={{ flex: 3 }}>
-        <Button
-          mode='outlined'
-          icon={'plus'}
-          onPress={() => props.joinMeetup(props.selectedMeetup._id)}
-          style={{ alignItems: 'center' }}
-        >
-          I'm in!
-        </Button>
-      </View>
-    );
   };
 
   return (

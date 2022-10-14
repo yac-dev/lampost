@@ -10,115 +10,35 @@ import { joinMeetup } from '../../../redux/actionCreators/meetups';
 import { leaveMeetup } from '../../../redux/actionCreators/meetups';
 
 const ActionButtons = (props) => {
-  const renderJoinOrLeave = () => {
-    if (!props.auth.data.upcomingMeetups.length) {
-      return (
-        <Button
-          mode='outlined'
-          icon={'rocket'}
-          onPress={() => props.joinMeetup(props.selectedMeetup._id)}
-          style={{ marginRight: 10 }}
-        >
-          I'm in!
-        </Button>
-      );
-    } else {
+  const renderApp = () => {
+    if (props.auth.isAuthenticated) {
       for (let i = 0; i < props.auth.data.upcomingMeetups.length; i++) {
-        if (props.auth.data.upcomingMeetups[i].launched) {
+        if (props.auth.data.upcomingMeetups[i].meetup === props.selectedMeetup._id) {
           return (
-            <Button
-              mode='outlined'
-              icon={'plus'}
-              onPress={() => props.leaveMeetup(props.selectedMeetup._id)}
-              style={{ marginRight: 10 }}
-            >
-              Recruit
-            </Button>
+            <View style={{ flexDirection: 'row' }}>
+              <Button
+                mode='outlined'
+                icon={'chat'}
+                onPress={() => props.navigation.navigate('Lounge', { meetupId: props.selectedMeetup._id })}
+                style={{ marginRight: 10 }}
+              >
+                Lounge
+              </Button>
+              <Button mode='outlined' icon={'camera'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
+                Camera
+              </Button>
+              <Button mode='outlined' icon={'web'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
+                Location detail
+              </Button>
+              <Button mode='outlined' icon={'map'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
+                Map chat
+              </Button>
+            </View>
           );
-        } else {
-          for (let i = 0; i < props.auth.data.upcomingMeetups.length; i++) {
-            if (props.selectedMeetup._id === props.auth.data.upcomingMeetups[i].meetup) {
-              return (
-                <View style={{ flexDirection: 'row' }}>
-                  <Button
-                    mode='outlined'
-                    icon={'exit-run'}
-                    onPress={() => props.leaveMeetup(props.selectedMeetup._id)}
-                    style={{ marginRight: 10 }}
-                  >
-                    Leave
-                  </Button>
-                  <Button
-                    mode='outlined'
-                    icon={'exit-run'}
-                    onPress={() => props.leaveMeetup(props.selectedMeetup._id)}
-                    style={{ marginRight: 10 }}
-                  >
-                    Invite
-                  </Button>
-                </View>
-              );
-            } else {
-              return (
-                <Button
-                  mode='outlined'
-                  icon={'rocket'}
-                  onPress={() => props.joinMeetup(props.selectedMeetup._id)}
-                  style={{ marginRight: 10 }}
-                >
-                  I'm in!
-                </Button>
-              );
-            }
-          }
         }
       }
-    }
-  };
-
-  const renderApp = () => {
-    for (let i = 0; i < props.auth.data.upcomingMeetups.length; i++) {
-      if (props.auth.data.upcomingMeetups[i].meetup === props.selectedMeetup._id) {
-        // if (props.auth.data.upcomingMeetups[i].launched) {
-        //   return (
-        //     <View style={{ flexDirection: 'row' }}>
-        //       <Button mode='outlined' icon={'plus'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
-        //         Edit
-        //       </Button>
-        //       <Button mode='outlined' icon={'plus'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
-        //         Scout!
-        //       </Button>
-        //     </View>
-        //   );
-        // } else {
-        //   return (
-        //     <Button mode='outlined' icon={'plus'} onPress={() => console.log('leave')} style={{ marginBottom: 10 }}>
-        //       Leave
-        //     </Button>
-        //   );
-        // }
-        return (
-          <View style={{ flexDirection: 'row' }}>
-            <Button
-              mode='outlined'
-              icon={'chat'}
-              onPress={() => props.navigation.navigate('Lounge', { meetupId: props.selectedMeetup._id })}
-              style={{ marginRight: 10 }}
-            >
-              Lounge
-            </Button>
-            <Button mode='outlined' icon={'camera'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
-              Camera
-            </Button>
-            <Button mode='outlined' icon={'web'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
-              Location detail
-            </Button>
-            <Button mode='outlined' icon={'map'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
-              Map chat
-            </Button>
-          </View>
-        );
-      }
+    } else {
+      return null;
     }
   };
 
@@ -138,9 +58,6 @@ const ActionButtons = (props) => {
         )}
       </Button> */}
       {renderApp()}
-      {/* <Button mode='outlined' icon={'more'} onPress={() => console.log('Pressed')} style={{ marginRight: 10 }}>
-        More
-      </Button> */}
     </ScrollView>
   );
 };

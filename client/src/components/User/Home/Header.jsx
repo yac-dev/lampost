@@ -13,11 +13,11 @@ const Header = (props) => {
         <Text>{props.user.name}</Text>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', flex: 1 }}>
           <Text style={{}}>{props.user.bio}&nbsp;&nbsp;</Text>
-          {props.auth.data._id === props.user._id ? (
+          {/* {props.auth.data._id === props.user._id ? (
             <TouchableOpacity>
               <Text>Edit</Text>
             </TouchableOpacity>
-          ) : null}
+          ) : null} */}
         </View>
       </View>
     </View>

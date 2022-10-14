@@ -87,6 +87,9 @@ const Container = (props) => {
       if (props.bottomSheet.textBox.isOpen) {
         props.setIsTextBoxBottomSheetOpen(false);
       }
+      if (props.bottomSheet.crew.isOpen) {
+        props.setIsCrewBottomSheetOpen(false);
+      }
     };
   });
 

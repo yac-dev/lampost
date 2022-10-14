@@ -16,7 +16,7 @@ import Crew from './Crew';
 import { setIsCrewBottomSheetOpen } from '../../../../../redux/actionCreators/bottomSheet';
 
 const CrewBottomSheet = (props) => {
-  const snapPoints = ['50%', '85%', '100%'];
+  const snapPoints = ['65%', '85%', '100%'];
 
   const onCrewBottomSheetClose = () => {
     if (props.bottomSheet.crew.isOpen) {
