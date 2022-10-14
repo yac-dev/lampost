@@ -233,10 +233,10 @@ export const getSelectedMeetup = async (request, response) => {
 export const getMeetup = async (request, response) => {
   try {
     const meetup = await Meetup.findById(request.params.id)
-      // .populate({
-      //   path: 'attendees',
-      //   model: User,
-      // })
+      .populate({
+        path: 'attendees',
+        model: User,
+      })
       .populate({
         path: 'chatRoom',
         model: ChatRoom,

@@ -38,7 +38,7 @@ const CrewBottomSheet = (props) => {
     >
       <BottomSheetView style={{ flex: 1, paddingLeft: 15, paddingRight: 15 }}>
         <Text>Crew</Text>
-        <Crew navigation={props.navigation} />
+        <Crew meetup={props.meetup} navigation={props.navigation} />
       </BottomSheetView>
     </GorhomBottomSheet>
   );

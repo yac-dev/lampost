@@ -22,6 +22,7 @@ import CrewBottomSheet from './CrewBottomSheet/Container';
 import FABMenu from './FABMenu';
 
 // ac
+import { setIsTextBoxBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
 import { setIsCrewBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
 
 const Container = (props) => {
@@ -100,7 +101,7 @@ const Container = (props) => {
         textInputRef={textInputRef}
         setChats={setChats}
       />
-      <CrewBottomSheet crewBottomSheetRef={crewBottomSheetRef} navigation={props.navigation} />
+      <CrewBottomSheet crewBottomSheetRef={crewBottomSheetRef} meetup={meetup} navigation={props.navigation} />
       <FABMenu handleTextBoxBottomSheet={handleTextBoxBottomSheet} handleCrewBottomSheet={handleCrewBottomSheet} />
     </View>
   );
@@ -110,4 +111,4 @@ const mapStateToProps = (state) => {
   return { bottomSheet: state.bottomSheet, auth: state.auth };
 };
 
-export default connect(mapStateToProps, { setIsCrewBottomSheetOpen })(Container);
+export default connect(mapStateToProps, { setIsTextBoxBottomSheetOpen, setIsCrewBottomSheetOpen })(Container);
