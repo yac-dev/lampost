@@ -1,11 +1,12 @@
 // main libraries
 import React from 'react';
 import { View, Text } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 const Container = () => {
   return (
     <View>
-      <Text>Memories</Text>
+      <Text>Here is gonna be memoirs</Text>
     </View>
   );
 };
