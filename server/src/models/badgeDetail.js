@@ -1,26 +1,28 @@
 import mongoose from 'mongoose';
 
 const badgeDetailSchema = new mongoose.Schema({
-  // Write your timeline of your hobby!!
-  badge: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Badge',
-  },
-  title: {
-    type: String,
-  },
-  when: {
-    type: Date,
-  },
-  detail: {
-    type: String,
-    // ここで、social mediaのlinkを埋め込んで見せられるようにしたいね。
-  },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
+  badge: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Badge',
+  },
+  state: {
+    type: String,
+    // enums:[ 'plain', 'star' ]
+  },
+  totalVotes: Number,
+  voters: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+    },
+  ],
+  detail: String,
+  timeline: [],
 });
 
-const badgeDetail = mongoose.model('BadgeDetail', badgeDetailSchema);
-export default badgeDetail;
+const BadgeDetail = mongoose.model('BadgeDetail', badgeDetailSchema);
+export default BadgeDetail;

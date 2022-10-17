@@ -16,25 +16,39 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   photo: {
-    type: String
+    type: String,
   },
   bio: {
     type: String,
     maxLength: 50,
     default: 'Just joined!',
   },
-  skills: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Badge',
-    },
-  ],
+  // skills: [
+  //   {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'Badge',
+  //   },
+  // ],
   badges: [
     {
       badge: {
         type: mongoose.Schema.ObjectId,
         ref: 'Badge',
       },
+      state: {
+        type: String,
+        // enums:[ 'plain', 'star' ]
+      },
+      totalVotes: Number,
+      voters: [
+        {
+          type: mongoose.Schema.ObjectId,
+          ref: 'User',
+        },
+      ],
+      timeline: [
+        // ここどうしようかね。schemを変えた方がいいかも、key多すぎるわ。
+      ],
       detail: [
         {
           type: mongoose.Schema.ObjectId,
