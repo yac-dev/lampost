@@ -1,17 +1,13 @@
 import mongoose from 'mongoose';
 
-const badgeDetailSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User',
-  },
+const badgeStatusSchema = new mongoose.Schema({
   badge: {
     type: mongoose.Schema.ObjectId,
     ref: 'Badge',
   },
   state: {
     type: String,
-    // enums:[ 'plain', 'star' ]
+    enum: ['plain', 'star'],
   },
   totalVotes: Number,
   voters: [
@@ -21,8 +17,8 @@ const badgeDetailSchema = new mongoose.Schema({
     },
   ],
   detail: String,
-  timeline: [],
+  // timeline: [],
 });
 
-const BadgeDetail = mongoose.model('BadgeDetail', badgeDetailSchema);
-export default BadgeDetail;
+const BadgeStatus = mongoose.model('BadgeStatus', badgeStatusSchema);
+export default BadgeStatus;

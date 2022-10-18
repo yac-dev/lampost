@@ -35,7 +35,7 @@ const CreateMeetupBadge = (props) => {
           <Button
             icon='plus'
             mode='outlined'
-            onPress={() => props.setIsSelectMeetupBadgesModalOpen(true)}
+            onPress={() => props.navigation.navigate('Add badges')}
             style={{ width: 150 }}
           >
             Add

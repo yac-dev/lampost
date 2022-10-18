@@ -15,6 +15,7 @@ import QandA from '../Map/SelectedMeetup/QandA/Container';
 import Lounge from '../Map/SelectedMeetup/Lounge/Container';
 import User from '../User/Container';
 import SendChat from '../Meetup/SendChat';
+import AddBadges from '../Utils/AddBadges/Container';
 
 import AuthNavigator from './Auth';
 
@@ -69,6 +70,13 @@ const MapNavigator = () => {
           options={({ navigation }) => ({
             headerLeft: () => <Button onPress={() => navigation.goBack()}>Close</Button>,
             headerRight: () => <Button onPress={() => navigation.goBack()}>Send</Button>,
+          })}
+        />
+        <Stack.Screen
+          name='Add badges'
+          component={AddBadges}
+          options={({ navigation }) => ({
+            headerLeft: () => <Button onPress={() => navigation.goBack()}>Close</Button>,
           })}
         />
       </Stack.Group>

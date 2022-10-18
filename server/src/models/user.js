@@ -23,85 +23,65 @@ const userSchema = new mongoose.Schema({
     maxLength: 50,
     default: 'Just joined!',
   },
-  // skills: [
-  //   {
-  //     type: mongoose.Schema.ObjectId,
-  //     ref: 'Badge',
-  //   },
-  // ],
   badges: [
     {
-      badge: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Badge',
-      },
-      state: {
-        type: String,
-        // enums:[ 'plain', 'star' ]
-      },
-      totalVotes: Number,
-      voters: [
-        {
-          type: mongoose.Schema.ObjectId,
-          ref: 'User',
-        },
-      ],
-      timeline: [
-        // ここどうしようかね。schemを変えた方がいいかも、key多すぎるわ。
-      ],
-      detail: [
-        {
-          type: mongoose.Schema.ObjectId,
-          ref: 'BadgeDetail',
-        },
-      ],
-    },
-  ],
-  socials: [
-    {
-      name: String,
-      url: String,
+      type: mongoose.Schema.ObjectId,
+      ref: 'BadgeStatus',
     },
   ],
   upcomingMeetups: [
     {
-      meetup: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Meetup',
-      },
-      launched: Boolean,
-      viewedChatsLastTime: Date,
+      type: mongoose.Schema.ObjectId,
+      ref: 'MeetupStatus',
     },
+    // {
+    //   meetup: {
+    //     type: mongoose.Schema.ObjectId,
+    //     ref: 'Meetup',
+    //   },
+    //   launched: Boolean,
+    //   viewedChatsLastTime: Date,
+    // },
   ],
   pastMeetups: [
     {
-      meetup: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Meetup',
-      },
-      launched: Boolean,
+      type: mongoose.Schema.ObjectId,
+      ref: 'MeetupStatus',
     },
+    // {
+    //   meetup: {
+    //     type: mongoose.Schema.ObjectId,
+    //     ref: 'Meetup',
+    //   },
+    //   launched: Boolean,
+    // },
   ],
-  totalConnections: {
-    type: Number,
-    default: 0,
-  },
   connections: [
     {
-      user: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'User',
-      },
-      chatRoom: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'ChatRoom',
-      },
-      viewedChatsLastTime: Date,
+      type: mongoose.Schema.ObjectId,
+      ref: 'Connection',
     },
+    // {
+    //   user: {
+    //     type: mongoose.Schema.ObjectId,
+    //     ref: 'User',
+    //   },
+    //   chatRoom: {
+    //     type: mongoose.Schema.ObjectId,
+    //     ref: 'ChatRoom',
+    //   },
+    //   viewedChatsLastTime: Date,
+    // },
   ],
   createdAt: {
     type: Date,
   },
+  // socials: [
+  //   {
+  //     name: String,
+  //     url: String,
+  //   },
+  // ],
   // これ多分いらない。代わりにrelationshipのschemaが必要になる。
   // subscribed: [
   //   {

@@ -1,35 +1,15 @@
 import mongoose from 'mongoose';
 
 const badgeSchema = new mongoose.Schema({
-  // JavaScript
-  // label: {
-  //   type: String,
-  // },
-  // // tech
-  // type: {
-  //   type: String,
-  // },
-  // color: {
-  //   type: String,
-  // },
-  // value: {
-  //   type: String,
-  // },
-  // creator: {
-  //   type: mongoose.Schema.ObjectId,
-  //   ref: 'User',
-  // },
   icon: {
     type: String,
     // file nameね。aws上の。
   },
   name: {
     type: String,
-    // badgeの名前
   },
   color: {
     type: String,
-    // badgeの色
   },
   type: {
     type: String,

@@ -104,7 +104,7 @@ const Container = (props) => {
   const switchComponent = () => {
     switch (state.component) {
       case 'MeetupBadge':
-        return <CreateMeetupBadge state={state} dispatch={dispatch} />;
+        return <CreateMeetupBadge state={state} dispatch={dispatch} navigation={props.navigation} />;
       case 'MeetupDetail':
         return <CreateMeetupDetail state={state} dispatch={dispatch} />;
       case 'MeetupDescription':
