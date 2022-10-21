@@ -1,6 +1,9 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
+
 const Tabs = () => {
   return (
     <ScrollView horizontal={true} style={{ flexDirection: 'row', marginBottom: 10 }}>

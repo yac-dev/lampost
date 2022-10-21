@@ -28,7 +28,7 @@ const Container = () => {
       return <Badge key={index} badge={badge} />;
     });
 
-    return <View>{badgesList}</View>;
+    return <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{badgesList}</View>;
   };
 
   return (
@@ -41,7 +41,7 @@ const Container = () => {
         autoCapitalize='none'
         // keyboardType={'visible-password'}
       />
-      {/* <Tabs /> */}
+      <Tabs />
       {renderBadges()}
     </View>
   );
