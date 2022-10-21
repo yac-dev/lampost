@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Badge as RNPBadge, IconButton } from 'react-native-paper';
@@ -12,6 +12,8 @@ import { removeBadge } from '../../../redux/actionCreators/selectItem';
 
 const Badge = (props) => {
   const [selected, setSelected] = useState(false);
+  const [height, setHeight] = useState(null);
+  const [width, setWidth] = useState(null);
 
   // const onPressBadge = () => {
   //   if(props.selectedBadges[props.badge._id]){
@@ -20,6 +22,22 @@ const Badge = (props) => {
   //     removeBadge
   //   }
   // };
+  useEffect(() => {
+    // FastImage.getSize(props.badge.icon, (width, height) => {
+    //   if (width && height) {
+    //       this.setState({
+    //           height: this.props.,
+    //           height: height * (this.props.width / width)
+    //       });
+    //   } else if (!this.props.width && this.props.height) {
+    //       this.setState({
+    //           width: width * (this.props.height / height),
+    //           height: this.props.height
+    //       });
+    //   } else {
+    //       this.setState({ width: width, height: height });
+    //   }
+  }, []);
 
   const selectBadge = () => {
     setSelected(true);
@@ -108,8 +126,8 @@ const Badge = (props) => {
             borderWidth: 1,
             padding: 15,
             // marginLeft: 5,
-            marginRight: 10,
-            marginBottom: 10,
+            marginRight: 15,
+            marginBottom: 15,
             maxWidth: 150,
             height: 100,
             // marginTop: 5,
@@ -119,16 +137,18 @@ const Badge = (props) => {
             selectBadge();
           }}
         >
+          {/* <View style={{ backgroundColor: '#B0AFAF' }}> */}
           <FastImage
-            style={{ width: 35, height: 35, marginBottom: 5 }}
+            style={{ height: 45, width: props.badge.landscape ? 65 : 45, marginBottom: 5 }}
             source={{
               uri: props.badge.icon,
               // headers: { Authorization: 'someAuthToken' },
               priority: FastImage.priority.normal,
             }}
             tintColor={props.badge.color}
-            // resizeMode={FastImage.resizeMode.contain}
+            resizeMode={FastImage.resizeMode.contain}
           />
+          {/* </View> */}
           <Text style={{ color: 'black', fontWeight: 'bold' }}>{props.badge.name}</Text>
           <View
             style={{

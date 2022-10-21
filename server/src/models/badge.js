@@ -11,6 +11,9 @@ const badgeSchema = new mongoose.Schema({
   color: {
     type: String,
   },
+  landscape: {
+    type: Boolean,
+  },
   type: {
     type: String,
     // tech, food, sports etc
