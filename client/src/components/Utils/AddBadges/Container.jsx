@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { connect } from 'react-redux';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import lampostAPI from '../../../apis/lampost';
 import { Searchbar } from 'react-native-paper';
@@ -6,12 +7,23 @@ import FastImage from 'react-native-fast-image';
 
 // components
 import Badge from './Badge';
-import Tabs from './Tabs';
+import SearchBadgeBottomSheet from './SearchBadgeBottomSheet/Container';
+import TappedBadgeBottomSheetRef from './TappedBadgeBottomSheet/Container';
+
+//ac
+import { setIsTappedBadgeBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
 
 const Container = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [badges, setBadges] = useState([]);
   const [tab, setTab] = useState('');
+  const searchBadgeBottomSheetRef = useRef(null);
+  const tappedBadgeBottomSheetRef = useRef(null);
+
+  const closeTappedBadgeBottomSheet = () => {
+    props.setIsTappedBadgeBottomSheetOpen(false, null);
+    tappedBadgeBottomSheetRef.current?.close();
+  };
 
   const getBadges = async () => {
     const result = await lampostAPI.get('/badges');
@@ -28,23 +40,35 @@ const Container = () => {
       return <Badge key={index} badge={badge} />;
     });
 
-    return <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{badgesList}</View>;
+    return (
+      <ScrollView contentContainerStyle={{ paddingBottom: 150 }} style={{ flex: 3 }}>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{badgesList}</View>
+      </ScrollView>
+    );
   };
 
   return (
-    <View style={{ padding: 10 }}>
-      <Searchbar
+    <View style={{ padding: 10, flex: 1 }}>
+      {/* <Searchbar
         placeholder='Search'
-        style={{ height: 60, marginBottom: 20, borderRadius: 10, padding: 10 }}
+        style={{ height: 40, marginBottom: 20, borderRadius: 10, padding: 10 }}
         value={searchQuery}
         onChangeText={(query) => setSearchQuery(query)}
         autoCapitalize='none'
         // keyboardType={'visible-password'}
-      />
-      <Tabs />
+      /> */}
       {renderBadges()}
+      <SearchBadgeBottomSheet />
+      <TappedBadgeBottomSheetRef
+        tappedBadgeBottomSheetRef={tappedBadgeBottomSheetRef}
+        closeTappedBadgeBottomSheet={closeTappedBadgeBottomSheet}
+      />
     </View>
   );
 };
 
-export default Container;
+const mapStateToProps = (state) => {
+  return { bottomSheet: state.bottomSheet };
+};
+
+export default connect(mapStateToProps, { setIsTappedBadgeBottomSheetOpen })(Container);

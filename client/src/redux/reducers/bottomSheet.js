@@ -17,6 +17,10 @@ const INITIAL_STATE = {
   crew: {
     isOpen: false,
   },
+  badgeDetail: {
+    isOpen: false,
+    data: null,
+  },
 };
 
 const bottomSheetReducer = (state = INITIAL_STATE, action) => {
@@ -29,6 +33,8 @@ const bottomSheetReducer = (state = INITIAL_STATE, action) => {
       return { ...state, textBox: { isOpen: action.payload } };
     case 'SET_CREW_BOTTOM_SHEET':
       return { ...state, crew: { isOpen: action.payload } };
+    case 'SET_TAPPED_BADGE_BOTTOM_SHEET': // ここ、かっこいい書き方あったよな。。。なんだっけ？
+      return { ...state, badgeDetail: { isOpen: action.payload.isOpen, data: action.payload.data } };
     default:
       return { ...state };
   }

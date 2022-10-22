@@ -87,7 +87,7 @@ const Tabs = () => {
     });
 
     return (
-      <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
+      <ScrollView horizontal={true} style={{ flexDirection: 'row', position: 'absolute', bottom: 0 }}>
         {tabsList}
       </ScrollView>
     );

@@ -9,6 +9,7 @@ import { Foundation } from '@expo/vector-icons';
 // ac
 import { selectBadge } from '../../../redux/actionCreators/selectItem';
 import { removeBadge } from '../../../redux/actionCreators/selectItem';
+import { setIsTappedBadgeBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
 
 const Badge = (props) => {
   const [selected, setSelected] = useState(false);
@@ -134,12 +135,13 @@ const Badge = (props) => {
           }}
           onPress={() => {
             // onPressBadge();
-            selectBadge();
+            // selectBadge();
+            props.setIsTappedBadgeBottomSheetOpen(true, props.badge);
           }}
         >
           {/* <View style={{ backgroundColor: '#B0AFAF' }}> */}
           <FastImage
-            style={{ height: 45, width: props.badge.landscape ? 65 : 45, marginBottom: 5 }}
+            style={{ height: 40, width: props.badge.landscape ? 65 : 40, marginBottom: 5 }}
             source={{
               uri: props.badge.icon,
               // headers: { Authorization: 'someAuthToken' },
@@ -182,4 +184,4 @@ const mapStateToProps = (state) => {
   return { selectedBadges: state.selectedItem.badges };
 };
 
-export default connect(mapStateToProps, { selectBadge, removeBadge })(Badge);
+export default connect(mapStateToProps, { selectBadge, removeBadge, setIsTappedBadgeBottomSheetOpen })(Badge);

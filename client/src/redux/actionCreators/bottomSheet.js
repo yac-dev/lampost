@@ -25,3 +25,10 @@ export const setIsCrewBottomSheetOpen = (bool) => {
     payload: bool,
   };
 };
+
+export const setIsTappedBadgeBottomSheetOpen = (bool, data) => {
+  return {
+    type: 'SET_TAPPED_BADGE_BOTTOM_SHEET',
+    payload: { isOpen: bool, data },
+  };
+};
