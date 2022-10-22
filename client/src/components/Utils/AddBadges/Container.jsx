@@ -13,9 +13,11 @@ import TappedBadgeBottomSheetRef from './TappedBadgeBottomSheet/Container';
 //ac
 import { setIsTappedBadgeBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
 
+const INITIAL_STATE = [];
+
 const Container = (props) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [badges, setBadges] = useState([]);
+  const [badges, setBadges] = useState(INITIAL_STATE);
   const [tab, setTab] = useState('');
   const searchBadgeBottomSheetRef = useRef(null);
   const tappedBadgeBottomSheetRef = useRef(null);
@@ -29,6 +31,13 @@ const Container = (props) => {
     const result = await lampostAPI.get('/badges');
     const { badges } = result.data;
     setBadges((previous) => [...previous, ...badges]);
+  };
+
+  const queryBadges = async (query) => {
+    const result = await lampostAPI.get(`/badges/?=${query}`);
+    const { badges } = result.data;
+    // 一回、今もっているbadgeを消す。そして、取ってきたbadgeを足すっていうやり方。
+    setBadges(badges);
   };
 
   useEffect(() => {
@@ -58,7 +67,7 @@ const Container = (props) => {
         // keyboardType={'visible-password'}
       /> */}
       {renderBadges()}
-      <SearchBadgeBottomSheet />
+      <SearchBadgeBottomSheet searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <TappedBadgeBottomSheetRef
         tappedBadgeBottomSheetRef={tappedBadgeBottomSheetRef}
         closeTappedBadgeBottomSheet={closeTappedBadgeBottomSheet}
