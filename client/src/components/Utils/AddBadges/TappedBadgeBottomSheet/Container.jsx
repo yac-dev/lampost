@@ -3,15 +3,19 @@ import { connect } from 'react-redux';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetTextInput, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
+// components
+import BadgeDetail from '../../BadgeDetail/Container';
+
+// ac
 import { setIsTappedBadgeBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
 
 const Container = (props) => {
-  const snapPoints = ['35%', '80%'];
+  const snapPoints = ['15%', '35%', '80%'];
 
   if (props.bottomSheet.badgeDetail.isOpen) {
     return (
       <GorhomBottomSheet
-        index={-1}
+        index={1}
         enableOverDrag={true}
         ref={props.tappedBadgeBottomSheetRef}
         snapPoints={snapPoints}
@@ -24,6 +28,7 @@ const Container = (props) => {
           <TouchableOpacity onPress={() => props.closeTappedBadgeBottomSheet()}>
             <Text>Close this bottom</Text>
           </TouchableOpacity>
+          <BadgeDetail />
         </BottomSheetView>
       </GorhomBottomSheet>
     );

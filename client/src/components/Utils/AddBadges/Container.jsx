@@ -13,7 +13,7 @@ import TappedBadgeBottomSheetRef from './TappedBadgeBottomSheet/Container';
 //ac
 import { setIsTappedBadgeBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
 
-const Container = () => {
+const Container = (props) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [badges, setBadges] = useState([]);
   const [tab, setTab] = useState('');

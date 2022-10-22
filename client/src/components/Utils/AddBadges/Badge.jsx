@@ -84,10 +84,10 @@ const Badge = (props) => {
               backgroundColor: props.badge.color,
               // marginTop: 5,
             }}
-            onPress={() => {
-              // onPressBadge();
-              removeBadge();
-            }}
+            // onPress={() => {
+            //   // onPressBadge();
+            //   removeBadge();
+            // }}
           >
             <FastImage
               style={{ width: 35, height: 35, marginBottom: 5 }}
