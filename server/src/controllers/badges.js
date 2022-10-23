@@ -2,14 +2,24 @@ import Badge from '../models/badge';
 
 export const getBadges = async (request, response) => {
   try {
-    let queryFilter = {};
+    let queryFilters = [];
+
     if (request.query.type) {
-      queryFilter = { type: request.query.type };
+      const queryByType = { type: request.query.type };
+      queryFilters.push(queryByType);
     }
-    // ?type=sports&type=foodAndBeverage&page=1
-    let badges = Badge.find(queryFilter);
+    if (request.query.name) {
+      const queryByName = { name: request.query.name };
+      queryFilters.push(queryByName);
+    }
+    let badges;
+    if (queryFilters.length) {
+      badges = Badge.find({ $and: queryFilters });
+    } else {
+      badges = Badge.find({});
+    }
     const limit = 50;
-    const page = request.query.page; // load moreで、自動で+1ずつincrementされていく。client側で。
+    const page = request.query.page;
     const skip = (page - 1) * limit;
 
     badges = await badges.skip(skip).limit(limit);

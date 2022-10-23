@@ -23,36 +23,56 @@ const Container = (props) => {
   const tappedBadgeBottomSheetRef = useRef(null);
   const [queryType, setQueryType] = useState([]);
   const [queryName, setQueryName] = useState('');
+  const [page, setPage] = useState(null);
 
   const closeTappedBadgeBottomSheet = () => {
     props.setIsTappedBadgeBottomSheetOpen(false, null);
     tappedBadgeBottomSheetRef.current?.close();
   };
 
-  const getBadges = async () => {
-    const result = await lampostAPI.get('/badges');
-    const { badges } = result.data;
-    setBadges((previous) => [...previous, ...badges]);
-  };
+  // const getBadges = async () => {
+  //   const result = await lampostAPI.get('/badges');
+  //   const { badges } = result.data;
+  //   setBadges((previous) => [...previous, ...badges]);
+  // };
 
   const queryBadgesByType = async () => {
-    console.log(queryType);
-    let queryString = '';
+    let queryString = '?page=1';
     const queryTypes = [...queryType];
-    // const queryNames = [...queryName];
-    // arrayがlengthを持つ状態から0に変わった場合、おかしくなるな。
     for (let i = 0; i < queryTypes.length; i++) {
-      if (i === 0) {
-        queryString = '?type=' + queryTypes[i];
-      } else {
-        queryString = queryString + '&type=' + queryTypes[i];
-      }
+      // if (i === 0) {
+      //   queryString = '?type=' + queryTypes[i];
+      // } else {
+      queryString = queryString + '&type=' + queryTypes[i];
+      // }
     }
-
     console.log(queryString);
     const result = await lampostAPI.get(`/badges/${queryString}`);
     const { badges } = result.data;
     setBadges(badges);
+    setPage(2);
+  };
+
+  // load moreしたら、次の分のpage用にnumberを事前に更新しておく感じだな。
+  const onPressSearch = async () => {
+    if (!queryName) {
+      return null;
+    } else {
+      let queryString = '?page=1';
+      const queryTypes = [...queryType];
+      for (let i = 0; i < queryTypes.length; i++) {
+        // if (i === 0) {
+        //   queryString = '?type=' + queryTypes[i];
+        // } else {
+        queryString = queryString + '&type=' + queryTypes[i];
+        // }
+      }
+      queryString = queryString + '&name=' + queryName;
+      const result = await lampostAPI.get(`/badges/${queryString}`);
+      const { badges } = result.data;
+      setBadges(badges);
+      setPage(2);
+    }
   };
 
   // useEffect(() => {
