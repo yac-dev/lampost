@@ -21,10 +21,7 @@ const tabs = [
   },
   {
     label: 'Sports',
-    icon: (
-      // <MaterialIcons name='sports-baseball' size={24} color={'rgba(225, 221, 0, 0.85)'} style={{ marginRight: 5 }} />
-      <MaterialIcons name='sports-baseball' size={24} />
-    ),
+    icon: <MaterialIcons name='sports-baseball' size={24} />,
     query: 'sports',
     onPress: () => {
       console.log('sports tab');
@@ -32,7 +29,6 @@ const tabs = [
   },
   {
     label: 'Culture',
-    // icon: <Foundation name='book' size={24} color={'rgba(170, 100, 0, 0.85)'} style={{ marginRight: 5 }} />,
     icon: <Foundation name='book' size={24} />,
     query: 'culture',
     onPress: () => {
@@ -49,7 +45,6 @@ const tabs = [
   },
   {
     label: 'Tech',
-    // icon: <MaterialIcons name='laptop' size={24} color={'rgba(182, 182, 182, 0.85)'} style={{ marginRight: 5 }} />,
     icon: <MaterialIcons name='laptop' size={24} />,
     query: 'tech',
     onPress: () => {
@@ -103,7 +98,15 @@ const tabs = [
 const FilterActionButtons = (props) => {
   const renderTabsMenu = () => {
     const tabsList = tabs.map((tab, index) => {
-      return <ActionButton key={index} tab={tab} />;
+      return (
+        <ActionButton
+          key={index}
+          tab={tab}
+          indexVal={index}
+          queryType={props.queryType}
+          setQueryType={props.setQueryType}
+        />
+      );
     });
 
     return (

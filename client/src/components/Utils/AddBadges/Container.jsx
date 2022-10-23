@@ -21,6 +21,8 @@ const Container = (props) => {
   const [tab, setTab] = useState('');
   const searchBadgeBottomSheetRef = useRef(null);
   const tappedBadgeBottomSheetRef = useRef(null);
+  const [queryType, setQueryType] = useState([]);
+  const [queryName, setQueryName] = useState('');
 
   const closeTappedBadgeBottomSheet = () => {
     props.setIsTappedBadgeBottomSheetOpen(false, null);
@@ -33,16 +35,33 @@ const Container = (props) => {
     setBadges((previous) => [...previous, ...badges]);
   };
 
-  const queryBadges = async (query) => {
-    const result = await lampostAPI.get(`/badges/?=${query}`);
+  const queryBadgesByType = async () => {
+    console.log(queryType);
+    let queryString = '';
+    const queryTypes = [...queryType];
+    // const queryNames = [...queryName];
+    // arrayがlengthを持つ状態から0に変わった場合、おかしくなるな。
+    for (let i = 0; i < queryTypes.length; i++) {
+      if (i === 0) {
+        queryString = '?type=' + queryTypes[i];
+      } else {
+        queryString = queryString + '&type=' + queryTypes[i];
+      }
+    }
+
+    console.log(queryString);
+    const result = await lampostAPI.get(`/badges/${queryString}`);
     const { badges } = result.data;
-    // 一回、今もっているbadgeを消す。そして、取ってきたbadgeを足すっていうやり方。
     setBadges(badges);
   };
 
+  // useEffect(() => {
+  //   getBadges();
+  // }, []);
+
   useEffect(() => {
-    getBadges();
-  }, []);
+    queryBadgesByType();
+  }, [queryType]);
 
   const renderBadges = () => {
     const badgesList = badges.map((badge, index) => {
@@ -67,7 +86,12 @@ const Container = (props) => {
         // keyboardType={'visible-password'}
       /> */}
       {renderBadges()}
-      <SearchBadgeBottomSheet searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <SearchBadgeBottomSheet
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        queryType={queryType}
+        setQueryType={setQueryType}
+      />
       <TappedBadgeBottomSheetRef
         tappedBadgeBottomSheetRef={tappedBadgeBottomSheetRef}
         closeTappedBadgeBottomSheet={closeTappedBadgeBottomSheet}

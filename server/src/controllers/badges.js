@@ -8,7 +8,7 @@ export const getBadges = async (request, response) => {
     }
     // ?type=sports&type=foodAndBeverage&page=1
     let badges = Badge.find(queryFilter);
-    const limit = 4;
+    const limit = 50;
     const page = request.query.page; // load moreで、自動で+1ずつincrementされていく。client側で。
     const skip = (page - 1) * limit;
 

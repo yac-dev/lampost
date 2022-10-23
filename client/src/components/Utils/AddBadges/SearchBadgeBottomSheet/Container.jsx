@@ -9,7 +9,7 @@ import SearchBar from './SearchBar';
 import FilterActionButtons from './FilterActionButtons';
 
 const SearchBottomSheet = (props) => {
-  const snapPoints = ['10%', '65%', '80%'];
+  const snapPoints = ['10%', '30%', '65%', '80%'];
   return (
     <GorhomBottomSheet
       index={0}
@@ -41,7 +41,12 @@ const SearchBottomSheet = (props) => {
             onChangeText={props.setSearchQuery}
           />
         </View>
-        <FilterActionButtons searchQuery={props.searchQuery} setSearchQuery={props.setSearchQuery} />
+        <FilterActionButtons
+          searchQuery={props.searchQuery}
+          setSearchQuery={props.setSearchQuery}
+          queryType={props.queryType}
+          setQueryType={props.setQueryType}
+        />
       </BottomSheetView>
     </GorhomBottomSheet>
   );
