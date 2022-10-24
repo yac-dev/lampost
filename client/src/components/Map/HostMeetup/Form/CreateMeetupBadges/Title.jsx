@@ -7,7 +7,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
-const Title = () => {
+const Title = (props) => {
   return (
     <View style={{ marginBottom: 20 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
@@ -24,7 +24,10 @@ const Title = () => {
           <AntDesign name='edit' size={25} color='white' />
         </View>
         <View style={{ marginLeft: 15 }}>
-          <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5 }}>Title</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5, marginRight: 10 }}>Title</Text>
+            <Text style={{ fontSize: 13, color: '#9E9E9E' }}>{props.state.title.length}/40</Text>
+          </View>
           <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E' }}>Please write the meetup title.</Text>
         </View>
       </View>
@@ -37,10 +40,10 @@ const Title = () => {
             color: '#424242',
             borderRadius: 5,
           }}
-          // value={props.searchQuery}
-          // onChangeText={props.setSearchQuery}
+          value={props.state.title}
+          onChangeText={(text) => props.dispatch({ type: 'SET_TITLE', payload: text })}
         />
-        <Text style={{ padding: 10, fontWeight: 'bold' }}>35/40</Text>
+        {/* <Text style={{ padding: 10, fontWeight: 'bold' }}>{props.state.title.length}/40</Text> */}
       </View>
     </View>
   );

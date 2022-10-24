@@ -22,24 +22,27 @@ const Description = (props) => {
         >
           <MaterialCommunityIcons name='message-text' size={25} color='white' />
         </View>
-        <View style={{ marginLeft: 15 }}>
+        <View style={{ marginLeft: 15, flex: 1 }}>
           {/* <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5 }}>Media permission</Text> */}
-          <Text style={{ fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Message</Text>
-          <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', flexWrap: 'wrap' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5, marginRight: 10 }}>Message</Text>
+            <Text style={{ fontSize: 13, color: '#9E9E9E' }}>{props.state.description.length}/300</Text>
+          </View>
+          <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', flexShrink: 1 }}>
             Please write a message to the attendees or more detailed description if you have.
           </Text>
         </View>
       </View>
       <BottomSheetTextInput
-        style={{ height: 150, backgroundColor: '#E9E9E9' }}
+        style={{ height: 150, backgroundColor: '#E9E9E9', borderRadius: 5, padding: 10 }}
         // label='Meetup title'
         multiline
         value={props.state.description}
         onChangeText={(text) => props.dispatch({ type: 'SET_DESCRIPTION', payload: text })}
         // left={<TextInput.Icon name='eye' />}
         mode='outlined'
-        // right={<TextInput.Affix text={`${props.state.description.length}/300`} />}
       />
+      {/* <Text style={{ padding: 10, fontWeight: 'bold' }}>{props.state.description.length}/300</Text> */}
     </View>
   );
 };

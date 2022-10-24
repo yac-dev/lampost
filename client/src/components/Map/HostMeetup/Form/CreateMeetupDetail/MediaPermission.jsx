@@ -31,7 +31,7 @@ const CameraPermission = (props) => {
         >
           <FontAwesome5 name='photo-video' size={25} color='white' />
         </View>
-        <View style={{ marginLeft: 15 }}>
+        <View style={{ marginLeft: 15, flex: 1 }}>
           {/* <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5 }}>Media permission</Text> */}
           <View style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
             <Text style={{ fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Media permission</Text>
@@ -42,7 +42,7 @@ const CameraPermission = (props) => {
             />
             {renderSwitchState()}
           </View>
-          <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', flexWrap: 'wrap' }}>
+          <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', flexShrink: 1 }}>
             Do you allow the attendees to take photos or videos during the meetup?
           </Text>
         </View>

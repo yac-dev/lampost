@@ -147,7 +147,7 @@ const Container = (props) => {
   };
 
   return (
-    <View style={{ paddingLeft: 20, paddingRight: 20 }}>
+    <View style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
       <View style={{ alignSelf: 'flex-end', marginBottom: 5 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <AntDesign name='close' size={20} color={'black'} style={{ marginRight: 5 }} />
