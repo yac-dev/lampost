@@ -21,9 +21,13 @@ const INITIAL_STATE = {
   component: 'MeetupBadge',
   title: '',
   startDateAndTime: null,
+  duration: null,
+  applicationDeadline: null,
   isStartDatePickerVisible: false,
-  endDateAndTime: null,
-  isEndDatePickerVisible: false,
+  isDurationPickerVisible: false,
+  isApplicationDeadlinePickerVisible: false,
+  // endDateAndTime: null,
+  // isEndDatePickerVisible: false,
   isMeetupAttendeesLimitFree: true,
   meetupAttendeesLimit: 10,
   isMeetupFeeFree: true,
@@ -52,8 +56,16 @@ const reducer = (state, action) => {
       return { ...state, title: action.payload };
     case 'SET_START_DATE_AND_TIME':
       return { ...state, startDateAndTime: action.payload };
+    case 'SET_DURATION':
+      return { ...state, duration: action.payload };
+    case 'SET_APPLICATION_DEADLINE':
+      return { ...state, applicationDeadline: action.payload };
     case 'SET_IS_START_DATE_PICKER_VISIBLE':
       return { ...state, isStartDatePickerVisible: action.payload };
+    case 'SET_IS_DURATION_PICKER_VISIBLE':
+      return { ...state, isDurationPickerVisible: action.payload };
+    case 'SET_IS_APPLICATION_DEADLINE_PICKER_VISIBLE':
+      return { ...state, isApplicationDeadlinePickerVisible: action.payload };
     case 'SET_END_DATE_AND_TIME':
       return { ...state, endDateAndTime: action.payload };
     case 'SET_IS_END_DATE_PICKER_VISIBLE':

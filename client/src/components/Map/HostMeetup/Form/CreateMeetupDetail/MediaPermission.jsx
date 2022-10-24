@@ -43,7 +43,7 @@ const CameraPermission = (props) => {
             {renderSwitchState()}
           </View>
           <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', flexWrap: 'wrap' }}>
-            Do you allow the attendees to take photos or video during the meetup?
+            Do you allow the attendees to take photos or videos during the meetup?
           </Text>
         </View>
       </View>

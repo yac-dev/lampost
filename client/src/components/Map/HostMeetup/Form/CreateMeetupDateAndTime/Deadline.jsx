@@ -18,6 +18,11 @@ const Deadline = (props) => {
     props.dispatch({ type: 'SET_IS_END_DATE_PICKER_VISIBLE', payload: false });
   };
 
+  const onApplicationDeadlineConfirm = (date) => {
+    props.dispatch({ type: 'SET_APPLICATION_DEADLINE', payload: date });
+    props.dispatch({ type: 'SET_IS_APPLICATION_DEADLINE_PICKER_VISIBLE', payload: false });
+  };
+
   const renderDate = (date) => {
     if (date) {
       return (
@@ -34,39 +39,48 @@ const Deadline = (props) => {
     }
   };
   return (
-    <View style={{ marginBottom: 20 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
-        <View
-          style={{
-            backgroundColor: 'rgba(158, 20, 236, 0.85)',
-            padding: 5,
-            borderRadius: 7,
-            width: 35,
-            height: 35,
-            alignItems: 'center',
-          }}
-        >
-          <MaterialCommunityIcons name='login' size={25} color='white' />
-        </View>
-        <View style={{ marginLeft: 15 }}>
-          <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5 }}>Application deadline</Text>
-          <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E' }}>
-            Until when can the users apply for join your meetup?
-          </Text>
-        </View>
-      </View>
-      <View>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Button
-            style={{ marginRight: 10, marginBottom: 10 }}
-            mode='outlined'
-            onPress={() => props.dispatch({ type: 'SET_IS_START_DATE_PICKER_VISIBLE', payload: true })}
+    <View>
+      <View style={{ marginBottom: 20 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+          <View
+            style={{
+              backgroundColor: 'rgba(158, 20, 236, 0.85)',
+              padding: 5,
+              borderRadius: 7,
+              width: 35,
+              height: 35,
+              alignItems: 'center',
+            }}
           >
-            Start
-          </Button>
-          {renderDate(props.state.startDateAndTime)}
+            <MaterialCommunityIcons name='login' size={25} color='white' />
+          </View>
+          <View style={{ marginLeft: 15 }}>
+            <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5 }}>Application deadline</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E' }}>
+              Until when can the users apply for join this meetup?
+            </Text>
+          </View>
+        </View>
+        <View>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Button
+              style={{ marginRight: 10, marginBottom: 10 }}
+              mode='outlined'
+              onPress={() => props.dispatch({ type: 'SET_IS_APPLICATION_DEADLINE_PICKER_VISIBLE', payload: true })}
+            >
+              Deadline
+            </Button>
+            {renderDate(props.state.applicationDeadline)}
+          </View>
         </View>
       </View>
+      <DateTimePickerModal
+        isVisible={props.state.isApplicationDeadlinePickerVisible}
+        mode='datetime'
+        onConfirm={(date) => onApplicationDeadlineConfirm(date)}
+        onCancel={() => props.dispatch({ type: 'SET_IS_START_DATE_PICKER_VISIBLE', payload: false })}
+        is24Hour={true}
+      />
     </View>
   );
 };
