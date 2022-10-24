@@ -6,27 +6,21 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
-import DateAndTime from './DateAndTime';
-import Deadline from './Deadline';
+import Title from './Title';
+import Badges from './Badges';
 
 const Container = (props) => {
   return (
     <View>
-      <DateAndTime state={props.state} dispatch={props.dispatch} />
-      <Deadline state={props.state} dispatch={props.dispatch} />
-      <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
-        <Button
-          icon='arrow-left'
-          mode='outlined'
-          onPress={() => props.dispatch({ type: 'BACK_TO_MEETUP_BADGE', payload: '' })}
-        >
-          Back
-        </Button>
+      <Title state={props.state} dispatch={props.dispatch} />
+      <Badges state={props.state} dispatch={props.dispatch} navigation={props.navigation} />
+      <View style={{ alignSelf: 'center' }}>
         <Button
           icon='arrow-right'
           mode='outlined'
+          // buttonColor='blue'
           contentStyle={{ flexDirection: 'row-reverse' }}
-          onPress={() => props.dispatch({ type: 'GO_TO_MEETUP_DETAIL', payload: '' })}
+          onPress={() => props.dispatch({ type: 'GO_TO_MEETUP_DATE_AND_TIME', payload: '' })}
         >
           Next
         </Button>

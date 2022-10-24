@@ -78,7 +78,7 @@ const Deadline = (props) => {
         isVisible={props.state.isApplicationDeadlinePickerVisible}
         mode='datetime'
         onConfirm={(date) => onApplicationDeadlineConfirm(date)}
-        onCancel={() => props.dispatch({ type: 'SET_IS_START_DATE_PICKER_VISIBLE', payload: false })}
+        onCancel={() => props.dispatch({ type: 'SET_IS_APPLICATION_DEADLINE_PICKER_VISIBLE', payload: false })}
         is24Hour={true}
       />
     </View>

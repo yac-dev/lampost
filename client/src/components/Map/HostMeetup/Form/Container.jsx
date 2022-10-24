@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { AntDesign } from '@expo/vector-icons';
 
 // components
-import CreateMeetupBadge from './CreateMeetupBadge';
+// import CreateMeetupBadge from './CreateMeetupBadge';
+import CreateMeetupBadges from './CreateMeetupBadges/Container';
 import CreateMeetupDateAndTime from './CreateMeetupDateAndTime/Container';
 import CreateMeetupDetail from './CreateMeetupDetail/Container';
 import CreateMeetupDescription from './CreateMeetupDescription/Container';
@@ -36,6 +37,7 @@ const INITIAL_STATE = {
   currency: '',
   meetupFee: 0,
   description: '',
+  link: '',
 };
 
 const reducer = (state, action) => {
@@ -86,6 +88,8 @@ const reducer = (state, action) => {
       return { ...state, meetupFee: action.payload };
     case 'SET_DESCRIPTION':
       return { ...state, description: action.payload };
+    case 'SET_LINK':
+      return { ...state, link: action.payload };
     default:
       return { ...state };
   }
@@ -130,7 +134,7 @@ const Container = (props) => {
   const switchComponent = () => {
     switch (state.component) {
       case 'MeetupBadge':
-        return <CreateMeetupBadge state={state} dispatch={dispatch} navigation={props.navigation} />;
+        return <CreateMeetupBadges state={state} dispatch={dispatch} navigation={props.navigation} />;
       case 'MeetupDateAndTime':
         return <CreateMeetupDateAndTime state={state} dispatch={dispatch} />;
       case 'MeetupDetail':

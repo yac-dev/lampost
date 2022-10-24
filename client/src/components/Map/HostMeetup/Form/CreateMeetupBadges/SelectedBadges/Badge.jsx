@@ -8,7 +8,7 @@ import FastImage from 'react-native-fast-image';
 import { AntDesign } from '@expo/vector-icons';
 
 // ac
-import { removeBadge } from '../../../../../redux/actionCreators/selectItem';
+import { removeBadge } from '../../../../../../redux/actionCreators/selectItem';
 
 const Badge = (props) => {
   return (

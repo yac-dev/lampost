@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { Button } from 'react-native-paper';
 import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -14,26 +15,24 @@ const Container = (props) => {
     <View>
       <Description state={props.state} dispatch={props.dispatch} />
       <Reference state={props.state} dispatch={props.dispatch} />
-      <View>
-        <TouchableOpacity
-          style={{ alignSelf: 'center' }}
+      <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
+        <Button
+          icon='arrow-left'
+          mode='outlined'
           onPress={() => props.dispatch({ type: 'BACK_TO_MEETUP_DETAIL', payload: '' })}
         >
-          <View style={{ flexDirection: 'row' }}>
-            <Text>Back (3/4)</Text>
-            <Entypo name='arrow-with-circle-left' size={25} />
-          </View>
-        </TouchableOpacity>
-        {/* <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => props.onSubmit()}>
-          <Text>Done!</Text>
-          <IconButton
-            icon='arrow-right'
-            iconColor={'blue'}
-            size={20}
-            // disabled={disableIconButton()}
-          />
-        </TouchableOpacity> */}
+          Back
+        </Button>
+        <Button
+          icon='rocket-launch'
+          mode='outlined'
+          contentStyle={{ flexDirection: 'row-reverse' }}
+          onPress={() => props.onSubmit()}
+        >
+          Launch
+        </Button>
       </View>
+      <View></View>
     </View>
   );
 };

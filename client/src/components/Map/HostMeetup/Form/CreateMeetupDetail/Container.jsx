@@ -14,29 +14,25 @@ const Container = (props) => {
   return (
     <View>
       <ScrollView contentContainerStyle={{ paddingBottom: 150 }}>
-        {/* <MeetupDate state={props.state} dispatch={props.dispatch} /> */}
         <MediaPermission state={props.state} dispatch={props.dispatch} />
         <MeetupAttendeesLimit state={props.state} dispatch={props.dispatch} />
         <MeetupFee state={props.state} dispatch={props.dispatch} />
-        <View>
-          <TouchableOpacity
-            style={{ alignSelf: 'center' }}
+        <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
+          <Button
+            icon='arrow-left'
+            mode='outlined'
             onPress={() => props.dispatch({ type: 'BACK_TO_MEETUP_DATE_AND_TIME', payload: '' })}
           >
-            <View style={{ flexDirection: 'row' }}>
-              <Text>Back (2/4)</Text>
-              <Entypo name='arrow-with-circle-left' size={25} />
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ alignSelf: 'center' }}
+            Back
+          </Button>
+          <Button
+            icon='arrow-right'
+            mode='outlined'
+            contentStyle={{ flexDirection: 'row-reverse' }}
             onPress={() => props.dispatch({ type: 'GO_TO_MEETUP_DESCRIPTION', payload: '' })}
           >
-            <View style={{ flexDirection: 'row' }}>
-              <Text>Next (4/4)</Text>
-              <Entypo name='arrow-with-circle-right' size={25} />
-            </View>
-          </TouchableOpacity>
+            Next
+          </Button>
         </View>
       </ScrollView>
     </View>
