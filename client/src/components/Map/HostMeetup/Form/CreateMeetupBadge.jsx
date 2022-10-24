@@ -103,17 +103,18 @@ const CreateMeetupBadge = (props) => {
 
       <TouchableOpacity
         style={{ alignSelf: 'center' }}
-        onPress={() => props.dispatch({ type: 'GO_TO_MEETUP_DETAIL', payload: '' })}
+        onPress={() => props.dispatch({ type: 'GO_TO_MEETUP_DATE_AND_TIME', payload: '' })}
       >
         <View style={{ flexDirection: 'row' }}>
-          <Text>Next (2/3)</Text>
+          <Text>Next (2/4)</Text>
           <Entypo name='arrow-with-circle-right' size={25} />
         </View>
       </TouchableOpacity>
-      {/* <Button mode='outlined' onPress={() => props.dispatch({ type: 'GO_TO_MEETUP_DETAIL', payload: '' })}>
+
+      {/* <Button mode='outlined' onPress={() => props.dispatch({ type: 'GO_TO_MEETUP_DATE_AND_TIME', payload: '' })}>
         Next
-      </Button> */}
-      {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      </Button>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Text style={{ fontWeight: 'bold' }}>Next (2/3)</Text>
         <Entypo name='arrow-with-circle-right' size={25} />
       </View> */}

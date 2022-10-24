@@ -6,8 +6,10 @@ import { AntDesign } from '@expo/vector-icons';
 
 // components
 import CreateMeetupBadge from './CreateMeetupBadge';
+import CreateMeetupDateAndTime from './CreateMeetupDateAndTime/Container';
 import CreateMeetupDetail from './CreateMeetupDetail/Container';
-import CreateMeetupDescription from './CreateMeetupDescription';
+import CreateMeetupDescription from './CreateMeetupDescription/Container';
+// import CreateMeetupDescription from './CreateMeetupDescription';
 
 // ac
 import { createMeetup } from '../../../../redux/actionCreators/meetups';
@@ -26,7 +28,7 @@ const INITIAL_STATE = {
   meetupAttendeesLimit: 10,
   isMeetupFeeFree: true,
   isCurrencyMenuVisible: false,
-  isCameraAllowed: true,
+  isMediaAllowed: true,
   currency: '',
   meetupFee: 0,
   description: '',
@@ -34,14 +36,18 @@ const INITIAL_STATE = {
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'GO_TO_MEETUP_DETAIL':
-      return { ...state, component: 'MeetupDetail' };
+    case 'GO_TO_MEETUP_DATE_AND_TIME':
+      return { ...state, component: 'MeetupDateAndTime' };
     case 'BACK_TO_MEETUP_BADGE':
       return { ...state, component: 'MeetupBadge' };
-    case 'GO_TO_MEETUP_DESCRIPTION':
-      return { ...state, component: 'MeetupDescription' };
+    case 'GO_TO_MEETUP_DETAIL':
+      return { ...state, component: 'MeetupDetail' };
+    case 'BACK_TO_MEETUP_DATE_AND_TIME':
+      return { ...state, component: 'MeetupDateAndTime' };
     case 'BACK_TO_MEETUP_DETAIL':
       return { ...state, component: 'MeetupDetail' };
+    case 'GO_TO_MEETUP_DESCRIPTION':
+      return { ...state, component: 'MeetupDescription' };
     case 'SET_MEETUP_TITLE':
       return { ...state, title: action.payload };
     case 'SET_START_DATE_AND_TIME':
@@ -60,6 +66,8 @@ const reducer = (state, action) => {
       return { ...state, isMeetupFeeFree: !state.isMeetupFeeFree };
     case 'SET_IS_CURRENCY_MENU_VISIBLE':
       return { ...state, isCurrencyMenuVisible: action.payload };
+    case 'SET_IS_MEDIA_ALLOWED':
+      return { ...state, isMediaAllowed: !state.isMediaAllowed };
     case 'SET_CURRENCY':
       return { ...state, currency: action.payload };
     case 'SET_MEETUP_FEE':
@@ -82,8 +90,9 @@ const Container = (props) => {
     const badgeIds = props.selectedBadges.map((badge) => {
       return badge._id;
     });
+
     const formData = {
-      title: `Example ${Math.random(0, 9)}`,
+      title,
       place: {
         type: 'Point',
         coordinates: [props.hostMeetup.setLocation.longitude, props.hostMeetup.setLocation.latitude],
@@ -110,6 +119,8 @@ const Container = (props) => {
     switch (state.component) {
       case 'MeetupBadge':
         return <CreateMeetupBadge state={state} dispatch={dispatch} navigation={props.navigation} />;
+      case 'MeetupDateAndTime':
+        return <CreateMeetupDateAndTime state={state} dispatch={dispatch} />;
       case 'MeetupDetail':
         return <CreateMeetupDetail state={state} dispatch={dispatch} />;
       case 'MeetupDescription':

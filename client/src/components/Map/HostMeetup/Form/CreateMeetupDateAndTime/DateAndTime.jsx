@@ -1,6 +1,5 @@
-// main libraries
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import { TextInput, Divider, IconButton, Button, Menu, Switch } from 'react-native-paper';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
@@ -8,7 +7,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const MeetupDate = (props) => {
+const DateAndTime = (props) => {
   const onStartDateConfirm = (date) => {
     props.dispatch({ type: 'SET_START_DATE_AND_TIME', payload: date });
     props.dispatch({ type: 'SET_IS_START_DATE_PICKER_VISIBLE', payload: false });
@@ -58,31 +57,29 @@ const MeetupDate = (props) => {
             <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E' }}>When do you meetup?</Text>
           </View>
         </View>
+        <View>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Button
+              style={{ marginRight: 10, marginBottom: 10 }}
+              mode='outlined'
+              onPress={() => props.dispatch({ type: 'SET_IS_START_DATE_PICKER_VISIBLE', payload: true })}
+            >
+              Start
+            </Button>
+            {renderDate(props.state.startDateAndTime)}
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Button
+              style={{ marginRight: 10 }}
+              mode='outlined'
+              onPress={() => props.dispatch({ type: 'SET_IS_END_DATE_PICKER_VISIBLE', payload: true })}
+            >
+              end
+            </Button>
+            {renderDate(props.state.endDateAndTime)}
+          </View>
+        </View>
       </View>
-
-      {/* <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>When do you meetup?</Text>
-      <View>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Button
-            style={{ marginRight: 10, marginBottom: 10 }}
-            mode='outlined'
-            onPress={() => props.dispatch({ type: 'SET_IS_START_DATE_PICKER_VISIBLE', payload: true })}
-          >
-            Start
-          </Button>
-          {renderDate(props.state.startDateAndTime)}
-        </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Button
-            style={{ marginRight: 10 }}
-            mode='outlined'
-            onPress={() => props.dispatch({ type: 'SET_IS_END_DATE_PICKER_VISIBLE', payload: true })}
-          >
-            end
-          </Button>
-          {renderDate(props.state.endDateAndTime)}
-        </View>
-      </View> */}
       <DateTimePickerModal
         isVisible={props.state.isStartDatePickerVisible}
         mode='datetime'
@@ -101,8 +98,4 @@ const MeetupDate = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {},
-});
-
-export default MeetupDate;
+export default DateAndTime;

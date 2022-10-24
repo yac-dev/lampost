@@ -3,6 +3,11 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { Menu, Switch, TextInput, Button } from 'react-native-paper';
 
+import { FontAwesome } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
+
 const currencyOptions = ['$USD', '£GBP', '€EUR', '¥JPY', '$CAD'];
 
 const MeetupFee = (props) => {
@@ -60,16 +65,53 @@ const MeetupFee = (props) => {
     }
   };
   return (
-    <View style={{ marginTop: 20 }}>
-      <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Is this meetup free to join?</Text>
-      <View style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center' }}>
-        {renderSwitchState()}
+    // <View style={{ marginTop: 20 }}>
+    //   <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Is this meetup free to join?</Text>
+    //   <View style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center' }}>
+    //     {renderSwitchState()}
+    //     <Switch
+    //       value={props.state.isMeetupFeeFree}
+    //       onValueChange={() => props.dispatch({ type: 'SET_IS_MEETUP_FEE_FREE', payload: '' })}
+    //     />
+    //     {renderFeeForm()}
+    //   </View>
+    // </View>
+    <View style={{ marginBottom: 20 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+        <View
+          style={{
+            backgroundColor: 'rgba(236, 164, 20, 0.85)',
+            padding: 5,
+            borderRadius: 7,
+            width: 35,
+            height: 35,
+            alignItems: 'center',
+          }}
+        >
+          <Foundation name='dollar-bill' size={25} color='white' />
+        </View>
+        <View style={{ marginLeft: 15 }}>
+          <View style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+            <Text style={{ fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Fee</Text>
+            <Switch
+              value={props.state.isMeetupFeeFree}
+              onValueChange={() => props.dispatch({ type: 'SET_IS_MEETUP_FEE_FREE', payload: '' })}
+              style={{ marginRight: 10 }}
+            />
+            {renderSwitchState()}
+          </View>
+          {/* <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5 }}>Fee</Text> */}
+          <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E' }}>Is this meetup free to join?</Text>
+        </View>
+      </View>
+      {/* <View style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center' }}>
         <Switch
           value={props.state.isMeetupFeeFree}
           onValueChange={() => props.dispatch({ type: 'SET_IS_MEETUP_FEE_FREE', payload: '' })}
         />
-        {renderFeeForm()}
-      </View>
+        {renderSwitchState()}
+      </View> */}
+      {renderFeeForm()}
     </View>
   );
 };
