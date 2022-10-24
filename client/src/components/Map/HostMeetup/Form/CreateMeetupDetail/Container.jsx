@@ -11,7 +11,17 @@ import MeetupFee from './MeetupFee';
 const Container = (props) => {
   return (
     <View>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <ScrollView contentContainerStyle={{ paddingBottom: 150 }}>
+        <MeetupDate state={props.state} dispatch={props.dispatch} />
+        <MeetupAttendeesLimit state={props.state} dispatch={props.dispatch} />
+        <MeetupFee state={props.state} dispatch={props.dispatch} />
+      </ScrollView>
+    </View>
+  );
+};
+
+{
+  /* <View style={{ flexDirection: 'row' }}>
         <View style={{ alignItems: 'flex-start' }}>
           <TouchableOpacity
             style={{ flexDirection: 'row', alignItems: 'center' }}
@@ -40,14 +50,7 @@ const Container = (props) => {
             />
           </TouchableOpacity>
         </View>
-      </View>
-      <ScrollView contentContainerStyle={{ paddingBottom: 150 }}>
-        <MeetupDate state={props.state} dispatch={props.dispatch} />
-        <MeetupAttendeesLimit state={props.state} dispatch={props.dispatch} />
-        <MeetupFee state={props.state} dispatch={props.dispatch} />
-      </ScrollView>
-    </View>
-  );
-};
+      </View> */
+}
 
 export default Container;

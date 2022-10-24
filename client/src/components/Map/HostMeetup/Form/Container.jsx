@@ -1,7 +1,8 @@
 // main libraries
 import React, { useState, useEffect, useReducer } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
+import { AntDesign } from '@expo/vector-icons';
 
 // components
 import CreateMeetupBadge from './CreateMeetupBadge';
@@ -16,6 +17,7 @@ import { addSnackBar } from '../../../../redux/actionCreators/snackBar';
 
 const INITIAL_STATE = {
   component: 'MeetupBadge',
+  title: '',
   startDateAndTime: null,
   isStartDatePickerVisible: false,
   endDateAndTime: null,
@@ -24,6 +26,7 @@ const INITIAL_STATE = {
   meetupAttendeesLimit: 10,
   isMeetupFeeFree: true,
   isCurrencyMenuVisible: false,
+  isCameraAllowed: true,
   currency: '',
   meetupFee: 0,
   description: '',
@@ -39,6 +42,8 @@ const reducer = (state, action) => {
       return { ...state, component: 'MeetupDescription' };
     case 'BACK_TO_MEETUP_DETAIL':
       return { ...state, component: 'MeetupDetail' };
+    case 'SET_MEETUP_TITLE':
+      return { ...state, title: action.payload };
     case 'SET_START_DATE_AND_TIME':
       return { ...state, startDateAndTime: action.payload };
     case 'SET_IS_START_DATE_PICKER_VISIBLE':
@@ -114,7 +119,17 @@ const Container = (props) => {
     }
   };
 
-  return <View style={{ paddingLeft: 30, paddingRight: 30 }}>{switchComponent()}</View>;
+  return (
+    <View style={{ paddingLeft: 20, paddingRight: 20 }}>
+      <View style={{ alignSelf: 'flex-end', marginBottom: 5 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <AntDesign name='close' size={20} color={'black'} style={{ marginRight: 5 }} />
+          <Text>Cancel</Text>
+        </View>
+      </View>
+      {switchComponent()}
+    </View>
+  );
 };
 
 const mapStateToProps = (state) => {

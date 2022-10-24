@@ -21,7 +21,7 @@ const BottomSheet = (props) => {
         // enablePanDownToClose={true}
         onClose={() => onFormBottomSheetClose()}
       >
-        <BottomSheetView style={{ flex: 1, backgroundColor: 'red' }}>
+        <BottomSheetView style={{ flex: 1 }}>
           <FormContainer navigation={props.navigation} />
         </BottomSheetView>
       </GorhomBottomSheet>
