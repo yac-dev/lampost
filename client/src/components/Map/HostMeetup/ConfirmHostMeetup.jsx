@@ -6,7 +6,7 @@ import { View, Text } from 'react-native';
 const ConfirmHostMeetup = () => {
   return (
     <View>
-      <Text>Please tap the place where you wanna host the meetup!</Text>
+      <Text style={{ fontWeight: 'bold', fontSize: 15 }}>Please tap the place where you wanna host the meetup 🚀</Text>
     </View>
   );
 };

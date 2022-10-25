@@ -10,6 +10,12 @@ import Title from './Title';
 import Badges from './Badges';
 
 const Container = (props) => {
+  const validateForm = () => {
+    if (props.state.title.length <= 41) {
+      // ここでsnackbarを出す。
+    }
+  };
+
   return (
     <View>
       <Title state={props.state} dispatch={props.dispatch} />

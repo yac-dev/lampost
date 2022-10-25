@@ -41,7 +41,7 @@ const Title = (props) => {
             borderRadius: 5,
           }}
           value={props.state.title}
-          onChangeText={(text) => props.dispatch({ type: 'SET_TITLE', payload: text })}
+          onChangeText={(text) => props.dispatch({ type: 'SET_MEETUP_TITLE', payload: text })}
         />
         {/* <Text style={{ padding: 10, fontWeight: 'bold' }}>{props.state.title.length}/40</Text> */}
       </View>

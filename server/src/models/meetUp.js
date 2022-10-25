@@ -21,6 +21,8 @@ const meetupSchema = new mongoose.Schema({
   },
   startDateAndTime: Date,
   isStartDateAndTimeUpdated: Boolean,
+  duration: Number,
+  applicationDeadline: Date,
   endDateAndTime: Date,
   isEndDateAndTimeUpdated: Boolean,
   isFeeFree: Boolean,
@@ -30,9 +32,11 @@ const meetupSchema = new mongoose.Schema({
   attendeesLimit: Number,
   description: {
     type: String,
-    maxLength: 300,
+    maxLength: 350,
   },
   isPublic: Boolean,
+  isMediaAllowed: Boolean,
+  link: String,
   totalComments: {
     type: Number,
     default: 0,
@@ -43,10 +47,6 @@ const meetupSchema = new mongoose.Schema({
       ref: 'Comment',
     },
   ],
-  totalImpressions: {
-    type: Number,
-    default: 0,
-  },
   launcher: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',

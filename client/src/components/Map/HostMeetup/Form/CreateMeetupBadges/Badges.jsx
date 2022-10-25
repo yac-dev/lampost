@@ -8,7 +8,7 @@ import { Entypo } from '@expo/vector-icons';
 
 import SelectedBadges from './SelectedBadges/Badges';
 
-const Badges = () => {
+const Badges = (props) => {
   return (
     <View style={{ marginBottom: 20 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>

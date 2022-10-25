@@ -60,6 +60,8 @@ export const createMeetup = async (request, response) => {
       badges,
       title,
       startDateAndTime,
+      duration,
+      applicationDeadline,
       endDateAndTime,
       isMeetupAttendeesLimitFree,
       meetupAttendeesLimit,
@@ -68,7 +70,9 @@ export const createMeetup = async (request, response) => {
       fee,
       description,
       isMeetupPublic,
+      isMediaAllowed,
       launcher,
+      link,
     } = request.body;
 
     const meetup = new Meetup({
@@ -76,8 +80,11 @@ export const createMeetup = async (request, response) => {
       badges,
       title,
       startDateAndTime,
+      duration,
       endDateAndTime,
+      applicationDeadline,
       description,
+      link,
       launcher,
       createdAt: new Date(),
     });
@@ -103,10 +110,15 @@ export const createMeetup = async (request, response) => {
       meetup.isPublic = false;
     }
 
+    if (isMediaAllowed) {
+      meetup.isMediaAllowed = true;
+    } else {
+      meetup.isMediaAllowed = false;
+    }
+
     const user = await User.findById(launcher);
     const pushing = {
       meetup: meetup._id,
-      launched: true,
       viewedChatsLastTime: new Date(),
     };
     user.upcomingMeetups.push(pushing);

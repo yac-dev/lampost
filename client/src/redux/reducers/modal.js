@@ -8,6 +8,9 @@ const INITIAL_STATE = {
   confirmHostMeetup: {
     isOpen: false,
   },
+  cancelLaunchMeetup: {
+    isOpen: false,
+  },
   selectMeetupBadges: {
     isOpen: false,
   },
@@ -21,6 +24,8 @@ const modalReducer = (state = INITIAL_STATE, action) => {
       return { ...state, selectLimitHour: { isOpen: action.payload } };
     case 'SET_IS_HOST_MEETUP_CONFIRM_MODAL_OPEN':
       return { ...state, confirmHostMeetup: { isOpen: action.payload } };
+    case 'SET_IS_CANCEL_LAUNCH_MEETUP_MODAL_OPEN':
+      return { ...state, cancelLaunchMeetup: { isOpen: action.payload } };
     case 'SET_IS_SELECT_MEETUP_BADGES_MODAL':
       return { ...state, selectMeetupBadges: { isOpen: action.payload } };
     default:

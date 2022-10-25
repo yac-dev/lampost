@@ -31,30 +31,18 @@ const userSchema = new mongoose.Schema({
   ],
   upcomingMeetups: [
     {
-      type: mongoose.Schema.ObjectId,
-      ref: 'MeetupStatus',
+      meetup: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Meetup',
+      },
+      viewedChatsLastTime: Date,
     },
-    // {
-    //   meetup: {
-    //     type: mongoose.Schema.ObjectId,
-    //     ref: 'Meetup',
-    //   },
-    //   launched: Boolean,
-    //   viewedChatsLastTime: Date,
-    // },
   ],
   pastMeetups: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: 'MeetupStatus',
+      ref: 'Meetup',
     },
-    // {
-    //   meetup: {
-    //     type: mongoose.Schema.ObjectId,
-    //     ref: 'Meetup',
-    //   },
-    //   launched: Boolean,
-    // },
   ],
   connections: [
     {

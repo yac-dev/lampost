@@ -19,6 +19,13 @@ export const setIsConfirmHostMeetupModalOpen = (bool) => {
   };
 };
 
+export const setIsCancelLaunchMeetupModalOpen = (bool) => {
+  return {
+    type: 'SET_IS_CANCEL_LAUNCH_MEETUP_MODAL_OPEN',
+    payload: bool,
+  };
+};
+
 export const setIsSelectMeetupBadgesModalOpen = (bool) => {
   return {
     type: 'SET_IS_SELECT_MEETUP_BADGES_MODAL',

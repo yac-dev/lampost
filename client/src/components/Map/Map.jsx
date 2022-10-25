@@ -14,6 +14,7 @@ import SelectedMeetup from './SelectedMeetup/Container';
 import FABMenu from './Utils/FABMenu';
 import ModalContainer from '../Utils/ModalContainer';
 import ConfirmHostMeetup from './HostMeetup/ConfirmHostMeetup';
+import CancelLaunchMeetup from './HostMeetup/CancelLaunchMeetup';
 // import CancelHostMeetupButton from './HostMeetup/CancelHostMeetupButton';
 import SetMeetupLocation from './HostMeetup/SetMeetupLocation';
 import HostMeetupBottomSheet from './HostMeetup/BottomSheet';
@@ -34,6 +35,7 @@ import { setIsHostMeetupOpen } from '../../redux/actionCreators/hostMeetup';
 import { setMeetupLocation } from '../../redux/actionCreators/hostMeetup';
 import { setIsSelectMeetupBadgesModalOpen } from '../../redux/actionCreators/modal';
 import { setIsConfirmHostMeetupModalOpen } from '../../redux/actionCreators/modal';
+import { setIsCancelLaunchMeetupModalOpen } from '../../redux/actionCreators/modal';
 
 const Map = (props) => {
   const [region, setRegion] = useState(null);
@@ -111,6 +113,11 @@ const Map = (props) => {
 
   const onPressCancelConfirmHostMeetup = () => {
     props.setIsConfirmHostMeetupModalOpen(false);
+  };
+
+  const onPressYesCancelLaunchMeetup = () => {
+    props.setIsHostMeetupOpen(false);
+    props.setIsCancelLaunchMeetupModalOpen(false);
   };
 
   useEffect(() => {
@@ -197,14 +204,15 @@ const Map = (props) => {
             <SetMeetupLocation />
             <MapMarkers handleSelectedItemBottomSheetChanges={handleSelectedItemBottomSheetChanges} />
           </MapView>
-          <ModalContainer
+
+          {/* <ModalContainer
             modalOpen={props.modal.selectMeetupBadges.isOpen}
             onPressOk={onPressOkSelectBadge}
             onPressCancel={onPressCancelSelectBadge}
             okText={'Done'}
           >
             <Badges />
-          </ModalContainer>
+          </ModalContainer> */}
           <ModalContainer
             modalOpen={props.modal.confirmHostMeetup.isOpen}
             onPressOk={onPressOkConfirmHostMeetup}
@@ -212,6 +220,15 @@ const Map = (props) => {
             okText={'Ok'}
           >
             <ConfirmHostMeetup />
+          </ModalContainer>
+
+          <ModalContainer
+            modalOpen={props.modal.cancelLaunchMeetup.isOpen}
+            onPressOk={onPressYesCancelLaunchMeetup}
+            onPressCancel={onPressCancelConfirmHostMeetup}
+            okText={'Yes'}
+          >
+            <CancelLaunchMeetup />
           </ModalContainer>
 
           <FABMenu navigation={props.navigation} />
@@ -268,5 +285,6 @@ export default connect(mapStateToProps, {
   setIsHostMeetupOpen,
   setMeetupLocation,
   setIsConfirmHostMeetupModalOpen,
+  setIsCancelLaunchMeetupModalOpen,
   setIsSelectMeetupBadgesModalOpen,
 })(Map);

@@ -1,6 +1,6 @@
 // main libraries
 import React, { useState, useEffect, useReducer } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -16,6 +16,7 @@ import CreateMeetupDescription from './CreateMeetupDescription/Container';
 import { createMeetup } from '../../../../redux/actionCreators/meetups';
 import { setIsHostMeetupOpen } from '../../../../redux/actionCreators/hostMeetup';
 import { setMeetupLocation } from '../../../../redux/actionCreators/hostMeetup';
+import { setIsCancelLaunchMeetupModalOpen } from '../../../../redux/actionCreators/modal';
 import { addSnackBar } from '../../../../redux/actionCreators/snackBar';
 
 const INITIAL_STATE = {
@@ -108,20 +109,24 @@ const Container = (props) => {
     });
 
     const formData = {
-      title,
+      title: state.title,
       place: {
         type: 'Point',
         coordinates: [props.hostMeetup.setLocation.longitude, props.hostMeetup.setLocation.latitude],
       },
       badges: badgeIds,
       startDateAndTime: state.startDateAndTime,
+      duration: state.duration,
+      applicationDeadline: state.applicationDeadline,
       endDateAndTime: state.endDateAndTime,
       isMeetupAttendeesLimitFree: state.isMeetupAttendeesLimitFree,
       meetupAttendeesLimit: state.meetupAttendeesLimit,
       isMeetupFeeFree: state.isMeetupFeeFree,
       currency: state.currency,
       fee: state.meetupFee,
+      isMediaAllowed: state.isMediaAllowed,
       description: state.description,
+      link: state.link,
       launcher: props.auth.data._id,
     };
     console.log(formData);
@@ -129,6 +134,11 @@ const Container = (props) => {
     props.setMeetupLocation('');
     // props.addSnackBar('Meetup was created successfully! Please check your schedule.', 'success', 7000);
     props.createMeetup(formData);
+  };
+
+  const onCancelPressd = () => {
+    props.setIsHostMeetupOpen(false);
+    props.setMeetupLocation('');
   };
 
   const switchComponent = () => {
@@ -149,10 +159,13 @@ const Container = (props) => {
   return (
     <View style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
       <View style={{ alignSelf: 'flex-end', marginBottom: 5 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center' }}
+          onPress={() => props.setIsCancelLaunchMeetupModalOpen(true)}
+        >
           <AntDesign name='close' size={20} color={'black'} style={{ marginRight: 5 }} />
           <Text>Cancel</Text>
-        </View>
+        </TouchableOpacity>
       </View>
       {switchComponent()}
     </View>
@@ -163,6 +176,10 @@ const mapStateToProps = (state) => {
   return { hostMeetup: state.hostMeetup, selectedBadges: Object.values(state.selectedItem.badges), auth: state.auth };
 };
 
-export default connect(mapStateToProps, { createMeetup, setIsHostMeetupOpen, setMeetupLocation, addSnackBar })(
-  Container
-);
+export default connect(mapStateToProps, {
+  createMeetup,
+  setIsHostMeetupOpen,
+  setMeetupLocation,
+  setIsCancelLaunchMeetupModalOpen,
+  addSnackBar,
+})(Container);

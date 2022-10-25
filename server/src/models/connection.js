@@ -4,7 +4,7 @@ const connectionSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
-  }, //この、userっていうfieldいらないかもな。。。
+  }, //この、userっていうfieldいらないかもな。。。user schemaのarrayに直接、入れるからね。
   with: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
