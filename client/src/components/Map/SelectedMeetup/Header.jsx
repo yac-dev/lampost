@@ -65,15 +65,35 @@ const Header = (props) => {
     }
   };
 
+  const renderDate = (date) => {
+    if (date) {
+      return (
+        <Text>{`${new Date(date).toLocaleString('en-US', {
+          weekday: 'long',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        })}`}</Text>
+      );
+    } else {
+      return null;
+    }
+  };
+
   return (
-    <View style={{ marginBottom: 30 }}>
+    <View style={{ marginBottom: 10 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
         <View style={{ flex: 7 }}>
-          <Text style={{ fontWeight: 'bold', marginBottom: 20, fontSize: 25 }}>{props.selectedMeetup.title}</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 16, flexShrink: 1 }}>{props.selectedMeetup.title}</Text>
         </View>
         {renderActionButton()}
       </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View>
+        <Text style={{}}>{`Starts at ${renderDate(props.selectedMeetup.startDateAndTime)}`}</Text>
+      </View>
+
+      {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <View style={{ width: 50, height: 50, backgroundColor: 'red', borderRadius: 5, marginRight: 20 }}>
           <Text>Pic</Text>
         </View>
@@ -83,7 +103,7 @@ const Header = (props) => {
           </TouchableOpacity>
           <Text>Skills here</Text>
         </View>
-      </View>
+      </View> */}
     </View>
   );
 };

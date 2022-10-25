@@ -9,6 +9,7 @@ import { setIsSelectedItemBottomSheetOpen } from '../../../redux/actionCreators/
 
 import Header from './Header';
 import ActionButtons from './ActionButtons';
+import Menus from './Menus';
 import Tab from './Tab';
 import About from './About';
 import LocationDetail from './LocationDetail';
@@ -32,8 +33,9 @@ const Container = (props) => {
           <View>
             <Header component={component} setComponent={setComponent} />
             <ActionButtons navigation={props.navigation} />
+            <Menus />
             {/* <Tab component={component} setComponent={setComponent} /> */}
-            <About navigation={props.navigation} />
+            {/* <About navigation={props.navigation} /> */}
             {/* {switchComponent()} */}
           </View>
         );
