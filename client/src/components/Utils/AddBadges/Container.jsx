@@ -4,6 +4,8 @@ import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import lampostAPI from '../../../apis/lampost';
 import { Searchbar } from 'react-native-paper';
 import FastImage from 'react-native-fast-image';
+import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // components
 import Badge from './Badge';
@@ -35,6 +37,34 @@ const Container = (props) => {
   //   const { badges } = result.data;
   //   setBadges((previous) => [...previous, ...badges]);
   // };
+
+  useEffect(() => {
+    if (props.route.params.headerRight === 'userpage') {
+      props.navigation.setOptions({
+        headerRight: () => (
+          <TouchableOpacity
+            // onPress={() => this.share()}
+            onPress={() => console.log('Hello from add badge')}
+          >
+            {/* <MaterialCommunityIcons name='user' size={24} /> */}
+            <Text>Done(useepage)</Text>
+          </TouchableOpacity>
+        ),
+      });
+    } else if (props.route.params.headerRight === 'createMeetup') {
+      props.navigation.setOptions({
+        headerRight: () => (
+          <TouchableOpacity
+            // onPress={() => this.share()}
+            onPress={() => console.log('Hello from create meetup')}
+          >
+            {/* <MaterialCommunityIcons name='plus' size={24} /> */}
+            <Text>Done(meet)</Text>
+          </TouchableOpacity>
+        ),
+      });
+    }
+  }, []);
 
   const queryBadgesByType = async () => {
     let queryString = '?page=1';

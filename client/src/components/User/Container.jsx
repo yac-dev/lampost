@@ -31,7 +31,7 @@ const Container = (props) => {
         <Header user={user} />
         <ActionButtons user={user} />
         {/* <Bio user={user} /> */}
-        <Badges user={user} />
+        <Badges user={user} navigation={props.navigation} />
         <FABMenu user={user} />
       </SafeAreaView>
     );

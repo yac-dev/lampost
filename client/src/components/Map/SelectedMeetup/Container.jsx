@@ -64,9 +64,11 @@ const Container = (props) => {
         <>{switchComponent()}</>
       );
     } else {
-      <View>
-        <Text>Loading</Text>
-      </View>;
+      return (
+        <View>
+          <Text>Now Loading...</Text>
+        </View>
+      );
     }
   };
 

@@ -8,6 +8,7 @@ const INITIAL_STATE = {
   live: {
     isOpen: false,
   },
+  // こういうstateマジで注意ね。
   selectedItem: {
     isOpen: false,
     infoDetail: {

@@ -22,7 +22,7 @@ const ActionButtons = (props) => {
       return null;
     }
   } else {
-    return <Text>Heeeey</Text>;
+    return <Text>Signup or login to connect.</Text>;
   }
 };
 

@@ -30,7 +30,7 @@ const Badges = (props) => {
               <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5 }}>Badges</Text>
               <TouchableOpacity
                 style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 30 }}
-                onPress={() => props.navigation.navigate('Add badges')}
+                onPress={() => props.navigation.navigate('Add badges', { headerRight: 'createMeetup' })}
               >
                 <SimpleLineIcons name='magnifier-add' size={20} color={'black'} style={{ marginRight: 5 }} />
                 <Text>Add</Text>
