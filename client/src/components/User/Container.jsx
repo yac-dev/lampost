@@ -17,13 +17,24 @@ const Container = (props) => {
 
   useEffect(() => {
     // ここで、_id使って、user情報をfetchしてくる。
+    console.log(props.route.params);
     const getUser = async () => {
       const result = await lampostAPI.get(`/users/${props.route.params.userId}`);
       const { user } = result.data;
+      console.log(user);
       setUser(user);
     };
     getUser();
   }, []);
+
+  // useEffect(() => {
+  //   if(props.route.params?.badges){
+  //     setUser((previous) => {}) // userのbadges部分だけをupdateすればいいだけよ。この方針でokなはず。
+  //   }
+  // },[props.route.params.badges])
+
+  // badgesが来たら、反応するようにしなきゃいかん。それか、普通にuser
+  // props.route.params.badges
 
   if (user) {
     return (

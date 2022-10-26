@@ -1,8 +1,11 @@
 // main libraries
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import lampostAPI from '../../../apis/lampost';
 import { View, Text } from 'react-native';
 import { Button, Menu, Divider, Provider } from 'react-native-paper';
+
+import Badge from './Badge';
 
 // これ、paramsにfunctionを渡せるわ。
 const Badges = (props) => {
@@ -12,9 +15,13 @@ const Badges = (props) => {
 
   const closeMenu = () => setVisible(false);
 
-  const func = () => {
-    console.log('this is the func param');
-  };
+  // const renderBadges = () => {
+  //   const badgesList = props.user.badges((badge, index) => {
+  //     return (
+  //       <Badge badge={badge}/>
+  //     )
+  //   })
+  // }
 
   return (
     <View>
@@ -32,7 +39,7 @@ const Badges = (props) => {
           >
             <Menu.Item
               onPress={() => {
-                props.navigation.navigate('Add badges', { headerRight: 'userpage' });
+                props.navigation.navigate('Add badges', { headerRight: 'Edit user badges' });
               }}
               title='Add new badge'
             />

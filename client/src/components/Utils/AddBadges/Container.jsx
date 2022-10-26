@@ -32,19 +32,20 @@ const Container = (props) => {
     tappedBadgeBottomSheetRef.current?.close();
   };
 
-  // const getBadges = async () => {
-  //   const result = await lampostAPI.get('/badges');
-  //   const { badges } = result.data;
-  //   setBadges((previous) => [...previous, ...badges]);
-  // };
+  const addBadgesOfUser = async () => {
+    const result = await lampostAPI.patch(`/users/${props.auth.data._id}/addbadges`);
+    const { badges } = result.data;
+    props.navigation.navigate('User', { userId: props.auth.data._id, badges });
+  };
 
   useEffect(() => {
-    if (props.route.params.headerRight === 'userpage') {
+    if (props.route.params.headerRight === 'Edit user badges') {
       props.navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity
             // onPress={() => this.share()}
-            onPress={() => console.log('Hello from add badge')}
+            // ここでpatchのapi requestを送るわけだが、、、その後updateをUser componentのbadgesに反映させなきゃいけないのよな。。。どうしよう。
+            onPress={() => addBadgesOfUser()}
           >
             {/* <MaterialCommunityIcons name='user' size={24} /> */}
             <Text>Done(useepage)</Text>
