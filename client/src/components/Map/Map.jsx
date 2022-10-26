@@ -10,6 +10,7 @@ import MapMarkers from './MapMarkers/MapMarkers';
 import PostBottomSheet from './Post/PostBottomSheet';
 import SelectedItemBottomSheet from './SelectedItem/SelectedItemBottomSheet';
 import SelectedMeetup from './SelectedMeetup/Container';
+import SelectedMeetupInfoDetail from './SelectedMeetup/InfoDetail/Container';
 
 import FABMenu from './Utils/FABMenu';
 import ModalContainer from '../Utils/ModalContainer';
@@ -36,6 +37,7 @@ import { setMeetupLocation } from '../../redux/actionCreators/hostMeetup';
 import { setIsSelectMeetupBadgesModalOpen } from '../../redux/actionCreators/modal';
 import { setIsConfirmHostMeetupModalOpen } from '../../redux/actionCreators/modal';
 import { setIsCancelLaunchMeetupModalOpen } from '../../redux/actionCreators/modal';
+import { setIsSelectedMeetupInfoDetailBottomSheetOpen } from '../../redux/actionCreators/bottomSheet';
 
 const Map = (props) => {
   const [region, setRegion] = useState(null);
@@ -43,6 +45,8 @@ const Map = (props) => {
 
   const postBottomSheetRef = useRef(null);
   const selectedItemBottomSheetRef = useRef(null);
+  const selectedMeetupDetailBottomSheetRef = useRef(null);
+
   const mapRef = useRef(null);
   console.log('Map is rendered');
 
@@ -90,20 +94,17 @@ const Map = (props) => {
     }
   };
 
+  const handleselectedMeetupDetailBottomSheetChanges = (component) => {
+    props.setIsSelectedMeetupInfoDetailBottomSheetOpen(true, component);
+    selectedMeetupDetailBottomSheetRef.current?.snapToIndex(0);
+  };
+
   const setMeetupLocation = (event) => {
     if (props.hostMeetup.isOpen) {
       props.setMeetupLocation(event.nativeEvent.coordinate);
     } else {
       return null;
     }
-  };
-
-  const onPressOkSelectBadge = () => {
-    props.setIsSelectMeetupBadgesModalOpen(false);
-  };
-
-  const onPressCancelSelectBadge = () => {
-    props.setIsSelectMeetupBadgesModalOpen(false);
   };
 
   const onPressOkConfirmHostMeetup = () => {
@@ -234,8 +235,18 @@ const Map = (props) => {
           <FABMenu navigation={props.navigation} />
           <SnackBar />
           <PostBottomSheet postBottomSheetRef={postBottomSheetRef} />
-          <SelectedMeetup navigation={props.navigation} selectedItemBottomSheetRef={selectedItemBottomSheetRef} />
+
+          <SelectedMeetup
+            navigation={props.navigation}
+            selectedItemBottomSheetRef={selectedItemBottomSheetRef}
+            handleselectedMeetupDetailBottomSheetChanges={handleselectedMeetupDetailBottomSheetChanges}
+          />
+          <SelectedMeetupInfoDetail
+            navigation={props.navigation}
+            selectedMeetupDetailBottomSheetRef={selectedMeetupDetailBottomSheetRef}
+          />
           <HostMeetupBottomSheet navigation={props.navigation} />
+
           {/* <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} /> */}
           {/* <CancelHostMeetupButton /> */}
         </View>
@@ -287,4 +298,5 @@ export default connect(mapStateToProps, {
   setIsConfirmHostMeetupModalOpen,
   setIsCancelLaunchMeetupModalOpen,
   setIsSelectMeetupBadgesModalOpen,
+  setIsSelectedMeetupInfoDetailBottomSheetOpen,
 })(Map);

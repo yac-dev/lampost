@@ -15,10 +15,24 @@ const ActionButtons = (props) => {
       for (let i = 0; i < props.auth.data.upcomingMeetups.length; i++) {
         if (props.auth.data.upcomingMeetups[i].meetup === props.selectedMeetup._id) {
           return (
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row', paddingTop: 10, paddingBottom: 10 }}>
+              {props.selectedMeetup.launcher._id === props.auth.data._id ? (
+                <Button mode='outlined' icon={'plus'} style={{ marginRight: 10 }} onPress={() => console.log('edit')}>
+                  Scout
+                </Button>
+              ) : (
+                <Button
+                  mode='outlined'
+                  icon={'exit-run'}
+                  onPress={() => props.leaveMeetup(props.selectedMeetup._id)}
+                  style={{ marginRight: 10 }}
+                >
+                  Leave
+                </Button>
+              )}
               <Button
                 mode='outlined'
-                icon={'chat'}
+                icon={'comment-text-multiple'}
                 onPress={() => props.navigation.navigate('Lounge', { meetupId: props.selectedMeetup._id })}
                 style={{ marginRight: 10 }}
               >
@@ -27,9 +41,9 @@ const ActionButtons = (props) => {
               <Button mode='outlined' icon={'camera'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
                 Camera
               </Button>
-              <Button mode='outlined' icon={'web'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
+              {/* <Button mode='outlined' icon={'web'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
                 Location detail
-              </Button>
+              </Button> */}
               <Button mode='outlined' icon={'map'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
                 Map chat
               </Button>

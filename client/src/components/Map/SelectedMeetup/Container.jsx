@@ -33,7 +33,10 @@ const Container = (props) => {
           <View>
             <Header component={component} setComponent={setComponent} />
             <ActionButtons navigation={props.navigation} />
-            <Menus />
+            <Menus
+              navigation={props.navigation}
+              handleselectedMeetupDetailBottomSheetChanges={props.handleselectedMeetupDetailBottomSheetChanges}
+            />
             {/* <Tab component={component} setComponent={setComponent} /> */}
             {/* <About navigation={props.navigation} /> */}
             {/* {switchComponent()} */}

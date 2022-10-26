@@ -3,7 +3,10 @@ import { View, Text, TouchableOpacity } from 'react-native';
 
 const Menu = (props) => {
   return (
-    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
+    <TouchableOpacity
+      style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}
+      onPress={() => props.menu.onPress()}
+    >
       <View
         style={{
           backgroundColor: props.menu.iconBackgroundColor,

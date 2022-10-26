@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -37,54 +38,80 @@ const Menus = (props) => {
           <Text>{`${props.selectedMeetup.launcher.name} >`}</Text>
         </View>
       ),
+      onPress: () => {
+        props.navigation.navigate('User', { userId: props.selectedMeetup.launcher._id });
+      },
     },
     {
       name: 'Badges',
       iconBackgroundColor: 'rgba(45, 209, 40, 0.85)',
       icon: <Foundation name='sheriff-badge' size={25} color='white' />,
-      info: <Text>Hello</Text>,
+      info: (
+        <View style={{ flexDirection: 'row' }}>
+          {props.selectedMeetup.badges.map((badge, index) => {
+            return (
+              <FastImage
+                style={{ height: 35, width: badge.landscape ? 55 : 35 }}
+                source={{
+                  uri: badge.icon,
+                  // headers: { Authorization: 'someAuthToken' },
+                  priority: FastImage.priority.normal,
+                }}
+                tintColor={badge.color}
+                resizeMode={FastImage.resizeMode.contain}
+              />
+            );
+          })}
+        </View>
+      ),
+      onPress: () => {
+        props.handleselectedMeetupDetailBottomSheetChanges('Badges');
+      },
     },
-    // {
-    //   name: 'Date & Time',
-    //   iconBackgroundColor: 'rgba(39, 80, 204, 0.85)',
-    //   icon: <MaterialCommunityIcons name='calendar-clock' size={25} color='white' />,
-    //   info: <Text>{props.selectedMeetup.title}</Text>,
-    // },
     {
       name: 'Fee',
       iconBackgroundColor: 'rgba(236, 164, 20, 0.85)',
       icon: <Foundation name='dollar-bill' size={25} color='white' />,
       info: <View>{props.selectedMeetup.isFeeFree ? <Text>Its free</Text> : <Text>Its not free</Text>}</View>,
+      onPress: () => {
+        props.handleselectedMeetupDetailBottomSheetChanges('Fee');
+      },
     },
     {
       name: 'Q&As',
       iconBackgroundColor: 'grey',
       icon: <MaterialCommunityIcons name='chat-question' size={25} color='white' />,
       info: <Text>{`${props.selectedMeetup.comments.length} >`}</Text>,
+      onPress: () => {
+        console.log('open qa page');
+      },
     },
     {
       name: 'Crew',
       iconBackgroundColor: 'purple',
       icon: <FontAwesome5 name='user-astronaut' size={25} color='white' />,
-      info: <Text>Hello</Text>,
+      info: <Text>{`${props.selectedMeetup.attendees.length} >`}</Text>,
+      onPress: () => {
+        props.handleselectedMeetupDetailBottomSheetChanges('Crew');
+      },
     },
-    // {
-    //   name: 'Description',
-    //   iconBackgroundColor: 'rgba(174, 101, 9, 0.85)',
-    //   icon: <MaterialCommunityIcons name='message-text' size={25} color='white' />,
-    //   info: <Text>Hello</Text>,
-    // },
     {
       name: 'MediaPermission',
       iconBackgroundColor: 'rgba(19, 167, 236, 0.85)',
       icon: <FontAwesome5 name='photo-video' size={25} color='white' />,
-      info: <Text>Hello</Text>,
+      info: <View>{props.selectedMeetup.isMediaAllowed ? <Text>Allowed</Text> : <Text>Not allowed...</Text>}</View>,
+      onPress: () => {
+        // props.handleselectedMeetupDetailBottomSheetChanges('MediaPermission');
+      },
     },
     {
       name: 'Link',
       iconBackgroundColor: 'rgba(163, 163, 163, 0.85)',
       icon: <Entypo name='link' size={25} color='white' />,
-      info: <Text>Hello</Text>,
+      info: <Text>right</Text>,
+      onPress: () => {
+        props.handleselectedMeetupDetailBottomSheetChanges('Links');
+      },
     },
   ];
 

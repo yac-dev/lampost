@@ -12,6 +12,13 @@ export const setIsSelectedItemBottomSheetOpen = (bool) => {
   };
 };
 
+export const setIsSelectedMeetupInfoDetailBottomSheetOpen = (bool, component) => {
+  return {
+    type: 'SET_SELECTED_MEETUP_INFO_DETAIL_BOTTOM_SHEET_OPEN',
+    payload: { isOpen: bool, component },
+  };
+};
+
 export const setIsTextBoxBottomSheetOpen = (bool) => {
   return {
     type: 'SET_TEXT_BOX_BOTTOM_SHEET',

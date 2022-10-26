@@ -83,27 +83,9 @@ const Header = (props) => {
 
   return (
     <View style={{ marginBottom: 10 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-        <View style={{ flex: 7 }}>
-          <Text style={{ fontWeight: 'bold', fontSize: 16, flexShrink: 1 }}>{props.selectedMeetup.title}</Text>
-        </View>
-        {renderActionButton()}
-      </View>
-      <View>
-        <Text style={{}}>{`Starts at ${renderDate(props.selectedMeetup.startDateAndTime)}`}</Text>
-      </View>
-
-      {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <View style={{ width: 50, height: 50, backgroundColor: 'red', borderRadius: 5, marginRight: 20 }}>
-          <Text>Pic</Text>
-        </View>
-        <View>
-          <TouchableOpacity>
-            <Text style={{ fontWeight: 'bold' }}>{props.selectedMeetup.launcher.name}</Text>
-          </TouchableOpacity>
-          <Text>Skills here</Text>
-        </View>
-      </View> */}
+      <Text style={{ fontWeight: 'bold', fontSize: 18, marginBottom: 5 }}>{props.selectedMeetup.title}</Text>
+      <Text style={{ alignSelf: 'flex-end' }}>{`Starts at ${renderDate(props.selectedMeetup.startDateAndTime)}`}</Text>
+      <Text style={{ flexShrink: 1 }}>{props.selectedMeetup.description}</Text>
     </View>
   );
 };
