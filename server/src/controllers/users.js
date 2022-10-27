@@ -1,4 +1,5 @@
 import User from '../models/user';
+import BadgeStatus from '../models/badgeStatus';
 import Badge from '../models/badge';
 import ChatRoom from '../models/chatRoom';
 
@@ -35,13 +36,29 @@ export const connectUser = async (request, response) => {
 
 export const addBadges = async (request, response) => {
   try {
+    // array of objectsを作らないといかん。
     const { badgeIds } = request.body;
+    const arr = badgeIds.map((badgeId) => {
+      return { badge: badgeId, totalVotes: 0 };
+    });
+
     const user = await User.findById(request.params.id);
-    const badges = await Badge.find({ _id: { $in: badgeIds } });
-    user.badges.push(badgeIds);
-    user.save();
+    let badgeStatuses = await BadgeStatus.create(arr); // create populateって無理なのかね。。。まあいいか。
+    // 再度queryするしかないな。
+    const bss = await BadgeStatus.find({
+      _id: {
+        $in: badgeStatuses.map((badgeStatus) => {
+          return badgeStatus._id;
+        }),
+      },
+    });
+    // console.log(badgeStatuses);
+    // user.badges.push(...badgeStatuses);
+    // user.save();
+    // badgeStatuses = await badgeStatuses.populate('badge').execPopulate();
+    // console.log(badgeStatuses);
     response.status(200).json({
-      badges,
+      badges: bss,
     });
   } catch (error) {
     console.log(error);

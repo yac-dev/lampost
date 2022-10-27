@@ -27,11 +27,13 @@ const Container = (props) => {
     getUser();
   }, []);
 
-  // useEffect(() => {
-  //   if(props.route.params?.badges){
-  //     setUser((previous) => {}) // userのbadges部分だけをupdateすればいいだけよ。この方針でokなはず。
-  //   }
-  // },[props.route.params.badges])
+  useEffect(() => {
+    if (props.route.params?.badges) {
+      setUser((previous) => {
+        return { ...previous, badges: [...previous.badges, props.route.params?.badges] };
+      }); // userのbadges部分だけをupdateすればいいだけよ。この方針でokなはず。
+    }
+  }, [props.route.params?.badges]);
 
   // badgesが来たら、反応するようにしなきゃいかん。それか、普通にuser
   // props.route.params.badges

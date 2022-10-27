@@ -35,6 +35,7 @@ const bottomSheetReducer = (state = INITIAL_STATE, action) => {
     case 'SET_POST_BOTTOM_SHEET':
       return { ...state, post: { isOpen: action.payload } };
     case 'SET_SELECTED_ITEM_BOTTOM_SHEET':
+      // ここまじ注意な。{ ...state, selectedItem: {isOpen: true} };だと、selectedItemのデータ構造変えちゃうから。
       return { ...state, selectedItem: { ...state.selectedItem, isOpen: action.payload } };
     case 'SET_SELECTED_MEETUP_INFO_DETAIL_BOTTOM_SHEET_OPEN':
       return {

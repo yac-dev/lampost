@@ -5,11 +5,10 @@ const badgeStatusSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Badge',
   },
-  state: {
-    type: String,
-    enum: ['plain', 'star'],
+  totalVotes: {
+    type: Number,
+    default: 0,
   },
-  totalVotes: Number,
   voters: [
     {
       type: mongoose.Schema.ObjectId,
@@ -17,7 +16,6 @@ const badgeStatusSchema = new mongoose.Schema({
     },
   ],
   detail: String,
-  // timeline: [],
 });
 
 const BadgeStatus = mongoose.model('BadgeStatus', badgeStatusSchema);
