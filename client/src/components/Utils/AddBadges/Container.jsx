@@ -32,12 +32,19 @@ const Container = (props) => {
     tappedBadgeBottomSheetRef.current?.close();
   };
 
-  const addBadgesOfUser = async () => {
-    const result = await lampostAPI.patch(`/users/${props.auth.data._id}/addbadges`);
-    const { badges } = result.data;
-    props.navigation.navigate('User', { userId: props.auth.data._id, badges });
+  const addBadgesOfUser = async (obj) => {
+    console.log('selected these', obj);
+    // const badgeIds = props.selectedBadges.map((badge) => {
+    //   console.log(badge);
+    //   return badge._id;
+    // });
+    // console.log(badgeIds);
+    // const result = await lampostAPI.patch(`/users/${props.auth.data._id}/addbadges`, { badgeIds });
+    // const { badges } = result.data;
+    props.navigation.navigate('User', { userId: props.auth.data._id, badges: [1, 2, 3] });
   };
 
+  // first renderの時点でadd Badgesを登録しているからか。。。多分そうだわ。
   useEffect(() => {
     if (props.route.params.headerRight === 'Edit user badges') {
       props.navigation.setOptions({
@@ -45,7 +52,7 @@ const Container = (props) => {
           <TouchableOpacity
             // onPress={() => this.share()}
             // ここでpatchのapi requestを送るわけだが、、、その後updateをUser componentのbadgesに反映させなきゃいけないのよな。。。どうしよう。
-            onPress={() => addBadgesOfUser()}
+            onPress={() => addBadgesOfUser(props.selectedItem)}
           >
             {/* <MaterialCommunityIcons name='user' size={24} /> */}
             <Text>Done(useepage)</Text>
@@ -65,7 +72,7 @@ const Container = (props) => {
         ),
       });
     }
-  }, []);
+  }, [props.selectedItem]); // これ完全に盲点だったわ。こんな罠があったとは。。。[]だと、first renderの時点のselectedItem[]でcallbackを登録しちゃっているんだわ。これ完全に盲点だった。
 
   const queryBadgesByType = async () => {
     let queryString = '?page=1';
@@ -152,7 +159,7 @@ const Container = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { bottomSheet: state.bottomSheet };
+  return { bottomSheet: state.bottomSheet, selectedItem: state.selectedItem, auth: state.auth };
 };
 
 export default connect(mapStateToProps, { setIsTappedBadgeBottomSheetOpen })(Container);

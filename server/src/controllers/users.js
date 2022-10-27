@@ -38,6 +38,7 @@ export const addBadges = async (request, response) => {
   try {
     // array of objectsを作らないといかん。
     const { badgeIds } = request.body;
+    console.log(badgeIds);
     const arr = badgeIds.map((badgeId) => {
       return { badge: badgeId, totalVotes: 0 };
     });
@@ -53,8 +54,8 @@ export const addBadges = async (request, response) => {
       },
     });
     // console.log(badgeStatuses);
-    // user.badges.push(...badgeStatuses);
-    // user.save();
+    user.badges.push(...badgeStatuses);
+    user.save();
     // badgeStatuses = await badgeStatuses.populate('badge').execPopulate();
     // console.log(badgeStatuses);
     response.status(200).json({

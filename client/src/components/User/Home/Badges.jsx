@@ -15,13 +15,21 @@ const Badges = (props) => {
 
   const closeMenu = () => setVisible(false);
 
-  // const renderBadges = () => {
-  //   const badgesList = props.user.badges((badge, index) => {
-  //     return (
-  //       <Badge badge={badge}/>
-  //     )
-  //   })
-  // }
+  const renderBadges = () => {
+    if (props.user.badges.length) {
+      const badgesList = props.user.badges.map((badge, index) => {
+        return <Badge key={index} badge={badge} />;
+      });
+
+      return <View>{badgesList}</View>;
+    } else {
+      return (
+        <View>
+          <Text>No badges yet...</Text>
+        </View>
+      );
+    }
+  };
 
   return (
     <View>
@@ -64,6 +72,7 @@ const Badges = (props) => {
           </Menu>
         ) : null}
       </View>
+      {renderBadges()}
     </View>
   );
 };
