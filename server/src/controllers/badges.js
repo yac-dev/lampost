@@ -7,7 +7,6 @@ export const getBadges = async (request, response) => {
     const filteringUserBadges = [];
     let badges = Badge.find({}); // grab all
     if (request.body.userId) {
-      console.log('filtering by userid');
       const user = await User.findById(request.body.userId).populate({
         path: 'badges',
         model: BadgeStatus,
@@ -16,13 +15,11 @@ export const getBadges = async (request, response) => {
           model: Badge,
         },
       });
-      // console.log('this is the user', user);
 
       for (let i = 0; i < user.badges.length; i++) {
         console.log(user.badges[i]);
         filteringUserBadges.push(user.badges[i].badge._id);
       }
-      console.log(filteringUserBadges);
       badges.where({ _id: { $nin: filteringUserBadges } });
     }
 

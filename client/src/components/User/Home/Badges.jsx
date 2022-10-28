@@ -1,8 +1,8 @@
 // main libraries
 import React, { useState } from 'react';
+import { View, Text, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import lampostAPI from '../../../apis/lampost';
-import { View, Text } from 'react-native';
 import { Button, Menu, Divider, Provider } from 'react-native-paper';
 
 import Badge from './Badge';
@@ -21,7 +21,11 @@ const Badges = (props) => {
         return <Badge key={index} badge={badge} />;
       });
 
-      return <View>{badgesList}</View>;
+      return (
+        <ScrollView>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{badgesList}</View>
+        </ScrollView>
+      );
     } else {
       return (
         <View>

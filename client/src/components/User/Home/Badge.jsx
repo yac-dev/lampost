@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 const Badge = (props) => {
+  console.log('my badge', props.badge);
   return (
     <View>
       <TouchableOpacity
@@ -13,7 +14,7 @@ const Badge = (props) => {
           borderRadius: 7,
           // backgroundColor,
           borderStyle: 'solid',
-          borderColor: props.badge.color,
+          borderColor: props.badge.badge.color,
           borderWidth: 1,
           padding: 15,
           // marginLeft: 5,
@@ -32,11 +33,11 @@ const Badge = (props) => {
         <FastImage
           style={{ width: 35, height: 35, marginBottom: 5 }}
           source={{
-            uri: props.badge.icon,
+            uri: props.badge.badge.icon,
             // headers: { Authorization: 'someAuthToken' },
             priority: FastImage.priority.normal,
           }}
-          tintColor={'white'}
+          tintColor={'red'}
           // resizeMode={FastImage.resizeMode.contain}
         />
         <Text style={{ color: 'white', fontWeight: 'bold' }}>{props.badge.name}</Text>

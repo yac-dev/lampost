@@ -5,7 +5,14 @@ import ChatRoom from '../models/chatRoom';
 
 export const getUser = async (request, response) => {
   try {
-    const user = await User.findById(request.params.id);
+    const user = await User.findById(request.params.id).populate({
+      path: 'badges',
+      model: BadgeStatus,
+      populate: {
+        path: 'badge',
+        model: Badge,
+      },
+    });
     response.status(200).json({
       user,
     });

@@ -5,178 +5,63 @@ import { Badge as RNPBadge, IconButton } from 'react-native-paper';
 import FastImage from 'react-native-fast-image';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 // ac
 import { selectBadge } from '../../../redux/actionCreators/selectItem';
 import { removeBadge } from '../../../redux/actionCreators/selectItem';
 import { setIsTappedBadgeBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
 
+import { bgColorsTable } from '../bgColorsTable';
+
 const Badge = (props) => {
-  const [selected, setSelected] = useState(false);
-  const [height, setHeight] = useState(null);
-  const [width, setWidth] = useState(null);
-
-  // const onPressBadge = () => {
-  //   if(props.selectedBadges[props.badge._id]){
-  //     selectBadge()
-  //   } else {
-  //     removeBadge
-  //   }
-  // };
-  useEffect(() => {
-    // FastImage.getSize(props.badge.icon, (width, height) => {
-    //   if (width && height) {
-    //       this.setState({
-    //           height: this.props.,
-    //           height: height * (this.props.width / width)
-    //       });
-    //   } else if (!this.props.width && this.props.height) {
-    //       this.setState({
-    //           width: width * (this.props.height / height),
-    //           height: this.props.height
-    //       });
-    //   } else {
-    //       this.setState({ width: width, height: height });
-    //   }
-  }, []);
-
-  const selectBadge = () => {
-    setSelected(true);
-    props.selectBadge(props.badge);
-  };
-
-  const removeBadge = () => {
-    setSelected(false);
-    props.removeBadge(props.badge);
-  };
-
-  {
-    /* {props.selectedBadges[props.badge._id] ? (
-          <RNPBadge visible={true} size={30} style={{ top: 0, position: 'absolute' }}>
-            1
-          </RNPBadge>
-        ) : null} */
-  }
-
-  const renderBadge = (
-    onPressBadge
-    // tintColor, backgroundColor, textColor, borderColor
-  ) => {
-    if (props.selectedBadges[props.badge._id]) {
-      return (
-        <View>
-          <TouchableOpacity
-            style={{
-              // flexDirection: 'row',
-              // alignSelf: 'flex-start',
-              alignItems: 'center',
-              borderRadius: 7,
-              // backgroundColor,
-              borderStyle: 'solid',
-              borderColor: props.badge.color,
-              borderWidth: 1,
-              padding: 15,
-              // marginLeft: 5,
-              marginRight: 10,
-              marginBottom: 10,
-              maxWidth: 150,
-              height: 100,
-              backgroundColor: props.badge.color,
-              // marginTop: 5,
-            }}
-            // onPress={() => {
-            //   // onPressBadge();
-            //   removeBadge();
-            // }}
-          >
-            <FastImage
-              style={{ width: 35, height: 35, marginBottom: 5 }}
-              source={{
-                uri: props.badge.icon,
-                // headers: { Authorization: 'someAuthToken' },
-                priority: FastImage.priority.normal,
-              }}
-              tintColor={'white'}
-              // resizeMode={FastImage.resizeMode.contain}
-            />
-            <Text style={{ color: 'white', fontWeight: 'bold' }}>{props.badge.name}</Text>
-
-            {/* <Foundation
-              name='sheriff-badge'
-              size={24}
-              color={'#25C213'}
-              style={{ top: -10, right: -10, position: 'absolute' }}
-            /> */}
-            <View style={{ border: 5, top: 0, right: 0, position: 'absolute', color: '#989898' }}>
-              <Text>10k</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      );
-    } else if (!selected) {
-      return (
+  const renderBadge = () => {
+    return (
+      <View style={{ marginBottom: 35, width: 85, height: 85 }}>
         <TouchableOpacity
           style={{
-            // flexDirection: 'row',
-            // alignSelf: 'flex-start',
             alignItems: 'center',
             borderRadius: 7,
-            // backgroundColor,
+            backgroundColor: bgColorsTable[props.badge.color],
             borderStyle: 'solid',
-            borderColor: '#D7D7D7',
+            borderColor: bgColorsTable[props.badge.color],
             borderWidth: 1,
             padding: 15,
-            // marginLeft: 5,
-            marginRight: 15,
-            marginBottom: 15,
-            maxWidth: 150,
-            height: 100,
-            // marginTop: 5,
+            marginBottom: 3,
           }}
           onPress={() => {
-            // onPressBadge();
-            // selectBadge();
             props.setIsTappedBadgeBottomSheetOpen(true, props.badge);
           }}
         >
-          {/* <View style={{ backgroundColor: '#B0AFAF' }}> */}
           <FastImage
-            style={{ height: 40, width: props.badge.landscape ? 65 : 40, marginBottom: 5 }}
+            style={{ height: 50, width: props.badge.landscape ? 70 : 50 }}
             source={{
               uri: props.badge.icon,
-              // headers: { Authorization: 'someAuthToken' },
               priority: FastImage.priority.normal,
             }}
             tintColor={props.badge.color}
             resizeMode={FastImage.resizeMode.contain}
           />
-          {/* </View> */}
-          <Text style={{ color: 'black', fontWeight: 'bold' }}>{props.badge.name}</Text>
+        </TouchableOpacity>
+        <Text style={{ color: 'black', fontWeight: 'bold', alignSelf: 'center', fontSize: 12, textAlign: 'center' }}>
+          {props.badge.name}
+        </Text>
+        {props.selectedBadges[props.badge._id] ? (
           <View
             style={{
-              // borderRadius: 10,
-              // borderColor: '#D7D7D7',
-              // borderWidth: 1,
-              // padding: 2,
               top: 0,
               right: 0,
               position: 'absolute',
               color: '#989898',
-              // backgroundColor: '#D7D7D7',
             }}
           >
-            <Text style={{ color: '#989898' }}>10k</Text>
+            <Foundation name='sheriff-badge' size={20} color='#49CF13' />
           </View>
-        </TouchableOpacity>
-      );
-    }
+        ) : null}
+      </View>
+    );
   };
 
-  // if (props.selectedBadges[props.badge._id]) {
-  //   return <>{renderBadge(removeBadge, 'white', props.badge.color, 'white', props.badge.color)}</>;
-  // } else if (!selected) {
-  //   return <>{renderBadge(selectBadge, props.badge.color, 'white', 'black', 'rgba(148, 148, 148, 0.85)')}</>;
-  // }
   return <>{renderBadge()}</>;
 };
 

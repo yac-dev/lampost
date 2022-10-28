@@ -92,23 +92,6 @@ const ContainerContainer = (props) => {
     setPage(2);
   };
 
-  // const queryBadgesByFilteringUserBadges = async (userId) => {
-  //   let queryString = '?page=1';
-  //   const queryTypes = [...queryType];
-  //   for (let i = 0; i < queryTypes.length; i++) {
-  //     // if (i === 0) {
-  //     //   queryString = '?type=' + queryTypes[i];
-  //     // } else {
-  //     queryString = queryString + '&type=' + queryTypes[i];
-  //     // }
-  //   }
-  //   console.log(queryString);
-  //   const result = await lampostAPI.post(`/badges/${queryString}`, { userId });
-  //   const { badges } = result.data;
-  //   setBadges(badges);
-  //   setPage(2);
-  // };
-
   const closeTappedBadgeBottomSheet = () => {
     props.setIsTappedBadgeBottomSheetOpen(false, null);
     tappedBadgeBottomSheetRef.current?.close();
