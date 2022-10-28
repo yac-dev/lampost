@@ -47,7 +47,7 @@ const Badges = (props) => {
           >
             <Menu.Item
               onPress={() => {
-                props.navigation.navigate('Add badges', { headerRight: 'Edit user badges' });
+                props.navigation.navigate('Add badges', { fromComponent: 'Add user badges' });
               }}
               title='Add new badge'
             />

@@ -29,10 +29,10 @@ const Container = (props) => {
 
   useEffect(() => {
     if (props.route.params?.badges) {
-      // setUser((previous) => {
-      //   console.log('user data', previous);
-      //   return { ...previous, badges: [...previous.badges, props.route.params.badges] };
-      // }); // userのbadges部分だけをupdateすればいいだけよ。この方針でokなはず。
+      setUser((previous) => {
+        console.log('user data', previous);
+        return { ...previous, badges: [...previous.badges, ...props.route.params.badges] };
+      }); // userのbadges部分だけをupdateすればいいだけよ。この方針でokなはず。
       console.log('from add badges to user', props.route.params.badges);
     }
   }, [props.route.params?.badges]);
