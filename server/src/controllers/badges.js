@@ -4,6 +4,28 @@ import User from '../models/user';
 
 export const getBadges = async (request, response) => {
   try {
+    const filteringUserBadges = [];
+    let badges = Badge.find({}); // grab all
+    if (request.body.userId) {
+      console.log('filtering by userid');
+      const user = await User.findById(request.body.userId).populate({
+        path: 'badges',
+        model: BadgeStatus,
+        populate: {
+          path: 'badge',
+          model: Badge,
+        },
+      });
+      // console.log('this is the user', user);
+
+      for (let i = 0; i < user.badges.length; i++) {
+        console.log(user.badges[i]);
+        filteringUserBadges.push(user.badges[i].badge._id);
+      }
+      console.log(filteringUserBadges);
+      badges.where({ _id: { $nin: filteringUserBadges } });
+    }
+
     let queryFilters = [];
 
     if (request.query.type) {
@@ -14,38 +36,16 @@ export const getBadges = async (request, response) => {
       const queryByName = { name: request.query.name };
       queryFilters.push(queryByName);
     }
-    let badges;
+
     if (queryFilters.length) {
-      badges = Badge.find({ $and: queryFilters });
-    } else {
-      badges = Badge.find({});
+      badges = badges.where({ $and: queryFilters });
     }
+
     const limit = 50;
     const page = request.query.page;
     const skip = (page - 1) * limit;
 
-    let user;
-    const filteringUserBadges = [];
-    if (request.body.userId) {
-      console.log('filtering by userid');
-      user = await User.findById(request.body.userId).populate({
-        path: 'badges',
-        model: BadgeStatus,
-        populate: {
-          path: 'badge',
-          model: Badge,
-        },
-      });
-      console.log('this is the user', user);
-
-      for (let i = 0; user.badges.length; i++) {
-        filteringUserBadges.push(user.badges[i].badge_id);
-      }
-      // badges.filter((badge) => !filteringUserBadges.includes(badge._id));
-    }
-
     badges = await badges.skip(skip).limit(limit);
-    // .filter((badge) => !filteringUserBadges.includes(badge._id));
 
     response.status(200).json({
       badges,

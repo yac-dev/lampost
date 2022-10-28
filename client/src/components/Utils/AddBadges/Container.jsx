@@ -23,6 +23,7 @@ const ContainerContainer = (props) => {
 
   // header rightに関するuseEffect
   useEffect(() => {
+    // ここは、user pageからここに来て、doneをpressしたら, user pageへ戻る。addしたbadgesをparamsに入れていく感じ。
     if (props.route.params.fromComponent === 'Add user badges') {
       props.navigation.setOptions({
         headerRight: () => (
