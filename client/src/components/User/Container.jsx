@@ -9,6 +9,7 @@ import lampostAPI from '../../apis/lampost';
 import Header from './Home/Header';
 import ActionButtons from './Home/ActionButtons';
 import Badges from '../Utils/AddBadges/Badges';
+import BadgeStatuses from './Home/BadgeStatuses/Container';
 import FABMenu from './Utils/FABMenu';
 import BadgeStatusBottomSheet from './Home/BadgeStatusBottomSheet';
 
@@ -16,7 +17,8 @@ import BadgeStatusBottomSheet from './Home/BadgeStatusBottomSheet';
 const Container = (props) => {
   const [user, setUser] = useState(null);
   const [badges, setBadges] = useState([]);
-  const [badgeStatus, setBadgeStatus] = useState(null);
+  const [tappedBadgeStatus, setTappedBadgeStatus] = useState(null);
+  const [badgeStatuses, setBadgeStatuses] = useState([]);
 
   const badgeStatusBottomSheetRef = useRef(null);
 
@@ -42,6 +44,16 @@ const Container = (props) => {
   }, [user]);
 
   useEffect(() => {
+    if (user) {
+      const badgeStatuses = user.badges.map((badgeStatus) => {
+        return badgeStatus;
+      });
+
+      setBadgeStatuses(badgeStatuses);
+    }
+  }, [user]);
+
+  useEffect(() => {
     if (props.route.params?.badges) {
       setUser((previous) => {
         console.log('user data', previous);
@@ -51,11 +63,11 @@ const Container = (props) => {
     }
   }, [props.route.params?.badges]);
 
-  const onBadgePress = async (badge) => {
+  const onBadgePress = async (badgeStatusId) => {
     // このuser pageのuser id、そしてbadgeを使ってget requestをする。
-    const result = await lampostAPI.post(`/badgestatuses/`, { user: user._id, badge: badge._id });
+    const result = await lampostAPI.get(`/badgestatuses/${badgeStatusId}`);
     const { badgeStatus } = result.data;
-    setBadgeStatus(badgeStatus);
+    setTappedBadgeStatus(badgeStatus);
     // bottom sheetにこのbadge statusをrenderする、それを書く。多分、add badges側もこんな感じで変えることになる。
   };
 
@@ -64,47 +76,13 @@ const Container = (props) => {
       <View style={{ padding: 10, flex: 1 }}>
         <Header user={user} />
         <ActionButtons user={user} />
-        <Text>Badges</Text>
-        {/* {props.auth.data._id === user._id ? (
-          <Menu
-            visible={visible}
-            onDismiss={closeMenu}
-            style={{ alignSelf: 'flex-end' }}
-            anchor={
-              <Button onPress={openMenu} style={{ alignSelf: 'flex-end' }}>
-                Edit
-              </Button>
-            }
-          >
-            <Menu.Item
-              onPress={() => {
-                props.navigation.navigate('Add badges', { fromComponent: 'Add user badges' });
-              }}
-              title='Add new badge'
-            />
-            <Menu.Item
-              onPress={() => {
-                console.log('create your badge!!');
-              }}
-              title='Create new badge'
-            />
-            <Menu.Item
-              onPress={() => {
-                console.log('delete badges');
-              }}
-              title='Remove'
-            />
-            <Menu.Item
-              onPress={() => {
-                console.log('create your badge!!');
-              }}
-              title='Request new badge'
-            />
-          </Menu>
-        ) : null} */}
-        <Badges user={user} badges={badges} onBadgePress={onBadgePress} />
+        <BadgeStatuses user={user} badgeStatuses={badgeStatuses} onBadgePress={onBadgePress} />
+        {/* <Badges user={user} badges={badges} onBadgePress={onBadgePress} /> */}
         <FABMenu user={user} />
-        <BadgeStatusBottomSheet badgeStatusBottomSheetRef={badgeStatusBottomSheetRef} badgeStatus={badgeStatus} />
+        <BadgeStatusBottomSheet
+          badgeStatusBottomSheetRef={badgeStatusBottomSheetRef}
+          tappedBadgeStatus={tappedBadgeStatus}
+        />
       </View>
     );
   } else {

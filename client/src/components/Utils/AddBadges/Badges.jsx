@@ -45,7 +45,7 @@ const Container = (props) => {
   };
 
   if (props.badges.length) {
-    return <View>{ren()}</View>;
+    return <View>{renderBadges()}</View>;
   } else {
     return <Text>Now loadinggggg...</Text>;
   }

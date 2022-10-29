@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
-import { getUserBadgeStatus } from '../controllers/badgeStatuses';
+import { getBadgeStatus } from '../controllers/badgeStatuses';
 
-router.route('/').post(getUserBadgeStatus);
+router.route('/:id').get(getBadgeStatus);
 
 export default router;

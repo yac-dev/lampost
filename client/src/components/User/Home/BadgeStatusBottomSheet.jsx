@@ -9,7 +9,6 @@ import GorhomBottomSheet, {
 
 const BadgeStatusBottomSheet = (props) => {
   const snapPoints = ['40%, 100%'];
-
   return (
     <GorhomBottomSheet
       index={0}
@@ -24,7 +23,11 @@ const BadgeStatusBottomSheet = (props) => {
       // onClose={() => onSelectedItemBottomSheetClose()}
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
-        {props.badgeStatus ? <Text>This is the badge status</Text> : <Text>No badge status tapped ...</Text>}
+        {props.tappedBadgeStatus ? (
+          <Text>{props.tappedBadgeStatus.detail}</Text>
+        ) : (
+          <Text>No badge status tapped ...</Text>
+        )}
       </BottomSheetView>
     </GorhomBottomSheet>
   );

@@ -1,9 +1,9 @@
 import BadgeStatus from '../models/badgeStatus';
 
-export const getUserBadgeStatus = async (request, response) => {
+export const getBadgeStatus = async (request, response) => {
   try {
-    const { user, badge } = request.body;
-    const badgeStatus = await BadgeStatus.find({ user, badge });
+    const badgeStatus = await BadgeStatus.findById(request.params.id);
+    console.log(badgeStatus);
     response.status(200).json({
       badgeStatus,
     });

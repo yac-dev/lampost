@@ -9,6 +9,9 @@ const badgeStatusSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Badge',
   },
+  url: {
+    type: String,
+  },
   totalVotes: {
     type: Number,
     default: 0,
