@@ -97,9 +97,13 @@ const ContainerContainer = (props) => {
     tappedBadgeBottomSheetRef.current?.close();
   };
 
+  const onBadgePress = (badge) => {
+    props.setIsTappedBadgeBottomSheetOpen(true, badge);
+  };
+
   return (
     <View style={{ padding: 10, flex: 1 }}>
-      <Badges badges={badges} />
+      <Badges badges={badges} onBadgePress={onBadgePress} />
       <SearchBadgeBottomSheet
         searchBadgeBottomSheetRef={searchBadgeBottomSheetRef}
         searchQuery={searchQuery}

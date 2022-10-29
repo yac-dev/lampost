@@ -15,6 +15,18 @@ import { setIsTappedBadgeBottomSheetOpen } from '../../../redux/actionCreators/b
 import { bgColorsTable } from '../bgColorsTable';
 
 const Badge = (props) => {
+  // Add badges(add user badgeとadd meetup badge)componentのbadgeをtapした時の挙動、
+  // user page componentのbadgeをtapした時の挙動を変えるっていう話。
+  const onBadgePress = () => {
+    if (11) {
+      // badgeStatus関係ないときには
+      props.onBadgePress(props.badge);
+    } else {
+      // badgeStatusがある時はこれを実行する。
+      props.onBadgePress(props.badgeStatus);
+    }
+  };
+
   const renderBadge = () => {
     return (
       <View style={{ marginBottom: 35, width: 85, height: 85 }}>
@@ -30,7 +42,7 @@ const Badge = (props) => {
             marginBottom: 3,
           }}
           onPress={() => {
-            props.setIsTappedBadgeBottomSheetOpen(true, props.badge);
+            props.onBadgePress(props.badge);
           }}
         >
           <FastImage

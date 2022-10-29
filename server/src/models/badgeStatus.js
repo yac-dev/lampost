@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 
 const badgeStatusSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+  },
   badge: {
     type: mongoose.Schema.ObjectId,
     ref: 'Badge',

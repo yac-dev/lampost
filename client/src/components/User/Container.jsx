@@ -1,19 +1,24 @@
 // main libraries
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
-import { Avatar } from 'react-native-paper';
+import { connect } from 'react-redux';
+import { Avatar, Menu } from 'react-native-paper';
 import lampostAPI from '../../apis/lampost';
 
 // components
 import Header from './Home/Header';
 import ActionButtons from './Home/ActionButtons';
-import Badges from './Home/Badges';
-import Bio from './Home/Bio';
+import Badges from '../Utils/AddBadges/Badges';
 import FABMenu from './Utils/FABMenu';
+import BadgeStatusBottomSheet from './Home/BadgeStatusBottomSheet';
 
 // badgeを取ってきて、skillも取ってくる。subscriberの数も返すし、connectionの数も返す。
 const Container = (props) => {
   const [user, setUser] = useState(null);
+  const [badges, setBadges] = useState([]);
+  const [badgeStatus, setBadgeStatus] = useState(null);
+
+  const badgeStatusBottomSheetRef = useRef(null);
 
   useEffect(() => {
     // ここで、_id使って、user情報をfetchしてくる。
@@ -28,27 +33,79 @@ const Container = (props) => {
   }, []);
 
   useEffect(() => {
+    if (user) {
+      const badges = user.badges.map((badgeStatus) => {
+        return badgeStatus.badge;
+      });
+      setBadges(badges);
+    }
+  }, [user]);
+
+  useEffect(() => {
     if (props.route.params?.badges) {
       setUser((previous) => {
         console.log('user data', previous);
         return { ...previous, badges: [...previous.badges, ...props.route.params.badges] };
-      }); // userのbadges部分だけをupdateすればいいだけよ。この方針でokなはず。
+      });
       console.log('from add badges to user', props.route.params.badges);
     }
   }, [props.route.params?.badges]);
 
-  // badgesが来たら、反応するようにしなきゃいかん。それか、普通にuser
-  // props.route.params.badges
+  const onBadgePress = async (badge) => {
+    // このuser pageのuser id、そしてbadgeを使ってget requestをする。
+    const result = await lampostAPI.post(`/badgestatuses/`, { user: user._id, badge: badge._id });
+    const { badgeStatus } = result.data;
+    setBadgeStatus(badgeStatus);
+    // bottom sheetにこのbadge statusをrenderする、それを書く。多分、add badges側もこんな感じで変えることになる。
+  };
 
   if (user) {
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={{ padding: 10, flex: 1 }}>
         <Header user={user} />
         <ActionButtons user={user} />
-        {/* <Bio user={user} /> */}
-        <Badges user={user} navigation={props.navigation} />
+        <Text>Badges</Text>
+        {/* {props.auth.data._id === user._id ? (
+          <Menu
+            visible={visible}
+            onDismiss={closeMenu}
+            style={{ alignSelf: 'flex-end' }}
+            anchor={
+              <Button onPress={openMenu} style={{ alignSelf: 'flex-end' }}>
+                Edit
+              </Button>
+            }
+          >
+            <Menu.Item
+              onPress={() => {
+                props.navigation.navigate('Add badges', { fromComponent: 'Add user badges' });
+              }}
+              title='Add new badge'
+            />
+            <Menu.Item
+              onPress={() => {
+                console.log('create your badge!!');
+              }}
+              title='Create new badge'
+            />
+            <Menu.Item
+              onPress={() => {
+                console.log('delete badges');
+              }}
+              title='Remove'
+            />
+            <Menu.Item
+              onPress={() => {
+                console.log('create your badge!!');
+              }}
+              title='Request new badge'
+            />
+          </Menu>
+        ) : null} */}
+        <Badges user={user} badges={badges} onBadgePress={onBadgePress} />
         <FABMenu user={user} />
-      </SafeAreaView>
+        <BadgeStatusBottomSheet badgeStatusBottomSheetRef={badgeStatusBottomSheetRef} badgeStatus={badgeStatus} />
+      </View>
     );
   } else {
     return (
@@ -59,14 +116,20 @@ const Container = (props) => {
   }
 };
 
+// Badgesにremoveのpropsを渡すようにする。
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-  },
+  // container: {
+  //   flex: 1,
+  //   backgroundColor: '#fff',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+  // },
 });
 
-export default Container;
+const mapStateToProps = (state) => {
+  return { auth: state.auth };
+};
+
+export default connect(mapStateToProps)(Container);
