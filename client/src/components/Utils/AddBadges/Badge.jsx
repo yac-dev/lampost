@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { Badge as RNPBadge, IconButton } from 'react-native-paper';
 import FastImage from 'react-native-fast-image';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -29,16 +29,28 @@ const Badge = (props) => {
 
   const renderBadge = () => {
     return (
-      <View style={{ marginBottom: 35, width: 85, height: 85 }}>
+      <View
+        style={{
+          marginBottom: 20,
+          width: '25%',
+          height: 0,
+          aspectRatio: 1,
+          padding: 10,
+        }}
+      >
         <TouchableOpacity
           style={{
             alignItems: 'center',
-            borderRadius: 7,
+            justifyContent: 'center',
+            borderRadius: 10,
             backgroundColor: bgColorsTable[props.badge.color],
             borderStyle: 'solid',
             borderColor: bgColorsTable[props.badge.color],
             borderWidth: 1,
-            padding: 15,
+            width: '100%',
+            height: '100%',
+            // backgroundColor: 'red',
+            // padding: 15,
             marginBottom: 3,
           }}
           onPress={() => {
@@ -55,7 +67,7 @@ const Badge = (props) => {
             resizeMode={FastImage.resizeMode.contain}
           />
         </TouchableOpacity>
-        <Text style={{ color: 'black', fontWeight: 'bold', alignSelf: 'center', fontSize: 12, textAlign: 'center' }}>
+        <Text style={{ color: 'black', fontWeight: 'bold', alignSelf: 'center', fontSize: 10, textAlign: 'center' }}>
           {props.badge.name}
         </Text>
         {props.selectedBadges[props.badge._id] ? (

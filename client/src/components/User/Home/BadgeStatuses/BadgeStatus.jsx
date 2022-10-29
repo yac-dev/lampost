@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 
 import FastImage from 'react-native-fast-image';
@@ -11,8 +11,15 @@ import { bgColorsTable } from '../../../Utils/bgColorsTable';
 
 const BadgeStatus = (props) => {
   const renderBadgeStatus = () => {
+    const width = Dimensions.get('window').width / 5;
     return (
-      <View style={{ marginBottom: 35, width: 85, height: 85 }}>
+      <View
+        style={{
+          marginBottom: 35,
+          width: width,
+          height: width,
+        }}
+      >
         <TouchableOpacity
           style={{
             alignItems: 'center',

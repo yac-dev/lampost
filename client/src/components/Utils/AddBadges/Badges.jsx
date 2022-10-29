@@ -21,7 +21,7 @@ const Container = (props) => {
 
     return (
       <ScrollView contentContainerStyle={{ paddingBottom: 150 }}>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>{badgesList}</View>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{badgesList}</View>
       </ScrollView>
     );
   };
