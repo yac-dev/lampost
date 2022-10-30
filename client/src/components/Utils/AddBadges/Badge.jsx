@@ -31,26 +31,26 @@ const Badge = (props) => {
     return (
       <View
         style={{
-          marginBottom: 20,
           width: '25%',
           height: 0,
           aspectRatio: 1,
-          padding: 10,
+          padding: 15, // これは単純に、25%幅に対して
+          marginBottom: 15,
+          // backgroundColor: 'red',
         }}
       >
         <TouchableOpacity
           style={{
-            alignItems: 'center',
-            justifyContent: 'center',
+            width: '100%',
+            height: '100%',
+            alignItems: 'center', // これと
+            justifyContent: 'center', // これで中のimageを上下左右真ん中にする
             borderRadius: 10,
             backgroundColor: bgColorsTable[props.badge.color],
             borderStyle: 'solid',
             borderColor: bgColorsTable[props.badge.color],
             borderWidth: 1,
-            width: '100%',
-            height: '100%',
             // backgroundColor: 'red',
-            // padding: 15,
             marginBottom: 3,
           }}
           onPress={() => {
@@ -58,7 +58,7 @@ const Badge = (props) => {
           }}
         >
           <FastImage
-            style={{ height: 50, width: props.badge.landscape ? 70 : 50 }}
+            style={{ width: 55, height: 55 }}
             source={{
               uri: props.badge.icon,
               priority: FastImage.priority.normal,

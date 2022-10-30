@@ -30,7 +30,7 @@ const Menus = (props) => {
   const menuOptions = [
     {
       name: 'Launcher',
-      iconBackgroundColor: 'rgba(255, 51, 51, 0.85)',
+      iconBackgroundColor: 'rgb(0, 255, 255)',
       icon: <MaterialCommunityIcons name='rocket-launch' size={25} color='white' />,
       info: (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -88,7 +88,7 @@ const Menus = (props) => {
     },
     {
       name: 'Crew',
-      iconBackgroundColor: 'purple',
+      iconBackgroundColor: 'rgba(99, 16, 219, 0.85)',
       icon: <FontAwesome5 name='user-astronaut' size={25} color='white' />,
       info: <Text>{`${props.selectedMeetup.attendees.length} >`}</Text>,
       onPress: () => {

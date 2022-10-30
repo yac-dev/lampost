@@ -15,20 +15,25 @@ const BadgeStatus = (props) => {
     return (
       <View
         style={{
-          marginBottom: 35,
-          width: width,
-          height: width,
+          width: '25%',
+          height: 0, // これなんだろね。。。
+          aspectRatio: 1,
+          padding: 10, // これは単純に、25%幅に対して
+          marginBottom: 20,
+          // backgroundColor: 'red',
         }}
       >
         <TouchableOpacity
           style={{
-            alignItems: 'center',
+            width: '100%',
+            height: '100%',
+            alignItems: 'center', // これと
+            justifyContent: 'center', // これで中のimageを上下左右真ん中にする
             borderRadius: 7,
             backgroundColor: bgColorsTable[props.badgeStatus.badge.color],
             borderStyle: 'solid',
             borderColor: bgColorsTable[props.badgeStatus.badge.color],
             borderWidth: 1,
-            padding: 15,
             marginBottom: 3,
           }}
           onPress={() => {
@@ -45,7 +50,7 @@ const BadgeStatus = (props) => {
             resizeMode={FastImage.resizeMode.contain}
           />
         </TouchableOpacity>
-        <Text style={{ color: 'black', fontWeight: 'bold', alignSelf: 'center', fontSize: 12, textAlign: 'center' }}>
+        <Text style={{ color: 'black', fontWeight: 'bold', alignSelf: 'center', fontSize: 10, textAlign: 'center' }}>
           {props.badgeStatus.badge.name}
         </Text>
         {props.badgeStatus.url ? (
