@@ -12,6 +12,13 @@ const badgeStatusSchema = new mongoose.Schema({
   url: {
     type: String,
   },
+  // badgeの上にさらにそれを説明するbadgeが乗る感じ。まあ、便宜上ひとつひとつをtagと呼ぶことにする。
+  tags: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Badge',
+    },
+  ],
   totalVotes: {
     type: Number,
     default: 0,
