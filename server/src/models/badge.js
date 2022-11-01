@@ -11,13 +11,24 @@ const badgeSchema = new mongoose.Schema({
   color: {
     type: String,
   },
-  landscape: {
-    type: Boolean,
-  },
   type: {
     type: String,
     // tech, food, sports etc
   },
+  tags: [
+    {
+      badge: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Badge',
+      },
+      users: [
+        {
+          type: mongoose.Schema.ObjectId,
+          ref: 'User',
+        },
+      ],
+    },
+  ],
   creator: {
     user: {
       type: mongoose.Schema.ObjectId,

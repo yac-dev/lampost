@@ -18,6 +18,8 @@ const badgeStatusSchema = new mongoose.Schema({
       type: mongoose.Schema.ObjectId,
       ref: 'Badge',
     },
+    // だから、tagをaddする時に、同時にparent badgeのtags.users[]にuser idをpushすることになる。まあ、もしtagがなかったらそもそもそのbadgeのidを足すことになるけど。
+    //
   ],
   totalVotes: {
     type: Number,
