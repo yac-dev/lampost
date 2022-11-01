@@ -8,6 +8,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
+import { iconColorsTable, backgroundColorsTable } from '../../../utils/colorsTable';
+
 import Menu from './Menu';
 
 const Menus = (props) => {
@@ -30,8 +32,8 @@ const Menus = (props) => {
   const menuOptions = [
     {
       name: 'Launcher',
-      iconBackgroundColor: 'rgb(0, 255, 255)',
-      icon: <MaterialCommunityIcons name='rocket-launch' size={25} color='white' />,
+      iconBackgroundColor: iconColorsTable['red1'],
+      icon: <MaterialCommunityIcons name='rocket-launch' size={25} color={'white'} />,
       info: (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View style={{ backgroundColor: 'red', width: 35, height: 35, borderRadius: 7, marginRight: 5 }}></View>
@@ -70,7 +72,8 @@ const Menus = (props) => {
     },
     {
       name: 'Fee',
-      iconBackgroundColor: 'rgba(236, 164, 20, 0.85)',
+      // 254, 208, 0  // 236, 164, 20
+      iconBackgroundColor: 'rgba(254, 208, 0, 0.85)',
       icon: <Foundation name='dollar-bill' size={25} color='white' />,
       info: <View>{props.selectedMeetup.isFeeFree ? <Text>Its free</Text> : <Text>Its not free</Text>}</View>,
       onPress: () => {
@@ -88,7 +91,7 @@ const Menus = (props) => {
     },
     {
       name: 'Crew',
-      iconBackgroundColor: 'rgba(99, 16, 219, 0.85)',
+      iconBackgroundColor: 'rgba(147, 38, 201, 0.85)',
       icon: <FontAwesome5 name='user-astronaut' size={25} color='white' />,
       info: <Text>{`${props.selectedMeetup.attendees.length} >`}</Text>,
       onPress: () => {
@@ -97,7 +100,7 @@ const Menus = (props) => {
     },
     {
       name: 'MediaPermission',
-      iconBackgroundColor: 'rgba(19, 167, 236, 0.85)',
+      iconBackgroundColor: 'rgba(4, 151, 219, 0.85)',
       icon: <FontAwesome5 name='photo-video' size={25} color='white' />,
       info: <View>{props.selectedMeetup.isMediaAllowed ? <Text>Allowed</Text> : <Text>Not allowed...</Text>}</View>,
       onPress: () => {
@@ -106,7 +109,7 @@ const Menus = (props) => {
     },
     {
       name: 'Link',
-      iconBackgroundColor: 'rgba(163, 163, 163, 0.85)',
+      iconBackgroundColor: 'rgba(155, 155, 155, 0.85)',
       icon: <Entypo name='link' size={25} color='white' />,
       info: <Text>right</Text>,
       onPress: () => {

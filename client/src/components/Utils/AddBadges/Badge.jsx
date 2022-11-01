@@ -6,6 +6,7 @@ import FastImage from 'react-native-fast-image';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import { iconColorsTable, backgroundColorsTable } from '../../../utils/colorsTable';
 
 // ac
 import { selectBadge } from '../../../redux/actionCreators/selectItem';
@@ -31,11 +32,11 @@ const Badge = (props) => {
     return (
       <View
         style={{
-          width: '25%',
+          width: '20%',
           height: 0,
           aspectRatio: 1,
-          padding: 15, // これは単純に、25%幅に対して
-          marginBottom: 15,
+          padding: 10, // これは単純に、25%幅に対して
+          marginBottom: 23,
           // backgroundColor: 'red',
         }}
       >
@@ -46,24 +47,24 @@ const Badge = (props) => {
             alignItems: 'center', // これと
             justifyContent: 'center', // これで中のimageを上下左右真ん中にする
             borderRadius: 10,
-            backgroundColor: bgColorsTable[props.badge.color],
+            backgroundColor: backgroundColorsTable[props.badge.color],
             borderStyle: 'solid',
-            borderColor: bgColorsTable[props.badge.color],
+            borderColor: backgroundColorsTable[props.badge.color],
             borderWidth: 1,
             // backgroundColor: 'red',
-            marginBottom: 3,
+            marginBottom: 5,
           }}
           onPress={() => {
             props.onBadgePress(props.badge);
           }}
         >
           <FastImage
-            style={{ width: 55, height: 55 }}
+            style={{ width: 50, height: 50 }}
             source={{
               uri: props.badge.icon,
               priority: FastImage.priority.normal,
             }}
-            tintColor={props.badge.color}
+            tintColor={iconColorsTable[props.badge.color]}
             resizeMode={FastImage.resizeMode.contain}
           />
         </TouchableOpacity>
