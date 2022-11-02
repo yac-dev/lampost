@@ -20,11 +20,8 @@ const meetupSchema = new mongoose.Schema({
     maxLength: 40,
   },
   startDateAndTime: Date,
-  isStartDateAndTimeUpdated: Boolean,
   duration: Number,
   applicationDeadline: Date,
-  endDateAndTime: Date,
-  isEndDateAndTimeUpdated: Boolean,
   isFeeFree: Boolean,
   fee: Number,
   currency: String,
@@ -37,24 +34,12 @@ const meetupSchema = new mongoose.Schema({
   isPublic: Boolean,
   isMediaAllowed: Boolean,
   link: String,
-  totalComments: {
-    type: Number,
-    default: 0,
-  },
   comments: [
     {
       type: mongoose.Schema.ObjectId,
       ref: 'Comment',
     },
   ],
-  launcher: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User',
-  },
-  totalAttendees: {
-    type: Number,
-    default: 0,
-  },
   attendees: {
     type: [
       {
@@ -64,17 +49,40 @@ const meetupSchema = new mongoose.Schema({
     ],
     // validate: [attendeesLimit, 'OOPS! This meetup is full now.'],
   },
+  curious: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+    },
+  ],
+  launcher: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+  },
   chatRoom: {
     type: mongoose.Schema.ObjectId,
     ref: 'ChatRoom',
   },
   state: {
     type: String,
-    default: '', // '', started, done
+    default: '', // 'not started', 'started', 'finished'
   },
   createdAt: {
     type: Date,
   },
+  // isStartDateAndTimeUpdated: Boolean,
+  // isDuratonUpdated: Boolean,
+  // endDateAndTime: Date,
+  // isEndDateAndTimeUpdated: Boolean,
+  // totalComments: {
+  //   type: Number,
+  //   default: 0,
+  // },
+  // totalAttendees: {
+  //   type: Number,
+  //   default: 0,
+  // },
+
   // これも、commentをただ集めてくればいいだよな,
   // agenda: [
   //   {

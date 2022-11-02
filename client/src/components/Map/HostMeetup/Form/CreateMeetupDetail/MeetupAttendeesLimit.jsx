@@ -3,7 +3,9 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { Menu, Switch, TextInput } from 'react-native-paper';
 
+import { iconColorsTable } from '../../../../../utils/colorsTable';
 import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -40,7 +42,7 @@ const MeetupAttendeesLimit = (props) => {
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
         <View
           style={{
-            backgroundColor: 'rgba(242, 126, 164, 0.85)',
+            backgroundColor: iconColorsTable['violet1'],
             padding: 5,
             borderRadius: 7,
             width: 35,
@@ -48,7 +50,7 @@ const MeetupAttendeesLimit = (props) => {
             alignItems: 'center',
           }}
         >
-          <MaterialCommunityIcons name='account-group' size={25} color='white' />
+          <FontAwesome5 name='user-astronaut' size={25} color='white' />
         </View>
         <View style={{ marginLeft: 15 }}>
           <View style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>

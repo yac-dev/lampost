@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { TextInput, Divider, IconButton, Button, Menu, Switch } from 'react-native-paper';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-
+import { iconColorsTable } from '../../../../../utils/colorsTable';
 import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -58,7 +58,7 @@ const DateAndTime = (props) => {
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
           <View
             style={{
-              backgroundColor: 'rgba(39, 80, 204, 0.85)',
+              backgroundColor: iconColorsTable['blue1'],
               padding: 5,
               borderRadius: 7,
               width: 35,

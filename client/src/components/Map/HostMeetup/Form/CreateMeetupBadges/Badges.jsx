@@ -5,6 +5,7 @@ import { Foundation } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
+import { iconColorsTable } from '../../../../../utils/colorsTable';
 
 import SelectedBadges from './SelectedBadges/Badges';
 
@@ -14,7 +15,7 @@ const Badges = (props) => {
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
         <View
           style={{
-            backgroundColor: 'rgba(45, 209, 40, 0.85)',
+            backgroundColor: iconColorsTable['lightGreen1'],
             padding: 5,
             borderRadius: 7,
             width: 35,
@@ -37,7 +38,7 @@ const Badges = (props) => {
               </TouchableOpacity>
             </View>
             <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E' }}>
-              What kind of meetup you'll launch?
+              What kind of meetup you'll launch? Please choose the icons which is related to this meetup.
             </Text>
           </View>
         </View>

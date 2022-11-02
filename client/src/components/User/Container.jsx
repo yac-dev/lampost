@@ -76,7 +76,12 @@ const Container = (props) => {
       <View style={{ padding: 10, flex: 1 }}>
         <Header user={user} />
         <ActionButtons user={user} />
-        <BadgeStatuses user={user} badgeStatuses={badgeStatuses} onBadgePress={onBadgePress} />
+        <BadgeStatuses
+          user={user}
+          badgeStatuses={badgeStatuses}
+          onBadgePress={onBadgePress}
+          navigation={props.navigation}
+        />
         {/* <Badges user={user} badges={badges} onBadgePress={onBadgePress} /> */}
         <FABMenu user={user} />
         <BadgeStatusBottomSheet

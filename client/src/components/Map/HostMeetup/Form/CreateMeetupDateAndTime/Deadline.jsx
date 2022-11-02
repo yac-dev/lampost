@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { TextInput, Divider, IconButton, Button, Menu, Switch } from 'react-native-paper';
+import { iconColorsTable } from '../../../../../utils/colorsTable';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-
 import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -44,7 +44,7 @@ const Deadline = (props) => {
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
           <View
             style={{
-              backgroundColor: 'rgba(158, 20, 236, 0.85)',
+              backgroundColor: iconColorsTable['green1'],
               padding: 5,
               borderRadius: 7,
               width: 35,

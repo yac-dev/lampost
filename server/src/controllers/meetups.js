@@ -62,7 +62,7 @@ export const createMeetup = async (request, response) => {
       startDateAndTime,
       duration,
       applicationDeadline,
-      endDateAndTime,
+      // endDateAndTime,
       isMeetupAttendeesLimitFree,
       meetupAttendeesLimit,
       isMeetupFeeFree,
@@ -81,12 +81,12 @@ export const createMeetup = async (request, response) => {
       title,
       startDateAndTime,
       duration,
-      endDateAndTime,
       applicationDeadline,
       description,
       link,
       launcher,
       createdAt: new Date(),
+      // endDateAndTime,
     });
 
     if (isMeetupFeeFree) {
@@ -135,8 +135,8 @@ export const createMeetup = async (request, response) => {
     meetup.chatRoom = chatRoom._id;
     meetup.save();
 
-    scheduleStartMeetup(meetup.startDateAndTime, meetup._id);
-    scheduleEndMeetup(meetup.endDateAndTime, meetup._id);
+    // scheduleStartMeetup(meetup.startDateAndTime, meetup._id);
+    // scheduleEndMeetup(meetup.endDateAndTime, meetup._id);
 
     const populatingBadges = await Badge.find({ _id: { $in: badges } });
 

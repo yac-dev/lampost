@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetScrollView, BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { iconColorsTable } from '../../../../../utils/colorsTable';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -12,7 +13,7 @@ const Description = (props) => {
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
         <View
           style={{
-            backgroundColor: 'rgba(174, 101, 9, 0.85)',
+            backgroundColor: iconColorsTable['brown1'],
             padding: 5,
             borderRadius: 7,
             width: 35,
@@ -41,6 +42,7 @@ const Description = (props) => {
         onChangeText={(text) => props.dispatch({ type: 'SET_DESCRIPTION', payload: text })}
         // left={<TextInput.Icon name='eye' />}
         mode='outlined'
+        autoCapitalize='none'
       />
       {/* <Text style={{ padding: 10, fontWeight: 'bold' }}>{props.state.description.length}/300</Text> */}
     </View>

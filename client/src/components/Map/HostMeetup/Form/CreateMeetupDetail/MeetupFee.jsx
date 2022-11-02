@@ -3,6 +3,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { Menu, Switch, TextInput, Button } from 'react-native-paper';
 
+import { iconColorsTable } from '../../../../../utils/colorsTable';
 import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -80,7 +81,7 @@ const MeetupFee = (props) => {
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
         <View
           style={{
-            backgroundColor: 'rgba(236, 164, 20, 0.85)',
+            backgroundColor: iconColorsTable['yellow1'],
             padding: 5,
             borderRadius: 7,
             width: 35,

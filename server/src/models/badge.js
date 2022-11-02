@@ -29,6 +29,12 @@ const badgeSchema = new mongoose.Schema({
       ],
     },
   ],
+  users: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+    },
+  ],
   creator: {
     user: {
       type: mongoose.Schema.ObjectId,

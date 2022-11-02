@@ -7,13 +7,15 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
+import { iconColorsTable } from '../../../../../utils/colorsTable';
+
 const Title = (props) => {
   return (
     <View style={{ marginBottom: 20 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
         <View
           style={{
-            backgroundColor: 'rgba(255, 51, 51, 0.85)',
+            backgroundColor: iconColorsTable['red1'],
             padding: 5,
             borderRadius: 7,
             width: 35,
@@ -42,6 +44,7 @@ const Title = (props) => {
           }}
           value={props.state.title}
           onChangeText={(text) => props.dispatch({ type: 'SET_MEETUP_TITLE', payload: text })}
+          autoCapitalize='none'
         />
         {/* <Text style={{ padding: 10, fontWeight: 'bold' }}>{props.state.title.length}/40</Text> */}
       </View>

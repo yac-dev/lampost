@@ -13,6 +13,7 @@ const ActionButtons = (props) => {
   const renderApp = () => {
     if (props.auth.isAuthenticated) {
       for (let i = 0; i < props.auth.data.upcomingMeetups.length; i++) {
+        // これ、多分every使うかな？
         if (props.auth.data.upcomingMeetups[i].meetup === props.selectedMeetup._id) {
           return (
             <View style={{ flexDirection: 'row', paddingTop: 10, paddingBottom: 10 }}>
@@ -48,6 +49,12 @@ const ActionButtons = (props) => {
                 Map chat
               </Button>
             </View>
+          );
+        } else {
+          return (
+            <Button mode='outlined' icon={'map'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
+              Map chat
+            </Button>
           );
         }
       }
