@@ -60,9 +60,13 @@ const Container = (props) => {
     console.log(meetup);
     // console.log(meetup);
     setMeetup(meetup);
-    setChats((previous) => {
-      return [...previous, ...meetup.chatRoom.chats];
-    });
+    console.log(meetup.chatRoom.chats);
+    setChats(
+      //   (previous) => {
+      //   return meetup.chatRoom.chats;
+      // }
+      meetup.chatRoom.chats
+    );
   };
 
   useEffect(() => {

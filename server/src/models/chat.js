@@ -19,7 +19,7 @@ const chatSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['general', 'idea', 'questionOrHelp', 'announcement', 'lamnched'], // launchedは、portでのchat用ね。
+    enum: ['general', 'idea', 'questionOrHelp', 'announcement', 'launched'], // launchedは、portでのchat用ね。
   },
   createdAt: {
     type: Date,

@@ -1,25 +1,67 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
+import { iconColorsTable } from '../../../../utils/colorsTable';
+
+const chatTypeTable = {
+  general: iconColorsTable['grey1'],
+  idea: iconColorsTable['yellow1'],
+  questionOrHelp: iconColorsTable['blue1'],
+  announcement: iconColorsTable['red1'],
+};
 
 const Chats = (props) => {
+  const renderDate = (date) => {
+    const d = new Date(date).toLocaleDateString('en-US');
+    return <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#ABABAB' }}>{d}</Text>;
+  };
+
+  const renderChatType = (type) => {
+    switch (type) {
+      case 'general':
+        return <MaterialCommunityIcons name='comment-text' size={15} color={'white'} />;
+      case 'idea':
+        return <Ionicons name='bulb-outline' size={15} color={'white'} />;
+      case 'questionOrHelp':
+        return <Text>question or help</Text>;
+      case 'announcement':
+        return <Text></Text>;
+      case 'launched':
+        return <Text>Launched</Text>;
+      default:
+        return null;
+    }
+  };
+
   const renderChats = () => {
     const chatsList = props.chats.map((chat, index) => {
       return (
-        <View key={index} style={{}}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {/* <Avatar.Text size={24} label='XD' /> */}
-            {/* <Text style={{ marginLeft: 10 }}>
-              {chat.user.name.firstName} {chat.user.name.lastName}
-            </Text> */}
-            <Text>{chat.createdAt}</Text>
+        <TouchableOpacity key={index} style={{ padding: 10, borderBottomWidth: 0.3, borderBottomColor: '#ABABAB' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 7 }}>
+            <View
+              style={{
+                backgroundColor: chatTypeTable[chat.type],
+                padding: 5,
+                borderRadius: 7,
+                width: 25,
+                height: 25,
+                alignItems: 'center',
+                marginRight: 10,
+              }}
+            >
+              {renderChatType(chat.type)}
+            </View>
+            <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#ABABAB' }}>{renderDate(chat.createdAt)}</Text>
           </View>
-          <Text>{chat.content}</Text>
-          <View style={{ flexDirection: 'row' }}>
-            <TouchableOpacity>
-              <Text>icon Reply</Text>
-            </TouchableOpacity>
+          <Text style={{ fontWeight: 'bold', fontSize: 15, marginBottom: 7 }}>{chat.content}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
+            <View style={{ height: 25, width: 25, backgroundColor: 'blue', borderRadius: 5, marginRight: 5 }}></View>
+            <Text>{chat.user.name}</Text>
           </View>
-        </View>
+        </TouchableOpacity>
       );
     });
 

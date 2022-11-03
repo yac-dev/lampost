@@ -1,7 +1,15 @@
 import React, { useRef, useState, useEffect } from 'react';
 import lampostAPI from '../../../../apis/lampost';
 import { connect } from 'react-redux';
-import { View, Text, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableWithoutFeedback,
+  Keyboard,
+  InputAccessoryView,
+  TouchableOpacity,
+} from 'react-native';
 import { IconButton, Menu, Provider, Button } from 'react-native-paper';
 import GorhomBottomSheet, {
   BottomSheetView,
@@ -14,7 +22,7 @@ import GorhomBottomSheet, {
 import { setIsTextBoxBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
 
 const TextBox = (props) => {
-  const snapPoints = ['65%', '80%', '100%'];
+  const snapPoints = ['10%', '65%'];
   const inputAccessoryViewID = '111111111';
   const [content, setContent] = useState('');
   const [chatType, setChatType] = useState('general');
@@ -49,37 +57,68 @@ const TextBox = (props) => {
     setContent('');
   };
 
-  // if (props.bottomSheet.textBox.isOpen) {
   return (
     <GorhomBottomSheet
-      index={-1}
+      index={0}
       enableOverDrag={true}
       ref={props.textBoxBottomSheetRef}
       snapPoints={snapPoints}
-      enablePanDownToClose={true}
+      // enablePanDownToClose={true}
+      keyboardBehavior={'extend'}
       onClose={() => onTextBoxBottomSheetClose()}
     >
       <BottomSheetView style={{ flex: 1, paddingLeft: 15, paddingRight: 15 }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+        {/* <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
           <Button icon='send' mode='outlined' onPress={() => onSendPress()}>
             Send
           </Button>
-        </View>
-        <TextInput
+        </View> */}
+        {/* <TextInput
           multiline={true}
-          placeholder='Write your comment' // ここを、bottom sheetのmax分に広げる。
+          placeholder='Add a message' // ここを、bottom sheetのmax分に広げる。 // scrollableにすればいいと思う。。。
           inputAccessoryViewID={inputAccessoryViewID}
           style={{ borderRadius: 10, height: '100%' }}
           ref={props.textInputRef}
           value={content}
           onChangeText={setContent}
+        /> わざと、bottomsheetではなくtextinputを使って、keybordbehaviourを防ぐ方法もある。これ重要。*/}
+        <BottomSheetTextInput
+          multiline={true}
+          placeholder='Add a message'
+          inputAccessoryViewID={inputAccessoryViewID}
+          style={{ borderRadius: 10, height: '100%', padding: 10, backgroundColor: 'red' }}
+          ref={props.textInputRef}
+          value={content}
+          onChangeText={setContent}
         />
+        <InputAccessoryView nativeID={inputAccessoryViewID} backgroundColor='hsl(0, 0%, 95%)' style={{ padding: 5 }}>
+          <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity
+                onPress={() =>
+                  // keybord dismissとともに、snappointを15%にまで下げる。
+                  Keyboard.dismiss()
+                }
+              >
+                <Text>Send</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => Keyboard.dismiss()}>
+                <Text>Send</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => Keyboard.dismiss()}>
+                <Text>Send</Text>
+              </TouchableOpacity>
+            </View>
+            <View>
+              <TouchableOpacity onPress={() => Keyboard.dismiss()}>
+                <Text>Send</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </InputAccessoryView>
       </BottomSheetView>
     </GorhomBottomSheet>
   );
-  // } else {
-  //   return null;
-  // }
 };
 
 const mapStateToProps = (state) => {

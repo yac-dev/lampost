@@ -10,6 +10,7 @@ const chatRoomSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
   },
+  // chats: [chat1, chat2, chat3]
 });
 
 chatRoomSchema.set('toJSON', { virtuals: true });
