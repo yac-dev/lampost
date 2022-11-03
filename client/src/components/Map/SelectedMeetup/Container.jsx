@@ -10,14 +10,8 @@ import { setIsSelectedItemBottomSheetOpen } from '../../../redux/actionCreators/
 import Header from './Header';
 import ActionButtons from './ActionButtons';
 import Menus from './Menus';
-import Tab from './Tab';
-import About from './About';
-import LocationDetail from './LocationDetail';
-import QandA from './QandA/Container';
-// import QandA from './QandA';
 
 const Container = (props) => {
-  const [component, setComponent] = useState('about');
   const snapPoints = ['60%', '85%'];
 
   const onSelectedItemBottomSheetClose = () => {
@@ -26,42 +20,17 @@ const Container = (props) => {
     }
   };
 
-  const switchComponent = () => {
-    switch (component) {
-      case 'about':
-        return (
-          <View>
-            <Header component={component} setComponent={setComponent} />
-            <ActionButtons navigation={props.navigation} />
-            <Menus
-              navigation={props.navigation}
-              handleselectedMeetupDetailBottomSheetChanges={props.handleselectedMeetupDetailBottomSheetChanges}
-            />
-            {/* <Tab component={component} setComponent={setComponent} /> */}
-            {/* <About navigation={props.navigation} /> */}
-            {/* {switchComponent()} */}
-          </View>
-        );
-      // case 'locationDetail':
-      //   return <LocationDetail />;
-      case 'qAndA':
-        return <QandA />;
-      default:
-        return null;
-    }
-  };
-
   const renderSelectedMeetup = () => {
     if (props.selectedMeetup) {
       return (
-        // <View>
-        //   <Header component={component} setComponent={setComponent} />
-        //   <ActionButtons navigation={props.navigation} />
-        //   <Tab component={component} setComponent={setComponent} />
-        //   <About />
-        //   {switchComponent()}
-        // </View>
-        <>{switchComponent()}</>
+        <View>
+          <Header />
+          <ActionButtons navigation={props.navigation} />
+          <Menus
+            navigation={props.navigation}
+            handleselectedMeetupDetailBottomSheetChanges={props.handleselectedMeetupDetailBottomSheetChanges}
+          />
+        </View>
       );
     } else {
       return (

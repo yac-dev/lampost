@@ -9,12 +9,12 @@ const selectedItemReducer = (state = INITIAL_STATE, action) => {
     case 'SELECT_MEETUP':
       return { ...state, meetup: action.payload };
     case 'JOIN_MEETUP':
-      return { ...state, meetup: { ...state.meetup, totalAttendees: ++state.meetup.totalAttendees } };
+      return { ...state, meetup: { ...state.meetup, attendees: action.payload.attendees } };
     case 'LEAVE_MEETUP':
-      return { ...state, meetup: { ...state.meetup, totalAttendees: --state.meetup.totalAttendees } };
+      return { ...state, meetup: { ...state.meetup, attendees: action.payload.attendees } };
     // append
     case 'ADD_COMMENT':
-      return { ...state, meetup: {...state.meetup, comments: [ ...state.meetup.comments, action.payload ]} };
+      return { ...state, meetup: { ...state.meetup, comments: [...state.meetup.comments, action.payload] } };
     case 'SELECT_BADGE':
       const selectedBadges = { ...state.badges };
       selectedBadges[action.payload._id] = action.payload;

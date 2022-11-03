@@ -105,6 +105,7 @@ const Menus = (props) => {
       info: <View>{props.selectedMeetup.isMediaAllowed ? <Text>Allowed</Text> : <Text>Not allowed...</Text>}</View>,
       onPress: () => {
         // props.handleselectedMeetupDetailBottomSheetChanges('MediaPermission');
+        props.handleselectedMeetupDetailBottomSheetChanges('MediaPermission');
       },
     },
     {

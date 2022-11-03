@@ -14,9 +14,18 @@ const authReducer = (state = INITIAL_STATE, action) => {
     case 'LOG_OUT':
       return { ...state, data: null, isAuthenticated: false, currentLocation: null, socketId: null };
     case 'JOIN_MEETUP':
-      return { ...state, data: action.payload };
+      return {
+        ...state,
+        data: { ...state.data, upcomingMeetups: [...state.data.upcomingMeetups, action.payload.id] },
+      };
     case 'LEAVE_MEETUP':
-      return { ...state, data: action.payload };
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          upcomingMeetups: [...state.data.upcomingMeetups].filter((meetup) => meetup._id !== action.payload.id),
+        },
+      }; // ここ、filterする感じ。
     case 'GET_CURRENT_LOCATION':
       return { ...state, currentLocation: { latitude: action.payload.latitude, longitude: action.payload.longitude } };
     case 'GET_SOCKET':

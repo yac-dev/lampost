@@ -13,7 +13,7 @@ const ActionButtons = (props) => {
   const renderApp = () => {
     if (props.auth.isAuthenticated) {
       for (let i = 0; i < props.auth.data.upcomingMeetups.length; i++) {
-        // これ、多分every使うかな？
+        // everyか？
         if (props.auth.data.upcomingMeetups[i].meetup === props.selectedMeetup._id) {
           return (
             <View style={{ flexDirection: 'row', paddingTop: 10, paddingBottom: 10 }}>
@@ -50,21 +50,27 @@ const ActionButtons = (props) => {
               </Button>
             </View>
           );
-        } else {
-          return (
-            <Button mode='outlined' icon={'map'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
-              Map chat
-            </Button>
-          );
         }
       }
+      return (
+        <View style={{ paddingTop: 10, paddingBottom: 10 }}>
+          <Button
+            mode='outlined'
+            icon={'human-greeting-variant'}
+            onPress={() => props.joinMeetup(props.selectedMeetup._id)}
+            style={{ marginRight: 10 }}
+          >
+            I'm in!
+          </Button>
+        </View>
+      );
     } else {
       return null;
     }
   };
 
   return (
-    <ScrollView horizontal={true} style={{ flexDirection: 'row', marginBottom: 30 }}>
+    <ScrollView horizontal={true} style={{ marginBottom: 30 }}>
       {/* <Button
         mode='outlined'
         icon={<FontAwesome5 name='user-astronaut' />}

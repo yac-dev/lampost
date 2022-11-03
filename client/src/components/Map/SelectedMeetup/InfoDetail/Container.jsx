@@ -10,6 +10,7 @@ import GorhomBottomSheet, {
 
 // components
 import Crew from './Crew';
+import MediaPermission from './MediaPermission';
 
 const Container = (props) => {
   const snapPoints = ['40%'];
@@ -22,6 +23,8 @@ const Container = (props) => {
         return <Text>Fee here</Text>;
       case 'Crew':
         return <Crew />;
+      case 'MediaPermission':
+        return <MediaPermission />;
       case 'Links':
         return <Text>Links here</Text>;
       default:

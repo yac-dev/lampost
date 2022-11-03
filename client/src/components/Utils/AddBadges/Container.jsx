@@ -120,7 +120,7 @@ const ContainerContainer = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { auth: state.auth };
+  return { auth: state.auth, selectedBadges: Object.values(state.selectedItem.badges) };
 };
 
 export default connect(mapStateToProps, { setIsTappedBadgeBottomSheetOpen })(ContainerContainer);

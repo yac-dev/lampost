@@ -7,7 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
-import { bgColorsTable } from '../../../Utils/bgColorsTable';
+import { iconColorsTable, backgroundColorsTable } from '../../../../utils/colorsTable';
 
 const BadgeStatus = (props) => {
   const renderBadgeStatus = () => {
@@ -15,11 +15,11 @@ const BadgeStatus = (props) => {
     return (
       <View
         style={{
-          width: '25%',
+          width: '20%',
           height: 0, // これなんだろね。。。
           aspectRatio: 1,
           padding: 10, // これは単純に、25%幅に対して
-          marginBottom: 20,
+          marginBottom: 23,
           // backgroundColor: 'red',
         }}
       >
@@ -30,27 +30,38 @@ const BadgeStatus = (props) => {
             alignItems: 'center', // これと
             justifyContent: 'center', // これで中のimageを上下左右真ん中にする
             borderRadius: 7,
-            backgroundColor: bgColorsTable[props.badgeStatus.badge.color],
+            backgroundColor: backgroundColorsTable[props.badgeStatus.badge.color],
             borderStyle: 'solid',
-            borderColor: bgColorsTable[props.badgeStatus.badge.color],
+            borderColor: backgroundColorsTable[props.badgeStatus.badge.color],
             borderWidth: 1,
-            marginBottom: 3,
+            marginBottom: 5,
           }}
           onPress={() => {
             props.onBadgePress(props.badgeStatus._id);
           }}
         >
           <FastImage
-            style={{ height: 50, width: props.badgeStatus.badge.landscape ? 70 : 50 }}
+            style={{ height: 50, width: 50 }}
             source={{
               uri: props.badgeStatus.badge.icon,
               priority: FastImage.priority.normal,
             }}
-            tintColor={props.badgeStatus.badge.color}
+            tintColor={iconColorsTable[props.badgeStatus.badge.color]}
             resizeMode={FastImage.resizeMode.contain}
           />
         </TouchableOpacity>
-        <Text style={{ color: 'black', fontWeight: 'bold', alignSelf: 'center', fontSize: 10, textAlign: 'center' }}>
+        <Text
+          style={{
+            color: 'black',
+            fontWeight: 'bold',
+            alignSelf: 'center',
+            fontSize: 12,
+            textAlign: 'center',
+            // borderWidth: 1,
+            // borderRadius: 5,
+            // padding: 4,
+          }}
+        >
           {props.badgeStatus.badge.name}
         </Text>
         {props.badgeStatus.url ? (

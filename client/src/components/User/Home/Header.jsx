@@ -3,12 +3,26 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity } from 'react-native';
 
+import { FontAwesome5 } from '@expo/vector-icons';
+import { iconColorsTable } from '../../../utils/colorsTable';
 import { Avatar } from 'react-native-paper';
 
 const Header = (props) => {
   return (
     <View style={{ flexDirection: 'row', padding: 20, alignItems: 'center' }}>
-      <View style={{ width: 60, height: 60, backgroundColor: 'blue', borderRadius: 10, marginRight: 10 }}></View>
+      <View
+        style={{
+          backgroundColor: iconColorsTable['blue1'],
+          padding: 5,
+          borderRadius: 7,
+          width: 60,
+          height: 60,
+          alignItems: 'center',
+          marginRight: 10,
+        }}
+      >
+        <FontAwesome5 name='user-astronaut' size={45} color='white' />
+      </View>
       <Text>{props.user.name}</Text>
       <View>
         {/* <View style={{ flexDirection: 'row', flexWrap: 'wrap', flex: 1 }}> */}

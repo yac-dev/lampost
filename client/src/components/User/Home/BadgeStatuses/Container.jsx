@@ -10,17 +10,19 @@ const Container = (props) => {
   const [menuVisible, setMenuVisible] = useState(false);
   return (
     <View>
-      {/* <Text>Badges</Text> */}
       {props.auth.data._id === props.user._id ? (
-        <Button
-          onPress={() => {
-            props.navigation.navigate('Add badges', { fromComponent: 'Add user badges' });
-            // setMenuVisible(false);
-          }}
-          mode='outlined'
-        >
-          Add new
-        </Button>
+        <View style={{ alignSelf: 'flex-end', marginBottom: 20 }}>
+          <Button
+            onPress={() => {
+              props.navigation.navigate('Add badges', { fromComponent: 'Add user badges' });
+              // setMenuVisible(false);
+            }}
+            mode='outlined'
+            icon={'plus'}
+          >
+            Add new
+          </Button>
+        </View>
       ) : // <Menu
       //   visible={menuVisible}
       //   onDismiss={() => setMenuVisible(false)}
