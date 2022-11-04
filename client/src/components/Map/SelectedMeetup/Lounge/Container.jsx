@@ -20,6 +20,7 @@ import Chats from './Chats';
 import TextBoxBottomSheet from './TextBoxBottomSheet';
 import CrewBottomSheet from './CrewBottomSheet/Container';
 import FABMenu from './FABMenu';
+import SnackBar from '../../../Utils/SnackBar';
 
 // ac
 import { setIsTextBoxBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
@@ -110,6 +111,7 @@ const Container = (props) => {
       />
       <CrewBottomSheet crewBottomSheetRef={crewBottomSheetRef} meetup={meetup} navigation={props.navigation} />
       <FABMenu handleTextBoxBottomSheet={handleTextBoxBottomSheet} handleCrewBottomSheet={handleCrewBottomSheet} />
+      <SnackBar />
     </View>
   );
 };

@@ -17,12 +17,17 @@ import GorhomBottomSheet, {
   BottomSheetScrollView,
   BottomSheetBackdrop,
 } from '@gorhom/bottom-sheet';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // ac
 import { setIsTextBoxBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
+import { addSnackBar } from '../../../../redux/actionCreators/snackBar';
 
 const TextBox = (props) => {
-  const snapPoints = ['10%', '65%'];
+  const snapPoints = ['10%', '60%'];
   const inputAccessoryViewID = '111111111';
   const [content, setContent] = useState('');
   const [chatType, setChatType] = useState('general');
@@ -55,6 +60,8 @@ const TextBox = (props) => {
     props.auth.socket.emit('I_SEND_A_CHAT_TO_MY_GROUP', { chat, chatRoom: props.meetup.chatRoom._id });
     Keyboard.dismiss();
     setContent('');
+    props.textBoxBottomSheetRef.current?.snapToIndex(0);
+    props.addSnackBar('Message sent successfully!', 'success', 7000);
   };
 
   return (
@@ -82,16 +89,41 @@ const TextBox = (props) => {
           value={content}
           onChangeText={setContent}
         /> わざと、bottomsheetではなくtextinputを使って、keybordbehaviourを防ぐ方法もある。これ重要。*/}
-        <BottomSheetTextInput
-          multiline={true}
-          placeholder='Add a message'
-          inputAccessoryViewID={inputAccessoryViewID}
-          style={{ borderRadius: 10, height: '100%', padding: 10, backgroundColor: 'red' }}
-          ref={props.textInputRef}
-          value={content}
-          onChangeText={setContent}
-        />
-        <InputAccessoryView nativeID={inputAccessoryViewID} backgroundColor='hsl(0, 0%, 95%)' style={{ padding: 5 }}>
+        <View style={{ height: '100%', flexDirection: 'row' }}>
+          <BottomSheetTextInput
+            multiline={true}
+            placeholder='Add a message'
+            inputAccessoryViewID={inputAccessoryViewID}
+            style={{ borderRadius: 10, height: '100%', padding: 10, backgroundColor: 'red', width: '90%' }}
+            ref={props.textInputRef}
+            value={content}
+            onChangeText={setContent}
+            autoCapitalize='none'
+          />
+          <View style={{ height: '100%', backgroundColor: 'blue' }}>
+            <TouchableOpacity
+              onPress={() =>
+                // keybord dismissとともに、snappointを15%にまで下げる。
+                console.log('hi')
+              }
+            >
+              <FontAwesome5 name='photo-video' size={20} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                // keybord dismissとともに、snappointを15%にまで下げる。
+                console.log('hi')
+              }
+            >
+              <FontAwesome name='camera' size={20} />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <InputAccessoryView
+          nativeID={inputAccessoryViewID}
+          backgroundColor='hsl(0, 0%, 95%)'
+          style={{ paddingTop: 5, paddingBottom: 5 }}
+        >
           <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
             <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity
@@ -100,17 +132,17 @@ const TextBox = (props) => {
                   Keyboard.dismiss()
                 }
               >
-                <Text>Send</Text>
+                <FontAwesome5 name='photo-video' size={25} />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => Keyboard.dismiss()}>
-                <Text>Send</Text>
+                <MaterialCommunityIcons name='plus' size={25} />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => Keyboard.dismiss()}>
-                <Text>Send</Text>
+                <MaterialCommunityIcons name='plus' size={25} />
               </TouchableOpacity>
             </View>
             <View>
-              <TouchableOpacity onPress={() => Keyboard.dismiss()}>
+              <TouchableOpacity onPress={() => onSendPress()}>
                 <Text>Send</Text>
               </TouchableOpacity>
             </View>
@@ -125,4 +157,4 @@ const mapStateToProps = (state) => {
   return { bottomSheet: state.bottomSheet, auth: state.auth };
 };
 
-export default connect(mapStateToProps, { setIsTextBoxBottomSheetOpen })(TextBox);
+export default connect(mapStateToProps, { setIsTextBoxBottomSheetOpen, addSnackBar })(TextBox);
