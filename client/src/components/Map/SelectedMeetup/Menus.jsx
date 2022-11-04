@@ -59,7 +59,7 @@ const Menus = (props) => {
                   // headers: { Authorization: 'someAuthToken' },
                   priority: FastImage.priority.normal,
                 }}
-                tintColor={badge.color}
+                tintColor={iconColorsTable[badge.color]}
                 resizeMode={FastImage.resizeMode.contain}
               />
             );

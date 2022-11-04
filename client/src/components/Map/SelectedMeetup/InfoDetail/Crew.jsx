@@ -24,9 +24,6 @@ const Crew = (props) => {
     if (crew.length) {
       const crewList = crew.map((user, index) => {
         return (
-          // <View key={index}>
-          //   <Text>{user.name}</Text>
-          // </View>
           <TouchableOpacity
             key={index}
             style={{

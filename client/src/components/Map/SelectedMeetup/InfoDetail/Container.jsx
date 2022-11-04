@@ -9,18 +9,20 @@ import GorhomBottomSheet, {
 } from '@gorhom/bottom-sheet';
 
 // components
+import Badges from './Badges';
 import Crew from './Crew';
+import Fee from './Fee';
 import MediaPermission from './MediaPermission';
 
 const Container = (props) => {
-  const snapPoints = ['40%'];
+  const snapPoints = ['40%', '90%'];
 
   const switchComponent = () => {
     switch (props.bottomSheet.selectedItem.infoDetail.component) {
       case 'Badges':
-        return <Text>Badges here</Text>;
+        return <Badges />;
       case 'Fee':
-        return <Text>Fee here</Text>;
+        return <Fee />;
       case 'Crew':
         return <Crew />;
       case 'MediaPermission':

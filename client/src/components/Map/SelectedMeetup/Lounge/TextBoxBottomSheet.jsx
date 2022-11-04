@@ -99,7 +99,7 @@ const TextBox = (props) => {
               borderRadius: 10,
               height: '100%',
               padding: 10,
-              backgroundColor: 'rgb(235, 235, 235)',
+              // backgroundColor: 'rgb(235, 235, 235)',
               width: '100%', // ここも、下の修正に沿って80 90%に変える。
             }}
             ref={props.textInputRef}
