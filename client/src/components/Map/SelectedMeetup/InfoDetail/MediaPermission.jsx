@@ -7,15 +7,19 @@ const MediaPermission = (props) => {
     <View>
       {props.selectedMeetup.isMediaAllowed ? (
         <View>
-          <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
-            It is allowed to take photos, videos and start live 👍
-          </Text>
-          <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
-            You can launch camera app from bottom tab and let's share your special moment!
+          <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>Allowed 👍</Text>
+          <Text style={{ fontSize: 15 }}>You can take photos, videos and start live during this meetup.</Text>
+          <Text style={{ fontSize: 15 }}>
+            You can launch camera app from bottom tab and let's share your special memories!
           </Text>
         </View>
       ) : (
-        <Text>It is NOT allowed to take photos, videos and start live...</Text>
+        <View>
+          <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Not allowed 👍</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
+            You cannot take any photos, videos or start live during this meetup...
+          </Text>
+        </View>
       )}
     </View>
   );

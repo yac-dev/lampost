@@ -21,13 +21,14 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { iconColorsTable } from '../../../../utils/colorsTable';
 
 // ac
 import { setIsTextBoxBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
 import { addSnackBar } from '../../../../redux/actionCreators/snackBar';
 
 const TextBox = (props) => {
-  const snapPoints = ['10%', '60%'];
+  const snapPoints = ['10%', '65%'];
   const inputAccessoryViewID = '111111111';
   const [content, setContent] = useState('');
   const [chatType, setChatType] = useState('general');
@@ -94,35 +95,56 @@ const TextBox = (props) => {
             multiline={true}
             placeholder='Add a message'
             inputAccessoryViewID={inputAccessoryViewID}
-            style={{ borderRadius: 10, height: '100%', padding: 10, backgroundColor: 'red', width: '90%' }}
+            style={{
+              borderRadius: 10,
+              height: '100%',
+              padding: 10,
+              backgroundColor: 'rgb(235, 235, 235)',
+              width: '100%', // ここも、下の修正に沿って80 90%に変える。
+            }}
             ref={props.textInputRef}
             value={content}
             onChangeText={setContent}
             autoCapitalize='none'
           />
-          <View style={{ height: '100%', backgroundColor: 'blue' }}>
+          {/* <View style={{ height: '100%', width: '10%' }}> ここ、後で修正する。
             <TouchableOpacity
               onPress={() =>
                 // keybord dismissとともに、snappointを15%にまで下げる。
                 console.log('hi')
               }
+              style={{
+                backgroundColor: iconColorsTable['red1'],
+                padding: 5,
+                borderRadius: 7,
+                width: 25,
+                height: 25,
+                marginBottom: 10,
+              }}
             >
-              <FontAwesome5 name='photo-video' size={20} />
+              <FontAwesome5 name='photo-video' size={15} />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() =>
                 // keybord dismissとともに、snappointを15%にまで下げる。
                 console.log('hi')
               }
+              style={{
+                backgroundColor: iconColorsTable['red1'],
+                padding: 5,
+                borderRadius: 7,
+                width: 25,
+                height: 25,
+              }}
             >
-              <FontAwesome name='camera' size={20} />
+              <FontAwesome name='camera' size={15} />
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
         <InputAccessoryView
           nativeID={inputAccessoryViewID}
           backgroundColor='hsl(0, 0%, 95%)'
-          style={{ paddingTop: 5, paddingBottom: 5 }}
+          style={{ paddingTop: 10, paddingBottom: 10 }}
         >
           <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
             <View style={{ flexDirection: 'row' }}>
@@ -132,13 +154,20 @@ const TextBox = (props) => {
                   Keyboard.dismiss()
                 }
               >
-                <FontAwesome5 name='photo-video' size={25} />
+                {/* <MaterialCommunityIcons name='comment-text' />; */}
+                <Text>General</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => Keyboard.dismiss()}>
-                <MaterialCommunityIcons name='plus' size={25} />
+                {/* <Ionicons name='bulb-outline' size={15} color={'white'} />; */}
+                <Text>Idea</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => Keyboard.dismiss()}>
-                <MaterialCommunityIcons name='plus' size={25} />
+                {/* <Ionicons name='bulb-outline' size={15} color={'white'} />; */}
+                <Text>Question and Help</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => Keyboard.dismiss()}>
+                {/* <FontAwesome5 name='question' size={15} color={'white'} />; */}
+                <Text>Announcement</Text>
               </TouchableOpacity>
             </View>
             <View>
@@ -152,6 +181,15 @@ const TextBox = (props) => {
     </GorhomBottomSheet>
   );
 };
+
+// case 'general':
+//         return <MaterialCommunityIcons name='comment-text' size={15} color={'white'} />;
+//       case 'idea':
+//         return <Ionicons name='bulb-outline' size={15} color={'white'} />;
+//       case 'questionOrHelp':
+//         return <FontAwesome5 name='question' size={15} color={'white'} />;
+//       case 'announcement':
+//         return <Entypo name='megaphone' size={15} color={'white'} />;
 
 const mapStateToProps = (state) => {
   return { bottomSheet: state.bottomSheet, auth: state.auth };

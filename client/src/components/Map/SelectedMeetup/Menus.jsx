@@ -124,10 +124,10 @@ const Menus = (props) => {
       return <Menu key={index} menu={menu} />;
     });
 
-    return <View>{menusList}</View>;
+    return <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{menusList}</ScrollView>;
   };
 
-  return <ScrollView contentContainerStyle={{ paddingBottom: 150 }}>{renderMenus()}</ScrollView>;
+  return <View contentContainerStyle={{ paddingBottom: 150 }}>{renderMenus()}</View>;
 };
 
 const mapStateToProps = (state) => {

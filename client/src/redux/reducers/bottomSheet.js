@@ -12,6 +12,7 @@ const INITIAL_STATE = {
   selectedItem: {
     isOpen: false,
     infoDetail: {
+      component: null,
       isOpen: false,
     },
   },

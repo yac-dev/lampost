@@ -32,6 +32,9 @@ const CrewBottomSheet = (props) => {
       ref={props.crewBottomSheetRef}
       snapPoints={snapPoints}
       enablePanDownToClose={true}
+      backdropComponent={(backdropProps) => (
+        <BottomSheetBackdrop {...backdropProps} appearsOnIndex={0} disappearsOnIndex={-1} />
+      )}
       // keyboardBehavior={'extend'}
       // keyboardBehavior='interactive'
       onClose={() => onCrewBottomSheetClose()}

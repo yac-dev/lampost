@@ -33,6 +33,21 @@ const Container = (props) => {
   const crewBottomSheetRef = useRef(null);
   const textInputRef = useRef(null);
 
+  const onPressCrew = () => {
+    crewBottomSheetRef.current?.snapToIndex(0);
+  };
+
+  useEffect(() => {
+    props.navigation.setOptions({
+      headerRight: () => (
+        // ここで、crewのbottom sheetを出すようにする。
+        <TouchableOpacity onPress={() => onPressCrew()}>
+          <Text>Crew</Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, []);
+
   const handleTextBoxBottomSheet = () => {
     if (!props.bottomSheet.textBox.isOpen) {
       // props.setIsPostBottomSheetOpen(false);
@@ -110,7 +125,7 @@ const Container = (props) => {
         setChats={setChats}
       />
       <CrewBottomSheet crewBottomSheetRef={crewBottomSheetRef} meetup={meetup} navigation={props.navigation} />
-      <FABMenu handleTextBoxBottomSheet={handleTextBoxBottomSheet} handleCrewBottomSheet={handleCrewBottomSheet} />
+      {/* <FABMenu handleTextBoxBottomSheet={handleTextBoxBottomSheet} handleCrewBottomSheet={handleCrewBottomSheet} /> */}
       <SnackBar />
     </View>
   );

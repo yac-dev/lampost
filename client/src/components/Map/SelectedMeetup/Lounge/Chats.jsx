@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+
+import { Entypo } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -26,9 +28,9 @@ const Chats = (props) => {
       case 'idea':
         return <Ionicons name='bulb-outline' size={15} color={'white'} />;
       case 'questionOrHelp':
-        return <Text>question or help</Text>;
+        return <FontAwesome5 name='question' size={15} color={'white'} />;
       case 'announcement':
-        return <Text></Text>;
+        return <Entypo name='megaphone' size={15} color={'white'} />;
       case 'launched':
         return <Text>Launched</Text>;
       default:
