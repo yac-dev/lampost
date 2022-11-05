@@ -5,7 +5,7 @@ import { io } from 'socket.io-client';
 import { StyleSheet, Text, View, StatusBar, SafeAreaView, Image } from 'react-native';
 import { Button } from 'react-native-paper';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
@@ -143,10 +143,10 @@ const AppStack = (props) => {
                 //   style={{ width: 24, height: 24 }}
                 //   source={require('../../../assets/app/timeMachine.png')}
                 // />
-                <MaterialCommunityIcons name='clock-alert-outline' color={color} size={size} />
+                <MaterialCommunityIcons name='space-station' color={color} size={size} />
                 // 本当はtime machineのiconにしたい。
               ),
-              tabBarLabel: 'Memoirs',
+              tabBarLabel: 'Ports',
               // () => {
               //   return null;
               // },
@@ -169,12 +169,12 @@ const AppStack = (props) => {
         />
 
         {/* <Tab.Screen
-          name='RollsNavigator'
-          component={RollsNavigator}
+          name='Notifications'
+          component={NotificationsNavigator}
           options={{
             headerShown: false,
-            tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name='paper-roll' color={color} size={size} />,
-            tabBarLabel: 'Ports',
+            tabBarIcon: ({ size, color }) => <FontAwesome5 name='user-astronaut' color={color} size={size} />,
+            tabBarLabel: 'Profile',
             // () => {
             //   return null;
             // },

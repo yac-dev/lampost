@@ -12,6 +12,7 @@ import GorhomBottomSheet, {
 import Badges from './Badges';
 import Crew from './Crew';
 import Fee from './Fee';
+import QandAs from './QandAs';
 import MediaPermission from './MediaPermission';
 
 const Container = (props) => {
@@ -25,6 +26,8 @@ const Container = (props) => {
         return <Fee />;
       case 'Crew':
         return <Crew />;
+      case 'QandAs':
+        return <QandAs />;
       case 'MediaPermission':
         return <MediaPermission />;
       case 'Links':
@@ -49,6 +52,7 @@ const Container = (props) => {
       enableOverDrag={true}
       ref={props.selectedMeetupDetailBottomSheetRef}
       snapPoints={snapPoints}
+      keyboardBehavior={'extend'}
       backdropComponent={(backdropProps) => (
         <BottomSheetBackdrop {...backdropProps} appearsOnIndex={0} disappearsOnIndex={-1} />
       )}

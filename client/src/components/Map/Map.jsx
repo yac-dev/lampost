@@ -1,16 +1,21 @@
 // main libraries
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Platform, View, StatusBar, Dimensions } from 'react-native';
+import { StyleSheet, Platform, View, StatusBar, Dimensions, TouchableOpacity, Text } from 'react-native';
 import MapView from 'react-native-maps';
+
+// icons
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // components
 import NBProvider from '../Utils/NativeBaseProvider';
 import MapMarkers from './MapMarkers/MapMarkers';
 import PostBottomSheet from './Post/PostBottomSheet';
 import SelectedItemBottomSheet from './SelectedItem/SelectedItemBottomSheet';
+// bottom sheeets
 import SelectedMeetup from './SelectedMeetup/Container';
 import SelectedMeetupInfoDetail from './SelectedMeetup/InfoDetail/Container';
+import Notifications from './Notifications/Container';
 
 import FABMenu from './Utils/FABMenu';
 import ModalContainer from '../Utils/ModalContainer';
@@ -44,6 +49,7 @@ const Map = (props) => {
   const [currentSnap, setCurrentSnap] = useState();
 
   const postBottomSheetRef = useRef(null);
+  const notificationBottomSheetRef = useRef(null);
   const selectedItemBottomSheetRef = useRef(null);
   const selectedMeetupDetailBottomSheetRef = useRef(null);
 
@@ -60,6 +66,20 @@ const Map = (props) => {
   //     bottomSheetRef.current?.snapToIndex(-1);
   //   }
   // }, []);
+  const onPressNotification = () => {
+    notificationBottomSheetRef.current?.snapToIndex(0);
+  };
+
+  useEffect(() => {
+    // ここは、user pageからここに来て、doneをpressしたら, user pageへ戻る。addしたbadgesをparamsに入れていく感じ。
+    props.navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={() => onPressNotification()}>
+          <MaterialCommunityIcons name='mailbox' size={30} color='red' />
+        </TouchableOpacity>
+      ),
+    });
+  }, []);
 
   const handlePostBottomSheetChanges = (index) => {
     if (!props.bottomSheet.post.isOpen) {
@@ -245,6 +265,7 @@ const Map = (props) => {
             navigation={props.navigation}
             selectedMeetupDetailBottomSheetRef={selectedMeetupDetailBottomSheetRef}
           />
+          <Notifications navigation={props.navigation} notificationBottomSheetRef={notificationBottomSheetRef} />
           <HostMeetupBottomSheet navigation={props.navigation} />
 
           {/* <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} /> */}

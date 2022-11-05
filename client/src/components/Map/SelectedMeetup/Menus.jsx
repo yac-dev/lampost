@@ -46,7 +46,7 @@ const Menus = (props) => {
     },
     {
       name: 'Badges',
-      iconBackgroundColor: 'rgba(45, 209, 40, 0.85)',
+      iconBackgroundColor: iconColorsTable['lightGreen1'],
       icon: <Foundation name='sheriff-badge' size={25} color='white' />,
       info: (
         <View style={{ flexDirection: 'row' }}>
@@ -71,27 +71,8 @@ const Menus = (props) => {
       },
     },
     {
-      name: 'Fee',
-      // 254, 208, 0  // 236, 164, 20
-      iconBackgroundColor: 'rgba(254, 208, 0, 0.85)',
-      icon: <Foundation name='dollar-bill' size={25} color='white' />,
-      info: <View>{props.selectedMeetup.isFeeFree ? <Text>Its free</Text> : <Text>Its not free</Text>}</View>,
-      onPress: () => {
-        props.handleselectedMeetupDetailBottomSheetChanges('Fee');
-      },
-    },
-    {
-      name: 'Q&As',
-      iconBackgroundColor: 'grey',
-      icon: <MaterialCommunityIcons name='chat-question' size={25} color='white' />,
-      info: <Text>{`${props.selectedMeetup.comments.length} >`}</Text>,
-      onPress: () => {
-        console.log('open qa page');
-      },
-    },
-    {
       name: 'Crew',
-      iconBackgroundColor: 'rgba(147, 38, 201, 0.85)',
+      iconBackgroundColor: iconColorsTable['violet1'],
       icon: <FontAwesome5 name='user-astronaut' size={25} color='white' />,
       info: <Text>{`${props.selectedMeetup.attendees.length} >`}</Text>,
       onPress: () => {
@@ -99,8 +80,27 @@ const Menus = (props) => {
       },
     },
     {
+      name: 'Q&As',
+      iconBackgroundColor: iconColorsTable['pink1'],
+      icon: <MaterialCommunityIcons name='chat-question' size={25} color='white' />,
+      info: <Text>{`${props.selectedMeetup.comments.length} >`}</Text>,
+      onPress: () => {
+        props.handleselectedMeetupDetailBottomSheetChanges('QandAs');
+      },
+    },
+    {
+      name: 'Fee',
+      // 254, 208, 0  // 236, 164, 20
+      iconBackgroundColor: iconColorsTable['yellow1'],
+      icon: <Foundation name='dollar-bill' size={25} color='white' />,
+      info: <View>{props.selectedMeetup.isFeeFree ? <Text>Its free</Text> : <Text>Its not free</Text>}</View>,
+      onPress: () => {
+        props.handleselectedMeetupDetailBottomSheetChanges('Fee');
+      },
+    },
+    {
       name: 'MediaPermission',
-      iconBackgroundColor: 'rgba(4, 151, 219, 0.85)',
+      iconBackgroundColor: iconColorsTable['lightBlue1'],
       icon: <FontAwesome5 name='photo-video' size={25} color='white' />,
       info: <View>{props.selectedMeetup.isMediaAllowed ? <Text>Allowed</Text> : <Text>Not allowed...</Text>}</View>,
       onPress: () => {
@@ -110,7 +110,7 @@ const Menus = (props) => {
     },
     {
       name: 'Link',
-      iconBackgroundColor: 'rgba(155, 155, 155, 0.85)',
+      iconBackgroundColor: iconColorsTable['grey1'],
       icon: <Entypo name='link' size={25} color='white' />,
       info: <Text>right</Text>,
       onPress: () => {
