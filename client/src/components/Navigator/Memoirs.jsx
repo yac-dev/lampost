@@ -18,7 +18,6 @@ const MemoirsNavigator = () => {
           options={({ navigation }) => ({
             headerShown: true,
             // headerTransparent: true,
-            // reduxのdata._idを使えばいいだけか。
             headerLeft: () => <Button onPress={() => navigation.navigate('My page/Memoirs')}>User page</Button>,
           })}
         />

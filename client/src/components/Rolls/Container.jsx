@@ -1,10 +1,13 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
+import Roll from './Roll';
+
 const Container = () => {
   return (
     <View>
-      <Text>Rolls container</Text>
+      {/* <Roll /> */}
+      <Text>Rolls</Text>
     </View>
   );
 };

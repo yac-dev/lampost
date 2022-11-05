@@ -5,29 +5,26 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Button } from 'react-native-paper';
 const Stack = createNativeStackNavigator();
 
-import Container from '../Rolls/Container';
+import Main from '../Memoirs/Container';
 import AuthNavigator from './Auth';
 
-const RollsNavigator = () => {
+const PortsNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Group>
         <Stack.Screen
-          name='Rolls'
-          component={Container}
+          name='Memoirs'
+          component={Main}
           options={({ navigation }) => ({
             headerShown: true,
-            title: 'Rolls',
             // headerTransparent: true,
-            // reduxのdata._idを使えばいいだけか。
-            // headerLeft: () => <Button onPress={() => navigation.navigate('My page/Memoirs')}>User page</Button>,
-            headerLeft: () => <Button onPress={() => console.log('hi')}>User page</Button>,
+            headerLeft: () => <Button onPress={() => navigation.navigate('My page/Memoirs')}>User page</Button>,
           })}
         />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
         <Stack.Screen
-          name='My page/Rolls'
+          name='My page/Memoirs'
           component={AuthNavigator}
           options={({ navigation }) => ({
             title: 'My page',
@@ -40,4 +37,4 @@ const RollsNavigator = () => {
   );
 };
 
-export default RollsNavigator;
+export default PortsNavigator;

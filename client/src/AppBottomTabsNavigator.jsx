@@ -15,8 +15,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import MapNavigator from './components/Navigator/Map';
 import MemoirsNavigator from './components/Navigator/Memoirs';
+import RollsNavigator from './components/Navigator/Rolls';
 import AuthNavigator from './components/Navigator/Auth';
-import RollsNavigator from './components/Rolls/Container';
 
 const ref = createNavigationContainerRef();
 const Tab = createBottomTabNavigator();
@@ -114,6 +114,7 @@ const AppStack = (props) => {
           options={{
             headerShown: false,
             tabBarLabel: 'Rolls',
+            tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name='paper-roll' color={color} size={size} />,
             // tabBarIcon: ({ size, focused, color }) => {
             //   return (
             //     <Image
@@ -122,7 +123,6 @@ const AppStack = (props) => {
             //     />
             //   );
             // },
-            tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name='paper-roll' color={color} size={size} />,
             // () => {
             //   return null;
             // },
