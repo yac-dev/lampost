@@ -28,7 +28,7 @@ const Container = (props) => {
           <TouchableOpacity onPress={() => props.closeTappedBadgeBottomSheet()}>
             <Text>Close this bottom</Text>
           </TouchableOpacity>
-          <BadgeDetail />
+          <BadgeDetail badge={props.badge} setBadge={props.setBadge} fromComponent={props.fromComponent} />
         </BottomSheetView>
       </GorhomBottomSheet>
     );

@@ -266,7 +266,7 @@ const Map = (props) => {
             selectedMeetupDetailBottomSheetRef={selectedMeetupDetailBottomSheetRef}
           />
           <Notifications navigation={props.navigation} notificationBottomSheetRef={notificationBottomSheetRef} />
-          <HostMeetupBottomSheet navigation={props.navigation} />
+          <HostMeetupBottomSheet navigation={props.navigation} route={props.route} />
 
           {/* <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} /> */}
           {/* <CancelHostMeetupButton /> */}

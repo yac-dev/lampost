@@ -22,6 +22,8 @@ import { addSnackBar } from '../../../../redux/actionCreators/snackBar';
 const INITIAL_STATE = {
   component: 'MeetupBadge',
   title: '',
+  badge: null,
+  requiredBadges: [],
   startDateAndTime: null,
   duration: null,
   applicationDeadline: null,
@@ -57,6 +59,10 @@ const reducer = (state, action) => {
       return { ...state, component: 'MeetupDescription' };
     case 'SET_MEETUP_TITLE':
       return { ...state, title: action.payload };
+    case 'SET_MEETUP_BADGE':
+      return { ...state, badge: action.payload };
+    case 'SET_REQUIRED_BADGES':
+      return { ...state, requiredBadges: [] };
     case 'SET_START_DATE_AND_TIME':
       return { ...state, startDateAndTime: action.payload };
     case 'SET_DURATION':
@@ -114,6 +120,7 @@ const Container = (props) => {
         type: 'Point',
         coordinates: [props.hostMeetup.setLocation.longitude, props.hostMeetup.setLocation.latitude],
       },
+      badge: state.badge,
       badges: badgeIds,
       startDateAndTime: state.startDateAndTime,
       duration: state.duration,
@@ -144,7 +151,9 @@ const Container = (props) => {
   const switchComponent = () => {
     switch (state.component) {
       case 'MeetupBadge':
-        return <CreateMeetupBadges state={state} dispatch={dispatch} navigation={props.navigation} />;
+        return (
+          <CreateMeetupBadges state={state} dispatch={dispatch} navigation={props.navigation} route={props.route} />
+        );
       case 'MeetupDateAndTime':
         return <CreateMeetupDateAndTime state={state} dispatch={dispatch} />;
       case 'MeetupDetail':

@@ -25,10 +25,11 @@ const Badges = (props) => {
         >
           <Foundation name='sheriff-badge' size={25} color='white' />
         </View>
+
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View style={{ marginLeft: 15 }}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5 }}>Badges</Text>
+              <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5 }}>Required badges</Text>
               <TouchableOpacity
                 style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 30 }}
                 onPress={() => props.navigation.navigate('Add badges', { fromComponent: 'Add meetup badges' })}

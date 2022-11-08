@@ -12,6 +12,8 @@ import TappedBadgeBottomSheet from './TappedBadgeBottomSheet/Container';
 import { setIsTappedBadgeBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
 
 const ContainerContainer = (props) => {
+  const [badge, setBadge] = useState(null);
+  const [fromComponent, setFromComponent] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [badges, setBadges] = useState([]);
   const [queryType, setQueryType] = useState([]);
@@ -22,9 +24,11 @@ const ContainerContainer = (props) => {
   const tappedBadgeBottomSheetRef = useRef(null);
 
   // header rightに関するuseEffect
+  // add user badgeの時のcomponent
   useEffect(() => {
     // ここは、user pageからここに来て、doneをpressしたら, user pageへ戻る。addしたbadgesをparamsに入れていく感じ。
     if (props.route.params.fromComponent === 'Add user badges') {
+      setFromComponent('Add user badges');
       props.navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity onPress={() => onDoneAddUserBadgesPress()}>
@@ -45,8 +49,28 @@ const ContainerContainer = (props) => {
     props.navigation.navigate('User', { userId: props.auth.data._id, badges });
   };
 
+  // select meetup badgeの時
+  useEffect(() => {
+    if (props.route.params.fromComponent === 'Select meetup badge') {
+      setFromComponent('Select meetup badge');
+      props.navigation.setOptions({
+        headerRight: () => (
+          <TouchableOpacity onPress={() => onSelectMeetupBadgeDone()}>
+            <Text>Done(meetup badge)</Text>
+          </TouchableOpacity>
+        ),
+      });
+    }
+  }, [badge]);
+
+  const onSelectMeetupBadgeDone = () => {
+    props.navigation.navigate('Map', { badge });
+  };
+
+  // meetup badgesの時
   useEffect(() => {
     if (props.route.params.fromComponent === 'Add meetup badges') {
+      setFromComponent('Add meetup badges');
       props.navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity onPress={() => onDoneAddMeetupBadges()}>
@@ -66,6 +90,8 @@ const ContainerContainer = (props) => {
     if (props.route.params.fromComponent === 'Add user badges') {
       queryBadges(props.auth.data._id);
     } else if (props.route.params.fromComponent === 'Add meetup badges') {
+      queryBadges();
+    } else if (props.route.params.fromComponent === 'Select meetup badge') {
       queryBadges();
     }
   }, [queryType]);
@@ -103,7 +129,7 @@ const ContainerContainer = (props) => {
 
   return (
     <View style={{ padding: 10, flex: 1 }}>
-      <Badges badges={badges} onBadgePress={onBadgePress} />
+      <Badges badgeState={badge} badges={badges} onBadgePress={onBadgePress} fromComponent={fromComponent} />
       <SearchBadgeBottomSheet
         searchBadgeBottomSheetRef={searchBadgeBottomSheetRef}
         searchQuery={searchQuery}
@@ -112,6 +138,9 @@ const ContainerContainer = (props) => {
         setQueryType={setQueryType}
       />
       <TappedBadgeBottomSheet
+        badge={badge}
+        setBadge={setBadge}
+        fromComponent={fromComponent}
         tappedBadgeBottomSheetRef={tappedBadgeBottomSheetRef}
         closeTappedBadgeBottomSheet={closeTappedBadgeBottomSheet}
       />

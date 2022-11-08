@@ -22,7 +22,7 @@ const BottomSheet = (props) => {
         onClose={() => onFormBottomSheetClose()}
       >
         <BottomSheetView style={{ flex: 1 }}>
-          <FormContainer navigation={props.navigation} />
+          <FormContainer navigation={props.navigation} route={props.route} />
         </BottomSheetView>
       </GorhomBottomSheet>
     );

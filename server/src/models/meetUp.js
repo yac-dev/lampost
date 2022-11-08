@@ -9,7 +9,11 @@ const meetupSchema = new mongoose.Schema({
     },
     coordinates: [Number],
   },
-  badges: [
+  badge: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Badge',
+  },
+  requiredBadges: [
     {
       type: mongoose.Schema.ObjectId,
       ref: 'Badge',
@@ -19,6 +23,13 @@ const meetupSchema = new mongoose.Schema({
     type: String,
     maxLength: 40,
   },
+  // badges: [
+  //   // badgeを一つにする、その代わりrequired badgeみたいなので人をfilterする感じのfieldをつけようか。
+  //   {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'Badge',
+  //   },
+  // ],
   startDateAndTime: Date,
   duration: Number,
   applicationDeadline: Date,

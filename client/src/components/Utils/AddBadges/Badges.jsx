@@ -16,7 +16,16 @@ import TappedBadgeBottomSheetRef from './TappedBadgeBottomSheet/Container';
 const Container = (props) => {
   const renderBadges = () => {
     const badgesList = props.badges.map((badge, index) => {
-      return <Badge user={props.user} key={index} badge={badge} onBadgePress={props.onBadgePress} />;
+      return (
+        <Badge
+          user={props.user}
+          key={index}
+          badgeState={props.badgeState}
+          fromComponent={props.fromComponent}
+          badge={badge}
+          onBadgePress={props.onBadgePress}
+        />
+      );
     });
 
     return (

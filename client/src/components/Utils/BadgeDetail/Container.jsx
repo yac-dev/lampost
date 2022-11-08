@@ -6,10 +6,31 @@ import FastImage from 'react-native-fast-image';
 // ac
 import { selectBadge } from '../../../redux/actionCreators/selectItem';
 import { removeBadge } from '../../../redux/actionCreators/selectItem';
+import { setIsTappedBadgeBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
 
 const Container = (props) => {
   // action button.選択したものの中にこれがなかったら、add buttonを、あったらremove buttonをrenderする。
   // headerとaction button, time lineっていう順番で変わっていくことになるだろう。
+
+  const renderActionButton = () => {
+    if (props.fromComponent === 'Select meetup badge') {
+      if (props.badge && props.badge._id === props.bottomSheet.badgeDetail.data._id) {
+        return (
+          <TouchableOpacity onPress={() => props.setBadge(props.bottomSheet.badgeDetail.data)}>
+            <Text>Remove</Text>
+          </TouchableOpacity>
+        );
+      } else {
+        return (
+          <TouchableOpacity onPress={() => props.setBadge(props.bottomSheet.badgeDetail.data)}>
+            <Text>Add</Text>
+          </TouchableOpacity>
+        );
+      }
+    }
+    // props.setBadge(props.bottomSheet.badgeDetail.data)
+    // fromComponent={props.fromComponent}
+  };
   return (
     <View>
       <Text>{props.bottomSheet.badgeDetail.data.name}</Text>
@@ -23,7 +44,7 @@ const Container = (props) => {
         tintColor={'red'}
         // resizeMode={FastImage.resizeMode.contain}
       />
-      {props.selectedItem.badges[props.bottomSheet.badgeDetail.data._id] ? (
+      {/* {props.selectedItem.badges[props.bottomSheet.badgeDetail.data._id] ? (
         <TouchableOpacity onPress={() => props.removeBadge(props.bottomSheet.badgeDetail.data)}>
           <Text>Remove</Text>
         </TouchableOpacity>
@@ -31,7 +52,8 @@ const Container = (props) => {
         <TouchableOpacity onPress={() => props.selectBadge(props.bottomSheet.badgeDetail.data)}>
           <Text>Add</Text>
         </TouchableOpacity>
-      )}
+      )} */}
+      {renderActionButton()}
     </View>
   );
 };

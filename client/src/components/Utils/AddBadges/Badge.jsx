@@ -28,6 +28,45 @@ const Badge = (props) => {
     }
   };
 
+  const renderBadgeIcon = (badge) => {
+    if (props.fromComponent === 'Select meetup badge') {
+      if (props.badgeState && props.badge._id === props.badgeState._id) {
+        console.log('same');
+        return (
+          <View
+            style={{
+              top: 0,
+              right: 0,
+              position: 'absolute',
+              color: '#989898',
+            }}
+          >
+            <Foundation name='sheriff-badge' size={20} color='#49CF13' />
+          </View>
+        );
+      } else {
+        return null;
+      }
+    } else if (props.fromComponent === 'Add Meetup badge') {
+      if (props.selectedBadges[props.badge._id]) {
+        return (
+          <View
+            style={{
+              top: 0,
+              right: 0,
+              position: 'absolute',
+              color: '#989898',
+            }}
+          >
+            <Foundation name='sheriff-badge' size={20} color='#49CF13' />
+          </View>
+        );
+      } else {
+        return null;
+      }
+    }
+  };
+
   const renderBadge = () => {
     return (
       <View
@@ -71,7 +110,8 @@ const Badge = (props) => {
         <Text style={{ color: 'black', fontWeight: 'bold', alignSelf: 'center', fontSize: 10, textAlign: 'center' }}>
           {props.badge.name}
         </Text>
-        {props.selectedBadges[props.badge._id] ? (
+        {renderBadgeIcon()}
+        {/* {props.selectedBadges[props.badge._id] ? (
           <View
             style={{
               top: 0,
@@ -82,7 +122,7 @@ const Badge = (props) => {
           >
             <Foundation name='sheriff-badge' size={20} color='#49CF13' />
           </View>
-        ) : null}
+        ) : null} */}
       </View>
     );
   };
