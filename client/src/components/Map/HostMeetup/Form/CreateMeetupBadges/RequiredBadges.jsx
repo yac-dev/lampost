@@ -35,11 +35,17 @@ const Badges = (props) => {
 
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View style={{ marginLeft: 15 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5 }}>Required badges (optional)</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+              <Text style={{ fontWeight: 'bold', fontSize: 17, marginRight: 5 }}>Required badges</Text>
+              <Text style={{ fontSize: 13, color: '#9E9E9E' }}>(optional)</Text>
               <TouchableOpacity
-                style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 30 }}
-                onPress={() => props.navigation.navigate('Add badges', { fromComponent: 'Add meetup required badges' })}
+                style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 15 }}
+                onPress={() =>
+                  props.navigation.navigate('Add badges', {
+                    fromComponent: 'Add meetup required badges',
+                    badges: props.state.requiredBadges,
+                  })
+                }
               >
                 <SimpleLineIcons name='magnifier-add' size={20} color={'black'} style={{ marginRight: 5 }} />
                 <Text>Add</Text>

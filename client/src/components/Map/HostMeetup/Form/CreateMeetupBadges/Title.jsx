@@ -27,7 +27,7 @@ const Title = (props) => {
         </View>
         <View style={{ marginLeft: 15 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5, marginRight: 10 }}>Title</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: 17, marginBottom: 5, marginRight: 10 }}>Title</Text>
             <Text style={{ fontSize: 13, color: '#9E9E9E' }}>{props.state.title.length}/40</Text>
           </View>
           <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E' }}>Please write the meetup title.</Text>

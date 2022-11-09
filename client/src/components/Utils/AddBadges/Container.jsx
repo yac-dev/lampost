@@ -70,8 +70,14 @@ const ContainerContainer = (props) => {
 
   // meetup badgesの時
   useEffect(() => {
-    if (props.route.params.fromComponent === 'Add meetup required badges') {
+    if (props.route.params?.fromComponent === 'Add meetup required badges') {
       setFromComponent('Add meetup required badges');
+      // setRequiredBadges((previous) => {
+      //   return {
+      //     ...previous,
+      //     ...props.route.params.badges,
+      //   };
+      // });
       props.navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity onPress={() => onAddRequiredBadgesDone()}>
@@ -81,6 +87,18 @@ const ContainerContainer = (props) => {
       });
     }
   }, [requiredBadges]);
+  // うん。上でやると、useEffectでstackoverflow的なことが起こっている。だから下で分けてやる必要がありそう。
+
+  useEffect(() => {
+    if (props.route.params?.badges) {
+      setRequiredBadges((previous) => {
+        return {
+          ...previous,
+          ...props.route.params.badges,
+        };
+      });
+    }
+  }, []);
 
   const onAddRequiredBadgesDone = () => {
     props.navigation.navigate('Map', { requiredBadges });

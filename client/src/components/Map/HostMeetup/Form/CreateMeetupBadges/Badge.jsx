@@ -34,9 +34,9 @@ const Badge = (props) => {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View style={{ marginLeft: 15 }}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5 }}>Badge</Text>
+              <Text style={{ fontWeight: 'bold', fontSize: 17, marginBottom: 5 }}>Badge</Text>
               <TouchableOpacity
-                style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 30 }}
+                style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 15 }}
                 onPress={() => props.navigation.navigate('Add badges', { fromComponent: 'Select meetup badge' })}
               >
                 <SimpleLineIcons name='magnifier-add' size={20} color={'black'} style={{ marginRight: 5 }} />

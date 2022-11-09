@@ -62,7 +62,7 @@ const reducer = (state, action) => {
     case 'SET_MEETUP_BADGE':
       return { ...state, badge: action.payload };
     case 'SET_MEETUP_REQUIRED_BADGES':
-      return { ...state, requiredBadges: action.payload };
+      return { ...state, requiredBadges: { ...state.requiredBadges, ...action.payload } };
     case 'SET_START_DATE_AND_TIME':
       return { ...state, startDateAndTime: action.payload };
     case 'SET_DURATION':
