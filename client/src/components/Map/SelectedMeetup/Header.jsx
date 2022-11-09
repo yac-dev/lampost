@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
+import FastImage from 'react-native-fast-image';
+import { iconColorsTable, backgroundColorsTable } from '../../../utils/colorsTable';
 
 // ac
 import { joinMeetup } from '../../../redux/actionCreators/meetups';
@@ -89,7 +91,18 @@ const Header = (props) => {
 
   return (
     <View style={{ marginBottom: 10 }}>
-      <Text style={{ fontWeight: 'bold', fontSize: 18, marginBottom: 5 }}>{props.selectedMeetup.title}</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <FastImage
+          style={{ height: 35, width: 35, marginRight: 5 }}
+          source={{
+            uri: props.selectedMeetup.badge.icon,
+            // headers: { Authorization: 'someAuthToken' },
+            priority: FastImage.priority.normal,
+          }}
+          tintColor={iconColorsTable[props.selectedMeetup.badge.color]}
+        />
+        <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 5 }}>{props.selectedMeetup.title}</Text>
+      </View>
       <Text style={{ alignSelf: 'flex-end' }}>
         {/* {`Starts at ${renderDate(props.selectedMeetup.startDateAndTime)}`} */}
         {ren(props.selectedMeetup.startDateAndTime)}

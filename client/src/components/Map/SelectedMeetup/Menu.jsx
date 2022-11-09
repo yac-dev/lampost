@@ -22,7 +22,7 @@ const Menu = (props) => {
       <View
         style={{ marginLeft: 15, flexDirection: 'row', flex: 1, justifyContent: 'space-between', alignItems: 'center' }}
       >
-        <Text style={{ fontWeight: 'bold', fontSize: 17 }}>{props.menu.name}</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{props.menu.name}</Text>
         {props.menu.info}
         {/* <Text style={{ fontSize: 13, color: '#9E9E9E' }}>40</Text> */}
       </View>

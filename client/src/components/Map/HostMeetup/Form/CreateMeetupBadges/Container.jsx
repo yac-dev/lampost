@@ -8,7 +8,7 @@ import { Entypo } from '@expo/vector-icons';
 
 import Title from './Title';
 import Badge from './Badge';
-import Badges from './Badges';
+import RequiredBadges from './RequiredBadges';
 
 const Container = (props) => {
   const validateForm = () => {
@@ -21,7 +21,7 @@ const Container = (props) => {
     <View>
       <Title state={props.state} dispatch={props.dispatch} />
       <Badge state={props.state} dispatch={props.dispatch} navigation={props.navigation} route={props.route} />
-      <Badges state={props.state} dispatch={props.dispatch} navigation={props.navigation} />
+      <RequiredBadges state={props.state} dispatch={props.dispatch} navigation={props.navigation} route={props.route} />
       <View style={{ alignSelf: 'center' }}>
         <Button
           icon='arrow-right'

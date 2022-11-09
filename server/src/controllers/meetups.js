@@ -57,7 +57,8 @@ export const createMeetup = async (request, response) => {
   try {
     const {
       place,
-      badges,
+      badge,
+      // badges,
       title,
       startDateAndTime,
       duration,
@@ -77,7 +78,8 @@ export const createMeetup = async (request, response) => {
 
     const meetup = new Meetup({
       place,
-      badges,
+      badge,
+      // badges,
       title,
       startDateAndTime,
       duration,
@@ -138,14 +140,14 @@ export const createMeetup = async (request, response) => {
     // scheduleStartMeetup(meetup.startDateAndTime, meetup._id);
     // scheduleEndMeetup(meetup.endDateAndTime, meetup._id);
 
-    const populatingBadges = await Badge.find({ _id: { $in: badges } });
+    // const populatingBadges = await Badge.find({ _id: { $in: badges } });
 
     response.status(201).json({
       meetup: {
         _id: meetup._id,
         place: meetup.place,
         startDateAndTime: meetup.startDateAndTime,
-        badges: populatingBadges,
+        // badges: populatingBadges,
       },
     });
   } catch (error) {
@@ -155,10 +157,11 @@ export const createMeetup = async (request, response) => {
 
 export const getMeetups = async (request, response) => {
   try {
-    const meetups = await Meetup.find().select({ _id: 1, place: 1, badges: 1, startDateAndTime: 1 }).populate({
-      path: 'badges',
-      model: Badge,
-    });
+    const meetups = await Meetup.find().select({ _id: 1, place: 1, badges: 1, startDateAndTime: 1 });
+    // .populate({
+    //   path: 'badges',
+    //   model: Badge,
+    // });
     // .populate({
     //   path: 'launcher',
     //   model: User,
@@ -205,35 +208,35 @@ export const getUpcomingMeetups = async (request, response) => {
 export const getSelectedMeetup = async (request, response) => {
   try {
     const meetup = await Meetup.findById(request.params.id)
-      .select({
-        title: 1,
-        place: 1,
-        badges: 1,
-        startDateAndTime: 1,
-        duration: 1,
-        applicationDeadline: 1,
-        // endDateAndTime: 1,
-        isFeeFree: 1,
-        isAttendeesLimitFree: 1,
-        fee: 1,
-        currency: 1,
-        description: 1,
-        link: 1,
-        launcher: 1,
-        // totalComments: 1,
-        state: 1,
-        comments: 1,
-        attendees: 1,
-        // totalAttendees: 1,
-        isMediaAllowed: 1,
-      })
+      // .select({
+      //   title: 1,
+      //   place: 1,
+      //   badges: 1,
+      //   startDateAndTime: 1,
+      //   duration: 1,
+      //   applicationDeadline: 1,
+      //   // endDateAndTime: 1,
+      //   isFeeFree: 1,
+      //   isAttendeesLimitFree: 1,
+      //   fee: 1,
+      //   currency: 1,
+      //   description: 1,
+      //   link: 1,
+      //   launcher: 1,
+      //   // totalComments: 1,
+      //   state: 1,
+      //   comments: 1,
+      //   attendees: 1,
+      //   // totalAttendees: 1,
+      //   isMediaAllowed: 1,
+      // })
       .populate({
         path: 'launcher',
         model: User,
         select: 'name photo',
       })
       .populate({
-        path: 'badges',
+        path: 'badge',
         model: Badge,
       })
       .populate({
@@ -252,7 +255,7 @@ export const getMeetup = async (request, response) => {
   try {
     const meetup = await Meetup.findById(request.params.id)
       .populate({
-        path: 'badges',
+        path: 'badge',
         model: Badge,
       })
       .populate({

@@ -13,6 +13,7 @@ import { setIsTappedBadgeBottomSheetOpen } from '../../../redux/actionCreators/b
 
 const ContainerContainer = (props) => {
   const [badge, setBadge] = useState(null);
+  const [requiredBadges, setRequiredBadges] = useState({});
   const [fromComponent, setFromComponent] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [badges, setBadges] = useState([]);
@@ -69,27 +70,31 @@ const ContainerContainer = (props) => {
 
   // meetup badgesの時
   useEffect(() => {
-    if (props.route.params.fromComponent === 'Add meetup badges') {
-      setFromComponent('Add meetup badges');
+    if (props.route.params.fromComponent === 'Add meetup required badges') {
+      setFromComponent('Add meetup required badges');
       props.navigation.setOptions({
         headerRight: () => (
-          <TouchableOpacity onPress={() => onDoneAddMeetupBadges()}>
+          <TouchableOpacity onPress={() => onAddRequiredBadgesDone()}>
             <Text>Done(meet)</Text>
           </TouchableOpacity>
         ),
       });
     }
-  }, []);
+  }, [requiredBadges]);
 
-  const onDoneAddMeetupBadges = () => {
-    props.navigation.goBack();
+  const onAddRequiredBadgesDone = () => {
+    props.navigation.navigate('Map', { requiredBadges });
   };
+
+  // const onDoneAddMeetupBadges = () => {
+  //   props.navigation.goBack();
+  // };
 
   // query
   useEffect(() => {
     if (props.route.params.fromComponent === 'Add user badges') {
       queryBadges(props.auth.data._id);
-    } else if (props.route.params.fromComponent === 'Add meetup badges') {
+    } else if (props.route.params.fromComponent === 'Add meetup required badges') {
       queryBadges();
     } else if (props.route.params.fromComponent === 'Select meetup badge') {
       queryBadges();
@@ -129,7 +134,13 @@ const ContainerContainer = (props) => {
 
   return (
     <View style={{ padding: 10, flex: 1 }}>
-      <Badges badgeState={badge} badges={badges} onBadgePress={onBadgePress} fromComponent={fromComponent} />
+      <Badges
+        badgeState={badge}
+        requiredBadges={requiredBadges}
+        badges={badges}
+        onBadgePress={onBadgePress}
+        fromComponent={fromComponent}
+      />
       <SearchBadgeBottomSheet
         searchBadgeBottomSheetRef={searchBadgeBottomSheetRef}
         searchQuery={searchQuery}
@@ -138,9 +149,11 @@ const ContainerContainer = (props) => {
         setQueryType={setQueryType}
       />
       <TappedBadgeBottomSheet
+        fromComponent={fromComponent}
         badge={badge}
         setBadge={setBadge}
-        fromComponent={fromComponent}
+        requiredBadges={requiredBadges}
+        setRequiredBadges={setRequiredBadges}
         tappedBadgeBottomSheetRef={tappedBadgeBottomSheetRef}
         closeTappedBadgeBottomSheet={closeTappedBadgeBottomSheet}
       />

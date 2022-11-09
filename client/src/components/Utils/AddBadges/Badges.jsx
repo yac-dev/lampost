@@ -20,8 +20,9 @@ const Container = (props) => {
         <Badge
           user={props.user}
           key={index}
-          badgeState={props.badgeState}
           fromComponent={props.fromComponent}
+          badgeState={props.badgeState}
+          requiredBadges={props.requiredBadges}
           badge={badge}
           onBadgePress={props.onBadgePress}
         />

@@ -12,6 +12,8 @@ const Container = (props) => {
   // action button.選択したものの中にこれがなかったら、add buttonを、あったらremove buttonをrenderする。
   // headerとaction button, time lineっていう順番で変わっていくことになるだろう。
 
+  const removeMeetupRequiredBadges = () => {};
+
   const renderActionButton = () => {
     if (props.fromComponent === 'Select meetup badge') {
       if (props.badge && props.badge._id === props.bottomSheet.badgeDetail.data._id) {
@@ -23,6 +25,39 @@ const Container = (props) => {
       } else {
         return (
           <TouchableOpacity onPress={() => props.setBadge(props.bottomSheet.badgeDetail.data)}>
+            <Text>Add</Text>
+          </TouchableOpacity>
+        );
+      }
+    } else if (props.fromComponent === 'Add meetup required badges') {
+      // requiredBadges {}
+      if (props.requiredBadges[props.bottomSheet.badgeDetail.data._id]) {
+        return (
+          // deleteする。
+          <TouchableOpacity
+            onPress={() =>
+              props.setRequiredBadges((previous) => {
+                const copy = { ...previous };
+                delete copy[props.bottomSheet.badgeDetail.data._id];
+                return copy;
+              })
+            }
+          >
+            <Text>Remove</Text>
+          </TouchableOpacity>
+        );
+      } else {
+        return (
+          <TouchableOpacity
+            onPress={() =>
+              props.setRequiredBadges((previous) => {
+                return {
+                  ...previous,
+                  [props.bottomSheet.badgeDetail.data._id]: props.bottomSheet.badgeDetail.data,
+                };
+              })
+            }
+          >
             <Text>Add</Text>
           </TouchableOpacity>
         );

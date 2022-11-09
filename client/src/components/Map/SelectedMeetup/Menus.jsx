@@ -45,26 +45,27 @@ const Menus = (props) => {
       },
     },
     {
-      name: 'Badges',
+      name: 'Required Badges',
       iconBackgroundColor: iconColorsTable['lightGreen1'],
       icon: <Foundation name='sheriff-badge' size={25} color='white' />,
       info: (
-        <View style={{ flexDirection: 'row' }}>
-          {props.selectedMeetup.badges.map((badge, index) => {
-            return (
-              <FastImage
-                style={{ height: 35, width: badge.landscape ? 55 : 35 }}
-                source={{
-                  uri: badge.icon,
-                  // headers: { Authorization: 'someAuthToken' },
-                  priority: FastImage.priority.normal,
-                }}
-                tintColor={iconColorsTable[badge.color]}
-                resizeMode={FastImage.resizeMode.contain}
-              />
-            );
-          })}
-        </View>
+        <Text>{`${props.selectedMeetup.launcher.name} >`}</Text>
+        // <View style={{ flexDirection: 'row' }}>
+        //   {props.selectedMeetup.badges.map((badge, index) => {
+        //     return (
+        //       <FastImage
+        //         style={{ height: 35, width: 35 }}
+        //         source={{
+        //           uri: props.selectedMeetup.badge.icon,
+        //           // headers: { Authorization: 'someAuthToken' },
+        //           priority: FastImage.priority.normal,
+        //         }}
+        //         tintColor={iconColorsTable[props.selectedMeetup.badge.color]}
+        //         resizeMode={FastImage.resizeMode.contain}
+        //       />
+        //     );
+        //   })}
+        // </View>
       ),
       onPress: () => {
         props.handleselectedMeetupDetailBottomSheetChanges('Badges');
