@@ -18,7 +18,7 @@ const Container = (props) => {
   };
 
   return (
-    <View>
+    <View style={{}}>
       <Title state={props.state} dispatch={props.dispatch} />
       <Badge state={props.state} dispatch={props.dispatch} navigation={props.navigation} route={props.route} />
       <RequiredBadges state={props.state} dispatch={props.dispatch} navigation={props.navigation} route={props.route} />

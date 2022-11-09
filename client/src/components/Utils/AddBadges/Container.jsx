@@ -64,11 +64,17 @@ const ContainerContainer = (props) => {
     }
   }, [badge]);
 
+  useEffect(() => {
+    if (props.route.params.selectedBadge) {
+      setBadge(props.route.params.selectedBadge);
+    }
+  }, []);
+
   const onSelectMeetupBadgeDone = () => {
     props.navigation.navigate('Map', { badge });
   };
 
-  // meetup badgesの時
+  // meetup required badgesの時
   useEffect(() => {
     if (props.route.params?.fromComponent === 'Add meetup required badges') {
       setFromComponent('Add meetup required badges');

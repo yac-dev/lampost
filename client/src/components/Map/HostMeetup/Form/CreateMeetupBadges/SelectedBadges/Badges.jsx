@@ -19,8 +19,7 @@ const Badges = (props) => {
         {/* <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => props.navigation.navigate('Add badges')}>
           <Text>Add</Text>
         </TouchableOpacity> */}
-
-        {selectedBadgesList}
+        <View style={{ flexDirection: 'row', width: '100%' }}>{selectedBadgesList}</View>
       </ScrollView>
     );
   };

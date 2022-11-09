@@ -9,7 +9,7 @@ import { iconColorsTable } from '../../../../../utils/colorsTable';
 
 import SelectedBadges from './SelectedBadges/Badges';
 
-const Badges = (props) => {
+const RequiredBadges = (props) => {
   useEffect(() => {
     if (props.route.params?.requiredBadges) {
       console.log('this is the badge...', props.route.params.requiredBadges);
@@ -57,9 +57,10 @@ const Badges = (props) => {
           </View>
         </View>
       </View>
+
       <SelectedBadges requiredBadges={Object.values(props.state.requiredBadges)} />
     </View>
   );
 };
 
-export default Badges;
+export default RequiredBadges;
