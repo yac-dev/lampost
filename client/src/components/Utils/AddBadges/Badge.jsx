@@ -17,21 +17,9 @@ import { bgColorsTable } from '../bgColorsTable';
 
 const Badge = (props) => {
   // Add badges(add user badgeとadd meetup badge)componentのbadgeをtapした時の挙動、
-  // user page componentのbadgeをtapした時の挙動を変えるっていう話。
-  const onBadgePress = () => {
-    if (11) {
-      // badgeStatus関係ないときには
-      props.onBadgePress(props.badge);
-    } else {
-      // badgeStatusがある時はこれを実行する。
-      props.onBadgePress(props.badgeStatus);
-    }
-  };
-
-  const renderBadgeIcon = (badge) => {
+  const renderBadgeIcon = () => {
     if (props.fromComponent === 'Select meetup badge') {
       if (props.badgeState && props.badge._id === props.badgeState._id) {
-        console.log('same');
         return (
           <View
             style={{
@@ -67,67 +55,99 @@ const Badge = (props) => {
     }
   };
 
-  const renderBadge = () => {
-    return (
-      <View
+  // const renderBadge = () => {
+  //   return (
+  //     <View
+  //       style={{
+  //         width: '20%',
+  //         height: 0,
+  //         aspectRatio: 1,
+  //         padding: 10, // これは単純に、25%幅に対して
+  //         marginBottom: 23,
+  //         // backgroundColor: 'red',
+  //       }}
+  //     >
+  //       <TouchableOpacity
+  //         style={{
+  //           width: '100%',
+  //           height: '100%',
+  //           alignItems: 'center', // これと
+  //           justifyContent: 'center', // これで中のimageを上下左右真ん中にする
+  //           borderRadius: 10,
+  //           backgroundColor: backgroundColorsTable[props.badge.color],
+  //           borderStyle: 'solid',
+  //           borderColor: backgroundColorsTable[props.badge.color],
+  //           borderWidth: 1,
+  //           // backgroundColor: 'red',
+  //           marginBottom: 5,
+  //         }}
+  //         onPress={() => {
+  //           props.onBadgePress(props.badge);
+  //         }}
+  //       >
+  //         <FastImage
+  //           style={{ width: 50, height: 50 }}
+  //           source={{
+  //             uri: props.badge.icon,
+  //             priority: FastImage.priority.normal,
+  //           }}
+  //           tintColor={iconColorsTable[props.badge.color]}
+  //           resizeMode={FastImage.resizeMode.contain}
+  //         />
+  //       </TouchableOpacity>
+  //       <Text style={{ color: 'black', fontWeight: 'bold', alignSelf: 'center', fontSize: 10, textAlign: 'center' }}>
+  //         {props.badge.name}
+  //       </Text>
+  //       {renderBadgeIcon()}
+  //     </View>
+  //   );
+  // };
+
+  return (
+    <View
+      style={{
+        width: '20%',
+        height: 0,
+        aspectRatio: 1,
+        padding: 10, // これは単純に、25%幅に対して
+        marginBottom: 23,
+        // backgroundColor: 'red',
+      }}
+    >
+      <TouchableOpacity
         style={{
-          width: '20%',
-          height: 0,
-          aspectRatio: 1,
-          padding: 10, // これは単純に、25%幅に対して
-          marginBottom: 23,
+          width: '100%',
+          height: '100%',
+          alignItems: 'center', // これと
+          justifyContent: 'center', // これで中のimageを上下左右真ん中にする
+          borderRadius: 10,
+          backgroundColor: backgroundColorsTable[props.badge.color],
+          borderStyle: 'solid',
+          borderColor: backgroundColorsTable[props.badge.color],
+          borderWidth: 1,
           // backgroundColor: 'red',
+          marginBottom: 5,
+        }}
+        onPress={() => {
+          props.onBadgePress(props.badge);
         }}
       >
-        <TouchableOpacity
-          style={{
-            width: '100%',
-            height: '100%',
-            alignItems: 'center', // これと
-            justifyContent: 'center', // これで中のimageを上下左右真ん中にする
-            borderRadius: 10,
-            backgroundColor: backgroundColorsTable[props.badge.color],
-            borderStyle: 'solid',
-            borderColor: backgroundColorsTable[props.badge.color],
-            borderWidth: 1,
-            // backgroundColor: 'red',
-            marginBottom: 5,
+        <FastImage
+          style={{ width: 50, height: 50 }}
+          source={{
+            uri: props.badge.icon,
+            priority: FastImage.priority.normal,
           }}
-          onPress={() => {
-            props.onBadgePress(props.badge);
-          }}
-        >
-          <FastImage
-            style={{ width: 50, height: 50 }}
-            source={{
-              uri: props.badge.icon,
-              priority: FastImage.priority.normal,
-            }}
-            tintColor={iconColorsTable[props.badge.color]}
-            resizeMode={FastImage.resizeMode.contain}
-          />
-        </TouchableOpacity>
-        <Text style={{ color: 'black', fontWeight: 'bold', alignSelf: 'center', fontSize: 10, textAlign: 'center' }}>
-          {props.badge.name}
-        </Text>
-        {renderBadgeIcon()}
-        {/* {props.selectedBadges[props.badge._id] ? (
-          <View
-            style={{
-              top: 0,
-              right: 0,
-              position: 'absolute',
-              color: '#989898',
-            }}
-          >
-            <Foundation name='sheriff-badge' size={20} color='#49CF13' />
-          </View>
-        ) : null} */}
-      </View>
-    );
-  };
-
-  return <>{renderBadge()}</>;
+          tintColor={iconColorsTable[props.badge.color]}
+          resizeMode={FastImage.resizeMode.contain}
+        />
+      </TouchableOpacity>
+      <Text style={{ color: 'black', fontWeight: 'bold', alignSelf: 'center', fontSize: 10, textAlign: 'center' }}>
+        {props.badge.name}
+      </Text>
+      {renderBadgeIcon()}
+    </View>
+  );
 };
 
 const mapStateToProps = (state) => {

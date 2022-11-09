@@ -11,9 +11,10 @@ import TappedBadgeBottomSheet from './TappedBadgeBottomSheet/Container';
 // ac
 import { setIsTappedBadgeBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
 
-const ContainerContainer = (props) => {
+const Container = (props) => {
   const [badge, setBadge] = useState(null);
   const [requiredBadges, setRequiredBadges] = useState({});
+  const [userBadges, setUserBadges] = useState({});
   const [fromComponent, setFromComponent] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [badges, setBadges] = useState([]);
@@ -189,4 +190,4 @@ const mapStateToProps = (state) => {
   return { auth: state.auth, selectedBadges: Object.values(state.selectedItem.badges) };
 };
 
-export default connect(mapStateToProps, { setIsTappedBadgeBottomSheetOpen })(ContainerContainer);
+export default connect(mapStateToProps, { setIsTappedBadgeBottomSheetOpen })(Container);

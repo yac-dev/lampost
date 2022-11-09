@@ -24,7 +24,6 @@ const Description = (props) => {
           <MaterialCommunityIcons name='message-text' size={25} color='white' />
         </View>
         <View style={{ marginLeft: 15, flex: 1 }}>
-          {/* <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5 }}>Media permission</Text> */}
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5, marginRight: 10 }}>Message</Text>
             <Text style={{ fontSize: 13, color: '#9E9E9E' }}>{props.state.description.length}/300</Text>

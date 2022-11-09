@@ -34,7 +34,7 @@ const RequiredBadges = (props) => {
         </View>
 
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View style={{ marginLeft: 15 }}>
+          <View style={{ marginLeft: 15, flex: 1 }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
               <Text style={{ fontWeight: 'bold', fontSize: 17, marginRight: 5 }}>Required badges</Text>
               <Text style={{ fontSize: 13, color: '#9E9E9E' }}>(optional)</Text>
@@ -51,7 +51,7 @@ const RequiredBadges = (props) => {
                 <Text>Add</Text>
               </TouchableOpacity>
             </View>
-            <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E' }}>
+            <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', flexShrink: 1 }}>
               Which badges should attendees have?
             </Text>
           </View>

@@ -6,11 +6,10 @@ import { iconColorsTable, backgroundColorsTable } from '../../../../../utils/col
 import FastImage from 'react-native-fast-image';
 
 const Badge = (props) => {
-  // 要は、add badgeのfull screen modalからここに帰ってきた時にpropsでadd badgeのselected されたbadgeを渡すわけよ。これがあるなら
-  // ここでstateを持つ必要はないわけ。state.badgeを渡せばいいわけ。
+  // このcomponentからadd badgeのmodalへscreen移動する。
+  // そんで、add badgeのmodalからnavigateでここに戻ってくる時に、paramsがadd badgesのmodalで選んだbadgeがparamsとして渡される。それを、formのstateにそのまま設定しましょう、っていう流れ。
   useEffect(() => {
     if (props.route.params?.badge) {
-      console.log('this is the badge...', props.route.params.badge);
       props.dispatch({ type: 'SET_MEETUP_BADGE', payload: props.route.params.badge });
     }
   }, [props.route.params?.badge]);
@@ -95,15 +94,6 @@ const Badge = (props) => {
           </Text> */}
         </View>
       ) : (
-        // <FastImage
-        //   style={{ width: 50, height: 50 }}
-        //   source={{
-        //     uri: props.state.badge.icon,
-        //     priority: FastImage.priority.normal,
-        //   }}
-        //   tintColor={iconColorsTable[props.state.badge.color]}
-        //   resizeMode={FastImage.resizeMode.contain}
-        // />
         <Text>No badge selected yet</Text>
       )}
     </View>

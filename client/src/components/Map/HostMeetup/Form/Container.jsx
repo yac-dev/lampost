@@ -104,13 +104,14 @@ const reducer = (state, action) => {
 
 const Container = (props) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-  const enableSubmitButton = () => {
+
+  const formValidation = () => {
     // formのvalidationをここに書いていくことになる。
     return true;
   };
 
   const onSubmit = () => {
-    const badgeIds = props.selectedBadges.map((badge) => {
+    const requiredBadgeIds = Object.values(props.state.requiredBadges).map((badge) => {
       return badge._id;
     });
 
@@ -120,8 +121,8 @@ const Container = (props) => {
         type: 'Point',
         coordinates: [props.hostMeetup.setLocation.longitude, props.hostMeetup.setLocation.latitude],
       },
-      badge: state.badge,
-      badges: badgeIds,
+      badge: state.badge._id,
+      badges: requiredBadgeIds,
       startDateAndTime: state.startDateAndTime,
       duration: state.duration,
       applicationDeadline: state.applicationDeadline,
