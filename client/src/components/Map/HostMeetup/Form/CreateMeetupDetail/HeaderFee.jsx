@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { iconColorsTable } from '../../../../../utils/colorsTable';
+import { Foundation } from '@expo/vector-icons';
 
 const Header = () => {
   return (
@@ -16,9 +16,9 @@ const Header = () => {
           alignItems: 'center',
         }}
       >
-        <MaterialCommunityIcons name='calendar-clock' size={25} color='white' />
+        <Foundation name='dollar-bill' size={25} color='white' />
       </View>
-      <Text style={{ fontWeight: 'bold', fontSize: 17, marginLeft: 15 }}>Date and Time</Text>
+      <Text style={{ fontWeight: 'bold', fontSize: 20, marginLeft: 15 }}>Fee</Text>
     </View>
   );
 };

@@ -5,6 +5,8 @@ import { IconButton, Button, Searchbar, Dialog, Portal, Provider } from 'react-n
 import { Entypo } from '@expo/vector-icons';
 
 // component
+import HeaderFee from './HeaderFee';
+import HeaderPermission from './HeaderPermission';
 import MediaPermission from './MediaPermission';
 import MeetupDate from './MeetupDate';
 import MeetupAttendeesLimit from './MeetupAttendeesLimit';
@@ -13,28 +15,30 @@ import MeetupFee from './MeetupFee';
 const Container = (props) => {
   return (
     <View>
-      <ScrollView contentContainerStyle={{ paddingBottom: 150 }}>
-        <MediaPermission state={props.state} dispatch={props.dispatch} />
-        <MeetupAttendeesLimit state={props.state} dispatch={props.dispatch} />
-        <MeetupFee state={props.state} dispatch={props.dispatch} />
-        <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
-          <Button
-            icon='arrow-left'
-            mode='outlined'
-            onPress={() => props.dispatch({ type: 'BACK_TO_MEETUP_DATE_AND_TIME', payload: '' })}
-          >
-            Back
-          </Button>
-          <Button
-            icon='arrow-right'
-            mode='outlined'
-            contentStyle={{ flexDirection: 'row-reverse' }}
-            onPress={() => props.dispatch({ type: 'GO_TO_MEETUP_DESCRIPTION', payload: '' })}
-          >
-            Next
-          </Button>
-        </View>
-      </ScrollView>
+      {/* <ScrollView contentContainerStyle={{ paddingBottom: 150 }}> */}
+      <HeaderFee />
+      <MeetupFee state={props.state} dispatch={props.dispatch} />
+      <HeaderPermission />
+      <MediaPermission state={props.state} dispatch={props.dispatch} />
+      {/* <MeetupAttendeesLimit state={props.state} dispatch={props.dispatch} /> */}
+      <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
+        <Button
+          icon='arrow-left'
+          mode='outlined'
+          onPress={() => props.dispatch({ type: 'BACK_TO_MEETUP_DATE_AND_TIME', payload: '' })}
+        >
+          Back
+        </Button>
+        <Button
+          icon='arrow-right'
+          mode='outlined'
+          contentStyle={{ flexDirection: 'row-reverse' }}
+          onPress={() => props.dispatch({ type: 'GO_TO_MEETUP_DESCRIPTION', payload: '' })}
+        >
+          Next
+        </Button>
+      </View>
+      {/* </ScrollView> */}
     </View>
   );
 };

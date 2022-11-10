@@ -55,7 +55,10 @@ const DateAndTime = (props) => {
       {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <FontAwesome name='calendar' size={24} /> */}
       <View style={{ marginBottom: 20 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', marginBottom: 10 }}>
+          When does your meetup start? And how long is it?
+        </Text>
+        {/* <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
           <View
             style={{
               backgroundColor: iconColorsTable['blue1'],
@@ -74,7 +77,7 @@ const DateAndTime = (props) => {
               When do you meetup? And how long is it?
             </Text>
           </View>
-        </View>
+        </View> */}
         <View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Button

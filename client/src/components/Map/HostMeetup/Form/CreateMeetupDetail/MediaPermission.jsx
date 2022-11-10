@@ -19,7 +19,18 @@ const CameraPermission = (props) => {
 
   return (
     <View style={{ marginBottom: 20 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+      <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', flexShrink: 1, marginBottom: 10 }}>
+        Do you allow the attendees to take photos or videos during the meetup?
+      </Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Switch
+          value={props.state.isMediaAllowed}
+          onValueChange={() => props.dispatch({ type: 'SET_IS_MEDIA_ALLOWED', payload: '' })}
+          style={{ marginRight: 10 }}
+        />
+        {renderSwitchState()}
+      </View>
+      {/* <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
         <View
           style={{
             backgroundColor: iconColorsTable['lightBlue1'],
@@ -33,7 +44,6 @@ const CameraPermission = (props) => {
           <FontAwesome5 name='photo-video' size={25} color='white' />
         </View>
         <View style={{ marginLeft: 15, flex: 1 }}>
-          {/* <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5 }}>Media permission</Text> */}
           <View style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
             <Text style={{ fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Media permission</Text>
             <Switch
@@ -47,7 +57,7 @@ const CameraPermission = (props) => {
             Do you allow the attendees to take photos or videos during the meetup?
           </Text>
         </View>
-      </View>
+      </View> */}
     </View>
   );
 };

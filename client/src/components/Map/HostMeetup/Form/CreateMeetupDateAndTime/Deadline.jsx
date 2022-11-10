@@ -41,7 +41,10 @@ const Deadline = (props) => {
   return (
     <View>
       <View style={{ marginBottom: 20 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', marginBottom: 10 }}>
+          Until when can the users apply for join this meetup?
+        </Text>
+        {/* <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
           <View
             style={{
               backgroundColor: iconColorsTable['green1'],
@@ -60,7 +63,7 @@ const Deadline = (props) => {
               Until when can the users apply for join this meetup?
             </Text>
           </View>
-        </View>
+        </View> */}
         <View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Button
