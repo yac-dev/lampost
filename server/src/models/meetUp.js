@@ -81,6 +81,12 @@ const meetupSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
   },
+  photos: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Photo',
+    },
+  ],
   // isStartDateAndTimeUpdated: Boolean,
   // isDuratonUpdated: Boolean,
   // endDateAndTime: Date,

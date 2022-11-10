@@ -12,21 +12,16 @@ const photoSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Meetup',
   },
-  badge: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Badge',
-  },
   createdBy: [
     {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
     },
   ],
-  creator: {
-    user: {
-      type: mongoose.Schema.ObjectId,
-      ref: 'User',
-    },
+  // launcherがrollを作ったらphotosは全て、そのrollのidになる。
+  roll: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Roll',
   },
   createdAt: Date,
 });
