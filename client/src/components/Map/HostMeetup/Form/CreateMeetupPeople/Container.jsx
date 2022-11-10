@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import Header from './Header';
-import WelcomeBadges from './WelcomeBadges';
+import WelcomeBadges from './PreferredBadges';
 import AttendeesLimit from './AttendeesLimit';
 
 const Container = (props) => {

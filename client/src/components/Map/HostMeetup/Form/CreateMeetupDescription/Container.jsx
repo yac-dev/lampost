@@ -7,13 +7,17 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
 // components
+import HeaderDescription from './HeaderDescription';
+import HeaderLink from './HeaderLink';
 import Description from './Description';
 import Reference from './Reference';
 
 const Container = (props) => {
   return (
     <View>
+      <HeaderDescription />
       <Description state={props.state} dispatch={props.dispatch} />
+      <HeaderLink />
       <Reference state={props.state} dispatch={props.dispatch} />
       <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
         <Button

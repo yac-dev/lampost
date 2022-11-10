@@ -8,7 +8,7 @@ const Header = () => {
     <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
       <View
         style={{
-          backgroundColor: iconColorsTable['red1'],
+          backgroundColor: iconColorsTable['yellow1'],
           padding: 5,
           borderRadius: 7,
           width: 35,

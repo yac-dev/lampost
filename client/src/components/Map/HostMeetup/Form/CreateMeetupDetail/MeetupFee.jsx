@@ -81,7 +81,7 @@ const MeetupFee = (props) => {
       <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', marginBottom: 10 }}>
         Is this meetup free to join?
       </Text>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
         <Switch
           value={props.state.isMeetupFeeFree}
           onValueChange={() => props.dispatch({ type: 'SET_IS_MEETUP_FEE_FREE', payload: '' })}

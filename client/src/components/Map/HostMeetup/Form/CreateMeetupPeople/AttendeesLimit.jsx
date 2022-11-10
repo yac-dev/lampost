@@ -14,11 +14,11 @@ const AttendeesLimit = (props) => {
   const renderAttendeesLimitForm = () => {
     if (!props.state.isMeetupAttendeesLimitFree) {
       return (
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
           <TextInput
             style={{ width: 200, marginLeft: 10 }}
             mode='outlined'
-            label='How many?'
+            label='How many people?'
             value={props.state.fee}
             onChangeText={(text) => props.dispatch({ type: 'SET_MEETUP_FEE', payload: text })}
           />
@@ -31,8 +31,10 @@ const AttendeesLimit = (props) => {
 
   return (
     <View>
-      <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E' }}>How many people can join this meetup?</Text>
-      <View>
+      <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', marginBottom: 10 }}>
+        How many people can join this meetup?
+      </Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end', marginBottom: 10 }}>
         <Switch
           value={props.state.isMeetupAttendeesLimitFree}
           onValueChange={() => props.dispatch({ type: 'SET_IS_MEETUP_ATTENDEES_LIMIT_FREE', payload: '' })}

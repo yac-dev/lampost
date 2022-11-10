@@ -22,7 +22,7 @@ const CameraPermission = (props) => {
       <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', flexShrink: 1, marginBottom: 10 }}>
         Do you allow the attendees to take photos or videos during the meetup?
       </Text>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
         <Switch
           value={props.state.isMediaAllowed}
           onValueChange={() => props.dispatch({ type: 'SET_IS_MEDIA_ALLOWED', payload: '' })}

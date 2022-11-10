@@ -10,7 +10,10 @@ import { Entypo } from '@expo/vector-icons';
 const Description = (props) => {
   return (
     <View style={{ marginBottom: 20 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+      <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', flexShrink: 1, marginBottom: 10 }}>
+        Please write a message to the attendees or more detailed description.
+      </Text>
+      {/* <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
         <View
           style={{
             backgroundColor: iconColorsTable['brown1'],
@@ -32,9 +35,9 @@ const Description = (props) => {
             Please write a message to the attendees or more detailed description if you have.
           </Text>
         </View>
-      </View>
+      </View> */}
       <BottomSheetTextInput
-        style={{ height: 150, backgroundColor: '#E9E9E9', borderRadius: 5, padding: 10 }}
+        style={{ height: 100, backgroundColor: '#E9E9E9', borderRadius: 5, padding: 10 }}
         // label='Meetup title'
         multiline
         value={props.state.description}

@@ -10,7 +10,10 @@ import { Entypo } from '@expo/vector-icons';
 const Reference = (props) => {
   return (
     <View style={{ marginBottom: 20 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+      <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', flexShrink: 1, marginBottom: 10 }}>
+        Please paste the link of location info or attachment if you have.
+      </Text>
+      {/* <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
         <View
           style={{
             backgroundColor: iconColorsTable['grey1'],
@@ -24,13 +27,12 @@ const Reference = (props) => {
           <Entypo name='link' size={25} color='white' />
         </View>
         <View style={{ marginLeft: 15, flex: 1 }}>
-          {/* <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5 }}>Media permission</Text> */}
           <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5 }}>Link (optional)</Text>
           <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', flexShrink: 1 }}>
             Please paste the link of location info or attachment if you have.
           </Text>
         </View>
-      </View>
+      </View> */}
       <BottomSheetTextInput
         style={{ backgroundColor: '#E9E9E9', padding: 10, borderRadius: 5 }}
         placeholder='URL'

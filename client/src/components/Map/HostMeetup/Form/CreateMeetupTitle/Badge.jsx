@@ -16,29 +16,26 @@ const Badge = (props) => {
 
   return (
     <View style={{ marginBottom: 20 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-        {/* <Text style={{ fontWeight: 'bold', fontSize: 17, marginBottom: 5 }}>Badge</Text> */}
-        <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', marginRight: 10 }}>
-          Please describe your meetup in one badge. It'll be displayed on the map.
-        </Text>
-        <TouchableOpacity
-          style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 15 }}
-          onPress={() =>
-            props.navigation.navigate('Add badges', {
-              fromComponent: 'Select meetup badge',
-              selectedBadge: props.state.badge,
-            })
-          }
-        >
-          <SimpleLineIcons name='magnifier-add' size={20} color={'black'} style={{ marginRight: 5 }} />
-          <Text>Select</Text>
-        </TouchableOpacity>
-      </View>
+      <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', marginBottom: 10 }}>
+        Please describe your meetup in one badge. It'll be displayed on the map.
+      </Text>
+      <TouchableOpacity
+        style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, alignSelf: 'flex-end' }}
+        onPress={() =>
+          props.navigation.navigate('Add badges', {
+            fromComponent: 'Select meetup badge',
+            selectedBadge: props.state.badge,
+          })
+        }
+      >
+        <SimpleLineIcons name='magnifier-add' size={20} color={'black'} style={{ marginRight: 5 }} />
+        <Text>Select</Text>
+      </TouchableOpacity>
 
       {props.state.badge ? (
         <View
           style={{
-            width: '20%',
+            width: 80,
             // height: 0,
             aspectRatio: 1,
             padding: 10,

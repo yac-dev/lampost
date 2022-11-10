@@ -8,7 +8,7 @@ import { iconColorsTable } from '../../../../../utils/colorsTable';
 
 import SelectedBadges from './SelectedBadges/Badges';
 
-const WelcomeBadges = (props) => {
+const PreferredBadges = (props) => {
   useEffect(() => {
     if (props.route.params?.requiredBadges) {
       console.log('this is the badge...', props.route.params.requiredBadges);
@@ -18,11 +18,14 @@ const WelcomeBadges = (props) => {
 
   return (
     <View style={{ marginBottom: 20 }}>
-      <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', flexShrink: 1 }}>
-        What kind of people would be a good fit your meetup? Please select the badges which are related to this meetup.
+      <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', marginBottom: 10 }}>
+        Which badges are preffered to have for attendees to join?
       </Text>
+      {/* <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', marginBottom: 10 }}>
+        まあ、要はそんな人を探しているかってこと。what kind of person are you looking forよ。端的に書くと。
+      </Text> */}
       <TouchableOpacity
-        style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 15 }}
+        style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}
         onPress={() =>
           props.navigation.navigate('Add badges', {
             fromComponent: 'Add meetup required badges',
@@ -33,9 +36,9 @@ const WelcomeBadges = (props) => {
         <SimpleLineIcons name='magnifier-add' size={20} color={'black'} style={{ marginRight: 5 }} />
         <Text>Add</Text>
       </TouchableOpacity>
-      {/* <SelectedBadges /> */}
+      <SelectedBadges requiredBadges={Object.values(props.state.requiredBadges)} />
     </View>
   );
 };
 
-export default WelcomeBadges;
+export default PreferredBadges;
