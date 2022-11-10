@@ -53,9 +53,9 @@ const MeetupFee = (props) => {
           </Menu>
           {/* <Text>{props.state.currency}</Text> */}
           <TextInput
-            style={{ width: 150, marginLeft: 10 }}
+            style={{ width: 200, marginLeft: 10 }}
             mode='outlined'
-            label='How much?'
+            label='How much is it?'
             value={props.state.fee}
             onChangeText={(text) => props.dispatch({ type: 'SET_MEETUP_FEE', payload: text })}
           />

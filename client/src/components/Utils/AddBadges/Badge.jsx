@@ -35,13 +35,13 @@ const Badge = (props) => {
       } else {
         return null;
       }
-    } else if (props.fromComponent === 'Add meetup required badges') {
-      if (props.requiredBadges[props.badge._id]) {
+    } else if (props.fromComponent === 'Add meetup preferred badges') {
+      if (props.preferredBadges[props.badge._id]) {
         return (
           <View
             style={{
-              top: 0,
-              right: 0,
+              top: 5,
+              right: 5,
               position: 'absolute',
               color: '#989898',
             }}

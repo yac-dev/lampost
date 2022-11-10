@@ -10,7 +10,7 @@ import Badge from './Badge';
 
 const Badges = (props) => {
   const renderBadges = () => {
-    const selectedBadgesList = props.requiredBadges.map((badge, index) => {
+    const selectedBadgesList = props.preferredBadges.map((badge, index) => {
       return <Badge key={index} badge={badge} />;
     });
 
@@ -24,7 +24,7 @@ const Badges = (props) => {
     );
   };
 
-  if (!props.requiredBadges.length) {
+  if (!props.preferredBadges.length) {
     return <Text style={{ fontWeight: 'bold' }}>No badges added yet...</Text>;
   } else {
     return <>{renderBadges()}</>;

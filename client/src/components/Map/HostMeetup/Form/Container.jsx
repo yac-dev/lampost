@@ -24,7 +24,7 @@ const INITIAL_STATE = {
   component: 'MeetupTitle',
   title: '',
   badge: null,
-  requiredBadges: {},
+  preferredBadges: {},
   startDateAndTime: null,
   duration: null,
   applicationDeadline: null,
@@ -66,8 +66,8 @@ const reducer = (state, action) => {
       return { ...state, title: action.payload };
     case 'SET_MEETUP_BADGE':
       return { ...state, badge: action.payload };
-    case 'SET_MEETUP_REQUIRED_BADGES':
-      return { ...state, requiredBadges: action.payload };
+    case 'SET_MEETUP_PREFERRED_BADGES':
+      return { ...state, preferredBadges: action.payload };
     case 'SET_START_DATE_AND_TIME':
       return { ...state, startDateAndTime: action.payload };
     case 'SET_DURATION':
@@ -116,8 +116,8 @@ const Container = (props) => {
   };
 
   const onSubmit = () => {
-    const requiredBadgeIds = Object.values(props.state.requiredBadges).map((badge) => {
-      return badge._id;
+    const preferredBadgeIds = Object.values(state.preferredBadges).map((preferredBadge) => {
+      return preferredBadge._id;
     });
 
     const formData = {
@@ -127,7 +127,7 @@ const Container = (props) => {
         coordinates: [props.hostMeetup.setLocation.longitude, props.hostMeetup.setLocation.latitude],
       },
       badge: state.badge._id,
-      requiredBadges: requiredBadgeIds,
+      preferredBadges: preferredBadgeIds,
       startDateAndTime: state.startDateAndTime,
       duration: state.duration,
       applicationDeadline: state.applicationDeadline,

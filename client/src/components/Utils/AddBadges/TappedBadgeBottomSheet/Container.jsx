@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetTextInput, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { AntDesign } from '@expo/vector-icons';
 
 // components
 import BadgeDetail from '../../BadgeDetail/Container';
@@ -25,15 +26,15 @@ const Container = (props) => {
       >
         <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
           {/* <BottomSheetTextInput /> */}
-          <TouchableOpacity onPress={() => props.closeTappedBadgeBottomSheet()}>
-            <Text>Close this bottom</Text>
+          <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => props.closeTappedBadgeBottomSheet()}>
+            <AntDesign name='closecircleo' size={25} />
           </TouchableOpacity>
           <BadgeDetail
             fromComponent={props.fromComponent}
             badge={props.badge}
             setBadge={props.setBadge}
-            requiredBadges={props.requiredBadges}
-            setRequiredBadges={props.setRequiredBadges}
+            preferredBadges={props.preferredBadges}
+            setPreferredBadges={props.setPreferredBadges}
           />
         </BottomSheetView>
       </GorhomBottomSheet>

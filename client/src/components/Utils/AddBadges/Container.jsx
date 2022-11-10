@@ -13,7 +13,7 @@ import { setIsTappedBadgeBottomSheetOpen } from '../../../redux/actionCreators/b
 
 const Container = (props) => {
   const [badge, setBadge] = useState(null);
-  const [requiredBadges, setRequiredBadges] = useState({});
+  const [preferredBadges, setPreferredBadges] = useState({});
   const [userBadges, setUserBadges] = useState({});
   const [fromComponent, setFromComponent] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -77,8 +77,8 @@ const Container = (props) => {
 
   // meetup required badgesの時
   useEffect(() => {
-    if (props.route.params?.fromComponent === 'Add meetup required badges') {
-      setFromComponent('Add meetup required badges');
+    if (props.route.params?.fromComponent === 'Add meetup preferred badges') {
+      setFromComponent('Add meetup preferred badges');
       // setRequiredBadges((previous) => {
       //   return {
       //     ...previous,
@@ -87,28 +87,28 @@ const Container = (props) => {
       // });
       props.navigation.setOptions({
         headerRight: () => (
-          <TouchableOpacity onPress={() => onAddRequiredBadgesDone()}>
+          <TouchableOpacity onPress={() => onAddPreferredBadgesDone()}>
             <Text>Done(meet)</Text>
           </TouchableOpacity>
         ),
       });
     }
-  }, [requiredBadges]);
+  }, [preferredBadges]);
   // うん。上でやると、useEffectでstackoverflow的なことが起こっている。だから下で分けてやる必要がありそう。
 
   useEffect(() => {
-    if (props.route.params?.badges) {
-      setRequiredBadges((previous) => {
+    if (props.route.params?.preferredBadges) {
+      setPreferredBadges((previous) => {
         return {
           ...previous,
-          ...props.route.params.badges,
+          ...props.route.params.preferredBadges,
         };
       });
     }
   }, []);
 
-  const onAddRequiredBadgesDone = () => {
-    props.navigation.navigate('Map', { requiredBadges });
+  const onAddPreferredBadgesDone = () => {
+    props.navigation.navigate('Map', { preferredBadges });
   };
 
   // const onDoneAddMeetupBadges = () => {
@@ -119,7 +119,7 @@ const Container = (props) => {
   useEffect(() => {
     if (props.route.params.fromComponent === 'Add user badges') {
       queryBadges(props.auth.data._id);
-    } else if (props.route.params.fromComponent === 'Add meetup required badges') {
+    } else if (props.route.params.fromComponent === 'Add meetup preferred badges') {
       queryBadges();
     } else if (props.route.params.fromComponent === 'Select meetup badge') {
       queryBadges();
@@ -161,7 +161,7 @@ const Container = (props) => {
     <View style={{ padding: 10, flex: 1 }}>
       <Badges
         badgeState={badge}
-        requiredBadges={requiredBadges}
+        preferredBadges={preferredBadges}
         badges={badges}
         onBadgePress={onBadgePress}
         fromComponent={fromComponent}
@@ -177,8 +177,8 @@ const Container = (props) => {
         fromComponent={fromComponent}
         badge={badge}
         setBadge={setBadge}
-        requiredBadges={requiredBadges}
-        setRequiredBadges={setRequiredBadges}
+        preferredBadges={preferredBadges}
+        setPreferredBadges={setPreferredBadges}
         tappedBadgeBottomSheetRef={tappedBadgeBottomSheetRef}
         closeTappedBadgeBottomSheet={closeTappedBadgeBottomSheet}
       />

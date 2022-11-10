@@ -9,17 +9,18 @@ import { iconColorsTable } from '../../../../../utils/colorsTable';
 import SelectedBadges from './SelectedBadges/Badges';
 
 const PreferredBadges = (props) => {
+  // add badgesから帰ってきた時用。
   useEffect(() => {
-    if (props.route.params?.requiredBadges) {
-      console.log('this is the badge...', props.route.params.requiredBadges);
-      props.dispatch({ type: 'SET_MEETUP_REQUIRED_BADGES', payload: props.route.params.requiredBadges });
+    if (props.route.params?.preferredBadges) {
+      console.log('this is the badge...', props.route.params.preferredBadges);
+      props.dispatch({ type: 'SET_MEETUP_PREFERRED_BADGES', payload: props.route.params.preferredBadges });
     }
-  }, [props.route.params?.requiredBadges]);
+  }, [props.route.params?.preferredBadges]);
 
   return (
     <View style={{ marginBottom: 20 }}>
       <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', marginBottom: 10 }}>
-        Which badges are preffered to have for attendees to join?
+        Which badges are preffered to have attendees for this meetup?
       </Text>
       {/* <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', marginBottom: 10 }}>
         まあ、要はそんな人を探しているかってこと。what kind of person are you looking forよ。端的に書くと。
@@ -28,15 +29,15 @@ const PreferredBadges = (props) => {
         style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}
         onPress={() =>
           props.navigation.navigate('Add badges', {
-            fromComponent: 'Add meetup required badges',
-            badges: props.state.requiredBadges,
+            fromComponent: 'Add meetup preferred badges',
+            preferredBadges: props.state.preferredBadges,
           })
         }
       >
         <SimpleLineIcons name='magnifier-add' size={20} color={'black'} style={{ marginRight: 5 }} />
         <Text>Add</Text>
       </TouchableOpacity>
-      <SelectedBadges requiredBadges={Object.values(props.state.requiredBadges)} />
+      <SelectedBadges preferredBadges={Object.values(props.state.preferredBadges)} />
     </View>
   );
 };

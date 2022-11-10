@@ -10,9 +10,12 @@ import { Entypo } from '@expo/vector-icons';
 const Description = (props) => {
   return (
     <View style={{ marginBottom: 20 }}>
-      <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', flexShrink: 1, marginBottom: 10 }}>
-        Please write a message to the attendees or more detailed description.
-      </Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', flexShrink: 1, marginBottom: 10 }}>
+          Please write a message to the attendees or more detailed description.
+        </Text>
+        <Text style={{ fontSize: 13, color: '#9E9E9E' }}>{props.state.description.length}/300</Text>
+      </View>
       {/* <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
         <View
           style={{

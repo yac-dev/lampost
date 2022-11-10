@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Touchable } from 'react-native';
 import { connect } from 'react-redux';
+import { Button } from 'react-native-paper';
+import { iconColorsTable, backgroundColorsTable } from '../../../utils/colorsTable';
 import FastImage from 'react-native-fast-image';
 
 // ac
@@ -29,28 +31,34 @@ const Container = (props) => {
           </TouchableOpacity>
         );
       }
-    } else if (props.fromComponent === 'Add meetup required badges') {
+    } else if (props.fromComponent === 'Add meetup preferred badges') {
       // requiredBadges {}
-      if (props.requiredBadges[props.bottomSheet.badgeDetail.data._id]) {
+      if (props.preferredBadges[props.bottomSheet.badgeDetail.data._id]) {
         return (
           // deleteする。
-          <TouchableOpacity
+          <Button
+            icon='minus'
+            mode='contained'
+            buttonColor={iconColorsTable['red1']}
             onPress={() =>
-              props.setRequiredBadges((previous) => {
+              props.setPreferredBadges((previous) => {
                 const copy = { ...previous };
                 delete copy[props.bottomSheet.badgeDetail.data._id];
                 return copy;
               })
             }
           >
-            <Text>Remove</Text>
-          </TouchableOpacity>
+            Remove
+          </Button>
         );
       } else {
         return (
-          <TouchableOpacity
+          <Button
+            icon='plus'
+            mode='contained'
+            buttonColor={iconColorsTable['lightGreen1']}
             onPress={() =>
-              props.setRequiredBadges((previous) => {
+              props.setPreferredBadges((previous) => {
                 return {
                   ...previous,
                   [props.bottomSheet.badgeDetail.data._id]: props.bottomSheet.badgeDetail.data,
@@ -58,8 +66,8 @@ const Container = (props) => {
               })
             }
           >
-            <Text>Add</Text>
-          </TouchableOpacity>
+            Add
+          </Button>
         );
       }
     }
@@ -67,27 +75,58 @@ const Container = (props) => {
     // fromComponent={props.fromComponent}
   };
   return (
-    <View>
-      <Text>{props.bottomSheet.badgeDetail.data.name}</Text>
-      <FastImage
-        style={{ width: props.bottomSheet.badgeDetail.data.landscape ? 105 : 80, height: 80, marginBottom: 5 }}
-        source={{
-          uri: props.bottomSheet.badgeDetail.data.icon,
-          // headers: { Authorization: 'someAuthToken' },
-          priority: FastImage.priority.normal,
+    // <View>
+    //   <Text>{props.bottomSheet.badgeDetail.data.name}</Text>
+    //   <FastImage
+    //     style={{ width: 80, height: 80, marginBottom: 5 }}
+    //     source={{
+    //       uri: props.bottomSheet.badgeDetail.data.icon,
+    //       // headers: { Authorization: 'someAuthToken' },
+    //       priority: FastImage.priority.normal,
+    //     }}
+    //     tintColor={iconColorsTable[props.bottomSheet.badgeDetail.data.color]}
+    //     resizeMode={FastImage.resizeMode.contain}
+    //   />
+    //   {renderActionButton()}
+    // </View>
+    <View style={{ flexDirection: 'row' }}>
+      <View
+        style={{
+          width: 100,
+          aspectRatio: 1,
+          // padding: 10, // これは単純に、25%幅に対して
+          // marginBottom: 23,
+          // backgroundColor: 'red',
         }}
-        tintColor={'red'}
-        // resizeMode={FastImage.resizeMode.contain}
-      />
-      {/* {props.selectedItem.badges[props.bottomSheet.badgeDetail.data._id] ? (
-        <TouchableOpacity onPress={() => props.removeBadge(props.bottomSheet.badgeDetail.data)}>
-          <Text>Remove</Text>
+      >
+        <TouchableOpacity
+          style={{
+            width: '100%',
+            height: '100%',
+            alignItems: 'center', // これと
+            justifyContent: 'center', // これで中のimageを上下左右真ん中にする
+            borderRadius: 10,
+            backgroundColor: backgroundColorsTable[props.bottomSheet.badgeDetail.data.color],
+            borderStyle: 'solid',
+            borderColor: backgroundColorsTable[props.bottomSheet.badgeDetail.data.color],
+            borderWidth: 1,
+            marginBottom: 5,
+          }}
+        >
+          <FastImage
+            style={{ width: 80, height: 80 }}
+            source={{
+              uri: props.bottomSheet.badgeDetail.data.icon,
+              priority: FastImage.priority.normal,
+            }}
+            tintColor={iconColorsTable[props.bottomSheet.badgeDetail.data.color]}
+            resizeMode={FastImage.resizeMode.contain}
+          />
         </TouchableOpacity>
-      ) : (
-        <TouchableOpacity onPress={() => props.selectBadge(props.bottomSheet.badgeDetail.data)}>
-          <Text>Add</Text>
-        </TouchableOpacity>
-      )} */}
+        <Text style={{ color: 'black', fontWeight: 'bold', alignSelf: 'center', fontSize: 10, textAlign: 'center' }}>
+          {props.bottomSheet.badgeDetail.data.name}
+        </Text>
+      </View>
       {renderActionButton()}
     </View>
   );

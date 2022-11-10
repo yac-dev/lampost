@@ -57,7 +57,7 @@ const Badge = (props) => {
         width: 80,
         aspectRatio: 1,
         padding: 10,
-        // backgroundColor: 'red',
+        marginBottom: 20,
       }}
     >
       <TouchableOpacity
@@ -85,9 +85,9 @@ const Badge = (props) => {
           resizeMode={FastImage.resizeMode.contain}
         />
       </TouchableOpacity>
-      {/* <Text style={{ color: 'black', fontWeight: 'bold', alignSelf: 'center', fontSize: 10, textAlign: 'center' }}>
+      <Text style={{ color: 'black', fontWeight: 'bold', alignSelf: 'center', fontSize: 10, textAlign: 'center' }}>
         {props.badge.name}
-      </Text> */}
+      </Text>
     </View>
   );
 };

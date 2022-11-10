@@ -22,7 +22,7 @@ const Container = (props) => {
           key={index}
           fromComponent={props.fromComponent}
           badgeState={props.badgeState}
-          requiredBadges={props.requiredBadges}
+          preferredBadges={props.preferredBadges}
           badge={badge}
           onBadgePress={props.onBadgePress}
         />
