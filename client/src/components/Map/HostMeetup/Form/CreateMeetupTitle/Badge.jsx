@@ -16,42 +16,23 @@ const Badge = (props) => {
 
   return (
     <View style={{ marginBottom: 20 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
-        <View
-          style={{
-            backgroundColor: iconColorsTable['green1'],
-            padding: 5,
-            borderRadius: 7,
-            width: 35,
-            height: 35,
-            alignItems: 'center',
-          }}
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+        {/* <Text style={{ fontWeight: 'bold', fontSize: 17, marginBottom: 5 }}>Badge</Text> */}
+        <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', marginRight: 10 }}>
+          Please describe your meetup in one badge. It'll be displayed on the map.
+        </Text>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 15 }}
+          onPress={() =>
+            props.navigation.navigate('Add badges', {
+              fromComponent: 'Select meetup badge',
+              selectedBadge: props.state.badge,
+            })
+          }
         >
-          <Foundation name='sheriff-badge' size={25} color='white' />
-        </View>
-
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View style={{ marginLeft: 15 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={{ fontWeight: 'bold', fontSize: 17, marginBottom: 5 }}>Badge</Text>
-              <TouchableOpacity
-                style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 15 }}
-                onPress={() =>
-                  props.navigation.navigate('Add badges', {
-                    fromComponent: 'Select meetup badge',
-                    selectedBadge: props.state.badge,
-                  })
-                }
-              >
-                <SimpleLineIcons name='magnifier-add' size={20} color={'black'} style={{ marginRight: 5 }} />
-                <Text>Select</Text>
-              </TouchableOpacity>
-            </View>
-            <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E' }}>
-              Please describe your meetup in one badge. It'll be displayed on the map.
-            </Text>
-          </View>
-        </View>
+          <SimpleLineIcons name='magnifier-add' size={20} color={'black'} style={{ marginRight: 5 }} />
+          <Text>Select</Text>
+        </TouchableOpacity>
       </View>
 
       {props.state.badge ? (

@@ -7,7 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { iconColorsTable } from '../../../../../utils/colorsTable';
 
-import SelectedBadges from './SelectedBadges/Badges';
+// import SelectedBadges from './SelectedBadges/Badges';
 
 const RequiredBadges = (props) => {
   useEffect(() => {
@@ -58,7 +58,7 @@ const RequiredBadges = (props) => {
         </View>
       </View>
 
-      <SelectedBadges requiredBadges={Object.values(props.state.requiredBadges)} />
+      {/* <SelectedBadges requiredBadges={Object.values(props.state.requiredBadges)} /> */}
     </View>
   );
 };

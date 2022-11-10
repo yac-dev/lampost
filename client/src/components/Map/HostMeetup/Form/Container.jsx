@@ -6,7 +6,8 @@ import { AntDesign } from '@expo/vector-icons';
 
 // components
 // import CreateMeetupBadge from './CreateMeetupBadge';
-import CreateMeetupBadges from './CreateMeetupBadges/Container';
+import CreateMeetupTitle from './CreateMeetupTitle/Container';
+import CreateMeetupPeople from './CreateMeetupPeople/Container';
 import CreateMeetupDateAndTime from './CreateMeetupDateAndTime/Container';
 import CreateMeetupDetail from './CreateMeetupDetail/Container';
 import CreateMeetupDescription from './CreateMeetupDescription/Container';
@@ -20,7 +21,7 @@ import { setIsCancelLaunchMeetupModalOpen } from '../../../../redux/actionCreato
 import { addSnackBar } from '../../../../redux/actionCreators/snackBar';
 
 const INITIAL_STATE = {
-  component: 'MeetupBadge',
+  component: 'MeetupTitle',
   title: '',
   badge: null,
   requiredBadges: {},
@@ -45,10 +46,14 @@ const INITIAL_STATE = {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'GO_TO_MEETUP_PEOPLE':
+      return { ...state, component: 'MeetupPeople' };
+    case 'BACK_TO_MEETUP_TITLE':
+      return { ...state, component: 'MeetupTitle' };
     case 'GO_TO_MEETUP_DATE_AND_TIME':
       return { ...state, component: 'MeetupDateAndTime' };
-    case 'BACK_TO_MEETUP_BADGE':
-      return { ...state, component: 'MeetupBadge' };
+    case 'BACK_TO_MEETUP_PEOPLE':
+      return { ...state, component: 'MeetupPeople' };
     case 'GO_TO_MEETUP_DETAIL':
       return { ...state, component: 'MeetupDetail' };
     case 'BACK_TO_MEETUP_DATE_AND_TIME':
@@ -122,7 +127,7 @@ const Container = (props) => {
         coordinates: [props.hostMeetup.setLocation.longitude, props.hostMeetup.setLocation.latitude],
       },
       badge: state.badge._id,
-      badges: requiredBadgeIds,
+      requiredBadges: requiredBadgeIds,
       startDateAndTime: state.startDateAndTime,
       duration: state.duration,
       applicationDeadline: state.applicationDeadline,
@@ -151,9 +156,13 @@ const Container = (props) => {
 
   const switchComponent = () => {
     switch (state.component) {
-      case 'MeetupBadge':
+      case 'MeetupTitle':
         return (
-          <CreateMeetupBadges state={state} dispatch={dispatch} navigation={props.navigation} route={props.route} />
+          <CreateMeetupTitle state={state} dispatch={dispatch} navigation={props.navigation} route={props.route} />
+        );
+      case 'MeetupPeople':
+        return (
+          <CreateMeetupPeople state={state} dispatch={dispatch} navigation={props.navigation} route={props.route} />
         );
       case 'MeetupDateAndTime':
         return <CreateMeetupDateAndTime state={state} dispatch={dispatch} />;
