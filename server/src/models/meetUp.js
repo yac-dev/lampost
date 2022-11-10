@@ -13,7 +13,7 @@ const meetupSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Badge',
   },
-  welcomeBadges: [
+  preferredBadges: [
     {
       type: mongoose.Schema.ObjectId,
       ref: 'Badge',

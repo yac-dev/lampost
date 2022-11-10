@@ -58,6 +58,7 @@ export const createMeetup = async (request, response) => {
     const {
       place,
       badge,
+      preferredBadges,
       // badges,
       title,
       startDateAndTime,
@@ -80,6 +81,7 @@ export const createMeetup = async (request, response) => {
       place,
       badge,
       // badges,
+      preferredBadges,
       title,
       startDateAndTime,
       duration,
