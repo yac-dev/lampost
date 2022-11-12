@@ -4,6 +4,8 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { AntDesign } from '@expo/vector-icons';
 
+// AIzaSyCS21jPWA4QzrsmT8zkRiTH623JxTVJ6ek
+
 // components
 // import CreateMeetupBadge from './CreateMeetupBadge';
 import CreateMeetupTitle from './CreateMeetupTitle/Container';

@@ -101,9 +101,9 @@ const Header = (props) => {
           }}
           tintColor={iconColorsTable[props.selectedMeetup.badge.color]}
         />
-        <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 5 }}>{props.selectedMeetup.title}</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 10 }}>{props.selectedMeetup.title}</Text>
       </View>
-      <Text style={{ alignSelf: 'flex-end' }}>
+      <Text style={{ alignSelf: 'flex-end', marginBottom: 10 }}>
         {/* {`Starts at ${renderDate(props.selectedMeetup.startDateAndTime)}`} */}
         {ren(props.selectedMeetup.startDateAndTime)}
       </Text>

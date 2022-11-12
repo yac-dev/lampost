@@ -45,7 +45,7 @@ const Menus = (props) => {
       },
     },
     {
-      name: 'Required Badges',
+      name: 'Preferred Badges',
       iconBackgroundColor: iconColorsTable['lightGreen1'],
       icon: <Foundation name='sheriff-badge' size={25} color='white' />,
       info: (
@@ -125,10 +125,10 @@ const Menus = (props) => {
       return <Menu key={index} menu={menu} />;
     });
 
-    return <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{menusList}</ScrollView>;
+    return <View>{menusList}</View>;
   };
 
-  return <View contentContainerStyle={{ paddingBottom: 150 }}>{renderMenus()}</View>;
+  return <View>{renderMenus()}</View>;
 };
 
 const mapStateToProps = (state) => {

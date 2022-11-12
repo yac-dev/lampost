@@ -159,7 +159,10 @@ export const createMeetup = async (request, response) => {
 
 export const getMeetups = async (request, response) => {
   try {
-    const meetups = await Meetup.find().select({ _id: 1, place: 1, badges: 1, startDateAndTime: 1 });
+    const meetups = await Meetup.find().select({ _id: 1, place: 1, badge: 1, startDateAndTime: 1 }).populate({
+      path: 'badge',
+      model: Badge,
+    });
     // .populate({
     //   path: 'badges',
     //   model: Badge,

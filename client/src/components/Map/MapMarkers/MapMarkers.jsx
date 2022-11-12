@@ -2,8 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import lampostAPI from '../../../apis/lampost';
-import { View, Text, FlatList, Image } from 'react-native';
+import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 import { Callout, Marker, Circle } from 'react-native-maps';
+import FastImage from 'react-native-fast-image';
+import { iconColorsTable, backgroundColorsTable } from '../../../utils/colorsTable';
 import { Avatar, Button } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -74,31 +76,39 @@ const MapMarkers = (props) => {
                 props.handleSelectedItemBottomSheetChanges(meetup._id);
               }}
             >
-              <View>
-                <View style={{ backgroundColor: 'red', borderRadius: 5 }}>
-                  {/* <Image
-                    source={foodAndBeverage[meetup.badges[0].label].source}
-                    style={{ width: 30, height: 30, tintColor: meetup.badges[0].color }}
-                  /> */}
-                  <Text>Hi</Text>
-                </View>
-                {/* <Text style={{ fontWeight: 'bold' }}>
-                  {new Date(meetup.startDateAndTime).toLocaleDateString('en-US', {
-                    month: 'numeric',
-                    day: 'numeric',
-                    hour: 'numeric',
-                  })}
-                </Text> */}
-              </View>
-              {/* <Button
-                mode='contained'
-                onPress={() => {
-                  console.log('selected meetup');
-                  props.selectMeetup(meetup);
+              <View
+                style={{
+                  width: 40,
+                  aspectRatio: 1,
+                  // padding: 10,
                 }}
               >
-                {meetup.title}
-              </Button> */}
+                <TouchableOpacity
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    alignItems: 'center', // これと
+                    justifyContent: 'center', // これで中のimageを上下左右真ん中にする
+                    borderRadius: 10,
+                    backgroundColor: backgroundColorsTable[meetup.badge.color],
+                    borderStyle: 'solid',
+                    borderColor: backgroundColorsTable[meetup.badge.color],
+                    borderWidth: 1,
+                    // backgroundColor: 'red',
+                    marginBottom: 5,
+                  }}
+                >
+                  <FastImage
+                    style={{ width: 30, height: 30 }}
+                    source={{
+                      uri: meetup.badge.icon,
+                      priority: FastImage.priority.normal,
+                    }}
+                    tintColor={iconColorsTable[meetup.badge.color]}
+                    resizeMode={FastImage.resizeMode.contain}
+                  />
+                </TouchableOpacity>
+              </View>
             </Marker>
           </View>
         );

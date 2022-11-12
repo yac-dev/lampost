@@ -220,7 +220,8 @@ const Map = (props) => {
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }}
-            // provider='google'
+            provider='google'
+            // provider={Platform.OS === 'android' ? MapView.PROVIDER_GOOGLE : MapView.PROVIDER_DEFAULT}
           >
             <SetMeetupLocation />
             <MapMarkers handleSelectedItemBottomSheetChanges={handleSelectedItemBottomSheetChanges} />
