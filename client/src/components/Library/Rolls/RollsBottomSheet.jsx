@@ -13,6 +13,7 @@ const BadgeFolderBottomSheet = (props) => {
           <TouchableOpacity
             key={index}
             style={{ borderBottomWidth: 0.3, borderBottomColor: 'rgb(178, 178, 178)', padding: 20 }}
+            onPress={() => props.navigation.navigate('Roll')}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Image

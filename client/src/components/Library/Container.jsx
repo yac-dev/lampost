@@ -6,7 +6,7 @@ import Roll from './Roll';
 import BadgeFolders from './BadgeFolders/Container';
 import BadgeFolderBottomSheet from './Rolls/RollsBottomSheet';
 
-const Container = () => {
+const Container = (props) => {
   const rollsBottomSheetRef = useRef(null);
   const [selected, setSelected] = useState(null);
   const [rolls, setRolls] = useState([]);
@@ -33,7 +33,12 @@ const Container = () => {
       {/* <Roll /> */}
       {/* <Text>Rolls here</Text> */}
       <BadgeFolders onSelectBadgeFolder={onSelectBadgeFolder} />
-      <BadgeFolderBottomSheet rollsBottomSheetRef={rollsBottomSheetRef} selected={selected} rolls={rolls} />
+      <BadgeFolderBottomSheet
+        rollsBottomSheetRef={rollsBottomSheetRef}
+        selected={selected}
+        rolls={rolls}
+        navigation={props.navigation}
+      />
     </View>
   );
 };

@@ -9,6 +9,10 @@ const assetSchema = new mongoose.Schema({
   data: {
     type: String,
   },
+  type: {
+    type: String,
+    // enums [photo or video]
+  },
   message: {
     type: String,
     maxLength: 40,

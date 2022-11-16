@@ -15,7 +15,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import MapNavigator from './components/Navigator/Map';
 import MemoirsNavigator from './components/Navigator/Memoirs';
-import RollsNavigator from './components/Navigator/Rolls';
+import LibraryNavigator from './components/Navigator/Library';
 import AuthNavigator from './components/Navigator/Auth';
 
 const ref = createNavigationContainerRef();
@@ -109,12 +109,12 @@ const AppStack = (props) => {
           }}
         /> */}
         <Tab.Screen
-          name='RollsNavigator'
-          component={RollsNavigator}
+          name='LibraryNavigator'
+          component={LibraryNavigator}
           options={{
             headerShown: false,
-            tabBarLabel: 'Rolls',
-            tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name='paper-roll' color={color} size={size} />,
+            tabBarLabel: 'Library',
+            tabBarIcon: ({ size, color }) => <MaterialIcons name='photo-library' color={color} size={size} />,
             // tabBarIcon: ({ size, focused, color }) => {
             //   return (
             //     <Image

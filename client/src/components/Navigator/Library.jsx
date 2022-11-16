@@ -5,23 +5,35 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Button } from 'react-native-paper';
 const Stack = createNativeStackNavigator();
 
-import Container from '../Rolls/Container';
+import Container from '../Library/Container';
+import RollContainer from '../Library/Roll/Container';
 import AuthNavigator from './Auth';
 
-const RollsNavigator = () => {
+const LibraryNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Group>
         <Stack.Screen
-          name='Rolls'
+          name='Library'
           component={Container}
           options={({ navigation }) => ({
             headerShown: true,
-            title: 'Rolls',
+            title: 'Library',
             // headerTransparent: true,
             // reduxのdata._idを使えばいいだけか。
             // headerLeft: () => <Button onPress={() => navigation.navigate('My page/Memoirs')}>User page</Button>,
             headerLeft: () => <Button onPress={() => console.log('hi')}>User page</Button>,
+          })}
+        />
+        <Stack.Screen
+          name='Roll'
+          component={RollContainer}
+          options={({ navigation }) => ({
+            headerShown: true,
+            title: 'Roll',
+            // headerTransparent: true,
+            // headerLeft: () => <Button onPress={() => navigation.navigate('My page/Memoirs')}>User page</Button>,
+            // headerLeft: () => <Button onPress={() => console.log('hi')}>User page</Button>,
           })}
         />
       </Stack.Group>
@@ -40,4 +52,4 @@ const RollsNavigator = () => {
   );
 };
 
-export default RollsNavigator;
+export default LibraryNavigator;
