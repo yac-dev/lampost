@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 const rollSchema = new mongoose.Schema({
+  // rollっていうのは、sharedなalbumのことな。
   name: {
     type: String,
   },
@@ -13,8 +14,8 @@ const rollSchema = new mongoose.Schema({
 rollSchema.set('toJSON', { virtuals: true });
 rollSchema.set('toObject', { virtuals: true });
 
-rollSchema.virtual('photos', {
-  ref: 'Photo',
+rollSchema.virtual('assets', {
+  ref: 'Asset',
   foreignField: 'roll',
   localField: '_id',
 });

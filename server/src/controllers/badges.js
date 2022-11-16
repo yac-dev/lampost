@@ -1,6 +1,8 @@
 import Badge from '../models/badge';
 import BadgeStatus from '../models/badgeStatus';
 import User from '../models/user';
+import Roll from '../models/roll';
+import Asset from '../models/asset';
 
 export const getBadges = async (request, response) => {
   try {
@@ -54,6 +56,44 @@ export const getBadges = async (request, response) => {
 
 export const getBadgesByFilteringUserBadges = async (request, response) => {
   try {
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getBadgesByRolls = async (request, response) => {
+  try {
+    let badges = Badge.find({}).populate({
+      path: 'rolls',
+      model: Roll,
+    });
+    badges = await badges.limit(10);
+    response.status(200).json({
+      badgeFolders: badges,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getBadgeRolls = async (request, response) => {
+  try {
+    let badgeRolls = Badge.findById(request.params.id)
+      .populate({
+        path: 'rolls',
+        model: Roll,
+        populate: {
+          path: 'assets',
+          model: Asset,
+        },
+      })
+      .select({ _id: 1, rolls: 1 });
+    console.log('working');
+
+    badgeRolls = await badgeRolls.limit(10);
+    response.status(200).json({
+      badgeRolls: badgeRolls.rolls,
+    });
   } catch (error) {
     console.log(error);
   }

@@ -33,13 +33,13 @@ const FABMenu = (props) => {
   };
 
   const renderFABGroupIcon = () => {
-    if (props.mode === 'Photo') {
+    if (props.cameraMode === 'photo') {
       if (open) {
         return 'close';
       } else {
         return 'camera';
       }
-    } else if (props.mode === 'Video') {
+    } else if (props.cameraMode === 'video') {
       if (open) {
         return 'close';
       } else {
@@ -61,7 +61,7 @@ const FABMenu = (props) => {
   // },
 
   const fabActions = () => {
-    if (props.mode === 'Photo') {
+    if (props.cameraMode === 'photo') {
       return [
         createIconObject({ icon: 'flash', label: 'Set flash', onPress: () => console.log('flash setting') }),
         createIconObject({
@@ -89,7 +89,7 @@ const FABMenu = (props) => {
         createIconObject({ icon: 'camera', label: 'Original cam', onPress: () => console.log('original') }),
         createIconObject({ icon: 'camera-flip', label: 'Set flip', onPress: () => console.log('set flip') }),
       ];
-    } else if (props.mode === 'Video') {
+    } else if (props.cameraMode === 'video') {
       return [
         createIconObject({ icon: 'camera-flip', label: 'Set flip', onPress: () => console.log('set flip') }),
         createIconObject({

@@ -51,7 +51,7 @@ const ActionButtons = (props) => {
                 mode='outlined'
                 // buttonColor='#2DB437'
                 icon={'camera'}
-                onPress={() => console.log('edit')}
+                onPress={() => props.navigation.navigate('Camera', { meetupId: props.selectedMeetup._id })}
                 style={{ marginRight: 10 }}
               >
                 Camera

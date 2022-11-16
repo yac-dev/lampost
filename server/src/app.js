@@ -10,6 +10,7 @@ import badgesRouter from './routers/badges';
 import commentsRouter from './routers/comments';
 import chatsRouter from './routers/chats';
 import badgeStatusesRouter from './routers/badgeStatuses';
+import assetsRouter from './routers/assets';
 
 // import postsRouter from './routers/posts';
 // import usersRouter from './routers/users';
@@ -29,6 +30,7 @@ app.use('/api/badges', badgesRouter);
 app.use('/api/comments', commentsRouter);
 app.use('/api/chats', chatsRouter);
 app.use('/api/badgestatuses', badgeStatusesRouter);
+app.use('/api/medias', assetsRouter);
 // app.use('/api/posts', postsRouter);
 // app.use('/api/users', usersRouter);
 // app.use('/api/polls', pollsRouter);
