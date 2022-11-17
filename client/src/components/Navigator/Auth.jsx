@@ -18,10 +18,10 @@ const Auth = (props) => {
     return (
       <Stack.Navigator>
         <Stack.Screen
-          name='My page'
+          name='Profile'
           component={UserHome}
           initialParams={{ userId: props.auth.data._id }}
-          options={{ headerShown: false }}
+          // options={{ headerShown: false }}
         >
           {/* {(props) => <UserHome {...props} user={props.auth.data} />} */}
         </Stack.Screen>

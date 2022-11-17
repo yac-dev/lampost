@@ -22,7 +22,7 @@ const LibraryNavigator = () => {
             // headerTransparent: true,
             // reduxのdata._idを使えばいいだけか。
             // headerLeft: () => <Button onPress={() => navigation.navigate('My page/Memoirs')}>User page</Button>,
-            headerLeft: () => <Button onPress={() => console.log('hi')}>User page</Button>,
+            // headerLeft: () => <Button onPress={() => console.log('hi')}>User page</Button>,
           })}
         />
         <Stack.Screen

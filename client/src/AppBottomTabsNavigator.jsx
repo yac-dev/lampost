@@ -130,8 +130,8 @@ const AppStack = (props) => {
         />
         {/* 全てのcomponent、navigatorを足さないといけないわ。Mapと全く同じように。この状態だと。mapの方のuser page routeに行く。*/}
         <Tab.Screen
-          name='MemoirsNavigator'
-          component={MemoirsNavigator}
+          name='Auth'
+          component={AuthNavigator}
           options={
             ({ navigation }) => ({
               headerShown: false,
@@ -143,10 +143,10 @@ const AppStack = (props) => {
                 //   style={{ width: 24, height: 24 }}
                 //   source={require('../../../assets/app/timeMachine.png')}
                 // />
-                <MaterialCommunityIcons name='space-station' color={color} size={size} />
+                <FontAwesome5 name='user-astronaut' color={color} size={size} />
                 // 本当はtime machineのiconにしたい。
               ),
-              tabBarLabel: 'Ports',
+              tabBarLabel: 'Profile',
               // () => {
               //   return null;
               // },

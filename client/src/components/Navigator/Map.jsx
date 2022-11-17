@@ -33,7 +33,7 @@ const MapNavigator = () => {
             title: '',
             headerTransparent: true,
             // reduxのdata._idを使えばいいだけか。
-            headerLeft: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
+            // headerLeft: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
           })}
         />
         <Stack.Screen name='Camera' component={Camera} options={{ headerShown: false }} />
