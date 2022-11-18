@@ -1,16 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, Touchable } from 'react-native';
 import LogContext from './LogContext';
 import { connect } from 'react-redux';
 import lampostAPI from '../../../apis/lampost';
 
 import Log from './Log';
+import CreateRollBottomSheet from './CreateRollBottomSheet';
+import CommentBottomSheet from './CommentBottomSheet';
 
 // ここも、毎度自分のpageかの確認が必要だわな。
 const Container = (props) => {
   // past meetupだけ、ここで撮ってくる。
   const [isMyPage, setIsMyPage] = useState();
   const [pastMeetups, setPastMeetups] = useState([]);
+  const [bottomSheetType, setBottomSheetType] = useState('');
+  const createRollBottomSheetRef = useRef(null);
+  const addCommentBottomSheetRef = useRef(null);
+
+  const handleCreateRollBottomSheet = () => {
+    createRollBottomSheetRef.current?.snapToIndex(0);
+  };
+
+  const handleAddCommentBottomSheet = () => {
+    addCommentBottomSheetRef.current?.snapToIndex(0);
+  };
 
   useEffect(() => {
     if (props.route.params.userId === props.auth.data._id) {
@@ -34,10 +47,7 @@ const Container = (props) => {
     if (pastMeetups.length) {
       const pastMeetupsList = pastMeetups.map((meetup, index) => {
         return (
-          // <TouchableOpacity key={index}>
-          //   <Text>{meetup.title}</Text>
-          // </TouchableOpacity>
-          <LogContext.Provider value={{ meetup, isMyPage }}>
+          <LogContext.Provider value={{ meetup, isMyPage, handleCreateRollBottomSheet, handleAddCommentBottomSheet }}>
             <View key={index}>
               <Log />
             </View>
@@ -53,11 +63,10 @@ const Container = (props) => {
 
   // ここで、userId使ってpastMeetupsを取ってくる。
   return (
-    <View>
-      <Text>Log component</Text>
-      <Text>{props.route.params.userId}</Text>
-      <Text>{isMyPage ? 'yes' : 'no'}</Text>
+    <View style={{ flex: 1 }}>
       {renderPastMeetups()}
+      <CreateRollBottomSheet createRollBottomSheetRef={createRollBottomSheetRef} />
+      <CommentBottomSheet addCommentBottomSheetRef={addCommentBottomSheetRef} />
     </View>
   );
 };
