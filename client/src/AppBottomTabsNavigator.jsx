@@ -1,5 +1,6 @@
 // main libraries
 import React, { useEffect, useState } from 'react';
+// import GlobalContext from './GlobalContext';
 import { connect } from 'react-redux';
 import { io } from 'socket.io-client';
 import { StyleSheet, Text, View, StatusBar, SafeAreaView, Image } from 'react-native';
@@ -33,6 +34,7 @@ import { getSocket } from './redux/actionCreators/auth';
 // };
 
 const AppStack = (props) => {
+  // const [auth, setAuth] = useState({ data: null, socket: null });
   const [routeName, setRouteName] = useState();
   const hide = routeName === 'Camera' || routeName === 'Meetup' || routeName === 'Dummy2' || routeName === 'Q&A';
 
@@ -53,7 +55,10 @@ const AppStack = (props) => {
     props.getSocket(socket);
   }, []);
 
+  // これも、contextを使っていた方がいいな。reduxのstateよりも。refactoringは後でやろうか。authDataみたいな感じで渡して、app全体で使う感じがいいだろう。
   return (
+    // <GlobalContext.Provider value={{auth: {data: }}}>
+
     <NavigationContainer
       ref={ref}
       onReady={() => {
@@ -146,7 +151,7 @@ const AppStack = (props) => {
                 <FontAwesome5 name='user-astronaut' color={color} size={size} />
                 // 本当はtime machineのiconにしたい。
               ),
-              tabBarLabel: 'Profile',
+              tabBarLabel: 'Personal page',
               // () => {
               //   return null;
               // },
@@ -182,6 +187,7 @@ const AppStack = (props) => {
         /> */}
       </Tab.Navigator>
     </NavigationContainer>
+    // </GlobalContext.Provider>
   );
 };
 

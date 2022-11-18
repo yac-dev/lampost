@@ -73,9 +73,9 @@ const Map = (props) => {
   useEffect(() => {
     // ここは、user pageからここに来て、doneをpressしたら, user pageへ戻る。addしたbadgesをparamsに入れていく感じ。
     props.navigation.setOptions({
-      headerRight: () => (
+      headerLeft: () => (
         <TouchableOpacity onPress={() => onPressNotification()}>
-          <MaterialCommunityIcons name='mailbox' size={30} color='red' />
+          <MaterialCommunityIcons name='mailbox' size={30} color={'white'} />
         </TouchableOpacity>
       ),
     });

@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 const assetSchema = new mongoose.Schema({
+  // このassetがどこのrollに属するかって話。
   roll: {
     type: mongoose.Schema.ObjectId,
     ref: 'Roll',

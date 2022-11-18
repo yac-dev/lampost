@@ -1,5 +1,7 @@
 // main libraries
 import React from 'react';
+import UserContext from '../Context';
+import { useContext } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity } from 'react-native';
 
@@ -8,6 +10,8 @@ import { iconColorsTable } from '../../../utils/colorsTable';
 import { Avatar } from 'react-native-paper';
 
 const Header = (props) => {
+  const { user } = useContext(UserContext);
+
   return (
     <View style={{ flexDirection: 'row', padding: 20, alignItems: 'center' }}>
       <View
@@ -23,7 +27,7 @@ const Header = (props) => {
       >
         <FontAwesome5 name='user-astronaut' size={45} color='white' />
       </View>
-      <Text>{props.user.name}</Text>
+      <Text>{user.name}</Text>
       <View>
         {/* <View style={{ flexDirection: 'row', flexWrap: 'wrap', flex: 1 }}> */}
         {/* <Text style={{}}>{props.user.bio}&nbsp;&nbsp;</Text> */}

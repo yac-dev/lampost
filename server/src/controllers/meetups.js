@@ -17,8 +17,8 @@ const scheduleStartMeetup = async (startDateAndTime, meetupId) => {
       if (meetup.isStartDateAndTimeUpdated) {
         scheduleStartMeetup(meetup.startDateAndTime, meetup._id);
       } else {
-        meetup.state = 'started';
-        console.log('started schedulte');
+        meetup.state = 'ongoing';
+        console.log('meetup started');
         meetup.save();
         return;
       }

@@ -2,6 +2,7 @@ import User from '../models/user';
 import BadgeStatus from '../models/badgeStatus';
 import Badge from '../models/badge';
 import ChatRoom from '../models/chatRoom';
+import Meetup from '../models/meetup';
 
 export const getUser = async (request, response) => {
   try {
@@ -67,6 +68,20 @@ export const addBadges = async (request, response) => {
     // console.log(badgeStatuses);
     response.status(200).json({
       badges: bss,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getPastMeetups = async (request, response) => {
+  try {
+    const user = await User.findById(request.params.id).select({ pastMeetups: 1 }).populate({
+      path: 'pastMeetups',
+      model: Meetup,
+    });
+    response.status(200).json({
+      pastMeetups: user.pastMeetups,
     });
   } catch (error) {
     console.log(error);

@@ -1,9 +1,11 @@
 // main libraries
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
+import UserContext from './Context';
 import { Avatar, Menu } from 'react-native-paper';
 import lampostAPI from '../../apis/lampost';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // components
 import Header from './Home/Header';
@@ -19,16 +21,37 @@ const Container = (props) => {
   const [badges, setBadges] = useState([]);
   const [tappedBadgeStatus, setTappedBadgeStatus] = useState(null);
   const [badgeStatuses, setBadgeStatuses] = useState([]);
+  const [isMyPage, setIsMyPage] = useState();
 
   const badgeStatusBottomSheetRef = useRef(null);
 
+  // これで、自分のpageを見ているか、他人のpageを見ているかのstateを管理する。
+  useEffect(() => {
+    if (props.route.params.userId === props.auth.data._id) {
+      setIsMyPage(true);
+    } else {
+      setIsMyPage(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    // ここは、user pageからここに来て、doneをpressしたら, user pageへ戻る。addしたbadgesをparamsに入れていく感じ。
+    props.navigation.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity onPress={() => console.log('notify')}>
+          <MaterialCommunityIcons name='mailbox' size={30} color={'blue'} />
+        </TouchableOpacity>
+      ),
+    });
+  }, []);
+
   useEffect(() => {
     // ここで、_id使って、user情報をfetchしてくる。
-    console.log(props.route.params);
+    // console.log(props.route.params);
     const getUser = async () => {
       const result = await lampostAPI.get(`/users/${props.route.params.userId}`);
       const { user } = result.data;
-      console.log(user);
+      // console.log(user);
       setUser(user);
     };
     getUser();
@@ -73,22 +96,24 @@ const Container = (props) => {
 
   if (user) {
     return (
-      <View style={{ padding: 10, flex: 1 }}>
-        <Header user={user} />
-        <ActionButtons user={user} />
-        <BadgeStatuses
-          user={user}
-          badgeStatuses={badgeStatuses}
-          onBadgePress={onBadgePress}
-          navigation={props.navigation}
-        />
-        {/* <Badges user={user} badges={badges} onBadgePress={onBadgePress} /> */}
-        <FABMenu user={user} />
-        <BadgeStatusBottomSheet
-          badgeStatusBottomSheetRef={badgeStatusBottomSheetRef}
-          tappedBadgeStatus={tappedBadgeStatus}
-        />
-      </View>
+      <UserContext.Provider value={{ user, isMyPage, navigation: props.navigation }}>
+        <View style={{ padding: 10, flex: 1 }}>
+          <Header />
+          <ActionButtons />
+          <BadgeStatuses
+            user={user}
+            badgeStatuses={badgeStatuses}
+            onBadgePress={onBadgePress}
+            navigation={props.navigation}
+          />
+          {/* <Badges user={user} badges={badges} onBadgePress={onBadgePress} /> */}
+          <FABMenu />
+          <BadgeStatusBottomSheet
+            badgeStatusBottomSheetRef={badgeStatusBottomSheetRef}
+            tappedBadgeStatus={tappedBadgeStatus}
+          />
+        </View>
+      </UserContext.Provider>
     );
   } else {
     return (

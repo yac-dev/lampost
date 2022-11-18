@@ -1,5 +1,7 @@
 // main libraries
 import React, { useState } from 'react';
+import UserContext from '../Context';
+import { useContext } from 'react';
 import { connect } from 'react-redux';
 import { Image, View, Text } from 'react-native';
 import { FAB, Portal, Provider, IconButton, withTheme } from 'react-native-paper';
@@ -11,9 +13,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { logout } from '../../../redux/actionCreators/auth';
 
 const FABMenu = (props) => {
-  // const [state, setState] = React.useState({ open: false });
-  // const onStateChange = ({ open }) => setState({ open });
-  // const { open } = state;
+  const { user, navigation } = useContext(UserContext);
   const [open, setOpen] = useState(false);
   // const { colors } = props.theme;
 
@@ -39,7 +39,7 @@ const FABMenu = (props) => {
     };
   };
 
-  if (props.auth.data._id === props.user._id) {
+  if (user._id === props.auth.data._id) {
     return (
       <Provider>
         <Portal>
@@ -92,7 +92,7 @@ const FABMenu = (props) => {
             />
             <FAB
               visible={open ? true : false}
-              icon={'timeline-clock'}
+              icon={'history'}
               size='small'
               color={'white'}
               style={{
@@ -100,10 +100,10 @@ const FABMenu = (props) => {
                 marginBottom: 20,
                 backgroundColor: 'rgb(58, 126, 224)',
               }}
-              onPress={() => props.navigation.navigate('Crew', { meetup: props.meetup })}
+              onPress={() => navigation.navigate('Log', { userId: user._id })}
             />
             <FAB
-              icon={open ? 'close' : 'account'}
+              icon={open ? 'close' : 'human-edit'}
               color={'white'}
               style={{
                 backgroundColor: 'rgb(58, 126, 224)',

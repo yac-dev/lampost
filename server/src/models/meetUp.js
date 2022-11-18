@@ -76,15 +76,15 @@ const meetupSchema = new mongoose.Schema({
   },
   state: {
     type: String,
-    default: '', // 'not started', 'started', 'finished'
+    default: '', // 'upcoming', 'ongoing', 'finished'
   },
   createdAt: {
     type: Date,
   },
-  photos: [
+  assets: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: 'Photo',
+      ref: 'Asset',
     },
   ],
   // isStartDateAndTimeUpdated: Boolean,

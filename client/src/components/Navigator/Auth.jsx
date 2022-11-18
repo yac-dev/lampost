@@ -1,5 +1,5 @@
 // main libraries
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
@@ -10,21 +10,22 @@ import SignUp from '../Auth/SignUp';
 import LogIn from '../Auth/LogIn';
 
 import UserHome from '../User/Container';
+import Log from '../User/Log/Container';
 
 const Auth = (props) => {
-  // ここ注目ね。sighup後、page遷移する感じになる。
   if (props.auth.isAuthenticated) {
     // ここも、多分user pageにかんするnavigatorを使うことになるだろう。今はこれで置いておくけど。
     return (
       <Stack.Navigator>
         <Stack.Screen
-          name='Profile'
+          name='Personal page'
           component={UserHome}
           initialParams={{ userId: props.auth.data._id }}
           // options={{ headerShown: false }}
         >
-          {/* {(props) => <UserHome {...props} user={props.auth.data} />} */}
+          {/*  これまた、別でuserhomeのcomponentがひちようだわな。connectionなりで、違うuser pageに飛んでいくから。*/}
         </Stack.Screen>
+        <Stack.Screen name='Log' component={Log}></Stack.Screen>
       </Stack.Navigator>
     );
   } else {

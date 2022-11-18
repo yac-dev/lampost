@@ -36,9 +36,9 @@ const Container = (props) => {
       eventObj[time] = meetup.title;
       const dateValue = {
         selected: true,
-        marked: true,
-        dotColor: 'white',
-        selectedColor: 'red',
+        // marked: true,
+        dotColor: 'red',
+        selectedColor: 'rgba(255, 24, 24, 0.3)',
         meetups: [],
       };
       dateValue.meetups.push(eventObj);
