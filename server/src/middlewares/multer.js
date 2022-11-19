@@ -1,12 +1,11 @@
 import multer from 'multer';
-import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
 
 const storage = multer.diskStorage({
   destination: function (request, file, callback) {
     const __dirname = path.resolve();
     console.log(file);
-    const destination = path.join(__dirname, './medias', request.route.path);
+    const destination = path.join(__dirname, './assets', request.route.path);
     callback(null, destination); // 第一引数はpotential errorのこと。nullでいい。./uploadsは相対パス。
   },
 

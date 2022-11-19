@@ -1,7 +1,9 @@
+import { uploadPhoto } from '../services/s3';
+
 export const createPhoto = async (request, response) => {
   try {
-    console.log('body data from controller', request.body.meetupId, request.body.userId);
-    // こっから、photoをawsに保存していく。
+    //　ここで、compressなり画像の編集なりをしないといけない。それは後で。
+    uploadPhoto(request.file.filename);
     response.status(200).json({
       m: 'success!',
     });
