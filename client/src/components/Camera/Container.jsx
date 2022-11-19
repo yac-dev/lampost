@@ -43,16 +43,29 @@ const Container = (props) => {
       exif: false,
     };
 
-    let newPhoto = await cameraRef.current.takePictureAsync();
-    const result = await lampostAPI.post('/medias/photos', {});
-    console.log(newPhoto);
+    let newPhoto = await cameraRef.current.takePictureAsync(options);
+    const formData = new FormData();
+    // photo fieldよりも後にmeetupIdをappendするとダメなんだよな。。。何でだろ。。。
+    formData.append('meetupId', props.route.params.meetupId);
+    formData.append('userId', props.auth.data._id);
+    formData.append('asset', {
+      name: newPhoto.uri.split('/').pop(),
+      uri: newPhoto.uri,
+      type: 'image/jpg',
+    });
+    const result = await lampostAPI.post(`/assets/photos`, formData, {
+      headers: { 'Content-type': 'multipart/form-data' },
+    });
+    console.log(result.data);
+    // console.log(newPhoto);
+    // console.log(newPhoto.uri);
+    props.addSnackBar('Nice shot! A photo has been sent!', 'success', 1500);
   };
 
   const takeShot = () => {
     // modeによって、screen押した時の挙動を変えないといかん。
     if (cameraMode === 'photo') {
       takePhoto();
-      props.addSnackBar('Nice shot! A photo has been sent!', 'success', 1500);
       // 写真をとったらそのままその写真をbackendに送る。
     } else if (cameraMode === 'video') {
       console.log('start recording video');
@@ -96,7 +109,7 @@ const Container = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { snackBar: state.snackBar };
+  return { snackBar: state.snackBar, auth: state.auth };
 };
 
 export default connect(mapStateToProps, { addSnackBar })(Container);

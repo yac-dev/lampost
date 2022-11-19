@@ -11,7 +11,8 @@ const Container = (props) => {
   return (
     <View>
       {props.auth.data._id === props.user._id ? (
-        <View style={{ alignSelf: 'flex-end', marginBottom: 20 }}>
+        <View style={{ marginBottom: 20, flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={{ fontWeight: 'bold', color: 'rgb(156, 156, 156)' }}>Add more badges to express yourself!</Text>
           <Button
             onPress={() => {
               props.navigation.navigate('Add badges', { fromComponent: 'Add user badges' });

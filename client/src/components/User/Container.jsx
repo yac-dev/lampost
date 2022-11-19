@@ -108,10 +108,10 @@ const Container = (props) => {
           />
           {/* <Badges user={user} badges={badges} onBadgePress={onBadgePress} /> */}
           <FABMenu />
-          <BadgeStatusBottomSheet
+          {/* <BadgeStatusBottomSheet
             badgeStatusBottomSheetRef={badgeStatusBottomSheetRef}
             tappedBadgeStatus={tappedBadgeStatus}
-          />
+          /> */}
         </View>
       </UserContext.Provider>
     );

@@ -5,18 +5,15 @@ import path from 'path';
 const storage = multer.diskStorage({
   destination: function (request, file, callback) {
     const __dirname = path.resolve();
-    console.log(__dirname);
-    console.log(request.body);
-    console.log(request.body.mediaType);
-    const destination = path.join(__dirname, './medias');
-    console.log(destination);
+    console.log(file);
+    const destination = path.join(__dirname, './medias', request.route.path);
     callback(null, destination); // 第一引数はpotential errorのこと。nullでいい。./uploadsは相対パス。
   },
 
   filename: function (request, file, callback) {
     const extension = file.mimetype.split('/')[1];
-    // ここでjsonに直そうとしてもだめだ。
-    const fileName = Date.now() + '-' + uuidv4() + '.' + extension;
+    console.log(request.body.meetupId); // meetupidとuserIdを使ってfile名を作ろうか
+    const fileName = request.body.meetupId + '-' + request.body.userId + '-' + Date.now() + '.' + extension;
     console.log(fileName);
     callback(null, fileName);
   },

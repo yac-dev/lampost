@@ -28,11 +28,7 @@ const Header = (props) => {
         <FontAwesome5 name='user-astronaut' size={45} color='white' />
       </View>
       <Text>{user.name}</Text>
-      <View>
-        {/* <View style={{ flexDirection: 'row', flexWrap: 'wrap', flex: 1 }}> */}
-        {/* <Text style={{}}>{props.user.bio}&nbsp;&nbsp;</Text> */}
-        {/* </View> */}
-      </View>
+      <View></View>
     </View>
   );
 };
