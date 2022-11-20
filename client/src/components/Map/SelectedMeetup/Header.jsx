@@ -86,7 +86,7 @@ const Header = (props) => {
       minute: '2-digit',
     });
     console.log(d);
-    return <Text>Starts at&nbsp;&nbsp;{d}</Text>;
+    return <Text>Scheduled for&nbsp;&nbsp;{d}</Text>;
   };
 
   return (

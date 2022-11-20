@@ -14,6 +14,7 @@ import Badges from '../Utils/AddBadges/Badges';
 import BadgeStatuses from './Home/BadgeStatuses/Container';
 import FABMenu from './Utils/FABMenu';
 import BadgeStatusBottomSheet from './Home/BadgeStatusBottomSheet';
+import AppMenuBottomSheet from './AppMenuBottomSheet';
 
 // badgeを取ってきて、skillも取ってくる。subscriberの数も返すし、connectionの数も返す。
 const Container = (props) => {
@@ -24,6 +25,7 @@ const Container = (props) => {
   const [isMyPage, setIsMyPage] = useState();
 
   const badgeStatusBottomSheetRef = useRef(null);
+  const appMenuBottomSheetRef = useRef(null);
 
   // これで、自分のpageを見ているか、他人のpageを見ているかのstateを管理する。
   useEffect(() => {
@@ -97,7 +99,13 @@ const Container = (props) => {
   if (user) {
     return (
       <UserContext.Provider value={{ user, isMyPage, navigation: props.navigation }}>
-        <View style={{ padding: 10, flex: 1 }}>
+        <View
+          style={{
+            padding: 10,
+            flex: 1,
+            // backgroundColor: 'rgb(27, 27, 79)' この色いい。
+          }}
+        >
           <Header />
           <ActionButtons />
           <BadgeStatuses
@@ -112,6 +120,7 @@ const Container = (props) => {
             badgeStatusBottomSheetRef={badgeStatusBottomSheetRef}
             tappedBadgeStatus={tappedBadgeStatus}
           /> */}
+          {/* <AppMenuBottomSheet appMenuBottomSheetRef={appMenuBottomSheetRef} /> */}
         </View>
       </UserContext.Provider>
     );

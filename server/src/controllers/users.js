@@ -3,6 +3,7 @@ import BadgeStatus from '../models/badgeStatus';
 import Badge from '../models/badge';
 import ChatRoom from '../models/chatRoom';
 import Meetup from '../models/meetup';
+import Asset from '../models/asset';
 
 export const getUser = async (request, response) => {
   try {
@@ -74,12 +75,30 @@ export const addBadges = async (request, response) => {
   }
 };
 
+// これ, userではなくmeetup側にcontrollerを設定した方がいいわ。紛らわしい。
 export const getPastMeetups = async (request, response) => {
   try {
-    const user = await User.findById(request.params.id).select({ pastMeetups: 1 }).populate({
-      path: 'pastMeetups',
-      model: Meetup,
-    });
+    const user = await User.findById(request.params.id)
+      .select({ pastMeetups: 1, assets: 1, badge: 1 })
+      .populate({
+        path: 'pastMeetups',
+        model: Meetup,
+        populate: [
+          {
+            path: 'assets',
+            model: Asset,
+          },
+          {
+            path: 'badge',
+            model: Badge,
+          },
+          {
+            path: 'launcher',
+            model: User,
+          },
+        ],
+      });
+
     response.status(200).json({
       pastMeetups: user.pastMeetups,
     });

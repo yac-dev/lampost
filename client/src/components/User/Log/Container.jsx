@@ -13,12 +13,14 @@ const Container = (props) => {
   // past meetupだけ、ここで撮ってくる。
   const [isMyPage, setIsMyPage] = useState();
   const [pastMeetups, setPastMeetups] = useState([]);
+  const [selectedMeetup, setSelectedMeetup] = useState(null);
   const [bottomSheetType, setBottomSheetType] = useState('');
   const createRollBottomSheetRef = useRef(null);
   const addCommentBottomSheetRef = useRef(null);
 
-  const handleCreateRollBottomSheet = () => {
+  const handleCreateRollBottomSheet = (meetup) => {
     createRollBottomSheetRef.current?.snapToIndex(0);
+    setSelectedMeetup(meetup);
   };
 
   const handleAddCommentBottomSheet = () => {
@@ -65,7 +67,7 @@ const Container = (props) => {
   return (
     <View style={{ flex: 1 }}>
       {renderPastMeetups()}
-      <CreateRollBottomSheet createRollBottomSheetRef={createRollBottomSheetRef} />
+      <CreateRollBottomSheet createRollBottomSheetRef={createRollBottomSheetRef} selectedMeetup={selectedMeetup} />
       <CommentBottomSheet addCommentBottomSheetRef={addCommentBottomSheetRef} />
     </View>
   );

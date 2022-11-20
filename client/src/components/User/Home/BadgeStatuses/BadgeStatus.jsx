@@ -20,7 +20,7 @@ const BadgeStatus = (props) => {
           aspectRatio: 1,
           padding: 10, // これは単純に、25%幅に対して
           marginBottom: 23,
-          // backgroundColor: 'red',
+          // backgroundColor: 'white',
         }}
       >
         <TouchableOpacity
