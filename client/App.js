@@ -20,10 +20,10 @@ const App = () => {
     <Provider store={store}>
       <PaperProvider>
         <StatusBar hidden={false} translucent={true} />
-        {/* <AppBottomTabsNavigator /> */}
-        <NavigationContainer>
+        <AppBottomTabsNavigator />
+        {/* <NavigationContainer>
           <MapNavigator />
-        </NavigationContainer>
+        </NavigationContainer> */}
       </PaperProvider>
     </Provider>
   );

@@ -30,23 +30,6 @@ const MapNavigator = (props) => {
   // mapの画面から、どんなcomponentへの遷移があるか、それが重要なのかもな。mainのmapはもちろん、そっからカメラのcomponent, 各userのpage, chat component、、、ここは色々多くなるはず。
   // 基本、map画面における全てのroutingをここに登録しておく。
 
-  const getJWTToken = async () => {
-    const jwtToken = await SecureStore.getItemAsync('secure_token');
-    if (jwtToken) {
-      props.loadMe(jwtToken);
-    }
-  };
-  useEffect(() => {
-    getJWTToken();
-  }, []);
-
-  useEffect(() => {
-    const socket = io('http://192.168.11.17:3500', {
-      path: '/mysocket',
-    });
-    props.getSocket(socket);
-  }, []);
-
   return (
     <Stack.Navigator>
       <Stack.Group>
@@ -110,4 +93,4 @@ const MapNavigator = (props) => {
   );
 };
 
-export default connect(null, { loadMe, getSocket })(MapNavigator);
+export default MapNavigator;

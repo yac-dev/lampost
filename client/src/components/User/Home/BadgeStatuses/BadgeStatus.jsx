@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import UserContext from '../../Context';
 import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 
@@ -10,6 +11,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { iconColorsTable, backgroundColorsTable } from '../../../../utils/colorsTable';
 
 const BadgeStatus = (props) => {
+  const { navigation } = useContext(UserContext);
   const renderBadgeStatus = () => {
     const width = Dimensions.get('window').width / 5;
     return (
@@ -37,7 +39,9 @@ const BadgeStatus = (props) => {
             marginBottom: 5,
           }}
           onPress={() => {
-            props.onBadgePress(props.badgeStatus._id);
+            // props.onBadgePress(props.badgeStatus._id);
+            console.log('hey');
+            navigation.navigate('BadgeInfo', { badgeId: props.badgeStatus._id });
           }}
         >
           <FastImage

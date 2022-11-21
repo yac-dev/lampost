@@ -73,16 +73,16 @@ const Map = (props) => {
     notificationBottomSheetRef.current?.snapToIndex(0);
   };
 
-  useEffect(() => {
-    // ここは、user pageからここに来て、doneをpressしたら, user pageへ戻る。addしたbadgesをparamsに入れていく感じ。
-    props.navigation.setOptions({
-      headerLeft: () => (
-        <TouchableOpacity onPress={() => onPressNotification()}>
-          <MaterialCommunityIcons name='mailbox' size={30} color={'white'} />
-        </TouchableOpacity>
-      ),
-    });
-  }, []);
+  // useEffect(() => {
+  //   // ここは、user pageからここに来て、doneをpressしたら, user pageへ戻る。addしたbadgesをparamsに入れていく感じ。
+  //   props.navigation.setOptions({
+  //     headerLeft: () => (
+  //       <TouchableOpacity onPress={() => onPressNotification()}>
+  //         <MaterialCommunityIcons name='mailbox' size={30} color={'white'} />
+  //       </TouchableOpacity>
+  //     ),
+  //   });
+  // }, []);
 
   const handlePostBottomSheetChanges = (index) => {
     if (!props.bottomSheet.post.isOpen) {

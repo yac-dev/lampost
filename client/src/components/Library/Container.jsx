@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import RollsContext from './RollsContext';
 import { View, Text, TouchableOpacity } from 'react-native';
 import lampostAPI from '../../apis/lampost';
 
@@ -7,11 +8,29 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Roll from './Roll';
 import BadgeFolders from './BadgeFolders/Container';
 import BadgeFolderBottomSheet from './Rolls/RollsBottomSheet';
+import AppMenuBottomSheet from './AppMenuBottomSheet';
+import CreateRoll from './CreateRoll/Container';
 
 const Container = (props) => {
   const rollsBottomSheetRef = useRef(null);
   const [selected, setSelected] = useState(null);
   const [rolls, setRolls] = useState([]);
+
+  const appMenuBottomSheetRef = useRef(null);
+  const createRollBottomSheetRef = useRef(null);
+
+  const handleCreateRollBottomSheet = () => {
+    appMenuBottomSheetRef.current.snapToIndex(0);
+    createRollBottomSheetRef.current.snapToIndex(0);
+  };
+
+  const closeCreateRollBottomSheet = () => {
+    createRollBottomSheetRef.current.close();
+  };
+
+  // const onCloseCreateRollBottomSheet = () => {
+  //   appMenuBottomSheetRef.current.snapToIndex(0);
+  // };
 
   useEffect(() => {
     // ここは、user pageからここに来て、doneをpressしたら, user pageへ戻る。addしたbadgesをparamsに入れていく感じ。
@@ -36,24 +55,36 @@ const Container = (props) => {
     setRolls(badgeRolls);
   };
 
-  useEffect(() => {
-    if (selected) {
-      getRollsOfSelectedBadge();
-    }
-  }, [selected]);
+  // useEffect(() => {
+  //   if (selected) {
+  //     getRollsOfSelectedBadge();
+  //   }
+  // }, [selected]);
 
   return (
-    <View>
-      {/* <Roll /> */}
-      {/* <Text>Rolls here</Text> */}
-      <BadgeFolders onSelectBadgeFolder={onSelectBadgeFolder} />
+    <RollsContext.Provider
+      value={{
+        appMenuBottomSheetRef,
+        createRollBottomSheetRef,
+        handleCreateRollBottomSheet,
+        closeCreateRollBottomSheet,
+      }}
+    >
+      <View style={{ flex: 1 }}>
+        {/* <Roll /> */}
+        {/* <Text>Rolls here</Text> */}
+        {/* <BadgeFolders onSelectBadgeFolder={onSelectBadgeFolder} />
       <BadgeFolderBottomSheet
         rollsBottomSheetRef={rollsBottomSheetRef}
         selected={selected}
         rolls={rolls}
         navigation={props.navigation}
-      />
-    </View>
+      /> */}
+        <Text>This is the rolls timeline</Text>
+        <AppMenuBottomSheet />
+        <CreateRoll />
+      </View>
+    </RollsContext.Provider>
   );
 };
 

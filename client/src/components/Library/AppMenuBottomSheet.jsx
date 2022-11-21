@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import UserContext from './Context';
+import RollsContext from './RollsContext';
+// import UserContext from './Context';
 import { View, Text, TouchableOpacity } from 'react-native';
 import GorhomBottomSheet, {
   BottomSheetView,
@@ -13,15 +14,16 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const AppMenuBottomSheet = (props) => {
-  const { navigation, user } = useContext(UserContext);
+  const { appMenuBottomSheetRef, handleCreateRollBottomSheet } = useContext(RollsContext);
   const snapPoints = ['10%', '30%'];
   return (
     <GorhomBottomSheet
       index={0}
       enableOverDrag={true}
-      ref={props.appMenuBottomSheetRef}
+      ref={appMenuBottomSheetRef}
       snapPoints={snapPoints}
       backdropComponent={(backdropProps) => (
         <BottomSheetBackdrop {...backdropProps} appearsOnIndex={1} disappearsOnIndex={0} pressBehavior={0} />
@@ -45,23 +47,13 @@ const AppMenuBottomSheet = (props) => {
           Actions
         </Text>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-          <TouchableOpacity onPress={() => navigation.navigate('Log', { userId: user._id })}>
-            <MaterialCommunityIcons name='history' size={40} />
-            <Text>Log</Text>
+          <TouchableOpacity onPress={() => handleCreateRollBottomSheet()}>
+            <MaterialIcons name='create-new-folder' size={40} />
+            <Text>Create</Text>
           </TouchableOpacity>
           <TouchableOpacity>
             <Entypo name='images' size={40} />
-            <Text>Assets</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <FontAwesome name='handshake-o' size={40} />
-            <Text>Connections</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <MaterialCommunityIcons name='logout' size={40} />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Fontisto name='player-settings' size={40} />
+            <Text>Search</Text>
           </TouchableOpacity>
         </View>
       </BottomSheetView>

@@ -113,7 +113,7 @@ const AppStack = (props) => {
             },
           }}
         /> */}
-        {/* <Tab.Screen
+        <Tab.Screen
           name='LibraryNavigator'
           component={LibraryNavigator}
           options={{
@@ -121,7 +121,7 @@ const AppStack = (props) => {
             tabBarLabel: 'Library',
             tabBarIcon: ({ size, color }) => <MaterialIcons name='photo-library' color={color} size={size} />,
           }}
-        /> */}
+        />
         {/* 全てのcomponent、navigatorを足さないといけないわ。Mapと全く同じように。この状態だと。mapの方のuser page routeに行く。*/}
         <Tab.Screen
           name='Auth'

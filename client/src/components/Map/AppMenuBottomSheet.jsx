@@ -27,11 +27,12 @@ const AppMenusBottomSheet = (props) => {
           <BottomSheetBackdrop {...backdropProps} appearsOnIndex={1} disappearsOnIndex={0} pressBehavior={0} />
         )}
         enablePanDownToClose={false}
+        backgroundStyle={{ backgroundColor: 'rgb(50, 78, 165)' }}
         // keyboardBehavior={'interactive'}
         // onClose={() => onSelectedItemBottomSheetClose()}
       >
         <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
-          <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Shortscuts</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>What are you gonna do?</Text>
           <TouchableOpacity onPress={() => props.setIsConfirmHostMeetupModalOpen(true)}>
             <MaterialCommunityIcons name='rocket-launch' size={40} />
           </TouchableOpacity>

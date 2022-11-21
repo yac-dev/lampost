@@ -114,13 +114,13 @@ const Container = (props) => {
             onBadgePress={onBadgePress}
             navigation={props.navigation}
           />
+          <AppMenuBottomSheet appMenuBottomSheetRef={appMenuBottomSheetRef} />
           {/* <Badges user={user} badges={badges} onBadgePress={onBadgePress} /> */}
           {/* <FABMenu /> */}
           {/* <BadgeStatusBottomSheet
             badgeStatusBottomSheetRef={badgeStatusBottomSheetRef}
             tappedBadgeStatus={tappedBadgeStatus}
           /> */}
-          <AppMenuBottomSheet appMenuBottomSheetRef={appMenuBottomSheetRef} />
         </View>
       </UserContext.Provider>
     );
