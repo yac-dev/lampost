@@ -18,7 +18,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const AppMenuBottomSheet = (props) => {
   const { appMenuBottomSheetRef, handleCreateRollBottomSheet } = useContext(RollsContext);
-  const snapPoints = ['10%', '30%'];
+  const snapPoints = ['10%', '30%', '90%'];
   return (
     <GorhomBottomSheet
       index={0}

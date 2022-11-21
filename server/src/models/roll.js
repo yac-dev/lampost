@@ -5,10 +5,18 @@ const rollSchema = new mongoose.Schema({
   name: {
     type: String,
   },
-  badge: {
+  badges: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Badge',
+    },
+  ],
+  description: String,
+  createdBy: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Badge',
+    ref: 'User',
   },
+  createdAt: Date,
 });
 
 rollSchema.set('toJSON', { virtuals: true });

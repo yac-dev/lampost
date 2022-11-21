@@ -18,7 +18,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import Form from './Form/Container';
 
-const AppMenuBottomSheet = (props) => {
+const Container = (props) => {
   const { createRollBottomSheetRef } = useContext(RollsContext);
   const snapPoints = ['60%'];
   return (
@@ -32,7 +32,7 @@ const AppMenuBottomSheet = (props) => {
           {...backdropProps}
           appearsOnIndex={0}
           disappearsOnIndex={-1}
-          // pressBehavior={0} これ、pressした時にどのsnappointに戻るかってことね。
+          // pressBehavior={'none'} 最終的にこれにする。
         />
       )}
       enablePanDownToClose={false}
@@ -59,4 +59,4 @@ const AppMenuBottomSheet = (props) => {
   );
 };
 
-export default AppMenuBottomSheet;
+export default Container;

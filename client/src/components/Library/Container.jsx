@@ -5,9 +5,10 @@ import lampostAPI from '../../apis/lampost';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import Roll from './Roll';
-import BadgeFolders from './BadgeFolders/Container';
-import BadgeFolderBottomSheet from './Rolls/RollsBottomSheet';
+// import Roll from './Roll';
+// import BadgeFolders from './BadgeFolders/Container';
+// import BadgeFolderBottomSheet from './Rolls/RollsBottomSheet';
+import Rolls from './Rolls/Container';
 import AppMenuBottomSheet from './AppMenuBottomSheet';
 import CreateRoll from './CreateRoll/Container';
 
@@ -24,9 +25,9 @@ const Container = (props) => {
     createRollBottomSheetRef.current.snapToIndex(0);
   };
 
-  const closeCreateRollBottomSheet = () => {
-    createRollBottomSheetRef.current.close();
-  };
+  // const closeCreateRollBottomSheet = () => {
+  //   createRollBottomSheetRef.current.close();
+  // };
 
   // const onCloseCreateRollBottomSheet = () => {
   //   appMenuBottomSheetRef.current.snapToIndex(0);
@@ -44,17 +45,6 @@ const Container = (props) => {
     });
   }, []);
 
-  const onSelectBadgeFolder = (badge) => {
-    setSelected(badge);
-    rollsBottomSheetRef.current?.snapToIndex(0);
-  };
-
-  const getRollsOfSelectedBadge = async () => {
-    const result = await lampostAPI.get(`/badges/${selected._id}/rolls`);
-    const { badgeRolls } = result.data;
-    setRolls(badgeRolls);
-  };
-
   // useEffect(() => {
   //   if (selected) {
   //     getRollsOfSelectedBadge();
@@ -67,20 +57,13 @@ const Container = (props) => {
         appMenuBottomSheetRef,
         createRollBottomSheetRef,
         handleCreateRollBottomSheet,
-        closeCreateRollBottomSheet,
+        // closeCreateRollBottomSheet,
+        rolls,
+        setRolls,
       }}
     >
       <View style={{ flex: 1 }}>
-        {/* <Roll /> */}
-        {/* <Text>Rolls here</Text> */}
-        {/* <BadgeFolders onSelectBadgeFolder={onSelectBadgeFolder} />
-      <BadgeFolderBottomSheet
-        rollsBottomSheetRef={rollsBottomSheetRef}
-        selected={selected}
-        rolls={rolls}
-        navigation={props.navigation}
-      /> */}
-        <Text>This is the rolls timeline</Text>
+        <Rolls />
         <AppMenuBottomSheet />
         <CreateRoll />
       </View>

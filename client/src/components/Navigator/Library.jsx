@@ -6,7 +6,7 @@ import { Button } from 'react-native-paper';
 const Stack = createNativeStackNavigator();
 
 import Container from '../Library/Container';
-import RollContainer from '../Library/Roll/Container';
+// import RollContainer from '../Library/Roll/Container';
 import AuthNavigator from './Auth';
 
 const LibraryNavigator = () => {
@@ -25,17 +25,15 @@ const LibraryNavigator = () => {
             // headerLeft: () => <Button onPress={() => console.log('hi')}>User page</Button>,
           })}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name='Roll'
           component={RollContainer}
           options={({ navigation }) => ({
             headerShown: true,
             title: 'Roll',
-            // headerTransparent: true,
-            // headerLeft: () => <Button onPress={() => navigation.navigate('My page/Memoirs')}>User page</Button>,
-            // headerLeft: () => <Button onPress={() => console.log('hi')}>User page</Button>,
+
           })}
-        />
+        /> */}
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
         <Stack.Screen

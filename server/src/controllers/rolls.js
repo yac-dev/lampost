@@ -4,22 +4,25 @@ import Asset from '../models/asset';
 
 export const createRoll = async (request, response) => {
   try {
-    const { name, badge } = request.body;
+    const { name, badges, description, createdBy } = request.body;
     const roll = await Roll.create({
       name,
-      badge,
+      badges,
+      description,
+      createdBy,
+      createdAt: new Date(),
     });
+    // const meetup = await Meetup.findById(request.body.meetupId).populate({
+    //   path: 'assets',
+    //   model: Asset,
+    // });
+    // for (let i = 0; i < meetup.assets; i++) {
+    //   meetup.assets[i].roll = roll._id;
+    // }
 
-    const meetup = await Meetup.findById(request.body.meetupId).populate({
-      path: 'assets',
-      model: Asset,
-    });
-    for (let i = 0; i < meetup.assets; i++) {
-      meetup.assets[i].roll = roll._id;
-    }
-    meetup.save();
+    // meetup.save();
     response.status(200).json({
-      message: 'success',
+      roll,
     });
   } catch (error) {
     console.log(error);
