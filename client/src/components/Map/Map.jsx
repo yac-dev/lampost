@@ -16,6 +16,7 @@ import SelectedItemBottomSheet from './SelectedItem/SelectedItemBottomSheet';
 import SelectedMeetup from './SelectedMeetup/Container';
 import SelectedMeetupInfoDetail from './SelectedMeetup/InfoDetail/Container';
 import Notifications from './Notifications/Container';
+import AppMenusBottomSheet from './AppMenuBottomSheet';
 
 import FABMenu from './Utils/FABMenu';
 import ModalContainer from '../Utils/ModalContainer';
@@ -47,6 +48,8 @@ import { setIsSelectedMeetupInfoDetailBottomSheetOpen } from '../../redux/action
 const Map = (props) => {
   const [region, setRegion] = useState(null);
   const [currentSnap, setCurrentSnap] = useState();
+
+  const appMenuBottomSheetRef = useRef(null);
 
   const postBottomSheetRef = useRef(null);
   const notificationBottomSheetRef = useRef(null);
@@ -268,6 +271,7 @@ const Map = (props) => {
           />
           <Notifications navigation={props.navigation} notificationBottomSheetRef={notificationBottomSheetRef} />
           <HostMeetupBottomSheet navigation={props.navigation} route={props.route} />
+          <AppMenusBottomSheet appMenuBottomSheetRef={appMenuBottomSheetRef} />
 
           {/* <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} /> */}
           {/* <CancelHostMeetupButton /> */}

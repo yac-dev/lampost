@@ -6,9 +6,11 @@ import { Provider } from 'react-redux';
 import { Provider as PaperProvider } from 'react-native-paper';
 import store from './src/redux/store';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { NavigationContainer } from '@react-navigation/native';
 
 // components
 import AppBottomTabsNavigator from './src/AppBottomTabsNavigator';
+import MapNavigator from './src/components/Navigator/Map';
 
 // ac
 // import { loadMe } from './src/redux/actionCreators/auth'; // いや、やっぱここでは使えない。redux appはこっからprovideされるから。だから、appbottomでこれやっている。
@@ -18,7 +20,10 @@ const App = () => {
     <Provider store={store}>
       <PaperProvider>
         <StatusBar hidden={false} translucent={true} />
-        <AppBottomTabsNavigator />
+        {/* <AppBottomTabsNavigator /> */}
+        <NavigationContainer>
+          <MapNavigator />
+        </NavigationContainer>
       </PaperProvider>
     </Provider>
   );

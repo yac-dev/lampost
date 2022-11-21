@@ -1,9 +1,12 @@
 // main libraries
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
+import { connect } from 'react-redux';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Button } from 'react-native-paper';
 const Stack = createNativeStackNavigator();
+import * as SecureStore from 'expo-secure-store';
+import { io } from 'socket.io-client';
 
 // components
 import Map from '../Map/Map';
@@ -19,9 +22,31 @@ import AddBadges from '../Utils/AddBadges/Container';
 
 import AuthNavigator from './Auth';
 
-const MapNavigator = () => {
+// ac
+import { loadMe } from '../../redux/actionCreators/auth';
+import { getSocket } from '../../redux/actionCreators/auth';
+
+const MapNavigator = (props) => {
   // mapの画面から、どんなcomponentへの遷移があるか、それが重要なのかもな。mainのmapはもちろん、そっからカメラのcomponent, 各userのpage, chat component、、、ここは色々多くなるはず。
   // 基本、map画面における全てのroutingをここに登録しておく。
+
+  const getJWTToken = async () => {
+    const jwtToken = await SecureStore.getItemAsync('secure_token');
+    if (jwtToken) {
+      props.loadMe(jwtToken);
+    }
+  };
+  useEffect(() => {
+    getJWTToken();
+  }, []);
+
+  useEffect(() => {
+    const socket = io('http://192.168.11.17:3500', {
+      path: '/mysocket',
+    });
+    props.getSocket(socket);
+  }, []);
+
   return (
     <Stack.Navigator>
       <Stack.Group>
@@ -34,6 +59,7 @@ const MapNavigator = () => {
             headerTransparent: true,
             // reduxのdata._idを使えばいいだけか。
             // headerLeft: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
+            headerRight: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
           })}
         />
         <Stack.Screen name='Camera' component={Camera} options={{ headerShown: false }} />
@@ -84,4 +110,4 @@ const MapNavigator = () => {
   );
 };
 
-export default MapNavigator;
+export default connect(null, { loadMe, getSocket })(MapNavigator);

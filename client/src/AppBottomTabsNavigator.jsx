@@ -113,26 +113,15 @@ const AppStack = (props) => {
             },
           }}
         /> */}
-        <Tab.Screen
+        {/* <Tab.Screen
           name='LibraryNavigator'
           component={LibraryNavigator}
           options={{
             headerShown: false,
             tabBarLabel: 'Library',
             tabBarIcon: ({ size, color }) => <MaterialIcons name='photo-library' color={color} size={size} />,
-            // tabBarIcon: ({ size, focused, color }) => {
-            //   return (
-            //     <Image
-            //       style={{ width: 60, height: 60, tintColor: 'white' }}
-            //       source={require('../assets/app/astronaut-camera.png')}
-            //     />
-            //   );
-            // },
-            // () => {
-            //   return null;
-            // },
           }}
-        />
+        /> */}
         {/* 全てのcomponent、navigatorを足さないといけないわ。Mapと全く同じように。この状態だと。mapの方のuser page routeに行く。*/}
         <Tab.Screen
           name='Auth'
@@ -151,7 +140,7 @@ const AppStack = (props) => {
                 <FontAwesome5 name='user-astronaut' color={color} size={size} />
                 // 本当はtime machineのiconにしたい。
               ),
-              tabBarLabel: 'Personal page',
+              tabBarLabel: 'Home',
               // () => {
               //   return null;
               // },
