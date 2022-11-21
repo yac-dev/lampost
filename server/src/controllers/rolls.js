@@ -1,4 +1,5 @@
 import Roll from '../models/roll';
+import User from '../models/user';
 import Meetup from '../models/meetup';
 import Asset from '../models/asset';
 
@@ -23,6 +24,20 @@ export const createRoll = async (request, response) => {
     // meetup.save();
     response.status(200).json({
       roll,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getRolls = async (request, response) => {
+  try {
+    const rolls = await Roll.find({}).populate({
+      path: 'createdBy',
+      model: User,
+    });
+    response.status(200).json({
+      rolls,
     });
   } catch (error) {
     console.log(error);

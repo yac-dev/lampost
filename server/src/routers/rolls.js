@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
-import { createRoll } from '../controllers/rolls';
+import { createRoll, getRolls } from '../controllers/rolls';
 
-router.route('/').post(createRoll);
+router.route('/').post(createRoll).get(getRolls);
 
 export default router;

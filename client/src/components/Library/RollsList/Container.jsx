@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import RollsContext from '../RollsContext';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 
 const Container = () => {
-  const { rolls } = useContext(RollsContext);
+  const { rolls, navigation } = useContext(RollsContext);
 
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
@@ -28,7 +28,11 @@ const Container = () => {
           // <View key={index}>
           //   <Text>{roll.description}</Text>
           // </View>
-          <View style={{ borderBottomWidth: 0.3, padding: 20 }}>
+          <TouchableOpacity
+            key={index}
+            style={{ borderBottomWidth: 0.3, padding: 20 }}
+            onPress={() => navigation.navigate('Roll', { rollId: roll._id })}
+          >
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
               {renderDate(roll.createdAt)}
               <View
@@ -54,15 +58,15 @@ const Container = () => {
               </View>
             </View>
             <Text>{roll.description}</Text>
-            <View style={{ alignSelf: 'flex-end', marginBottom: 15 }}>
+            {/* <View style={{ alignSelf: 'flex-end', marginBottom: 15 }}>
               <Text>Launched by&nbsp;{roll.createdBy.name}</Text>
-            </View>
+            </View> */}
             {/* <View style={{ flexDirection: 'row', marginBottom: 15 }}>
             <Text>👍 21</Text>
             <Text>🤔 3</Text>
             <Text>😂 10</Text>
           </View> */}
-          </View>
+          </TouchableOpacity>
         );
       });
 

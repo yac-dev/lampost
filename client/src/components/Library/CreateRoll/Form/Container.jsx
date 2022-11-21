@@ -40,7 +40,7 @@ const Container = (props) => {
       name: state.name,
       badges: state.badges,
       description: state.description,
-      launcher: props.auth.data._id,
+      createdBy: props.auth.data._id,
     };
     const result = await lampostAPI.post('/rolls', formData);
     const { roll } = result.data;

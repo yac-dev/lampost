@@ -8,7 +8,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 // import Roll from './Roll';
 // import BadgeFolders from './BadgeFolders/Container';
 // import BadgeFolderBottomSheet from './Rolls/RollsBottomSheet';
-import Rolls from './Rolls/Container';
+import RollsList from './RollsList/Container';
 import AppMenuBottomSheet from './AppMenuBottomSheet';
 import CreateRoll from './CreateRoll/Container';
 
@@ -45,11 +45,14 @@ const Container = (props) => {
     });
   }, []);
 
-  // useEffect(() => {
-  //   if (selected) {
-  //     getRollsOfSelectedBadge();
-  //   }
-  // }, [selected]);
+  const getRolls = async () => {
+    const result = await lampostAPI.get('rolls');
+    const { rolls } = result.data;
+    setRolls(rolls);
+  };
+  useEffect(() => {
+    getRolls();
+  }, []);
 
   return (
     <RollsContext.Provider
@@ -57,13 +60,13 @@ const Container = (props) => {
         appMenuBottomSheetRef,
         createRollBottomSheetRef,
         handleCreateRollBottomSheet,
-        // closeCreateRollBottomSheet,
         rolls,
         setRolls,
+        navigation: props.navigation,
       }}
     >
       <View style={{ flex: 1 }}>
-        <Rolls />
+        <RollsList />
         <AppMenuBottomSheet />
         <CreateRoll />
       </View>
