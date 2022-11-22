@@ -12,6 +12,7 @@ import chatsRouter from './routers/chats';
 import badgeStatusesRouter from './routers/badgeStatuses';
 import assetsRouter from './routers/assets';
 import rollsRouter from './routers/rolls';
+import librariesRouter from './routers/libraries';
 
 // import postsRouter from './routers/posts';
 // import usersRouter from './routers/users';
@@ -33,6 +34,7 @@ app.use('/api/chats', chatsRouter);
 app.use('/api/badgestatuses', badgeStatusesRouter);
 app.use('/api/assets', assetsRouter);
 app.use('/api/rolls', rollsRouter);
+app.use('/api/libraries', librariesRouter);
 // app.use('/api/posts', postsRouter);
 // app.use('/api/users', usersRouter);
 // app.use('/api/polls', pollsRouter);

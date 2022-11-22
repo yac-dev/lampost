@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import RollsContext from '../RollsContext';
+import RollsContext from '../LibrariesContext';
 // import UserContext from './Context';
 import { View, Text, TouchableOpacity } from 'react-native';
 import GorhomBottomSheet, {
@@ -20,7 +20,7 @@ import Form from './Form/Container';
 
 const Container = (props) => {
   const { createLibraryBottomSheetRef } = useContext(RollsContext);
-  const snapPoints = ['60%'];
+  const snapPoints = ['80%'];
   return (
     <GorhomBottomSheet
       index={-1}

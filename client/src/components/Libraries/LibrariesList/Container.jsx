@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import RollsContext from '../RollsContext';
+import RollsContext from '../LibrariesContext';
 import { View, Text, TouchableOpacity } from 'react-native';
 
 const Container = () => {
@@ -54,10 +54,10 @@ const Container = () => {
                   }}
                   tintColor={iconColorsTable[meetup.badge.color]}
                 /> */}
-                <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 10 }}>{roll.name}</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 10 }}>{library.name}</Text>
               </View>
             </View>
-            <Text>{roll.description}</Text>
+            <Text>{library.description}</Text>
             {/* <View style={{ alignSelf: 'flex-end', marginBottom: 15 }}>
               <Text>Launched by&nbsp;{roll.createdBy.name}</Text>
             </View> */}

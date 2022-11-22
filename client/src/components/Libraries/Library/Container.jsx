@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from 'react';
 import LibraryContext from './LibraryContext';
 import { View, Text, TouchableOpacity } from 'react-native';
-import RollsContext from '../RollsContext';
+import RollsContext from '../LibrariesContext';
 
 import AppMenuBottomSheet from './AppMenuBottomSheet';
 

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import RollsContext from './RollsContext';
+import LibrariesContext from './LibrariesContext';
 import { View, Text, TouchableOpacity } from 'react-native';
 import lampostAPI from '../../apis/lampost';
 
@@ -45,17 +45,17 @@ const Container = (props) => {
     });
   }, []);
 
-  // const getRolls = async () => {
-  //   const result = await lampostAPI.get('rolls');
-  //   const { rolls } = result.data;
-  //   setRolls(rolls);
-  // };
-  // useEffect(() => {
-  //   getRolls();
-  // }, []);
+  const getLibraries = async () => {
+    const result = await lampostAPI.get('/libraries');
+    const { libraries } = result.data;
+    setLibraries(libraries);
+  };
+  useEffect(() => {
+    getLibraries();
+  }, []);
 
   return (
-    <RollsContext.Provider
+    <LibrariesContext.Provider
       value={{
         appMenuBottomSheetRef,
         createLibraryBottomSheetRef,
@@ -70,7 +70,7 @@ const Container = (props) => {
         <AppMenuBottomSheet />
         <CreateLibrary />
       </View>
-    </RollsContext.Provider>
+    </LibrariesContext.Provider>
   );
 };
 
