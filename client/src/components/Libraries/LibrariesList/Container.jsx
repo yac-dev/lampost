@@ -3,7 +3,7 @@ import RollsContext from '../RollsContext';
 import { View, Text, TouchableOpacity } from 'react-native';
 
 const Container = () => {
-  const { rolls, navigation } = useContext(RollsContext);
+  const { libraries, navigation } = useContext(RollsContext);
 
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
@@ -21,9 +21,9 @@ const Container = () => {
     );
   };
 
-  const renderRolls = () => {
-    if (rolls.length) {
-      const rollsList = rolls.map((roll, index) => {
+  const renderLibraries = () => {
+    if (libraries.length) {
+      const librariesList = libraries.map((library, index) => {
         return (
           // <View key={index}>
           //   <Text>{roll.description}</Text>
@@ -31,10 +31,10 @@ const Container = () => {
           <TouchableOpacity
             key={index}
             style={{ borderBottomWidth: 0.3, padding: 20 }}
-            onPress={() => navigation.navigate('Roll', { rollId: roll._id })}
+            onPress={() => navigation.navigate('Library', { libraryId: library._id })}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-              {renderDate(roll.createdAt)}
+              {renderDate(library.createdAt)}
               <View
                 style={{
                   flexDirection: 'row',
@@ -70,7 +70,7 @@ const Container = () => {
         );
       });
 
-      return <View>{rollsList}</View>;
+      return <View>{librariesList}</View>;
     } else {
       return (
         <View>
@@ -80,7 +80,7 @@ const Container = () => {
     }
   };
 
-  return <View>{renderRolls()}</View>;
+  return <View>{renderLibraries()}</View>;
 };
 
 export default Container;

@@ -1,21 +1,16 @@
 import mongoose from 'mongoose';
 
 const rollSchema = new mongoose.Schema({
-  // rollっていうのは、sharedなalbumのことな。
   name: {
     type: String,
   },
-  badges: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Badge',
-    },
-  ],
+  // badges: [
+  //   {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'Badge',
+  //   },
+  // ],
   description: String,
-  createdBy: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User',
-  },
   createdAt: Date,
 });
 

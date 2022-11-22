@@ -5,8 +5,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Button } from 'react-native-paper';
 const Stack = createNativeStackNavigator();
 
-import Container from '../Library/Container';
-import RollContainer from '../Library/Roll/Container';
+import Container from '../Libraries/Container';
+import LibraryContainer from '../Libraries/Library/Container';
 import AuthNavigator from './Auth';
 
 const LibraryNavigator = () => {
@@ -14,11 +14,11 @@ const LibraryNavigator = () => {
     <Stack.Navigator>
       <Stack.Group>
         <Stack.Screen
-          name='Library'
+          name='Libraries'
           component={Container}
           options={({ navigation }) => ({
             headerShown: true,
-            title: 'Library',
+            title: 'Libraries',
             // headerTransparent: true,
             // reduxのdata._idを使えばいいだけか。
             // headerLeft: () => <Button onPress={() => navigation.navigate('My page/Memoirs')}>User page</Button>,
@@ -26,11 +26,11 @@ const LibraryNavigator = () => {
           })}
         />
         <Stack.Screen
-          name='Roll'
-          component={RollContainer}
+          name='Library'
+          component={LibraryContainer}
           options={({ navigation }) => ({
             headerShown: true,
-            title: 'Roll',
+            title: 'Library',
           })}
         />
       </Stack.Group>

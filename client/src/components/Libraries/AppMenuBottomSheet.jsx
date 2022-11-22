@@ -17,7 +17,7 @@ import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const AppMenuBottomSheet = (props) => {
-  const { appMenuBottomSheetRef, handleCreateRollBottomSheet } = useContext(RollsContext);
+  const { appMenuBottomSheetRef, handleCreateLibraryBottomSheet } = useContext(RollsContext);
   const snapPoints = ['10%', '30%', '90%'];
   return (
     <GorhomBottomSheet
@@ -47,7 +47,7 @@ const AppMenuBottomSheet = (props) => {
           Actions
         </Text>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-          <TouchableOpacity onPress={() => handleCreateRollBottomSheet()}>
+          <TouchableOpacity onPress={() => handleCreateLibraryBottomSheet()}>
             <MaterialIcons name='create-new-folder' size={40} />
             <Text>Create</Text>
           </TouchableOpacity>

@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity } from 'react-native';
 import lampostAPI from '../../../../apis/lampost';
 
-import RollName from './RollName';
-import RollBadges from './RollBadges';
-import RollDescription from './RollDescription';
+import LibraryName from './LibraryName';
+import LibraryBadges from './LibraryBadges';
+import LibraryDescription from './LibraryDescription';
 
 const INITIAL_STATE = {
   name: '',
@@ -29,7 +29,7 @@ const reducer = (state, action) => {
 
 const Container = (props) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-  const { createRollBottomSheetRef, setRolls } = useContext(RollsContext);
+  const { createLibraryBottomSheetRef, setLibraries } = useContext(RollsContext);
 
   const onSubmit = async () => {
     // const preferredBadgeIds = Object.values(state.preferredBadges).map((preferredBadge) => {
@@ -42,17 +42,18 @@ const Container = (props) => {
       description: state.description,
       createdBy: props.auth.data._id,
     };
+
     const result = await lampostAPI.post('/rolls', formData);
-    const { roll } = result.data;
-    createRollBottomSheetRef.current.close();
-    setRolls((previous) => [...previous, roll]);
+    const { library } = result.data;
+    createLibraryBottomSheetRef.current.close();
+    setLibraries((previous) => [...previous, library]);
   };
   return (
     <View>
       <Text>Form here!</Text>
-      <RollName state={state} dispatch={dispatch} />
-      <RollBadges state={state} dispatch={dispatch} />
-      <RollDescription state={state} dispatch={dispatch} />
+      <LibraryName state={state} dispatch={dispatch} />
+      <LibraryBadges state={state} dispatch={dispatch} />
+      <LibraryDescription state={state} dispatch={dispatch} />
       <TouchableOpacity onPress={() => onSubmit()}>
         <Text>Done</Text>
       </TouchableOpacity>
