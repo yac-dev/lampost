@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 
-import AppButtons from './AppButtons';
+import AppButtons from './AppButtons/AppButtons';
+import UpcomingMeetups from './UpcomingMeetups/Container';
 
 import { setIsConfirmHostMeetupModalOpen } from '../../../redux/actionCreators/modal';
 
@@ -30,6 +31,7 @@ const AppMenusBottomSheet = (props) => {
             What are you gonna do?
           </Text>
           <AppButtons />
+          <UpcomingMeetups />
         </BottomSheetView>
       </GorhomBottomSheet>
     );
