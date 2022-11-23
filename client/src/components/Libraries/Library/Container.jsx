@@ -9,19 +9,17 @@ const Container = (props) => {
   const appMenuBottomSheetRef = useRef(null);
 
   return (
-    // <LibraryContext.Provider>
-    <View style={{ flex: 1 }}>
-      <Text>{props.route.params.libraryId}</Text>
-      <TouchableOpacity>
-        <Text>Post</Text>
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <Text>Join</Text>
-      </TouchableOpacity>
-      {/* <AppMenuBottomSheet appMenuBottomSheetRef={appMenuBottomSheetRef}/> */}
-    </View>
-
-    // {/* </LibraryContext.Provider> */}
+    <LibraryContext.Provider value={{ appMenuBottomSheetRef }}>
+      <View style={{ flex: 1 }}>
+        <Text>{props.route.params.libraryId}</Text>
+        <TouchableOpacity>
+          <Text>Post</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text>Join</Text>
+        </TouchableOpacity>
+      </View>
+    </LibraryContext.Provider>
   );
 };
 

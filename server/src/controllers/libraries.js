@@ -28,3 +28,14 @@ export const getLibraries = async (request, response) => {
     console.log(error);
   }
 };
+
+export const getLibrary = async (request, response) => {
+  try {
+    const library = await Library.findById(request.params.id);
+    response.status(200).json({
+      library,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

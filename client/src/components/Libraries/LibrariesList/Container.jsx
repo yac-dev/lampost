@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import RollsContext from '../LibrariesContext';
+import LibrariesContext from '../LibrariesContext';
 import { View, Text, TouchableOpacity } from 'react-native';
 
 const Container = () => {
-  const { libraries, navigation } = useContext(RollsContext);
+  const { libraries, navigation, selectLibrary } = useContext(LibrariesContext);
 
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
@@ -31,7 +31,7 @@ const Container = () => {
           <TouchableOpacity
             key={index}
             style={{ borderBottomWidth: 0.3, padding: 20 }}
-            onPress={() => navigation.navigate('Library', { libraryId: library._id })}
+            onPress={() => selectLibrary(library._id)}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
               {renderDate(library.createdAt)}

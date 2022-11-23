@@ -10,19 +10,29 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 // import BadgeFolderBottomSheet from './Rolls/RollsBottomSheet';
 import LibrariesList from './LibrariesList/Container';
 import AppMenuBottomSheet from './AppMenuBottomSheet';
-import CreateLibrary from './CreateLibrary/Container';
+import CreateLibraryBottomSheet from './CreateLibraryBottomSheet/Container';
+import LibraryOverviewBottomSheet from './LibraryOverviewBottomSheet/Container';
 
 const Container = (props) => {
   const rollsBottomSheetRef = useRef(null);
   const [selected, setSelected] = useState(null);
   const [libraries, setLibraries] = useState([]);
+  const [selectedLibrary, setSelectedLibrary] = useState(null);
 
   const appMenuBottomSheetRef = useRef(null);
   const createLibraryBottomSheetRef = useRef(null);
+  const libraryOverviewBottomSheetRef = useRef(null);
 
   const handleCreateLibraryBottomSheet = () => {
     appMenuBottomSheetRef.current.snapToIndex(0);
     createLibraryBottomSheetRef.current.snapToIndex(0);
+  };
+
+  const selectLibrary = async (id) => {
+    libraryOverviewBottomSheetRef.current.snapToIndex(0);
+    const result = await lampostAPI.get(`/libraries/${id}`);
+    const { library } = result.data;
+    setSelectedLibrary(library);
   };
 
   // const closeCreateRollBottomSheet = () => {
@@ -59,16 +69,20 @@ const Container = (props) => {
       value={{
         appMenuBottomSheetRef,
         createLibraryBottomSheetRef,
+        libraryOverviewBottomSheetRef,
         handleCreateLibraryBottomSheet,
         libraries,
         setLibraries,
         navigation: props.navigation,
+        selectedLibrary,
+        selectLibrary,
       }}
     >
       <View style={{ flex: 1 }}>
         <LibrariesList />
         <AppMenuBottomSheet />
-        <CreateLibrary />
+        <CreateLibraryBottomSheet />
+        <LibraryOverviewBottomSheet />
       </View>
     </LibrariesContext.Provider>
   );
