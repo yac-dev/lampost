@@ -16,7 +16,7 @@ import SelectedItemBottomSheet from './SelectedItem/SelectedItemBottomSheet';
 import SelectedMeetup from './SelectedMeetup/Container';
 import SelectedMeetupInfoDetail from './SelectedMeetup/InfoDetail/Container';
 import Notifications from './Notifications/Container';
-import AppMenusBottomSheet from './AppMenuBottomSheet';
+import AppMenusBottomSheet from './AppMenuBottomSheet/Container';
 
 import FABMenu from './Utils/FABMenu';
 import ModalContainer from '../Utils/ModalContainer';

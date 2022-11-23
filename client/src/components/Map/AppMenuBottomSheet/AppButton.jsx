@@ -12,6 +12,7 @@ const AppButton = (props) => {
           borderRadius: 7,
           marginBottom: 5,
         }}
+        onPress={() => props.onPress()}
       >
         <View
           style={{
