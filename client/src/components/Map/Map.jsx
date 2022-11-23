@@ -256,7 +256,7 @@ const Map = (props) => {
             <CancelLaunchMeetup />
           </ModalContainer>
 
-          <FABMenu navigation={props.navigation} />
+          {/* <FABMenu navigation={props.navigation} /> */}
           <SnackBar />
           <PostBottomSheet postBottomSheetRef={postBottomSheetRef} />
 

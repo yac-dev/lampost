@@ -9,7 +9,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 // import BadgeFolders from './BadgeFolders/Container';
 // import BadgeFolderBottomSheet from './Rolls/RollsBottomSheet';
 import LibrariesList from './LibrariesList/Container';
-import AppMenuBottomSheet from './AppMenuBottomSheet';
+import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import CreateLibraryBottomSheet from './CreateLibraryBottomSheet/Container';
 import LibraryOverviewBottomSheet from './LibraryOverviewBottomSheet/Container';
 
