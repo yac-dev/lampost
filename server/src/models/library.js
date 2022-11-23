@@ -12,7 +12,20 @@ const librarySchema = new mongoose.Schema({
     },
   ],
   description: String,
-  createdBy: {
+  members: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+    },
+  ],
+  rolls: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Roll',
+    },
+  ],
+  rate: Number,
+  launcher: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
@@ -24,11 +37,11 @@ const librarySchema = new mongoose.Schema({
 librarySchema.set('toJSON', { virtuals: true });
 librarySchema.set('toObject', { virtuals: true });
 
-librarySchema.virtual('rolls', {
-  ref: 'Roll',
-  foreignField: 'library',
-  localField: '_id',
-});
+// librarySchema.virtual('members', {
+//   ref: 'User',
+//   foreignField: 'libraries',
+//   localField: '_id'
+// })
 
 const Library = mongoose.model('Library', librarySchema);
 export default Library;

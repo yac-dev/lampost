@@ -4,12 +4,6 @@ const rollSchema = new mongoose.Schema({
   name: {
     type: String,
   },
-  // badges: [
-  //   {
-  //     type: mongoose.Schema.ObjectId,
-  //     ref: 'Badge',
-  //   },
-  // ],
   description: String,
   createdAt: Date,
 });

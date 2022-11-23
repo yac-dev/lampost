@@ -75,6 +75,7 @@ const Container = (props) => {
         setLibraries,
         navigation: props.navigation,
         selectedLibrary,
+        setSelectedLibrary,
         selectLibrary,
       }}
     >

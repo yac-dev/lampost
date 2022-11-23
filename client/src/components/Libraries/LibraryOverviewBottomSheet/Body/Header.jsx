@@ -5,8 +5,9 @@ import LibrariesContext from '../../LibrariesContext';
 const Header = () => {
   const { selectedLibrary } = useContext(LibrariesContext);
   return (
-    <View>
-      <Text>{selectedLibrary.name}</Text>
+    <View style={{ marginBottom: 15 }}>
+      <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 15 }}>{selectedLibrary.name}</Text>
+      <Text>{selectedLibrary.description}</Text>
     </View>
   );
 };

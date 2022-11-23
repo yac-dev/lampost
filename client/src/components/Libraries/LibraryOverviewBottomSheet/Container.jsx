@@ -13,7 +13,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const Container = (props) => {
   // oncloseでselecteされたlibraryを消すようにすればいい。
-  const { libraryOverviewBottomSheetRef, selectedLibrary } = useContext(LibrariesContext);
+  const { libraryOverviewBottomSheetRef, setSelectedLibrary } = useContext(LibrariesContext);
   const snapPoints = ['80%', '100%'];
 
   return (
@@ -33,21 +33,9 @@ const Container = (props) => {
       enablePanDownToClose={false}
       // backgroundStyle={{ backgroundColor: 'rgb(50, 78, 165)' }}
       // keyboardBehavior={'interactive'}
-      // onClose={() => onSelectedItemBottomSheetClose()}
+      onClose={() => setSelectedLibrary(null)}
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            alignSelf: 'center',
-            fontSize: 20,
-            borderBottomWidth: 0.3,
-            borderBottomColor: 'red',
-            padding: 10,
-          }}
-        >
-          Launch your Library
-        </Text>
         <Body />
       </BottomSheetView>
     </GorhomBottomSheet>
