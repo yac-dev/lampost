@@ -44,6 +44,12 @@ const userSchema = new mongoose.Schema({
       ref: 'Meetup',
     },
   ],
+  joinedLibraries: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Library',
+    },
+  ],
   connections: [
     {
       type: mongoose.Schema.ObjectId,

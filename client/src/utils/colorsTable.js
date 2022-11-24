@@ -29,3 +29,7 @@ export const backgroundColorsTable = {
   brown1: 'rgba(155, 81, 15, 0.3)',
   no: 'rgba(130, 130, 130, 0.1)',
 };
+
+
+
+export const rnDefaultBackgroundColor = '#efefef';

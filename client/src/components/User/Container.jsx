@@ -14,7 +14,7 @@ import Badges from '../Utils/AddBadges/Badges';
 import BadgeStatuses from './Home/BadgeStatuses/Container';
 import FABMenu from './Utils/FABMenu';
 import BadgeStatusBottomSheet from './Home/BadgeStatusBottomSheet';
-import AppMenuBottomSheet from './AppMenuBottomSheet';
+import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 
 // badgeを取ってきて、skillも取ってくる。subscriberの数も返すし、connectionの数も返す。
 const Container = (props) => {
@@ -98,7 +98,7 @@ const Container = (props) => {
 
   if (user) {
     return (
-      <UserContext.Provider value={{ user, isMyPage, navigation: props.navigation }}>
+      <UserContext.Provider value={{ user, isMyPage, navigation: props.navigation, appMenuBottomSheetRef }}>
         <View
           style={{
             padding: 10,
@@ -114,7 +114,7 @@ const Container = (props) => {
             onBadgePress={onBadgePress}
             navigation={props.navigation}
           />
-          <AppMenuBottomSheet appMenuBottomSheetRef={appMenuBottomSheetRef} />
+          <AppMenuBottomSheet />
           {/* <Badges user={user} badges={badges} onBadgePress={onBadgePress} /> */}
           {/* <FABMenu /> */}
           {/* <BadgeStatusBottomSheet

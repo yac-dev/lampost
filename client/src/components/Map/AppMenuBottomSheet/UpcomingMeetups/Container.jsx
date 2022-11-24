@@ -75,7 +75,7 @@ const Container = (props) => {
   };
   return (
     <View>
-      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>Upcoming meetups</Text>
+      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My upcoming meetups</Text>
       {renderUpcomingMeetups()}
     </View>
   );

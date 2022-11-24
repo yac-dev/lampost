@@ -21,7 +21,7 @@ const Auth = (props) => {
           name='Personal page'
           component={UserHome}
           initialParams={{ userId: props.auth.data._id }}
-          options={{ headerShown: false }}
+          // options={{ headerShown: false }}
         >
           {/*  これまた、別でuserhomeのcomponentがひちようだわな。connectionなりで、違うuser pageに飛んでいくから。*/}
         </Stack.Screen>

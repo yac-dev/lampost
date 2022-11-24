@@ -9,7 +9,7 @@ import UpcomingMeetups from './UpcomingMeetups/Container';
 import { setIsConfirmHostMeetupModalOpen } from '../../../redux/actionCreators/modal';
 
 const AppMenusBottomSheet = (props) => {
-  const snapPoints = useMemo(() => ['7%', '30%', '80%'], []);
+  const snapPoints = useMemo(() => ['8%', '30%', '80%'], []);
 
   if (!props.hostMeetup.isOpen) {
     return (
