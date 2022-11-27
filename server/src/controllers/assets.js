@@ -30,3 +30,25 @@ export const createVideo = () => {
     console.log(error);
   }
 };
+
+export const getUserAssets = async (request, response) => {
+  try {
+    const assets = await Asset.find({ createdBy: request.body.userId });
+    response.status(200).json({
+      assets,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getAsset = async (request, response) => {
+  try {
+    const asset = await Asset.findById(request.params.id);
+    response.status(200).json({
+      asset,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

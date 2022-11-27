@@ -106,3 +106,14 @@ export const getPastMeetups = async (request, response) => {
     console.log(error);
   }
 };
+
+export const getUserAssets = async (request, response) => {
+  try {
+    const assets = await Asset.find({ createdBy: request.params.id });
+    response.status(200).json({
+      assets,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -30,6 +30,7 @@ const AppButtons = () => {
           backgroundColor={backgroundColorsTable['pink1']}
           icon={<Entypo name='images' size={35} color={iconColorsTable['pink1']} />}
           label='Assets'
+          onPress={() => navigation.navigate('Assets', { userId: user._id })}
         />
         <AppButton
           backgroundColor={backgroundColorsTable['grey1']}
