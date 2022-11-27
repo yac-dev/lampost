@@ -2,6 +2,7 @@ import Roll from '../models/roll';
 import User from '../models/user';
 import Meetup from '../models/meetup';
 import Asset from '../models/asset';
+import RollAndAssetRelationship from '../models/rollAndAssetRelationship';
 
 export const createRoll = async (request, response) => {
   try {
@@ -38,6 +39,27 @@ export const getRolls = async (request, response) => {
     });
     response.status(200).json({
       rolls,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getRollAndRelationships = async (request, response) => {
+  try {
+    const roll = await Roll.findById(request.params.id);
+    const relationships = await RollAndAssetRelationship.find({ roll: request.params.id });
+    // .populate({
+    //   path: 'asset',
+    //   model: Asset,
+    // });
+    // .populate({
+    //   path: 'assets',
+    //   model: Asset,
+    // });
+    response.status(200).json({
+      roll,
+      relationships,
     });
   } catch (error) {
     console.log(error);

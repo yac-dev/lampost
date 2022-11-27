@@ -7,6 +7,7 @@ const Stack = createNativeStackNavigator();
 
 import Container from '../Libraries/Container';
 import LibraryContainer from '../Libraries/Library/Container';
+import RollContainer from '../Libraries/Roll';
 import AuthNavigator from './Auth';
 
 const LibraryNavigator = () => {
@@ -31,6 +32,14 @@ const LibraryNavigator = () => {
           options={({ navigation }) => ({
             headerShown: true,
             title: 'Library',
+          })}
+        />
+        <Stack.Screen
+          name='Roll'
+          component={RollContainer}
+          options={({ navigation }) => ({
+            headerShown: true,
+            title: 'Roll',
           })}
         />
       </Stack.Group>
