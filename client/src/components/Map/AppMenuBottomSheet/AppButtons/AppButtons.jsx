@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import MapContext from '../../MeetupContext';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
@@ -6,9 +7,11 @@ import AppButton from './AppButton';
 import { iconColorsTable, backgroundColorsTable, sectionBackgroundColor } from '../../../../utils/colorsTable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { setIsConfirmHostMeetupModalOpen } from '../../../../redux/actionCreators/modal';
+import { setIsPostBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
 
 const AppButtons = (props) => {
   // 何だろう。。。scrollviewをtopのcomponentにするとなんかバグる。
+  const { appMenuBottomSheetRef, setIsLaunchMeetupConfirmationModalOpen } = useContext(MapContext);
   return (
     <View style={{ paddingTop: 10, marginBottom: 15, borderRadius: 10, backgroundColor: sectionBackgroundColor }}>
       <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
@@ -17,8 +20,9 @@ const AppButtons = (props) => {
           icon={<MaterialCommunityIcons name='rocket-launch' size={35} color={iconColorsTable['red1']} />}
           label='Launch'
           onActionButtonPress={() => {
-            props.setIsConfirmHostMeetupModalOpen(true);
-            props.appMenuBottomSheetRef.current.snapToIndex(0);
+            setIsLaunchMeetupConfirmationModalOpen(true);
+            appMenuBottomSheetRef.current.close();
+            // props.postBottomSheetRef.current.snapToIndex(0);
           }}
         />
         <AppButton

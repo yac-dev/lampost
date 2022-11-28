@@ -35,7 +35,7 @@ const Badge = (props) => {
       } else {
         return null;
       }
-    } else if (props.fromComponent === 'Add meetup preferred badges') {
+    } else if (props.fromComponent === 'Add meetup badges') {
       if (props.preferredBadges[props.badge._id]) {
         return (
           <View

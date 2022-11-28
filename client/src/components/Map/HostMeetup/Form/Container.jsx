@@ -1,6 +1,7 @@
 // main libraries
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useContext } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import MapContext from '../../MeetupContext';
 import { connect } from 'react-redux';
 import { AntDesign } from '@expo/vector-icons';
 import { baseTextColor } from '../../../../utils/colorsTable';
@@ -112,6 +113,7 @@ const reducer = (state, action) => {
 
 const Container = (props) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+  const { setIsCancelLaunchMeetupConfirmationModalOpen } = useContext(MapContext);
 
   const formValidation = () => {
     // formのvalidationをここに書いていくことになる。
@@ -183,7 +185,7 @@ const Container = (props) => {
       <View style={{ alignSelf: 'flex-end', marginBottom: 5 }}>
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center' }}
-          onPress={() => props.setIsCancelLaunchMeetupModalOpen(true)}
+          onPress={() => setIsCancelLaunchMeetupConfirmationModalOpen(true)}
         >
           <AntDesign name='close' size={20} color={baseTextColor} style={{ marginRight: 5 }} />
           <Text style={{ color: baseTextColor }}>Cancel</Text>

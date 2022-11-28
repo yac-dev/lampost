@@ -1,16 +1,18 @@
 // main libraries
-import React from 'react';
+import React, { useContext } from 'react';
+import MapContext from '../MeetupContext';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Callout, Marker, Circle } from 'react-native-maps';
 
 const SetMeetupLocation = (props) => {
-  if (props.hostMeetup.isOpen && props.hostMeetup.setLocation) {
+  const { launchLocation } = useContext(MapContext);
+  if (launchLocation) {
     return (
       <Marker
         coordinate={{
-          latitude: props.hostMeetup.setLocation.latitude,
-          longitude: props.hostMeetup.setLocation.longitude,
+          latitude: launchLocation.latitude,
+          longitude: launchLocation.longitude,
         }}
       />
     );

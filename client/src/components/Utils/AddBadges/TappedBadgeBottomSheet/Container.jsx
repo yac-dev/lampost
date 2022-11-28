@@ -33,8 +33,8 @@ const Container = (props) => {
             fromComponent={props.fromComponent}
             badge={props.badge}
             setBadge={props.setBadge}
-            preferredBadges={props.preferredBadges}
-            setPreferredBadges={props.setPreferredBadges}
+            meetupBadges={props.meetupBadges}
+            setMeetupBadges={props.setMeetupBadges}
           />
         </BottomSheetView>
       </GorhomBottomSheet>

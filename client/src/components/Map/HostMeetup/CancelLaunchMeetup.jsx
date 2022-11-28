@@ -1,30 +1,55 @@
 // main libraries
-import React from 'react';
+import React, { useContext } from 'react';
+import MapContext from '../MeetupContext';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
+import { Button, Dialog, Portal, Provider, withTheme } from 'react-native-paper';
+import { appBottomSheetBackgroundColor, baseTextColor } from '../../../utils/colorsTable';
 
 // ac
 import { setIsHostMeetupOpen } from '../../../redux/actionCreators/hostMeetup';
 
 const CancelHostMeetupButton = (props) => {
-  // if (props.hostMeetup.isOpen) {
-  //   return (
-  //     <TouchableOpacity
-  //       style={{ position: 'absolute', top: 50, left: 50 }}
-  //       onPress={() => props.setIsHostMeetupOpen(false)}
-  //     >
-  //       <View>
-  //         <Text>Cancel button here</Text>
-  //       </View>
-  //     </TouchableOpacity>
-  //   );
-  // } else {
-  //   return null;
-  // }
+  const {
+    launchMeetupBottomSheetRef,
+    isCancelLaunchMeetupConfirmationModalOpen,
+    setIsCancelLaunchMeetupConfirmationModalOpen,
+    setIsLaunchMeetupConfirmed,
+    setLaunchLocation,
+  } = useContext(MapContext);
+
   return (
-    <View>
-      <Text style={{ fontWeight: 'bold', fontSize: 15 }}>Are you sure you want to cancel launching?</Text>
-    </View>
+    <Portal>
+      <Dialog
+        visible={isCancelLaunchMeetupConfirmationModalOpen}
+        style={{ backgroundColor: appBottomSheetBackgroundColor, padding: 30 }}
+      >
+        <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>
+          Are you sure you want to cancel launching?
+        </Text>
+        <Dialog.Actions>
+          <Button
+            textColor='rgb(58, 126, 224)'
+            onPress={() => {
+              setIsCancelLaunchMeetupConfirmationModalOpen(false);
+            }}
+          >
+            No
+          </Button>
+          <Button
+            textColor='rgb(58, 126, 224)'
+            onPress={() => {
+              setIsCancelLaunchMeetupConfirmationModalOpen(false);
+              setIsLaunchMeetupConfirmed(false);
+              setLaunchLocation(null);
+              launchMeetupBottomSheetRef.current.close();
+            }}
+          >
+            Yes
+          </Button>
+        </Dialog.Actions>
+      </Dialog>
+    </Portal>
   );
 };
 

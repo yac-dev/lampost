@@ -1,4 +1,5 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useContext } from 'react';
+import MapContext from '../MeetupContext';
 import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
@@ -10,34 +11,35 @@ import { setIsConfirmHostMeetupModalOpen } from '../../../redux/actionCreators/m
 
 const AppMenusBottomSheet = (props) => {
   const snapPoints = useMemo(() => ['8%', '30%', '80%'], []);
+  const { appMenuBottomSheetRef } = useContext(MapContext);
 
-  if (!props.hostMeetup.isOpen) {
-    return (
-      <GorhomBottomSheet
-        index={0}
-        enableOverDrag={true}
-        ref={props.appMenuBottomSheetRef}
-        snapPoints={snapPoints}
-        backdropComponent={(backdropProps) => (
-          <BottomSheetBackdrop {...backdropProps} appearsOnIndex={1} disappearsOnIndex={0} pressBehavior={0} />
-        )}
-        enablePanDownToClose={false}
-        backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
-        // keyboardBehavior={'interactive'}
-        // onClose={() => onSelectedItemBottomSheetClose()}
-      >
-        <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
-          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 5 }}>
-            What are you gonna do?
-          </Text>
-          <AppButtons appMenuBottomSheetRef={props.appMenuBottomSheetRef} />
-          <UpcomingMeetups />
-        </BottomSheetView>
-      </GorhomBottomSheet>
-    );
-  } else {
-    return null;
-  }
+  // if (!props.hostMeetup.isOpen) {
+  return (
+    <GorhomBottomSheet
+      index={0}
+      enableOverDrag={true}
+      ref={appMenuBottomSheetRef}
+      snapPoints={snapPoints}
+      backdropComponent={(backdropProps) => (
+        <BottomSheetBackdrop {...backdropProps} appearsOnIndex={1} disappearsOnIndex={0} pressBehavior={0} />
+      )}
+      enablePanDownToClose={false}
+      backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
+      // keyboardBehavior={'interactive'}
+      // onClose={() => onSelectedItemBottomSheetClose()}
+    >
+      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 5 }}>
+          What are you gonna do?
+        </Text>
+        <AppButtons appMenuBottomSheetRef={props.appMenuBottomSheetRef} postBottomSheetRef={props.postBottomSheetRef} />
+        <UpcomingMeetups />
+      </BottomSheetView>
+    </GorhomBottomSheet>
+  );
+  // } else {
+  //   return null;
+  // }
 };
 
 const mapStateToProps = (state) => {

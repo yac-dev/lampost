@@ -10,7 +10,7 @@ const Container = (props) => {
   return (
     <View style={{}}>
       <Header />
-      <WelcomeBadges state={props.state} dispatch={props.dispatch} navigation={props.navigation} route={props.route} />
+      {/* <WelcomeBadges state={props.state} dispatch={props.dispatch} navigation={props.navigation} route={props.route} /> */}
       <AttendeesLimit state={props.state} dispatch={props.dispatch} />
       <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
         <Button

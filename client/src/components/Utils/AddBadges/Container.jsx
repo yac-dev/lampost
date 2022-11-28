@@ -13,7 +13,7 @@ import { setIsTappedBadgeBottomSheetOpen } from '../../../redux/actionCreators/b
 
 const Container = (props) => {
   const [badge, setBadge] = useState(null);
-  const [preferredBadges, setPreferredBadges] = useState({});
+  const [meetupBadges, setMeetupBadges] = useState({});
   const [userBadges, setUserBadges] = useState({});
   const [fromComponent, setFromComponent] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -77,8 +77,8 @@ const Container = (props) => {
 
   // meetup required badgesの時
   useEffect(() => {
-    if (props.route.params?.fromComponent === 'Add meetup preferred badges') {
-      setFromComponent('Add meetup preferred badges');
+    if (props.route.params?.fromComponent === 'Add meetup badges') {
+      setFromComponent('Add meetup badges');
       // setRequiredBadges((previous) => {
       //   return {
       //     ...previous,
@@ -87,28 +87,28 @@ const Container = (props) => {
       // });
       props.navigation.setOptions({
         headerRight: () => (
-          <TouchableOpacity onPress={() => onAddPreferredBadgesDone()}>
+          <TouchableOpacity onPress={() => onAddMeetupBadgesDone()}>
             <Text>Done(meet)</Text>
           </TouchableOpacity>
         ),
       });
     }
-  }, [preferredBadges]);
+  }, [meetupBadges]);
   // うん。上でやると、useEffectでstackoverflow的なことが起こっている。だから下で分けてやる必要がありそう。
 
   useEffect(() => {
-    if (props.route.params?.preferredBadges) {
-      setPreferredBadges((previous) => {
+    if (props.route.params?.meetupBadges) {
+      setMeetupBadges((previous) => {
         return {
           ...previous,
-          ...props.route.params.preferredBadges,
+          ...props.route.params.meetupBadges,
         };
       });
     }
   }, []);
 
-  const onAddPreferredBadgesDone = () => {
-    props.navigation.navigate('Map', { preferredBadges });
+  const onAddMeetupBadgesDone = () => {
+    props.navigation.navigate('Map', { meetupBadges });
   };
 
   // const onDoneAddMeetupBadges = () => {
@@ -177,8 +177,8 @@ const Container = (props) => {
         fromComponent={fromComponent}
         badge={badge}
         setBadge={setBadge}
-        preferredBadges={preferredBadges}
-        setPreferredBadges={setPreferredBadges}
+        meetupBadges={meetupBadges}
+        setMeetupBadges={setMeetupBadges}
         tappedBadgeBottomSheetRef={tappedBadgeBottomSheetRef}
         closeTappedBadgeBottomSheet={closeTappedBadgeBottomSheet}
       />

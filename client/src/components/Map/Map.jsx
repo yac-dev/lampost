@@ -1,5 +1,6 @@
 // main libraries
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useContext } from 'react';
+import MapContext from './MeetupContext';
 import { connect } from 'react-redux';
 import { StyleSheet, Platform, View, StatusBar, Dimensions, TouchableOpacity, Text } from 'react-native';
 import MapView from 'react-native-maps';
@@ -48,10 +49,14 @@ import { setIsSelectedMeetupInfoDetailBottomSheetOpen } from '../../redux/action
 const Map = (props) => {
   const [region, setRegion] = useState(null);
   const [currentSnap, setCurrentSnap] = useState();
+  const [isLaunchMeetupConfirmationModalOpen, setIsLaunchMeetupConfirmationModalOpen] = useState(false);
+  const [isCancelLaunchMeetupConfirmationModalOpen, setIsCancelLaunchMeetupConfirmationModalOpen] = useState(false);
+  const [isLaunchMeetupConfirmed, setIsLaunchMeetupConfirmed] = useState(false);
+  const [launchLocation, setLaunchLocation] = useState(null);
 
   const appMenuBottomSheetRef = useRef(null);
-
   const postBottomSheetRef = useRef(null);
+  const launchMeetupBottomSheetRef = useRef(null);
   const notificationBottomSheetRef = useRef(null);
   const selectedItemBottomSheetRef = useRef(null);
   const selectedMeetupDetailBottomSheetRef = useRef(null);
@@ -122,17 +127,16 @@ const Map = (props) => {
     selectedMeetupDetailBottomSheetRef.current?.snapToIndex(0);
   };
 
+  // 基本は、mapのいずれをtapしてもなにも起きないようにする。launchMeetupがtrueのときだけ、mapをtapしたらlocationをsetして、launchのformを出す。
   const setMeetupLocation = (event) => {
-    if (props.hostMeetup.isOpen) {
-      props.setMeetupLocation(event.nativeEvent.coordinate);
+    if (isLaunchMeetupConfirmed) {
+      // props.setMeetupLocation(event.nativeEvent.coordinate);
+      setLaunchLocation(event.nativeEvent.coordinate);
+      appMenuBottomSheetRef.current.snapToIndex(0);
+      launchMeetupBottomSheetRef.current.snapToIndex(0);
     } else {
       return null;
     }
-  };
-
-  const onPressOkConfirmHostMeetup = () => {
-    props.setIsHostMeetupOpen(true);
-    props.setIsConfirmHostMeetupModalOpen(false);
   };
 
   const onPressCancelConfirmHostMeetup = () => {
@@ -176,18 +180,18 @@ const Map = (props) => {
     }
   }, [props.bottomSheet.post.isOpen]);
 
-  // これが、hostMeetupでbottomSheetが開いた時の自動map移動。
+  // これで、mapを自動で移動させる。launchMeetupの場所へ。
   useEffect(() => {
-    if (props.hostMeetup.isOpen && props.hostMeetup.setLocation) {
-      const newLat = props.hostMeetup.setLocation.latitude - 0.021;
+    if (isLaunchMeetupConfirmed && launchLocation) {
+      const newLat = launchLocation.latitude - 0.018;
       mapRef.current.animateToRegion({
         latitude: newLat,
-        longitude: props.hostMeetup.setLocation.longitude,
+        longitude: launchLocation.longitude,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       });
     }
-  }, [props.hostMeetup]);
+  }, [isLaunchMeetupConfirmed, launchLocation]);
 
   useEffect(() => {
     if (props.bottomSheet.selectedItem.isOpen && props.selectedMeetup) {
@@ -203,80 +207,83 @@ const Map = (props) => {
 
   return (
     <>
-      <NBProvider>
-        <View style={styles.container}>
-          <MapView
-            ref={mapRef}
-            style={styles.map}
-            showsUserLocation={true}
-            customMapStyle={mapStyle}
-            // showsMyLocationButton={true}
-            followsUserLocation={true}
-            showsCompass={true}
-            scrollEnabled={true}
-            zoomEnabled={true}
-            onPress={(event) => setMeetupLocation(event)}
-            // initial regionっていうのは、最初に地図がloadされたときに画面の中心にどのlatitudeとlongitudeを映すかって言うことね。
-            initialRegion={{
-              latitude: 37.78825,
-              longitude: -122.4324,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-            provider='google'
-            // provider={Platform.OS === 'android' ? MapView.PROVIDER_GOOGLE : MapView.PROVIDER_DEFAULT}
-          >
-            <SetMeetupLocation />
-            <MapMarkers handleSelectedItemBottomSheetChanges={handleSelectedItemBottomSheetChanges} />
-          </MapView>
+      <MapContext.Provider
+        value={{
+          launchMeetupBottomSheetRef,
+          appMenuBottomSheetRef,
+          isLaunchMeetupConfirmationModalOpen,
+          setIsLaunchMeetupConfirmationModalOpen,
+          isCancelLaunchMeetupConfirmationModalOpen,
+          setIsCancelLaunchMeetupConfirmationModalOpen,
+          isLaunchMeetupConfirmed,
+          setIsLaunchMeetupConfirmed,
+          launchLocation,
+          setLaunchLocation,
+        }}
+      >
+        <NBProvider>
+          <View style={styles.container}>
+            <MapView
+              ref={mapRef}
+              style={styles.map}
+              showsUserLocation={true}
+              customMapStyle={mapStyle}
+              // showsMyLocationButton={true}
+              followsUserLocation={true}
+              showsCompass={true}
+              scrollEnabled={true}
+              zoomEnabled={true}
+              onPress={(event) => setMeetupLocation(event)}
+              // initial regionっていうのは、最初に地図がloadされたときに画面の中心にどのlatitudeとlongitudeを映すかって言うことね。
+              initialRegion={{
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+              provider='google'
+              // provider={Platform.OS === 'android' ? MapView.PROVIDER_GOOGLE : MapView.PROVIDER_DEFAULT}
+            >
+              <SetMeetupLocation />
+              <MapMarkers handleSelectedItemBottomSheetChanges={handleSelectedItemBottomSheetChanges} />
+            </MapView>
 
-          {/* <ModalContainer
-            modalOpen={props.modal.selectMeetupBadges.isOpen}
-            onPressOk={onPressOkSelectBadge}
-            onPressCancel={onPressCancelSelectBadge}
-            okText={'Done'}
-          >
-            <Badges />
-          </ModalContainer> */}
-          <ModalContainer
-            modalOpen={props.modal.confirmHostMeetup.isOpen}
-            onPressOk={onPressOkConfirmHostMeetup}
-            onPressCancel={onPressCancelConfirmHostMeetup}
-            okText={'Ok'}
-          >
             <ConfirmHostMeetup />
-          </ModalContainer>
-
-          <ModalContainer
-            modalOpen={props.modal.cancelLaunchMeetup.isOpen}
-            onPressOk={onPressYesCancelLaunchMeetup}
-            onPressCancel={onPressCancelConfirmHostMeetup}
-            okText={'Yes'}
-          >
             <CancelLaunchMeetup />
-          </ModalContainer>
 
-          {/* <FABMenu navigation={props.navigation} /> */}
-          <SnackBar />
-          <PostBottomSheet postBottomSheetRef={postBottomSheetRef} />
+            {/* <ModalContainer
+              modalOpen={props.modal.cancelLaunchMeetup.isOpen}
+              onPressOk={onPressYesCancelLaunchMeetup}
+              onPressCancel={onPressCancelConfirmHostMeetup}
+              okText={'Yes'}
+            >
+            </ModalContainer> */}
 
-          <Notifications navigation={props.navigation} notificationBottomSheetRef={notificationBottomSheetRef} />
-          <AppMenusBottomSheet appMenuBottomSheetRef={appMenuBottomSheetRef} />
-          <HostMeetupBottomSheet navigation={props.navigation} route={props.route} />
-          <SelectedMeetup
-            navigation={props.navigation}
-            selectedItemBottomSheetRef={selectedItemBottomSheetRef}
-            handleselectedMeetupDetailBottomSheetChanges={handleselectedMeetupDetailBottomSheetChanges}
-          />
-          <SelectedMeetupInfoDetail
-            navigation={props.navigation}
-            selectedMeetupDetailBottomSheetRef={selectedMeetupDetailBottomSheetRef}
-          />
+            {/* <FABMenu navigation={props.navigation} /> */}
+            <SnackBar />
+            <PostBottomSheet postBottomSheetRef={postBottomSheetRef} />
 
-          {/* <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} /> */}
-          {/* <CancelHostMeetupButton /> */}
-        </View>
-      </NBProvider>
+            <Notifications navigation={props.navigation} notificationBottomSheetRef={notificationBottomSheetRef} />
+            <AppMenusBottomSheet
+              appMenuBottomSheetRef={appMenuBottomSheetRef}
+              postBottomSheetRef={postBottomSheetRef}
+            />
+            <HostMeetupBottomSheet navigation={props.navigation} route={props.route} />
+            <SelectedMeetup
+              navigation={props.navigation}
+              selectedItemBottomSheetRef={selectedItemBottomSheetRef}
+              handleselectedMeetupDetailBottomSheetChanges={handleselectedMeetupDetailBottomSheetChanges}
+            />
+            <SelectedMeetupInfoDetail
+              navigation={props.navigation}
+              selectedMeetupDetailBottomSheetRef={selectedMeetupDetailBottomSheetRef}
+            />
+
+            {/* <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} /> */}
+            {/* <CancelHostMeetupButton /> */}
+          </View>
+        </NBProvider>
+      </MapContext.Provider>
     </>
   );
 };

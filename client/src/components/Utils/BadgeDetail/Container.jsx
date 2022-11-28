@@ -31,9 +31,9 @@ const Container = (props) => {
           </TouchableOpacity>
         );
       }
-    } else if (props.fromComponent === 'Add meetup preferred badges') {
+    } else if (props.fromComponent === 'Add meetup badges') {
       // requiredBadges {}
-      if (props.preferredBadges[props.bottomSheet.badgeDetail.data._id]) {
+      if (props.meetupBadges[props.bottomSheet.badgeDetail.data._id]) {
         return (
           // deleteする。
           <Button
@@ -41,7 +41,7 @@ const Container = (props) => {
             mode='contained'
             buttonColor={iconColorsTable['red1']}
             onPress={() =>
-              props.setPreferredBadges((previous) => {
+              props.setMeetupBadges((previous) => {
                 const copy = { ...previous };
                 delete copy[props.bottomSheet.badgeDetail.data._id];
                 return copy;
@@ -58,7 +58,7 @@ const Container = (props) => {
             mode='contained'
             buttonColor={iconColorsTable['lightGreen1']}
             onPress={() =>
-              props.setPreferredBadges((previous) => {
+              props.setMeetupBadges((previous) => {
                 return {
                   ...previous,
                   [props.bottomSheet.badgeDetail.data._id]: props.bottomSheet.badgeDetail.data,

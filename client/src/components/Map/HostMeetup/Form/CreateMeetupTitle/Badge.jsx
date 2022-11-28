@@ -36,8 +36,8 @@ const Badge = (props) => {
         }}
         onPress={() =>
           props.navigation.navigate('Add badges', {
-            fromComponent: 'Add meetup preferred badges',
-            preferredBadges: props.state.preferredBadges,
+            fromComponent: 'Add meetup badges',
+            meetupBadges: props.state.preferredBadges,
           })
         }
       >
