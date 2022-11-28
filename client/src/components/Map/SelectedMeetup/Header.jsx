@@ -5,66 +5,13 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
 import FastImage from 'react-native-fast-image';
 import { iconColorsTable, backgroundColorsTable, baseTextColor } from '../../../utils/colorsTable';
+import { Ionicons } from '@expo/vector-icons';
 
 // ac
 import { joinMeetup } from '../../../redux/actionCreators/meetups';
 import { leaveMeetup } from '../../../redux/actionCreators/meetups';
 
 const Header = (props) => {
-  // const renderActionButton = () => {
-  //   if (props.auth.isAuthenticated) {
-  //     for (let i = 0; i < props.auth.data.upcomingMeetups.length; i++) {
-  //       if (props.auth.data.upcomingMeetups[i].meetup === props.selectedMeetup._id) {
-  //         if (props.auth.data.upcomingMeetups[i].launched) {
-  //           return (
-  //             <View style={{ flex: 3 }}>
-  //               <Button
-  //                 mode='outlined'
-  //                 icon={'application-edit-outline'}
-  //                 onPress={() => console.log('edit')}
-  //                 style={{ marginBottom: 10 }}
-  //               >
-  //                 Edit
-  //               </Button>
-  //               <Button mode='outlined' icon={'plus'} onPress={() => console.log('edit')}>
-  //                 Scout
-  //               </Button>
-  //             </View>
-  //           );
-  //         } else {
-  //           return (
-  //             <View style={{ flex: 3 }}>
-  //               <Button
-  //                 mode='outlined'
-  //                 icon={'plus'}
-  //                 onPress={() => props.leaveMeetup(props.selectedMeetup._id)}
-  //                 style={{ marginBottom: 10 }}
-  //               >
-  //                 Leave
-  //               </Button>
-  //             </View>
-  //           );
-  //         }
-  //       }
-  //     }
-  //     // upcomingMeetupsが全くない場合、ただjoinするかを聞くだけ。
-  //     return (
-  //       <View style={{ flex: 3 }}>
-  //         <Button
-  //           mode='outlined'
-  //           icon={'plus'}
-  //           onPress={() => props.joinMeetup(props.selectedMeetup._id)}
-  //           style={{ alignItems: 'center' }}
-  //         >
-  //           I'm in!
-  //         </Button>
-  //       </View>
-  //     );
-  //   } else {
-  //     return null;
-  //   }
-  // };
-
   // const renderDate = (date) => {
   //   return (
   //     <Text>{`${new Date(date).toLocaleString('en-US', {
@@ -77,38 +24,54 @@ const Header = (props) => {
   //   );
   // }; 何で、ここだとこれ動かないんだろ。。。。
 
-  const ren = (date) => {
+  const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
       weekday: 'short',
       month: 'short',
       day: 'numeric',
+    });
+    const dateElements = d.split(',').join('').split(' ');
+    return (
+      <View
+        style={{
+          padding: 10,
+          borderRadius: 10,
+          borderWidth: 0.3,
+          marginRight: 15,
+          borderColor: baseTextColor,
+        }}
+      >
+        <Text style={{ fontSize: 13, textAlign: 'center', color: baseTextColor }}>{dateElements[0]}</Text>
+        <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center', color: baseTextColor }}>
+          {dateElements[1]}&nbsp;{dateElements[2]}
+        </Text>
+      </View>
+    );
+  };
+
+  const renderTime = (date) => {
+    const d = new Date(date).toLocaleDateString('en-US', {
+      hourCycle: 'h23',
       hour: '2-digit',
       minute: '2-digit',
     });
-    console.log(d);
-    return <Text style={{ color: baseTextColor }}>Scheduled for&nbsp;&nbsp;{d}</Text>;
+    const dateElements = d.split(', ');
+
+    return (
+      <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
+        <Ionicons name='time-outline' size={15} color={baseTextColor} style={{ marginRight: 5 }} />
+        <Text style={{ color: baseTextColor }}>{dateElements[1]}&nbsp;~</Text>
+      </View>
+    );
   };
 
   return (
     <View style={{ marginBottom: 25 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <FastImage
-          style={{ height: 35, width: 35, marginRight: 5 }}
-          source={{
-            uri: props.selectedMeetup.badge.icon,
-            // headers: { Authorization: 'someAuthToken' },
-            priority: FastImage.priority.normal,
-          }}
-          tintColor={iconColorsTable[props.selectedMeetup.badge.color]}
-        />
-        <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 10, color: baseTextColor }}>
-          {props.selectedMeetup.title}
-        </Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+        {renderDate(props.selectedMeetup.startDateAndTime)}
+        <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>{props.selectedMeetup.title}</Text>
       </View>
-      <Text style={{ alignSelf: 'flex-end', marginBottom: 10 }}>
-        {/* {`Starts at ${renderDate(props.selectedMeetup.startDateAndTime)}`} */}
-        {ren(props.selectedMeetup.startDateAndTime)}
-      </Text>
+      <View style={{ marginBottom: 10 }}>{renderTime(props.selectedMeetup.startDateAndTime)}</View>
       <Text style={{ flexShrink: 1, color: baseTextColor }}>{props.selectedMeetup.description}</Text>
     </View>
   );
