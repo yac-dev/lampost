@@ -3,6 +3,7 @@ import LibrariesContext from '../LibrariesContext';
 // import UserContext from './Context';
 import { View, Text, TouchableOpacity } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 
 import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -24,7 +25,7 @@ const AppMenuBottomSheet = (props) => {
         <BottomSheetBackdrop {...backdropProps} appearsOnIndex={1} disappearsOnIndex={0} pressBehavior={0} />
       )}
       enablePanDownToClose={false}
-      backgroundStyle={{ backgroundColor: 'rgb(54, 57, 63)' }}
+      backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
       // keyboardBehavior={'interactive'}
       // onClose={() => onSelectedItemBottomSheetClose()}
     >
@@ -34,16 +35,6 @@ const AppMenuBottomSheet = (props) => {
         </Text>
         <AppButtons />
         <MyLibraries />
-        {/* <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: 10, marginBottom: 15 }}>
-          <TouchableOpacity onPress={() => handleCreateLibraryBottomSheet()}>
-            <MaterialIcons name='create-new-folder' size={40} />
-            <Text>Create</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Entypo name='images' size={40} />
-            <Text>Search</Text>
-          </TouchableOpacity>
-        </View> */}
       </BottomSheetView>
     </GorhomBottomSheet>
   );

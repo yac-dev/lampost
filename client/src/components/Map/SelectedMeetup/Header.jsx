@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
 import FastImage from 'react-native-fast-image';
-import { iconColorsTable, backgroundColorsTable } from '../../../utils/colorsTable';
+import { iconColorsTable, backgroundColorsTable, baseTextColor } from '../../../utils/colorsTable';
 
 // ac
 import { joinMeetup } from '../../../redux/actionCreators/meetups';
@@ -86,11 +86,11 @@ const Header = (props) => {
       minute: '2-digit',
     });
     console.log(d);
-    return <Text>Scheduled for&nbsp;&nbsp;{d}</Text>;
+    return <Text style={{ color: baseTextColor }}>Scheduled for&nbsp;&nbsp;{d}</Text>;
   };
 
   return (
-    <View style={{ marginBottom: 10 }}>
+    <View style={{ marginBottom: 25 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <FastImage
           style={{ height: 35, width: 35, marginRight: 5 }}
@@ -101,13 +101,15 @@ const Header = (props) => {
           }}
           tintColor={iconColorsTable[props.selectedMeetup.badge.color]}
         />
-        <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 10 }}>{props.selectedMeetup.title}</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 10, color: baseTextColor }}>
+          {props.selectedMeetup.title}
+        </Text>
       </View>
       <Text style={{ alignSelf: 'flex-end', marginBottom: 10 }}>
         {/* {`Starts at ${renderDate(props.selectedMeetup.startDateAndTime)}`} */}
         {ren(props.selectedMeetup.startDateAndTime)}
       </Text>
-      <Text style={{ flexShrink: 1 }}>{props.selectedMeetup.description}</Text>
+      <Text style={{ flexShrink: 1, color: baseTextColor }}>{props.selectedMeetup.description}</Text>
     </View>
   );
 };

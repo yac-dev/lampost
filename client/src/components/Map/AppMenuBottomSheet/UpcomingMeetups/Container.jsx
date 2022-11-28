@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { sectionBackgroundColor } from '../../../../utils/colorsTable';
 
 const Container = (props) => {
   // ここのconditional renderingまじ重要ね。
@@ -76,7 +77,9 @@ const Container = (props) => {
   return (
     <View>
       <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My upcoming meetups</Text>
-      {renderUpcomingMeetups()}
+      <View style={{ padding: 10, backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>
+        {renderUpcomingMeetups()}
+      </View>
     </View>
   );
 };

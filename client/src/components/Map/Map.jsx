@@ -260,10 +260,6 @@ const Map = (props) => {
           <SnackBar />
           <PostBottomSheet postBottomSheetRef={postBottomSheetRef} />
 
-          <SelectedMeetupInfoDetail
-            navigation={props.navigation}
-            selectedMeetupDetailBottomSheetRef={selectedMeetupDetailBottomSheetRef}
-          />
           <Notifications navigation={props.navigation} notificationBottomSheetRef={notificationBottomSheetRef} />
           <AppMenusBottomSheet appMenuBottomSheetRef={appMenuBottomSheetRef} />
           <HostMeetupBottomSheet navigation={props.navigation} route={props.route} />
@@ -271,6 +267,10 @@ const Map = (props) => {
             navigation={props.navigation}
             selectedItemBottomSheetRef={selectedItemBottomSheetRef}
             handleselectedMeetupDetailBottomSheetChanges={handleselectedMeetupDetailBottomSheetChanges}
+          />
+          <SelectedMeetupInfoDetail
+            navigation={props.navigation}
+            selectedMeetupDetailBottomSheetRef={selectedMeetupDetailBottomSheetRef}
           />
 
           {/* <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} /> */}

@@ -2,11 +2,17 @@ import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import LibrariesContext from '../../../LibrariesContext';
 
-import { iconColorsTable, backgroundColorsTable } from '../../../../../utils/colorsTable';
+import {
+  iconColorsTable,
+  backgroundColorsTable,
+  sectionBackgroundColor,
+  baseTextColor,
+} from '../../../../../utils/colorsTable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
-import Menu from './Menu';
+// import Menu from './Menu';
+import Menu from '../../../../Map/SelectedMeetup/Menu';
 
 const Container = () => {
   const { selectedLibrary, navigation } = useContext(LibrariesContext);
@@ -16,39 +22,39 @@ const Container = () => {
   });
 
   return (
-    <View style={{ marginBottom: 15 }}>
+    <View style={{ marginBottom: 25, backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>
       <Menu
         label='Launcher'
         // onPress={() => navigation.navigate('User', { userId: selectedLibrary.launcher._id })}
         onPress={() => console.log('heey')}
-        iconBackgroundColor={iconColorsTable['red1']}
-        iconComponent={<MaterialCommunityIcons name='rocket-launch' size={25} color={'white'} />}
-        rightInfoComponent={
+        backgroundColor={backgroundColorsTable['red1']}
+        icon={<MaterialCommunityIcons name='rocket-launch' size={25} color={iconColorsTable['red1']} />}
+        rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'red', width: 35, height: 35, borderRadius: 7, marginRight: 5 }}></View>
-            <Text>{`${selectedLibrary.launcher.name} >`}</Text>
+            <Text style={{ color: baseTextColor }}>{`${selectedLibrary.launcher.name} >`}</Text>
           </View>
         }
       />
       <Menu
         label='Members'
         onPress={() => console.log('hello')}
-        iconBackgroundColor={iconColorsTable['violet1']}
-        iconComponent={<FontAwesome5 name='user-astronaut' size={25} color={'white'} />}
-        rightInfoComponent={
+        backgroundColor={iconColorsTable['violet1']}
+        icon={<FontAwesome5 name='user-astronaut' size={25} color={'white'} />}
+        rightInfo={
           <View>
-            <Text>{`${selectedLibrary.members.length} >`}</Text>
+            <Text style={{ color: baseTextColor }}>{`${selectedLibrary.members.length} >`}</Text>
           </View>
         }
       />
       <Menu
         label='Rate'
         onPress={() => console.log('hello2')}
-        iconBackgroundColor={iconColorsTable['yellow1']}
-        iconComponent={<MaterialIcons name='star-rate' size={25} color={'white'} />}
-        rightInfoComponent={
+        backgroundColor={iconColorsTable['yellow1']}
+        icon={<MaterialIcons name='star-rate' size={25} color={'white'} />}
+        rightInfo={
           <View>
-            <Text>{`${selectedLibrary.rate} >`}</Text>
+            <Text style={{ color: baseTextColor }}>{`${selectedLibrary.rate} >`}</Text>
           </View>
         }
       />

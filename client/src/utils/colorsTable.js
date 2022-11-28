@@ -30,6 +30,11 @@ export const backgroundColorsTable = {
   no: 'rgba(130, 130, 130, 0.1)',
 };
 
-
-
+export const discordColor = 'rgb(54, 57, 63)';
 export const rnDefaultBackgroundColor = '#efefef';
+export const baseTextColor = 'rgb(185, 185, 185)';
+export const baseBackgroundColor = 'rgb(44, 47, 51)';
+export const baseBorderColor = 'rgb(72, 76, 86)';
+// export const baseBackgroundColor = 'red';
+export const appBottomSheetBackgroundColor = 'rgb(32, 34, 37)';
+export const sectionBackgroundColor = 'rgb(42, 44, 49)';

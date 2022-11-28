@@ -5,7 +5,7 @@ import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom
 
 import AppButtons from './AppButtons/AppButtons';
 import UpcomingMeetups from './UpcomingMeetups/Container';
-
+import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 import { setIsConfirmHostMeetupModalOpen } from '../../../redux/actionCreators/modal';
 
 const AppMenusBottomSheet = (props) => {
@@ -22,7 +22,7 @@ const AppMenusBottomSheet = (props) => {
           <BottomSheetBackdrop {...backdropProps} appearsOnIndex={1} disappearsOnIndex={0} pressBehavior={0} />
         )}
         enablePanDownToClose={false}
-        backgroundStyle={{ backgroundColor: 'rgb(54, 57, 63)' }}
+        backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
         // keyboardBehavior={'interactive'}
         // onClose={() => onSelectedItemBottomSheetClose()}
       >

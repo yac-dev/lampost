@@ -6,6 +6,7 @@ import GorhomBottomSheet, { BottomSheetView, BottomSheetTextInput, BottomSheetSc
 
 // ac
 import { setIsSelectedItemBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
+import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 
 import Header from './Header';
 import ActionButtons from './ActionButtons';
@@ -50,6 +51,7 @@ const Container = (props) => {
       enablePanDownToClose={true}
       keyboardBehavior={'interactive'}
       onClose={() => onSelectedItemBottomSheetClose()}
+      backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>{renderSelectedMeetup()}</BottomSheetView>
     </GorhomBottomSheet>

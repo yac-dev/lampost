@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import LibrariesContext from './LibrariesContext';
 import { View, Text, TouchableOpacity } from 'react-native';
 import lampostAPI from '../../apis/lampost';
-
+import { baseBackgroundColor } from '../../utils/colorsTable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // import Roll from './Roll';
@@ -79,7 +79,7 @@ const Container = (props) => {
         selectLibrary,
       }}
     >
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
         <LibrariesList />
         <AppMenuBottomSheet />
         <CreateLibraryBottomSheet />

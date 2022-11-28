@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
 import { Button } from 'react-native-paper';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { backgroundColorsTable, iconColorsTable } from '../../../utils/colorsTable';
+import ActionButton from '../../Utils/ActionButton';
 
 // ac
 import { joinMeetup } from '../../../redux/actionCreators/meetups';
@@ -28,15 +31,23 @@ const ActionButtons = (props) => {
                   Scout
                 </Button>
               ) : (
-                <Button
-                  mode='outlined'
-                  // buttonColor='#2DB437'
-                  icon={'exit-run'}
-                  onPress={() => props.leaveMeetup(props.selectedMeetup._id)}
-                  style={{ marginRight: 10 }}
-                >
-                  Leave
-                </Button>
+                // <Button
+                //   mode='outlined'
+                //   // buttonColor='#2DB437'
+                //   icon={'exit-run'}
+                //   onPress={() => props.leaveMeetup(props.selectedMeetup._id)}
+                //   style={{ marginRight: 10 }}
+                // >
+                //   Leave
+                // </Button>
+                <ActionButton
+                  label='Leave'
+                  icon={
+                    <MaterialCommunityIcons name='human-greeting-variant' size={25} color={iconColorsTable['red1']} />
+                  }
+                  backgroundColor={backgroundColorsTable['red1']}
+                  onActionButtonPress={() => console.log('pressing')}
+                />
               )}
               <Button
                 mode='outlined'
@@ -73,15 +84,13 @@ const ActionButtons = (props) => {
         }
       }
       return (
-        <View style={{ paddingTop: 10, paddingBottom: 10 }}>
-          <Button
-            mode='outlined'
-            icon={'human-greeting-variant'}
-            onPress={() => props.joinMeetup(props.selectedMeetup._id)}
-            style={{ marginRight: 10 }}
-          >
-            I'm in!
-          </Button>
+        <View style={{}}>
+          <ActionButton
+            label='Join this meetup'
+            icon={<MaterialCommunityIcons name='human-greeting-variant' size={25} color={iconColorsTable['blue1']} />}
+            backgroundColor={backgroundColorsTable['blue1']}
+            onActionButtonPress={() => console.log('pressing')}
+          />
         </View>
       );
     } else {
@@ -90,20 +99,7 @@ const ActionButtons = (props) => {
   };
 
   return (
-    <ScrollView horizontal={true} style={{ marginBottom: 30 }}>
-      {/* <Button
-        mode='outlined'
-        icon={<FontAwesome5 name='user-astronaut' />}
-        onPress={() => props.navigation.navigate('Crew', { meetupId: props.selectedMeetup._id })}
-        style={{ marginRight: 10 }}
-      >
-        Crew&nbsp;
-        {props.selectedMeetup.isAttendeesLimitFree ? (
-          <Text style={{ marginRight: 40 }}>{props.selectedMeetup.totalAttendees}/&infin;&nbsp;</Text>
-        ) : (
-          <Text style={{ marginRight: 40 }}>{props.selectedMeetup.totalAttendees}/limit</Text>
-        )}
-      </Button> */}
+    <ScrollView horizontal={true} style={{ marginBottom: 25 }}>
       {renderApp()}
     </ScrollView>
   );

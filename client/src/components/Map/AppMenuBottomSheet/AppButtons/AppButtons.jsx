@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import AppButton from './AppButton';
-import { iconColorsTable, backgroundColorsTable } from '../../../../utils/colorsTable';
+import { iconColorsTable, backgroundColorsTable, sectionBackgroundColor } from '../../../../utils/colorsTable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { setIsConfirmHostMeetupModalOpen } from '../../../../redux/actionCreators/modal';
 
 const AppButtons = () => {
   // 何だろう。。。scrollviewをtopのcomponentにするとなんかバグる。
   return (
-    <View style={{ paddingTop: 10, marginBottom: 15 }}>
+    <View style={{ paddingTop: 10, marginBottom: 15, borderRadius: 10, backgroundColor: sectionBackgroundColor }}>
       <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
         <AppButton
           backgroundColor={backgroundColorsTable['red1']}

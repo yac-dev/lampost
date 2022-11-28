@@ -48,18 +48,19 @@ export const getRolls = async (request, response) => {
 export const getRollAndRelationships = async (request, response) => {
   try {
     const roll = await Roll.findById(request.params.id);
-    const relationships = await RollAndAssetRelationship.find({ roll: request.params.id });
-    // .populate({
-    //   path: 'asset',
-    //   model: Asset,
-    // });
-    // .populate({
-    //   path: 'assets',
-    //   model: Asset,
-    // });
+    const relationships = await RollAndAssetRelationship.find({ roll: request.params.id })
+      .populate({
+        path: 'asset',
+        model: Asset,
+      })
+      .select({ asset: 1 });
+    const assets = relationships.map((obj, index) => {
+      return obj.asset;
+    });
+
     response.status(200).json({
       roll,
-      relationships,
+      assets,
     });
   } catch (error) {
     console.log(error);

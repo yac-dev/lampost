@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import LibrariesContext from '../../../LibrariesContext';
+import { baseBorderColor, baseTextColor, sectionBackgroundColor } from '../../../../../utils/colorsTable';
 
 const Container = () => {
   const { selectedLibrary, navigation } = useContext(LibrariesContext);
@@ -11,10 +12,10 @@ const Container = () => {
         return (
           <TouchableOpacity
             key={index}
-            style={{ padding: 10 }}
+            style={{ padding: 20, borderBottomWidth: 0.3, borderBottomColor: baseBorderColor }}
             onPress={() => navigation.navigate('Roll', { rollId: roll._id })}
           >
-            <Text>{roll.name}</Text>
+            <Text style={{ color: baseTextColor }}>{roll.name}</Text>
           </TouchableOpacity>
         );
       });
@@ -26,8 +27,8 @@ const Container = () => {
   };
   return (
     <View>
-      <Text style={{ fontWeight: 'bold', fontSize: 15, marginBottom: 10 }}>Rolls</Text>
-      {renderRolls()}
+      <Text style={{ fontWeight: 'bold', fontSize: 15, marginBottom: 10, color: 'white' }}>Rolls</Text>
+      <View style={{ backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>{renderRolls()}</View>
     </View>
   );
 };

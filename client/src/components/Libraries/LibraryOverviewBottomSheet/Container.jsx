@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import LibrariesContext from '../LibrariesContext';
 import { View, Text, TouchableOpacity } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
-
+import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 import Body from './Body/Container';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -30,8 +30,8 @@ const Container = (props) => {
           // pressBehavior={'none'} 最終的にこれにする。
         />
       )}
-      enablePanDownToClose={false}
-      // backgroundStyle={{ backgroundColor: 'rgb(50, 78, 165)' }}
+      enablePanDownToClose={true}
+      backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
       // keyboardBehavior={'interactive'}
       onClose={() => setSelectedLibrary(null)}
     >

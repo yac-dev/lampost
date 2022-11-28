@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { iconColorsTable, backgroundColorsTable } from '../../../utils/colorsTable';
+import { iconColorsTable, backgroundColorsTable, sectionBackgroundColor } from '../../../utils/colorsTable';
 import AppButton from '../../Map/AppMenuBottomSheet/AppButtons/AppButton';
 
 const AppButtons = () => {
   return (
-    <View style={{ paddingTop: 10, marginBottom: 15 }}>
+    <View style={{ paddingTop: 10, marginBottom: 15, backgroundColor: sectionBackgroundColor }}>
       <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
         <AppButton
           backgroundColor={backgroundColorsTable['red1']}
