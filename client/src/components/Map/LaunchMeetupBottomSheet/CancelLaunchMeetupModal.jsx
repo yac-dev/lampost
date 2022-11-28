@@ -9,7 +9,7 @@ import { appBottomSheetBackgroundColor, baseTextColor } from '../../../utils/col
 // ac
 import { setIsHostMeetupOpen } from '../../../redux/actionCreators/hostMeetup';
 
-const CancelHostMeetupButton = (props) => {
+const CancelLaunchMeetupModal = (props) => {
   const {
     launchMeetupBottomSheetRef,
     isCancelLaunchMeetupConfirmationModalOpen,
@@ -57,4 +57,4 @@ const mapStateToProps = (state) => {
   return { hostMeetup: state.hostMeetup };
 };
 
-export default connect(mapStateToProps, { setIsHostMeetupOpen })(CancelHostMeetupButton);
+export default connect(mapStateToProps, { setIsHostMeetupOpen })(CancelLaunchMeetupModal);

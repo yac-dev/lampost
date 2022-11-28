@@ -6,7 +6,7 @@ import { View, Text } from 'react-native';
 import { Button, Dialog, Portal, Provider, withTheme } from 'react-native-paper';
 import { baseTextColor, appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 
-const ConfirmLaunchMeetup = (props) => {
+const ConfirmLaunchMeetupModal = (props) => {
   const {
     isLaunchMeetupConfirmed,
     setIsLaunchMeetupConfirmed,
@@ -78,4 +78,4 @@ const mapStateToProps = (state) => {
   return { auth: state.auth };
 };
 
-export default connect(mapStateToProps)(ConfirmLaunchMeetup);
+export default connect(mapStateToProps)(ConfirmLaunchMeetupModal);

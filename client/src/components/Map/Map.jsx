@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useCallback, useContext } from 'rea
 import MapContext from './MeetupContext';
 import { connect } from 'react-redux';
 import { StyleSheet, Platform, View, StatusBar, Dimensions, TouchableOpacity, Text } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 
 // icons
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -11,26 +11,19 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 // components
 import NBProvider from '../Utils/NativeBaseProvider';
 import MapMarkers from './MapMarkers/MapMarkers';
-import PostBottomSheet from './Post/PostBottomSheet';
-import SelectedItemBottomSheet from './SelectedItem/SelectedItemBottomSheet';
 // bottom sheeets
 import SelectedMeetup from './SelectedMeetup/Container';
 import SelectedMeetupInfoDetail from './SelectedMeetup/InfoDetail/Container';
-import Notifications from './Notifications/Container';
 import AppMenusBottomSheet from './AppMenuBottomSheet/Container';
 
-import FABMenu from './Utils/FABMenu';
-import ModalContainer from '../Utils/ModalContainer';
-import ConfirmHostMeetup from './HostMeetup/ConfirmHostMeetup';
-import CancelLaunchMeetup from './HostMeetup/CancelLaunchMeetup';
-// import CancelHostMeetupButton from './HostMeetup/CancelHostMeetupButton';
-import SetMeetupLocation from './HostMeetup/SetMeetupLocation';
-import HostMeetupBottomSheet from './HostMeetup/BottomSheet';
-import Badges from '../Utils/SelectBadges/Badges';
+import ConfirmLaunchMeetupModal from './LaunchMeetupBottomSheet/ConfirmLaunchMeetupModal';
+import CancelLaunchMeetupModal from './LaunchMeetupBottomSheet/CancelLaunchMeetupModal';
+
+import LaunchMeetupBottomSheet from './LaunchMeetupBottomSheet/BottomSheet';
 import SnackBar from '../Utils/SnackBar';
 
 // utils
-import { mapStyle } from './Utils/mapStyle';
+import { mapStyle } from './mapStyle';
 
 // ac
 import { loadMe } from '../../redux/actionCreators/auth';
@@ -54,55 +47,16 @@ const Map = (props) => {
   const [isLaunchMeetupConfirmed, setIsLaunchMeetupConfirmed] = useState(false);
   const [launchLocation, setLaunchLocation] = useState(null);
 
+  // const [selectedMeetup, setSelectedMeetup] = useState(null)
+
+  const mapRef = useRef(null);
   const appMenuBottomSheetRef = useRef(null);
-  const postBottomSheetRef = useRef(null);
   const launchMeetupBottomSheetRef = useRef(null);
   const notificationBottomSheetRef = useRef(null);
   const selectedItemBottomSheetRef = useRef(null);
   const selectedMeetupDetailBottomSheetRef = useRef(null);
 
-  const mapRef = useRef(null);
   console.log('Map is rendered');
-
-  // const handleSheetChanges = useCallback((index) => {
-  //   if (!props.modal.bottomSheet.isOpen) {
-  //     props.setIsBottomSheetOpen(true);
-  //     bottomSheetRef.current?.snapToIndex(index);
-  //     // console.log('handleSheetChanges', index);
-  //   } else {
-  //     props.setIsBottomSheetOpen(false);
-  //     bottomSheetRef.current?.snapToIndex(-1);
-  //   }
-  // }, []);
-  const onPressNotification = () => {
-    notificationBottomSheetRef.current?.snapToIndex(0);
-  };
-
-  // useEffect(() => {
-  //   // ここは、user pageからここに来て、doneをpressしたら, user pageへ戻る。addしたbadgesをparamsに入れていく感じ。
-  //   props.navigation.setOptions({
-  //     headerLeft: () => (
-  //       <TouchableOpacity onPress={() => onPressNotification()}>
-  //         <MaterialCommunityIcons name='mailbox' size={30} color={'white'} />
-  //       </TouchableOpacity>
-  //     ),
-  //   });
-  // }, []);
-
-  const handlePostBottomSheetChanges = (index) => {
-    if (!props.bottomSheet.post.isOpen) {
-      props.setIsSelectedItemBottomSheetOpen(false);
-      selectedItemBottomSheetRef.current?.close();
-      props.setIsPostBottomSheetOpen(true);
-      postBottomSheetRef.current?.snapToIndex(0);
-      // console.log('handleSheetChanges', index);
-    } else if (props.bottomSheet.post.isOpen) {
-      console.log('closing');
-      props.setIsPostBottomSheetOpen(false);
-      // bottomSheetRef.current?.snapToIndex(-1);
-      postBottomSheetRef.current.close();
-    }
-  };
 
   // 手動で閉じたらおかしくなる。。。
   const handleSelectedItemBottomSheetChanges = (meetupId) => {
@@ -137,15 +91,6 @@ const Map = (props) => {
     } else {
       return null;
     }
-  };
-
-  const onPressCancelConfirmHostMeetup = () => {
-    props.setIsConfirmHostMeetupModalOpen(false);
-  };
-
-  const onPressYesCancelLaunchMeetup = () => {
-    props.setIsHostMeetupOpen(false);
-    props.setIsCancelLaunchMeetupModalOpen(false);
   };
 
   useEffect(() => {
@@ -244,31 +189,23 @@ const Map = (props) => {
               provider='google'
               // provider={Platform.OS === 'android' ? MapView.PROVIDER_GOOGLE : MapView.PROVIDER_DEFAULT}
             >
-              <SetMeetupLocation />
+              {launchLocation ? (
+                <Marker
+                  coordinate={{
+                    latitude: launchLocation.latitude,
+                    longitude: launchLocation.longitude,
+                  }}
+                />
+              ) : null}
               <MapMarkers handleSelectedItemBottomSheetChanges={handleSelectedItemBottomSheetChanges} />
             </MapView>
 
-            <ConfirmHostMeetup />
-            <CancelLaunchMeetup />
-
-            {/* <ModalContainer
-              modalOpen={props.modal.cancelLaunchMeetup.isOpen}
-              onPressOk={onPressYesCancelLaunchMeetup}
-              onPressCancel={onPressCancelConfirmHostMeetup}
-              okText={'Yes'}
-            >
-            </ModalContainer> */}
-
-            {/* <FABMenu navigation={props.navigation} /> */}
+            <ConfirmLaunchMeetupModal />
+            <CancelLaunchMeetupModal />
             <SnackBar />
-            <PostBottomSheet postBottomSheetRef={postBottomSheetRef} />
 
-            <Notifications navigation={props.navigation} notificationBottomSheetRef={notificationBottomSheetRef} />
-            <AppMenusBottomSheet
-              appMenuBottomSheetRef={appMenuBottomSheetRef}
-              postBottomSheetRef={postBottomSheetRef}
-            />
-            <HostMeetupBottomSheet navigation={props.navigation} route={props.route} />
+            <AppMenusBottomSheet />
+            <LaunchMeetupBottomSheet navigation={props.navigation} route={props.route} />
             <SelectedMeetup
               navigation={props.navigation}
               selectedItemBottomSheetRef={selectedItemBottomSheetRef}
@@ -278,9 +215,6 @@ const Map = (props) => {
               navigation={props.navigation}
               selectedMeetupDetailBottomSheetRef={selectedMeetupDetailBottomSheetRef}
             />
-
-            {/* <SelectedItemBottomSheet selectedItemBottomSheetRef={selectedItemBottomSheetRef} /> */}
-            {/* <CancelHostMeetupButton /> */}
           </View>
         </NBProvider>
       </MapContext.Provider>
