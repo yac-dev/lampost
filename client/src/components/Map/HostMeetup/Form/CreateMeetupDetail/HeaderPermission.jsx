@@ -18,7 +18,7 @@ const Header = () => {
       >
         <MaterialIcons name='public' size={25} color='white' />
       </View>
-      <Text style={{ fontWeight: 'bold', fontSize: 20, marginLeft: 15 }}>Privacy</Text>
+      <Text style={{ fontWeight: 'bold', fontSize: 20, marginLeft: 15, color: 'white' }}>Privacy</Text>
     </View>
   );
 };

@@ -8,6 +8,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
+import { baseTextColor } from '../../../../../utils/colorsTable';
 
 const currencyOptions = ['$USD', '£GBP', '€EUR', '¥JPY', '$CAD'];
 
@@ -30,9 +31,9 @@ const MeetupFee = (props) => {
 
   const renderSwitchState = () => {
     if (props.state.isMeetupFeeFree) {
-      return <Text style={{ marginRight: 5, fontSize: 15 }}>Yes</Text>;
+      return <Text style={{ marginRight: 5, fontSize: 15, color: baseTextColor }}>Yes</Text>;
     } else {
-      return <Text style={{ marginRight: 5, fontSize: 15 }}>No</Text>;
+      return <Text style={{ marginRight: 5, fontSize: 15, color: baseTextColor }}>No</Text>;
     }
   };
 
@@ -78,7 +79,7 @@ const MeetupFee = (props) => {
     //   </View>
     // </View>
     <View style={{ marginBottom: 20 }}>
-      <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', marginBottom: 10 }}>
+      <Text style={{ fontWeight: 'bold', fontSize: 13, color: baseTextColor, marginBottom: 10 }}>
         Is this meetup free to join?
       </Text>
       <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>

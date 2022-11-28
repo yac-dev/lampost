@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import { iconColorsTable } from '../../../../../utils/colorsTable';
+import { baseTextColor, iconColorsTable } from '../../../../../utils/colorsTable';
 
 const Header = () => {
   return (
@@ -18,7 +18,7 @@ const Header = () => {
       >
         <AntDesign name='edit' size={25} color='white' />
       </View>
-      <Text style={{ fontWeight: 'bold', fontSize: 17, marginLeft: 15 }}>Title</Text>
+      <Text style={{ fontWeight: 'bold', fontSize: 17, marginLeft: 15, color: 'white' }}>Title</Text>
     </View>
   );
 };

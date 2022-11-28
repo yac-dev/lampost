@@ -4,7 +4,7 @@ import { Foundation } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
-import { iconColorsTable } from '../../../../../utils/colorsTable';
+import { baseTextColor, iconColorsTable, backgroundColorsTable } from '../../../../../utils/colorsTable';
 
 import SelectedBadges from './SelectedBadges/Badges';
 
@@ -19,7 +19,7 @@ const PreferredBadges = (props) => {
 
   return (
     <View style={{ marginBottom: 20 }}>
-      <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', marginBottom: 10 }}>
+      <Text style={{ fontWeight: 'bold', fontSize: 13, color: baseTextColor, marginBottom: 10 }}>
         Which badges are preffered to have attendees for this meetup?
       </Text>
       {/* <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', marginBottom: 10 }}>

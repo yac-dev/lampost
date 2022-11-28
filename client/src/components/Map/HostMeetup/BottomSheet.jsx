@@ -2,24 +2,31 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
-import GorhomBottomSheet, { BottomSheetView, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import GorhomBottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+import {
+  baseTextColor,
+  iconColorsTable,
+  backgroundColorsTable,
+  appBottomSheetBackgroundColor,
+} from '../../../utils/colorsTable';
 
 // components
 // import Form from './Form';
 import FormContainer from './Form/Container';
 
 const BottomSheet = (props) => {
-  const snapPoints = ['20%', '55%'];
+  const snapPoints = ['55%'];
 
   if (props.hostMeetup.isOpen && props.hostMeetup.setLocation) {
     return (
       <GorhomBottomSheet
-        index={1}
+        index={-1}
         enableOverDrag={true}
         ref={props.postBottomSheetRef}
         snapPoints={snapPoints}
         // enablePanDownToClose={true}
         onClose={() => onFormBottomSheetClose()}
+        backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
       >
         <BottomSheetView style={{ flex: 1 }}>
           <FormContainer navigation={props.navigation} route={props.route} />

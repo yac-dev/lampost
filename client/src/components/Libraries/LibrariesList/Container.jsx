@@ -10,7 +10,6 @@ const Container = () => {
     const d = new Date(date).toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
-      // year: 'numeric',
     });
     const dateTable = { ...d.split(' ') };
     return (
@@ -31,7 +30,6 @@ const Container = () => {
         <Text style={{ fontSize: 13, fontWeight: 'bold', textAlign: 'center', color: baseTextColor }}>
           {dateTable['1']}
         </Text>
-        {/* <Text style={{ textAlign: 'center' }}>{dateTable['2']}</Text> */}
       </View>
     );
   };

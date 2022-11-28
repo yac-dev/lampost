@@ -6,6 +6,7 @@ import { iconColorsTable } from '../../../../../utils/colorsTable';
 import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { baseTextColor } from '../../../../../utils/colorsTable';
 
 const DateAndTime = (props) => {
   const onStartDateConfirm = (date) => {
@@ -27,7 +28,7 @@ const DateAndTime = (props) => {
   const renderDate = (date) => {
     if (date) {
       return (
-        <Text>{`${new Date(date).toLocaleString('en-US', {
+        <Text style={{ color: baseTextColor }}>{`${new Date(date).toLocaleString('en-US', {
           weekday: 'long',
           month: 'long',
           day: 'numeric',
@@ -44,7 +45,7 @@ const DateAndTime = (props) => {
     if (duration) {
       const hours = Math.floor(duration / 60);
       const minutes = duration % 60;
-      return <Text>{`${hours} hours ${minutes} minutes`}</Text>;
+      return <Text style={{ color: baseTextColor }}>{`${hours} hours ${minutes} minutes`}</Text>;
     } else {
       return null;
     }
@@ -55,7 +56,7 @@ const DateAndTime = (props) => {
       {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <FontAwesome name='calendar' size={24} /> */}
       <View style={{ marginBottom: 20 }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', marginBottom: 10 }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 13, color: baseTextColor, marginBottom: 10 }}>
           When does your meetup start? And how long is it?
         </Text>
         {/* <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>

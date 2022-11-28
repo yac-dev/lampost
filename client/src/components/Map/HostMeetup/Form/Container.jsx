@@ -3,6 +3,7 @@ import React, { useState, useEffect, useReducer } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { AntDesign } from '@expo/vector-icons';
+import { baseTextColor } from '../../../../utils/colorsTable';
 
 // AIzaSyCS21jPWA4QzrsmT8zkRiTH623JxTVJ6ek
 
@@ -184,8 +185,8 @@ const Container = (props) => {
           style={{ flexDirection: 'row', alignItems: 'center' }}
           onPress={() => props.setIsCancelLaunchMeetupModalOpen(true)}
         >
-          <AntDesign name='close' size={20} color={'black'} style={{ marginRight: 5 }} />
-          <Text>Cancel</Text>
+          <AntDesign name='close' size={20} color={baseTextColor} style={{ marginRight: 5 }} />
+          <Text style={{ color: baseTextColor }}>Cancel</Text>
         </TouchableOpacity>
       </View>
       {switchComponent()}

@@ -18,7 +18,7 @@ const Header = () => {
       >
         <MaterialCommunityIcons name='calendar-clock' size={25} color='white' />
       </View>
-      <Text style={{ fontWeight: 'bold', fontSize: 17, marginLeft: 15 }}>Date and Time</Text>
+      <Text style={{ fontWeight: 'bold', fontSize: 17, marginLeft: 15, color: 'white' }}>Date and Time</Text>
     </View>
   );
 };

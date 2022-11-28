@@ -19,7 +19,7 @@ const Header = () => {
       >
         <Entypo name='link' size={25} color='white' />
       </View>
-      <Text style={{ fontWeight: 'bold', fontSize: 17, marginLeft: 15 }}>Link</Text>
+      <Text style={{ fontWeight: 'bold', fontSize: 17, marginLeft: 15, color: 'white' }}>Link</Text>
     </View>
   );
 };

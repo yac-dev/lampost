@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, InputAccessoryView, TouchableOpacity, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { baseTextColor, sectionBackgroundColor } from '../../../../utils/colorsTable';
 
 const QandAs = (props) => {
   // getcomments的なのが必要になるね。
@@ -18,24 +19,25 @@ const QandAs = (props) => {
 
       return <ScrollView>{qandAsList}</ScrollView>;
     } else {
-      return <Text>No comments yet...</Text>;
+      return <Text style={{ color: baseTextColor }}>No comments yet...</Text>;
     }
   };
 
   return (
     <View>
-      <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>QandA</Text>
+      <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 10, color: 'white' }}>Comments</Text>
       <BottomSheetTextInput
         multiline={true}
         placeholder='Feel free to ask somethig'
+        placeholderTextColor={baseTextColor}
         inputAccessoryViewID={inputAccessoryViewID}
         style={{
           borderRadius: 10,
-          // height: 60,
           padding: 10,
-          // backgroundColor: 'rgb(235, 235, 235)',
+          backgroundColor: sectionBackgroundColor,
           marginBottom: 10,
-          borderWidth: 0.3,
+          borderWidth: 0.6,
+          borderColor: sectionBackgroundColor,
           width: '100%', // ここも、下の修正に沿って80 90%に変える。
         }}
         // value={content}

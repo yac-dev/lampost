@@ -16,9 +16,9 @@ const Header = () => {
           alignItems: 'center',
         }}
       >
-<MaterialCommunityIcons name='message-text' size={25} color='white' />
+        <MaterialCommunityIcons name='message-text' size={25} color='white' />
       </View>
-      <Text style={{ fontWeight: 'bold', fontSize: 17, marginLeft: 15 }}>Message</Text>
+      <Text style={{ fontWeight: 'bold', fontSize: 17, marginLeft: 15, color: 'white' }}>Message</Text>
     </View>
   );
 };

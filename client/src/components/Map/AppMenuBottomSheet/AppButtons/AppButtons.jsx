@@ -7,7 +7,7 @@ import { iconColorsTable, backgroundColorsTable, sectionBackgroundColor } from '
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { setIsConfirmHostMeetupModalOpen } from '../../../../redux/actionCreators/modal';
 
-const AppButtons = () => {
+const AppButtons = (props) => {
   // 何だろう。。。scrollviewをtopのcomponentにするとなんかバグる。
   return (
     <View style={{ paddingTop: 10, marginBottom: 15, borderRadius: 10, backgroundColor: sectionBackgroundColor }}>
@@ -16,7 +16,10 @@ const AppButtons = () => {
           backgroundColor={backgroundColorsTable['red1']}
           icon={<MaterialCommunityIcons name='rocket-launch' size={35} color={iconColorsTable['red1']} />}
           label='Launch'
-          onPress={() => setIsConfirmHostMeetupModalOpen()}
+          onActionButtonPress={() => {
+            props.setIsConfirmHostMeetupModalOpen(true);
+            props.appMenuBottomSheetRef.current.snapToIndex(0);
+          }}
         />
         <AppButton
           backgroundColor={backgroundColorsTable['grey1']}

@@ -18,7 +18,7 @@ const Header = () => {
       >
         <FontAwesome5 name='user-astronaut' size={25} color='white' />
       </View>
-      <Text style={{ fontWeight: 'bold', fontSize: 20, marginLeft: 15 }}>People</Text>
+      <Text style={{ fontWeight: 'bold', fontSize: 20, marginLeft: 15, color: 'white' }}>People</Text>
     </View>
   );
 };

@@ -7,24 +7,24 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
-import { iconColorsTable } from '../../../../../utils/colorsTable';
+import { iconColorsTable, baseTextColor, sectionBackgroundColor } from '../../../../../utils/colorsTable';
 
 const Title = (props) => {
   return (
     <View style={{ marginBottom: 20 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', marginRight: 10 }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 13, color: baseTextColor, marginRight: 10 }}>
           Please write the meetup title.
         </Text>
-        <Text style={{ fontSize: 13, color: '#9E9E9E' }}>{props.state.title.length}/40</Text>
+        <Text style={{ fontSize: 13, color: baseTextColor }}>{props.state.title.length}/40</Text>
       </View>
       <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 15 }}>
         <BottomSheetTextInput
           style={{
             flex: 1,
             padding: 10,
-            backgroundColor: '#E9E9E9',
-            color: '#424242',
+            backgroundColor: sectionBackgroundColor,
+            color: baseTextColor,
             borderRadius: 5,
           }}
           value={props.state.title}

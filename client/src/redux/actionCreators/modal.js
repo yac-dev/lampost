@@ -13,6 +13,7 @@ export const setIsSelectLimitHourModalOpen = (bool) => {
 };
 
 export const setIsConfirmHostMeetupModalOpen = (bool) => {
+  console.log('launcihg!!');
   return {
     type: 'SET_IS_HOST_MEETUP_CONFIRM_MODAL_OPEN',
     payload: bool,

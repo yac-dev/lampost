@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetScrollView, BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { iconColorsTable } from '../../../../../utils/colorsTable';
+import { iconColorsTable, baseTextColor, sectionBackgroundColor } from '../../../../../utils/colorsTable';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -11,10 +11,10 @@ const Description = (props) => {
   return (
     <View style={{ marginBottom: 20 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', flexShrink: 1, marginBottom: 10 }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 13, color: baseTextColor, flexShrink: 1, marginBottom: 10 }}>
           Please write a message to the attendees or more detailed description.
         </Text>
-        <Text style={{ fontSize: 13, color: '#9E9E9E' }}>{props.state.description.length}/300</Text>
+        <Text style={{ fontSize: 13, color: baseTextColor }}>{props.state.description.length}/300</Text>
       </View>
       {/* <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
         <View
@@ -40,7 +40,7 @@ const Description = (props) => {
         </View>
       </View> */}
       <BottomSheetTextInput
-        style={{ height: 100, backgroundColor: '#E9E9E9', borderRadius: 5, padding: 10 }}
+        style={{ height: 100, backgroundColor: sectionBackgroundColor, borderRadius: 5, padding: 10 }}
         // label='Meetup title'
         multiline
         value={props.state.description}

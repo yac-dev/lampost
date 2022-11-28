@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { TextInput, Divider, IconButton, Button, Menu, Switch } from 'react-native-paper';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-import { iconColorsTable } from '../../../../../utils/colorsTable';
+import { iconColorsTable, baseTextColor } from '../../../../../utils/colorsTable';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -11,15 +11,24 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 const CameraPermission = (props) => {
   const renderSwitchState = () => {
     if (props.state.isMediaAllowed) {
-      return <Text style={{ marginRight: 5, fontSize: 15 }}>Yes</Text>;
+      return <Text style={{ marginRight: 5, fontSize: 15, color: baseTextColor }}>Yes</Text>;
     } else {
-      return <Text style={{ marginRight: 5, fontSize: 15 }}>No</Text>;
+      return <Text style={{ marginRight: 5, fontSize: 15, color: baseTextColor }}>No</Text>;
     }
   };
 
   return (
     <View style={{ marginBottom: 20 }}>
-      <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', flexShrink: 1, marginBottom: 10 }}>
+      <Text
+        style={{
+          fontWeight: 'bold',
+          fontSize: 13,
+          color: '#9E9E9E',
+          flexShrink: 1,
+          marginBottom: 10,
+          color: baseTextColor,
+        }}
+      >
         Do you allow the attendees to take photos or videos during the meetup?
       </Text>
       <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>

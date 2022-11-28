@@ -4,7 +4,12 @@ import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
 import FastImage from 'react-native-fast-image';
-import { iconColorsTable, backgroundColorsTable, baseTextColor } from '../../../utils/colorsTable';
+import {
+  iconColorsTable,
+  backgroundColorsTable,
+  baseTextColor,
+  rnDefaultBackgroundColor,
+} from '../../../utils/colorsTable';
 import { Ionicons } from '@expo/vector-icons';
 
 // ac

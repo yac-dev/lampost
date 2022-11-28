@@ -18,7 +18,7 @@ const Header = () => {
       >
         <Foundation name='dollar-bill' size={25} color='white' />
       </View>
-      <Text style={{ fontWeight: 'bold', fontSize: 20, marginLeft: 15 }}>Fee</Text>
+      <Text style={{ fontWeight: 'bold', fontSize: 20, marginLeft: 15, color: 'white' }}>Fee</Text>
     </View>
   );
 };

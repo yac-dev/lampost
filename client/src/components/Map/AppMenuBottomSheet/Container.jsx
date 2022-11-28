@@ -30,7 +30,7 @@ const AppMenusBottomSheet = (props) => {
           <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 5 }}>
             What are you gonna do?
           </Text>
-          <AppButtons />
+          <AppButtons appMenuBottomSheetRef={props.appMenuBottomSheetRef} />
           <UpcomingMeetups />
         </BottomSheetView>
       </GorhomBottomSheet>

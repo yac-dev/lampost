@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { Menu, Switch, TextInput } from 'react-native-paper';
+import { baseTextColor } from '../../../../../utils/colorsTable';
 
 const AttendeesLimit = (props) => {
   const renderSwitchState = () => {
     if (props.state.isMeetupAttendeesLimitFree) {
-      return <Text style={{ marginRight: 5, fontSize: 15 }}>It's free.</Text>;
+      return <Text style={{ marginRight: 5, fontSize: 15, color: baseTextColor }}>It's free.</Text>;
     } else {
-      return <Text style={{ marginRight: 5, fontSize: 15 }}>It's not free.</Text>;
+      return <Text style={{ marginRight: 5, fontSize: 15, color: baseTextColor }}>It's not free.</Text>;
     }
   };
 
@@ -16,7 +17,7 @@ const AttendeesLimit = (props) => {
       return (
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
           <TextInput
-            style={{ width: 200, marginLeft: 10 }}
+            style={{ width: 200, marginLeft: 10, color: baseTextColor }}
             mode='outlined'
             label='How many people?'
             value={props.state.fee}
@@ -31,7 +32,7 @@ const AttendeesLimit = (props) => {
 
   return (
     <View>
-      <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E', marginBottom: 10 }}>
+      <Text style={{ fontWeight: 'bold', fontSize: 13, color: baseTextColor, marginBottom: 10 }}>
         How many people can join this meetup?
       </Text>
       <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end', marginBottom: 10 }}>
