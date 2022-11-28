@@ -63,7 +63,7 @@ const Badge = (props) => {
         style={{
           fontWeight: 'bold',
           // alignSelf: 'center',
-          fontSize: 10,
+          fontSize: 12,
           textAlign: 'center',
           color: baseTextColor,
         }}

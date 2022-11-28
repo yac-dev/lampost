@@ -22,7 +22,6 @@ const AppButtons = (props) => {
           onActionButtonPress={() => {
             setIsLaunchMeetupConfirmationModalOpen(true);
             appMenuBottomSheetRef.current.close();
-            // props.postBottomSheetRef.current.snapToIndex(0);
           }}
         />
         <AppButton

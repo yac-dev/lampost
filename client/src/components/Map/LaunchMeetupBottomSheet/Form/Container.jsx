@@ -28,7 +28,7 @@ const INITIAL_STATE = {
   component: 'MeetupTitle',
   title: '',
   badge: null,
-  preferredBadges: {},
+  badges: {},
   startDateAndTime: null,
   duration: null,
   applicationDeadline: null,
@@ -70,8 +70,8 @@ const reducer = (state, action) => {
       return { ...state, title: action.payload };
     case 'SET_MEETUP_BADGE':
       return { ...state, badge: action.payload };
-    case 'SET_MEETUP_PREFERRED_BADGES':
-      return { ...state, preferredBadges: action.payload };
+    case 'SET_MEETUP_BADGES':
+      return { ...state, badges: action.payload };
     case 'SET_START_DATE_AND_TIME':
       return { ...state, startDateAndTime: action.payload };
     case 'SET_DURATION':

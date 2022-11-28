@@ -38,6 +38,7 @@ import { setIsSelectMeetupBadgesModalOpen } from '../../redux/actionCreators/mod
 import { setIsConfirmHostMeetupModalOpen } from '../../redux/actionCreators/modal';
 import { setIsCancelLaunchMeetupModalOpen } from '../../redux/actionCreators/modal';
 import { setIsSelectedMeetupInfoDetailBottomSheetOpen } from '../../redux/actionCreators/bottomSheet';
+import { iconColorsTable } from '../../utils/colorsTable';
 
 const Map = (props) => {
   const [region, setRegion] = useState(null);
@@ -195,7 +196,9 @@ const Map = (props) => {
                     latitude: launchLocation.latitude,
                     longitude: launchLocation.longitude,
                   }}
-                />
+                >
+                  <MaterialCommunityIcons size={35} name='rocket-launch' color={iconColorsTable['red1']} />
+                </Marker>
               ) : null}
               <MapMarkers handleSelectedItemBottomSheetChanges={handleSelectedItemBottomSheetChanges} />
             </MapView>

@@ -119,7 +119,7 @@ const Container = (props) => {
   useEffect(() => {
     if (props.route.params.fromComponent === 'Add user badges') {
       queryBadges(props.auth.data._id);
-    } else if (props.route.params.fromComponent === 'Add meetup preferred badges') {
+    } else if (props.route.params.fromComponent === 'Add meetup badges') {
       queryBadges();
     } else if (props.route.params.fromComponent === 'Select meetup badge') {
       queryBadges();
@@ -161,7 +161,7 @@ const Container = (props) => {
     <View style={{ padding: 10, flex: 1 }}>
       <Badges
         badgeState={badge}
-        preferredBadges={preferredBadges}
+        meetupBadges={meetupBadges}
         badges={badges}
         onBadgePress={onBadgePress}
         fromComponent={fromComponent}

@@ -13,7 +13,6 @@ const AppMenusBottomSheet = (props) => {
   const snapPoints = useMemo(() => ['8%', '30%', '80%'], []);
   const { appMenuBottomSheetRef } = useContext(MapContext);
 
-  // if (!props.hostMeetup.isOpen) {
   return (
     <GorhomBottomSheet
       index={0}
@@ -37,9 +36,6 @@ const AppMenusBottomSheet = (props) => {
       </BottomSheetView>
     </GorhomBottomSheet>
   );
-  // } else {
-  //   return null;
-  // }
 };
 
 const mapStateToProps = (state) => {

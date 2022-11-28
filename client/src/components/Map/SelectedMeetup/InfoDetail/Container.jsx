@@ -1,12 +1,7 @@
 import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
-import GorhomBottomSheet, {
-  BottomSheetView,
-  BottomSheetTextInput,
-  BottomSheetScrollView,
-  BottomSheetBackdrop,
-} from '@gorhom/bottom-sheet';
+import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { appBottomSheetBackgroundColor } from '../../../../utils/colorsTable';
 // components
 import Badges from './Badges';
@@ -69,10 +64,6 @@ const Container = (props) => {
     </GorhomBottomSheet>
   );
 };
-//   else {
-//     return null;
-//   }
-// };
 
 const mapStateToProps = (state) => {
   return { selectedMeetup: state.selectedItem.meetup, bottomSheet: state.bottomSheet };

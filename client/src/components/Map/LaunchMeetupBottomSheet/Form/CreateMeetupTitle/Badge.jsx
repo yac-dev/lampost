@@ -16,11 +16,11 @@ const Badge = (props) => {
   // }, [props.route.params?.badge]);
 
   useEffect(() => {
-    if (props.route.params?.preferredBadges) {
-      console.log('this is the badges...', props.route.params.preferredBadges);
-      props.dispatch({ type: 'SET_MEETUP_PREFERRED_BADGES', payload: props.route.params.preferredBadges });
+    if (props.route.params?.meetupBadges) {
+      console.log('this is the badges...', props.route.params.meetupBadges);
+      props.dispatch({ type: 'SET_MEETUP_BADGES', payload: props.route.params.meetupBadges });
     }
-  }, [props.route.params?.preferredBadges]);
+  }, [props.route.params?.meetupBadges]);
 
   return (
     <View style={{ marginBottom: 20 }}>
@@ -37,14 +37,14 @@ const Badge = (props) => {
         onPress={() =>
           props.navigation.navigate('Add badges', {
             fromComponent: 'Add meetup badges',
-            meetupBadges: props.state.preferredBadges,
+            meetupBadges: props.state.badges,
           })
         }
       >
         <SimpleLineIcons name='magnifier-add' size={20} color={baseTextColor} style={{ marginRight: 5 }} />
         <Text style={{ color: baseTextColor }}>Add</Text>
       </TouchableOpacity>
-      <SelectedBadges preferredBadges={Object.values(props.state.preferredBadges)} />
+      <SelectedBadges badges={Object.values(props.state.badges)} />
       {/* {props.state.badge ? (
         <View
           style={{
