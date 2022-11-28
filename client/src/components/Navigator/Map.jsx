@@ -9,7 +9,7 @@ import * as SecureStore from 'expo-secure-store';
 import { io } from 'socket.io-client';
 
 // components
-import Map from '../Map/Map';
+import Map from '../Map/Container';
 import Camera from '../Camera/Container';
 import Schedule from '../Schedule/Container';
 import Meetup from '../Meetup/Container';

@@ -16,7 +16,7 @@ import {
 // react native elements
 // import { Button as ButtonRNE, Icon } from 'react-native-elements';
 
-import Map from '../Map/Map';
+import Map from '../Map/Container';
 
 // ac
 import { signUp } from '../../redux/actionCreators/auth';

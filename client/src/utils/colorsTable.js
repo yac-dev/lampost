@@ -16,7 +16,7 @@ export const iconColorsTable = {
 
 export const backgroundColorsTable = {
   red1: 'rgba(255, 51, 51, 0.3)',
-  yellow1: 'rgba(254, 208, 0, 0.3)',
+  yellow1: 'rgba(254, 208, 0, 0.1)',
   orange1: 'rgba(254, 115, 0, 0.3)',
   blue1: 'rgba(0, 108, 255, 0.3)',
   violet1: 'rgba(147, 38, 201, 0.3)',

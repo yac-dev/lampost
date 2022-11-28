@@ -1,29 +1,18 @@
 // main libraries
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import lampostAPI from '../../../apis/lampost';
-import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
-import { Callout, Marker, Circle } from 'react-native-maps';
+import lampostAPI from '../../apis/lampost';
+import { View, TouchableOpacity } from 'react-native';
+import { Marker } from 'react-native-maps';
 import FastImage from 'react-native-fast-image';
-import { iconColorsTable, backgroundColorsTable } from '../../../utils/colorsTable';
-import { Avatar, Button } from 'react-native-paper';
+import { iconColorsTable, backgroundColorsTable, rnDefaultBackgroundColor } from '../../utils/colorsTable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
 // ac
-import { getMeetups } from '../../../redux/actionCreators/meetups';
-import { selectMeetup } from '../../../redux/actionCreators/selectItem';
-
-import foodAndBeverage from '../../../../assets/badgeCollection/foodAndBeverage';
-
-const Item = ({ title }) => {
-  return (
-    <View>
-      <Text>{title}</Text>
-    </View>
-  );
-};
+import { getMeetups } from '../../redux/actionCreators/meetups';
+import { selectMeetup } from '../../redux/actionCreators/selectItem';
 
 const MapMarkers = (props) => {
   const [meetups, setMeetups] = useState([]);
@@ -48,16 +37,6 @@ const MapMarkers = (props) => {
     }
   }, [props.auth.socket]);
 
-  const renderItem = () => {
-    return (
-      <Marker coordinate={{ latitude: 37.78825, longitude: -122.4324 }}>
-        <Callout>
-          <Text>Yessssss</Text>
-        </Callout>
-      </Marker>
-    );
-  };
-
   // flatlistsなんで動かねーんだろ。
   const render = () => {
     if (meetups.length) {
@@ -80,7 +59,8 @@ const MapMarkers = (props) => {
                 style={{
                   width: 40,
                   aspectRatio: 1,
-                  // padding: 10,
+                  backgroundColor: rnDefaultBackgroundColor,
+                  borderRadius: 10,
                 }}
               >
                 <TouchableOpacity
@@ -91,11 +71,8 @@ const MapMarkers = (props) => {
                     justifyContent: 'center', // これで中のimageを上下左右真ん中にする
                     borderRadius: 10,
                     backgroundColor: backgroundColorsTable[meetup.badge.color],
-                    borderStyle: 'solid',
                     borderColor: backgroundColorsTable[meetup.badge.color],
-                    borderWidth: 1,
-                    // backgroundColor: 'red',
-                    marginBottom: 5,
+                    borderWidth: 0.5,
                   }}
                 >
                   <FastImage

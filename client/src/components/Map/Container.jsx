@@ -10,7 +10,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // components
 import NBProvider from '../Utils/NativeBaseProvider';
-import MapMarkers from './MapMarkers/MapMarkers';
+import MapMarkers from './MapMarkers';
 // bottom sheeets
 import SelectedMeetup from './SelectedMeetup/Container';
 import SelectedMeetupInfoDetail from './SelectedMeetup/InfoDetail/Container';

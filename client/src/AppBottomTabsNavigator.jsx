@@ -15,7 +15,6 @@ import { createNavigationContainerRef } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import MapNavigator from './components/Navigator/Map';
-import MemoirsNavigator from './components/Navigator/Memoirs';
 import LibraryNavigator from './components/Navigator/Library';
 import AuthNavigator from './components/Navigator/Auth';
 
