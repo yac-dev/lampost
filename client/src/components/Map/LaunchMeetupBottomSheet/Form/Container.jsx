@@ -113,7 +113,13 @@ const reducer = (state, action) => {
 
 const Container = (props) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-  const { setIsCancelLaunchMeetupConfirmationModalOpen } = useContext(MapContext);
+  const {
+    setIsCancelLaunchMeetupConfirmationModalOpen,
+    launchLocation,
+    setLaunchLocation,
+    setIsLaunchMeetupConfirmed,
+    launchMeetupBottomSheetRef,
+  } = useContext(MapContext);
 
   const formValidation = () => {
     // formのvalidationをここに書いていくことになる。
@@ -121,18 +127,17 @@ const Container = (props) => {
   };
 
   const onSubmit = () => {
-    const preferredBadgeIds = Object.values(state.preferredBadges).map((preferredBadge) => {
-      return preferredBadge._id;
+    const badgeIds = Object.values(state.badges).map((badge) => {
+      return badge._id;
     });
 
     const formData = {
       title: state.title,
       place: {
         type: 'Point',
-        coordinates: [props.hostMeetup.setLocation.longitude, props.hostMeetup.setLocation.latitude],
+        coordinates: [launchLocation.longitude, launchLocation.latitude],
       },
-      badge: state.badge._id,
-      preferredBadges: preferredBadgeIds,
+      badges: badgeIds,
       startDateAndTime: state.startDateAndTime,
       duration: state.duration,
       applicationDeadline: state.applicationDeadline,
@@ -148,15 +153,12 @@ const Container = (props) => {
       launcher: props.auth.data._id,
     };
     console.log(formData);
-    props.setIsHostMeetupOpen(false);
-    props.setMeetupLocation('');
-    // props.addSnackBar('Meetup was created successfully! Please check your schedule.', 'success', 7000);
+    // props.setIsHostMeetupOpen(false);
+    // props.setMeetupLocation('');
     props.createMeetup(formData);
-  };
-
-  const onCancelPressd = () => {
-    props.setIsHostMeetupOpen(false);
-    props.setMeetupLocation('');
+    setIsLaunchMeetupConfirmed(false);
+    setLaunchLocation(null);
+    launchMeetupBottomSheetRef.current.close();
   };
 
   const switchComponent = () => {

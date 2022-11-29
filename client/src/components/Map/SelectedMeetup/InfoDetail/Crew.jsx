@@ -34,7 +34,11 @@ const Crew = (props) => {
               borderBottomWidth: 0.3,
               borderBottomColor: '#ABABAB',
             }}
-            onPress={() => props.navigation.navigate('User', { userId: user._id })}
+            onPress={() => {
+              if (props.auth.data._id !== user._id) {
+                props.navigation.navigate('User', { userId: user._id });
+              }
+            }}
           >
             <View
               style={{
@@ -87,7 +91,7 @@ const Crew = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { selectedMeetup: state.selectedItem.meetup, bottomSheet: state.bottomSheet };
+  return { selectedMeetup: state.selectedItem.meetup, bottomSheet: state.bottomSheet, auth: state.auth };
 };
 
 export default connect(mapStateToProps)(Crew);

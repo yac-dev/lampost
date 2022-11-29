@@ -40,30 +40,33 @@ const MapNavigator = (props) => {
             headerShown: true,
             title: '',
             headerTransparent: true,
-            // reduxのdata._idを使えばいいだけか。
             // headerLeft: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
-            headerRight: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
+            // headerRight: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
           })}
         />
         <Stack.Screen name='Camera' component={Camera} options={{ headerShown: false }} />
-        {/* <Stack.Screen name='CalendarNavigator' component={CalendarNavigator} options={{ headerShown: false }} /> */}
         <Stack.Screen name='Schedule' component={Schedule} />
-        {/* <Stack.Screen name='Meetup' component={Calendar} options={{ headerShown: false }} /> */}
         <Stack.Screen
           name='Meetup'
           component={Meetup}
           options={({ navigation }) => ({
-            headerRight: () => (
-              <Button icon='camera' onPress={() => navigation.navigate('SendChat')}>
-                Send
-              </Button>
-            ),
+            // headerRight: () => (<Button icon='camera' onPress={() => navigation.navigate('SendChat')}>Send</Button>),
           })}
         />
         <Stack.Screen name='Crew' component={Crew} />
         <Stack.Screen name='QandA' component={QandA} />
         <Stack.Screen name='Lounge' component={Lounge} />
-        <Stack.Screen name='User' component={User} />
+        <Stack.Screen
+          name='User'
+          component={User}
+          options={({ navigation }) => ({
+            headerShown: true,
+            // title: '',
+            // headerTransparent: true,
+            // headerLeft: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
+            // headerRight: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
+          })}
+        />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
         <Stack.Screen

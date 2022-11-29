@@ -23,7 +23,7 @@ import LaunchMeetupBottomSheet from './LaunchMeetupBottomSheet/BottomSheet';
 import SnackBar from '../Utils/SnackBar';
 
 // utils
-import { mapStyle } from './mapStyle';
+import { mapStyle } from '../../utils/mapStyle';
 
 // ac
 import { loadMe } from '../../redux/actionCreators/auth';
@@ -47,7 +47,7 @@ const Map = (props) => {
   const [isCancelLaunchMeetupConfirmationModalOpen, setIsCancelLaunchMeetupConfirmationModalOpen] = useState(false);
   const [isLaunchMeetupConfirmed, setIsLaunchMeetupConfirmed] = useState(false);
   const [launchLocation, setLaunchLocation] = useState(null);
-
+  // const [meetups, setMeetups] = useState({}); // これも必要になるわ。map markersでstateを持つんではなく、ここで持った方がいい。
   // const [selectedMeetup, setSelectedMeetup] = useState(null)
 
   const mapRef = useRef(null);

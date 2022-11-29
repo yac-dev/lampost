@@ -9,11 +9,7 @@ const meetupSchema = new mongoose.Schema({
     },
     coordinates: [Number],
   },
-  badge: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Badge',
-  },
-  preferredBadges: [
+  badges: [
     {
       type: mongoose.Schema.ObjectId,
       ref: 'Badge',

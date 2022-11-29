@@ -70,18 +70,18 @@ const MapMarkers = (props) => {
                     alignItems: 'center', // これと
                     justifyContent: 'center', // これで中のimageを上下左右真ん中にする
                     borderRadius: 10,
-                    backgroundColor: backgroundColorsTable[meetup.badge.color],
-                    borderColor: backgroundColorsTable[meetup.badge.color],
+                    backgroundColor: backgroundColorsTable[meetup.badges[0].color],
+                    borderColor: backgroundColorsTable[meetup.badges[0].color],
                     borderWidth: 0.5,
                   }}
                 >
                   <FastImage
                     style={{ width: 30, height: 30 }}
                     source={{
-                      uri: meetup.badge.icon,
+                      uri: meetup.badges[0].icon,
                       priority: FastImage.priority.normal,
                     }}
-                    tintColor={iconColorsTable[meetup.badge.color]}
+                    tintColor={iconColorsTable[meetup.badges[0].color]}
                     resizeMode={FastImage.resizeMode.contain}
                   />
                 </TouchableOpacity>

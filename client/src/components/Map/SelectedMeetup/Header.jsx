@@ -11,6 +11,7 @@ import {
   rnDefaultBackgroundColor,
 } from '../../../utils/colorsTable';
 import { Ionicons } from '@expo/vector-icons';
+import Badges from './Badges';
 
 // ac
 import { joinMeetup } from '../../../redux/actionCreators/meetups';
@@ -54,14 +55,14 @@ const Header = (props) => {
     );
   };
 
-  const renderTime = (date) => {
+  const renderTime = (date, duration) => {
     const d = new Date(date).toLocaleDateString('en-US', {
       hourCycle: 'h23',
       hour: '2-digit',
       minute: '2-digit',
     });
     const dateElements = d.split(', ');
-
+    console.log(duration); // ここは置いておこうか。
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
         <Ionicons name='time-outline' size={15} color={baseTextColor} style={{ marginRight: 5 }} />
@@ -76,7 +77,12 @@ const Header = (props) => {
         {renderDate(props.selectedMeetup.startDateAndTime)}
         <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>{props.selectedMeetup.title}</Text>
       </View>
-      <View style={{ marginBottom: 10 }}>{renderTime(props.selectedMeetup.startDateAndTime)}</View>
+      <View style={{ marginBottom: 10 }}>
+        {renderTime(props.selectedMeetup.startDateAndTime, props.selectedMeetup.duration)}
+      </View>
+      <View style={{ marginBottom: 10 }}>
+        <Badges />
+      </View>
       <Text style={{ flexShrink: 1, color: baseTextColor }}>{props.selectedMeetup.description}</Text>
     </View>
   );

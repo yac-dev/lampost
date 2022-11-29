@@ -36,28 +36,26 @@ const Container = (props) => {
     }
   }, []);
 
+  const getUser = async () => {
+    const result = await lampostAPI.get(`/users/${props.route.params.userId}`);
+    const { user } = result.data;
+    // console.log(user);
+    setUser(user);
+  };
   useEffect(() => {
-    // ここは、user pageからここに来て、doneをpressしたら, user pageへ戻る。addしたbadgesをparamsに入れていく感じ。
-    props.navigation.setOptions({
-      headerLeft: () => (
-        <TouchableOpacity onPress={() => console.log('notify')}>
-          <MaterialCommunityIcons name='mailbox' size={30} color={'blue'} />
-        </TouchableOpacity>
-      ),
-    });
-  }, []);
-
-  useEffect(() => {
-    // ここで、_id使って、user情報をfetchしてくる。
-    // console.log(props.route.params);
-    const getUser = async () => {
-      const result = await lampostAPI.get(`/users/${props.route.params.userId}`);
-      const { user } = result.data;
-      // console.log(user);
-      setUser(user);
-    };
     getUser();
   }, []);
+
+  // useEffect(() => {
+  //   // ここは、user pageからここに来て、doneをpressしたら, user pageへ戻る。addしたbadgesをparamsに入れていく感じ。
+  //   props.navigation.setOptions({
+  //     headerLeft: () => (
+  //       <TouchableOpacity onPress={() => console.log('notify')}>
+  //         <MaterialCommunityIcons name='mailbox' size={30} color={'blue'} />
+  //       </TouchableOpacity>
+  //     ),
+  //   });
+  // }, []);
 
   useEffect(() => {
     if (user) {

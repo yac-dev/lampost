@@ -1,7 +1,7 @@
 // main libraries
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetTextInput, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 // ac
@@ -10,6 +10,7 @@ import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 
 import Header from './Header';
 import ActionButtons from './ActionButtons';
+import Badges from './Badges';
 import Menus from './Menus';
 
 const Container = (props) => {

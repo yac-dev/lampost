@@ -145,7 +145,12 @@ const Menus = (props) => {
             <Text style={{ color: baseTextColor }}>{`${props.selectedMeetup.launcher.name} >`}</Text>
           </View>
         }
-        onPressMenu={() => props.navigation.navigate('User', { userId: props.selectedMeetup.launcher._id })}
+        onPressMenu={() => {
+          // Map tab内では、自分のpageを見せないようにする。ごちゃごちゃになってめんどいからね。
+          if (props.auth.data._id !== props.selectedMeetup.launcher._id) {
+            props.navigation.navigate('User', { userId: props.selectedMeetup.launcher._id });
+          }
+        }}
       />
       <Menu
         label='Crew'
@@ -193,7 +198,7 @@ const Menus = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { selectedMeetup: state.selectedItem.meetup };
+  return { selectedMeetup: state.selectedItem.meetup, auth: state.auth };
 };
 
 export default connect(mapStateToProps)(Menus);

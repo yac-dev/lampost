@@ -16,7 +16,6 @@ import Asset from '../User/Assets/Asset';
 
 const Auth = (props) => {
   if (props.auth.isAuthenticated) {
-    // ここも、多分user pageにかんするnavigatorを使うことになるだろう。今はこれで置いておくけど。
     return (
       <Stack.Navigator>
         <Stack.Group>
