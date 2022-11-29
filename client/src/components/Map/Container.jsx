@@ -57,7 +57,7 @@ const Map = (props) => {
   const selectedMeetupBottomSheetRef = useRef(null);
   const selectedMeetupDetailBottomSheetRef = useRef(null);
 
-  console.log('Map is rendered');
+  // console.log('Map is rendered');
   // const selectedItemBottomSheetRef = useRef(null);
 
   // 手動で閉じたらおかしくなる。。。
@@ -103,7 +103,6 @@ const Map = (props) => {
     //     setErrorMsg('Permission to access location was denied');
     //     return;
     //   }
-
     //   let location = await Location.getCurrentPositionAsync({});
     //   setPosition((previous) => ({
     //     ...previous,
@@ -170,57 +169,54 @@ const Map = (props) => {
           selectedMeetupBottomSheetRef,
         }}
       >
-        <NBProvider>
-          <View style={styles.container}>
-            <MapView
-              ref={mapRef}
-              style={styles.map}
-              showsUserLocation={true}
-              customMapStyle={mapStyle}
-              // showsMyLocationButton={true}
-              followsUserLocation={true}
-              showsCompass={true}
-              scrollEnabled={true}
-              zoomEnabled={true}
-              onPress={(event) => setMeetupLocation(event)}
-              // initial regionっていうのは、最初に地図がloadされたときに画面の中心にどのlatitudeとlongitudeを映すかって言うことね。
-              initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}
-              provider='google'
-              // provider={Platform.OS === 'android' ? MapView.PROVIDER_GOOGLE : MapView.PROVIDER_DEFAULT}
-            >
-              {launchLocation ? (
-                <Marker
-                  coordinate={{
-                    latitude: launchLocation.latitude,
-                    longitude: launchLocation.longitude,
-                  }}
-                >
-                  <MaterialCommunityIcons size={35} name='rocket-launch' color={iconColorsTable['red1']} />
-                </Marker>
-              ) : null}
-              <MapMarkers />
-            </MapView>
+        <View style={styles.container}>
+          <MapView
+            ref={mapRef}
+            style={styles.map}
+            showsUserLocation={true}
+            customMapStyle={mapStyle}
+            // // showsMyLocationButton={true}
+            followsUserLocation={true}
+            showsCompass={true}
+            scrollEnabled={true}
+            zoomEnabled={true}
+            onPress={(event) => setMeetupLocation(event)}
+            // initial regionっていうのは、最初に地図がloadされたときに画面の中心にどのlatitudeとlongitudeを映すかって言うことね。
+            initialRegion={{
+              latitude: 37.78825,
+              longitude: -122.4324,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+            provider='google'
+            // provider={Platform.OS === 'android' ? MapView.PROVIDER_GOOGLE : MapView.PROVIDER_DEFAULT}
+          >
+            {launchLocation ? (
+              <Marker
+                tracksViewChanges={false} // これがないと、めちゃくちゃlaggyになる。
+                coordinate={{
+                  latitude: launchLocation.latitude,
+                  longitude: launchLocation.longitude,
+                }}
+              >
+                <MaterialCommunityIcons size={35} name='rocket-launch' color={iconColorsTable['red1']} />
+              </Marker>
+            ) : null}
+            <MapMarkers />
+          </MapView>
 
-            <ConfirmLaunchMeetupModal />
-            <CancelLaunchMeetupModal />
-            <SnackBar />
+          <ConfirmLaunchMeetupModal />
+          <CancelLaunchMeetupModal />
+          <SnackBar />
 
-            <AppMenusBottomSheet />
-            <LaunchMeetupBottomSheet navigation={props.navigation} route={props.route} />
-            <SelectedMeetup
-            // handleselectedMeetupDetailBottomSheetChanges={handleselectedMeetupDetailBottomSheetChanges}
-            />
-            <SelectedMeetupInfoDetail
-              navigation={props.navigation}
-              selectedMeetupDetailBottomSheetRef={selectedMeetupDetailBottomSheetRef}
-            />
-          </View>
-        </NBProvider>
+          <AppMenusBottomSheet />
+          <LaunchMeetupBottomSheet navigation={props.navigation} route={props.route} />
+          <SelectedMeetup />
+          <SelectedMeetupInfoDetail
+            navigation={props.navigation}
+            selectedMeetupDetailBottomSheetRef={selectedMeetupDetailBottomSheetRef}
+          />
+        </View>
       </MapContext.Provider>
     </>
   );
@@ -232,17 +228,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-  },
-  text: {
-    position: 'absolute',
-    right: 100,
-    top: 400,
+    // paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   map: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
-    position: 'relative',
+    // position: 'relative',
   },
 });
 

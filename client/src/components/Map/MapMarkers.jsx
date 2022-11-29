@@ -93,7 +93,6 @@ const MapMarkers = (props) => {
         return (
           <View key={index}>
             <Marker
-              key={index}
               tracksViewChanges={false}
               coordinate={{ latitude: meetup.place.coordinates[1], longitude: meetup.place.coordinates[0] }}
               pinColor='black'
