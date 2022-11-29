@@ -60,3 +60,10 @@ export const leaveMeetup = (meetupId) => async (dispatch, getState) => {
     console.log(error);
   }
 };
+
+export const launchMeetup = (meetup, viewedChatsLastTime) => {
+  return {
+    type: 'LAUNCHED_MEETUP',
+    payload: { meetup, viewedChatsLastTime },
+  };
+};

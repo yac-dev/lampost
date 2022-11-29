@@ -1,7 +1,7 @@
 // main libraries
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
+import MapContext from './MeetupContext';
 import { connect } from 'react-redux';
-import lampostAPI from '../../apis/lampost';
 import { View, TouchableOpacity } from 'react-native';
 import { Marker } from 'react-native-maps';
 import FastImage from 'react-native-fast-image';
@@ -15,30 +15,22 @@ import { getMeetups } from '../../redux/actionCreators/meetups';
 import { selectMeetup } from '../../redux/actionCreators/selectItem';
 
 const MapMarkers = (props) => {
-  const [meetups, setMeetups] = useState([]);
+  const { meetups } = useContext(MapContext);
 
-  const getMeetups = async () => {
-    const result = await lampostAPI.get('/meetups');
-    const { meetups } = result.data;
-    setMeetups((previous) => [...previous, ...meetups]);
-  };
-
-  useEffect(() => {
-    getMeetups();
-  }, []);
-
-  useEffect(() => {
-    const { socket } = props.auth;
-    if (socket) {
-      socket.on('SEND_NEW_MEETUP', (data) => {
-        console.log(data.meetup);
-        setMeetups((previous) => [...previous, data.meetup]);
-      });
-    }
-  }, [props.auth.socket]);
+  // useEffect(() => {
+  //   const { socket } = props.auth;
+  //   if (socket) {
+  //     socket.on('SEND_NEW_MEETUP', (data) => {
+  //       console.log(data.meetup);
+  //       setMeetups((previous) => [...previous, data.meetup]);
+  //     });
+  //   }
+  // }, [props.auth.socket]);
 
   // flatlistsなんで動かねーんだろ。
-  const render = () => {
+
+  const renderMeetups = () => {
+    console.log('My Meetups...', meetups);
     if (meetups.length) {
       const meetupsList = meetups.map((meetup, index) => {
         return (
@@ -47,11 +39,8 @@ const MapMarkers = (props) => {
               key={index}
               tracksViewChanges={false}
               coordinate={{ latitude: meetup.place.coordinates[1], longitude: meetup.place.coordinates[0] }}
-              // onPress={() => props.handleSelectedItemBottomSheetChanges(post)}
               pinColor='black'
               onPress={() => {
-                // console.log('select item');
-                // props.selectMeetup(meetup);
                 props.handleSelectedItemBottomSheetChanges(meetup._id);
               }}
             >
@@ -70,18 +59,18 @@ const MapMarkers = (props) => {
                     alignItems: 'center', // これと
                     justifyContent: 'center', // これで中のimageを上下左右真ん中にする
                     borderRadius: 10,
-                    backgroundColor: backgroundColorsTable[meetup.badges[0].color],
-                    borderColor: backgroundColorsTable[meetup.badges[0].color],
+                    backgroundColor: backgroundColorsTable[meetup.badge.color],
+                    borderColor: backgroundColorsTable[meetup.badge.color],
                     borderWidth: 0.5,
                   }}
                 >
                   <FastImage
                     style={{ width: 30, height: 30 }}
                     source={{
-                      uri: meetup.badges[0].icon,
+                      uri: meetup.badge.icon,
                       priority: FastImage.priority.normal,
                     }}
-                    tintColor={iconColorsTable[meetup.badges[0].color]}
+                    tintColor={iconColorsTable[meetup.badge.color]}
                     resizeMode={FastImage.resizeMode.contain}
                   />
                 </TouchableOpacity>
@@ -97,32 +86,7 @@ const MapMarkers = (props) => {
     }
   };
 
-  return (
-    <>
-      {/* <Marker coordinate={{ latitude: 37.78825, longitude: -122.4324 }}>
-        <Callout>
-          <Text>Yessssss</Text>
-        </Callout>
-      </Marker> */}
-      {/* <Circle center={{ latitude: 37.78825, longitude: -122.4324 }} radius={2000} /> */}
-      {/* <FlatList
-        data={props.posts}
-        renderItem={({ item }) => (
-          <Marker coordinate={{ latitude: item.place.coordinates[1], longitude: item.place.coordinates[0] }}>
-            <Callout>
-              <Text>Yessssss</Text>
-            </Callout>
-          </Marker>
-        )}
-        keyExtractor={(item) => item.id}
-      /> */}
-      {render()}
-    </>
-  );
+  return <>{renderMeetups()}</>;
 };
 
-const mapStateToProps = (state) => {
-  return { meetups: Object.values(state.meetups), auth: state.auth };
-};
-
-export default connect(mapStateToProps, { getMeetups, selectMeetup })(MapMarkers);
+export default connect(null, { getMeetups, selectMeetup })(MapMarkers);

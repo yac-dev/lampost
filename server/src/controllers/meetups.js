@@ -137,6 +137,7 @@ export const createMeetup = async (request, response) => {
     meetup.attendees.push(launcher);
     meetup.chatRoom = chatRoom._id;
     meetup.save();
+    const badge = await Badge.findById(badges[0]);
 
     // scheduleStartMeetup(meetup.startDateAndTime, meetup._id);
     // scheduleEndMeetup(meetup.endDateAndTime, meetup._id);
@@ -147,9 +148,20 @@ export const createMeetup = async (request, response) => {
       meetup: {
         _id: meetup._id,
         place: meetup.place,
+        title: meetup.title,
+        startDateAndTime: meetup.startDateAndTime,
+        badge: {
+          _id: badge._id,
+          icon: badge.icon,
+          color: badge.color,
+        },
         // startDateAndTime: meetup.startDateAndTime,
         // badges: populatingBadges,
       },
+      viewedChatsLastTime: new Date(),
+      // badge: {
+      //   icon: badge.icon,
+      // }
     });
   } catch (error) {
     console.log(error);
@@ -158,9 +170,22 @@ export const createMeetup = async (request, response) => {
 
 export const getMeetups = async (request, response) => {
   try {
-    const meetups = await Meetup.find().select({ _id: 1, place: 1, badge: 1, startDateAndTime: 1 }).populate({
-      path: 'badges',
-      model: Badge,
+    const meetups = await Meetup.find()
+      .select({ _id: 1, place: 1, startDateAndTime: 1, badges: 1 })
+      .populate({
+        path: 'badges',
+        model: Badge,
+        select: { icon: 1, color: 1 },
+      });
+
+    // 返すbadgeの数は一個でいい。それをどうするか。
+    const modifiedMeetups = meetups.map((meetup) => {
+      return {
+        _id: meetup._id,
+        place: meetup.place,
+        startDateAndTime: meetup.startDateAndTime,
+        badge: meetup.badges[0],
+      };
     });
     // .populate({
     //   path: 'badges',
@@ -181,7 +206,7 @@ export const getMeetups = async (request, response) => {
     //   model: Badge,
     // });
     response.status(200).json({
-      meetups,
+      meetups: modifiedMeetups,
     });
   } catch (error) {
     console.log(error);

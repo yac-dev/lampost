@@ -17,68 +17,52 @@ const ActionButtons = (props) => {
     if (props.auth.isAuthenticated) {
       for (let i = 0; i < props.auth.data.upcomingMeetups.length; i++) {
         // everyか？
-        if (props.auth.data.upcomingMeetups[i].meetup === props.selectedMeetup._id) {
+        if (props.auth.data.upcomingMeetups[i].meetup._id === props.selectedMeetup._id) {
           return (
             <View style={{ flexDirection: 'row', paddingTop: 10, paddingBottom: 10 }}>
               {props.selectedMeetup.launcher._id === props.auth.data._id ? (
-                <Button
-                  mode='outlined'
-                  // buttonColor='#2DB437'
-                  icon={'plus'}
-                  style={{ marginRight: 10 }}
-                  onPress={() => console.log('edit')}
-                >
-                  Scout
-                </Button>
+                <ActionButton
+                  label='Edit my meetup'
+                  icon={
+                    <MaterialCommunityIcons
+                      name='file-document-edit-outline'
+                      size={25}
+                      color={iconColorsTable['blue1']}
+                    />
+                  }
+                  backgroundColor={backgroundColorsTable['blue1']}
+                  onActionButtonPress={() => console.log('edit  my meetup')}
+                />
               ) : (
-                // <Button
-                //   mode='outlined'
-                //   // buttonColor='#2DB437'
-                //   icon={'exit-run'}
-                //   onPress={() => props.leaveMeetup(props.selectedMeetup._id)}
-                //   style={{ marginRight: 10 }}
-                // >
-                //   Leave
-                // </Button>
                 <ActionButton
                   label='Leave'
                   icon={
                     <MaterialCommunityIcons name='human-greeting-variant' size={25} color={iconColorsTable['red1']} />
                   }
                   backgroundColor={backgroundColorsTable['red1']}
-                  onActionButtonPress={() => console.log('pressing')}
+                  onActionButtonPress={() => props.leaveMeetup(props.selectedMeetup._id)}
                 />
               )}
-              <Button
-                mode='outlined'
-                // buttonColor='#2DB437'
-                icon={'comment-text-multiple'}
-                onPress={() => props.navigation.navigate('Lounge', { meetupId: props.selectedMeetup._id })}
-                style={{ marginRight: 10 }}
-              >
-                Lounge
-              </Button>
-              <Button
-                mode='outlined'
-                // buttonColor='#2DB437'
-                icon={'camera'}
-                onPress={() => props.navigation.navigate('Camera', { meetupId: props.selectedMeetup._id })}
-                style={{ marginRight: 10 }}
-              >
-                Camera
-              </Button>
-              {/* <Button mode='outlined' icon={'web'} onPress={() => console.log('edit')} style={{ marginRight: 10 }}>
-                Location detail
-              </Button> */}
-              <Button
-                mode='outlined'
-                // buttonColor='#2DB437'
-                icon={'map'}
-                onPress={() => console.log('edit')}
-                style={{ marginRight: 10 }}
-              >
-                Map chat
-              </Button>
+              <ActionButton
+                label='Go to lounge'
+                icon={
+                  <MaterialCommunityIcons name='comment-text-multiple' size={25} color={iconColorsTable['blue1']} />
+                }
+                backgroundColor={backgroundColorsTable['blue1']}
+                onActionButtonPress={() => props.navigation.navigate('Lounge', { meetupId: props.selectedMeetup._id })}
+              />
+              <ActionButton
+                label='Launch camera'
+                icon={<MaterialCommunityIcons name='camera' size={25} color={iconColorsTable['blue1']} />}
+                backgroundColor={backgroundColorsTable['blue1']}
+                onActionButtonPress={() => console.log('pressing')}
+              />
+              <ActionButton
+                label='Invite people'
+                icon={<MaterialCommunityIcons name='plus' size={25} color={iconColorsTable['blue1']} />}
+                backgroundColor={backgroundColorsTable['blue1']}
+                onActionButtonPress={() => console.log('pressing')}
+              />
             </View>
           );
         }

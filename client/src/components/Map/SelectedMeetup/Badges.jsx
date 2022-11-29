@@ -18,8 +18,8 @@ const Badges = (props) => {
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              paddingTop: 5,
-              paddingBottom: 5,
+              paddingTop: 2,
+              paddingBottom: 2,
               paddingRight: 10,
               paddingLeft: 10,
               backgroundColor: backgroundColorsTable[badge.color],
@@ -31,10 +31,6 @@ const Badges = (props) => {
                 height: 30,
                 alignItems: 'center', // これと
                 justifyContent: 'center', // これで中のimageを上下左右真ん中にする
-                // borderRadius: 10,
-                // backgroundColor: backgroundColorsTable[badge.color],
-                // borderColor: backgroundColorsTable[badge.color],
-                // borderWidth: 0.3,
               }}
             >
               <FastImage

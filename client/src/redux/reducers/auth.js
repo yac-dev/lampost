@@ -26,6 +26,14 @@ const authReducer = (state = INITIAL_STATE, action) => {
           upcomingMeetups: [...state.data.upcomingMeetups].filter((meetup) => meetup._id !== action.payload.id),
         },
       }; // ここ、filterする感じ。
+    case 'LAUNCHED_MEETUP':
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          upcomingMeetups: [...state.data.upcomingMeetups, action.payload],
+        },
+      };
     case 'GET_CURRENT_LOCATION':
       return { ...state, currentLocation: { latitude: action.payload.latitude, longitude: action.payload.longitude } };
     case 'GET_SOCKET':

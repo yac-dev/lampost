@@ -1,5 +1,6 @@
 // main libraries
 import React, { useState, useEffect, useRef, useCallback, useContext } from 'react';
+import lampostAPI from '../../apis/lampost';
 import MapContext from './MeetupContext';
 import { connect } from 'react-redux';
 import { StyleSheet, Platform, View, StatusBar, Dimensions, TouchableOpacity, Text } from 'react-native';
@@ -47,7 +48,7 @@ const Map = (props) => {
   const [isCancelLaunchMeetupConfirmationModalOpen, setIsCancelLaunchMeetupConfirmationModalOpen] = useState(false);
   const [isLaunchMeetupConfirmed, setIsLaunchMeetupConfirmed] = useState(false);
   const [launchLocation, setLaunchLocation] = useState(null);
-  // const [meetups, setMeetups] = useState({}); // これも必要になるわ。map markersでstateを持つんではなく、ここで持った方がいい。
+  const [meetups, setMeetups] = useState([]); // これも必要になるわ。map markersでstateを持つんではなく、ここで持った方がいい。
   // const [selectedMeetup, setSelectedMeetup] = useState(null)
 
   const mapRef = useRef(null);
@@ -113,6 +114,15 @@ const Map = (props) => {
     props.getCurrentLocation();
   }, []);
 
+  const getMeetups = async () => {
+    const result = await lampostAPI.get('/meetups');
+    const { meetups } = result.data;
+    setMeetups(meetups);
+  };
+  useEffect(() => {
+    getMeetups();
+  }, []);
+
   useEffect(() => {
     if (props.bottomSheet.post.isOpen && props.auth.currentLocation.latitude && props.auth.currentLocation.longitude) {
       const newLat = props.auth.currentLocation.latitude - 0.027;
@@ -155,6 +165,7 @@ const Map = (props) => {
     <>
       <MapContext.Provider
         value={{
+          navigation: props.navigation,
           launchMeetupBottomSheetRef,
           appMenuBottomSheetRef,
           isLaunchMeetupConfirmationModalOpen,
@@ -165,6 +176,8 @@ const Map = (props) => {
           setIsLaunchMeetupConfirmed,
           launchLocation,
           setLaunchLocation,
+          meetups,
+          setMeetups,
         }}
       >
         <NBProvider>

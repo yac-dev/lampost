@@ -1,5 +1,6 @@
 // main libraries
 import React, { useState, useEffect, useReducer, useContext } from 'react';
+import lampostAPI from '../../../../apis/lampost';
 import { View, Text, TouchableOpacity } from 'react-native';
 import MapContext from '../../MeetupContext';
 import { connect } from 'react-redux';
@@ -22,6 +23,7 @@ import { createMeetup } from '../../../../redux/actionCreators/meetups';
 import { setIsHostMeetupOpen } from '../../../../redux/actionCreators/hostMeetup';
 import { setMeetupLocation } from '../../../../redux/actionCreators/hostMeetup';
 import { setIsCancelLaunchMeetupModalOpen } from '../../../../redux/actionCreators/modal';
+import { launchMeetup } from '../../../../redux/actionCreators/meetups';
 import { addSnackBar } from '../../../../redux/actionCreators/snackBar';
 
 const INITIAL_STATE = {
@@ -119,6 +121,7 @@ const Container = (props) => {
     setLaunchLocation,
     setIsLaunchMeetupConfirmed,
     launchMeetupBottomSheetRef,
+    setMeetups,
   } = useContext(MapContext);
 
   const formValidation = () => {
@@ -126,7 +129,7 @@ const Container = (props) => {
     return true;
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const badgeIds = Object.values(state.badges).map((badge) => {
       return badge._id;
     });
@@ -152,10 +155,15 @@ const Container = (props) => {
       link: state.link,
       launcher: props.auth.data._id,
     };
-    console.log(formData);
+    // console.log(formData);
     // props.setIsHostMeetupOpen(false);
     // props.setMeetupLocation('');
-    props.createMeetup(formData);
+    // props.createMeetup(formData);
+    const result = await lampostAPI.post('/meetups', formData);
+    const { meetup, viewedChatsLastTime } = result.data;
+    // console.log('created meetup', meetup);
+    setMeetups((previous) => [...previous, meetup]);
+    props.launchMeetup(meetup, viewedChatsLastTime);
     setIsLaunchMeetupConfirmed(false);
     setLaunchLocation(null);
     launchMeetupBottomSheetRef.current.close();
@@ -207,5 +215,6 @@ export default connect(mapStateToProps, {
   setIsHostMeetupOpen,
   setMeetupLocation,
   setIsCancelLaunchMeetupModalOpen,
+  launchMeetup,
   addSnackBar,
 })(Container);
