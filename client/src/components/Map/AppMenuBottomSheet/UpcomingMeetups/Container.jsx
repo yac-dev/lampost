@@ -1,32 +1,34 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import MapContext from '../../MeetupContext';
 import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { sectionBackgroundColor } from '../../../../utils/colorsTable';
+import { sectionBackgroundColor, baseTextColor } from '../../../../utils/colorsTable';
+import { Entypo } from '@expo/vector-icons';
 
 const Container = (props) => {
+  const { appMenuBottomSheetRef } = useContext(MapContext);
   // ここのconditional renderingまじ重要ね。
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
+      weekday: 'short',
       month: 'short',
       day: 'numeric',
-      year: 'numeric',
     });
-    const dateTable = { ...d.split(' ') };
+    const dateElements = d.split(',').join('').split(' ');
     return (
       <View
         style={{
-          width: 50,
-          height: 50,
           padding: 10,
           borderRadius: 10,
           borderWidth: 0.3,
-          marginRight: 10,
-          backgroundColor: '#EFEFEF',
+          marginRight: 15,
+          borderColor: baseTextColor,
         }}
       >
-        <Text style={{ fontSize: 15, fontWeight: 'bold', textAlign: 'center' }}>{dateTable['0']}</Text>
-        <Text style={{ fontSize: 13, fontWeight: 'bold', textAlign: 'center' }}>{dateTable['1']}</Text>
-        {/* <Text style={{ textAlign: 'center' }}>{dateTable['2']}</Text> */}
+        <Text style={{ fontSize: 13, textAlign: 'center', color: baseTextColor }}>{dateElements[0]}</Text>
+        <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center', color: baseTextColor }}>
+          {dateElements[1]}&nbsp;{dateElements[2]}
+        </Text>
       </View>
     );
   };
@@ -45,6 +47,11 @@ const Container = (props) => {
     );
   };
 
+  const onUpcomingMeetupPress = (meetupId) => {
+    appMenuBottomSheetRef.current.snapToIndex(0);
+    console.log('selected meetup', meetupId);
+  };
+
   const renderUpcomingMeetups = () => {
     if (props.auth.data) {
       const upcomingMeetupsList = props.auth.data.upcomingMeetups.map((meetup, index) => {
@@ -54,17 +61,22 @@ const Container = (props) => {
             style={{
               flexDirection: 'row',
               alignItems: 'center',
+              justifyContent: 'space-between',
               paddingTop: 10,
               paddingBottom: 10,
               borderBottomWidth: 0.3,
               borderBottomColor: '#EFEFEF',
             }}
+            onPress={() => onUpcomingMeetupPress(meetup.meetup._id)}
           >
-            {renderDate(meetup.meetup.startDateAndTime)}
-            <View style={{}}>
-              <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>{meetup.meetup.title}</Text>
-              {renderTime(meetup.meetup.startDateAndTime)}
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              {renderDate(meetup.meetup.startDateAndTime)}
+              <View style={{}}>
+                <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>{meetup.meetup.title}</Text>
+                {renderTime(meetup.meetup.startDateAndTime)}
+              </View>
             </View>
+            <Entypo size={25} name='chat' color={baseTextColor} onPress={() => console.log('opening chat')} />
           </TouchableOpacity>
         );
       });

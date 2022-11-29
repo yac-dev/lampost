@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
+import MapContext from '../MeetupContext';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -18,6 +19,8 @@ import {
 import Menu from './Menu';
 
 const Menus = (props) => {
+  const { selectedMeetup, navigation } = useContext(MapContext);
+
   const renderDate = (date) => {
     if (date) {
       return (
@@ -142,13 +145,13 @@ const Menus = (props) => {
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'red', width: 35, height: 35, borderRadius: 7, marginRight: 5 }}></View>
-            <Text style={{ color: baseTextColor }}>{`${props.selectedMeetup.launcher.name} >`}</Text>
+            <Text style={{ color: baseTextColor }}>{`${selectedMeetup.launcher.name} >`}</Text>
           </View>
         }
         onPressMenu={() => {
           // Map tab内では、自分のpageを見せないようにする。ごちゃごちゃになってめんどいからね。
-          if (props.auth.data._id !== props.selectedMeetup.launcher._id) {
-            props.navigation.navigate('User', { userId: props.selectedMeetup.launcher._id });
+          if (props.auth.data._id !== selectedMeetup.launcher._id) {
+            props.navigation.navigate('User', { userId: selectedMeetup.launcher._id });
           }
         }}
       />
@@ -156,14 +159,14 @@ const Menus = (props) => {
         label='Crew'
         icon={<FontAwesome5 name='user-astronaut' size={25} color={iconColorsTable['violet1']} />}
         backgroundColor={backgroundColorsTable['violet1']}
-        rightInfo={<Text style={{ color: baseTextColor }}>{`${props.selectedMeetup.attendees.length} >`}</Text>}
+        rightInfo={<Text style={{ color: baseTextColor }}>{`${selectedMeetup.attendees.length} >`}</Text>}
         onPressMenu={() => props.handleselectedMeetupDetailBottomSheetChanges('Crew')}
       />
       <Menu
         label='Comments'
         icon={<MaterialCommunityIcons name='chat-question' size={25} color={iconColorsTable['pink1']} />}
         backgroundColor={backgroundColorsTable['pink1']}
-        rightInfo={<Text style={{ color: baseTextColor }}>{`${props.selectedMeetup.comments.length} >`}</Text>}
+        rightInfo={<Text style={{ color: baseTextColor }}>{`${selectedMeetup.comments.length} >`}</Text>}
         onPressMenu={() => props.handleselectedMeetupDetailBottomSheetChanges('QandAs')}
       />
       <Menu
@@ -171,7 +174,7 @@ const Menus = (props) => {
         icon={<Foundation name='dollar-bill' size={25} color={iconColorsTable['yellow1']} />}
         backgroundColor={backgroundColorsTable['yellow1']}
         rightInfo={
-          <Text style={{ color: baseTextColor }}>{props.selectedMeetup.isFeeFree ? "It's free" : "It's not free"}</Text>
+          <Text style={{ color: baseTextColor }}>{selectedMeetup.isFeeFree ? "It's free" : "It's not free"}</Text>
         }
         onPressMenu={() => props.handleselectedMeetupDetailBottomSheetChanges('Fee')}
       />
@@ -180,9 +183,7 @@ const Menus = (props) => {
         icon={<FontAwesome5 name='photo-video' size={25} color={iconColorsTable['lightBlue1']} />}
         backgroundColor={backgroundColorsTable['lightBlue1']}
         rightInfo={
-          <Text style={{ color: baseTextColor }}>
-            {props.selectedMeetup.isMediaAllowed ? 'Allowed' : 'Not allowed'}
-          </Text>
+          <Text style={{ color: baseTextColor }}>{selectedMeetup.isMediaAllowed ? 'Allowed' : 'Not allowed'}</Text>
         }
         onPressMenu={() => props.handleselectedMeetupDetailBottomSheetChanges('MediaPermission')}
       />
@@ -198,7 +199,7 @@ const Menus = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { selectedMeetup: state.selectedItem.meetup, auth: state.auth };
+  return { auth: state.auth };
 };
 
 export default connect(mapStateToProps)(Menus);

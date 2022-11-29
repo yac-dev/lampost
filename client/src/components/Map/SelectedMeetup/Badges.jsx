@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import MapContext from '../MeetupContext';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import {
@@ -10,8 +11,10 @@ import {
 import FastImage from 'react-native-fast-image';
 
 const Badges = (props) => {
+  const { selectedMeetup } = useContext(MapContext);
+
   const renderBadges = () => {
-    const badgesList = props.selectedMeetup.badges.map((badge, index) => {
+    const badgesList = selectedMeetup.badges.map((badge, index) => {
       return (
         <View key={index} style={{ backgroundColor: rnDefaultBackgroundColor, marginRight: 10, borderRadius: 10 }}>
           <TouchableOpacity

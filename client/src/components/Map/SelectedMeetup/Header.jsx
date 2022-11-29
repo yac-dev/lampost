@@ -1,5 +1,6 @@
 // main libraries
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import MapContext from '../MeetupContext';
 import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
@@ -18,6 +19,7 @@ import { joinMeetup } from '../../../redux/actionCreators/meetups';
 import { leaveMeetup } from '../../../redux/actionCreators/meetups';
 
 const Header = (props) => {
+  const { selectedMeetup } = useContext(MapContext);
   // const renderDate = (date) => {
   //   return (
   //     <Text>{`${new Date(date).toLocaleString('en-US', {
@@ -74,16 +76,14 @@ const Header = (props) => {
   return (
     <View style={{ marginBottom: 25 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-        {renderDate(props.selectedMeetup.startDateAndTime)}
-        <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>{props.selectedMeetup.title}</Text>
+        {renderDate(selectedMeetup.startDateAndTime)}
+        <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>{selectedMeetup.title}</Text>
       </View>
-      <View style={{ marginBottom: 10 }}>
-        {renderTime(props.selectedMeetup.startDateAndTime, props.selectedMeetup.duration)}
-      </View>
+      <View style={{ marginBottom: 10 }}>{renderTime(selectedMeetup.startDateAndTime, selectedMeetup.duration)}</View>
       <View style={{ marginBottom: 10 }}>
         <Badges />
       </View>
-      <Text style={{ flexShrink: 1, color: baseTextColor }}>{props.selectedMeetup.description}</Text>
+      <Text style={{ flexShrink: 1, color: baseTextColor }}>{selectedMeetup.description}</Text>
     </View>
   );
 };

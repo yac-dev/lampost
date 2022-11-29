@@ -1,5 +1,6 @@
 // main libraries
 import React, { useContext, useEffect } from 'react';
+import lampostAPI from '../../apis/lampost';
 import MapContext from './MeetupContext';
 import { connect } from 'react-redux';
 import { View, TouchableOpacity } from 'react-native';
@@ -15,7 +16,7 @@ import { getMeetups } from '../../redux/actionCreators/meetups';
 import { selectMeetup } from '../../redux/actionCreators/selectItem';
 
 const MapMarkers = (props) => {
-  const { meetups } = useContext(MapContext);
+  const { meetups, selectedMeetup, setSelectedMeetup, selectedMeetupBottomSheetRef } = useContext(MapContext);
 
   // useEffect(() => {
   //   const { socket } = props.auth;
@@ -29,10 +30,66 @@ const MapMarkers = (props) => {
 
   // flatlistsなんで動かねーんだろ。
 
+  const getSelectedMeetup = async (meetupId) => {
+    const result = await lampostAPI.get(`/meetups/${meetupId}/selected`);
+    const { meetup } = result.data;
+    setSelectedMeetup(meetup);
+    selectedMeetupBottomSheetRef.current.snapToIndex(0);
+  };
+
+  // badgeだけ、また別で作った方がいいわ。
   const renderMeetups = () => {
-    console.log('My Meetups...', meetups);
     if (meetups.length) {
       const meetupsList = meetups.map((meetup, index) => {
+        // if (selectedMeetup && selectedMeetup._id === meetup._id) {
+        //   return (
+        //     <View key={index}>
+        //       <Marker
+        //         key={index}
+        //         tracksViewChanges={false}
+        //         coordinate={{ latitude: meetup.place.coordinates[1], longitude: meetup.place.coordinates[0] }}
+        //         pinColor='black'
+        //         onPress={() => {
+        //           // props.handleSelectedItemBottomSheetChanges(meetup._id);
+        //           // setSelectedMeetup()
+        //           getSelectedMeetup(meetup._id);
+        //         }}
+        //       >
+        //         <View
+        //           style={{
+        //             width: 55,
+        //             aspectRatio: 1,
+        //             backgroundColor: rnDefaultBackgroundColor,
+        //             borderRadius: 10,
+        //           }}
+        //         >
+        //           <TouchableOpacity
+        //             style={{
+        //               width: '100%',
+        //               height: '100%',
+        //               alignItems: 'center', // これと
+        //               justifyContent: 'center', // これで中のimageを上下左右真ん中にする
+        //               borderRadius: 10,
+        //               backgroundColor: backgroundColorsTable[meetup.badge.color],
+        //               borderColor: backgroundColorsTable[meetup.badge.color],
+        //               borderWidth: 0.5,
+        //             }}
+        //           >
+        //             <FastImage
+        //               style={{ width: 30, height: 30 }}
+        //               source={{
+        //                 uri: meetup.badge.icon,
+        //                 priority: FastImage.priority.normal,
+        //               }}
+        //               tintColor={iconColorsTable[meetup.badge.color]}
+        //               resizeMode={FastImage.resizeMode.contain}
+        //             />
+        //           </TouchableOpacity>
+        //         </View>
+        //       </Marker>
+        //     </View>
+        //   );
+        // } else {
         return (
           <View key={index}>
             <Marker
@@ -41,7 +98,7 @@ const MapMarkers = (props) => {
               coordinate={{ latitude: meetup.place.coordinates[1], longitude: meetup.place.coordinates[0] }}
               pinColor='black'
               onPress={() => {
-                props.handleSelectedItemBottomSheetChanges(meetup._id);
+                getSelectedMeetup(meetup._id);
               }}
             >
               <View
@@ -78,6 +135,7 @@ const MapMarkers = (props) => {
             </Marker>
           </View>
         );
+        // }
       });
 
       return <View>{meetupsList}</View>;

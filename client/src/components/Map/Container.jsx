@@ -49,34 +49,34 @@ const Map = (props) => {
   const [isLaunchMeetupConfirmed, setIsLaunchMeetupConfirmed] = useState(false);
   const [launchLocation, setLaunchLocation] = useState(null);
   const [meetups, setMeetups] = useState([]); // これも必要になるわ。map markersでstateを持つんではなく、ここで持った方がいい。
-  // const [selectedMeetup, setSelectedMeetup] = useState(null)
+  const [selectedMeetup, setSelectedMeetup] = useState(null);
 
   const mapRef = useRef(null);
   const appMenuBottomSheetRef = useRef(null);
   const launchMeetupBottomSheetRef = useRef(null);
-  const notificationBottomSheetRef = useRef(null);
-  const selectedItemBottomSheetRef = useRef(null);
+  const selectedMeetupBottomSheetRef = useRef(null);
   const selectedMeetupDetailBottomSheetRef = useRef(null);
 
   console.log('Map is rendered');
+  // const selectedItemBottomSheetRef = useRef(null);
 
   // 手動で閉じたらおかしくなる。。。
-  const handleSelectedItemBottomSheetChanges = (meetupId) => {
-    if (!props.bottomSheet.selectedItem.isOpen) {
-      console.log(meetupId);
-      props.selectMeetup(meetupId);
-      // props.setIsPostBottomSheetOpen(false);
-      // postBottomSheetRef.current?.close();
-      props.setIsSelectedItemBottomSheetOpen(true);
-      selectedItemBottomSheetRef.current?.snapToIndex(0);
-    } else if (props.bottomSheet.selectedItem.isOpen) {
-      console.log(meetupId);
-      props.selectMeetup(meetupId);
-      // props.setIsSelectedItemBottomSheetOpen(false);
-      // selectedItemBottomSheetRef.current.close();
-      // bottomSheetRef.current?.snapToIndex(-1);
-    }
-  };
+  // const handleSelectedItemBottomSheetChanges = (meetupId) => {
+  //   if (!props.bottomSheet.selectedItem.isOpen) {
+  //     console.log(meetupId);
+  //     props.selectMeetup(meetupId);
+  //     // props.setIsPostBottomSheetOpen(false);
+  //     // postBottomSheetRef.current?.close();
+  //     props.setIsSelectedItemBottomSheetOpen(true);
+  //     selectedItemBottomSheetRef.current?.snapToIndex(0);
+  //   } else if (props.bottomSheet.selectedItem.isOpen) {
+  //     console.log(meetupId);
+  //     props.selectMeetup(meetupId);
+  //     // props.setIsSelectedItemBottomSheetOpen(false);
+  //     // selectedItemBottomSheetRef.current.close();
+  //     // bottomSheetRef.current?.snapToIndex(-1);
+  //   }
+  // };
 
   const handleselectedMeetupDetailBottomSheetChanges = (component) => {
     props.setIsSelectedMeetupInfoDetailBottomSheetOpen(true, component);
@@ -123,19 +123,6 @@ const Map = (props) => {
     getMeetups();
   }, []);
 
-  useEffect(() => {
-    if (props.bottomSheet.post.isOpen && props.auth.currentLocation.latitude && props.auth.currentLocation.longitude) {
-      const newLat = props.auth.currentLocation.latitude - 0.027;
-      console.log(newLat);
-      mapRef.current.animateToRegion({
-        latitude: newLat,
-        longitude: props.auth.currentLocation.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      });
-    }
-  }, [props.bottomSheet.post.isOpen]);
-
   // これで、mapを自動で移動させる。launchMeetupの場所へ。
   useEffect(() => {
     if (isLaunchMeetupConfirmed && launchLocation) {
@@ -178,6 +165,9 @@ const Map = (props) => {
           setLaunchLocation,
           meetups,
           setMeetups,
+          selectedMeetup,
+          setSelectedMeetup,
+          selectedMeetupBottomSheetRef,
         }}
       >
         <NBProvider>
@@ -213,7 +203,7 @@ const Map = (props) => {
                   <MaterialCommunityIcons size={35} name='rocket-launch' color={iconColorsTable['red1']} />
                 </Marker>
               ) : null}
-              <MapMarkers handleSelectedItemBottomSheetChanges={handleSelectedItemBottomSheetChanges} />
+              <MapMarkers />
             </MapView>
 
             <ConfirmLaunchMeetupModal />
@@ -223,9 +213,7 @@ const Map = (props) => {
             <AppMenusBottomSheet />
             <LaunchMeetupBottomSheet navigation={props.navigation} route={props.route} />
             <SelectedMeetup
-              navigation={props.navigation}
-              selectedItemBottomSheetRef={selectedItemBottomSheetRef}
-              handleselectedMeetupDetailBottomSheetChanges={handleselectedMeetupDetailBottomSheetChanges}
+            // handleselectedMeetupDetailBottomSheetChanges={handleselectedMeetupDetailBottomSheetChanges}
             />
             <SelectedMeetupInfoDetail
               navigation={props.navigation}

@@ -1,5 +1,6 @@
 // main libraries
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import MapContext from '../MeetupContext';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
 import { Button } from 'react-native-paper';
@@ -13,14 +14,16 @@ import { joinMeetup } from '../../../redux/actionCreators/meetups';
 import { leaveMeetup } from '../../../redux/actionCreators/meetups';
 
 const ActionButtons = (props) => {
+  const { selectedMeetup, navigation } = useContext(MapContext);
+
   const renderApp = () => {
     if (props.auth.isAuthenticated) {
       for (let i = 0; i < props.auth.data.upcomingMeetups.length; i++) {
         // everyか？
-        if (props.auth.data.upcomingMeetups[i].meetup._id === props.selectedMeetup._id) {
+        if (props.auth.data.upcomingMeetups[i].meetup._id === selectedMeetup._id) {
           return (
             <View style={{ flexDirection: 'row', paddingTop: 10, paddingBottom: 10 }}>
-              {props.selectedMeetup.launcher._id === props.auth.data._id ? (
+              {selectedMeetup.launcher._id === props.auth.data._id ? (
                 <ActionButton
                   label='Edit my meetup'
                   icon={
@@ -40,7 +43,7 @@ const ActionButtons = (props) => {
                     <MaterialCommunityIcons name='human-greeting-variant' size={25} color={iconColorsTable['red1']} />
                   }
                   backgroundColor={backgroundColorsTable['red1']}
-                  onActionButtonPress={() => props.leaveMeetup(props.selectedMeetup._id)}
+                  onActionButtonPress={() => props.leaveMeetup(selectedMeetup._id)}
                 />
               )}
               <ActionButton
@@ -49,7 +52,7 @@ const ActionButtons = (props) => {
                   <MaterialCommunityIcons name='comment-text-multiple' size={25} color={iconColorsTable['blue1']} />
                 }
                 backgroundColor={backgroundColorsTable['blue1']}
-                onActionButtonPress={() => props.navigation.navigate('Lounge', { meetupId: props.selectedMeetup._id })}
+                onActionButtonPress={() => navigation.navigate('Lounge', { meetupId: selectedMeetup._id })}
               />
               <ActionButton
                 label='Launch camera'
@@ -90,7 +93,7 @@ const ActionButtons = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { selectedMeetup: state.selectedItem.meetup, auth: state.auth };
+  return { auth: state.auth };
 };
 
 export default connect(mapStateToProps, { joinMeetup, leaveMeetup })(ActionButtons);
