@@ -50,6 +50,7 @@ const Map = (props) => {
   const [launchLocation, setLaunchLocation] = useState(null);
   const [meetups, setMeetups] = useState([]); // これも必要になるわ。map markersでstateを持つんではなく、ここで持った方がいい。
   const [selectedMeetup, setSelectedMeetup] = useState(null);
+  const [selectedMeetupDetailComponent, setSelectedMeetupDetailComponent] = useState('');
 
   const mapRef = useRef(null);
   const appMenuBottomSheetRef = useRef(null);
@@ -136,16 +137,16 @@ const Map = (props) => {
   }, [isLaunchMeetupConfirmed, launchLocation]);
 
   useEffect(() => {
-    if (props.bottomSheet.selectedItem.isOpen && props.selectedMeetup) {
-      const newLat = props.selectedMeetup.place.coordinates[1] - 0.017;
+    if (selectedMeetup) {
+      const newLat = selectedMeetup.place.coordinates[1] - 0.017;
       mapRef.current.animateToRegion({
         latitude: newLat,
-        longitude: props.selectedMeetup.place.coordinates[0],
+        longitude: selectedMeetup.place.coordinates[0],
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       });
     }
-  }, [props.bottomSheet.selectedItem, props.selectedMeetup]);
+  }, [selectedMeetup]);
 
   return (
     <>
@@ -167,6 +168,9 @@ const Map = (props) => {
           selectedMeetup,
           setSelectedMeetup,
           selectedMeetupBottomSheetRef,
+          selectedMeetupDetailComponent,
+          setSelectedMeetupDetailComponent,
+          selectedMeetupDetailBottomSheetRef,
         }}
       >
         <View style={styles.container}>

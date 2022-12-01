@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Keyboard } from 'react-native';
 import { Button } from 'react-native-paper';
 import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -31,7 +31,9 @@ const Container = (props) => {
           icon='rocket-launch'
           mode='outlined'
           contentStyle={{ flexDirection: 'row-reverse' }}
-          onPress={() => props.onSubmit()}
+          onPress={() => {
+            props.onSubmit();
+          }}
         >
           Launch
         </Button>

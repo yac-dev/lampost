@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import MapContext from '../../MeetupContext';
+import lampostAPI from '../../../../apis/lampost';
 import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { sectionBackgroundColor, baseTextColor } from '../../../../utils/colorsTable';
 import { Entypo } from '@expo/vector-icons';
 
 const Container = (props) => {
-  const { appMenuBottomSheetRef } = useContext(MapContext);
+  const { appMenuBottomSheetRef, setSelectedMeetup, selectedMeetupBottomSheetRef } = useContext(MapContext);
   // ここのconditional renderingまじ重要ね。
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
@@ -52,6 +53,14 @@ const Container = (props) => {
     console.log('selected meetup', meetupId);
   };
 
+  const getMeetup = async (meetupId) => {
+    const result = await lampostAPI.get(`/meetups/${meetupId}/selected`);
+    const { meetup } = result.data;
+    appMenuBottomSheetRef.current.snapToIndex(0);
+    setSelectedMeetup(meetup);
+    selectedMeetupBottomSheetRef.current.snapToIndex(0);
+  };
+
   const renderUpcomingMeetups = () => {
     if (props.auth.data) {
       const upcomingMeetupsList = props.auth.data.upcomingMeetups.map((meetup, index) => {
@@ -67,7 +76,7 @@ const Container = (props) => {
               borderBottomWidth: 0.3,
               borderBottomColor: '#EFEFEF',
             }}
-            onPress={() => onUpcomingMeetupPress(meetup.meetup._id)}
+            onPress={() => getMeetup(meetup.meetup._id)}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               {renderDate(meetup.meetup.startDateAndTime)}

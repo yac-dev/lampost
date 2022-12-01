@@ -1,7 +1,7 @@
 // main libraries
 import React, { useState, useEffect, useReducer, useContext } from 'react';
 import lampostAPI from '../../../../apis/lampost';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Keyboard } from 'react-native';
 import MapContext from '../../MeetupContext';
 import { connect } from 'react-redux';
 import { AntDesign } from '@expo/vector-icons';
@@ -162,6 +162,7 @@ const Container = (props) => {
     const result = await lampostAPI.post('/meetups', formData);
     const { meetup, viewedChatsLastTime } = result.data;
     // console.log('created meetup', meetup);
+    Keyboard.dismiss();
     setMeetups((previous) => [...previous, meetup]);
     props.launchMeetup(meetup, viewedChatsLastTime);
     setIsLaunchMeetupConfirmed(false);

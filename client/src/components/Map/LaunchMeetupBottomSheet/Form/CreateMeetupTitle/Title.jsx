@@ -1,5 +1,6 @@
-import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import React, { useContext } from 'react';
+import MapContext from '../../../MeetupContext';
+import { View, Text, TouchableOpacity, InputAccessoryView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetScrollView, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { Button } from 'react-native-paper';
 import { FontAwesome } from '@expo/vector-icons';
@@ -10,6 +11,8 @@ import { Entypo } from '@expo/vector-icons';
 import { iconColorsTable, baseTextColor, sectionBackgroundColor } from '../../../../../utils/colorsTable';
 
 const Title = (props) => {
+  const { launchMeetupBottomSheetRef } = useContext(MapContext);
+  const inputAccessoryViewID = 'TITLE_INPUT';
   return (
     <View style={{ marginBottom: 20 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
@@ -27,10 +30,27 @@ const Title = (props) => {
             color: baseTextColor,
             borderRadius: 5,
           }}
+          inputAccessoryViewID={inputAccessoryViewID}
           value={props.state.title}
           onChangeText={(text) => props.dispatch({ type: 'SET_MEETUP_TITLE', payload: text })}
           autoCapitalize='none'
         />
+        <InputAccessoryView
+          nativeID={inputAccessoryViewID}
+          backgroundColor={sectionBackgroundColor}
+          // style={{ paddingTop: 10, paddingBottom: 10, paddingRight: 10 }}
+        >
+          <View style={{ alignItems: 'flex-end' }}>
+            <TouchableOpacity
+              onPress={() => {
+                Keyboard.dismiss();
+                launchMeetupBottomSheetRef.current.snapToIndex(0);
+              }}
+            >
+              <Text style={{ color: 'white', padding: 10, fontWeight: 'bold' }}>Done</Text>
+            </TouchableOpacity>
+          </View>
+        </InputAccessoryView>
       </View>
     </View>
   );

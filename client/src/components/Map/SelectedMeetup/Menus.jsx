@@ -19,7 +19,13 @@ import {
 import Menu from './Menu';
 
 const Menus = (props) => {
-  const { selectedMeetup, navigation } = useContext(MapContext);
+  const {
+    selectedMeetup,
+    navigation,
+    selectedMeetupDetailComponent,
+    setSelectedMeetupDetailComponent,
+    selectedMeetupDetailBottomSheetRef,
+  } = useContext(MapContext);
 
   const renderDate = (date) => {
     if (date) {
@@ -151,7 +157,7 @@ const Menus = (props) => {
         onPressMenu={() => {
           // Map tab内では、自分のpageを見せないようにする。ごちゃごちゃになってめんどいからね。
           if (props.auth.data._id !== selectedMeetup.launcher._id) {
-            props.navigation.navigate('User', { userId: selectedMeetup.launcher._id });
+            navigation.navigate('User', { userId: selectedMeetup.launcher._id });
           }
         }}
       />
@@ -160,14 +166,20 @@ const Menus = (props) => {
         icon={<FontAwesome5 name='user-astronaut' size={25} color={iconColorsTable['violet1']} />}
         backgroundColor={backgroundColorsTable['violet1']}
         rightInfo={<Text style={{ color: baseTextColor }}>{`${selectedMeetup.attendees.length} >`}</Text>}
-        onPressMenu={() => props.handleselectedMeetupDetailBottomSheetChanges('Crew')}
+        onPressMenu={() => {
+          setSelectedMeetupDetailComponent('Crew');
+          selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
+        }}
       />
       <Menu
         label='Comments'
         icon={<MaterialCommunityIcons name='chat-question' size={25} color={iconColorsTable['pink1']} />}
         backgroundColor={backgroundColorsTable['pink1']}
         rightInfo={<Text style={{ color: baseTextColor }}>{`${selectedMeetup.comments.length} >`}</Text>}
-        onPressMenu={() => props.handleselectedMeetupDetailBottomSheetChanges('QandAs')}
+        onPressMenu={() => {
+          setSelectedMeetupDetailComponent('QandAs');
+          selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
+        }}
       />
       <Menu
         label='Fee'
@@ -176,7 +188,10 @@ const Menus = (props) => {
         rightInfo={
           <Text style={{ color: baseTextColor }}>{selectedMeetup.isFeeFree ? "It's free" : "It's not free"}</Text>
         }
-        onPressMenu={() => props.handleselectedMeetupDetailBottomSheetChanges('Fee')}
+        onPressMenu={() => {
+          setSelectedMeetupDetailComponent('Fee');
+          selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
+        }}
       />
       <Menu
         label='Privacy'
@@ -185,14 +200,20 @@ const Menus = (props) => {
         rightInfo={
           <Text style={{ color: baseTextColor }}>{selectedMeetup.isMediaAllowed ? 'Allowed' : 'Not allowed'}</Text>
         }
-        onPressMenu={() => props.handleselectedMeetupDetailBottomSheetChanges('MediaPermission')}
+        onPressMenu={() => {
+          setSelectedMeetupDetailComponent('MediaPermission');
+          selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
+        }}
       />
       <Menu
         label='Link'
         icon={<Entypo name='link' size={25} color={iconColorsTable['grey1']} />}
         backgroundColor={backgroundColorsTable['grey1']}
         rightInfo={<Text style={{ color: baseTextColor }}>Right</Text>}
-        onPressMenu={() => props.handleselectedMeetupDetailBottomSheetChanges('Links')}
+        onPressMenu={() => {
+          setSelectedMeetupDetailComponent('Link');
+          selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
+        }}
       />
     </View>
   );

@@ -1,4 +1,5 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
+import MapContext from '../../MeetupContext';
 import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
@@ -13,10 +14,12 @@ import MediaPermission from './MediaPermission';
 import { setIsSelectedMeetupInfoDetailBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
 
 const Container = (props) => {
+  const { selectedMeetupDetailComponent, setSelectedMeetupDetailComponent, selectedMeetupDetailBottomSheetRef } =
+    useContext(MapContext);
   const snapPoints = ['40%', '90%'];
 
   const switchComponent = () => {
-    switch (props.bottomSheet.selectedItem.infoDetail.component) {
+    switch (selectedMeetupDetailComponent) {
       case 'Badges':
         return <Badges />;
       case 'Fee':
@@ -50,7 +53,7 @@ const Container = (props) => {
     <GorhomBottomSheet
       index={-1}
       enableOverDrag={true}
-      ref={props.selectedMeetupDetailBottomSheetRef}
+      ref={selectedMeetupDetailBottomSheetRef}
       snapPoints={snapPoints}
       keyboardBehavior={'extend'}
       backdropComponent={(backdropProps) => (

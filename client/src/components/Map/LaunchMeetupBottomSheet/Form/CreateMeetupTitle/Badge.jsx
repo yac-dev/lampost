@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
+import MapContext from '../../../MeetupContext';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Foundation } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
@@ -7,6 +8,7 @@ import FastImage from 'react-native-fast-image';
 import SelectedBadges from '../CreateMeetupPeople/SelectedBadges/Badges';
 
 const Badge = (props) => {
+  const { launchMeetupBottomSheetRef } = useContext(MapContext);
   // このcomponentからadd badgeのmodalへscreen移動する。
   // そんで、add badgeのmodalからnavigateでここに戻ってくる時に、paramsがadd badgesのmodalで選んだbadgeがparamsとして渡される。それを、formのstateにそのまま設定しましょう、っていう流れ。
   // useEffect(() => {
@@ -34,12 +36,13 @@ const Badge = (props) => {
           marginBottom: 10,
           alignSelf: 'flex-end',
         }}
-        onPress={() =>
+        onPress={() => {
+          launchMeetupBottomSheetRef.current.snapToIndex(0);
           props.navigation.navigate('Add badges', {
             fromComponent: 'Add meetup badges',
             meetupBadges: props.state.badges,
-          })
-        }
+          });
+        }}
       >
         <SimpleLineIcons name='magnifier-add' size={20} color={baseTextColor} style={{ marginRight: 5 }} />
         <Text style={{ color: baseTextColor }}>Add</Text>

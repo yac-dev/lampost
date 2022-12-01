@@ -5,7 +5,7 @@ import lampostAPI from '../../apis/lampost';
 import { useEffect, useRef, useState } from 'react';
 import { Camera } from 'expo-camera';
 import { IconButton } from 'react-native-paper';
-import ButtonToggleGroup from 'react-native-button-toggle-group';
+// import ButtonToggleGroup from 'react-native-button-toggle-group';
 
 import SnackBar from '../Utils/SnackBar';
 import { addSnackBar } from '../../redux/actionCreators/snackBar';

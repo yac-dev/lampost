@@ -139,7 +139,7 @@ const AppStack = (props) => {
                 <FontAwesome5 name='user-astronaut' color={color} size={size} />
                 // 本当はtime machineのiconにしたい。
               ),
-              tabBarLabel: 'Home',
+              tabBarLabel: 'My page',
               // () => {
               //   return null;
               // },

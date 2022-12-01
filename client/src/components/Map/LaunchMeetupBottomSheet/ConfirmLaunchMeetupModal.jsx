@@ -23,12 +23,21 @@ const ConfirmLaunchMeetupModal = (props) => {
   if (!props.auth.isAuthenticated) {
     return (
       <Portal>
-        <Dialog visible={props.modalOpen} style={{ backgroundColor: 'white' }}>
+        <Dialog
+          visible={isLaunchMeetupConfirmationModalOpen}
+          style={{ backgroundColor: appBottomSheetBackgroundColor }}
+        >
           <Dialog.Content>
-            <Text>Please login or signup from top left corner before using.</Text>
+            <Text style={{ color: 'white' }}>Please log in or sign up from the "My page" tab below.</Text>
           </Dialog.Content>
           <Dialog.Actions>
-            <Button textColor='rgb(58, 126, 224)' onPress={() => props.onPressCancel()}>
+            <Button
+              textColor='white'
+              onPress={() => {
+                setIsLaunchMeetupConfirmationModalOpen(false);
+                appMenuBottomSheetRef.current.snapToIndex(0);
+              }}
+            >
               Got it
             </Button>
           </Dialog.Actions>
