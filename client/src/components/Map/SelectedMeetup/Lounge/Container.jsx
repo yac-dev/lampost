@@ -112,6 +112,7 @@ const Container = (props) => {
   return (
     <LoungeContext.Provider
       value={{
+        meetup,
         appMenuBottomSheetRef,
         sendChatBottomSheetRef,
         crewBottomSheetRef,

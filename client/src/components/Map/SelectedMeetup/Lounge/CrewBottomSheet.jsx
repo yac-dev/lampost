@@ -1,50 +1,60 @@
 import React, { useMemo, useContext } from 'react';
 import LoungeContext from './LoungeContext';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { connect } from 'react-redux';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { appBottomSheetBackgroundColor } from '../../../../utils/colorsTable';
 
-const SendChatBottomSheet = (props) => {
+const CrewBottomSheet = (props) => {
   const snapPoints = useMemo(() => ['30%', '80%'], []);
-  const { crewBottomSheetRef } = useContext(LoungeContext);
+  const { meetup, navigation, crewBottomSheetRef } = useContext(LoungeContext);
 
   const renderCrew = () => {
-    const crewList = meetup.attendees.map((user, index) => {
-      return (
-        <TouchableOpacity
-          key={index}
-          style={{
-            flexDirection: 'row',
-            paddingLeft: 20,
-            paddingTop: 10,
-            paddingBottom: 10,
-            borderBottomWidth: 0.3,
-            borderBottomColor: '#ABABAB',
-          }}
-          // onPress={() => props.navigation.navigate('User', { userId: user._id })}
-        >
-          <View
+    if (meetup) {
+      const crewList = meetup.attendees.map((user, index) => {
+        return (
+          <TouchableOpacity
+            key={index}
             style={{
-              backgroundColor: 'blue',
-              marginRight: 20,
-              padding: 5,
-              borderRadius: 7,
-              width: 50,
-              height: 50,
-              alignItems: 'center',
+              flexDirection: 'row',
+              paddingLeft: 20,
+              paddingTop: 10,
+              paddingBottom: 10,
+              borderBottomWidth: 0.3,
+              borderBottomColor: '#ABABAB',
+            }}
+            onPress={() => {
+              if (props.auth.data._id !== user._id) {
+                navigation.navigate('User', { userId: user._id });
+              }
             }}
           >
-            <FontAwesome5 name='user-astronaut' color='white' size={35} />
-          </View>
-          <View>
-            <Text style={{ color: 'rgb(160,160,160)' }}>{user.name}</Text>
-            <Text>Badges</Text>
-          </View>
-        </TouchableOpacity>
-      );
-    });
+            <View
+              style={{
+                backgroundColor: 'blue',
+                marginRight: 20,
+                padding: 5,
+                borderRadius: 7,
+                width: 50,
+                height: 50,
+                alignItems: 'center',
+              }}
+            >
+              <FontAwesome5 name='user-astronaut' color='white' size={35} />
+            </View>
+            <View>
+              <Text style={{ color: 'rgb(160,160,160)' }}>{user.name}</Text>
+              <Text>Badges</Text>
+            </View>
+          </TouchableOpacity>
+        );
+      });
 
-    return <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{crewList}</ScrollView>;
+      return <View>{crewList}</View>;
+    } else {
+      return null;
+    }
   };
 
   return (
@@ -62,9 +72,14 @@ const SendChatBottomSheet = (props) => {
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
         <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 5 }}>Crew</Text>
+        <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderCrew()}</ScrollView>
       </BottomSheetView>
     </GorhomBottomSheet>
   );
 };
 
-export default SendChatBottomSheet;
+const mapStateToProps = (state) => {
+  return { auth: state.auth };
+};
+
+export default connect(mapStateToProps)(CrewBottomSheet);
