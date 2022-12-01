@@ -10,7 +10,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { iconColorsTable, baseTextColor } from '../../../../utils/colorsTable';
 
 const chatTypeTable = {
-  general: iconColorsTable['grey1'],
+  general: iconColorsTable['blue1'],
   idea: iconColorsTable['yellow1'],
   questionOrHelp: iconColorsTable['blue1'],
   announcement: iconColorsTable['red1'],
@@ -44,28 +44,37 @@ const Chats = (props) => {
   const renderChats = () => {
     const chatsList = chats.map((chat, index) => {
       return (
-        <TouchableOpacity key={index} style={{ padding: 10, borderBottomWidth: 0.3, borderBottomColor: '#ABABAB' }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 7 }}>
-            <View
-              style={{
-                backgroundColor: chatTypeTable[chat.type],
-                padding: 5,
-                borderRadius: 7,
-                width: 25,
-                height: 25,
-                alignItems: 'center',
-                marginRight: 10,
-              }}
-            >
-              {renderChatType(chat.type)}
+        <TouchableOpacity
+          key={index}
+          style={{ paddingTop: 20, paddingBottom: 20, borderBottomWidth: 0.3, borderBottomColor: '#ABABAB' }}
+        >
+          <View
+            style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, justifyContent: 'space-between' }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View
+                style={{
+                  backgroundColor: chatTypeTable[chat.type],
+                  padding: 5,
+                  borderRadius: 7,
+                  width: 25,
+                  height: 25,
+                  alignItems: 'center',
+                  marginRight: 10,
+                }}
+              >
+                {renderChatType(chat.type)}
+              </View>
+              <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#ABABAB' }}>{renderDate(chat.createdAt)}</Text>
             </View>
-            <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#ABABAB' }}>{renderDate(chat.createdAt)}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
+              <View style={{ height: 25, width: 25, backgroundColor: 'blue', borderRadius: 5, marginRight: 5 }}></View>
+              <Text>{chat.user.name}</Text>
+            </View>
           </View>
-          <Text style={{ fontWeight: 'bold', fontSize: 15, marginBottom: 7 }}>{chat.content}</Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
-            <View style={{ height: 25, width: 25, backgroundColor: 'blue', borderRadius: 5, marginRight: 5 }}></View>
-            <Text>{chat.user.name}</Text>
-          </View>
+          <Text style={{ fontWeight: 'bold', fontSize: 15, marginBottom: 10, color: baseTextColor }}>
+            {chat.content}
+          </Text>
         </TouchableOpacity>
       );
     });

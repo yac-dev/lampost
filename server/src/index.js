@@ -27,12 +27,19 @@ io.on('connection', (socket) => {
 
   socket.on('I_SEND_A_CHAT_TO_MY_GROUP', async (data) => {
     // data {text: 'hello', chatRoomId: '111111', type: 'general', userId: '222222'}
-    const chat = await Chat.create({
+    // const chat = await Chat.create({
+    //   chatRoom: data.chatRoomId,
+    //   content: data.text,
+    //   user: data.userId,
+    //   type: data.type,
+    // });
+    const chat = {
       chatRoom: data.chatRoomId,
       content: data.text,
       user: data.userId,
       type: data.type,
-    });
+    };
+    console.log('someone sent a chat!');
     io.in(chat.chatRoom).emit('SOMEONE_SENT_A_CHAT_TO_MY_GROUP', { chat });
   });
 });

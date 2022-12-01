@@ -17,13 +17,6 @@ const SendChatBottomSheet = (props) => {
 
   const onSendPress = async () => {
     console.log('sending comment');
-    // const body = {
-    //   chatRoomId: props.meetup.chatRoom._id,
-    //   userId: props.auth.data._id,
-    //   content,
-    //   type: chatType,
-    // };
-    // console.log(body);
     const chatObject = {
       text: text,
       chatRoomId: meetup.chatRoom._id,
@@ -39,7 +32,7 @@ const SendChatBottomSheet = (props) => {
     Keyboard.dismiss();
     sendChatBottomSheetRef.current.close();
     appMenuBottomSheetRef.current.snapToIndex(0);
-    props.addSnackBar('Message sent successfully!', 'success', 7000);
+    // props.addSnackBar('Message sent successfully!', 'success', 7000);
   };
 
   return (

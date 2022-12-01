@@ -66,19 +66,23 @@ const Container = (props) => {
     props.auth.socket.on('SOMEONE_SENT_A_CHAT_TO_MY_GROUP', (data) => {
       setChats((previous) => [...previous, data.chat]);
     });
+
+    // return () => {
+    //   props.auth.socket.off('SOMEONE_SENT_A_CHAT_TO_MY_GROUP');
+    // };
   }, []);
 
-  useEffect(() => {
-    // lounge出た時の時間をapi request送らないといけない。
-    return () => {
-      if (props.bottomSheet.textBox.isOpen) {
-        props.setIsTextBoxBottomSheetOpen(false);
-      }
-      if (props.bottomSheet.crew.isOpen) {
-        props.setIsCrewBottomSheetOpen(false);
-      }
-    };
-  });
+  // useEffect(() => {
+  //   // lounge出た時の時間をapi request送らないといけない。
+  //   return () => {
+  //     if (props.bottomSheet.textBox.isOpen) {
+  //       props.setIsTextBoxBottomSheetOpen(false);
+  //     }
+  //     if (props.bottomSheet.crew.isOpen) {
+  //       props.setIsCrewBottomSheetOpen(false);
+  //     }
+  //   };
+  // });
 
   // ここに入った時点で、chatroomのidを持っている状態になる。
   return (
