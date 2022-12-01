@@ -37,18 +37,6 @@ const Container = (props) => {
     }
   };
 
-  // const renderSwitchingComponent = () => {
-  //   if (props.bottomSheet.selectedItem.infoDetail.isOpen) {
-  //     return <>{switchComponent()}</>;
-  //   } else {
-  //     return null;
-  //   }
-  // };
-
-  const onDetailBottomSheetClose = () => {
-    props.setIsSelectedMeetupInfoDetailBottomSheetOpen(false, '');
-  };
-
   return (
     <GorhomBottomSheet
       index={-1}

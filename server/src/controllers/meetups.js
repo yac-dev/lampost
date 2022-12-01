@@ -262,10 +262,6 @@ export const getMeetup = async (request, response) => {
   try {
     const meetup = await Meetup.findById(request.params.id)
       .populate({
-        path: 'badge',
-        model: Badge,
-      })
-      .populate({
         path: 'attendees',
         model: User,
       })

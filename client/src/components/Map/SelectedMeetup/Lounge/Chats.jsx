@@ -6,7 +6,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { iconColorsTable } from '../../../../utils/colorsTable';
+import { iconColorsTable, baseTextColor } from '../../../../utils/colorsTable';
 
 const chatTypeTable = {
   general: iconColorsTable['grey1'],
@@ -77,7 +77,7 @@ const Chats = (props) => {
   if (!props.chats.length) {
     return (
       <View>
-        <Text>No comments yet.</Text>
+        <Text style={{ color: baseTextColor }}>No comments yet.</Text>
       </View>
     );
   } else {

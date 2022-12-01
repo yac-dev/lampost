@@ -1,25 +1,17 @@
 // main libraries
 import React, { useEffect, useState, useRef } from 'react';
+import LoungeContext from './LoungeContext';
 import { connect } from 'react-redux';
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  TextInput,
-  ScrollView,
-  TouchableWithoutFeedback,
-  Keyboard,
-  InputAccessoryView,
-} from 'react-native';
+import { View } from 'react-native';
 import { Avatar, IconButton } from 'react-native-paper';
 import lampostAPI from '../../../../apis/lampost';
-
+import { baseBackgroundColor } from '../../../../utils/colorsTable';
 // components
+import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
+import SendChatBottomSheet from './SendChatBottomSheet';
+import CrewBottomSheet from './CrewBottomSheet';
 import Chats from './Chats';
 import TextBoxBottomSheet from './TextBoxBottomSheet';
-import CrewBottomSheet from './CrewBottomSheet/Container';
-import FABMenu from './FABMenu';
 import SnackBar from '../../../Utils/SnackBar';
 
 // ac
@@ -29,46 +21,48 @@ import { setIsCrewBottomSheetOpen } from '../../../../redux/actionCreators/botto
 const Container = (props) => {
   const [meetup, setMeetup] = useState(null);
   const [chats, setChats] = useState([]);
-  const textBoxBottomSheetRef = useRef(null);
+  const appMenuBottomSheetRef = useRef(null);
+  const sendChatBottomSheetRef = useRef(null);
   const crewBottomSheetRef = useRef(null);
   const textInputRef = useRef(null);
+  const textBoxBottomSheetRef = useRef(null);
 
-  const onPressCrew = () => {
-    crewBottomSheetRef.current?.snapToIndex(0);
-  };
+  // const onPressCrew = () => {
+  //   crewBottomSheetRef.current?.snapToIndex(0);
+  // };
 
-  useEffect(() => {
-    props.navigation.setOptions({
-      headerRight: () => (
-        // ここで、crewのbottom sheetを出すようにする。
-        <TouchableOpacity onPress={() => onPressCrew()}>
-          <Text>Crew</Text>
-        </TouchableOpacity>
-      ),
-    });
-  }, []);
+  // useEffect(() => {
+  //   props.navigation.setOptions({
+  //     headerRight: () => (
+  //       // ここで、crewのbottom sheetを出すようにする。
+  //       <TouchableOpacity onPress={() => onPressCrew()}>
+  //         <Text>Crew</Text>
+  //       </TouchableOpacity>
+  //     ),
+  //   });
+  // }, []);
 
-  const handleTextBoxBottomSheet = () => {
-    if (!props.bottomSheet.textBox.isOpen) {
-      // props.setIsPostBottomSheetOpen(false);
-      // postBottomSheetRef.current?.close();
-      props.setIsTextBoxBottomSheetOpen(true);
-      textBoxBottomSheetRef.current?.snapToIndex(0);
-      textInputRef.current.focus();
-    } else if (props.bottomSheet.selectedItem.isOpen) {
-      // 開いている状態なら。
-      // console.log(meetupId);
-      // props.selectMeetup(meetupId);
-      // props.setIsSelectedItemBottomSheetOpen(false);
-      // selectedItemBottomSheetRef.current.close();
-      // bottomSheetRef.current?.snapToIndex(-1);
-    }
-  };
+  // const handleTextBoxBottomSheet = () => {
+  //   if (!props.bottomSheet.textBox.isOpen) {
+  //     // props.setIsPostBottomSheetOpen(false);
+  //     // postBottomSheetRef.current?.close();
+  //     props.setIsTextBoxBottomSheetOpen(true);
+  //     textBoxBottomSheetRef.current?.snapToIndex(0);
+  //     textInputRef.current.focus();
+  //   } else if (props.bottomSheet.selectedItem.isOpen) {
+  //     // 開いている状態なら。
+  //     // console.log(meetupId);
+  //     // props.selectMeetup(meetupId);
+  //     // props.setIsSelectedItemBottomSheetOpen(false);
+  //     // selectedItemBottomSheetRef.current.close();
+  //     // bottomSheetRef.current?.snapToIndex(-1);
+  //   }
+  // };
 
-  const handleCrewBottomSheet = () => {
-    props.setIsCrewBottomSheetOpen(true);
-    crewBottomSheetRef.current?.snapToIndex(0);
-  };
+  // const handleCrewBottomSheet = () => {
+  //   props.setIsCrewBottomSheetOpen(true);
+  //   crewBottomSheetRef.current?.snapToIndex(0);
+  // };
 
   const getMeetup = async () => {
     const result = await lampostAPI.get(`/meetups/${props.route.params.meetupId}`);
@@ -116,18 +110,22 @@ const Container = (props) => {
   // fabボタンやらをどっかに置いておいて、それをtapしてtextBoxのbottomSheetを出すようにする感じかな。
   // ここに入った時点で、chatroomのidを持っている状態になる。
   return (
-    <View style={{ flex: 1 }}>
-      <Chats chats={chats} />
-      <TextBoxBottomSheet
-        meetup={meetup}
-        textBoxBottomSheetRef={textBoxBottomSheetRef}
-        textInputRef={textInputRef}
-        setChats={setChats}
-      />
-      <CrewBottomSheet crewBottomSheetRef={crewBottomSheetRef} meetup={meetup} navigation={props.navigation} />
-      {/* <FABMenu handleTextBoxBottomSheet={handleTextBoxBottomSheet} handleCrewBottomSheet={handleCrewBottomSheet} /> */}
-      <SnackBar />
-    </View>
+    <LoungeContext.Provider value={{ appMenuBottomSheetRef, sendChatBottomSheetRef, crewBottomSheetRef, textInputRef }}>
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+        <Chats chats={chats} />
+        <AppMenuBottomSheet />
+        <SendChatBottomSheet />
+        <CrewBottomSheet />
+        {/* <TextBoxBottomSheet
+          meetup={meetup}
+          textBoxBottomSheetRef={textBoxBottomSheetRef}
+          textInputRef={textInputRef}
+          setChats={setChats}
+        />
+        <CrewBottomSheet crewBottomSheetRef={crewBottomSheetRef} meetup={meetup} navigation={props.navigation} /> */}
+        <SnackBar />
+      </View>
+    </LoungeContext.Provider>
   );
 };
 

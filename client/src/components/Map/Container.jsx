@@ -59,7 +59,6 @@ const Map = (props) => {
   const selectedMeetupDetailBottomSheetRef = useRef(null);
 
   // console.log('Map is rendered');
-  // const selectedItemBottomSheetRef = useRef(null);
 
   // 手動で閉じたらおかしくなる。。。
   // const handleSelectedItemBottomSheetChanges = (meetupId) => {
@@ -78,11 +77,6 @@ const Map = (props) => {
   //     // bottomSheetRef.current?.snapToIndex(-1);
   //   }
   // };
-
-  const handleselectedMeetupDetailBottomSheetChanges = (component) => {
-    props.setIsSelectedMeetupInfoDetailBottomSheetOpen(true, component);
-    selectedMeetupDetailBottomSheetRef.current?.snapToIndex(0);
-  };
 
   // 基本は、mapのいずれをtapしてもなにも起きないようにする。launchMeetupがtrueのときだけ、mapをtapしたらlocationをsetして、launchのformを出す。
   const setMeetupLocation = (event) => {
@@ -216,10 +210,7 @@ const Map = (props) => {
           <AppMenusBottomSheet />
           <LaunchMeetupBottomSheet navigation={props.navigation} route={props.route} />
           <SelectedMeetup />
-          <SelectedMeetupInfoDetail
-            navigation={props.navigation}
-            selectedMeetupDetailBottomSheetRef={selectedMeetupDetailBottomSheetRef}
-          />
+          <SelectedMeetupInfoDetail />
         </View>
       </MapContext.Provider>
     </>
