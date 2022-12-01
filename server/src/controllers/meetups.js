@@ -278,7 +278,7 @@ export const getMeetup = async (request, response) => {
           },
         },
       });
-    console.log(meetup);
+    // console.log(meetup);
     response.status(200).json({
       meetup,
     });

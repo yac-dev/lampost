@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import LoungeContext from './LoungeContext';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 
 import { Entypo } from '@expo/vector-icons';
@@ -16,6 +17,8 @@ const chatTypeTable = {
 };
 
 const Chats = (props) => {
+  const { chats } = useContext(LoungeContext);
+
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US');
     return <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#ABABAB' }}>{d}</Text>;
@@ -39,7 +42,7 @@ const Chats = (props) => {
   };
 
   const renderChats = () => {
-    const chatsList = props.chats.map((chat, index) => {
+    const chatsList = chats.map((chat, index) => {
       return (
         <TouchableOpacity key={index} style={{ padding: 10, borderBottomWidth: 0.3, borderBottomColor: '#ABABAB' }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 7 }}>
@@ -67,14 +70,10 @@ const Chats = (props) => {
       );
     });
 
-    return (
-      <ScrollView style={{ paddingLeft: 15, paddingRight: 15, paddingTop: 15, paddingBottom: 250 }}>
-        {chatsList}
-      </ScrollView>
-    );
+    return <View>{chatsList}</View>;
   };
 
-  if (!props.chats.length) {
+  if (!chats.length) {
     return (
       <View>
         <Text style={{ color: baseTextColor }}>No comments yet.</Text>
@@ -83,7 +82,7 @@ const Chats = (props) => {
   } else {
     return (
       <View>
-        <View>{renderChats()}</View>
+        <ScrollView contentContainerStyle={{ paddingBottom: 50 }}>{renderChats()}</ScrollView>
       </View>
     );
   }

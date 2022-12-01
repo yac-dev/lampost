@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
-import { appBottomSheetBackgroundColor } from '../../../../utils/colorsTable';
+import { appBottomSheetBackgroundColor, baseTextColor } from '../../../../utils/colorsTable';
 
 const CrewBottomSheet = (props) => {
   const snapPoints = useMemo(() => ['30%', '80%'], []);
@@ -45,7 +45,7 @@ const CrewBottomSheet = (props) => {
             </View>
             <View>
               <Text style={{ color: 'rgb(160,160,160)' }}>{user.name}</Text>
-              <Text>Badges</Text>
+              <Text style={{ color: baseTextColor }}>Badges in here</Text>
             </View>
           </TouchableOpacity>
         );

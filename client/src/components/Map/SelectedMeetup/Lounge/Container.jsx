@@ -11,7 +11,6 @@ import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import SendChatBottomSheet from './SendChatBottomSheet';
 import CrewBottomSheet from './CrewBottomSheet';
 import Chats from './Chats';
-import TextBoxBottomSheet from './TextBoxBottomSheet';
 import SnackBar from '../../../Utils/SnackBar';
 
 // ac
@@ -25,58 +24,12 @@ const Container = (props) => {
   const sendChatBottomSheetRef = useRef(null);
   const crewBottomSheetRef = useRef(null);
   const textInputRef = useRef(null);
-  const textBoxBottomSheetRef = useRef(null);
-
-  // const onPressCrew = () => {
-  //   crewBottomSheetRef.current?.snapToIndex(0);
-  // };
-
-  // useEffect(() => {
-  //   props.navigation.setOptions({
-  //     headerRight: () => (
-  //       // ここで、crewのbottom sheetを出すようにする。
-  //       <TouchableOpacity onPress={() => onPressCrew()}>
-  //         <Text>Crew</Text>
-  //       </TouchableOpacity>
-  //     ),
-  //   });
-  // }, []);
-
-  // const handleTextBoxBottomSheet = () => {
-  //   if (!props.bottomSheet.textBox.isOpen) {
-  //     // props.setIsPostBottomSheetOpen(false);
-  //     // postBottomSheetRef.current?.close();
-  //     props.setIsTextBoxBottomSheetOpen(true);
-  //     textBoxBottomSheetRef.current?.snapToIndex(0);
-  //     textInputRef.current.focus();
-  //   } else if (props.bottomSheet.selectedItem.isOpen) {
-  //     // 開いている状態なら。
-  //     // console.log(meetupId);
-  //     // props.selectMeetup(meetupId);
-  //     // props.setIsSelectedItemBottomSheetOpen(false);
-  //     // selectedItemBottomSheetRef.current.close();
-  //     // bottomSheetRef.current?.snapToIndex(-1);
-  //   }
-  // };
-
-  // const handleCrewBottomSheet = () => {
-  //   props.setIsCrewBottomSheetOpen(true);
-  //   crewBottomSheetRef.current?.snapToIndex(0);
-  // };
 
   const getMeetup = async () => {
     const result = await lampostAPI.get(`/meetups/${props.route.params.meetupId}`);
     const { meetup } = result.data;
-    console.log(meetup);
-    // console.log(meetup);
     setMeetup(meetup);
-    console.log(meetup.chatRoom.chats);
-    setChats(
-      //   (previous) => {
-      //   return meetup.chatRoom.chats;
-      // }
-      meetup.chatRoom.chats
-    );
+    setChats(meetup.chatRoom.chats);
   };
 
   useEffect(() => {
@@ -85,12 +38,32 @@ const Container = (props) => {
 
   useEffect(() => {
     if (meetup) {
-      props.auth.socket.emit('JOIN_LOUNGE', { chatRoom: meetup.chatRoom._id });
+      props.auth.socket.emit('JOIN_A_LOUNGE', { chatRoom: meetup.chatRoom._id, socketId: props.auth.socket.id });
+
+      props.auth.socket.on('SOMEONE_JOINED_TO_MY_LOUNGE', (data) => {
+        console.log(data.message);
+      });
     }
+
+    return () => {
+      props.auth.socket.off('SOMEONE_JOINED_TO_MY_LOUNGE');
+    };
   }, [meetup]);
 
   useEffect(() => {
-    props.auth.socket.on('A_PEER_SEND_A_CHAT_TO_MY_GROUP', (data) => {
+    if (meetup) {
+      props.auth.socket.on('SOMEONE_JOINED_TO_MY_LOUNGE', (data) => {
+        console.log(data.message);
+      });
+    }
+
+    return () => {
+      props.auth.socket.off('SOMEONE_JOINED_TO_MY_LOUNGE');
+    };
+  }, [meetup]);
+
+  useEffect(() => {
+    props.auth.socket.on('SOMEONE_SENT_A_CHAT_TO_MY_GROUP', (data) => {
       setChats((previous) => [...previous, data.chat]);
     });
   }, []);
@@ -107,31 +80,25 @@ const Container = (props) => {
     };
   });
 
-  // fabボタンやらをどっかに置いておいて、それをtapしてtextBoxのbottomSheetを出すようにする感じかな。
   // ここに入った時点で、chatroomのidを持っている状態になる。
   return (
     <LoungeContext.Provider
       value={{
         meetup,
+        navigation: props.navigation,
         appMenuBottomSheetRef,
         sendChatBottomSheetRef,
         crewBottomSheetRef,
         textInputRef,
-        navigation: props.navigation,
+        chats,
+        setChats,
       }}
     >
-      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        <Chats chats={chats} />
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 15 }}>
+        <Chats />
         <AppMenuBottomSheet />
         <SendChatBottomSheet />
         <CrewBottomSheet />
-        {/* <TextBoxBottomSheet
-          meetup={meetup}
-          textBoxBottomSheetRef={textBoxBottomSheetRef}
-          textInputRef={textInputRef}
-          setChats={setChats}
-        />
-        <CrewBottomSheet crewBottomSheetRef={crewBottomSheetRef} meetup={meetup} navigation={props.navigation} /> */}
         <SnackBar />
       </View>
     </LoungeContext.Provider>

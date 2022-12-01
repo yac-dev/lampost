@@ -48,7 +48,10 @@ const AppStack = (props) => {
   }, []);
 
   useEffect(() => {
-    const socket = io('http://192.168.11.17:3500', {
+    // const socket = io('http://192.168.11.17:3500', {
+    //   path: '/mysocket',
+    // });
+    const socket = io('http://localhost:3500', {
       path: '/mysocket',
     });
     props.getSocket(socket);

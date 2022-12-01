@@ -1,21 +1,45 @@
 import React, { useMemo, useContext, useState } from 'react';
+import { connect } from 'react-redux';
+import lampostAPI from '../../../../apis/lampost';
 import LoungeContext from './LoungeContext';
 import { View, Text, InputAccessoryView, Keyboard, TouchableOpacity } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { appBottomSheetBackgroundColor, sectionBackgroundColor, baseTextColor } from '../../../../utils/colorsTable';
 
+import { addSnackBar } from '../../../../redux/actionCreators/snackBar';
+
 const SendChatBottomSheet = (props) => {
   const inputAccessoryViewID = 'SEND_CHAT_INPUT';
   const snapPoints = useMemo(() => ['65%'], []);
-  const { appMenuBottomSheetRef, sendChatBottomSheetRef, textInputRef } = useContext(LoungeContext);
+  const { appMenuBottomSheetRef, sendChatBottomSheetRef, textInputRef, setChats, meetup } = useContext(LoungeContext);
   const [text, setText] = useState('');
+  const [chatType, setChatType] = useState('general');
 
-  const onSendPress = () => {
+  const onSendPress = async () => {
+    console.log('sending comment');
+    // const body = {
+    //   chatRoomId: props.meetup.chatRoom._id,
+    //   userId: props.auth.data._id,
+    //   content,
+    //   type: chatType,
+    // };
+    // console.log(body);
+    const chatObject = {
+      text: text,
+      chatRoomId: meetup.chatRoom._id,
+      userId: props.auth.data._id,
+      type: chatType,
+    };
+    // これ、そもそもapi requestである必要あるのかな。。。。普通にsocket eventだけで良くないか？
+    // const result = await lampostAPI.post('/chats', body);
+    // const { chat } = result.data;
+    // setChats((previous) => [...previous, chat]);
+    props.auth.socket.emit('I_SEND_A_CHAT_TO_MY_GROUP', chatObject);
+    setText('');
     Keyboard.dismiss();
     sendChatBottomSheetRef.current.close();
     appMenuBottomSheetRef.current.snapToIndex(0);
-    console.log(text);
-    setText('');
+    props.addSnackBar('Message sent successfully!', 'success', 7000);
   };
 
   return (
@@ -133,4 +157,8 @@ const SendChatBottomSheet = (props) => {
   );
 };
 
-export default SendChatBottomSheet;
+const mapStateToProps = (state) => {
+  return { auth: state.auth };
+};
+
+export default connect(mapStateToProps, { addSnackBar })(SendChatBottomSheet);
