@@ -211,7 +211,7 @@ const Menus = (props) => {
         backgroundColor={backgroundColorsTable['grey1']}
         rightInfo={<Text style={{ color: baseTextColor }}>Right</Text>}
         onPressMenu={() => {
-          setSelectedMeetupDetailComponent('Link');
+          setSelectedMeetupDetailComponent('Links');
           selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
         }}
       />

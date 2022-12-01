@@ -45,9 +45,9 @@ const Container = (props) => {
   //   }
   // };
 
-  // const onCloseInfoDetailBottomSheet = () => {
-  //   props.setIsSelectedMeetupInfoDetailBottomSheetOpen(false, '');
-  // };
+  const onDetailBottomSheetClose = () => {
+    props.setIsSelectedMeetupInfoDetailBottomSheetOpen(false, '');
+  };
 
   return (
     <GorhomBottomSheet
@@ -61,7 +61,7 @@ const Container = (props) => {
       )}
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
       enablePanDownToClose={true}
-      // onClose={() => onCloseInfoDetailBottomSheet()}
+      onClose={() => setSelectedMeetupDetailComponent('')}
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>{switchComponent()}</BottomSheetView>
     </GorhomBottomSheet>

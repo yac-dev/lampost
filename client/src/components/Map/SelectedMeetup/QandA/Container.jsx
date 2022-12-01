@@ -1,5 +1,6 @@
 // main libraries
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import MapContext from '../../MeetupContext';
 import lampostAPI from '../../../../apis/lampost';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
@@ -9,6 +10,7 @@ import CommentInput from './CommentInput';
 import Comments from './Comments';
 
 const Container = (props) => {
+  const { selectedMeetup, selectedMeetupDetailComponent } = useContext(MapContext);
   const [comments, setComments] = useState(props.selectedMeetup.comments);
   const inputRef = useRef(null);
   const [reply, setReply] = useState({ pressed: false, comment: null });

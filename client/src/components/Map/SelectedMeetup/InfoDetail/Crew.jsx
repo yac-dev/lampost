@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import MapContext from '../../MeetupContext';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import lampostAPI from '../../../../apis/lampost';
@@ -6,20 +7,21 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { baseTextColor, sectionBackgroundColor } from '../../../../utils/colorsTable';
 
 const Crew = (props) => {
+  const { selectedMeetup, selectedMeetupDetailComponent, navigation } = useContext(MapContext);
   const [crew, setCrew] = useState([]);
 
   const getAttendees = async () => {
-    const result = await lampostAPI.get(`/meetups/${props.selectedMeetup._id}/crew`);
+    const result = await lampostAPI.get(`/meetups/${selectedMeetup._id}/crew`);
     const { attendees } = result.data;
-    console.log(attendees);
+    // console.log(attendees);
     setCrew((prev) => [...prev, ...attendees]);
   };
 
   useEffect(() => {
-    if (props.bottomSheet.selectedItem.infoDetail.component === 'Crew') {
+    if (selectedMeetupDetailComponent === 'Crew') {
       getAttendees();
     }
-  }, [props.bottomSheet.selectedItem.infoDetail.component]); // bottomSheetのopenが変わるたびにね。
+  }, [selectedMeetupDetailComponent]);
 
   const renderCrew = () => {
     if (crew.length) {
@@ -36,7 +38,7 @@ const Crew = (props) => {
             }}
             onPress={() => {
               if (props.auth.data._id !== user._id) {
-                props.navigation.navigate('User', { userId: user._id });
+                navigation.navigate('User', { userId: user._id });
               }
             }}
           >

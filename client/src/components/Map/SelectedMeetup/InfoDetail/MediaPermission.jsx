@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import MapContext from '../../MeetupContext';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { baseTextColor } from '../../../../utils/colorsTable';
 
 const MediaPermission = (props) => {
+  const { selectedMeetup } = useContext(MapContext);
   return (
     <View>
-      {props.selectedMeetup.isMediaAllowed ? (
+      {selectedMeetup.isMediaAllowed ? (
         <View>
           <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 10, color: 'white' }}>Allowed 👍</Text>
           <Text style={{ fontSize: 15, color: baseTextColor }}>

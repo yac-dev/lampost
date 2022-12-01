@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import MapContext from '../../MeetupContext';
 import { View, Text, ScrollView, InputAccessoryView, TouchableOpacity, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
@@ -6,10 +7,11 @@ import { baseTextColor, sectionBackgroundColor } from '../../../../utils/colorsT
 
 const QandAs = (props) => {
   // getcomments的なのが必要になるね。
+  const { selectedMeetup, selectedMeetupDetailComponent } = useContext(MapContext);
   const inputAccessoryViewID = '2222222';
   const renderQandAs = () => {
-    if (props.selectedMeetup.comments.length) {
-      const qandAsList = props.selectedMeetup.comments.map((comment, index) => {
+    if (selectedMeetup.comments.length) {
+      const qandAsList = selectedMeetup.comments.map((comment, index) => {
         return (
           <View key={index}>
             <Text>{comment.content}</Text>
@@ -26,9 +28,10 @@ const QandAs = (props) => {
   return (
     <View>
       <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 10, color: 'white' }}>Comments</Text>
+      <Text style={{ color: baseTextColor, marginBottom: 10 }}>Feel free to ask something about this meetup!</Text>
       <BottomSheetTextInput
         multiline={true}
-        placeholder='Feel free to ask somethig'
+        placeholder='Add a question'
         placeholderTextColor={baseTextColor}
         inputAccessoryViewID={inputAccessoryViewID}
         style={{
