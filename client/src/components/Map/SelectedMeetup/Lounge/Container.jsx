@@ -110,7 +110,15 @@ const Container = (props) => {
   // fabボタンやらをどっかに置いておいて、それをtapしてtextBoxのbottomSheetを出すようにする感じかな。
   // ここに入った時点で、chatroomのidを持っている状態になる。
   return (
-    <LoungeContext.Provider value={{ appMenuBottomSheetRef, sendChatBottomSheetRef, crewBottomSheetRef, textInputRef }}>
+    <LoungeContext.Provider
+      value={{
+        appMenuBottomSheetRef,
+        sendChatBottomSheetRef,
+        crewBottomSheetRef,
+        textInputRef,
+        navigation: props.navigation,
+      }}
+    >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
         <Chats chats={chats} />
         <AppMenuBottomSheet />

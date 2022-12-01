@@ -10,6 +10,14 @@ const SendChatBottomSheet = (props) => {
   const { appMenuBottomSheetRef, sendChatBottomSheetRef, textInputRef } = useContext(LoungeContext);
   const [text, setText] = useState('');
 
+  const onSendPress = () => {
+    Keyboard.dismiss();
+    sendChatBottomSheetRef.current.close();
+    appMenuBottomSheetRef.current.snapToIndex(0);
+    console.log(text);
+    setText('');
+  };
+
   return (
     <GorhomBottomSheet
       index={-1}
@@ -19,7 +27,7 @@ const SendChatBottomSheet = (props) => {
       backdropComponent={(backdropProps) => (
         <BottomSheetBackdrop {...backdropProps} appearsOnIndex={0} disappearsOnIndex={-1} pressBehavior='none' />
       )}
-      enablePanDownToClose={false}
+      enablePanDownToClose={true}
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
       keyboardBehavior={'extend'}
       onClose={() => setText('')}
@@ -38,6 +46,7 @@ const SendChatBottomSheet = (props) => {
               // backgroundColor: 'rgb(235, 235, 235)',
               width: '100%', // ここも、下の修正に沿って80 90%に変える。
             }}
+            color={baseTextColor}
             ref={textInputRef}
             value={text}
             onChangeText={setText}
@@ -83,29 +92,25 @@ const SendChatBottomSheet = (props) => {
           // style={{ paddingTop: 10, paddingBottom: 10 }}
         >
           <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-            <View style={{ flexDirection: 'row' }}>
+            {/* <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity
                 onPress={() =>
-                  // keybord dismissとともに、snappointを15%にまで下げる。
                   Keyboard.dismiss()
                 }
               >
-                {/* <MaterialCommunityIcons name='comment-text' />; */}
                 <Text>General</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => Keyboard.dismiss()}>
-                {/* <Ionicons name='bulb-outline' size={15} color={'white'} />; */}
                 <Text>Idea</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => Keyboard.dismiss()}>
-                {/* <Ionicons name='bulb-outline' size={15} color={'white'} />; */}
                 <Text>Question and Help</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => Keyboard.dismiss()}>
-                {/* <FontAwesome5 name='question' size={15} color={'white'} />; */}
                 <Text>Announcement</Text>
               </TouchableOpacity>
-            </View>
+            </View> */}
+            <View></View>
             <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity
                 style={{ padding: 10 }}
