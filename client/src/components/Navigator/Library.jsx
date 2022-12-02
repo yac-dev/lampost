@@ -9,7 +9,7 @@ import Container from '../Libraries/Container';
 import LibraryContainer from '../Libraries/Library/Container';
 import RollContainer from '../Libraries/Roll';
 import AuthNavigator from './Auth';
-import { baseBackgroundColor } from '../../utils/colorsTable';
+import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
 
 const LibraryNavigator = () => {
   return (
@@ -22,7 +22,7 @@ const LibraryNavigator = () => {
             headerShown: true,
             title: 'Libraries',
             headerStyle: {
-              backgroundColor: baseBackgroundColor,
+              backgroundColor: appBottomSheetBackgroundColor,
             },
             headerTitleStyle: {
               fontWeight: 'bold',

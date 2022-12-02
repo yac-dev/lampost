@@ -13,7 +13,7 @@ import UserHome from '../User/Container';
 import Log from '../User/Log/Container';
 import Assets from '../User/Assets/Container';
 import Asset from '../User/Assets/Asset';
-import { baseBackgroundColor } from '../../utils/colorsTable';
+import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
 
 const Auth = (props) => {
   if (props.auth.isAuthenticated) {
@@ -27,7 +27,7 @@ const Auth = (props) => {
             options={{
               // headerShown: false,
               headerStyle: {
-                backgroundColor: baseBackgroundColor,
+                backgroundColor: appBottomSheetBackgroundColor,
               },
               headerTitleStyle: {
                 fontWeight: 'bold',

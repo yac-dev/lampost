@@ -20,7 +20,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <PaperProvider>
-        <StatusBar hidden={false} translucent={true} />
+        <StatusBar hidden={false} translucent={true} backgroundColor='blue' barStyle='light-content' />
         <AppBottomTabsNavigator />
       </PaperProvider>
     </Provider>

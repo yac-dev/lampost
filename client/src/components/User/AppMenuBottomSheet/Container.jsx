@@ -30,9 +30,7 @@ const AppMenuBottomSheet = (props) => {
       // onClose={() => onSelectedItemBottomSheetClose()}
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 5 }}>
-          What are you gonna do?
-        </Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 5 }}>Add badges?</Text>
         <AppButtons />
         <MyConnections />
         {/* <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: 10, marginBottom: 15 }}>

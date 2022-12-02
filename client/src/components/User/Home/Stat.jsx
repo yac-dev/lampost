@@ -10,7 +10,7 @@ const Stat = (props) => {
     >
       {/* <MaterialCommunityIcons name='history' color={baseTextColor} size={25} style={{ marginRight: 10 }} /> */}
       {props.icon}
-      <View>
+      <View style={{ alignItems: 'center' }}>
         <Text style={{ color: baseTextColor }}>{props.label}</Text>
         <Text style={{ color: baseTextColor }}>{props.value}</Text>
       </View>

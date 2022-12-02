@@ -22,7 +22,16 @@ const Header = (props) => {
   const AvatarWidth = Dimensions.get('window').width / 6;
 
   return (
-    <View style={{ flexDirection: 'row', paddingLeft: 20, paddingRight: 20, marginBottom: 10, marginTop: 10 }}>
+    <View
+      style={{
+        flexDirection: 'row',
+        paddingLeft: 20,
+        paddingRight: 20,
+        marginBottom: 10,
+        marginTop: 20,
+        alignItems: 'center',
+      }}
+    >
       <View
         style={{
           backgroundColor: iconColorsTable['blue1'],
@@ -36,18 +45,7 @@ const Header = (props) => {
       >
         <FontAwesome5 name='user-astronaut' size={30} color='white' />
       </View>
-      <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-        <Text style={{ color: 'white', fontSize: 20 }}>{user.name}</Text>
-
-        <View style={{ flexDirection: 'row' }}>
-          <TouchableOpacity style={{ padding: 10, backgroundColor: 'blue', borderRadius: 15, marginRight: 10 }}>
-            <Text style={{ color: 'white' }}>Subscribe</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{ padding: 10, backgroundColor: 'blue', borderRadius: 15 }}>
-            <Text style={{ color: 'white' }}>Connect</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <Text style={{ color: 'white', fontSize: 20 }}>{user.name}</Text>
     </View>
   );
 };
@@ -58,3 +56,13 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {})(Header);
+{
+  /* <View style={{ flexDirection: 'row' }}>
+          <TouchableOpacity style={{ padding: 10, backgroundColor: 'blue', borderRadius: 15, marginRight: 10 }}>
+            <Text style={{ color: 'white' }}>Subscribe</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{ padding: 10, backgroundColor: 'blue', borderRadius: 15 }}>
+            <Text style={{ color: 'white' }}>Connect</Text>
+          </TouchableOpacity>
+        </View> これ、やっぱやめる。これ入れると、見た目がすげー忙しくなる。*/
+}

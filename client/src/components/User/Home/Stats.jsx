@@ -25,7 +25,6 @@ const Stats = () => {
           paddingRight: 20,
           paddingTop: 10,
           paddingBottom: 10,
-          // backgroundColor: 'red',
           marginBottom: 25,
         }}
       >
@@ -38,13 +37,21 @@ const Stats = () => {
         <Stat
           label='Assets'
           value={15}
-          icon={<MaterialCommunityIcons name='history' color={baseTextColor} size={25} style={{ marginRight: 10 }} />}
+          icon={
+            <MaterialCommunityIcons name='treasure-chest' color={baseTextColor} size={25} style={{ marginRight: 10 }} />
+          }
           onStatPress={() => console.log('opening logs page')}
         />
         <Stat
-          label='Subs'
+          label='Connections'
           value={15}
-          icon={<SimpleLineIcons name='user-follow' color={baseTextColor} size={25} style={{ marginRight: 10 }} />}
+          icon={<Entypo name='network' color={baseTextColor} size={25} style={{ marginRight: 10 }} />}
+          onStatPress={() => console.log('opening logs page')}
+        />
+        {/* <Stat
+          label='Supports'
+          value={15}
+          icon={<MaterialCommunityIcons name='fire' color={baseTextColor} size={25} style={{ marginRight: 10 }} />}
           onStatPress={() => console.log('opening logs page')}
         />
         <Stat
@@ -52,7 +59,7 @@ const Stats = () => {
           value={15}
           icon={<Ionicons name='ios-library' color={baseTextColor} size={25} style={{ marginRight: 10 }} />}
           onStatPress={() => console.log('opening logs page')}
-        />
+        /> */}
       </ScrollView>
     </View>
   );
