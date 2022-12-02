@@ -6,8 +6,7 @@ import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity } from 'react-native';
 
 import { FontAwesome5 } from '@expo/vector-icons';
-import { iconColorsTable } from '../../../utils/colorsTable';
-import { Avatar } from 'react-native-paper';
+import { iconColorsTable, baseTextColor } from '../../../utils/colorsTable';
 
 const Header = (props) => {
   const { user } = useContext(UserContext);

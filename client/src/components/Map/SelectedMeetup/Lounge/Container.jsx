@@ -98,7 +98,7 @@ const Container = (props) => {
         setChats,
       }}
     >
-      <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 15 }}>
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
         <Chats />
         <AppMenuBottomSheet />
         <SendChatBottomSheet />

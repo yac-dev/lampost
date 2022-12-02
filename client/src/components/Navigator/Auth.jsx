@@ -13,6 +13,7 @@ import UserHome from '../User/Container';
 import Log from '../User/Log/Container';
 import Assets from '../User/Assets/Container';
 import Asset from '../User/Assets/Asset';
+import { baseBackgroundColor } from '../../utils/colorsTable';
 
 const Auth = (props) => {
   if (props.auth.isAuthenticated) {
@@ -23,7 +24,16 @@ const Auth = (props) => {
             name='Personal page'
             component={UserHome}
             initialParams={{ userId: props.auth.data._id }}
-            // options={{ headerShown: false }}
+            options={{
+              // headerShown: false,
+              headerStyle: {
+                backgroundColor: baseBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+            }}
           >
             {/*  これまた、別でuserhomeのcomponentがひちようだわな。connectionなりで、違うuser pageに飛んでいくから。*/}
           </Stack.Screen>

@@ -43,38 +43,30 @@ const Chats = (props) => {
 
   const renderChats = () => {
     const chatsList = chats.map((chat, index) => {
+      // launcherのchatだけは、背景を少し変える。
       return (
-        <TouchableOpacity
-          key={index}
-          style={{ paddingTop: 20, paddingBottom: 20, borderBottomWidth: 0.3, borderBottomColor: '#ABABAB' }}
-        >
-          <View
-            style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, justifyContent: 'space-between' }}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <View
-                style={{
-                  backgroundColor: chatTypeTable[chat.type],
-                  padding: 5,
-                  borderRadius: 7,
-                  width: 25,
-                  height: 25,
-                  alignItems: 'center',
-                  marginRight: 10,
-                }}
-              >
-                {renderChatType(chat.type)}
-              </View>
-              <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#ABABAB' }}>{renderDate(chat.createdAt)}</Text>
+        <TouchableOpacity key={index} style={{ padding: 20, borderBottomWidth: 0.3, borderBottomColor: '#ABABAB' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+            <View
+              style={{
+                backgroundColor: chatTypeTable[chat.type],
+                padding: 5,
+                borderRadius: 7,
+                width: 25,
+                height: 25,
+                alignItems: 'center',
+                marginRight: 10,
+              }}
+            >
+              {renderChatType(chat.type)}
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
-              <View style={{ height: 25, width: 25, backgroundColor: 'blue', borderRadius: 5, marginRight: 5 }}></View>
-              <Text>{chat.user.name}</Text>
-            </View>
+            <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#ABABAB' }}>{renderDate(chat.createdAt)}</Text>
           </View>
-          <Text style={{ fontWeight: 'bold', fontSize: 15, marginBottom: 10, color: baseTextColor }}>
-            {chat.content}
-          </Text>
+          <Text style={{ fontSize: 15, marginBottom: 10, color: baseTextColor }}>{chat.content}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
+            <View style={{ height: 25, width: 25, backgroundColor: 'blue', borderRadius: 5, marginRight: 5 }}></View>
+            <Text>{chat.user.name}</Text>
+          </View>
         </TouchableOpacity>
       );
     });

@@ -9,6 +9,7 @@ import Container from '../Libraries/Container';
 import LibraryContainer from '../Libraries/Library/Container';
 import RollContainer from '../Libraries/Roll';
 import AuthNavigator from './Auth';
+import { baseBackgroundColor } from '../../utils/colorsTable';
 
 const LibraryNavigator = () => {
   return (
@@ -20,6 +21,14 @@ const LibraryNavigator = () => {
           options={({ navigation }) => ({
             headerShown: true,
             title: 'Libraries',
+            headerStyle: {
+              backgroundColor: baseBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            // headerTransparent: true,
             // headerTransparent: true,
             // reduxのdata._idを使えばいいだけか。
             // headerLeft: () => <Button onPress={() => navigation.navigate('My page/Memoirs')}>User page</Button>,

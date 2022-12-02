@@ -6,6 +6,7 @@ import UserContext from './Context';
 import { Avatar, Menu } from 'react-native-paper';
 import lampostAPI from '../../apis/lampost';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { baseBackgroundColor } from '../../utils/colorsTable';
 
 // components
 import Header from './Home/Header';
@@ -102,6 +103,7 @@ const Container = (props) => {
             padding: 10,
             flex: 1,
             // backgroundColor: 'rgb(27, 27, 79)' この色いい。
+            // backgroundColor: baseBackgroundColor,
           }}
         >
           <Header />

@@ -12,8 +12,11 @@ import { iconColorsTable, backgroundColorsTable } from '../../../../utils/colors
 
 const BadgeStatus = (props) => {
   const { navigation } = useContext(UserContext);
+
   const renderBadgeStatus = () => {
-    const width = Dimensions.get('window').width / 5;
+    // const width = Dimensions.get('window').width / 5;
+    const baseHeight = Dimensions.get('window').height / 8;
+
     return (
       <View
         style={{
