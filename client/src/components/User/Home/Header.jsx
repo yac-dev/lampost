@@ -3,7 +3,7 @@ import React from 'react';
 import UserContext from '../Context';
 import { useContext } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 
 import { Entypo } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
@@ -19,6 +19,7 @@ import {
 
 const Header = (props) => {
   const { user } = useContext(UserContext);
+  const AvatarWidth = Dimensions.get('window').width / 6;
 
   return (
     <View style={{ flexDirection: 'row', paddingLeft: 20, paddingRight: 20, marginBottom: 10, marginTop: 10 }}>
@@ -27,16 +28,26 @@ const Header = (props) => {
           backgroundColor: iconColorsTable['blue1'],
           padding: 5,
           borderRadius: 10,
-          width: 70,
-          height: 70,
+          width: AvatarWidth,
+          aspectRatio: 1,
           alignItems: 'center',
           marginRight: 30,
         }}
       >
         <FontAwesome5 name='user-astronaut' size={30} color='white' />
       </View>
-      <Text style={{ color: 'white', fontSize: 20 }}>{user.name}</Text>
-      <View></View>
+      <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+        <Text style={{ color: 'white', fontSize: 20 }}>{user.name}</Text>
+
+        <View style={{ flexDirection: 'row' }}>
+          <TouchableOpacity style={{ padding: 10, backgroundColor: 'blue', borderRadius: 15, marginRight: 10 }}>
+            <Text style={{ color: 'white' }}>Subscribe</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{ padding: 10, backgroundColor: 'blue', borderRadius: 15 }}>
+            <Text style={{ color: 'white' }}>Connect</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 };

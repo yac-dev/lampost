@@ -10,6 +10,7 @@ import {
   rnDefaultBackgroundColor,
   iconColorsTable,
   backgroundColorsTable,
+  sectionBackgroundColor,
 } from '../../../utils/colorsTable';
 import Stat from './Stat';
 
@@ -18,7 +19,15 @@ const Stats = () => {
     <View>
       <ScrollView
         horizontal={true}
-        style={{ flexDirection: 'row', paddingLeft: 20, paddingRight: 20, marginBottom: 25 }}
+        style={{
+          flexDirection: 'row',
+          paddingLeft: 20,
+          paddingRight: 20,
+          paddingTop: 10,
+          paddingBottom: 10,
+          // backgroundColor: 'red',
+          marginBottom: 25,
+        }}
       >
         <Stat
           label='Logs'
