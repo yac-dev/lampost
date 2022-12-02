@@ -10,7 +10,7 @@ const Container = (props) => {
     });
 
     return (
-      <ScrollView contentContainerStyle={{ paddingBottom: 150 }}>
+      <ScrollView contentContainerStyle={{ paddingBottom: 200 }}>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{badgeStatusesList}</View>
       </ScrollView>
     );

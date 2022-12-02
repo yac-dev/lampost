@@ -8,58 +8,82 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
-import { iconColorsTable, backgroundColorsTable } from '../../../../utils/colorsTable';
+import {
+  iconColorsTable,
+  backgroundColorsTable,
+  rnDefaultBackgroundColor,
+  baseTextColor,
+} from '../../../../utils/colorsTable';
 
 const BadgeStatus = (props) => {
   const { navigation } = useContext(UserContext);
 
   const renderBadgeStatus = () => {
     // const width = Dimensions.get('window').width / 5;
-    const baseHeight = Dimensions.get('window').height / 8;
+    const oneGridWidth = Dimensions.get('window').width / 4;
+    const oneGridHeight = Dimensions.get('window').height / 8.5;
+    const badgeContainerWidth = oneGridWidth * 0.6;
+    const badgeIconWidth = badgeContainerWidth * 0.7;
 
     return (
       <View
         style={{
-          width: '20%',
-          height: 0, // これなんだろね。。。
-          aspectRatio: 1,
-          padding: 10, // これは単純に、25%幅に対して
-          marginBottom: 23,
+          width: oneGridWidth,
+          height: oneGridHeight, // これなんだろね。。。
+          // aspectRatio: 1,
+          // padding: 10, // これは単純に、25%幅に対して
+          // marginBottom: 23,
           // backgroundColor: 'white',
+          // backgroundColor: 'red',
+          alignItems: 'center',
         }}
       >
         <TouchableOpacity
+          // これがbadgeのcontainer, rndefault colorを割り当てるためのもの。
           style={{
-            width: '100%',
-            height: '100%',
+            width: badgeContainerWidth,
+            // height: 0,
+            aspectRatio: 1,
+            // height: '100%',
             alignItems: 'center', // これと
             justifyContent: 'center', // これで中のimageを上下左右真ん中にする
-            borderRadius: 7,
-            backgroundColor: backgroundColorsTable[props.badgeStatus.badge.color],
-            borderStyle: 'solid',
-            borderColor: backgroundColorsTable[props.badgeStatus.badge.color],
-            borderWidth: 1,
-            marginBottom: 5,
+            borderRadius: 15,
+            backgroundColor: rnDefaultBackgroundColor,
+            borderWidth: 0.3,
+            marginBottom: 10,
           }}
           onPress={() => {
             // props.onBadgePress(props.badgeStatus._id);
             console.log('hey');
-            navigation.navigate('BadgeInfo', { badgeId: props.badgeStatus._id });
+            // navigation.navigate('BadgeInfo', { badgeId: props.badgeStatus._id });
           }}
         >
-          <FastImage
-            style={{ height: 50, width: 50 }}
-            source={{
-              uri: props.badgeStatus.badge.icon,
-              priority: FastImage.priority.normal,
+          <View
+            style={{
+              width: '100%',
+              height: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 15,
+              backgroundColor: backgroundColorsTable[props.badgeStatus.badge.color],
+              borderWidth: 0.3,
+              borderColor: backgroundColorsTable[props.badgeStatus.badge.color],
             }}
-            tintColor={iconColorsTable[props.badgeStatus.badge.color]}
-            resizeMode={FastImage.resizeMode.contain}
-          />
+          >
+            <FastImage
+              style={{ height: badgeIconWidth, width: badgeIconWidth }}
+              source={{
+                uri: props.badgeStatus.badge.icon,
+                priority: FastImage.priority.normal,
+              }}
+              tintColor={iconColorsTable[props.badgeStatus.badge.color]}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+          </View>
         </TouchableOpacity>
         <Text
           style={{
-            color: 'black',
+            color: baseTextColor,
             fontWeight: 'bold',
             alignSelf: 'center',
             fontSize: 12,

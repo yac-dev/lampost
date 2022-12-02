@@ -11,6 +11,7 @@ import { baseBackgroundColor } from '../../utils/colorsTable';
 // components
 import Header from './Home/Header';
 import ActionButtons from './Home/ActionButtons';
+import Stats from './Home/Stats';
 import Badges from '../Utils/AddBadges/Badges';
 import BadgeStatuses from './Home/BadgeStatuses/Container';
 import FABMenu from './Utils/FABMenu';
@@ -100,14 +101,15 @@ const Container = (props) => {
       <UserContext.Provider value={{ user, isMyPage, navigation: props.navigation, appMenuBottomSheetRef }}>
         <View
           style={{
-            padding: 10,
+            // padding: 10,
             flex: 1,
             // backgroundColor: 'rgb(27, 27, 79)' この色いい。
-            // backgroundColor: baseBackgroundColor,
+            backgroundColor: baseBackgroundColor,
           }}
         >
           <Header />
-          <ActionButtons />
+          {/* <ActionButtons /> */}
+          <Stats />
           <BadgeStatuses
             user={user}
             badgeStatuses={badgeStatuses}

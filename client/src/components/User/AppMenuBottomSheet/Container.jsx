@@ -9,6 +9,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import AppButtons from './AppButtons';
 import MyConnections from './MyConnections/Container';
+import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 
 const AppMenuBottomSheet = (props) => {
   const { appMenuBottomSheetRef } = useContext(UserContext);
@@ -24,7 +25,7 @@ const AppMenuBottomSheet = (props) => {
         <BottomSheetBackdrop {...backdropProps} appearsOnIndex={1} disappearsOnIndex={0} pressBehavior={0} />
       )}
       enablePanDownToClose={false}
-      backgroundStyle={{ backgroundColor: 'rgb(54, 57, 63)' }}
+      backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
       // keyboardBehavior={'interactive'}
       // onClose={() => onSelectedItemBottomSheetClose()}
     >
