@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { View, Text } from 'react-native';
 import LibrariesContext from '../../LibrariesContext';
+import { baseTextColor } from '../../../../utils/colorsTable';
 
 import Header from './Header';
 import ActionButtons from './ActionButtons';
@@ -22,7 +23,7 @@ const Container = () => {
   } else {
     return (
       <View>
-        <Text>Now loading...</Text>
+        <Text style={{ color: baseTextColor }}>Now loading...</Text>
       </View>
     );
   }

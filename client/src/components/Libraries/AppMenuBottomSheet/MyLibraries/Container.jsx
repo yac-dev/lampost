@@ -12,7 +12,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 
 const Container = (props) => {
-  const { myJoinedLibraries, setMyJoinedLibraries } = useContext(LibrariesContext);
+  const { myJoinedLibraries, setMyJoinedLibraries, navigation } = useContext(LibrariesContext);
 
   const getMyJoinedLibraries = async () => {
     const result = await lampostAPI.get(`/libraryanduserrelationships/${props.auth.data._id}`);
@@ -27,7 +27,11 @@ const Container = (props) => {
     if (myJoinedLibraries.length) {
       const myJoinedLibrariesList = myJoinedLibraries.map((library, index) => {
         return (
-          <TouchableOpacity key={index} style={{ padding: 10, flexDirection: 'row', alignItems: 'center' }}>
+          <TouchableOpacity
+            key={index}
+            style={{ padding: 10, flexDirection: 'row', alignItems: 'center' }}
+            onPress={() => navigation.navigate('Library', { libraryId: library._id })}
+          >
             <View
               style={{
                 width: 40,

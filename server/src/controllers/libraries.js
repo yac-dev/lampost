@@ -43,10 +43,10 @@ export const getLibrary = async (request, response) => {
       .populate({
         path: 'rolls',
         model: Roll,
-        populate: {
-          path: 'assets',
-          model: Asset,
-        },
+        // populate: {
+        //   path: 'assets',
+        //   model: Asset,
+        // },
       });
     response.status(200).json({
       library,

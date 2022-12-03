@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import lampostAPI from '../../../../apis/lampost';
 import LibrariesContext from '../../LibrariesContext';
 import { MaterialIcons } from '@expo/vector-icons';
-import { backgroundColorsTable, iconColorsTable } from '../../../../utils/colorsTable';
+import { backgroundColorsTable, baseTextColor, iconColorsTable } from '../../../../utils/colorsTable';
 import ActionButton from '../../../Utils/ActionButton';
 
 const ActionButtons = (props) => {
@@ -20,31 +20,52 @@ const ActionButtons = (props) => {
     setMyJoinedLibraries((previous) => [...previous, library]);
   };
 
-  return (
-    <ScrollView horizontal={'true'}>
-      <View style={{ marginBottom: 25, flexDirection: 'row' }}>
-        <ActionButton
-          label='Join this library'
-          icon={<MaterialIcons name='library-add' size={25} color={iconColorsTable['blue1']} />}
-          backgroundColor={backgroundColorsTable['blue1']}
-          onActionButtonPress={joinLibrary}
-        />
-        {/* <ActionButton
-          label='Report this library'
-          icon={
-            <MaterialIcons
-              name='report-problem'
-              size={25}
-              color={iconColorsTable['red1']}
-              style={{ marginRight: 10 }}
+  const leaveLibrary = () => {
+    console.log('left this library');
+  };
+  if (props.auth.isAuthenticated) {
+    return (
+      <ScrollView horizontal={'true'}>
+        <View style={{ marginBottom: 25, flexDirection: 'row' }}>
+          {myJoinedLibraries.some((library) => library._id === selectedLibrary._id) ? (
+            <ActionButton
+              label='Leave this library'
+              icon={<MaterialIcons name='library-add' size={25} color={iconColorsTable['red1']} />}
+              backgroundColor={backgroundColorsTable['red1']}
+              onActionButtonPress={leaveLibrary}
             />
-          }
-          backgroundColor={backgroundColorsTable['red1']}
-          onActionButtonPress={() => console.log('press action button report')}
-        /> */}
+          ) : (
+            <ActionButton
+              label='Join this library'
+              icon={<MaterialIcons name='library-add' size={25} color={iconColorsTable['blue1']} />}
+              backgroundColor={backgroundColorsTable['blue1']}
+              onActionButtonPress={joinLibrary}
+            />
+          )}
+
+          {/* <ActionButton
+            label='Report this library'
+            icon={
+              <MaterialIcons
+                name='report-problem'
+                size={25}
+                color={iconColorsTable['red1']}
+                style={{ marginRight: 10 }}
+              />
+            }
+            backgroundColor={backgroundColorsTable['red1']}
+            onActionButtonPress={() => console.log('press action button report')}
+          /> */}
+        </View>
+      </ScrollView>
+    );
+  } else {
+    return (
+      <View>
+        <Text style={{ color: baseTextColor }}>Please login or signup to use.</Text>
       </View>
-    </ScrollView>
-  );
+    );
+  }
 };
 
 const mapStateToProps = (state) => {
