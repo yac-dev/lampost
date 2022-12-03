@@ -13,6 +13,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import { createNavigationContainerRef } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { appBottomSheetBackgroundColor } from './utils/colorsTable';
 
 import MapNavigator from './components/Navigator/Map';
 import LibraryNavigator from './components/Navigator/Library';
@@ -77,7 +78,7 @@ const AppStack = (props) => {
           activeTintColor: 'red',
           tabBarStyle: {
             display: hide ? 'none' : 'flex',
-            backgroundColor: '#0B1673',
+            backgroundColor: appBottomSheetBackgroundColor,
             // borderTopColor: 'transparent',
           },
         }}

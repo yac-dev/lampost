@@ -17,20 +17,13 @@ const AppButtons = () => {
         <AppButton
           backgroundColor={backgroundColorsTable['lightGreen1']}
           icon={<Foundation name='sheriff-badge' size={35} color={iconColorsTable['lightGreen1']} />}
-          label='Badges'
+          label='Add badges'
           onPress={() => console.log('yes')}
         />
         <AppButton
-          backgroundColor={backgroundColorsTable['violet1']}
-          icon={<MaterialCommunityIcons name='history' size={35} color={iconColorsTable['violet1']} />}
-          label='Log'
-          onPress={() => navigation.navigate('Log', { userId: user._id })}
-        />
-        <AppButton
-          backgroundColor={backgroundColorsTable['pink1']}
-          icon={<Entypo name='images' size={35} color={iconColorsTable['pink1']} />}
-          label='Assets'
-          onPress={() => navigation.navigate('Assets', { userId: user._id })}
+          backgroundColor={backgroundColorsTable['grey1']}
+          icon={<Fontisto name='player-settings' size={35} color={iconColorsTable['grey1']} />}
+          label='Edit my profile'
         />
         <AppButton
           backgroundColor={backgroundColorsTable['grey1']}

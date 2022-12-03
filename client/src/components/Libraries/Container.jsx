@@ -18,6 +18,7 @@ const Container = (props) => {
   const [selected, setSelected] = useState(null);
   const [libraries, setLibraries] = useState([]);
   const [selectedLibrary, setSelectedLibrary] = useState(null);
+  const [myJoinedLibraries, setMyJoinedLibraries] = useState([]);
 
   const appMenuBottomSheetRef = useRef(null);
   const createLibraryBottomSheetRef = useRef(null);
@@ -69,6 +70,8 @@ const Container = (props) => {
         selectedLibrary,
         setSelectedLibrary,
         selectLibrary,
+        myJoinedLibraries,
+        setMyJoinedLibraries,
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>

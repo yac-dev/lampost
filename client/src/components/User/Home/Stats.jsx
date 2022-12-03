@@ -1,20 +1,17 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useContext } from 'react';
+import UserContext from '../Context';
+import { View, ScrollView } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import {
-  baseTextColor,
-  rnDefaultBackgroundColor,
-  iconColorsTable,
-  backgroundColorsTable,
-  sectionBackgroundColor,
-} from '../../../utils/colorsTable';
+import { baseTextColor } from '../../../utils/colorsTable';
 import Stat from './Stat';
 
 const Stats = () => {
+  const { navigation, user } = useContext(UserContext);
+
   return (
     <View>
       <ScrollView
@@ -29,10 +26,10 @@ const Stats = () => {
         }}
       >
         <Stat
-          label='Logs'
+          label='Log'
           value={15}
           icon={<MaterialCommunityIcons name='history' color={baseTextColor} size={25} style={{ marginRight: 10 }} />}
-          onStatPress={() => console.log('opening logs page')}
+          onStatPress={() => navigation.navigate('Log', { userId: user._id })}
         />
         <Stat
           label='Assets'
@@ -40,7 +37,7 @@ const Stats = () => {
           icon={
             <MaterialCommunityIcons name='treasure-chest' color={baseTextColor} size={25} style={{ marginRight: 10 }} />
           }
-          onStatPress={() => console.log('opening logs page')}
+          onStatPress={() => navigation.navigate('Assets', { userId: user._id })}
         />
         <Stat
           label='Connections'

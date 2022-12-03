@@ -36,14 +36,15 @@ const Header = (props) => {
         style={{
           backgroundColor: iconColorsTable['blue1'],
           padding: 5,
-          borderRadius: 10,
+          borderRadius: 15,
           width: AvatarWidth,
           aspectRatio: 1,
           alignItems: 'center',
+          justifyContent: 'center',
           marginRight: 30,
         }}
       >
-        <FontAwesome5 name='user-astronaut' size={30} color='white' />
+        <FontAwesome5 name='user-astronaut' size={40} color='white' />
       </View>
       <Text style={{ color: 'white', fontSize: 20 }}>{user.name}</Text>
     </View>
