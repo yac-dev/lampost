@@ -41,7 +41,7 @@ const Stats = () => {
         />
         <Stat
           label='Connections'
-          value={15}
+          value={0}
           icon={<Entypo name='network' color={baseTextColor} size={25} style={{ marginRight: 10 }} />}
           onStatPress={() => console.log('opening logs page')}
         />

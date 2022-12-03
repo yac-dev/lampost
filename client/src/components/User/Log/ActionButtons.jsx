@@ -10,9 +10,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
 const ActionButtons = (props) => {
-  const { meetup, isMyPage, handleCreateRollBottomSheet, handleAddCommentBottomSheet } = useContext(LogContext);
+  const { pastMeetup, isMyPage, handleCreateRollBottomSheet, handleAddCommentBottomSheet } = useContext(LogContext);
 
-  if (meetup.launcher._id === props.auth.data._id) {
+  if (pastMeetup.launcher._id === props.auth.data._id) {
     return (
       <View style={{ flexDirection: 'row' }}>
         <TouchableOpacity
@@ -21,7 +21,7 @@ const ActionButtons = (props) => {
             marginRight: 10,
             alignItems: 'center',
           }}
-          onPress={() => handleCreateRollBottomSheet(meetup)}
+          // onPress={() => handleCreateRollBottomSheet(meetup)}
         >
           <MaterialIcons name='photo-album' size={25} color={'black'} style={{ marginRight: 5 }} />
           <Text style={{}}>Roll</Text>

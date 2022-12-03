@@ -6,15 +6,15 @@ import ActionButtons from './ActionButtons';
 import { iconColorsTable, backgroundColorsTable } from '../../../utils/colorsTable';
 
 const Log = (props) => {
-  const { meetup, isMyPage } = useContext(LogContext);
+  const { pastMeetup, index, isMyPage } = useContext(LogContext);
 
-  const renderAssets = () => {
-    const assetsList = meetup.assets.map((asset, index) => {
-      return <Image key={index} style={{ width: 50, height: 50, borderRadius: 5 }} source={{ uri: asset.data }} />;
-    });
+  // const renderAssets = () => {
+  //   const assetsList = pastMeetup.assets.map((asset, index) => {
+  //     return <Image key={index} style={{ width: 50, height: 50, borderRadius: 5 }} source={{ uri: asset.data }} />;
+  //   });
 
-    return <View style={{ flexDirection: 'row', marginBottom: 15 }}>{assetsList}</View>;
-  };
+  //   return <View style={{ flexDirection: 'row', marginBottom: 15 }}>{assetsList}</View>;
+  // };
 
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
@@ -43,35 +43,35 @@ const Log = (props) => {
   };
 
   return (
-    <View style={{ borderBottomWidth: 0.3, padding: 20 }}>
+    <View key={index} style={{ borderBottomWidth: 0.3, padding: 20 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-        {renderDate(meetup.startDateAndTime)}
+        {renderDate(pastMeetup.startDateAndTime)}
         <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
           }}
         >
-          <FastImage
+          {/* <FastImage
             style={{
               height: 35,
               width: 35,
               marginRight: 5,
-              backgroundColor: backgroundColorsTable[meetup.badge.color],
+              backgroundColor: backgroundColorsTable[pastMeetup.badge.color],
             }}
             source={{
               uri: meetup.badge.icon,
               priority: FastImage.priority.normal,
             }}
             tintColor={iconColorsTable[meetup.badge.color]}
-          />
-          <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 10 }}>{meetup.title}</Text>
+          /> */}
+          <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 10 }}>{pastMeetup.title}</Text>
         </View>
       </View>
       <View style={{ alignSelf: 'flex-end', marginBottom: 15 }}>
-        <Text>Launched by&nbsp;{meetup.launcher.name}</Text>
+        <Text>Launched by&nbsp;{pastMeetup.launcher.name}</Text>
       </View>
-      {renderAssets()}
+      {/* {renderAssets()} */}
       <View style={{ marginBottom: 15 }}>
         <Text>No messages added ...</Text>
       </View>

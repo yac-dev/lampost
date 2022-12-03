@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Touchable } from 'react-native';
 import LogContext from './LogContext';
 import { connect } from 'react-redux';
 import lampostAPI from '../../../apis/lampost';
+import { baseBackgroundColor, baseTextColor } from '../../../utils/colorsTable';
 
 import Log from './Log';
 import CreateRollBottomSheet from './CreateRollBottomSheet';
@@ -35,37 +36,46 @@ const Container = (props) => {
     }
   }, []);
 
-  const getPastMeetups = async () => {
-    const result = await lampostAPI.get(`/users/${props.route.params.userId}/pastmeetups`);
+  const getPastMeetupsByUserId = async () => {
+    const result = await lampostAPI.get(`/pastmeetupanduserrelationships/${props.route.params.userId}`);
     const { pastMeetups } = result.data;
-    console.log(pastMeetups);
     setPastMeetups(pastMeetups);
   };
   useEffect(() => {
-    getPastMeetups();
+    getPastMeetupsByUserId();
   }, []);
+
+  // const getPastMeetups = async () => {
+  //   const result = await lampostAPI.get(`/users/${props.route.params.userId}/pastmeetups`);
+  //   const { pastMeetups } = result.data;
+  //   console.log(pastMeetups);
+  //   setPastMeetups(pastMeetups);
+  // };
+  // useEffect(() => {
+  //   getPastMeetups();
+  // }, []);
 
   const renderPastMeetups = () => {
     if (pastMeetups.length) {
-      const pastMeetupsList = pastMeetups.map((meetup, index) => {
+      const pastMeetupsList = pastMeetups.map((pastMeetup, index) => {
         return (
-          <LogContext.Provider value={{ meetup, isMyPage, handleCreateRollBottomSheet, handleAddCommentBottomSheet }}>
-            <View key={index}>
-              <Log />
-            </View>
+          <LogContext.Provider
+            value={{ pastMeetup, index, isMyPage, handleCreateRollBottomSheet, handleAddCommentBottomSheet }}
+          >
+            <Log />
           </LogContext.Provider>
         );
       });
 
       return <View>{pastMeetupsList}</View>;
     } else {
-      return <Text>Nothing...</Text>;
+      return <Text style={{ color: baseTextColor }}>Nothing...</Text>;
     }
   };
 
   // ここで、userId使ってpastMeetupsを取ってくる。
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
       {renderPastMeetups()}
       <CreateRollBottomSheet createRollBottomSheetRef={createRollBottomSheetRef} selectedMeetup={selectedMeetup} />
       <CommentBottomSheet addCommentBottomSheetRef={addCommentBottomSheetRef} />

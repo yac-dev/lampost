@@ -37,7 +37,19 @@ const Auth = (props) => {
           >
             {/*  これまた、別でuserhomeのcomponentがひちようだわな。connectionなりで、違うuser pageに飛んでいくから。*/}
           </Stack.Screen>
-          <Stack.Screen name='Log' component={Log}></Stack.Screen>
+          <Stack.Screen
+            name='Log'
+            component={Log}
+            options={{
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+            }}
+          ></Stack.Screen>
           <Stack.Screen name='Assets' component={Assets} />
           <Stack.Screen name='Asset' component={Asset} />
         </Stack.Group>

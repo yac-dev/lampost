@@ -41,6 +41,13 @@ const LibraryNavigator = () => {
           options={({ navigation }) => ({
             headerShown: true,
             title: 'Library',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
           })}
         />
         <Stack.Screen
