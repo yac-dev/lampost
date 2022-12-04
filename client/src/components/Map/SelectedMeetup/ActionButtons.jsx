@@ -26,14 +26,8 @@ const ActionButtons = (props) => {
               {selectedMeetup.launcher._id === props.auth.data._id ? (
                 <ActionButton
                   label='Edit my meetup'
-                  icon={
-                    <MaterialCommunityIcons
-                      name='file-document-edit-outline'
-                      size={25}
-                      color={iconColorsTable['blue1']}
-                    />
-                  }
-                  backgroundColor={backgroundColorsTable['blue1']}
+                  icon={<MaterialCommunityIcons name='file-document-edit-outline' size={20} color={'white'} />}
+                  backgroundColor={iconColorsTable['blue1']}
                   onActionButtonPress={() => console.log('edit  my meetup')}
                 />
               ) : (
@@ -48,22 +42,20 @@ const ActionButtons = (props) => {
               )}
               <ActionButton
                 label='Go to lounge'
-                icon={
-                  <MaterialCommunityIcons name='comment-text-multiple' size={25} color={iconColorsTable['blue1']} />
-                }
-                backgroundColor={backgroundColorsTable['blue1']}
+                icon={<MaterialCommunityIcons name='comment-text-multiple' size={25} color={'white'} />}
+                backgroundColor={iconColorsTable['blue1']}
                 onActionButtonPress={() => navigation.navigate('Lounge', { meetupId: selectedMeetup._id })}
               />
               <ActionButton
                 label='Launch camera'
-                icon={<MaterialCommunityIcons name='camera' size={25} color={iconColorsTable['blue1']} />}
-                backgroundColor={backgroundColorsTable['blue1']}
+                icon={<MaterialCommunityIcons name='camera' size={25} color={'white'} />}
+                backgroundColor={iconColorsTable['blue1']}
                 onActionButtonPress={() => console.log('pressing')}
               />
               <ActionButton
                 label='Invite people'
-                icon={<MaterialCommunityIcons name='plus' size={25} color={iconColorsTable['blue1']} />}
-                backgroundColor={backgroundColorsTable['blue1']}
+                icon={<MaterialCommunityIcons name='plus' size={25} color={'white'} />}
+                backgroundColor={iconColorsTable['blue1']}
                 onActionButtonPress={() => console.log('pressing')}
               />
             </View>

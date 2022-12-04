@@ -21,6 +21,7 @@ import SendChat from '../Meetup/SendChat';
 import AddBadges from '../Utils/AddBadges/Container';
 
 import AuthNavigator from './Auth';
+import { appBottomSheetBackgroundColor } from '../../utils/colorsTable';
 
 // ac
 import { loadMe } from '../../redux/actionCreators/auth';
@@ -59,7 +60,20 @@ const MapNavigator = (props) => {
         />
         <Stack.Screen name='Crew' component={Crew} />
         <Stack.Screen name='QandA' component={QandA} />
-        <Stack.Screen name='Lounge' component={Lounge} />
+        <Stack.Screen
+          name='Lounge'
+          component={Lounge}
+          options={{
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: 'white',
+          }}
+        />
         <Stack.Screen
           name='User'
           component={User}

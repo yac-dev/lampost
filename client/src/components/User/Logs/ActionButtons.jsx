@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-paper';
-import LogContext from './LogContext';
+import LogContext from './LogsContext';
 import { iconColorsTable, backgroundColorsTable, baseTextColor } from '../../../utils/colorsTable';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';

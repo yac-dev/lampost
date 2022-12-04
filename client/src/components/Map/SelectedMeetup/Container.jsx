@@ -57,6 +57,7 @@ const Container = (props) => {
       keyboardBehavior={'interactive'}
       onClose={() => onSelectedItemBottomSheetClose()}
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
+      handleIndicatorStyle={{ backgroundColor: 'white' }}
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>{renderSelectedMeetup()}</BottomSheetView>
     </GorhomBottomSheet>

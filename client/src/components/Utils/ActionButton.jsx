@@ -2,31 +2,35 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { rnDefaultBackgroundColor } from '../../utils/colorsTable';
 
-const ActionButton = (props) => {
+const ActionButtonNew = (props) => {
   return (
     <TouchableOpacity
       style={{
-        borderRadius: 10,
-        // backgroundColor: rnDefaultBackgroundColor,
-        width: 200,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingTop: 2,
+        paddingBottom: 2,
+        paddingRight: 10,
+        paddingLeft: 5,
+        backgroundColor: props.backgroundColor,
         marginRight: 10,
+        borderRadius: 10,
       }}
       onPress={() => props.onActionButtonPress()}
     >
-      <View
+      <TouchableOpacity
         style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          backgroundColor: props.backgroundColor,
-          padding: 15,
-          borderRadius: 10,
+          width: 40,
+          height: 40,
+          alignItems: 'center', // これと
+          justifyContent: 'center', // これで中のimageを上下左右真ん中にする
         }}
       >
         {props.icon}
-        <Text style={{ color: 'white', marginLeft: 10 }}>{props.label}</Text>
-      </View>
+      </TouchableOpacity>
+      <Text style={{ color: 'white' }}>{props.label}</Text>
     </TouchableOpacity>
   );
 };
 
-export default ActionButton;
+export default ActionButtonNew;

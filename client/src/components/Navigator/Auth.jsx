@@ -48,6 +48,7 @@ const Auth = (props) => {
                 fontWeight: 'bold',
                 color: 'white',
               },
+              headerTintColor: 'white',
             }}
           ></Stack.Screen>
           <Stack.Screen name='Assets' component={Assets} />

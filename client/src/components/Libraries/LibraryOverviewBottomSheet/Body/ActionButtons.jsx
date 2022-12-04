@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import lampostAPI from '../../../../apis/lampost';
 import LibrariesContext from '../../LibrariesContext';
 import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { backgroundColorsTable, baseTextColor, iconColorsTable } from '../../../../utils/colorsTable';
 import ActionButton from '../../../Utils/ActionButton';
 
@@ -30,8 +31,8 @@ const ActionButtons = (props) => {
           {myJoinedLibraries.some((library) => library._id === selectedLibrary._id) ? (
             <ActionButton
               label='Leave this library'
-              icon={<MaterialIcons name='library-add' size={25} color={iconColorsTable['red1']} />}
-              backgroundColor={backgroundColorsTable['red1']}
+              icon={<MaterialCommunityIcons name='exit-run' size={20} color={'white'} />}
+              backgroundColor={iconColorsTable['red1']}
               onActionButtonPress={leaveLibrary}
             />
           ) : (
