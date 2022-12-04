@@ -10,7 +10,7 @@ import { iconColorsTable, backgroundColorsTable } from '../../../utils/colorsTab
 import AppButton from '../../Map/AppMenuBottomSheet/AppButtons/AppButton';
 
 const AppButtons = () => {
-  const { user, navigation } = useContext(AuthContext);
+  const { user, navigation, appMenuBottomSheetRef } = useContext(AuthContext);
   return (
     <View style={{ paddingTop: 10, marginBottom: 15 }}>
       <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
@@ -18,7 +18,10 @@ const AppButtons = () => {
           backgroundColor={backgroundColorsTable['lightGreen1']}
           icon={<Foundation name='sheriff-badge' size={35} color={iconColorsTable['lightGreen1']} />}
           label='Add badges'
-          onPress={() => console.log('yes')}
+          onAppMenuButtonPress={() => {
+            appMenuBottomSheetRef.current.snapToIndex(0);
+            navigation.navigate('Add badges', { fromComponent: 'Add user badges' });
+          }}
         />
         <AppButton
           backgroundColor={backgroundColorsTable['grey1']}

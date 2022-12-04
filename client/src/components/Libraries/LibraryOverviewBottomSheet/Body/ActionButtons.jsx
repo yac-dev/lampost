@@ -38,8 +38,8 @@ const ActionButtons = (props) => {
           ) : (
             <ActionButton
               label='Join this library'
-              icon={<MaterialIcons name='library-add' size={25} color={iconColorsTable['blue1']} />}
-              backgroundColor={backgroundColorsTable['blue1']}
+              icon={<MaterialIcons name='library-add' size={25} color={'white'} />}
+              backgroundColor={iconColorsTable['blue1']}
               onActionButtonPress={joinLibrary}
             />
           )}

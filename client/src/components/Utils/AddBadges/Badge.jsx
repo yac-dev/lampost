@@ -13,8 +13,6 @@ import { selectBadge } from '../../../redux/actionCreators/selectItem';
 import { removeBadge } from '../../../redux/actionCreators/selectItem';
 import { setIsTappedBadgeBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
 
-import { bgColorsTable } from '../bgColorsTable';
-
 const Badge = (props) => {
   // Add badges(add user badgeとadd meetup badge)componentのbadgeをtapした時の挙動、
   const renderBadgeIcon = () => {

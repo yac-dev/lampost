@@ -14,7 +14,6 @@ import ActionButtons from './Home/ActionButtons';
 import Stats from './Home/Stats';
 import Badges from '../Utils/AddBadges/Badges';
 import BadgeStatuses from './Home/BadgeStatuses/Container';
-import FABMenu from './Utils/FABMenu';
 import BadgeStatusBottomSheet from './Home/BadgeStatusBottomSheet';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 

@@ -10,7 +10,6 @@ import MapView, { Marker } from 'react-native-maps';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // components
-import NBProvider from '../Utils/NativeBaseProvider';
 import MapMarkers from './MapMarkers';
 // bottom sheeets
 import SelectedMeetup from './SelectedMeetup/Container';

@@ -1,5 +1,6 @@
 // main libraries
 import React, { useState } from 'react';
+import { Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
@@ -13,6 +14,7 @@ import UserHome from '../User/Container';
 import Logs from '../User/Logs/Container';
 import Assets from '../User/Assets/Container';
 import Asset from '../User/Assets/Asset';
+import AddBadges from '../Utils/AddBadges/Container';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
 
 const Auth = (props) => {
@@ -54,7 +56,19 @@ const Auth = (props) => {
           <Stack.Screen name='Assets' component={Assets} />
           <Stack.Screen name='Asset' component={Asset} />
         </Stack.Group>
-        <Stack.Group></Stack.Group>
+        <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
+          <Stack.Screen
+            name='Add badges'
+            component={AddBadges}
+            options={({ navigation }) => ({
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Text>Close</Text>
+                </TouchableOpacity>
+              ),
+            })}
+          />
+        </Stack.Group>
       </Stack.Navigator>
     );
   } else {
