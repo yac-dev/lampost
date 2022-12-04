@@ -39,7 +39,7 @@ const Badge = (props) => {
         onPress={() => {
           launchMeetupBottomSheetRef.current.snapToIndex(0);
           props.navigation.navigate('Add badges', {
-            fromComponent: 'Add meetup badges',
+            fromComponent: 'ADD_MEETUP_BADGES',
             meetupBadges: props.state.badges,
           });
         }}

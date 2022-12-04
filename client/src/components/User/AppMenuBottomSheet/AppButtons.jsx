@@ -20,7 +20,7 @@ const AppButtons = () => {
           label='Add badges'
           onAppMenuButtonPress={() => {
             appMenuBottomSheetRef.current.snapToIndex(0);
-            navigation.navigate('Add badges', { fromComponent: 'Add user badges' });
+            navigation.navigate('Add badges', { fromComponent: 'ADD_USER_BADGES' });
           }}
         />
         <AppButton

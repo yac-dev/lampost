@@ -12,7 +12,7 @@ import { baseBackgroundColor } from '../../utils/colorsTable';
 import Header from './Home/Header';
 import ActionButtons from './Home/ActionButtons';
 import Stats from './Home/Stats';
-import Badges from '../Utils/AddBadges/Badges';
+// import Badges from '../Utils/AddBadges/Badges/Container';
 import BadgeStatuses from './Home/BadgeStatuses/Container';
 import BadgeStatusBottomSheet from './Home/BadgeStatusBottomSheet';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
@@ -98,16 +98,8 @@ const Container = (props) => {
   if (user) {
     return (
       <UserContext.Provider value={{ user, isMyPage, navigation: props.navigation, appMenuBottomSheetRef }}>
-        <View
-          style={{
-            // padding: 10,
-            flex: 1,
-            // backgroundColor: 'rgb(27, 27, 79)' この色いい。
-            backgroundColor: baseBackgroundColor,
-          }}
-        >
+        <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
           <Header />
-          {/* <ActionButtons /> */}
           <Stats />
           <BadgeStatuses
             user={user}
@@ -117,7 +109,6 @@ const Container = (props) => {
           />
           <AppMenuBottomSheet />
           {/* <Badges user={user} badges={badges} onBadgePress={onBadgePress} /> */}
-          {/* <FABMenu /> */}
           {/* <BadgeStatusBottomSheet
             badgeStatusBottomSheetRef={badgeStatusBottomSheetRef}
             tappedBadgeStatus={tappedBadgeStatus}

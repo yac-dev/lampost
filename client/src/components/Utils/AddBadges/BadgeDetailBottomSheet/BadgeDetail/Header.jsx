@@ -16,7 +16,7 @@ const Header = () => {
 
   // こういうの、if state mentよりもhashtableで使った方がいいだろな。いちいち分岐って読みづらいしね。
   const renderActionButton = () => {
-    if (fromComponent === 'Add user badges') {
+    if (fromComponent === 'ADD_USER_BADGES') {
       if (selectedUserBadges[tappedBadge._id]) {
         return (
           <ActionButton

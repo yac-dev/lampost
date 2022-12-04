@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import AddBadgesContext from './AddBadgesContext';
-import BadgeContext from './BadgeContext';
+import AddBadgesContext from '../AddBadgesContext';
+import BadgeContext from '../BadgeContext';
 import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { Badge as RNPBadge, IconButton } from 'react-native-paper';
@@ -13,12 +13,12 @@ import {
   backgroundColorsTable,
   rnDefaultBackgroundColor,
   baseTextColor,
-} from '../../../utils/colorsTable';
+} from '../../../../utils/colorsTable';
 
 // ac
-import { selectBadge } from '../../../redux/actionCreators/selectItem';
-import { removeBadge } from '../../../redux/actionCreators/selectItem';
-import { setIsTappedBadgeBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
+import { selectBadge } from '../../../../redux/actionCreators/selectItem';
+import { removeBadge } from '../../../../redux/actionCreators/selectItem';
+import { setIsTappedBadgeBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
 
 const Badge = (props) => {
   const { badge } = useContext(BadgeContext);
@@ -84,7 +84,7 @@ const Badge = (props) => {
   };
 
   const renderIsBadgeSelected = () => {
-    if (fromComponent === 'Add user badges') {
+    if (fromComponent === 'ADD_USER_BADGES') {
       if (selectedUserBadges[badge._id]) {
         return (
           <View

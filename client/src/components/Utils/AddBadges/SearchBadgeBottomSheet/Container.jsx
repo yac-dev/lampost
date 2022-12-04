@@ -7,7 +7,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
 // components
-import SearchBar from './SearchBar';
 import FilterActionButtons from './FilterActionButtons';
 
 const SearchBottomSheet = (props) => {

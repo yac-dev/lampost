@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { baseBackgroundColor } from '../../../utils/colorsTable';
 
 // components
-import Badges from './Badges';
+import Badges from './Badges/Container';
 import SearchBadgeBottomSheet from './SearchBadgeBottomSheet/Container';
 import BadgeDetailBottomSheet from './BadgeDetailBottomSheet/Container';
 
@@ -14,12 +14,10 @@ import BadgeDetailBottomSheet from './BadgeDetailBottomSheet/Container';
 import { setIsTappedBadgeBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
 
 const Container = (props) => {
-  const [badge, setBadge] = useState(null);
   const [meetupBadges, setMeetupBadges] = useState({});
-  const [userBadges, setUserBadges] = useState({});
   const [fromComponent, setFromComponent] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const [badges, setBadges] = useState([]);
+  const [queriedBadges, setQueriedBadges] = useState([]);
   const [queryType, setQueryType] = useState([]);
   const [queryName, setQueryName] = useState('');
   const [page, setPage] = useState(null);
@@ -30,12 +28,11 @@ const Container = (props) => {
   const searchBadgeBottomSheetRef = useRef(null);
   const badgeDetailBottomSheetRef = useRef(null);
 
-  // header rightに関するuseEffect
-  // add user badgeの時のcomponent
+  // ADD_USER_BADGESの時のcomponent
   useEffect(() => {
     // ここは、user pageからここに来て、doneをpressしたら, user pageへ戻る。addしたbadgesをparamsに入れていく感じ。
-    if (props.route.params.fromComponent === 'Add user badges') {
-      setFromComponent('Add user badges');
+    if (props.route.params.fromComponent === 'ADD_USER_BADGES') {
+      setFromComponent('ADD_USER_BADGES');
       props.navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity onPress={() => onDoneAddUserBadgesPress()}>
@@ -45,7 +42,6 @@ const Container = (props) => {
       });
     }
   }, [selectedUserBadges]);
-
   const onDoneAddUserBadgesPress = () => {
     const badgeIds = Object.values(selectedUserBadges).map((badge) => {
       return badge._id;
@@ -56,34 +52,10 @@ const Container = (props) => {
     props.navigation.navigate('Personal page', { userId: props.auth.data._id, addedUserBadges: badgeIds });
   };
 
-  // select meetup badgeの時
+  // ADD_MEETUP_BADGESの時。
   useEffect(() => {
-    if (props.route.params.fromComponent === 'Select meetup badge') {
-      setFromComponent('Select meetup badge');
-      props.navigation.setOptions({
-        headerRight: () => (
-          <TouchableOpacity onPress={() => onSelectMeetupBadgeDone()}>
-            <Text>Done(meetup badge)</Text>
-          </TouchableOpacity>
-        ),
-      });
-    }
-  }, [badge]);
-
-  useEffect(() => {
-    if (props.route.params.selectedBadge) {
-      setBadge(props.route.params.selectedBadge);
-    }
-  }, []);
-
-  const onSelectMeetupBadgeDone = () => {
-    props.navigation.navigate('Map', { badge });
-  };
-
-  // meetup required badgesの時
-  useEffect(() => {
-    if (props.route.params?.fromComponent === 'Add meetup badges') {
-      setFromComponent('Add meetup badges');
+    if (props.route.params?.fromComponent === 'ADD_MEETUP_BADGES') {
+      setFromComponent('ADD_MEETUP_BADGES');
       // setRequiredBadges((previous) => {
       //   return {
       //     ...previous,
@@ -101,6 +73,8 @@ const Container = (props) => {
   }, [meetupBadges]);
   // うん。上でやると、useEffectでstackoverflow的なことが起こっている。だから下で分けてやる必要がありそう。
 
+  // launch meetupから来た既に選択済みのmeetup badgesがここのcomponentに送られ、それをそのままcomponentのstateにセットする。
+  // 上のuseEffectでこれをやるとstackoverflowを起こす。だから、これで分けている。
   useEffect(() => {
     if (props.route.params?.meetupBadges) {
       setMeetupBadges((previous) => {
@@ -116,17 +90,11 @@ const Container = (props) => {
     props.navigation.navigate('Map', { meetupBadges });
   };
 
-  // const onDoneAddMeetupBadges = () => {
-  //   props.navigation.goBack();
-  // };
-
   // query
   useEffect(() => {
-    if (props.route.params.fromComponent === 'Add user badges') {
+    if (props.route.params.fromComponent === 'ADD_USER_BADGES') {
       queryBadges(props.auth.data._id);
-    } else if (props.route.params.fromComponent === 'Add meetup badges') {
-      queryBadges();
-    } else if (props.route.params.fromComponent === 'Select meetup badge') {
+    } else if (props.route.params.fromComponent === 'ADD_MEETUP_BADGES') {
       queryBadges();
     }
   }, [queryType]);
@@ -149,23 +117,15 @@ const Container = (props) => {
     console.log(queryString);
     const result = await lampostAPI.post(`/badges/${queryString}`, postBody);
     const { badges } = result.data;
-    setBadges(badges);
+    setQueriedBadges(badges);
     setPage(2);
-  };
-
-  const closeTappedBadgeBottomSheet = () => {
-    props.setIsTappedBadgeBottomSheetOpen(false, null);
-    tappedBadgeBottomSheetRef.current?.close();
-  };
-
-  const onBadgePress = (badge) => {
-    props.setIsTappedBadgeBottomSheetOpen(true, badge);
   };
 
   return (
     <AddBadgesContext.Provider
       value={{
         fromComponent,
+        queriedBadges,
         selectedUserBadges,
         setSelectedUserBadges,
         badgeDetailBottomSheetRef,
@@ -180,11 +140,11 @@ const Container = (props) => {
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
         <Badges
-          badgeState={badge}
-          meetupBadges={meetupBadges}
-          badges={badges}
-          onBadgePress={onBadgePress}
-          fromComponent={fromComponent}
+        // badgeState={badge}
+        // meetupBadges={meetupBadges}
+        // badges={badges}
+        // onBadgePress={onBadgePress}
+        // fromComponent={fromComponent}
         />
         {/* <SearchBadgeBottomSheet
         searchBadgeBottomSheetRef={searchBadgeBottomSheetRef}

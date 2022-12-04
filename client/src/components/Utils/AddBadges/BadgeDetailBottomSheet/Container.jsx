@@ -43,13 +43,6 @@ const Container = (props) => {
           </View>
         </TouchableOpacity>
         {tappedBadge ? <BadgeDetail /> : null}
-        {/* <BadgeDetail
-            fromComponent={props.fromComponent}
-            badge={props.badge}
-            setBadge={props.setBadge}
-            meetupBadges={props.meetupBadges}
-            setMeetupBadges={props.setMeetupBadges}
-          /> */}
       </BottomSheetView>
     </GorhomBottomSheet>
   );
