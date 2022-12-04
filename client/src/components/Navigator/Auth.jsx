@@ -63,9 +63,17 @@ const Auth = (props) => {
             options={({ navigation }) => ({
               headerLeft: () => (
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                  <Text>Close</Text>
+                  <Text style={{ color: 'white' }}>Cancel</Text>
                 </TouchableOpacity>
               ),
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+              headerTintColor: 'white',
             })}
           />
         </Stack.Group>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import BadgeContext from './BadgeContext';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView, FlatList, TouchableOpacity } from 'react-native';
 import lampostAPI from '../../../apis/lampost';
@@ -10,52 +11,32 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 // components
 import Badge from './Badge';
 import SearchBadgeBottomSheet from './SearchBadgeBottomSheet/Container';
-import TappedBadgeBottomSheetRef from './TappedBadgeBottomSheet/Container';
+import TappedBadgeBottomSheetRef from './BadgeDetailBottomSheet/Container';
 
 // 結局、違いはbadgeを押した時のonPressの挙動だけなのよ。そこをどうするか。
 const Container = (props) => {
   const renderBadges = () => {
     const badgesList = props.badges.map((badge, index) => {
       return (
-        <Badge
-          user={props.user}
-          key={index}
-          fromComponent={props.fromComponent}
-          badgeState={props.badgeState}
-          meetupBadges={props.meetupBadges}
-          badge={badge}
-          onBadgePress={props.onBadgePress}
-        />
+        <BadgeContext.Provider value={{ badge }}>
+          <Badge
+            // user={props.user}
+            key={index}
+            fromComponent={props.fromComponent}
+            badgeState={props.badgeState}
+            meetupBadges={props.meetupBadges}
+            badge={badge}
+            onBadgePress={props.onBadgePress}
+          />
+        </BadgeContext.Provider>
       );
     });
 
-    return (
-      <ScrollView contentContainerStyle={{ paddingBottom: 300 }}>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{badgesList}</View>
-      </ScrollView>
-    );
-  };
-
-  const ren = () => {
-    return (
-      <FlatList
-        showsVerticalScrollIndicator={true}
-        data={props.badges}
-        numColumns={4}
-        renderItem={({ item, index }) => {
-          return (
-            <View style={{ flexDirection: 'row', paddingHorizontal: 5, paddingVertical: 5 }}>
-              <Badge badge={item} onBadgePress={props.onBadgePress} />
-            </View>
-          );
-        }}
-        keyExtractor={(item) => item._id}
-      />
-    );
+    return <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{badgesList}</View>;
   };
 
   if (props.badges.length) {
-    return <View>{renderBadges()}</View>;
+    return <ScrollView contentContainerStyle={{ paddingBottom: 300 }}>{renderBadges()}</ScrollView>;
   } else {
     return <Text>Now loadinggggg...</Text>;
   }

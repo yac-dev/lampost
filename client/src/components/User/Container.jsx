@@ -78,14 +78,14 @@ const Container = (props) => {
   }, [user]);
 
   useEffect(() => {
-    if (props.route.params?.badges) {
-      setUser((previous) => {
-        console.log('user data', previous);
-        return { ...previous, badges: [...previous.badges, ...props.route.params.badges] };
-      });
-      console.log('from add badges to user', props.route.params.badges);
+    if (props.route.params?.addedUserBadges) {
+      // setUser((previous) => {
+      //   console.log('user data', previous);
+      //   return { ...previous, badges: [...previous.badges, ...props.route.params.badges] };
+      // });
+      console.log('I added these badges', props.route.params.addedUserBadges);
     }
-  }, [props.route.params?.badges]);
+  }, [props.route.params?.addedUserBadges]);
 
   const onBadgePress = async (badgeStatusId) => {
     // このuser pageのuser id、そしてbadgeを使ってget requestをする。

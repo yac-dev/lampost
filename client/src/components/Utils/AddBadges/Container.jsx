@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import AddBadgesContext from './AddBadgesContext';
 import lampostAPI from '../../../apis/lampost';
 import { connect } from 'react-redux';
+import { baseBackgroundColor } from '../../../utils/colorsTable';
 
 // components
 import Badges from './Badges';
 import SearchBadgeBottomSheet from './SearchBadgeBottomSheet/Container';
-import TappedBadgeBottomSheet from './TappedBadgeBottomSheet/Container';
+import BadgeDetailBottomSheet from './BadgeDetailBottomSheet/Container';
 
 // ac
 import { setIsTappedBadgeBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
@@ -21,9 +23,12 @@ const Container = (props) => {
   const [queryType, setQueryType] = useState([]);
   const [queryName, setQueryName] = useState('');
   const [page, setPage] = useState(null);
+  const [selectedUserBadges, setSelectedUserBadges] = useState({});
+  const [selectedMeetupBadges, setSelectedMeetupBadges] = useState({});
+  const [tappedBadge, setTappedBadge] = useState(null);
 
   const searchBadgeBottomSheetRef = useRef(null);
-  const tappedBadgeBottomSheetRef = useRef(null);
+  const badgeDetailBottomSheetRef = useRef(null);
 
   // header rightに関するuseEffect
   // add user badgeの時のcomponent
@@ -34,21 +39,21 @@ const Container = (props) => {
       props.navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity onPress={() => onDoneAddUserBadgesPress()}>
-            <Text>Done(user badges)</Text>
+            <Text style={{ color: 'white' }}>Done</Text>
           </TouchableOpacity>
         ),
       });
     }
-  }, [props.selectedBadges]);
+  }, [selectedUserBadges]);
 
-  const onDoneAddUserBadgesPress = async () => {
-    const badgeIds = props.selectedBadges.map((badge) => {
+  const onDoneAddUserBadgesPress = () => {
+    const badgeIds = Object.values(selectedUserBadges).map((badge) => {
       return badge._id;
     });
-    console.log('These are badge ids', badgeIds);
-    const result = await lampostAPI.patch(`/users/${props.auth.data._id}/addbadges`, { badgeIds });
-    const { badges } = result.data;
-    props.navigation.navigate('User', { userId: props.auth.data._id, badges });
+    console.log("I'm adding these badges", badgeIds);
+    // const result = await lampostAPI.patch(`/users/${props.auth.data._id}/addbadges`, { badgeIds });
+    // const { badges } = result.data;
+    props.navigation.navigate('Personal page', { userId: props.auth.data._id, addedUserBadges: badgeIds });
   };
 
   // select meetup badgeの時
@@ -158,31 +163,49 @@ const Container = (props) => {
   };
 
   return (
-    <View style={{ padding: 10, flex: 1 }}>
-      <Badges
-        badgeState={badge}
-        meetupBadges={meetupBadges}
-        badges={badges}
-        onBadgePress={onBadgePress}
-        fromComponent={fromComponent}
-      />
-      <SearchBadgeBottomSheet
+    <AddBadgesContext.Provider
+      value={{
+        fromComponent,
+        selectedUserBadges,
+        setSelectedUserBadges,
+        badgeDetailBottomSheetRef,
+        searchBadgeBottomSheetRef,
+        searchQuery,
+        setSearchQuery,
+        queryType,
+        setQueryType,
+        tappedBadge,
+        setTappedBadge,
+      }}
+    >
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+        <Badges
+          badgeState={badge}
+          meetupBadges={meetupBadges}
+          badges={badges}
+          onBadgePress={onBadgePress}
+          fromComponent={fromComponent}
+        />
+        {/* <SearchBadgeBottomSheet
         searchBadgeBottomSheetRef={searchBadgeBottomSheetRef}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         queryType={queryType}
         setQueryType={setQueryType}
-      />
-      <TappedBadgeBottomSheet
-        fromComponent={fromComponent}
-        badge={badge}
-        setBadge={setBadge}
-        meetupBadges={meetupBadges}
-        setMeetupBadges={setMeetupBadges}
-        tappedBadgeBottomSheetRef={tappedBadgeBottomSheetRef}
-        closeTappedBadgeBottomSheet={closeTappedBadgeBottomSheet}
-      />
-    </View>
+        /> */}
+        <BadgeDetailBottomSheet />
+        <SearchBadgeBottomSheet />
+        {/* <TappedBadgeBottomSheet
+          fromComponent={fromComponent}
+          badge={badge}
+          setBadge={setBadge}
+          meetupBadges={meetupBadges}
+          setMeetupBadges={setMeetupBadges}
+          tappedBadgeBottomSheetRef={tappedBadgeBottomSheetRef}
+          closeTappedBadgeBottomSheet={closeTappedBadgeBottomSheet}
+        /> */}
+      </View>
+    </AddBadgesContext.Provider>
   );
 };
 

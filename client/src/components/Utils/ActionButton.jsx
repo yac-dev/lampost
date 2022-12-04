@@ -17,7 +17,7 @@ const ActionButtonNew = (props) => {
       }}
       onPress={() => props.onActionButtonPress()}
     >
-      <TouchableOpacity
+      <View
         style={{
           width: 40,
           height: 40,
@@ -26,7 +26,7 @@ const ActionButtonNew = (props) => {
         }}
       >
         {props.icon}
-      </TouchableOpacity>
+      </View>
       <Text style={{ color: 'white' }}>{props.label}</Text>
     </TouchableOpacity>
   );
