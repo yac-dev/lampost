@@ -10,7 +10,7 @@ import SignUp from '../Auth/SignUp';
 import LogIn from '../Auth/LogIn';
 
 import UserHome from '../User/Container';
-import Log from '../User/Log/Container';
+import Logs from '../User/Logs/Container';
 import Assets from '../User/Assets/Container';
 import Asset from '../User/Assets/Asset';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
@@ -38,8 +38,8 @@ const Auth = (props) => {
             {/*  これまた、別でuserhomeのcomponentがひちようだわな。connectionなりで、違うuser pageに飛んでいくから。*/}
           </Stack.Screen>
           <Stack.Screen
-            name='Log'
-            component={Log}
+            name='Logs'
+            component={Logs}
             options={{
               headerStyle: {
                 backgroundColor: appBottomSheetBackgroundColor,

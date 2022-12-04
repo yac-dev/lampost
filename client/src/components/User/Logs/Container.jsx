@@ -18,6 +18,7 @@ const Container = (props) => {
   const [bottomSheetType, setBottomSheetType] = useState('');
   const createRollBottomSheetRef = useRef(null);
   const addCommentBottomSheetRef = useRef(null);
+  const addThooughtsBottomSheet = useRef(null);
 
   const handleCreateRollBottomSheet = (meetup) => {
     createRollBottomSheetRef.current?.snapToIndex(0);
@@ -44,6 +45,7 @@ const Container = (props) => {
   useEffect(() => {
     getPastMeetupsByUserId();
   }, []);
+  console.log(pastMeetups);
 
   // const getPastMeetups = async () => {
   //   const result = await lampostAPI.get(`/users/${props.route.params.userId}/pastmeetups`);
@@ -60,9 +62,9 @@ const Container = (props) => {
       const pastMeetupsList = pastMeetups.map((pastMeetup, index) => {
         return (
           <LogContext.Provider
-            value={{ pastMeetup, index, isMyPage, handleCreateRollBottomSheet, handleAddCommentBottomSheet }}
+            value={{ pastMeetup, isMyPage, handleCreateRollBottomSheet, handleAddCommentBottomSheet }}
           >
-            <Log />
+            <Log key={index} />
           </LogContext.Provider>
         );
       });
@@ -77,8 +79,8 @@ const Container = (props) => {
   return (
     <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
       {renderPastMeetups()}
-      <CreateRollBottomSheet createRollBottomSheetRef={createRollBottomSheetRef} selectedMeetup={selectedMeetup} />
-      <CommentBottomSheet addCommentBottomSheetRef={addCommentBottomSheetRef} />
+      {/* <CreateRollBottomSheet createRollBottomSheetRef={createRollBottomSheetRef} selectedMeetup={selectedMeetup} /> */}
+      {/* <CommentBottomSheet addCommentBottomSheetRef={addCommentBottomSheetRef} /> */}
     </View>
   );
 };

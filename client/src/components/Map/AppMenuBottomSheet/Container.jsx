@@ -24,6 +24,7 @@ const AppMenusBottomSheet = (props) => {
       )}
       enablePanDownToClose={false}
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
+      handleIndicatorStyle={{ backgroundColor: 'white' }}
       // keyboardBehavior={'interactive'}
       // onClose={() => onSelectedItemBottomSheetClose()}
     >

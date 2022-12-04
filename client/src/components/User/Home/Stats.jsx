@@ -26,10 +26,10 @@ const Stats = () => {
         }}
       >
         <Stat
-          label='Log'
+          label='Logs'
           value={15}
           icon={<MaterialCommunityIcons name='history' color={baseTextColor} size={25} style={{ marginRight: 10 }} />}
-          onStatPress={() => navigation.navigate('Log', { userId: user._id })}
+          onStatPress={() => navigation.navigate('Logs', { userId: user._id })}
         />
         <Stat
           label='Assets'

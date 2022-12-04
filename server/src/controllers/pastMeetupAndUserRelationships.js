@@ -6,12 +6,18 @@ export const getPastMeetupsByUserId = async (request, response) => {
       user: request.params.userId,
     }).populate({
       path: 'pastMeetup',
+      select: 'assets attendees badges startDateAndTime launcher place title',
       populate: [
         {
           path: 'launcher',
+          select: 'name photo _id',
         },
         {
           path: 'assets',
+        },
+        {
+          path: 'badges',
+          select: 'color icon name',
         },
       ],
     });

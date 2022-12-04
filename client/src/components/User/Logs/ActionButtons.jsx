@@ -3,11 +3,12 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-paper';
 import LogContext from './LogContext';
-import { iconColorsTable, backgroundColorsTable } from '../../../utils/colorsTable';
+import { iconColorsTable, backgroundColorsTable, baseTextColor } from '../../../utils/colorsTable';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import { Fontisto } from '@expo/vector-icons';
 
 const ActionButtons = (props) => {
   const { pastMeetup, isMyPage, handleCreateRollBottomSheet, handleAddCommentBottomSheet } = useContext(LogContext);
@@ -16,28 +17,16 @@ const ActionButtons = (props) => {
     return (
       <View style={{ flexDirection: 'row' }}>
         <TouchableOpacity
-          style={{
-            flexDirection: 'row',
-            marginRight: 10,
-            alignItems: 'center',
-          }}
-          // onPress={() => handleCreateRollBottomSheet(meetup)}
-        >
-          <MaterialIcons name='photo-album' size={25} color={'black'} style={{ marginRight: 5 }} />
-          <Text style={{}}>Roll</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
           style={{ flexDirection: 'row', marginRight: 10, alignItems: 'center' }}
-          onPress={() => handleAddCommentBottomSheet()}
+          onPress={() => console.log('Add message')}
         >
-          <FontAwesome name='comments' size={25} color={'black'} style={{ marginRight: 5 }} />
-          <Text style={{}}>Message</Text>
+          <FontAwesome name='comment' size={25} color={baseTextColor} style={{ marginRight: 5 }} />
+          <Text style={{ color: baseTextColor }}>Add your thought</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={{ flexDirection: 'row', marginRight: 10, alignItems: 'center' }}>
+        {/* <TouchableOpacity style={{ flexDirection: 'row', marginRight: 10, alignItems: 'center' }}>
           <MaterialCommunityIcons name='human-greeting-variant' size={25} color={'black'} style={{ marginRight: 5 }} />
           <Text style={{}}>Connect</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     );
   } else {
