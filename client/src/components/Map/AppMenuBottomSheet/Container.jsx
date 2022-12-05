@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 
-import AppButtons from './AppButtons';
+import AppMenuButtons from './AppMenuButtons';
 import UpcomingMeetups from './UpcomingMeetups/Container';
 import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 import { setIsConfirmHostMeetupModalOpen } from '../../../redux/actionCreators/modal';
@@ -30,7 +30,7 @@ const AppMenusBottomSheet = (props) => {
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
         <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 15 }}>Launch your meetup?</Text>
-        <AppButtons appMenuBottomSheetRef={props.appMenuBottomSheetRef} postBottomSheetRef={props.postBottomSheetRef} />
+        <AppMenuButtons />
         <UpcomingMeetups />
       </BottomSheetView>
     </GorhomBottomSheet>

@@ -29,7 +29,7 @@ const AppButton = (props) => {
           borderWidth: 0.3,
           marginBottom: 10,
         }}
-        oonPress={() => props.onAppMenuButtonPress()}
+        onPress={() => props.onAppMenuButtonPress()}
       >
         <View
           style={{

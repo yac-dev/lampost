@@ -1,10 +1,9 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Keyboard } from 'react-native';
 import { Button } from 'react-native-paper';
-import { FontAwesome } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
+import ActionButton from '../../../../Utils/ActionButton';
+import { iconColorsTable } from '../../../../../utils/colorsTable';
 
 // components
 import HeaderDescription from './HeaderDescription';
@@ -20,23 +19,18 @@ const Container = (props) => {
       <HeaderLink />
       <Reference state={props.state} dispatch={props.dispatch} />
       <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
-        <Button
-          icon='arrow-left'
-          mode='outlined'
-          onPress={() => props.dispatch({ type: 'BACK_TO_MEETUP_DETAIL', payload: '' })}
-        >
-          Back
-        </Button>
-        <Button
-          icon='rocket-launch'
-          mode='outlined'
-          contentStyle={{ flexDirection: 'row-reverse' }}
-          onPress={() => {
-            props.onSubmit();
-          }}
-        >
-          Launch
-        </Button>
+        <ActionButton
+          label='Back'
+          backgroundColor={iconColorsTable['blue1']}
+          icon={<MaterialCommunityIcons name='hand-pointing-left' color={'white'} size={25} />}
+          onActionButtonPress={() => props.dispatch({ type: 'BACK_TO_MEETUP_DETAIL', payload: '' })}
+        />
+        <ActionButton
+          label='Launch'
+          backgroundColor={iconColorsTable['blue1']}
+          icon={<MaterialCommunityIcons name='rocket-launch' color={'white'} size={25} />}
+          onActionButtonPress={() => props.onSubmit()}
+        />
       </View>
       <View></View>
     </View>

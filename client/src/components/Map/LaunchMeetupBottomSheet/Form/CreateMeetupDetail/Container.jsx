@@ -2,7 +2,9 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { IconButton, Button, Searchbar, Dialog, Portal, Provider } from 'react-native-paper';
-import { Entypo } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import ActionButton from '../../../../Utils/ActionButton';
+import { iconColorsTable } from '../../../../../utils/colorsTable';
 
 // component
 import HeaderFee from './HeaderFee';
@@ -22,21 +24,18 @@ const Container = (props) => {
       <MediaPermission state={props.state} dispatch={props.dispatch} />
       {/* <MeetupAttendeesLimit state={props.state} dispatch={props.dispatch} /> */}
       <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
-        <Button
-          icon='arrow-left'
-          mode='outlined'
-          onPress={() => props.dispatch({ type: 'BACK_TO_MEETUP_DATE_AND_TIME', payload: '' })}
-        >
-          Back
-        </Button>
-        <Button
-          icon='arrow-right'
-          mode='outlined'
-          contentStyle={{ flexDirection: 'row-reverse' }}
-          onPress={() => props.dispatch({ type: 'GO_TO_MEETUP_DESCRIPTION', payload: '' })}
-        >
-          Next
-        </Button>
+        <ActionButton
+          label='Back'
+          backgroundColor={iconColorsTable['blue1']}
+          icon={<MaterialCommunityIcons name='hand-pointing-left' color={'white'} size={25} />}
+          onActionButtonPress={() => props.dispatch({ type: 'BACK_TO_MEETUP_DATE_AND_TIME', payload: '' })}
+        />
+        <ActionButton
+          label='Next'
+          backgroundColor={iconColorsTable['blue1']}
+          icon={<MaterialCommunityIcons name='hand-pointing-right' color={'white'} size={25} />}
+          onActionButtonPress={() => props.dispatch({ type: 'GO_TO_MEETUP_DESCRIPTION', payload: '' })}
+        />
       </View>
       {/* </ScrollView> */}
     </View>

@@ -3,7 +3,7 @@ import MapContext from '../MeetupContext';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import AppButton from '../../Utils/AppButton';
+import AppButton from '../../Utils/AppMenuButton';
 import { iconColorsTable, backgroundColorsTable, sectionBackgroundColor } from '../../../utils/colorsTable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { setIsConfirmHostMeetupModalOpen } from '../../../redux/actionCreators/modal';

@@ -8,7 +8,7 @@ import { Entypo } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 import { iconColorsTable, backgroundColorsTable, sectionBackgroundColor } from '../../../utils/colorsTable';
-import AppButton from '../../Utils/AppButton';
+import AppButton from '../../Utils/AppMenuButton';
 
 const AppButtons = () => {
   const { user, navigation, appMenuBottomSheetRef } = useContext(AuthContext);
