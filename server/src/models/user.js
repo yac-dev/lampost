@@ -18,12 +18,12 @@ const userSchema = new mongoose.Schema({
   photo: {
     type: String,
   },
-  badges: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'BadgeStatus',
-    },
-  ],
+  // badges: [
+  //   {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'BadgeStatus',
+  //   },
+  // ],
   upcomingMeetups: [
     {
       meetup: {
@@ -76,15 +76,6 @@ const userSchema = new mongoose.Schema({
   //   {
   //     type: mongoose.Schema.ObjectId,
   //     ref: 'User',
-  //   },
-  // ],
-  // groupChats: [
-  //   {
-  //     chatRoom: {
-  //       type: mongoose.Schema.ObjectId,
-  //       ref: 'ChatRoom',
-  //     },
-  //     lastViewed: Date,
   //   },
   // ],
 });

@@ -13,6 +13,8 @@ const AppMenusBottomSheet = (props) => {
   const snapPoints = useMemo(() => ['8%', '30%', '80%'], []);
   const { appMenuBottomSheetRef } = useContext(MapContext);
 
+  console.log(props.auth.data);
+
   return (
     <GorhomBottomSheet
       index={0}
@@ -31,7 +33,7 @@ const AppMenusBottomSheet = (props) => {
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
         <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 15 }}>Launch your meetup?</Text>
         <AppMenuButtons />
-        {/* <UpcomingMeetups /> */}
+        <UpcomingMeetups />
       </BottomSheetView>
     </GorhomBottomSheet>
   );

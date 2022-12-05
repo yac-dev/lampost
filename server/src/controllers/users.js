@@ -7,14 +7,15 @@ import Asset from '../models/asset';
 
 export const getUser = async (request, response) => {
   try {
-    const user = await User.findById(request.params.id).populate({
-      path: 'badges',
-      model: BadgeStatus,
-      populate: {
-        path: 'badge',
-        model: Badge,
-      },
-    });
+    const user = await User.findById(request.params.id);
+    // .populate({
+    //   path: 'badges',
+    //   model: BadgeStatus,
+    //   populate: {
+    //     path: 'badge',
+    //     model: Badge,
+    //   },
+    // });
     response.status(200).json({
       user,
     });

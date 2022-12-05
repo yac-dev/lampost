@@ -10,7 +10,7 @@ import BadgeDetail from './BadgeDetail/Container';
 
 const Container = (props) => {
   const snapPoints = useMemo(() => ['35%', '80%', '100%'], []);
-  const { tappedBadge, badgeDetailBottomSheetRef } = useContext(UserContext);
+  const { pressedBadgeData, badgeDetailBottomSheetRef } = useContext(UserContext);
 
   // const onBadgeDetailBottomSheetClose = () => {
   //   badgeDetailBottomSheetRef.current.snapToIndex(0);
@@ -37,7 +37,7 @@ const Container = (props) => {
             <Text style={{ color: baseTextColor }}>Close</Text>
           </View>
         </TouchableOpacity>
-        {tappedBadge ? <BadgeDetail /> : null}
+        {pressedBadgeData ? <BadgeDetail /> : null}
       </BottomSheetView>
     </GorhomBottomSheet>
   );

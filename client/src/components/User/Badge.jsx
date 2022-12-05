@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import UserContext from './Context';
 import BadgeContext from './BadgeContext';
+import lampostAPI from '../../apis/lampost';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import {
   iconColorsTable,
@@ -13,12 +14,19 @@ import {
 import FastImage from 'react-native-fast-image';
 
 const Badge = () => {
-  const { badge } = useContext(BadgeContext);
-  const { setTappedBadge, badgeDetailBottomSheetRef } = useContext(UserContext);
+  const { badgeData } = useContext(BadgeContext);
+  const { setPressedBadgeData, badgeDetailBottomSheetRef } = useContext(UserContext);
   const oneGridWidth = Dimensions.get('window').width / 4;
   const oneGridHeight = Dimensions.get('window').height / 8;
   const badgeContainerWidth = oneGridWidth * 0.6;
   const badgeIconWidth = badgeContainerWidth * 0.7;
+
+  // const onBadgePress = async () => {
+  //   const result = await lampostAPI.get(`/`); // badgeidとuser idでrelationshipを取ってきて、かつbadgeを持っているuserを一覧で出す感じ。
+  //   // api側で、detailのobject dataを作る感じ。
+  //   const { badgeDetail } = result.data;
+  //   setTappedBadge(badge);
+  // };
 
   return (
     <View
@@ -49,7 +57,7 @@ const Badge = () => {
         }}
         onPress={() => {
           badgeDetailBottomSheetRef.current.snapToIndex(0);
-          setTappedBadge(badge);
+          setPressedBadgeData(badgeData);
           console.log('hey');
         }}
       >
@@ -60,18 +68,18 @@ const Badge = () => {
             alignItems: 'center',
             justifyContent: 'center',
             borderRadius: 15,
-            backgroundColor: backgroundColorsTable[badge.color],
+            backgroundColor: backgroundColorsTable[badgeData.badge.color],
             borderWidth: 0.3,
-            borderColor: backgroundColorsTable[badge.color],
+            borderColor: backgroundColorsTable[badgeData.badge.color],
           }}
         >
           <FastImage
             style={{ height: badgeIconWidth, width: badgeIconWidth }}
             source={{
-              uri: badge.icon,
+              uri: badgeData.badge.icon,
               priority: FastImage.priority.normal,
             }}
-            tintColor={iconColorsTable[badge.color]}
+            tintColor={iconColorsTable[badgeData.badge.color]}
             resizeMode={FastImage.resizeMode.contain}
           />
         </View>
@@ -88,20 +96,19 @@ const Badge = () => {
           // padding: 4,
         }}
       >
-        {badge.name}
+        {badgeData.badge.name}
       </Text>
-      {/* {props.badgeStatus.url ? (
+      {badgeData.url ? (
         <View
           style={{
             top: 0,
-            right: 0,
+            right: 10,
             position: 'absolute',
-            color: '#989898',
           }}
         >
-          <SimpleLineIcons name='paper-clip' size={20} color='#9C9C9C' />
+          <SimpleLineIcons name='paper-clip' size={20} color='white' />
         </View>
-      ) : null} */}
+      ) : null}
     </View>
   );
 };
