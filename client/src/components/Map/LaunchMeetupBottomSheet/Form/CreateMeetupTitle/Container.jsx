@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import Header from './Header';
 import Title from './Title';
-import Badge from './Badge';
+import Badges from './Badges';
 import ActionButton from '../../../../Utils/ActionButton';
 import { iconColorsTable } from '../../../../../utils/colorsTable';
 
@@ -19,7 +19,7 @@ const Container = (props) => {
     <View style={{}}>
       <Header />
       <Title state={props.state} dispatch={props.dispatch} />
-      <Badge state={props.state} dispatch={props.dispatch} navigation={props.navigation} route={props.route} />
+      <Badges state={props.state} dispatch={props.dispatch} navigation={props.navigation} route={props.route} />
       {/* <RequiredBadges state={props.state} dispatch={props.dispatch} navigation={props.navigation} route={props.route} /> */}
       <View style={{ alignSelf: 'center' }}>
         <ActionButton

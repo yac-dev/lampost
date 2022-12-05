@@ -1,6 +1,6 @@
 // main libraries
 import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Button } from 'react-native-paper';
@@ -87,7 +87,18 @@ const MapNavigator = (props) => {
           name='Add badges'
           component={AddBadges}
           options={({ navigation }) => ({
-            headerLeft: () => <Button onPress={() => navigation.goBack()}>Close</Button>,
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white' }}>Cancel</Text>
+              </TouchableOpacity>
+            ),
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
           })}
         />
       </Stack.Group>

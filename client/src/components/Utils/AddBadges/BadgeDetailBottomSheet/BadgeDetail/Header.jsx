@@ -12,7 +12,14 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ActionButton from '../../../ActionButton';
 
 const Header = () => {
-  const { fromComponent, tappedBadge, selectedUserBadges, setSelectedUserBadges } = useContext(AddBadgesContext);
+  const {
+    fromComponent,
+    tappedBadge,
+    selectedUserBadges,
+    setSelectedUserBadges,
+    addedMeetupBadges,
+    setAddedMeetupBadges,
+  } = useContext(AddBadgesContext);
 
   // こういうの、if state mentよりもhashtableで使った方がいいだろな。いちいち分岐って読みづらいしね。
   const renderActionButton = () => {
@@ -39,6 +46,39 @@ const Header = () => {
             backgroundColor={iconColorsTable['blue1']}
             onActionButtonPress={() =>
               setSelectedUserBadges((previous) => {
+                return {
+                  ...previous,
+                  [tappedBadge._id]: tappedBadge,
+                };
+              })
+            }
+            label='Add this badge'
+          />
+        );
+      }
+    } else if (fromComponent === 'ADD_MEETUP_BADGES') {
+      if (addedMeetupBadges[tappedBadge._id]) {
+        return (
+          <ActionButton
+            icon={<MaterialCommunityIcons name='minus' size={20} color={'white'} />}
+            backgroundColor={iconColorsTable['red1']}
+            onActionButtonPress={() =>
+              setAddedMeetupBadges((previous) => {
+                const copiedAddedMeetupBadges = { ...previous };
+                delete copiedAddedMeetupBadges[tappedBadge._id];
+                return copiedAddedMeetupBadges;
+              })
+            }
+            label='Remove this badge'
+          />
+        );
+      } else {
+        return (
+          <ActionButton
+            icon={<MaterialCommunityIcons name='plus' size={20} color={'white'} />}
+            backgroundColor={iconColorsTable['blue1']}
+            onActionButtonPress={() =>
+              setAddedMeetupBadges((previous) => {
                 return {
                   ...previous,
                   [tappedBadge._id]: tappedBadge,

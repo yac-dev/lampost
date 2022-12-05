@@ -29,6 +29,7 @@ const BottomSheet = (props) => {
       // enablePanDownToClose={true}
       // onClose={() => onFormBottomSheetClose()}
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
+      handleIndicatorStyle={{ backgroundColor: 'white' }}
     >
       <BottomSheetView style={{ flex: 1 }}>
         <FormContainer navigation={props.navigation} route={props.route} />

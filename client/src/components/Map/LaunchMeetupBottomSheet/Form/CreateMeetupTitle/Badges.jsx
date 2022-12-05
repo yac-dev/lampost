@@ -18,11 +18,11 @@ const Badge = (props) => {
   // }, [props.route.params?.badge]);
 
   useEffect(() => {
-    if (props.route.params?.meetupBadges) {
-      console.log('this is the badges...', props.route.params.meetupBadges);
-      props.dispatch({ type: 'SET_MEETUP_BADGES', payload: props.route.params.meetupBadges });
+    if (props.route.params?.addedMeetupBadges) {
+      console.log('this is the badges...', props.route.params.addedMeetupBadges);
+      props.dispatch({ type: 'SET_MEETUP_BADGES', payload: props.route.params.addedMeetupBadges });
     }
-  }, [props.route.params?.meetupBadges]);
+  }, [props.route.params?.addedMeetupBadges]);
 
   return (
     <View style={{ marginBottom: 20 }}>
@@ -40,7 +40,7 @@ const Badge = (props) => {
           launchMeetupBottomSheetRef.current.snapToIndex(0);
           props.navigation.navigate('Add badges', {
             fromComponent: 'ADD_MEETUP_BADGES',
-            meetupBadges: props.state.badges,
+            addedMeetupBadges: props.state.badges,
           });
         }}
       >

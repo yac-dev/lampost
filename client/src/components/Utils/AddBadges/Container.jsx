@@ -22,6 +22,7 @@ const Container = (props) => {
   const [queryName, setQueryName] = useState('');
   const [page, setPage] = useState(null);
   const [selectedUserBadges, setSelectedUserBadges] = useState({});
+  const [addedMeetupBadges, setAddedMeetupBadges] = useState({});
   const [selectedMeetupBadges, setSelectedMeetupBadges] = useState({});
   const [tappedBadge, setTappedBadge] = useState(null);
 
@@ -65,29 +66,28 @@ const Container = (props) => {
       props.navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity onPress={() => onAddMeetupBadgesDone()}>
-            <Text>Done(meet)</Text>
+            <Text style={{ color: 'white' }}>Done(meet)</Text>
           </TouchableOpacity>
         ),
       });
     }
-  }, [meetupBadges]);
+  }, [addedMeetupBadges]);
   // うん。上でやると、useEffectでstackoverflow的なことが起こっている。だから下で分けてやる必要がありそう。
 
   // launch meetupから来た既に選択済みのmeetup badgesがここのcomponentに送られ、それをそのままcomponentのstateにセットする。
   // 上のuseEffectでこれをやるとstackoverflowを起こす。だから、これで分けている。
   useEffect(() => {
-    if (props.route.params?.meetupBadges) {
-      setMeetupBadges((previous) => {
+    if (props.route.params?.addedMeetupBadges) {
+      setAddedMeetupBadges((previous) => {
         return {
           ...previous,
-          ...props.route.params.meetupBadges,
+          ...props.route.params.addedMeetupBadges,
         };
       });
     }
   }, []);
-
   const onAddMeetupBadgesDone = () => {
-    props.navigation.navigate('Map', { meetupBadges });
+    props.navigation.navigate('Map', { addedMeetupBadges });
   };
 
   // query
@@ -128,6 +128,8 @@ const Container = (props) => {
         queriedBadges,
         selectedUserBadges,
         setSelectedUserBadges,
+        addedMeetupBadges,
+        setAddedMeetupBadges,
         badgeDetailBottomSheetRef,
         searchBadgeBottomSheetRef,
         searchQuery,

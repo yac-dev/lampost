@@ -22,8 +22,14 @@ import { setIsTappedBadgeBottomSheetOpen } from '../../../../redux/actionCreator
 
 const Badge = (props) => {
   const { badge } = useContext(BadgeContext);
-  const { fromComponent, selectedUserBadges, badgeDetailBottomSheetRef, searchBadgeBottomSheetRef, setTappedBadge } =
-    useContext(AddBadgesContext);
+  const {
+    fromComponent,
+    selectedUserBadges,
+    addedMeetupBadges,
+    badgeDetailBottomSheetRef,
+    searchBadgeBottomSheetRef,
+    setTappedBadge,
+  } = useContext(AddBadgesContext);
 
   const oneGridWidth = Dimensions.get('window').width / 4;
   const oneGridHeight = Dimensions.get('window').height / 8;
@@ -32,57 +38,58 @@ const Badge = (props) => {
   // const isBadgeSelectedIconPlace = Dimensions.get('window').width / 100
 
   // Add badges(add user badgeとadd meetup badge)componentのbadgeをtapした時の挙動、
-  const renderBadgeIcon = () => {
-    if (fromComponent === 'Select meetup badge') {
-      if (props.badgeState && props.badge._id === props.badgeState._id) {
-        return (
-          <View
-            style={{
-              top: 0,
-              right: 0,
-              position: 'absolute',
-              color: '#989898',
-            }}
-          >
-            <Foundation name='sheriff-badge' size={20} color='#49CF13' />
-          </View>
-        );
-      } else {
-        return null;
-      }
-    } else if (fromComponent === 'Add meetup badges') {
-      if (props.meetupBadges[props.badge._id]) {
-        return (
-          <View
-            style={{
-              top: 5,
-              right: 5,
-              position: 'absolute',
-              color: '#989898',
-            }}
-          >
-            <Foundation name='sheriff-badge' size={20} color='#49CF13' />
-          </View>
-        );
-      } else {
-        return null;
-      }
-    } else if (fromComponent === 'Add user badges') {
-      if (selectedUserBadges[badge._id]) {
-        <View
-          style={{
-            top: 5,
-            right: 5,
-            position: 'absolute',
-            color: '#989898',
-          }}
-        >
-          <Foundation name='sheriff-badge' size={20} color='#49CF13' />
-        </View>;
-      }
-    }
-  };
+  // const renderBadgeIcon = () => {
+  //   if (fromComponent === 'Select meetup badge') {
+  //     if (props.badgeState && props.badge._id === props.badgeState._id) {
+  //       return (
+  //         <View
+  //           style={{
+  //             top: 0,
+  //             right: 0,
+  //             position: 'absolute',
+  //             color: '#989898',
+  //           }}
+  //         >
+  //           <Foundation name='sheriff-badge' size={20} color='#49CF13' />
+  //         </View>
+  //       );
+  //     } else {
+  //       return null;
+  //     }
+  //   } else if (fromComponent === 'Add meetup badges') {
+  //     if (props.meetupBadges[props.badge._id]) {
+  //       return (
+  //         <View
+  //           style={{
+  //             top: 5,
+  //             right: 5,
+  //             position: 'absolute',
+  //             color: '#989898',
+  //           }}
+  //         >
+  //           <Foundation name='sheriff-badge' size={20} color='#49CF13' />
+  //         </View>
+  //       );
+  //     } else {
+  //       return null;
+  //     }
+  //   } else if (fromComponent === 'Add user badges') {
+  //     if (selectedUserBadges[badge._id]) {
+  //       <View
+  //         style={{
+  //           top: 5,
+  //           right: 5,
+  //           position: 'absolute',
+  //           color: '#989898',
+  //         }}
+  //       >
+  //         <Foundation name='sheriff-badge' size={20} color='#49CF13' />
+  //       </View>;
+  //     }
+  //   }
+  // };
 
+  // ここ、　userbadgesとmeetup badgesで分ける必要ないかもな。
   const renderIsBadgeSelected = () => {
     if (fromComponent === 'ADD_USER_BADGES') {
       if (selectedUserBadges[badge._id]) {
@@ -98,9 +105,24 @@ const Badge = (props) => {
             <Foundation name='sheriff-badge' size={20} color='#49CF13' />
           </View>
         );
-      } else {
-        return null;
       }
+    } else if (fromComponent === 'ADD_MEETUP_BADGES') {
+      if (addedMeetupBadges[badge._id]) {
+        return (
+          <View
+            style={{
+              top: -10,
+              right: 10,
+              position: 'absolute',
+              color: '#989898',
+            }}
+          >
+            <Foundation name='sheriff-badge' size={20} color='#49CF13' />
+          </View>
+        );
+      }
+    } else {
+      return null;
     }
   };
 
