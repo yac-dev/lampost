@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 
-import AppButtons from './AppButtons/AppButtons';
+import AppButtons from './AppButtons';
 import UpcomingMeetups from './UpcomingMeetups/Container';
 import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 import { setIsConfirmHostMeetupModalOpen } from '../../../redux/actionCreators/modal';

@@ -3,16 +3,25 @@ import { View, Text, ScrollView } from 'react-native';
 import AuthContext from '../Context';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
-import { iconColorsTable, backgroundColorsTable } from '../../../utils/colorsTable';
-import AppButton from '../../Map/AppMenuBottomSheet/AppButtons/AppButton';
+import { iconColorsTable, backgroundColorsTable, sectionBackgroundColor } from '../../../utils/colorsTable';
+import AppButton from '../../Utils/AppButton';
 
 const AppButtons = () => {
   const { user, navigation, appMenuBottomSheetRef } = useContext(AuthContext);
   return (
-    <View style={{ paddingTop: 10, marginBottom: 15 }}>
+    <View
+      style={{
+        padding: 10,
+        borderRadius: 10,
+        backgroundColor: sectionBackgroundColor,
+        marginBottom: 15,
+        marginBottom: 15,
+      }}
+    >
       <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
         <AppButton
           backgroundColor={backgroundColorsTable['lightGreen1']}
@@ -24,8 +33,8 @@ const AppButtons = () => {
           }}
         />
         <AppButton
-          backgroundColor={backgroundColorsTable['grey1']}
-          icon={<Fontisto name='player-settings' size={35} color={iconColorsTable['grey1']} />}
+          backgroundColor={backgroundColorsTable['violet1']}
+          icon={<MaterialIcons name='edit' size={35} color={iconColorsTable['violet1']} />}
           label='Edit my profile'
         />
         <AppButton

@@ -8,7 +8,7 @@ import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import AppButtons from './AppButtons';
+import AppMenuButtons from './AppMenuButtons';
 import MyLibraries from './MyLibraries/Container';
 
 const AppMenuBottomSheet = (props) => {
@@ -32,7 +32,7 @@ const AppMenuBottomSheet = (props) => {
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
         <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 15 }}>Launch your library?</Text>
-        <AppButtons />
+        <AppMenuButtons />
         <MyLibraries />
       </BottomSheetView>
     </GorhomBottomSheet>

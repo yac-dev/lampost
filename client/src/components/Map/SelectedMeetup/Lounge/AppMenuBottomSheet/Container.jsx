@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { appBottomSheetBackgroundColor } from '../../../../../utils/colorsTable';
-import AppButtons from './AppButtons';
+import AppMenuButtons from './AppMenuButtons';
 
 const AppMenusBottomSheet = (props) => {
-  const snapPoints = useMemo(() => ['8%', '30%', '80%'], []);
+  const snapPoints = useMemo(() => ['8%', '30%'], []);
   const { appMenuBottomSheetRef } = useContext(LoungeContext);
 
   return (
@@ -21,12 +21,13 @@ const AppMenusBottomSheet = (props) => {
       )}
       enablePanDownToClose={false}
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
+      handleIndicatorStyle={{ backgroundColor: 'white' }}
       // keyboardBehavior={'interactive'}
       // onClose={() => onSelectedItemBottomSheetClose()}
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 5 }}>Send a chat?</Text>
-        <AppButtons />
+        <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 15 }}>Send a chat?</Text>
+        <AppMenuButtons />
       </BottomSheetView>
     </GorhomBottomSheet>
   );

@@ -7,7 +7,7 @@ import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom
 import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import AppButtons from './AppButtons';
+import AppButtons from './AppMenuButtons';
 import MyConnections from './MyConnections/Container';
 import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 

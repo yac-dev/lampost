@@ -1,25 +1,25 @@
 import React, { useContext } from 'react';
-import MapContext from '../../MeetupContext';
+import MapContext from '../MeetupContext';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import AppButton from './AppButton';
-import { iconColorsTable, backgroundColorsTable, sectionBackgroundColor } from '../../../../utils/colorsTable';
+import AppButton from '../../Utils/AppButton';
+import { iconColorsTable, backgroundColorsTable, sectionBackgroundColor } from '../../../utils/colorsTable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { setIsConfirmHostMeetupModalOpen } from '../../../../redux/actionCreators/modal';
-import { setIsPostBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
+import { setIsConfirmHostMeetupModalOpen } from '../../../redux/actionCreators/modal';
+import { setIsPostBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
 
 const AppButtons = (props) => {
   // 何だろう。。。scrollviewをtopのcomponentにするとなんかバグる。
   const { appMenuBottomSheetRef, setIsLaunchMeetupConfirmationModalOpen } = useContext(MapContext);
   return (
-    <View style={{ paddingTop: 10, marginBottom: 15, borderRadius: 10, backgroundColor: sectionBackgroundColor }}>
+    <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 15 }}>
       <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
         <AppButton
           backgroundColor={backgroundColorsTable['red1']}
           icon={<MaterialCommunityIcons name='rocket-launch' size={35} color={iconColorsTable['red1']} />}
-          label='Launch'
-          onActionButtonPress={() => {
+          label='Launch meetup'
+          onAppMenuButtonPress={() => {
             setIsLaunchMeetupConfirmationModalOpen(true);
             appMenuBottomSheetRef.current.close();
           }}
@@ -27,39 +27,28 @@ const AppButtons = (props) => {
         <AppButton
           backgroundColor={backgroundColorsTable['grey1']}
           icon={<MaterialCommunityIcons name='camera' size={35} color={iconColorsTable['grey1']} />}
-          label='Camera'
-          onPress={() => console.log('launch camera')}
+          label='Start camera'
+          onAppMenuButtonPress={() => console.log('Start camera')}
         />
         <AppButton
           backgroundColor={backgroundColorsTable['green1']}
           icon={<MaterialCommunityIcons name='fire' size={35} color={iconColorsTable['green1']} />}
-          label='Live'
+          label='Start live'
+          onAppMenuButtonPress={() => console.log('Start live')}
         />
 
         <AppButton
           backgroundColor={backgroundColorsTable['violet1']}
           icon={<MaterialCommunityIcons name='history' size={35} color={iconColorsTable['violet1']} />}
-          label='Timeline'
+          label='Meetup logs'
+          onAppMenuButtonPress={() => console.log('See meetup logs')}
         />
         <AppButton
           backgroundColor={backgroundColorsTable['pink1']}
           icon={<MaterialCommunityIcons name='map-search-outline' size={35} color={iconColorsTable['pink1']} />}
-          label='Search'
+          label='Search meetup'
+          onAppMenuButtonPress={() => console.log('Search for meetup')}
         />
-        {/* <TouchableOpacity
-      style={{
-        width: 50,
-        height: 50,
-        backgroundColor: backgroundColorsTable['red1'],
-        borderRadius: 7,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginRight: 10,
-      }}
-      onPress={() => props.setIsConfirmHostMeetupModalOpen(true)}
-    >
-      <MaterialCommunityIcons name='rocket-launch' size={35} color={iconColorsTable['red1']} />
-    </TouchableOpacity> */}
       </ScrollView>
     </View>
   );
