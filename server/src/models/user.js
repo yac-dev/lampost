@@ -18,11 +18,6 @@ const userSchema = new mongoose.Schema({
   photo: {
     type: String,
   },
-  bio: {
-    type: String,
-    maxLength: 50,
-    default: 'Just joined!',
-  },
   badges: [
     {
       type: mongoose.Schema.ObjectId,
@@ -38,18 +33,18 @@ const userSchema = new mongoose.Schema({
       viewedChatsLastTime: Date,
     },
   ],
-  pastMeetups: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Meetup',
-    },
-  ],
-  joinedLibraries: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Library',
-    },
-  ],
+  // pastMeetups: [
+  //   {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'Meetup',
+  //   },
+  // ],
+  // joinedLibraries: [
+  //   {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'Library',
+  //   },
+  // ],
   connections: [
     {
       type: mongoose.Schema.ObjectId,

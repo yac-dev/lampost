@@ -1,31 +1,27 @@
 // main libraries
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import UserContext from './Context';
-import { Avatar, Menu } from 'react-native-paper';
+import BadgeContext from './BadgeContext';
 import lampostAPI from '../../apis/lampost';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { baseBackgroundColor } from '../../utils/colorsTable';
+import { baseBackgroundColor, baseTextColor } from '../../utils/colorsTable';
 
 // components
 import Header from './Home/Header';
-import ActionButtons from './Home/ActionButtons';
 import Stats from './Home/Stats';
-// import Badges from '../Utils/AddBadges/Badges/Container';
-import BadgeStatuses from './Home/BadgeStatuses/Container';
-import BadgeStatusBottomSheet from './Home/BadgeStatusBottomSheet';
+import Badge from './Badge';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
+import BadgeDetailBottomSheet from './BadgeDetailBottomSheet/Container';
 
 // badgeを取ってきて、skillも取ってくる。subscriberの数も返すし、connectionの数も返す。
 const Container = (props) => {
   const [user, setUser] = useState(null);
   const [badges, setBadges] = useState([]);
-  const [tappedBadgeStatus, setTappedBadgeStatus] = useState(null);
-  const [badgeStatuses, setBadgeStatuses] = useState([]);
+  const [tappedBadge, setTappedBadge] = useState(null);
   const [isMyPage, setIsMyPage] = useState();
-
-  const badgeStatusBottomSheetRef = useRef(null);
+  const badgeDetailBottomSheetRef = useRef(null);
   const appMenuBottomSheetRef = useRef(null);
 
   // これで、自分のpageを見ているか、他人のpageを見ているかのstateを管理する。
@@ -47,6 +43,16 @@ const Container = (props) => {
     getUser();
   }, []);
 
+  const getBadgesByUserId = async () => {
+    const result = await lampostAPI.get(`/badgeanduserrelationship/${props.route.params.userId}`);
+    const { badges } = result.data;
+    console.log('badges by relationship', badges);
+    setBadges(badges);
+  };
+  useEffect(() => {
+    getBadgesByUserId();
+  }, []);
+
   // useEffect(() => {
   //   // ここは、user pageからここに来て、doneをpressしたら, user pageへ戻る。addしたbadgesをparamsに入れていく感じ。
   //   props.navigation.setOptions({
@@ -58,24 +64,24 @@ const Container = (props) => {
   //   });
   // }, []);
 
-  useEffect(() => {
-    if (user) {
-      const badges = user.badges.map((badgeStatus) => {
-        return badgeStatus.badge;
-      });
-      setBadges(badges);
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     const badges = user.badges.map((badgeStatus) => {
+  //       return badgeStatus.badge;
+  //     });
+  //     setBadges(badges);
+  //   }
+  // }, [user]);
 
-  useEffect(() => {
-    if (user) {
-      const badgeStatuses = user.badges.map((badgeStatus) => {
-        return badgeStatus;
-      });
+  // useEffect(() => {
+  //   if (user) {
+  //     const badgeStatuses = user.badges.map((badgeStatus) => {
+  //       return badgeStatus;
+  //     });
 
-      setBadgeStatuses(badgeStatuses);
-    }
-  }, [user]);
+  //     setBadgeStatuses(badgeStatuses);
+  //   }
+  // }, [user]);
 
   useEffect(() => {
     if (props.route.params?.addedUserBadges) {
@@ -95,19 +101,50 @@ const Container = (props) => {
     // bottom sheetにこのbadge statusをrenderする、それを書く。多分、add badges側もこんな感じで変えることになる。
   };
 
+  const renderBadges = () => {
+    if (badges.length) {
+      const badgesList = badges.map((badge, index) => {
+        return (
+          <BadgeContext.Provider value={{ badge }}>
+            <Badge key={index} />
+          </BadgeContext.Provider>
+        );
+      });
+      return <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{badgesList}</View>;
+    } else {
+      return (
+        <View>
+          <Text style={{ color: baseTextColor }}>No badges add yet...</Text>
+        </View>
+      );
+    }
+  };
+
   if (user) {
     return (
-      <UserContext.Provider value={{ user, isMyPage, navigation: props.navigation, appMenuBottomSheetRef }}>
+      <UserContext.Provider
+        value={{
+          user,
+          isMyPage,
+          navigation: props.navigation,
+          appMenuBottomSheetRef,
+          badgeDetailBottomSheetRef,
+          tappedBadge,
+          setTappedBadge,
+        }}
+      >
         <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
           <Header />
           <Stats />
-          <BadgeStatuses
+          <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
+          {/* <BadgeStatuses
             user={user}
             badgeStatuses={badgeStatuses}
             onBadgePress={onBadgePress}
             navigation={props.navigation}
-          />
+          /> */}
           <AppMenuBottomSheet />
+          <BadgeDetailBottomSheet />
           {/* <Badges user={user} badges={badges} onBadgePress={onBadgePress} /> */}
           {/* <BadgeStatusBottomSheet
             badgeStatusBottomSheetRef={badgeStatusBottomSheetRef}
