@@ -5,16 +5,7 @@ import { baseTextColor } from '../../utils/colorsTable';
 
 const LoadingSpinner = (props) => {
   const { loading } = useContext(GlobalContext);
-  return (
-    <Spinner
-      //visibility of Overlay Loading Spinner
-      visible={loading}
-      //Text with the Spinner
-      textContent={'Processing now'}
-      //Text style of the Spinner Text
-      textStyle={{ color: baseTextColor }}
-    />
-  );
+  return <Spinner visible={loading} textContent={'Processing now'} textStyle={{ color: baseTextColor }} />;
 };
 
 export default LoadingSpinner;

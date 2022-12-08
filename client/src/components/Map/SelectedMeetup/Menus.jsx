@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import GlobalContext from '../../../GlobalContext';
 import MapContext from '../MeetupContext';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
@@ -19,6 +20,7 @@ import {
 import Menu from './Menu';
 
 const Menus = (props) => {
+  const { auth } = useContext(GlobalContext);
   const {
     selectedMeetup,
     navigation,
@@ -156,7 +158,7 @@ const Menus = (props) => {
         }
         onPressMenu={() => {
           // Map tab内では、自分のpageを見せないようにする。ごちゃごちゃになってめんどいからね。
-          if (!props.auth.isAuthenticated || props.auth.data._id !== selectedMeetup.launcher._id) {
+          if (!auth.data || auth.data._id !== selectedMeetup.launcher._id) {
             navigation.navigate('User', { userId: selectedMeetup.launcher._id });
           }
         }}
@@ -219,8 +221,4 @@ const Menus = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return { auth: state.auth };
-};
-
-export default connect(mapStateToProps)(Menus);
+export default Menus;

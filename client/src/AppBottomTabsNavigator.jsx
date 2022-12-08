@@ -20,6 +20,7 @@ import MapNavigator from './components/Navigator/Map';
 import LibraryNavigator from './components/Navigator/Library';
 import AuthNavigator from './components/Navigator/Auth';
 import LoadingSpinner from './components/Utils/LoadingSpinner';
+import SnackBar from './components/Utils/SnackBar';
 
 const ref = createNavigationContainerRef();
 const Tab = createBottomTabNavigator();
@@ -33,9 +34,9 @@ import { getSocket } from './redux/actionCreators/auth';
 // };
 
 const AppStack = (props) => {
-  // const [auth, setAuth] = useState({ data: null, isAuthenticated: false, socket: null });
-  const [auth, setAuth] = useState({ data: null, isAuthenticated: false, socket: null, currentLocation: null }); // {data: null, socket: null, location: null}
+  const [auth, setAuth] = useState({ data: null, isAuthenticated: false, socket: null, currentLocation: null });
   const [loading, setLoading] = useState(false);
+  const [snackBar, setSnackBar] = useState({ isVisible: false, message: '', barType: '', duration: null });
   const [routeName, setRouteName] = useState();
   const hide = routeName === 'Camera' || routeName === 'Meetup' || routeName === 'Dummy2' || routeName === 'Q&A';
 
@@ -85,15 +86,9 @@ const AppStack = (props) => {
     props.getSocket(socket);
   }, []);
 
-  useEffect(() => {
-    if (auth.isAuthenticated) {
-      console.log('now authenticated');
-    }
-  }, [auth.isAuthenticated]);
-
   // これも、contextを使っていた方がいいな。reduxのstateよりも。refactoringは後でやろうか。authDataみたいな感じで渡して、app全体で使う感じがいいだろう。
   return (
-    <GlobalContext.Provider value={{ auth, setAuth, loading, setLoading }}>
+    <GlobalContext.Provider value={{ auth, setAuth, loading, setLoading, snackBar, setSnackBar }}>
       <NavigationContainer
         ref={ref}
         onReady={() => {
@@ -212,6 +207,7 @@ const AppStack = (props) => {
         </Tab.Navigator>
       </NavigationContainer>
       <LoadingSpinner />
+      <SnackBar />
     </GlobalContext.Provider>
   );
 };

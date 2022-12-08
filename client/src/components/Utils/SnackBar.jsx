@@ -1,21 +1,23 @@
 // main libraries
-import React from 'react';
+import React, { useContext } from 'react';
+import GlobalContext from '../../GlobalContext';
 import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 import { Snackbar } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import { iconColorsTable } from '../../utils/colorsTable';
 // ac
 import { removeSnackBar } from '../../redux/actionCreators/snackBar';
 
 const SnackBar = (props) => {
-  if (props.snackBar.isOpen) {
+  const { snackBar, setSnackBar } = useContext(GlobalContext);
+  if (snackBar.isVisible) {
     return (
       <Snackbar
         wrapperStyle={{ top: 0 }}
-        style={{ backgroundColor: props.snackBar.barType === 'success' ? 'green' : 'red' }}
-        visible={props.snackBar.isOpen}
-        onDismiss={() => props.removeSnackBar()}
+        style={{ backgroundColor: snackBar.barType === 'success' ? iconColorsTable['blue1'] : iconColorsTable['red1'] }}
+        visible={snackBar.isVisible}
+        onDismiss={() => setSnackBar({ isVisible: false, message: '', barType: '' })}
         action={{
           label: 'Close',
           onPress: () => {
@@ -23,7 +25,7 @@ const SnackBar = (props) => {
           },
         }}
       >
-        {props.snackBar.message}
+        {snackBar.message}
       </Snackbar>
     );
   } else {

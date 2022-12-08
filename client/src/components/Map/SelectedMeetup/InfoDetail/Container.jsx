@@ -1,6 +1,5 @@
 import React, { useCallback, useContext } from 'react';
 import MapContext from '../../MeetupContext';
-import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { appBottomSheetBackgroundColor } from '../../../../utils/colorsTable';
@@ -49,6 +48,7 @@ const Container = (props) => {
       )}
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
       enablePanDownToClose={true}
+      handleIndicatorStyle={{ backgroundColor: 'white' }}
       onClose={() => setSelectedMeetupDetailComponent('')}
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>{switchComponent()}</BottomSheetView>
@@ -56,8 +56,4 @@ const Container = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return { selectedMeetup: state.selectedItem.meetup, bottomSheet: state.bottomSheet };
-};
-
-export default connect(mapStateToProps, { setIsSelectedMeetupInfoDetailBottomSheetOpen })(Container);
+export default Container;

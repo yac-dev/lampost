@@ -207,7 +207,7 @@ const Map = (props) => {
 
           <ConfirmLaunchMeetupModal />
           <CancelLaunchMeetupModal />
-          <SnackBar />
+          {/* <SnackBar /> */}
 
           <AppMenusBottomSheet />
           <LaunchMeetupBottomSheet navigation={props.navigation} route={props.route} />

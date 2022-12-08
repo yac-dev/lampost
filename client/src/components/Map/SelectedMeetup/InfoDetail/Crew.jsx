@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import GlobalContext from '../../../../GlobalContext';
 import MapContext from '../../MeetupContext';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
@@ -7,6 +8,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { baseTextColor, sectionBackgroundColor } from '../../../../utils/colorsTable';
 
 const Crew = (props) => {
+  const { auth } = useContext(GlobalContext);
   const { selectedMeetup, selectedMeetupDetailComponent, navigation } = useContext(MapContext);
   const [crew, setCrew] = useState([]);
 
@@ -37,7 +39,7 @@ const Crew = (props) => {
               borderBottomColor: '#ABABAB',
             }}
             onPress={() => {
-              if (!props.auth.isAuthenticated || props.auth.data._id !== user._id) {
+              if (!auth.data || auth.data._id !== user._id) {
                 navigation.navigate('User', { userId: user._id });
               }
             }}
@@ -68,7 +70,6 @@ const Crew = (props) => {
     }
   };
 
-  // if (props.bottomSheet.selectedItem.infoDetail.component === 'Crew') {
   return (
     <View>
       <View style={{ marginBottom: 25 }}>
@@ -87,13 +88,6 @@ const Crew = (props) => {
       </ScrollView>
     </View>
   );
-  // } else {
-  //   return null;
-  // }
 };
 
-const mapStateToProps = (state) => {
-  return { selectedMeetup: state.selectedItem.meetup, bottomSheet: state.bottomSheet, auth: state.auth };
-};
-
-export default connect(mapStateToProps)(Crew);
+export default Crew;

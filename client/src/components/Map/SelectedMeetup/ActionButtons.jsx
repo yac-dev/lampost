@@ -3,7 +3,6 @@ import React, { useContext, useState } from 'react';
 import lampostAPI from '../../../apis/lampost';
 import GlobalContext from '../../../GlobalContext';
 import MapContext from '../MeetupContext';
-import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -11,14 +10,9 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { backgroundColorsTable, baseTextColor, iconColorsTable } from '../../../utils/colorsTable';
 import ActionButton from '../../Utils/ActionButton';
 
-// ac
-import { joinMeetup } from '../../../redux/actionCreators/meetups';
-import { leaveMeetup } from '../../../redux/actionCreators/meetups';
-
 const ActionButtons = (props) => {
-  const { auth, setAuth, setLoading } = useContext(GlobalContext);
+  const { auth, setAuth, setLoading, setSnackBar } = useContext(GlobalContext);
   const { selectedMeetup, setSelectedMeetup, navigation } = useContext(MapContext);
-  const [joinOrLeaveButtonPressed, setJoinOrLeaveButtonPressed] = useState(false);
 
   const joinMeetup = async () => {
     setLoading(true);
@@ -40,6 +34,14 @@ const ActionButtons = (props) => {
       };
     });
     setLoading(false);
+    setSnackBar({ isVisible: true, message: 'Joined the meetup successfully.', barType: 'success' });
+    setTimeout(() => {
+      setSnackBar({
+        isVisible: false,
+        message: '',
+        barType: '',
+      });
+    }, 5000);
   };
 
   const leaveMeetup = async () => {
@@ -64,6 +66,14 @@ const ActionButtons = (props) => {
       };
     });
     setLoading(false);
+    setSnackBar({ isVisible: true, message: 'Left the meetup successfully.', barType: 'success' });
+    setTimeout(() => {
+      setSnackBar({
+        isVisible: false,
+        message: '',
+        barType: '',
+      });
+    }, 5000);
   };
 
   const renderApp = () => {
@@ -140,8 +150,4 @@ const ActionButtons = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return { auth: state.auth };
-};
-
-export default connect(mapStateToProps, { joinMeetup, leaveMeetup })(ActionButtons);
+export default ActionButtons;

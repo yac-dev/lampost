@@ -135,6 +135,7 @@ export const createMeetup = async (request, response) => {
     chatRoom.save();
 
     meetup.attendees.push(launcher);
+    meetup.totalAttendees++;
     meetup.chatRoom = chatRoom._id;
     meetup.save();
     const badge = await Badge.findById(badges[0]);

@@ -1,5 +1,6 @@
 // main libraries
 import React, { useState, useEffect, useReducer, useContext } from 'react';
+import GlobalContext from '../../../../GlobalContext';
 import lampostAPI from '../../../../apis/lampost';
 import { View, Text, TouchableOpacity, Keyboard } from 'react-native';
 import MapContext from '../../MeetupContext';
@@ -115,6 +116,7 @@ const reducer = (state, action) => {
 
 const Container = (props) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+  const { auth, setAuth, setLoading } = useContext(GlobalContext);
   const {
     setIsCancelLaunchMeetupConfirmationModalOpen,
     launchLocation,
@@ -130,6 +132,7 @@ const Container = (props) => {
   };
 
   const onSubmit = async () => {
+    setLoading(true);
     const badgeIds = Object.values(state.badges).map((badge) => {
       return badge._id;
     });
@@ -153,7 +156,7 @@ const Container = (props) => {
       isMediaAllowed: state.isMediaAllowed,
       description: state.description,
       link: state.link,
-      launcher: props.auth.data._id,
+      launcher: auth.data._id,
     };
     // console.log(formData);
     // props.setIsHostMeetupOpen(false);
@@ -161,13 +164,21 @@ const Container = (props) => {
     // props.createMeetup(formData);
     const result = await lampostAPI.post('/meetups', formData);
     const { meetup, viewedChatsLastTime } = result.data;
-    // console.log('created meetup', meetup);
     Keyboard.dismiss();
+    setAuth((previous) => {
+      return {
+        ...previous,
+        data: {
+          ...previous.data,
+          upcomingMeetups: [...previous.data.upcomingMeetups, { meetup, viewedChatsLastTime }],
+        },
+      };
+    });
     setMeetups((previous) => [...previous, meetup]);
-    props.launchMeetup(meetup, viewedChatsLastTime);
     setIsLaunchMeetupConfirmed(false);
     setLaunchLocation(null);
     launchMeetupBottomSheetRef.current.close();
+    setLoading(false);
   };
 
   const switchComponent = () => {
@@ -207,15 +218,4 @@ const Container = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return { hostMeetup: state.hostMeetup, selectedBadges: Object.values(state.selectedItem.badges), auth: state.auth };
-};
-
-export default connect(mapStateToProps, {
-  createMeetup,
-  setIsHostMeetupOpen,
-  setMeetupLocation,
-  setIsCancelLaunchMeetupModalOpen,
-  launchMeetup,
-  addSnackBar,
-})(Container);
+export default connect(null, { addSnackBar })(Container);
