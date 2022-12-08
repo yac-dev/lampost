@@ -1,5 +1,6 @@
 // main libraries
 import React, { useContext, useMemo } from 'react';
+import GlobalContext from '../../../GlobalContext';
 import MapContext from '../MeetupContext';
 import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity } from 'react-native';
@@ -19,22 +20,13 @@ const Container = (props) => {
   const snapPoints = useMemo(() => ['60%', '85%'], []);
   const { selectedMeetup, selectedMeetupBottomSheetRef } = useContext(MapContext);
 
-  const onSelectedItemBottomSheetClose = () => {
-    if (props.bottomSheet.selectedItem.isOpen) {
-      props.setIsSelectedItemBottomSheetOpen(false);
-    }
-  };
-
   const renderSelectedMeetup = () => {
     if (selectedMeetup) {
       return (
         <View>
           <Header />
           <ActionButtons />
-          <Menus
-          // navigation={props.navigation}
-          // handleselectedMeetupDetailBottomSheetChanges={props.handleselectedMeetupDetailBottomSheetChanges}
-          />
+          <Menus />
         </View>
       );
     } else {
@@ -55,7 +47,6 @@ const Container = (props) => {
       snapPoints={snapPoints}
       enablePanDownToClose={true}
       keyboardBehavior={'interactive'}
-      onClose={() => onSelectedItemBottomSheetClose()}
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
       handleIndicatorStyle={{ backgroundColor: 'white' }}
     >

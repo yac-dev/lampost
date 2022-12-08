@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
-import MapContext from '../../MeetupContext';
-import lampostAPI from '../../../../apis/lampost';
-import { connect } from 'react-redux';
+import GlobalContext from '../../../GlobalContext';
+import MapContext from '../MeetupContext';
+import lampostAPI from '../../../apis/lampost';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { sectionBackgroundColor, baseTextColor } from '../../../../utils/colorsTable';
+import { sectionBackgroundColor, baseTextColor } from '../../../utils/colorsTable';
 import { Entypo } from '@expo/vector-icons';
 
 const Container = (props) => {
+  const { auth } = useContext(GlobalContext);
   const { appMenuBottomSheetRef, setSelectedMeetup, selectedMeetupBottomSheetRef } = useContext(MapContext);
   // ここのconditional renderingまじ重要ね。
   const renderDate = (date) => {
@@ -62,8 +63,8 @@ const Container = (props) => {
   };
 
   const renderUpcomingMeetups = () => {
-    if (props.auth.data) {
-      const upcomingMeetupsList = props.auth.data.upcomingMeetups.map((meetup, index) => {
+    if (auth.data.upcomingMeetups.length) {
+      const upcomingMeetupsList = auth.data.upcomingMeetups.map((meetupObject, index) => {
         return (
           <TouchableOpacity
             key={index}
@@ -76,13 +77,13 @@ const Container = (props) => {
               borderBottomWidth: 0.3,
               borderBottomColor: '#EFEFEF',
             }}
-            onPress={() => getMeetup(meetup.meetup._id)}
+            onPress={() => getMeetup(meetupObject.meetup._id)}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              {renderDate(meetup.meetup.startDateAndTime)}
+              {renderDate(meetupObject.meetup.startDateAndTime)}
               <View style={{}}>
-                <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>{meetup.meetup.title}</Text>
-                {renderTime(meetup.meetup.startDateAndTime)}
+                <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>{meetupObject.meetup.title}</Text>
+                {renderTime(meetupObject.meetup.startDateAndTime)}
               </View>
             </View>
             <Entypo size={25} name='chat' color={baseTextColor} onPress={() => console.log('opening chat')} />
@@ -90,28 +91,26 @@ const Container = (props) => {
         );
       });
 
-      return <View>{upcomingMeetupsList}</View>;
+      return (
+        <View style={{ padding: 10, backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>
+          {upcomingMeetupsList}
+        </View>
+      );
     } else {
-      return null;
+      return (
+        <View>
+          <Text style={{ color: baseTextColor }}>I haven't signed up any meetup yet.</Text>
+        </View>
+      );
     }
   };
 
-  if (props.auth.isAuthenticated) {
-    return (
-      <View>
-        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My upcoming meetups</Text>
-        <View style={{ padding: 10, backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>
-          {renderUpcomingMeetups()}
-        </View>
-      </View>
-    );
-  } else {
-    return null;
-  }
+  return (
+    <View>
+      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My upcoming meetups</Text>
+      {renderUpcomingMeetups()}
+    </View>
+  );
 };
 
-const mapStateToProps = (state) => {
-  return { auth: state.auth };
-};
-
-export default connect(mapStateToProps, {})(Container);
+export default Container;

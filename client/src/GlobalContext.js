@@ -1,4 +1,3 @@
 import { createContext } from 'react';
-const GlobalContext = createContext({
-  auth: {},
-});
+const GlobalContext = createContext({});
+export default GlobalContext;

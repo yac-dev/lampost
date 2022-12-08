@@ -1,6 +1,7 @@
 // main libraries
 import React, { useState, useEffect, useRef, useCallback, useContext } from 'react';
 import lampostAPI from '../../apis/lampost';
+import GlobalContext from '../../GlobalContext';
 import MapContext from './MeetupContext';
 import { connect } from 'react-redux';
 import { StyleSheet, Platform, View, StatusBar, Dimensions, TouchableOpacity, Text } from 'react-native';
@@ -41,6 +42,7 @@ import { setIsSelectedMeetupInfoDetailBottomSheetOpen } from '../../redux/action
 import { iconColorsTable } from '../../utils/colorsTable';
 
 const Map = (props) => {
+  const { auth } = useContext(GlobalContext);
   const [region, setRegion] = useState(null);
   const [currentSnap, setCurrentSnap] = useState();
   const [isLaunchMeetupConfirmationModalOpen, setIsLaunchMeetupConfirmationModalOpen] = useState(false);

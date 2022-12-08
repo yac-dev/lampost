@@ -34,6 +34,7 @@ const meetupSchema = new mongoose.Schema({
   isPublic: Boolean,
   isMediaAllowed: Boolean,
   link: String,
+  totalAttendees: Number,
   comments: [
     {
       type: mongoose.Schema.ObjectId,

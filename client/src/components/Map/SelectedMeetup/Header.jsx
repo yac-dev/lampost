@@ -14,10 +14,6 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import Badges from './Badges';
 
-// ac
-import { joinMeetup } from '../../../redux/actionCreators/meetups';
-import { leaveMeetup } from '../../../redux/actionCreators/meetups';
-
 const Header = (props) => {
   const { selectedMeetup } = useContext(MapContext);
   // const renderDate = (date) => {
@@ -88,8 +84,4 @@ const Header = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return { selectedMeetup: state.selectedItem.meetup, auth: state.auth };
-};
-
-export default connect(mapStateToProps, { joinMeetup, leaveMeetup })(Header);
+export default Header;

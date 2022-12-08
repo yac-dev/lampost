@@ -165,7 +165,7 @@ const Menus = (props) => {
         label='Crew'
         icon={<FontAwesome5 name='user-astronaut' size={25} color={iconColorsTable['violet1']} />}
         backgroundColor={backgroundColorsTable['violet1']}
-        rightInfo={<Text style={{ color: baseTextColor }}>{`${selectedMeetup.attendees.length} >`}</Text>}
+        rightInfo={<Text style={{ color: baseTextColor }}>{`${selectedMeetup.totalAttendees} >`}</Text>}
         onPressMenu={() => {
           setSelectedMeetupDetailComponent('Crew');
           selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
