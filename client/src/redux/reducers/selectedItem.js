@@ -8,10 +8,10 @@ const selectedItemReducer = (state = INITIAL_STATE, action) => {
     // これは、map上にrenderされているmeetupのobjectをtapした時にredux stateに入れて、それをbottom sheetにtapされたmeetupのdetailを表示する。
     case 'SELECT_MEETUP':
       return { ...state, meetup: action.payload };
-    case 'JOIN_MEETUP':
-      return { ...state, meetup: { ...state.meetup, attendees: action.payload.attendees } };
-    case 'LEAVE_MEETUP':
-      return { ...state, meetup: { ...state.meetup, attendees: action.payload.attendees } };
+    // case 'JOIN_MEETUP':
+    //   return { ...state, meetup: { ...state.meetup, attendees: action.payload.attendees } };
+    // case 'LEAVE_MEETUP':
+    //   return { ...state, meetup: { ...state.meetup, attendees: action.payload.attendees } };
     // append
     case 'ADD_COMMENT':
       return { ...state, meetup: { ...state.meetup, comments: [...state.meetup.comments, action.payload] } };

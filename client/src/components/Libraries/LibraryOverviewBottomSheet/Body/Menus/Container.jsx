@@ -44,8 +44,8 @@ const Container = (props) => {
       <Menu
         label='Members'
         onPress={() => console.log('hello')}
-        backgroundColor={iconColorsTable['violet1']}
-        icon={<FontAwesome5 name='user-astronaut' size={25} color={'white'} />}
+        backgroundColor={backgroundColorsTable['violet1']}
+        icon={<FontAwesome5 name='user-astronaut' size={25} color={iconColorsTable['violet1']} />}
         rightInfo={
           <View>
             <Text style={{ color: baseTextColor }}>{`${selectedLibrary.members.length} >`}</Text>
@@ -55,8 +55,8 @@ const Container = (props) => {
       <Menu
         label='Rate'
         onPress={() => console.log('hello2')}
-        backgroundColor={iconColorsTable['yellow1']}
-        icon={<MaterialIcons name='star-rate' size={25} color={'white'} />}
+        backgroundColor={backgroundColorsTable['yellow1']}
+        icon={<MaterialIcons name='star-rate' size={25} color={iconColorsTable['yellow1']} />}
         rightInfo={
           <View>
             <Text style={{ color: baseTextColor }}>{`${selectedLibrary.rate} >`}</Text>

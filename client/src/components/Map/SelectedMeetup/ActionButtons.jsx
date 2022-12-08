@@ -33,10 +33,8 @@ const ActionButtons = (props) => {
               ) : (
                 <ActionButton
                   label='Leave'
-                  icon={
-                    <MaterialCommunityIcons name='human-greeting-variant' size={25} color={iconColorsTable['red1']} />
-                  }
-                  backgroundColor={backgroundColorsTable['red1']}
+                  icon={<MaterialCommunityIcons name='exit-run' size={25} color={'white'} />}
+                  backgroundColor={iconColorsTable['red1']}
                   onActionButtonPress={() => props.leaveMeetup(selectedMeetup._id)}
                 />
               )}
@@ -66,9 +64,9 @@ const ActionButtons = (props) => {
         <View style={{}}>
           <ActionButton
             label='Join this meetup'
-            icon={<MaterialCommunityIcons name='human-greeting-variant' size={25} color={iconColorsTable['blue1']} />}
-            backgroundColor={backgroundColorsTable['blue1']}
-            onActionButtonPress={() => console.log('pressing')}
+            icon={<MaterialCommunityIcons name='human-greeting-variant' size={25} color={'white'} />}
+            backgroundColor={iconColorsTable['blue1']}
+            onActionButtonPress={() => props.joinMeetup(selectedMeetup._id)}
           />
         </View>
       );

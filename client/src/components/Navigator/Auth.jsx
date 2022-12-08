@@ -82,9 +82,54 @@ const Auth = (props) => {
   } else {
     return (
       <Stack.Navigator>
-        <Stack.Screen name='LogInOrSignUp' component={LogInOrSignUp} options={{ headerShown: false }} />
-        <Stack.Screen name='SignUp' component={SignUp} />
-        <Stack.Screen name='LogIn' component={LogIn} />
+        <Stack.Screen
+          name='LogInOrSignUp'
+          component={LogInOrSignUp}
+          options={{
+            headerShown: true,
+            title: 'Welcome to Lampost',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: 'white',
+          }}
+        />
+        <Stack.Screen
+          name='SignUp'
+          component={SignUp}
+          options={{
+            headerShown: true,
+            title: 'Signup',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: 'white',
+          }}
+        />
+        <Stack.Screen
+          name='LogIn'
+          component={LogIn}
+          options={{
+            headerShown: true,
+            title: 'Login',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: 'white',
+          }}
+        />
       </Stack.Navigator>
     );
   }

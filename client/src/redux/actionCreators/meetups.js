@@ -34,11 +34,10 @@ export const joinMeetup = (meetupId) => async (dispatch, getState) => {
   try {
     const userId = getState().auth.data._id;
     const result = await lampostAPI.patch(`/meetups/${meetupId}/join`, { user: userId });
-    const { id, attendees } = result.data;
-    console.log('fuck', id);
+    const { meetup } = result.data;
     dispatch({
       type: 'JOIN_MEETUP',
-      payload: { id, attendees },
+      payload: meetup,
     });
     dispatch(addSnackBar('Joined the meetup!', 'success', 7000));
   } catch (error) {
@@ -50,10 +49,10 @@ export const leaveMeetup = (meetupId) => async (dispatch, getState) => {
   try {
     const userId = getState().auth.data._id;
     const result = await lampostAPI.patch(`/meetups/${meetupId}/leave`, { user: userId });
-    const { id, attendees } = result.data;
+    const { meetup } = result.data;
     dispatch({
       type: 'LEAVE_MEETUP',
-      payload: { id, attendees },
+      payload: { meetup },
     });
     dispatch(addSnackBar('Left the meetup!', 'success', 7000));
   } catch (error) {

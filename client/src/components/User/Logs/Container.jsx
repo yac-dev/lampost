@@ -20,7 +20,7 @@ const Container = (props) => {
   const addImpressionsBottomSheetRef = useRef(null);
 
   useEffect(() => {
-    if (props.route.params.userId === props.auth.data._id) {
+    if (props.auth.isAuthenticated && props.route.params.userId === props.auth.data._id) {
       setIsMyPage(true);
     } else {
       setIsMyPage(false);

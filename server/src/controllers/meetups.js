@@ -368,9 +368,15 @@ export const joinMeetup = async (request, response) => {
     };
     user.upcomingMeetups.push(meetupObj);
     user.save();
+
     response.status(200).json({
-      id: meetup._id,
-      attendees: meetup.attendees,
+      meetupData: {
+        meetup: {
+          _id: meetup._id,
+          title: meetup.title,
+          startDataAndTime: meetup.startDateAndTime,
+        },
+      },
     });
   } catch (error) {
     console.log(error);
@@ -401,8 +407,9 @@ export const leaveMeetup = async (request, response) => {
     }
     user.save();
     response.status(200).json({
-      id: meetup._id,
-      attendees: meetup.attendees,
+      meetup: {
+        _id: meetup._id,
+      },
     });
   } catch (error) {
     console.log(error);

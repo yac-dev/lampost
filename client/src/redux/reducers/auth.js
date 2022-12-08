@@ -16,14 +16,14 @@ const authReducer = (state = INITIAL_STATE, action) => {
     case 'JOIN_MEETUP':
       return {
         ...state,
-        data: { ...state.data, upcomingMeetups: [...state.data.upcomingMeetups, action.payload.id] },
+        data: { ...state.data, upcomingMeetups: [...state.data.upcomingMeetups, action.payload] },
       };
     case 'LEAVE_MEETUP':
       return {
         ...state,
         data: {
           ...state.data,
-          upcomingMeetups: [...state.data.upcomingMeetups].filter((meetup) => meetup._id !== action.payload.id),
+          upcomingMeetups: [...state.data.upcomingMeetups].filter((meetup) => meetup._id !== action.payload._id),
         },
       }; // ここ、filterする感じ。
     case 'LAUNCHED_MEETUP':
