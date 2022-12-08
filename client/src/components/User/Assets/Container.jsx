@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text } from 'react-native';
-import UserContext from '../Context';
+import UserContext from '../UserContext';
 import lampostAPI from '../../../apis/lampost';
 import FastImage from 'react-native-fast-image';
 

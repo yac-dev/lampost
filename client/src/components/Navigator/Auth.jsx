@@ -1,5 +1,6 @@
 // main libraries
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import GlobalContext from '../../GlobalContext';
 import { Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -18,7 +19,9 @@ import AddBadges from '../Utils/AddBadges/Container';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
 
 const Auth = (props) => {
-  if (props.auth.isAuthenticated) {
+  // ここらへん、一つにできるね。まあ、後で。
+  const { auth } = useContext(GlobalContext);
+  if (auth.data) {
     return (
       <Stack.Navigator>
         <Stack.Group>
@@ -53,8 +56,34 @@ const Auth = (props) => {
               headerTintColor: 'white',
             }}
           ></Stack.Screen>
-          <Stack.Screen name='Assets' component={Assets} />
-          <Stack.Screen name='Asset' component={Asset} />
+          <Stack.Screen
+            name='Assets'
+            component={Assets}
+            options={{
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+              headerTintColor: 'white',
+            }}
+          />
+          <Stack.Screen
+            name='Asset'
+            component={Asset}
+            options={{
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+              headerTintColor: 'white',
+            }}
+          />
         </Stack.Group>
         <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
           <Stack.Screen

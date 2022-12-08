@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
-import UserContext from './Context';
+import UserContext from './UserContext';
 import BadgeContext from './BadgeContext';
 import lampostAPI from '../../apis/lampost';
 import { SimpleLineIcons } from '@expo/vector-icons';

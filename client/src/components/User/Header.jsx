@@ -1,6 +1,6 @@
 // main libraries
 import React from 'react';
-import UserContext from '../Context';
+import UserContext from './UserContext';
 import { useContext } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
@@ -15,7 +15,7 @@ import {
   rnDefaultBackgroundColor,
   iconColorsTable,
   backgroundColorsTable,
-} from '../../../utils/colorsTable';
+} from '../../utils/colorsTable';
 
 const Header = (props) => {
   const { user } = useContext(UserContext);

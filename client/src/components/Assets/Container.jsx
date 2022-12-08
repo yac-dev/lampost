@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import ImageView from 'react-native-image-viewing';
+import { baseBackgroundColor } from '../../utils/colorsTable';
 
 const Container = (props) => {
   const [images, setImages] = useState();
@@ -28,14 +29,10 @@ const Container = (props) => {
         </TouchableOpacity>
       );
     });
-    return (
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap', backgroundColor: 'red', paddingLeft: 5, paddingTop: 5 }}>
-        {assetsList}
-      </View>
-    );
+    return <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingLeft: 5, paddingTop: 5 }}>{assetsList}</View>;
   };
 
-  return <ScrollView style={{}}>{renderUserAssets()}</ScrollView>;
+  return <ScrollView style={{ flex: 1, backgroundColor: baseBackgroundColor }}>{renderUserAssets()}</ScrollView>;
 };
 
 export default Container;

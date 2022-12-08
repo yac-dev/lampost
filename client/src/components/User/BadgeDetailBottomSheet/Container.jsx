@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from 'react';
-import UserContext from '../Context';
+import UserContext from '../UserContext';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';

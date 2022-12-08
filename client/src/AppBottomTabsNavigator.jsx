@@ -14,7 +14,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import { createNavigationContainerRef } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { appBottomSheetBackgroundColor } from './utils/colorsTable';
+import { appBottomSheetBackgroundColor, iconColorsTable } from './utils/colorsTable';
 
 import MapNavigator from './components/Navigator/Map';
 import LibraryNavigator from './components/Navigator/Library';
@@ -102,13 +102,30 @@ const AppStack = (props) => {
       >
         <Tab.Navigator
           screenOptions={{
-            activeTintColor: 'red',
             tabBarStyle: {
               display: hide ? 'none' : 'flex',
               backgroundColor: appBottomSheetBackgroundColor,
-              // borderTopColor: 'transparent',
+            },
+            tabBarLabelStyle: {
+              fontSize: 12,
             },
           }}
+          // tabBarOptions={{
+          //   showLabel: false,
+          //   activeBackgroundColor: iconColorsTable['blue1'],
+          //   inactiveBackgroundColor: 'yellow',
+          //   style:{
+          //       position:'absolute',
+          //       bottom:0,
+          //       right:0,
+          //       left:0,
+          //       elevation:0,
+          //       height:55,
+          //       borderTopRightRadius: 20,
+          //       borderTopLeftRadius: 20,
+
+          //   },
+          // }}
         >
           <Tab.Screen
             name='Meetups'
@@ -170,7 +187,7 @@ const AppStack = (props) => {
                   <FontAwesome5 name='user-astronaut' color={color} size={size} />
                   // 本当はtime machineのiconにしたい。
                 ),
-                tabBarLabel: 'My page',
+                tabBarLabel: 'Profile',
                 // () => {
                 //   return null;
                 // },

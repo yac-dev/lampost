@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import UserContext from '../../Context';
+import UserContext from '../../UserContext';
 import { View, Text, TouchableOpacity } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {

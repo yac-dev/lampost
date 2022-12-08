@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
-import AuthContext from '../Context';
+import AuthContext from '../UserContext';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';

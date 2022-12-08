@@ -2,15 +2,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import UserContext from './Context';
+import UserContext from './UserContext';
 import BadgeContext from './BadgeContext';
 import lampostAPI from '../../apis/lampost';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { baseBackgroundColor, baseTextColor } from '../../utils/colorsTable';
 
 // components
-import Header from './Home/Header';
-import Stats from './Home/Stats';
+import Header from './Header';
+import Stats from './Stats';
 import Badge from './Badge';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import BadgeDetailBottomSheet from './BadgeDetailBottomSheet/Container';

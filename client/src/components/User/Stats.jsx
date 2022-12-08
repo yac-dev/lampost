@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
-import UserContext from '../Context';
+import UserContext from './UserContext';
 import { View, ScrollView } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { baseTextColor } from '../../../utils/colorsTable';
+import { baseTextColor } from '../../utils/colorsTable';
 import Stat from './Stat';
 
 const Stats = () => {

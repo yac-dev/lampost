@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { baseTextColor } from '../../../utils/colorsTable';
+import { baseTextColor } from '../../utils/colorsTable';
 
 const Stat = (props) => {
   return (
