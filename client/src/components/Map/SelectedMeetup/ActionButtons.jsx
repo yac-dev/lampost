@@ -16,12 +16,12 @@ import { joinMeetup } from '../../../redux/actionCreators/meetups';
 import { leaveMeetup } from '../../../redux/actionCreators/meetups';
 
 const ActionButtons = (props) => {
-  const { auth, setAuth } = useContext(GlobalContext);
+  const { auth, setAuth, setLoading } = useContext(GlobalContext);
   const { selectedMeetup, setSelectedMeetup, navigation } = useContext(MapContext);
   const [joinOrLeaveButtonPressed, setJoinOrLeaveButtonPressed] = useState(false);
 
   const joinMeetup = async () => {
-    setJoinOrLeaveButtonPressed(true);
+    setLoading(true);
     const result = await lampostAPI.patch(`/meetups/${selectedMeetup._id}/join`, { userId: auth.data._id });
     const { meetupObject, totalAttendees } = result.data;
     setAuth((previous) => {
@@ -39,10 +39,11 @@ const ActionButtons = (props) => {
         totalAttendees,
       };
     });
-    setJoinOrLeaveButtonPressed(false);
+    setLoading(false);
   };
 
   const leaveMeetup = async () => {
+    setLoading(true);
     const result = await lampostAPI.patch(`/meetups/${selectedMeetup._id}/leave`, { userId: auth.data._id });
     const { meetupId, totalAttendees } = result.data; // filteringするだけよ。
     setAuth((previous) => {
@@ -62,6 +63,7 @@ const ActionButtons = (props) => {
         totalAttendees,
       };
     });
+    setLoading(false);
   };
 
   const renderApp = () => {

@@ -19,6 +19,7 @@ import { appBottomSheetBackgroundColor } from './utils/colorsTable';
 import MapNavigator from './components/Navigator/Map';
 import LibraryNavigator from './components/Navigator/Library';
 import AuthNavigator from './components/Navigator/Auth';
+import LoadingSpinner from './components/Utils/LoadingSpinner';
 
 const ref = createNavigationContainerRef();
 const Tab = createBottomTabNavigator();
@@ -34,6 +35,7 @@ import { getSocket } from './redux/actionCreators/auth';
 const AppStack = (props) => {
   // const [auth, setAuth] = useState({ data: null, isAuthenticated: false, socket: null });
   const [auth, setAuth] = useState({ data: null, isAuthenticated: false, socket: null, currentLocation: null }); // {data: null, socket: null, location: null}
+  const [loading, setLoading] = useState(false);
   const [routeName, setRouteName] = useState();
   const hide = routeName === 'Camera' || routeName === 'Meetup' || routeName === 'Dummy2' || routeName === 'Q&A';
 
@@ -91,7 +93,7 @@ const AppStack = (props) => {
 
   // これも、contextを使っていた方がいいな。reduxのstateよりも。refactoringは後でやろうか。authDataみたいな感じで渡して、app全体で使う感じがいいだろう。
   return (
-    <GlobalContext.Provider value={{ auth, setAuth }}>
+    <GlobalContext.Provider value={{ auth, setAuth, loading, setLoading }}>
       <NavigationContainer
         ref={ref}
         onReady={() => {
@@ -209,6 +211,7 @@ const AppStack = (props) => {
         /> */}
         </Tab.Navigator>
       </NavigationContainer>
+      <LoadingSpinner />
     </GlobalContext.Provider>
   );
 };

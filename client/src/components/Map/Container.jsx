@@ -22,6 +22,7 @@ import CancelLaunchMeetupModal from './LaunchMeetupBottomSheet/CancelLaunchMeetu
 
 import LaunchMeetupBottomSheet from './LaunchMeetupBottomSheet/BottomSheet';
 import SnackBar from '../Utils/SnackBar';
+import LoadingSpinner from '../Utils/LoadingSpinner';
 
 // utils
 import { mapStyle } from '../../utils/mapStyle';
@@ -42,7 +43,7 @@ import { setIsSelectedMeetupInfoDetailBottomSheetOpen } from '../../redux/action
 import { iconColorsTable } from '../../utils/colorsTable';
 
 const Map = (props) => {
-  const { auth } = useContext(GlobalContext);
+  const { auth, loading } = useContext(GlobalContext);
   const [region, setRegion] = useState(null);
   const [currentSnap, setCurrentSnap] = useState();
   const [isLaunchMeetupConfirmationModalOpen, setIsLaunchMeetupConfirmationModalOpen] = useState(false);
@@ -212,6 +213,7 @@ const Map = (props) => {
           <LaunchMeetupBottomSheet navigation={props.navigation} route={props.route} />
           <SelectedMeetup />
           <SelectedMeetupInfoDetail />
+          {/* <LoadingSpinner /> */}
         </View>
       </MapContext.Provider>
     </>
