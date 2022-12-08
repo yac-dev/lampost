@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
 import AuthContext from '../Context';
 
@@ -10,7 +11,9 @@ import { Foundation } from '@expo/vector-icons';
 import { iconColorsTable, backgroundColorsTable, sectionBackgroundColor } from '../../../utils/colorsTable';
 import AppButton from '../../Utils/AppMenuButton';
 
-const AppButtons = () => {
+import { logout } from '../../../redux/actionCreators/auth';
+
+const AppButtons = (props) => {
   const { user, navigation, appMenuBottomSheetRef } = useContext(AuthContext);
   return (
     <View
@@ -46,10 +49,14 @@ const AppButtons = () => {
           backgroundColor={backgroundColorsTable['blue1']}
           icon={<MaterialCommunityIcons name='logout' size={35} color={iconColorsTable['blue1']} />}
           label='Logout'
+          onAppMenuButtonPress={() => {
+            // ここは、authを消すだけだよね。。。ただ、httpでrequestするっていう方がいいのかもな。
+            props.logout();
+          }}
         />
       </ScrollView>
     </View>
   );
 };
 
-export default AppButtons;
+export default connect(null, { logout })(AppButtons);

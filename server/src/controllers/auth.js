@@ -67,3 +67,10 @@ export const loadMe = async (request, response) => {
     console.log(error);
   }
 };
+
+export const logout = async (request, response) => {
+  try {
+  } catch (error) {
+    console.log(error);
+  }
+};

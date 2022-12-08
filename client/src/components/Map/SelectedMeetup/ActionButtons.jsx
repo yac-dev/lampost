@@ -3,10 +3,10 @@ import React, { useContext } from 'react';
 import MapContext from '../MeetupContext';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
-import { Button } from 'react-native-paper';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { backgroundColorsTable, iconColorsTable } from '../../../utils/colorsTable';
+import { backgroundColorsTable, baseTextColor, iconColorsTable } from '../../../utils/colorsTable';
 import ActionButton from '../../Utils/ActionButton';
 
 // ac
@@ -19,7 +19,7 @@ const ActionButtons = (props) => {
   const renderApp = () => {
     if (props.auth.isAuthenticated) {
       for (let i = 0; i < props.auth.data.upcomingMeetups.length; i++) {
-        // everyか？
+        // everyか？someかな。
         if (props.auth.data.upcomingMeetups[i].meetup._id === selectedMeetup._id) {
           return (
             <View style={{ flexDirection: 'row', paddingTop: 10, paddingBottom: 10 }}>
@@ -73,7 +73,14 @@ const ActionButtons = (props) => {
         </View>
       );
     } else {
-      return null;
+      return (
+        <ActionButton
+          label='Please login or signup from "Profile" to join'
+          icon={<Ionicons name='ios-enter' size={25} color={'white'} />}
+          backgroundColor={iconColorsTable['blue1']}
+          onActionButtonPress={() => console.log('pressing')}
+        />
+      );
     }
   };
 

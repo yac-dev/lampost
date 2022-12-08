@@ -16,7 +16,7 @@ const AppButtons = () => {
           backgroundColor={backgroundColorsTable['blue1']}
           icon={<MaterialCommunityIcons name='send' size={35} color={iconColorsTable['blue1']} />}
           label='Send a chat'
-          onActionButtonPress={() => {
+          onAppMenuButtonPress={() => {
             appMenuBottomSheetRef.current.snapToIndex(0);
             sendChatBottomSheetRef.current.snapToIndex(0);
             textInputRef.current.focus();
@@ -26,7 +26,7 @@ const AppButtons = () => {
           backgroundColor={backgroundColorsTable['violet1']}
           icon={<FontAwesome5 name='user-astronaut' size={35} color={iconColorsTable['violet1']} />}
           label='Check my crew'
-          onActionButtonPress={() => {
+          onAppMenuButtonPress={() => {
             appMenuBottomSheetRef.current.snapToIndex(0);
             crewBottomSheetRef.current.snapToIndex(0);
           }}

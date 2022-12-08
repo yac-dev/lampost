@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity } from 'react-native';
 import LibrariesContext from '../../../LibrariesContext';
 
@@ -14,7 +15,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 // import Menu from './Menu';
 import Menu from '../../../../Map/SelectedMeetup/Menu';
 
-const Container = () => {
+const Container = (props) => {
   const { selectedLibrary, navigation } = useContext(LibrariesContext);
   const [menus, setMenus] = useState({
     members: { label: 'Members', info: '' },
@@ -26,7 +27,11 @@ const Container = () => {
       <Menu
         label='Launcher'
         // onPress={() => navigation.navigate('User', { userId: selectedLibrary.launcher._id })}
-        onPress={() => console.log('heey')}
+        onPressMenu={() => {
+          if (!props.auth.isAuthenticated || props.auth.data._id === selectedLibrary.launcher._id) {
+            navigation.navigate('User', { userId: selectedLibrary.launcher._id });
+          }
+        }}
         backgroundColor={backgroundColorsTable['red1']}
         icon={<MaterialCommunityIcons name='rocket-launch' size={25} color={iconColorsTable['red1']} />}
         rightInfo={
@@ -62,7 +67,11 @@ const Container = () => {
   );
 };
 
-export default Container;
+const mapStateToProps = (state) => {
+  return { auth: state.auth };
+};
+
+export default connect(mapStateToProps)(Container);
 
 {
   /* <TouchableOpacity

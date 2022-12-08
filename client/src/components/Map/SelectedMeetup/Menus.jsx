@@ -156,7 +156,7 @@ const Menus = (props) => {
         }
         onPressMenu={() => {
           // Map tab内では、自分のpageを見せないようにする。ごちゃごちゃになってめんどいからね。
-          if (props.auth.data._id !== selectedMeetup.launcher._id) {
+          if (!props.auth.isAuthenticated || props.auth.data._id !== selectedMeetup.launcher._id) {
             navigation.navigate('User', { userId: selectedMeetup.launcher._id });
           }
         }}

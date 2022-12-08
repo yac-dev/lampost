@@ -68,6 +68,14 @@ const MapNavigator = (props) => {
           component={User}
           options={({ navigation }) => ({
             headerShown: true,
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: 'white',
             // title: '',
             // headerTransparent: true,
             // headerLeft: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,

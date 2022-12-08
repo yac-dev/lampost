@@ -13,8 +13,6 @@ const AppMenusBottomSheet = (props) => {
   const snapPoints = useMemo(() => ['8%', '30%', '80%'], []);
   const { appMenuBottomSheetRef } = useContext(MapContext);
 
-  console.log(props.auth.data);
-
   return (
     <GorhomBottomSheet
       index={0}

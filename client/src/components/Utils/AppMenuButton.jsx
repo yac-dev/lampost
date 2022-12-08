@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity } from 'react-native';
 import {
   rnDefaultBackgroundColor,
@@ -29,7 +30,9 @@ const AppButton = (props) => {
           borderWidth: 0.3,
           marginBottom: 10,
         }}
-        onPress={() => props.onAppMenuButtonPress()}
+        onPress={() => {
+          props.onAppMenuButtonPress();
+        }}
       >
         <View
           style={{
@@ -64,4 +67,8 @@ const AppButton = (props) => {
   );
 };
 
-export default AppButton;
+const mapStateToProps = (state) => {
+  return { auth: state.auth };
+};
+
+export default connect(mapStateToProps)(AppButton);

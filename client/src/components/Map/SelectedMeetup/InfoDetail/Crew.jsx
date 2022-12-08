@@ -37,7 +37,7 @@ const Crew = (props) => {
               borderBottomColor: '#ABABAB',
             }}
             onPress={() => {
-              if (props.auth.data._id !== user._id) {
+              if (!props.auth.isAuthenticated || props.auth.data._id !== user._id) {
                 navigation.navigate('User', { userId: user._id });
               }
             }}

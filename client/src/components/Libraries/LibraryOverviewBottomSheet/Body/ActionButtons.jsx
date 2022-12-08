@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import lampostAPI from '../../../../apis/lampost';
 import LibrariesContext from '../../LibrariesContext';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { backgroundColorsTable, baseTextColor, iconColorsTable } from '../../../../utils/colorsTable';
 import ActionButton from '../../../Utils/ActionButton';
@@ -62,8 +63,13 @@ const ActionButtons = (props) => {
     );
   } else {
     return (
-      <View>
-        <Text style={{ color: baseTextColor }}>Please login or signup to use.</Text>
+      <View style={{ marginBottom: 25 }}>
+        <ActionButton
+          label='Please login or signup to join'
+          icon={<Ionicons name='ios-enter' size={25} color={'white'} />}
+          backgroundColor={iconColorsTable['blue1']}
+          onActionButtonPress={joinLibrary}
+        />
       </View>
     );
   }

@@ -95,14 +95,19 @@ const Container = (props) => {
       return null;
     }
   };
-  return (
-    <View>
-      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My upcoming meetups</Text>
-      <View style={{ padding: 10, backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>
-        {renderUpcomingMeetups()}
+
+  if (props.auth.isAuthenticated) {
+    return (
+      <View>
+        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My upcoming meetups</Text>
+        <View style={{ padding: 10, backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>
+          {renderUpcomingMeetups()}
+        </View>
       </View>
-    </View>
-  );
+    );
+  } else {
+    return null;
+  }
 };
 
 const mapStateToProps = (state) => {

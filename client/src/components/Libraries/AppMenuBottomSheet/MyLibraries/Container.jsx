@@ -70,12 +70,16 @@ const Container = (props) => {
     }
   };
 
-  return (
-    <View>
-      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My joined libraries</Text>
-      <ScrollView>{renderMyJoinedLibraries()}</ScrollView>
-    </View>
-  );
+  if (props.auth.isAuthenticated) {
+    return (
+      <View>
+        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My joined libraries</Text>
+        <ScrollView>{renderMyJoinedLibraries()}</ScrollView>
+      </View>
+    );
+  } else {
+    return null;
+  }
 };
 
 const mapStatToProps = (state) => {

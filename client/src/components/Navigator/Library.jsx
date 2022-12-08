@@ -9,6 +9,7 @@ import Container from '../Libraries/Container';
 import LibraryContainer from '../Libraries/Library/Container';
 import RollContainer from '../Libraries/Roll';
 import AuthNavigator from './Auth';
+import User from '../User/Container';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
 
 const LibraryNavigator = () => {
@@ -48,6 +49,22 @@ const LibraryNavigator = () => {
               fontWeight: 'bold',
               color: 'white',
             },
+          })}
+        />
+        <Stack.Screen
+          name='User'
+          component={User}
+          options={({ navigation }) => ({
+            headerShown: true,
+            title: 'User',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: 'white',
           })}
         />
         <Stack.Screen

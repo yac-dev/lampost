@@ -26,7 +26,7 @@ const Container = (props) => {
 
   // これで、自分のpageを見ているか、他人のpageを見ているかのstateを管理する。
   useEffect(() => {
-    if (props.route.params.userId === props.auth.data._id) {
+    if (props.auth.isAuthenticated && props.route.params.userId === props.auth.data._id) {
       setIsMyPage(true);
     } else {
       setIsMyPage(false);
