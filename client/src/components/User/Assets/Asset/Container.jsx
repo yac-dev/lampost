@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
-import lampostAPI from '../../../apis/lampost';
+import lampostAPI from '../../../../apis/lampost';
 import FastImage from 'react-native-fast-image';
 
 const Asset = (props) => {
-  console.log(props.route.params.assetId);
   const [asset, setAsset] = useState(null);
-  const getImage = async () => {
-    const result = await lampostAPI.get(`/assets/${props.route.params.assetId}`);
+
+  const getAsset = async () => {
+    const result = await lampostAPI.get(
+      `/assetanduserrelationships/${props.route.params.assetId}/${props.route.params.userId}`
+    );
     const { asset } = result.data;
     setAsset(asset);
   };
   useEffect(() => {
-    getImage();
+    getAsset();
   }, []);
 
   const renderAsset = () => {

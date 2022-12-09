@@ -1,11 +1,6 @@
 import mongoose from 'mongoose';
 
 const assetSchema = new mongoose.Schema({
-  // このassetがどこのrollに属するかって話。
-  roll: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Roll',
-  },
   // s3のlink先をこれに
   data: {
     type: String,
@@ -14,15 +9,30 @@ const assetSchema = new mongoose.Schema({
     type: String,
     // enums [photo or video]
   },
-  message: {
-    type: String,
-    maxLength: 40,
-  },
   meetup: {
     type: mongoose.Schema.ObjectId,
     ref: 'Meetup',
   },
-  createdBy: [
+  badges: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Badge',
+    },
+  ],
+  place: {
+    type: {
+      type: String,
+      enum: ['Point'],
+      default: 'Point',
+    },
+    coordinates: [Number],
+    name: String,
+  },
+  createdBy: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+  },
+  taggedPeople: [
     {
       type: mongoose.Schema.ObjectId,
       ref: 'User',

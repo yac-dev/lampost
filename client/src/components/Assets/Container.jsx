@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import AssetsContext from './AssetsContext';
 import FastImage from 'react-native-fast-image';
 import ImageView from 'react-native-image-viewing';
 import { baseBackgroundColor } from '../../utils/colorsTable';

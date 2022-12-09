@@ -1,8 +1,11 @@
 // main libraries
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import lampostAPI from '../../apis/lampost';
+import GlobalContext from '../../GlobalContext';
 import { connect } from 'react-redux';
 import { View, Text, SafeAreaView, StyleSheet, TextInput } from 'react-native';
 import { Button } from 'react-native-paper';
+import * as SecureStore from 'expo-secure-store';
 
 // import { Button as ButtonRNE, Icon } from 'react-native-elements';
 
@@ -10,16 +13,39 @@ import { Button } from 'react-native-paper';
 import { logIn } from '../../redux/actionCreators/auth';
 
 const Login = (props) => {
+  const { setAuth, setLoading } = useContext(GlobalContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const onPressSubmit = () => {
-    const formData = {
-      email,
-      password,
-    };
-    // props.navigation.navigate('LogInOrSignUp', { screen: 'Map' });
-    props.logIn(formData);
+  // const onPressSubmit = () => {
+  //   const formData = {
+  //     email,
+  //     password,
+  //   };
+  //   // props.navigation.navigate('LogInOrSignUp', { screen: 'Map' });
+  //   props.logIn(formData);
+  // };
+
+  const login = async () => {
+    try {
+      setLoading(true);
+      const formData = {
+        email,
+        password,
+      };
+      const result = await lampostAPI.post('/auth/login', formData);
+      const { user, jwtToken } = result.data;
+      await SecureStore.setItemAsync('secure_token', jwtToken);
+      setAuth((previous) => {
+        return {
+          ...previous,
+          data: user,
+        };
+      });
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -74,7 +100,7 @@ const Login = (props) => {
           onPressSubmit();
         }}
       /> */}
-      <Button onPress={() => onPressSubmit()}>Submit</Button>
+      <Button onPress={() => login()}>Login</Button>
     </SafeAreaView>
   );
 };

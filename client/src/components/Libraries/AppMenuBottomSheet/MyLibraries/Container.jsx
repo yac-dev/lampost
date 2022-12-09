@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import GlobalContext from '../../../../GlobalContext';
 import LibrariesContext from '../../LibrariesContext';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
@@ -12,15 +13,18 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 
 const Container = (props) => {
+  const { auth } = useContext(GlobalContext);
   const { myJoinedLibraries, setMyJoinedLibraries, navigation } = useContext(LibrariesContext);
 
   const getMyJoinedLibraries = async () => {
-    const result = await lampostAPI.get(`/libraryanduserrelationships/${props.auth.data._id}`);
+    const result = await lampostAPI.get(`/libraryanduserrelationships/${auth.data._id}`);
     const { myJoinedLibraries } = result.data;
     setMyJoinedLibraries(myJoinedLibraries);
   };
   useEffect(() => {
-    getMyJoinedLibraries();
+    if (auth.data) {
+      getMyJoinedLibraries();
+    }
   }, []);
 
   const renderMyJoinedLibraries = () => {

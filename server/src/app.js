@@ -17,6 +17,7 @@ import rollAndAssetRelationshipsRouter from './routers/rollAndAssetRelationships
 import libraryAndUserRelationshipsRouter from './routers/libraryAndUserRelationships';
 import pastMeetupAndUserRelationshipsRouter from './routers/pastMeetupAndUserRelationships';
 import badgeAndUserRelationshipsRouter from './routers/badgeAndUserRelationships';
+import assetAndUserRelationshipsRouter from './routers/assetAndUserRelationships';
 
 // import postsRouter from './routers/posts';
 // import usersRouter from './routers/users';
@@ -43,5 +44,6 @@ app.use('/api/rollAndAssetRelationships', rollAndAssetRelationshipsRouter);
 app.use('/api/libraryanduserrelationships', libraryAndUserRelationshipsRouter);
 app.use('/api/pastmeetupanduserrelationships', pastMeetupAndUserRelationshipsRouter);
 app.use('/api/badgeanduserrelationships', badgeAndUserRelationshipsRouter);
+app.use('/api/assetanduserrelationships', assetAndUserRelationshipsRouter);
 
 export default app;

@@ -14,7 +14,7 @@ import LogIn from '../Auth/LogIn';
 import UserHome from '../User/Container';
 import Logs from '../User/Logs/Container';
 import Assets from '../User/Assets/Container';
-import Asset from '../User/Assets/Asset';
+import Asset from '../User/Assets/Asset/Container';
 import AddBadges from '../Utils/AddBadges/Container';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
 
@@ -28,7 +28,7 @@ const Auth = (props) => {
           <Stack.Screen
             name='Personal page'
             component={UserHome}
-            initialParams={{ userId: props.auth.data._id }}
+            initialParams={{ userId: auth.data._id }}
             options={{
               // headerShown: false,
               headerStyle: {
