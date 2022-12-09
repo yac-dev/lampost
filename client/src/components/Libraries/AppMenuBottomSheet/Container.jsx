@@ -9,7 +9,7 @@ import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import AppMenuButtons from './AppMenuButtons';
-import MyLibraries from './MyLibraries/Container';
+import MyLibraries from './MyLibraries';
 
 const AppMenuBottomSheet = (props) => {
   const { appMenuBottomSheetRef, handleCreateLibraryBottomSheet } = useContext(LibrariesContext);

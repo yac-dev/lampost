@@ -1,3 +1,4 @@
+import { iconColorsTable } from './colorsTable';
 export const mapStyle = [
   {
     elementType: 'labels',
@@ -70,6 +71,7 @@ export const mapStyle = [
       {
         lightness: -20,
         color: '#0B1673',
+        // color: iconColorsTable['red1'],
       },
     ],
   },

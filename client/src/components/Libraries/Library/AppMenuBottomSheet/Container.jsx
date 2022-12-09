@@ -1,51 +1,21 @@
 import React, { useContext, useMemo, useEffect } from 'react';
-import LibraryContext from './LibraryContext';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import GlobalContext from '../../../../GlobalContext';
+import LibraryContext from '../LibraryContext';
+import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
-import { appBottomSheetBackgroundColor, baseTextColor } from '../../../utils/colorsTable';
+import { appBottomSheetBackgroundColor, baseTextColor } from '../../../../utils/colorsTable';
+import Rolls from './Rolls';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-import lampostAPI from '../../../apis/lampost';
+import lampostAPI from '../../../../apis/lampost';
 
 const AppMenuBottomSheet = (props) => {
   const { appMenuBottomSheetRef, library, selectedRoll, setSelectedRoll } = useContext(LibraryContext);
   const snapPoints = useMemo(() => ['8%', '30%', '80%'], []);
-
-  const selectRoll = (rollId) => {
-    setSelectedRoll(rollId);
-    appMenuBottomSheetRef.current.snapToIndex(0);
-  };
-
-  const renderRolls = () => {
-    if (library && selectedRoll) {
-      const rollsList = library.rolls.map((roll, index) => {
-        if (selectedRoll === roll._id) {
-          return (
-            <TouchableOpacity key={index}>
-              <Text style={{ color: 'red' }}>{roll.name}</Text>
-            </TouchableOpacity>
-          );
-        } else {
-          return (
-            <TouchableOpacity key={index} onPress={() => selectRoll(roll._id)}>
-              <Text style={{ color: baseTextColor }}>{roll.name}</Text>
-            </TouchableOpacity>
-          );
-        }
-      });
-      return <View>{rollsList}</View>;
-    } else {
-      return (
-        <View>
-          <Text>Now loading...</Text>
-        </View>
-      );
-    }
-  };
 
   return (
     <GorhomBottomSheet
@@ -63,8 +33,8 @@ const AppMenuBottomSheet = (props) => {
       // onClose={() => onSelectedItemBottomSheetClose()}
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
-        <Text style={{ color: 'white' }}>Rolls</Text>
-        <ScrollView>{renderRolls()}</ScrollView>
+        <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 15 }}>Rolls</Text>
+        <Rolls />
       </BottomSheetView>
     </GorhomBottomSheet>
   );

@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
-import GlobalContext from '../../../../GlobalContext';
-import LibrariesContext from '../../LibrariesContext';
+import GlobalContext from '../../../GlobalContext';
+import LibrariesContext from '../LibrariesContext';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
-import lampostAPI from '../../../../apis/lampost';
+import lampostAPI from '../../../apis/lampost';
 import {
   baseTextColor,
   iconColorsTable,
   backgroundColorsTable,
   rnDefaultBackgroundColor,
-} from '../../../../utils/colorsTable';
+} from '../../../utils/colorsTable';
 import { Ionicons } from '@expo/vector-icons';
 
 const Container = (props) => {
@@ -74,7 +74,7 @@ const Container = (props) => {
     }
   };
 
-  if (props.auth.isAuthenticated) {
+  if (auth.data) {
     return (
       <View>
         <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My joined libraries</Text>

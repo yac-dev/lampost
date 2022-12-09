@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import GlobalContext from '../../../GlobalContext';
+import LibrariesContext from '../LibrariesContext';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
 
@@ -12,7 +14,10 @@ import {
 import AppButton from '../../Utils/AppMenuButton';
 
 const AppButtons = (props) => {
-  if (props.auth.isAuthenticated) {
+  const { auth } = useContext(GlobalContext);
+  const { appMenuBottomSheetRef, createLibraryBottomSheetRef } = useContext(LibrariesContext);
+
+  if (auth.data) {
     return (
       <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 15 }}>
         <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
@@ -20,7 +25,10 @@ const AppButtons = (props) => {
             backgroundColor={backgroundColorsTable['red1']}
             icon={<MaterialCommunityIcons name='rocket-launch' size={35} color={iconColorsTable['red1']} />}
             label='Launch library'
-            onPress={() => console.log('yes')}
+            onPress={() => {
+              appMenuBottomSheetRef.current.snapToIndex(0);
+              createLibraryBottomSheetRef.current.snapToIndex(0);
+            }}
           />
           <AppButton
             backgroundColor={backgroundColorsTable['grey1']}
