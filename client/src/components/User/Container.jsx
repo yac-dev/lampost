@@ -44,7 +44,7 @@ const Container = (props) => {
   }, []);
 
   const getBadgeDatasByUserId = async () => {
-    const result = await lampostAPI.get(`/badgeanduserrelationship/${props.route.params.userId}`);
+    const result = await lampostAPI.get(`/badgeanduserrelationships/${props.route.params.userId}`);
     const { userBadgeDatas } = result.data;
     setBadgeDatas(userBadgeDatas);
   };
@@ -52,34 +52,12 @@ const Container = (props) => {
     getBadgeDatasByUserId();
   }, []);
 
-  // useEffect(() => {
-  //   // ここは、user pageからここに来て、doneをpressしたら, user pageへ戻る。addしたbadgesをparamsに入れていく感じ。
-  //   props.navigation.setOptions({
-  //     headerLeft: () => (
-  //       <TouchableOpacity onPress={() => console.log('notify')}>
-  //         <MaterialCommunityIcons name='mailbox' size={30} color={'blue'} />
-  //       </TouchableOpacity>
-  //     ),
-  //   });
-  // }, []);
-
   useEffect(() => {
     if (props.route.params?.addedUserBadges) {
-      // setUser((previous) => {
-      //   console.log('user data', previous);
-      //   return { ...previous, badges: [...previous.badges, ...props.route.params.badges] };
-      // });
-      console.log('I added these badges', props.route.params.addedUserBadges);
+      setBadgeDatas((previous) => [...previous, ...props.route.params.addedUserBadges]);
+      console.log('I added these badg', props.route.params.addedUserBadges);
     }
   }, [props.route.params?.addedUserBadges]);
-
-  // const onBadgePress = async (badgeStatusId) => {
-  //   // このuser pageのuser id、そしてbadgeを使ってget requestをする。
-  //   const result = await lampostAPI.get(`/badgestatuses/${badgeStatusId}`);
-  //   const { badgeStatus } = result.data;
-  //   setTappedBadgeStatus(badgeStatus);
-  //   // bottom sheetにこのbadge statusをrenderする、それを書く。多分、add badges側もこんな感じで変えることになる。
-  // };
 
   const renderBadges = () => {
     if (badgeDatas.length) {

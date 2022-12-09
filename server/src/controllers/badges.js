@@ -1,27 +1,32 @@
 import Badge from '../models/badge';
 import BadgeStatus from '../models/badgeStatus';
+import BadgeAndUserRelationship from '../models/badgeAndUserRelationship';
 import User from '../models/user';
 import Roll from '../models/roll';
 import Asset from '../models/asset';
 
 export const getBadges = async (request, response) => {
   try {
-    const filteringUserBadges = [];
+    // const filteringUserBadges = [];
     let badges = Badge.find({}); // grab all
     if (request.body.userId) {
-      const user = await User.findById(request.body.userId).populate({
-        path: 'badges',
-        model: BadgeStatus,
-        populate: {
-          path: 'badge',
-          model: Badge,
-        },
+      const badgeAndUserRelationships = await BadgeAndUserRelationship.find({ user: request.body.userId }).populate({
+        path: 'badge',
       });
+      // const user = await User.findById(request.body.userId).populate({
+      //   path: 'badges',
+      //   model: BadgeStatus,
+      //   populate: {
+      //     path: 'badge',
+      //     model: Badge,
+      //   },
+      // });
 
-      for (let i = 0; i < user.badges.length; i++) {
-        console.log(user.badges[i]);
-        filteringUserBadges.push(user.badges[i].badge._id);
-      }
+      const filteringUserBadges = badgeAndUserRelationships.map((element) => element.badge._id);
+      // for (let i = 0; i < user.badges.length; i++) {
+      //   console.log(user.badges[i]);
+      //   filteringUserBadges.push(user.badges[i].badge._id);
+      // }
       badges.where({ _id: { $nin: filteringUserBadges } });
     }
 

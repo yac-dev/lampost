@@ -42,6 +42,6 @@ app.use('/api/libraries', librariesRouter);
 app.use('/api/rollAndAssetRelationships', rollAndAssetRelationshipsRouter);
 app.use('/api/libraryanduserrelationships', libraryAndUserRelationshipsRouter);
 app.use('/api/pastmeetupanduserrelationships', pastMeetupAndUserRelationshipsRouter);
-app.use('/api/badgeanduserrelationship', badgeAndUserRelationshipsRouter);
+app.use('/api/badgeanduserrelationships', badgeAndUserRelationshipsRouter);
 
 export default app;

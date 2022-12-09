@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import GlobalContext from '../../../GlobalContext';
 import AddBadgesContext from './AddBadgesContext';
 import lampostAPI from '../../../apis/lampost';
 import { connect } from 'react-redux';
@@ -14,6 +15,7 @@ import BadgeDetailBottomSheet from './BadgeDetailBottomSheet/Container';
 import { setIsTappedBadgeBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
 
 const Container = (props) => {
+  const { auth } = useContext(GlobalContext);
   const [meetupBadges, setMeetupBadges] = useState({});
   const [fromComponent, setFromComponent] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -43,14 +45,18 @@ const Container = (props) => {
       });
     }
   }, [selectedUserBadges]);
-  const onDoneAddUserBadgesPress = () => {
-    const badgeIds = Object.values(selectedUserBadges).map((badge) => {
-      return badge._id;
+  const onDoneAddUserBadgesPress = async () => {
+    // api requestではbadge idsとuserIdをpost dataとして送るのはよし。client側では、単純にbadge dataを送るだけでいい。
+    const badgeIds = Object.keys(selectedUserBadges);
+    console.log('Sending these badge ids', badgeIds);
+    const result = await lampostAPI.post(`/badgeanduserrelationships/${auth.data._id}`, { badgeIds });
+    const newBadgeDatas = Object.values(selectedUserBadges).map((selectedUserBadge) => {
+      return {
+        badge: selectedUserBadge,
+        url: '',
+      };
     });
-    console.log("I'm adding these badges", badgeIds);
-    // const result = await lampostAPI.patch(`/users/${props.auth.data._id}/addbadges`, { badgeIds });
-    // const { badges } = result.data;
-    props.navigation.navigate('Personal page', { userId: props.auth.data._id, addedUserBadges: badgeIds });
+    props.navigation.navigate('Personal page', { userId: auth.data._id, addedUserBadges: newBadgeDatas });
   };
 
   // ADD_MEETUP_BADGESの時。

@@ -6,8 +6,8 @@ import {
   getBadgeDetailByUserId,
 } from '../controllers/badgeAndUserRelationships';
 
-router.route('/').post(addBadgesToUser);
-router.route('/:userId').get(getBadgeDatasByUserId);
+// router.route('/').post(addBadgesToUser);
+router.route('/:userId').get(getBadgeDatasByUserId).post(addBadgesToUser);
 // router.route('/:badgeId/:userId')
 
 export default router;

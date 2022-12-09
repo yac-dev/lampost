@@ -181,6 +181,7 @@ const Badge = (props) => {
 
   return (
     <View
+      key={props.key}
       style={{
         width: oneGridWidth,
         height: oneGridHeight, // これなんだろね。。。
