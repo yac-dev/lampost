@@ -19,6 +19,8 @@ const Header = () => {
     setSelectedUserBadges,
     addedMeetupBadges,
     setAddedMeetupBadges,
+    addedLibraryBadges,
+    setAddedLibraryBadges,
   } = useContext(AddBadgesContext);
 
   // こういうの、if state mentよりもhashtableで使った方がいいだろな。いちいち分岐って読みづらいしね。
@@ -79,6 +81,39 @@ const Header = () => {
             backgroundColor={iconColorsTable['blue1']}
             onActionButtonPress={() =>
               setAddedMeetupBadges((previous) => {
+                return {
+                  ...previous,
+                  [tappedBadge._id]: tappedBadge,
+                };
+              })
+            }
+            label='Add this badge'
+          />
+        );
+      }
+    } else if (fromComponent === 'ADD_LIBRARY_BADGES') {
+      if (addedLibraryBadges[tappedBadge._id]) {
+        return (
+          <ActionButton
+            icon={<MaterialCommunityIcons name='minus' size={20} color={'white'} />}
+            backgroundColor={iconColorsTable['red1']}
+            onActionButtonPress={() =>
+              setAddedLibraryBadges((previous) => {
+                const copiedAddedLibraryBadges = { ...previous };
+                delete copiedAddedLibraryBadges[tappedBadge._id];
+                return copiedAddedLibraryBadges;
+              })
+            }
+            label='Remove this badge'
+          />
+        );
+      } else {
+        return (
+          <ActionButton
+            icon={<MaterialCommunityIcons name='plus' size={20} color={'white'} />}
+            backgroundColor={iconColorsTable['blue1']}
+            onActionButtonPress={() =>
+              setAddedLibraryBadges((previous) => {
                 return {
                   ...previous,
                   [tappedBadge._id]: tappedBadge,

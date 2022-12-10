@@ -110,6 +110,7 @@ const Container = (props) => {
         libraries,
         setLibraries,
         navigation: props.navigation,
+        route: props.route,
         selectedLibrary,
         setSelectedLibrary,
         selectLibrary,

@@ -25,7 +25,7 @@ const AppButtons = (props) => {
             backgroundColor={backgroundColorsTable['red1']}
             icon={<MaterialCommunityIcons name='rocket-launch' size={35} color={iconColorsTable['red1']} />}
             label='Launch library'
-            onPress={() => {
+            onAppMenuButtonPress={() => {
               appMenuBottomSheetRef.current.snapToIndex(0);
               createLibraryBottomSheetRef.current.snapToIndex(0);
             }}

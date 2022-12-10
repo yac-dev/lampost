@@ -6,6 +6,7 @@ import MapContext from '../MeetupContext';
 import { View, Text, ScrollView } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { backgroundColorsTable, baseTextColor, iconColorsTable } from '../../../utils/colorsTable';
 import ActionButton from '../../Utils/ActionButton';
@@ -85,12 +86,26 @@ const ActionButtons = (props) => {
           return (
             <View style={{ flexDirection: 'row', paddingTop: 10, paddingBottom: 10 }}>
               {selectedMeetup.launcher._id === auth.data._id ? (
-                <ActionButton
-                  label='Edit my meetup'
-                  icon={<MaterialCommunityIcons name='file-document-edit-outline' size={20} color={'white'} />}
-                  backgroundColor={iconColorsTable['blue1']}
-                  onActionButtonPress={() => console.log('edit  my meetup')}
-                />
+                <>
+                  <ActionButton // ここ、meetupのstateによってbuttonを切り替える。
+                    label='Start meetup now'
+                    icon={<Feather name='power' size={20} color={'white'} />}
+                    backgroundColor={iconColorsTable['blue1']}
+                    onActionButtonPress={() => console.log('start meetup now')}
+                  />
+                  <ActionButton
+                    label='Finish meetup'
+                    icon={<Feather name='power' size={20} color={'white'} />}
+                    backgroundColor={iconColorsTable['red1']}
+                    onActionButtonPress={() => console.log('start meetup now')}
+                  />
+                  <ActionButton
+                    label='Edit my meetup'
+                    icon={<MaterialCommunityIcons name='file-document-edit-outline' size={20} color={'white'} />}
+                    backgroundColor={iconColorsTable['blue1']}
+                    onActionButtonPress={() => console.log('edit  my meetup')}
+                  />
+                </>
               ) : (
                 <ActionButton
                   label='Leave this meetup'
@@ -111,12 +126,12 @@ const ActionButtons = (props) => {
                 backgroundColor={iconColorsTable['blue1']}
                 onActionButtonPress={() => console.log('pressing')}
               />
-              <ActionButton
+              {/* <ActionButton
                 label='Invite people'
                 icon={<MaterialCommunityIcons name='plus' size={25} color={'white'} />}
                 backgroundColor={iconColorsTable['blue1']}
                 onActionButtonPress={() => console.log('pressing')}
-              />
+              /> */}
             </View>
           );
         }

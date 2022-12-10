@@ -25,6 +25,7 @@ const Container = (props) => {
   const [page, setPage] = useState(null);
   const [selectedUserBadges, setSelectedUserBadges] = useState({});
   const [addedMeetupBadges, setAddedMeetupBadges] = useState({});
+  const [addedLibraryBadges, setAddedLibraryBadges] = useState({});
   const [selectedMeetupBadges, setSelectedMeetupBadges] = useState({});
   const [tappedBadge, setTappedBadge] = useState(null);
 
@@ -96,11 +97,41 @@ const Container = (props) => {
     props.navigation.navigate('Map', { addedMeetupBadges });
   };
 
+  // ADD_LIBRARY_BADGESの時。
+  useEffect(() => {
+    if (props.route.params?.fromComponent === 'ADD_LIBRARY_BADGES') {
+      setFromComponent('ADD_LIBRARY_BADGES');
+      props.navigation.setOptions({
+        headerRight: () => (
+          <TouchableOpacity onPress={() => onAddLibraryBadgesDone()}>
+            <Text style={{ color: 'white' }}>Done(library)</Text>
+          </TouchableOpacity>
+        ),
+      });
+    }
+  }, [addedLibraryBadges]);
+
+  useEffect(() => {
+    if (props.route.params?.addedLibraryBadges) {
+      setAddedLibraryBadges((previous) => {
+        return {
+          ...previous,
+          ...props.route.params.addedLibraryBadges,
+        };
+      });
+    }
+  }, []);
+  const onAddLibraryBadgesDone = () => {
+    props.navigation.navigate('Libraries', { addedLibraryBadges });
+  };
+
   // query
   useEffect(() => {
     if (props.route.params.fromComponent === 'ADD_USER_BADGES') {
       queryBadges(props.auth.data._id);
     } else if (props.route.params.fromComponent === 'ADD_MEETUP_BADGES') {
+      queryBadges();
+    } else if (props.route.params.fromComponent === 'ADD_LIBRARY_BADGES') {
       queryBadges();
     }
   }, [queryType]);
@@ -136,6 +167,8 @@ const Container = (props) => {
         setSelectedUserBadges,
         addedMeetupBadges,
         setAddedMeetupBadges,
+        addedLibraryBadges,
+        setAddedLibraryBadges,
         badgeDetailBottomSheetRef,
         searchBadgeBottomSheetRef,
         searchQuery,

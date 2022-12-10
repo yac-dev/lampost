@@ -22,7 +22,6 @@ const Container = (props) => {
   useEffect(() => {
     getLibrary();
   }, []);
-  // 指定のlibraryに行く。libraryに行ったら、libraryが持っているrolls[0]を一番選択中のrollとして指定する。
 
   const getAssets = async () => {
     const result = await lampostAPI.get(`/rollAndAssetRelationships/${selectedRoll}`);
@@ -43,7 +42,7 @@ const Container = (props) => {
           <TouchableOpacity
             key={index}
             style={{ width: '50%', height: undefined, aspectRatio: 1, paddingRight: 5, paddingBottom: 5 }}
-            onPress={() => onAssetPress(asset._id)}
+            onPress={() => props.navigation.navigate('Asset', { assetId: asset._id })}
           >
             <FastImage
               style={{ width: '100%', height: '100%' }}
@@ -69,9 +68,6 @@ const Container = (props) => {
       value={{ appMenuBottomSheetRef, library, selectedRoll, setSelectedRoll, assets, setAssets }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        {/* <Text>{props.route.params.libraryId}</Text>
-        <Text>selected roll id {selectedRoll}</Text> */}
-        {/* <Assets /> */}
         <ScrollView>{renderAssets()}</ScrollView>
         <AppMenuBottomSheet />
       </View>

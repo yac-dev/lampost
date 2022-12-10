@@ -26,6 +26,7 @@ const Badge = (props) => {
     fromComponent,
     selectedUserBadges,
     addedMeetupBadges,
+    addedLibraryBadges,
     badgeDetailBottomSheetRef,
     searchBadgeBottomSheetRef,
     setTappedBadge,
@@ -121,8 +122,21 @@ const Badge = (props) => {
           </View>
         );
       }
-    } else {
-      return null;
+    } else if (fromComponent === 'ADD_LIBRARY_BADGES') {
+      if (addedLibraryBadges[badge._id]) {
+        return (
+          <View
+            style={{
+              top: -10,
+              right: 10,
+              position: 'absolute',
+              color: '#989898',
+            }}
+          >
+            <Foundation name='sheriff-badge' size={20} color='#49CF13' />
+          </View>
+        );
+      }
     }
   };
 
