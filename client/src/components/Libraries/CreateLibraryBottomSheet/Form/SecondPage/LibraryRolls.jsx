@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import LibrariesContext from '../../../LibrariesContext';
 import FormContext from '../../FormContext';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {
   iconColorsTable,
@@ -17,7 +18,7 @@ import RollInput from './RollInput';
 
 const LibraryRolls = (props) => {
   const { createLibraryBottomSheetRef } = useContext(LibrariesContext);
-  const { setPage, setFormData, formData } = useContext(FormContext);
+  const { setPage, formData, setFormData } = useContext(FormContext);
 
   const renderRollInputs = () => {
     const inputsList = formData.rolls.map((roll, index) => {
@@ -47,6 +48,24 @@ const LibraryRolls = (props) => {
       <Text style={{ fontWeight: 'bold', fontSize: 12, color: baseTextColor, marginBottom: 10 }}>
         Please create at least two rolls.
       </Text>
+      <TouchableOpacity
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginBottom: 20,
+          alignSelf: 'flex-end',
+        }}
+        onPress={() => {
+          setFormData((previous) => {
+            const updating = { ...previous };
+            updating.rolls.push('');
+            return updating;
+          });
+        }}
+      >
+        <AntDesign name='plus' size={20} style={{ marginRight: 5 }} color={baseTextColor} />
+        <Text style={{ color: baseTextColor }}>Add more roll</Text>
+      </TouchableOpacity>
       {renderRollInputs()}
       <View style={{ alignSelf: 'center', flexDirection: 'row', alignItems: 'center' }}>
         <ActionButton
@@ -59,7 +78,7 @@ const LibraryRolls = (props) => {
           label='Launch'
           backgroundColor={iconColorsTable['blue1']}
           icon={<MaterialCommunityIcons name='rocket-launch' color={'white'} size={25} />}
-          onActionButtonPress={() => console.log('launching')}
+          onActionButtonPress={() => console.log(formData)}
         />
       </View>
     </View>
