@@ -13,10 +13,19 @@ import {
 } from '../../../../../utils/colorsTable';
 import { useContext } from 'react';
 import ActionButton from '../../../../Utils/ActionButton';
+import RollInput from './RollInput';
 
 const LibraryRolls = (props) => {
   const { createLibraryBottomSheetRef } = useContext(LibrariesContext);
-  const { setPage } = useContext(FormContext);
+  const { setPage, setFormData, formData } = useContext(FormContext);
+
+  const renderRollInputs = () => {
+    const inputsList = formData.rolls.map((roll, index) => {
+      return <RollInput key={index} index={index} />;
+    });
+
+    return <View>{inputsList}</View>;
+  };
 
   return (
     <View style={{ marginBottom: 25 }}>
@@ -38,15 +47,7 @@ const LibraryRolls = (props) => {
       <Text style={{ fontWeight: 'bold', fontSize: 12, color: baseTextColor, marginBottom: 10 }}>
         Please create at least two rolls.
       </Text>
-      {/* <BottomSheetTextInput
-        placeholder='Library name'
-        placeholderTextColor={baseTextColor}
-        style={{ borderWidth: 0.3, padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor }}
-        value={props.state.name}
-        onChangeText={(text) => props.dispatch({ type: 'SET_LIBRARY_NAME', payload: text })}
-        mode='outlined'
-        autoCapitalize='none'
-      /> */}
+      {renderRollInputs()}
       <View style={{ alignSelf: 'center', flexDirection: 'row', alignItems: 'center' }}>
         <ActionButton
           label='Back'

@@ -24,7 +24,7 @@ const Container = (props) => {
   const { createLibraryBottomSheetRef } = useContext(LibrariesContext);
   const snapPoints = ['90%'];
   const [page, setPage] = useState('FIRST_PAGE');
-  const [formData, setFormData] = useState({ name: '', badges: {}, description: '', rolls: [] });
+  const [formData, setFormData] = useState({ name: '', badges: {}, description: '', rolls: ['', ''] });
 
   const switchPage = () => {
     console.log('hello world');
