@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import GlobalContext from '../../../../../GlobalContext';
 import LibrariesContext from '../../../LibrariesContext';
 import FormContext from '../../FormContext';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import lampostAPI from '../../../../../apis/lampost';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -17,8 +18,36 @@ import ActionButton from '../../../../Utils/ActionButton';
 import RollInput from './RollInput';
 
 const LibraryRolls = (props) => {
+  const { auth, setSnackBar } = useContext(GlobalContext);
   const { createLibraryBottomSheetRef } = useContext(LibrariesContext);
   const { setPage, formData, setFormData } = useContext(FormContext);
+
+  const onDonePress = async () => {
+    const launcher = {
+      _id: auth.data._id,
+      name: auth.data.name,
+      photo: auth.data.photo,
+    };
+
+    const body = {
+      name: formData.name,
+      badges: Object.values(formData.badges),
+      description: formData.description,
+      rolls: formData.rolls,
+      launcher,
+    };
+
+    // if (!formData.name) {
+    //   return console.log('no name');
+    // }
+    auth.socket.emit('CREATE_LIBRARY', body);
+    // これ、完了してからsnack barを出しましょう。
+    createLibraryBottomSheetRef.current.close();
+    return () => {
+      auth.socket.off('CREATE_LIBRARY');
+    };
+    // const result = await lampostAPI.post('/libraries', body);
+  };
 
   const renderRollInputs = () => {
     const inputsList = formData.rolls.map((roll, index) => {
@@ -78,7 +107,7 @@ const LibraryRolls = (props) => {
           label='Launch'
           backgroundColor={iconColorsTable['blue1']}
           icon={<MaterialCommunityIcons name='rocket-launch' color={'white'} size={25} />}
-          onActionButtonPress={() => console.log(formData)}
+          onActionButtonPress={() => onDonePress()}
         />
       </View>
     </View>

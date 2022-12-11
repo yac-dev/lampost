@@ -1,6 +1,7 @@
 // main libraries
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import FormContext from '../../FormContext';
 import { connect } from 'react-redux';
 import { AntDesign } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
@@ -13,8 +14,11 @@ import {
 import FastImage from 'react-native-fast-image';
 
 const AddedLibraryBadges = (props) => {
+  const { formData } = useContext(FormContext);
+  const badges = Object.values(formData.badges);
+
   const renderBadges = () => {
-    const addedBadgesList = props.badges.map((badge, index) => {
+    const addedBadgesList = badges.map((badge, index) => {
       return (
         <View
           style={{
@@ -79,7 +83,7 @@ const AddedLibraryBadges = (props) => {
     );
   };
 
-  if (!props.badges.length) {
+  if (!badges.length) {
     return <Text style={{ fontWeight: 'bold', color: baseTextColor }}>No badges added yet...</Text>;
   } else {
     return <>{renderBadges()}</>;

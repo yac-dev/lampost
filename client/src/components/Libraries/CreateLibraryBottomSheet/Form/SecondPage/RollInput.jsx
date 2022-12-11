@@ -1,16 +1,38 @@
 import React, { useContext, useState } from 'react';
 import FormContext from '../../FormContext';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { baseTextColor, sectionBackgroundColor } from '../../../../../utils/colorsTable';
+import { AntDesign } from '@expo/vector-icons';
 
 const RollInput = (props) => {
   const { setFormData, formData } = useContext(FormContext);
-  const [text, setText] = useState('');
 
   return (
     <View style={{ marginBottom: 10 }}>
-      <Text style={{ color: baseTextColor, marginBottom: 10 }}>{`Roll ${props.index + 1}`}</Text>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Text style={{ color: baseTextColor, marginBottom: 10 }}>{`Roll ${props.index + 1}`}</Text>
+        {props.index >= 2 ? (
+          <TouchableOpacity
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginBottom: 20,
+              alignSelf: 'flex-end',
+            }}
+            onPress={() => {
+              setFormData((previous) => {
+                const updating = { ...previous };
+                updating.rolls.push('');
+                return updating;
+              });
+            }}
+          >
+            <AntDesign name='plus' size={15} style={{ marginRight: 5 }} color={baseTextColor} />
+            <Text style={{ color: baseTextColor }}>Remove this</Text>
+          </TouchableOpacity>
+        ) : null}
+      </View>
       <BottomSheetTextInput
         placeholder='Library name'
         placeholderTextColor={baseTextColor}

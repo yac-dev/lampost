@@ -48,7 +48,7 @@ const Container = (props) => {
         icon={<FontAwesome5 name='user-astronaut' size={25} color={iconColorsTable['violet1']} />}
         rightInfo={
           <View>
-            <Text style={{ color: baseTextColor }}>{`${selectedLibrary.members.length} >`}</Text>
+            <Text style={{ color: baseTextColor }}>{`${selectedLibrary.totalMembers} >`}</Text>
           </View>
         }
       />

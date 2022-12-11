@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text } from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-
+import FormContext from '../../FormContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
@@ -15,6 +15,8 @@ import {
 } from '../../../../../utils/colorsTable';
 
 const RollDescription = (props) => {
+  const { formData, setFormData } = useContext(FormContext);
+
   return (
     <View style={{ marginBottom: 15 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
@@ -36,23 +38,27 @@ const RollDescription = (props) => {
         Please describe about your library.
       </Text>
       <BottomSheetTextInput
-        style={{ borderWidth: 0.3, height: 100, backgroundColor: sectionBackgroundColor, borderRadius: 5, padding: 10 }}
-        value={props.state.description}
-        onChangeText={(text) => props.dispatch({ type: 'SET_LIBRARY_DESCRIPTION', payload: text })}
+        style={{
+          borderWidth: 0.3,
+          height: 100,
+          backgroundColor: sectionBackgroundColor,
+          borderRadius: 5,
+          padding: 10,
+          color: baseTextColor,
+        }}
+        value={formData.description}
+        onChangeText={(text) =>
+          setFormData((previous) => {
+            return {
+              ...previous,
+              description: text,
+            };
+          })
+        }
         mode='outlined'
         autoCapitalize='none'
         multiline={true}
       />
-      {/* <BottomSheetTextInput
-        style={{ height: 100, backgroundColor: '#E9E9E9', borderRadius: 5, padding: 10 }}
-        // label='Meetup title'
-        multiline
-        value={props.state.description}
-        onChangeText={(text) => props.dispatch({ type: 'SET_DESCRIPTION', payload: text })}
-        // left={<TextInput.Icon name='eye' />}
-        mode='outlined'
-        autoCapitalize='none'
-      /> */}
     </View>
   );
 };

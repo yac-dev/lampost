@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
 const librarySchema = new mongoose.Schema({
-  // rollっていうのは、sharedなalbumのことな。
   name: {
     type: String,
   },
@@ -12,23 +11,18 @@ const librarySchema = new mongoose.Schema({
     },
   ],
   description: String,
-  members: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'User',
-    },
-  ],
   rolls: [
     {
       type: mongoose.Schema.ObjectId,
       ref: 'Roll',
     },
   ],
-  rate: Number,
   launcher: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
+  totalMembers: Number,
+  rate: Number,
   createdAt: Date,
 });
 

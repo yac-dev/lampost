@@ -27,7 +27,6 @@ const Container = (props) => {
   const [formData, setFormData] = useState({ name: '', badges: {}, description: '', rolls: ['', ''] });
 
   const switchPage = () => {
-    console.log('hello world');
     switch (page) {
       case 'FIRST_PAGE':
         return <FirstPage />;

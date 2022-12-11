@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import FormContext from '../../FormContext';
 import { View, Text, TouchableOpacity } from 'react-native';
 import LibrariesContext from '../../../LibrariesContext';
 import { Foundation } from '@expo/vector-icons';
@@ -10,11 +11,18 @@ import AddedLibraryBadges from './AddedLibraryBadges';
 
 const LibraryBadges = (props) => {
   const { navigation, route } = useContext(LibrariesContext);
+  const { formData, setFormData } = useContext(FormContext);
 
   useEffect(() => {
     if (route.params?.addedLibraryBadges) {
       console.log('this is the badges...', route.params.addedLibraryBadges);
-      props.dispatch({ type: 'SET_LIBRARY_BADGES', payload: route.params.addedLibraryBadges });
+      // props.dispatch({ type: 'SET_LIBRARY_BADGES', payload: route.params.addedLibraryBadges });
+      setFormData((previous) => {
+        return {
+          ...previous,
+          badges: route.params.addedLibraryBadges,
+        };
+      });
     }
   }, [route.params?.addedLibraryBadges]);
 
@@ -48,14 +56,14 @@ const LibraryBadges = (props) => {
         onPress={() => {
           navigation.navigate('Add badges', {
             fromComponent: 'ADD_LIBRARY_BADGES',
-            addedLibraryBadges: props.state.badges,
+            addedLibraryBadges: formData.badges,
           });
         }}
       >
         <SimpleLineIcons name='magnifier-add' size={20} color={baseTextColor} style={{ marginRight: 5 }} />
         <Text style={{ color: baseTextColor }}>Add</Text>
       </TouchableOpacity>
-      <AddedLibraryBadges badges={Object.values(props.state.badges)} />
+      <AddedLibraryBadges />
     </View>
   );
 };
