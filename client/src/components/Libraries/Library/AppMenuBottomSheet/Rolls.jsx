@@ -30,13 +30,22 @@ const Rolls = () => {
           </TouchableOpacity>
         );
       });
-      return <View>{rollsList}</View>;
+      return (
+        <ScrollView>
+          <View>{rollsList}</View>
+        </ScrollView>
+      );
     } else {
       return null;
     }
   };
 
-  return <ScrollView>{renderRolls()}</ScrollView>;
+  return (
+    <View>
+      <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 15 }}>Albums</Text>
+      {renderRolls()}
+    </View>
+  );
 };
 
 export default Rolls;

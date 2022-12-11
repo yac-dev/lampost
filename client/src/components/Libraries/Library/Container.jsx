@@ -1,5 +1,6 @@
 import React, { useContext, useRef, useEffect, useState } from 'react';
 import LibraryContext from './LibraryContext';
+import GlobalContext from '../../../GlobalContext';
 import lampostAPI from '../../../apis/lampost';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { baseBackgroundColor } from '../../../utils/colorsTable';
@@ -22,6 +23,16 @@ const Container = (props) => {
   useEffect(() => {
     getLibrary();
   }, []);
+
+  useEffect(() => {
+    if (props.route.params?.addedAssetsData) {
+      // console.log('this is the badges...', props.route.params.addedMeetupBadges);
+      // props.dispatch({ type: 'SET_MEETUP_BADGES', payload: props.route.params.addedMeetupBadges });
+      // まあ、単純に写真を表示するだけだから。。。
+      console.log(props.route.params?.addedAssetsData);
+      // ここであとはassetsをsetするだけと。
+    }
+  }, [props.route.params?.addedAssetsData]);
 
   const getAssets = async () => {
     const result = await lampostAPI.get(`/rollAndAssetRelationships/${selectedRoll}`);
@@ -65,7 +76,15 @@ const Container = (props) => {
 
   return (
     <LibraryContext.Provider
-      value={{ appMenuBottomSheetRef, library, selectedRoll, setSelectedRoll, assets, setAssets }}
+      value={{
+        appMenuBottomSheetRef,
+        library,
+        selectedRoll,
+        setSelectedRoll,
+        assets,
+        setAssets,
+        navigation: props.navigation,
+      }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
         <ScrollView>{renderAssets()}</ScrollView>

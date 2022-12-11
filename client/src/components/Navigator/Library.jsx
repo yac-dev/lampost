@@ -13,6 +13,7 @@ import Logs from '../User/Logs/Container';
 import Asset from '../Libraries/Library/Asset/Container';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
 import AddBadges from '../Utils/AddBadges/Container';
+import AddAssets from '../Utils/AddAssets/Container';
 
 const LibraryNavigator = () => {
   return (
@@ -118,6 +119,25 @@ const LibraryNavigator = () => {
               </TouchableOpacity>
             ),
             headerTitle: 'Badges for library',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          })}
+        />
+        <Stack.Screen // assetsのfull screen
+          name='Add assets'
+          component={AddAssets}
+          options={({ navigation }) => ({
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white' }}>Cancel</Text>
+              </TouchableOpacity>
+            ),
+            headerTitle: 'Add assets',
             headerStyle: {
               backgroundColor: appBottomSheetBackgroundColor,
             },

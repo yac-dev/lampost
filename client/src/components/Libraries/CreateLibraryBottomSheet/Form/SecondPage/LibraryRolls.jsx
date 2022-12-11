@@ -92,8 +92,13 @@ const LibraryRolls = (props) => {
           });
         }}
       >
-        <AntDesign name='plus' size={20} style={{ marginRight: 5 }} color={baseTextColor} />
-        <Text style={{ color: baseTextColor }}>Add more roll</Text>
+        <MaterialCommunityIcons
+          name='folder-multiple-plus'
+          size={20}
+          style={{ marginRight: 5 }}
+          color={baseTextColor}
+        />
+        <Text style={{ color: baseTextColor }}>Add more albums</Text>
       </TouchableOpacity>
       {renderRollInputs()}
       <View style={{ alignSelf: 'center', flexDirection: 'row', alignItems: 'center' }}>
