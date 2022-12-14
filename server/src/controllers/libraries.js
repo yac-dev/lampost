@@ -30,15 +30,10 @@ export const createLibrary = async (request, response) => {
 
 export const getLibraries = async (request, response) => {
   try {
-    const libraries = await Library.find({}).populate([
-      {
-        path: 'badges',
-      },
-      {
-        path: 'launcher',
-        select: 'name photo',
-      },
-    ]);
+    const libraries = await Library.find({}).populate({
+      path: 'launcher',
+      select: 'name photo',
+    });
     response.status(200).json({
       libraries,
     });
@@ -55,12 +50,7 @@ export const getLibrary = async (request, response) => {
         model: User,
       })
       .populate({
-        path: 'rolls',
-        model: Roll,
-        // populate: {
-        //   path: 'assets',
-        //   model: Asset,
-        // },
+        path: 'badges',
       });
     response.status(200).json({
       library,

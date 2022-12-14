@@ -11,12 +11,6 @@ const librarySchema = new mongoose.Schema({
     },
   ],
   description: String,
-  rolls: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Roll',
-    },
-  ],
   launcher: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
@@ -26,6 +20,12 @@ const librarySchema = new mongoose.Schema({
   totalMembers: Number,
   rate: Number,
   createdAt: Date,
+  // rolls: [
+  //   {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'Roll',
+  //   },
+  // ],
 });
 
 // このlibraryに紐づくalbumがいくともある感じになる。

@@ -15,6 +15,7 @@ const BadgeLabel = (props) => {
           paddingRight: 10,
           paddingLeft: 5,
           backgroundColor: props.badgeLableBackgroundColor,
+          borderRadius: 10,
         }}
       >
         <TouchableOpacity

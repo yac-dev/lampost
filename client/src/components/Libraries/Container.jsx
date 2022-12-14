@@ -28,6 +28,7 @@ const Container = (props) => {
   const [selected, setSelected] = useState(null);
   const [libraries, setLibraries] = useState([]);
   const [selectedLibrary, setSelectedLibrary] = useState(null);
+  const [libraryAssets, setLibraryAssets] = useState([]);
   const [myJoinedLibraries, setMyJoinedLibraries] = useState([]);
 
   const appMenuBottomSheetRef = useRef(null);
@@ -60,6 +61,9 @@ const Container = (props) => {
     const result = await lampostAPI.get(`/libraries/${libraryId}`);
     const { library } = result.data;
     setSelectedLibrary(library);
+    const res = await lampostAPI.get(`/libraryandassetrelationships/${libraryId}`);
+    const { assets } = res.data;
+    setLibraryAssets(assets);
   };
 
   const getLibraries = async () => {
@@ -151,6 +155,7 @@ const Container = (props) => {
                 borderWidth: 0.3,
                 marginBottom: 10,
               }}
+              onPress={() => selectLibrary(library._id)}
               // onPress={() => {
               //   badgeDetailBottomSheetRef.current.snapToIndex(0);
               //   setPressedBadgeData(badgeData);
@@ -173,7 +178,9 @@ const Container = (props) => {
 
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <MaterialCommunityIcons name='fire' color={iconColorsTable[library.color]} size={20} />
-                  <Text style={{ color: iconColorsTable[library.color], fontWeight: 'bold', fontSize: 15 }}>12.3k</Text>
+                  <Text style={{ color: iconColorsTable[library.color], fontWeight: 'bold', fontSize: 15 }}>
+                    {library.totalAssets}
+                  </Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -192,7 +199,7 @@ const Container = (props) => {
             >
               {library.name}
             </Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <MaterialCommunityIcons
                 name='rocket-launch'
                 style={{ marginRight: 5 }}
@@ -200,7 +207,7 @@ const Container = (props) => {
                 color={iconColorsTable['red1']}
               />
               <Text style={{ color: baseTextColor }}>Yosuke Kojima</Text>
-            </View>
+            </View> */}
           </View>
         );
       });
@@ -232,6 +239,8 @@ const Container = (props) => {
         selectedLibrary,
         setSelectedLibrary,
         selectLibrary,
+        libraryAssets,
+        setLibraryAssets,
         myJoinedLibraries,
         setMyJoinedLibraries,
       }}

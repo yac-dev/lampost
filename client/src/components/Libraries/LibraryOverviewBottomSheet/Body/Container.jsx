@@ -6,6 +6,7 @@ import { baseTextColor } from '../../../../utils/colorsTable';
 import Header from './Header';
 import ActionButtons from './ActionButtons';
 import Menus from './Menus/Container';
+import Assets from './Assets';
 import Rolls from './Rolls/Container';
 
 const Container = () => {
@@ -15,9 +16,10 @@ const Container = () => {
     return (
       <View>
         <Header />
-        <ActionButtons />
+        {/* <ActionButtons /> */}
         <Menus />
-        <Rolls />
+        <Assets />
+        {/* <Rolls /> */}
       </View>
     );
   } else {
