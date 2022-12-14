@@ -21,6 +21,8 @@ const librarySchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
+  color: String,
+  totalAssets: Number,
   totalMembers: Number,
   rate: Number,
   createdAt: Date,
