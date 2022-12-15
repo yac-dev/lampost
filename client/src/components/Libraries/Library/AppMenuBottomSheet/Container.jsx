@@ -5,7 +5,6 @@ import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { appBottomSheetBackgroundColor, baseTextColor } from '../../../../utils/colorsTable';
 import AppMenuButtons from './AppMenuButtons';
-import Rolls from './Rolls';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -34,9 +33,9 @@ const AppMenuBottomSheet = (props) => {
       // onClose={() => onSelectedItemBottomSheetClose()}
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 15 }}>Wanna post here?</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 15 }}>Post your assets?</Text>
         <AppMenuButtons />
-        {/* <Rolls /> */}
+        {/* ここに、自分がpostした写真をrenderして、deleteとかを簡単にできるようにしたい。 */}
       </BottomSheetView>
     </GorhomBottomSheet>
   );

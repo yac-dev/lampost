@@ -6,6 +6,9 @@ import { View, Text, TouchableOpacity, ScrollView, Dimensions } from 'react-nati
 import { baseBackgroundColor } from '../../../utils/colorsTable';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import FastImage from 'react-native-fast-image';
+import Header from './Header';
+import BadgeLabels from './BadgeLabels';
+import Description from './Description';
 
 const Container = (props) => {
   const appMenuBottomSheetRef = useRef(null);
@@ -104,7 +107,12 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderAssets()}</ScrollView>
+        <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
+          <Header />
+          <BadgeLabels />
+          <Description />
+          {renderAssets()}
+        </ScrollView>
         <AppMenuBottomSheet />
       </View>
     </LibraryContext.Provider>

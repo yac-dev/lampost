@@ -25,6 +25,24 @@ const AppMenuButtons = () => {
             appMenuBottomSheetRef.current.snapToIndex(0);
           }}
         />
+        <AppMenuButton
+          backgroundColor={backgroundColorsTable['blue1']}
+          icon={<MaterialCommunityIcons name='account-group' size={35} color={iconColorsTable['blue1']} />}
+          label='Members'
+          onAppMenuButtonPress={() => {
+            navigation.navigate('Add assets', { libraryId: library._id });
+            appMenuBottomSheetRef.current.snapToIndex(0);
+          }}
+        />
+        <AppMenuButton
+          backgroundColor={backgroundColorsTable['green1']}
+          icon={<MaterialCommunityIcons name='exit-run' size={35} color={iconColorsTable['green1']} />}
+          label='Leave this library'
+          onAppMenuButtonPress={() => {
+            navigation.navigate('Add assets', { libraryId: library._id });
+            appMenuBottomSheetRef.current.snapToIndex(0);
+          }}
+        />
       </ScrollView>
     </View>
   );
