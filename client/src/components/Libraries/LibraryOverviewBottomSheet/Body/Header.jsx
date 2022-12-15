@@ -10,7 +10,7 @@ import BadgeLabels from './BadgeLabels';
 const Header = () => {
   const { selectedLibrary } = useContext(LibrariesContext);
   return (
-    <View style={{ marginBottom: 25 }}>
+    <View style={{ marginBottom: 25, paddingLeft: 20, paddingRight: 20 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
         <View
           style={{
@@ -36,10 +36,7 @@ const Header = () => {
         </View>
         <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>{selectedLibrary.name}</Text>
       </View>
-      <View style={{ marginBottom: 15 }}>
-        <BadgeLabels />
-      </View>
-      <Text style={{ color: baseTextColor }}>{selectedLibrary.description}</Text>
+      <BadgeLabels />
     </View>
   );
 };

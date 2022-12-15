@@ -9,7 +9,7 @@ export const joinLibrary = async (request, response) => {
       user: userId,
     });
 
-    await libraryAndUserRelationship.populate({ path: 'library', select: 'name' });
+    await libraryAndUserRelationship.populate({ path: 'library', select: 'name color' });
     response.status(201).json({
       // relationshipのobjectをそのまま渡さないことね。populateしたobjectをそのまま渡す。
       library: libraryAndUserRelationship.library,
@@ -25,7 +25,7 @@ export const getMyJoinedLibrary = async (request, response) => {
       .select({ library: 1 })
       .populate({
         path: 'library',
-        select: 'name',
+        select: 'name color',
       });
     // [ {library: {name: 'qqqqq', description: 'hfuhoifhiqw'}, user: {'11111'} ]って面倒だからね。
     // 少なくとも、relationshipをまんま渡すのはやだわ。ごっちゃになる。
@@ -37,4 +37,16 @@ export const getMyJoinedLibrary = async (request, response) => {
       myJoinedLibraries,
     });
   } catch (error) {}
+};
+
+export const leaveLibrary = async (request, response) => {
+  try {
+    const libraryAndUserRelationship = await LibraryAndUserRelationship.findOne({
+      library: request.body.libraryId,
+      user: request.body.userId,
+    });
+    // ここでdeleteのoperationをする。
+  } catch (error) {
+    console.log(error);
+  }
 };

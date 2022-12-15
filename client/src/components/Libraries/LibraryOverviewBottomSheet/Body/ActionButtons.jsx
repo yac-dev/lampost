@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import lampostAPI from '../../../../apis/lampost';
+import GlobalContext from '../../../../GlobalContext';
 import LibrariesContext from '../../LibrariesContext';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -10,12 +11,13 @@ import { backgroundColorsTable, baseTextColor, iconColorsTable } from '../../../
 import ActionButton from '../../../Utils/ActionButton';
 
 const ActionButtons = (props) => {
+  const { auth } = useContext(GlobalContext);
   const { selectedLibrary, myJoinedLibraries, setMyJoinedLibraries } = useContext(LibrariesContext);
 
   const joinLibrary = async () => {
     const formData = {
       libraryId: selectedLibrary._id,
-      userId: props.auth.data._id,
+      userId: auth.data._id,
     };
     const result = await lampostAPI.post('/libraryanduserrelationships', formData);
     const { library } = result.data;
@@ -25,9 +27,10 @@ const ActionButtons = (props) => {
   const leaveLibrary = () => {
     console.log('left this library');
   };
+
   if (props.auth.isAuthenticated) {
     return (
-      <ScrollView horizontal={'true'}>
+      <ScrollView horizontal={'true'} style={{ paddingLeft: 20, paddingRight: 20 }}>
         <View style={{ marginBottom: 25, flexDirection: 'row' }}>
           {myJoinedLibraries.some((library) => library._id === selectedLibrary._id) ? (
             <ActionButton
@@ -63,7 +66,7 @@ const ActionButtons = (props) => {
     );
   } else {
     return (
-      <View style={{ marginBottom: 25 }}>
+      <View style={{ marginBottom: 25, paddingLeft: 20, paddingRight: 20 }}>
         <ActionButton
           label='Please login or signup to join'
           icon={<Ionicons name='ios-enter' size={25} color={'white'} />}

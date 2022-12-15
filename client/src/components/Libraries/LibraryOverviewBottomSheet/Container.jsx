@@ -32,10 +32,11 @@ const Container = (props) => {
       )}
       enablePanDownToClose={true}
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
+      handleIndicatorStyle={{ backgroundColor: 'white' }}
       // keyboardBehavior={'interactive'}
       onClose={() => setSelectedLibrary(null)}
     >
-      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
+      <BottomSheetView style={{ flex: 1 }}>
         <Body />
       </BottomSheetView>
     </GorhomBottomSheet>

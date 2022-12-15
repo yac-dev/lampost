@@ -11,7 +11,8 @@ import AppMenuButton from '../../../Utils/AppMenuButton';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const AppMenuButtons = () => {
-  const { appMenuBottomSheetRef, navigation } = useContext(LibraryContext);
+  const { appMenuBottomSheetRef, navigation, library } = useContext(LibraryContext);
+
   return (
     <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 25 }}>
       <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
@@ -20,7 +21,7 @@ const AppMenuButtons = () => {
           icon={<MaterialCommunityIcons name='image-plus' size={35} color={iconColorsTable['red1']} />}
           label='Post my assets'
           onAppMenuButtonPress={() => {
-            navigation.navigate('Add assets');
+            navigation.navigate('Add assets', { libraryId: library._id });
             appMenuBottomSheetRef.current.snapToIndex(0);
           }}
         />

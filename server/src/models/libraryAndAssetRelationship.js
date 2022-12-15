@@ -5,7 +5,7 @@ const libraryAndAssetRelationshipSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Library',
   },
-  user: {
+  asset: {
     type: mongoose.Schema.ObjectId,
     ref: 'Asset',
   },

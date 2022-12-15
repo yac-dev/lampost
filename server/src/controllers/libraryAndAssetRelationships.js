@@ -19,3 +19,21 @@ export const getAssetsByLibraryId = async (request, response) => {
     console.log(error);
   }
 };
+
+export const postAssetsByLibraryId = async (request, response) => {
+  try {
+    const { assets } = request.body;
+    const assetDatas = assets.map((asset) => {
+      return {
+        library: request.params.libraryId,
+        asset,
+      };
+    });
+    const libraryAndAssetRelationships = await LibraryAndAssetRelationship.insertMany(assetDatas);
+    response.status(200).json({
+      libraryAndAssetRelationships,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

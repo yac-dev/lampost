@@ -55,10 +55,10 @@ const Container = (props) => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   borderRadius: 10,
-                  backgroundColor: backgroundColorsTable['blue1'],
+                  backgroundColor: backgroundColorsTable[library.color],
                 }}
               >
-                <Ionicons name='ios-library' size={30} color={iconColorsTable['blue1']} />
+                <Ionicons name='ios-library' size={30} color={iconColorsTable[library.color]} />
               </View>
             </View>
 
@@ -71,7 +71,7 @@ const Container = (props) => {
     } else {
       return (
         <View>
-          <Text>You haven't joined any libraries yet...</Text>
+          <Text style={{ color: 'white' }}>You haven't joined any libraries yet.</Text>
         </View>
       );
     }

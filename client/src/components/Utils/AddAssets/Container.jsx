@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import GlobalContext from '../../../GlobalContext';
 import lampostAPI from '../../../apis/lampost';
 import FastImage from 'react-native-fast-image';
@@ -11,6 +11,7 @@ const Container = (props) => {
   const { auth } = useContext(GlobalContext);
   const [assets, setAssets] = useState([]);
   const [addedAssets, setAddedAssets] = useState({});
+  const oneAssetWidth = Dimensions.get('window').width / 2;
 
   useEffect(() => {
     props.navigation.setOptions({
@@ -21,11 +22,16 @@ const Container = (props) => {
       ),
     });
   }, [addedAssets]);
-  const onPostPress = () => {
+
+  const onPostPress = async () => {
     // postを押したらapi requestで、ここのrollにassetのobjectをpostする感じか。
     // assetsだけのdataを作って、propsで送る感じか。
-    const addedAssetsData = Object.values(addedAssets);
-    props.navigation.navigate('Library', { addedAssetsData });
+    const assets = Object.values(addedAssets);
+    const payload = {
+      assets,
+    };
+    const result = await lampostAPI.post(`/libraryandassetrelationships/${props.route.params.libraryId}`, payload);
+    props.navigation.navigate('Library', { addedAssets: assets });
   };
 
   const getAssetsByUserId = async () => {
@@ -56,7 +62,7 @@ const Container = (props) => {
       return (
         <TouchableOpacity
           key={index}
-          style={{ width: '50%', height: undefined, aspectRatio: 1, paddingRight: 5, paddingBottom: 5 }}
+          style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
           onPress={() => onAssetPress(asset)}
         >
           <FastImage
@@ -82,7 +88,7 @@ const Container = (props) => {
         </TouchableOpacity>
       );
     });
-    return <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingLeft: 5, paddingTop: 5 }}>{assetsList}</View>;
+    return <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{assetsList}</View>;
   };
 
   return <ScrollView style={{ flex: 1, backgroundColor: baseBackgroundColor }}>{renderUserAssets()}</ScrollView>;

@@ -18,7 +18,7 @@ const BadgeLabel = (props) => {
           borderRadius: 10,
         }}
       >
-        <TouchableOpacity
+        <View
           style={{
             width: 30,
             height: 30,
@@ -35,7 +35,7 @@ const BadgeLabel = (props) => {
             tintColor={props.badgeIconColor}
             resizeMode={FastImage.resizeMode.contain}
           />
-        </TouchableOpacity>
+        </View>
         <Text style={{ color: props.labelTextColor }}>{props.labelText}</Text>
       </TouchableOpacity>
     </View>
