@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import GlobalContext from '../../../GlobalContext';
 import LibraryContext from './LibraryContext';
 import lampostAPI from '../../../apis/lampost';
 import { View, Text } from 'react-native';
@@ -6,11 +7,13 @@ import { Button, Dialog, Portal, Provider, withTheme } from 'react-native-paper'
 import { baseTextColor, appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 
 const ConfirmLeaveLibrary = (props) => {
+  const { auth } = useContext(GlobalContext);
   const { isLeaveLibraryConfirmationModalOpen, setIsLeaveLibraryConfirmationModalOpen, navigation, library } =
     useContext(LibraryContext);
 
-  const leaveLibrary = () => {
+  const leaveLibrary = async () => {
     // setIsLeaveLibraryConfirmationModalOpen(false);
+    const result = await lampostAPI.delete(`/libraryanduserrelationships/${auth.data._id}/${library._id}`);
     navigation.navigate('Libraries', { leftLibraryId: library._id });
   };
 

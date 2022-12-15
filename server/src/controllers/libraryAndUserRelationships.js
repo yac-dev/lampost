@@ -21,7 +21,7 @@ export const joinLibrary = async (request, response) => {
 
 export const leaveLibrary = async (request, response) => {
   try {
-    const { libraryId, userId } = request.body;
+    const { libraryId, userId } = request.params;
     const libraryAndUserRelationship = await LibraryAndUserRelationship.deleteOne({ library: libraryId, user: userId });
     response.status(201).json({
       message: 'success',
