@@ -4,14 +4,16 @@ import GlobalContext from '../../../GlobalContext';
 import lampostAPI from '../../../apis/lampost';
 import { View, Text, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { baseBackgroundColor } from '../../../utils/colorsTable';
-import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import FastImage from 'react-native-fast-image';
+import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import Header from './Header';
 import BadgeLabels from './BadgeLabels';
 import Description from './Description';
+import ConfirmLeaveLibrary from './ConfirmLeaveLibrary';
 
 const Container = (props) => {
   const appMenuBottomSheetRef = useRef(null);
+  const [isLeaveLibraryConfirmationModalOpen, setIsLeaveLibraryConfirmationModalOpen] = useState(false);
   const [library, setLibrary] = useState(null);
   const [assets, setAssets] = useState([]);
   const oneAssetWidth = Dimensions.get('window').width / 2;
@@ -104,6 +106,8 @@ const Container = (props) => {
         assets,
         setAssets,
         navigation: props.navigation,
+        isLeaveLibraryConfirmationModalOpen,
+        setIsLeaveLibraryConfirmationModalOpen,
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
@@ -114,6 +118,7 @@ const Container = (props) => {
           {renderAssets()}
         </ScrollView>
         <AppMenuBottomSheet />
+        <ConfirmLeaveLibrary />
       </View>
     </LibraryContext.Provider>
   );

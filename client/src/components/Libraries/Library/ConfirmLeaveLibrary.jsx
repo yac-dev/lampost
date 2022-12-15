@@ -1,0 +1,45 @@
+import React, { useContext } from 'react';
+import LibraryContext from './LibraryContext';
+import lampostAPI from '../../../apis/lampost';
+import { View, Text } from 'react-native';
+import { Button, Dialog, Portal, Provider, withTheme } from 'react-native-paper';
+import { baseTextColor, appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
+
+const ConfirmLeaveLibrary = (props) => {
+  const { isLeaveLibraryConfirmationModalOpen, setIsLeaveLibraryConfirmationModalOpen, navigation, library } =
+    useContext(LibraryContext);
+
+  const leaveLibrary = () => {
+    // setIsLeaveLibraryConfirmationModalOpen(false);
+    navigation.navigate('Libraries', { leftLibraryId: library._id });
+  };
+
+  return (
+    <Portal>
+      <Dialog
+        visible={isLeaveLibraryConfirmationModalOpen}
+        style={{ backgroundColor: appBottomSheetBackgroundColor, padding: 30 }}
+      >
+        <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>
+          Are you sure you want to leave from this library?
+        </Text>
+        <Dialog.Actions>
+          <Button
+            textColor='rgb(58, 126, 224)'
+            onPress={() => {
+              setIsLeaveLibraryConfirmationModalOpen(false);
+              // appMenuBottomSheetRef.current.snapToIndex(0);
+            }}
+          >
+            Cancel
+          </Button>
+          <Button textColor='rgb(58, 126, 224)' onPress={() => leaveLibrary()}>
+            Yes, I leave this library.
+          </Button>
+        </Dialog.Actions>
+      </Dialog>
+    </Portal>
+  );
+};
+
+export default ConfirmLeaveLibrary;

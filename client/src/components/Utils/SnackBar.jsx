@@ -1,5 +1,5 @@
 // main libraries
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import GlobalContext from '../../GlobalContext';
 import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
@@ -11,13 +11,22 @@ import { removeSnackBar } from '../../redux/actionCreators/snackBar';
 
 const SnackBar = (props) => {
   const { snackBar, setSnackBar } = useContext(GlobalContext);
+
+  useEffect(() => {
+    if (snackBar.isVisible) {
+      setTimeout(() => {
+        setSnackBar({ isVisible: false, message: '', barType: '', duration: null });
+      }, snackBar.duration);
+    }
+  }, [snackBar.isVisible]);
+
   if (snackBar.isVisible) {
     return (
       <Snackbar
         wrapperStyle={{ top: 0 }}
         style={{ backgroundColor: snackBar.barType === 'success' ? iconColorsTable['blue1'] : iconColorsTable['red1'] }}
         visible={snackBar.isVisible}
-        onDismiss={() => setSnackBar({ isVisible: false, message: '', barType: '' })}
+        onDismiss={() => setSnackBar({ isVisible: false, message: '', barType: '', duration: null })}
         action={{
           label: 'Close',
           onPress: () => {

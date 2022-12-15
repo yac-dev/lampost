@@ -19,6 +19,18 @@ export const joinLibrary = async (request, response) => {
   }
 };
 
+export const leaveLibrary = async (request, response) => {
+  try {
+    const { libraryId, userId } = request.body;
+    const libraryAndUserRelationship = await LibraryAndUserRelationship.deleteOne({ library: libraryId, user: userId });
+    response.status(201).json({
+      message: 'success',
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getMyJoinedLibrary = async (request, response) => {
   try {
     const myJoinedLibrariesRelationships = await LibraryAndUserRelationship.find({ user: request.params.userId })
@@ -37,16 +49,4 @@ export const getMyJoinedLibrary = async (request, response) => {
       myJoinedLibraries,
     });
   } catch (error) {}
-};
-
-export const leaveLibrary = async (request, response) => {
-  try {
-    const libraryAndUserRelationship = await LibraryAndUserRelationship.findOne({
-      library: request.body.libraryId,
-      user: request.body.userId,
-    });
-    // ここでdeleteのoperationをする。
-  } catch (error) {
-    console.log(error);
-  }
 };

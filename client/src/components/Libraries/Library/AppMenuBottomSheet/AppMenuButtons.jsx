@@ -11,7 +11,8 @@ import AppMenuButton from '../../../Utils/AppMenuButton';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const AppMenuButtons = () => {
-  const { appMenuBottomSheetRef, navigation, library } = useContext(LibraryContext);
+  const { appMenuBottomSheetRef, navigation, library, setIsLeaveLibraryConfirmationModalOpen } =
+    useContext(LibraryContext);
 
   return (
     <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 25 }}>
@@ -39,7 +40,7 @@ const AppMenuButtons = () => {
           icon={<MaterialCommunityIcons name='exit-run' size={35} color={iconColorsTable['green1']} />}
           label='Leave this library'
           onAppMenuButtonPress={() => {
-            navigation.navigate('Add assets', { libraryId: library._id });
+            setIsLeaveLibraryConfirmationModalOpen(true);
             appMenuBottomSheetRef.current.snapToIndex(0);
           }}
         />
