@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import GlobalContext from '../../../../../GlobalContext';
 import LibrariesContext from '../../../LibrariesContext';
 import FormContext from '../../FormContext';
+import lampostAPI from '../../../../../apis/lampost';
 import { iconColorsTable } from '../../../../../utils/colorsTable';
 import { View, Text } from 'react-native';
 import Assets from './Assets';
@@ -11,7 +12,7 @@ import ActionButton from '../../../../Utils/ActionButton';
 
 const Container = () => {
   const { auth, setSnackBar } = useContext(GlobalContext);
-  const { createLibraryBottomSheetRef } = useContext(LibrariesContext);
+  const { createLibraryBottomSheetRef, setMyJoinedLibraries, setLibraries } = useContext(LibrariesContext);
   const { setPage, formData } = useContext(FormContext);
 
   const onLaunchPress = async () => {
@@ -25,12 +26,14 @@ const Container = () => {
       name: formData.name,
       badges: Object.values(formData.badges),
       description: formData.description,
-      rolls: formData.assets,
+      assets: Object.values(formData.assets), // assetのひとつ目だけ返す感じ。
       launcher,
     };
 
-    console.log(payload);
-
+    const result = await lampostAPI.post(`/libraries`, payload);
+    const { library } = result.data;
+    setMyJoinedLibraries((previous) => [...previous, library]);
+    setLibraries((previous) => [...previous, library]);
     createLibraryBottomSheetRef.current.close();
     setSnackBar({
       isVisible: true,
