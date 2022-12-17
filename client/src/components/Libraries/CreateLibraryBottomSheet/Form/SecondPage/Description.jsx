@@ -2,8 +2,6 @@ import React, { useContext } from 'react';
 import { View, Text } from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import FormContext from '../../FormContext';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';

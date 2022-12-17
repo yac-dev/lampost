@@ -18,13 +18,14 @@ import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import FirstPage from './Form/FirstPage/Container';
-import SecondPage from './Form/SecondPage/LibraryRolls';
+import SecondPage from './Form/SecondPage/Container';
 
 const Container = (props) => {
   const { createLibraryBottomSheetRef } = useContext(LibrariesContext);
-  const snapPoints = ['90%'];
+  const snapPoints = ['75%'];
   const [page, setPage] = useState('FIRST_PAGE');
-  const [formData, setFormData] = useState({ name: '', badges: {}, description: '', rolls: ['', ''] });
+  // const [formData, setFormData] = useState({ name: '', badges: {}, description: '', rolls: ['', ''] });
+  const [formData, setFormData] = useState({ name: '', badges: {}, description: '', assets: {} });
 
   const switchPage = () => {
     switch (page) {

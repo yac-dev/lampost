@@ -14,14 +14,42 @@ const Container = (props) => {
   const oneAssetWidth = Dimensions.get('window').width / 2;
 
   useEffect(() => {
-    props.navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity onPress={() => onPostPress()}>
-          <Text style={{ color: 'white' }}>Post</Text>
-        </TouchableOpacity>
-      ),
-    });
+    if (props.route.params.fromComponent === 'ADD_ASSETS_FOR_LAUNCHING_LIBRARY') {
+      props.navigation.setOptions({
+        headerRight: () => (
+          <TouchableOpacity onPress={() => onPostPress()}>
+            <Text style={{ color: 'white' }}>Post</Text>
+          </TouchableOpacity>
+        ),
+      });
+    }
   }, [addedAssets]);
+
+  useEffect(() => {
+    if (props.route.params.fromComponent === 'ADD_ASSETS_FOR_LAUNCHING_LIBRARY') {
+      props.navigation.setOptions({
+        headerRight: () => (
+          <TouchableOpacity onPress={() => onDoneAddAssetsPress()}>
+            <Text style={{ color: 'white' }}>Done</Text>
+          </TouchableOpacity>
+        ),
+      });
+    }
+  }, [addedAssets]);
+  const onDoneAddAssetsPress = () => {
+    props.navigation.navigate('Libraries', { addedAssets });
+  };
+
+  useEffect(() => {
+    if (props.route.params?.addedAssets) {
+      setAddedAssets((previous) => {
+        return {
+          ...previous,
+          ...props.route.params.addedAssets,
+        };
+      });
+    }
+  }, []);
 
   const onPostPress = async () => {
     // postを押したらapi requestで、ここのrollにassetのobjectをpostする感じか。

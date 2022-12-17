@@ -60,7 +60,7 @@ const Container = (props) => {
     <View>
       <LibraryName state={state} dispatch={dispatch} />
       <LibraryBadges state={state} dispatch={dispatch} />
-      <LibraryDescription state={state} dispatch={dispatch} />
+      {/* <LibraryDescription state={state} dispatch={dispatch} /> */}
       <View style={{ alignSelf: 'center' }}>
         <ActionButton
           label='Next'

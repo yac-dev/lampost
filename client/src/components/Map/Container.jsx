@@ -100,12 +100,6 @@ const Map = (props) => {
     getMeetups();
   }, []);
 
-  // useEffect(() => {
-  //   if(socketRef.current){
-
-  //   }
-  // },[socketRef.current])
-
   useEffect(() => {
     if (auth.socket) {
       auth.socket.on('CREATED_MEETUP', (data) => {
@@ -139,31 +133,6 @@ const Map = (props) => {
       });
     }
   }, [auth.socket]);
-
-  // if (data.launcher === auth.data._id) {
-  //   // setAuth((previous) => {
-  //   //   return {
-  //   //     ...previous,
-  //   //     data: {
-  //   //       ...previous.data,
-  //   //       upcomingMeetups: [
-  //   //         ...previous.data.upcomingMeetups,
-  //   //         { meetup: data.meetup, viewedChatsLastTime: data.viewedChatsLastTime },
-  //   //       ],
-  //   //     },
-  //   //   };
-  //   // });
-  //   setIsLaunchMeetupConfirmed(false);
-  //   setLaunchLocation(null);
-  //   launchMeetupBottomSheetRef.current.close();
-  //   // setLoading(false);
-  //   setSnackbar({
-  //     isVisible: true,
-  //     message: 'Launched a meetup.',
-  //     barType: 'success',
-  //     duration: 5000,
-  //   });
-  // }
 
   // これで、mapを自動で移動させる。launchMeetupの場所へ。
   useEffect(() => {

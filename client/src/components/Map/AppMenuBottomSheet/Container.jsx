@@ -29,18 +29,22 @@ const AppMenusBottomSheet = (props) => {
       handleIndicatorStyle={{ backgroundColor: 'white' }}
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 15 }}>Launch your meetup?</Text>
-        {auth.data ? (
-          // authがある上で、下のcomponentを表示していく。
-          <>
-            <AppMenuButtons />
-            <UpcomingMeetups />
-          </>
-        ) : (
-          <View>
-            <Text>Please login or signup to take some actions.</Text>
-          </View>
-        )}
+        <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
+          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 15 }}>
+            Launch your meetup?
+          </Text>
+          {auth.data ? (
+            // authがある上で、下のcomponentを表示していく。
+            <>
+              <AppMenuButtons />
+              <UpcomingMeetups />
+            </>
+          ) : (
+            <View>
+              <Text>Please login or signup to take some actions.</Text>
+            </View>
+          )}
+        </ScrollView>
       </BottomSheetView>
     </GorhomBottomSheet>
   );
