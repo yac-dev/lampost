@@ -14,7 +14,7 @@ const ConfirmLeaveLibrary = (props) => {
   const leaveLibrary = async () => {
     // setIsLeaveLibraryConfirmationModalOpen(false);
     const result = await lampostAPI.delete(`/libraryanduserrelationships/${auth.data._id}/${library._id}`);
-    navigation.navigate('Libraries', { leftLibraryId: library._id });
+    navigation.navigate('Libraries', { leftLibraryId: library._id, time: Date.now() });
   };
 
   return (

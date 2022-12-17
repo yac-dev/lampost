@@ -2,11 +2,9 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { TextInput, Divider, IconButton, Button, Menu, Switch } from 'react-native-paper';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { iconColorsTable } from '../../../../../utils/colorsTable';
-import { FontAwesome } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { baseTextColor } from '../../../../../utils/colorsTable';
+import { MaterialIcons } from '@expo/vector-icons';
+import { baseTextColor, iconColorsTable } from '../../../../../utils/colorsTable';
+import ActionButton from '../../../../Utils/ActionButton';
 
 const DateAndTime = (props) => {
   const onStartDateConfirm = (date) => {
@@ -80,25 +78,22 @@ const DateAndTime = (props) => {
           </View>
         </View> */}
         <View>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Button
-              style={{ marginRight: 10, marginBottom: 10 }}
-              mode='outlined'
-              onPress={() => props.dispatch({ type: 'SET_IS_START_DATE_PICKER_VISIBLE', payload: true })}
-            >
-              Start
-            </Button>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+            <ActionButton
+              label='Start'
+              backgroundColor={iconColorsTable['blue1']}
+              onActionButtonPress={() => props.dispatch({ type: 'SET_IS_START_DATE_PICKER_VISIBLE', payload: true })}
+              icon={<MaterialIcons name='hourglass-top' size={25} color='white' />}
+            />
             {renderDate(props.state.startDateAndTime)}
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Button
-              style={{ marginRight: 10, marginBottom: 10 }}
-              mode='outlined'
-              onPress={() => props.dispatch({ type: 'SET_IS_DURATION_PICKER_VISIBLE', payload: true })}
-            >
-              Duration
-            </Button>
-            {/* {renderDate(props.state.duration)} */}
+            <ActionButton
+              label='Duration'
+              backgroundColor={iconColorsTable['blue1']}
+              onActionButtonPress={() => props.dispatch({ type: 'SET_IS_DURATION_PICKER_VISIBLE', payload: true })}
+              icon={<MaterialIcons name='hourglass-bottom' size={25} color='white' />}
+            />
             {renderDuration(props.state.duration)}
           </View>
           {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>

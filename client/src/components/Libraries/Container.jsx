@@ -60,6 +60,7 @@ const Container = (props) => {
   // libraryから出て行った時用。
   useEffect(() => {
     if (props.route.params?.leftLibraryId) {
+      console.log('deleting this library', props.route.params.leftLibraryId);
       setMyJoinedLibraries((previous) => {
         const updating = [...previous];
         const updated = updating.filter((library) => library._id !== props.route.params.leftLibraryId);
@@ -69,10 +70,10 @@ const Container = (props) => {
         isVisible: true,
         message: 'Left library.',
         barType: 'success',
-        duration: 5000
+        duration: 5000,
       });
     }
-  }, [props.route.params?.leftLibraryId]);
+  }, [props.route.params?.leftLibraryId, props.route.params?.time]);
 
   const selectLibrary = async (libraryId) => {
     libraryOverviewBottomSheetRef.current.snapToIndex(0);
@@ -264,6 +265,9 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+        <Text style={{ fontSize: 23, fontWeight: 'bold', padding: 10, color: 'white', marginBottom: 10 }}>
+          Recently launched
+        </Text>
         {renderLibraries()}
         <AppMenuBottomSheet />
         <CreateLibraryBottomSheet />

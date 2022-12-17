@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import GlobalContext from '../../../GlobalContext';
 import MapContext from '../MeetupContext';
 import lampostAPI from '../../../apis/lampost';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { sectionBackgroundColor, baseTextColor } from '../../../utils/colorsTable';
 import { Entypo } from '@expo/vector-icons';
 
@@ -108,7 +109,9 @@ const Container = (props) => {
   return (
     <View>
       <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My upcoming meetups</Text>
+      {/* <BottomSheetScrollView contentContainerStyle={{ paddingBottom: 50 }}> */}
       {renderUpcomingMeetups()}
+      {/* </BottomSheetScrollView> */}
     </View>
   );
 };

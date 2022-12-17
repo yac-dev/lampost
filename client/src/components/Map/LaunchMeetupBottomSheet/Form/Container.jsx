@@ -133,17 +133,13 @@ const Container = (props) => {
 
   const onSubmit = async () => {
     setLoading(true);
-    const badgeIds = Object.values(state.badges).map((badge) => {
-      return badge._id;
-    });
-
-    const formData = {
+    const payload = {
       title: state.title,
       place: {
         type: 'Point',
         coordinates: [launchLocation.longitude, launchLocation.latitude],
       },
-      badges: badgeIds,
+      badges: Object.values(state.badges),
       startDateAndTime: state.startDateAndTime,
       duration: state.duration,
       applicationDeadline: state.applicationDeadline,
@@ -162,23 +158,27 @@ const Container = (props) => {
     // props.setIsHostMeetupOpen(false);
     // props.setMeetupLocation('');
     // props.createMeetup(formData);
-    const result = await lampostAPI.post('/meetups', formData);
-    const { meetup, viewedChatsLastTime } = result.data;
+    // const result = await lampostAPI.post('/meetups', formData);
+    auth.socket.emit('CREATE_MEETUP', payload);
+    // const { meetup, viewedChatsLastTime } = result.data;
     Keyboard.dismiss();
-    setAuth((previous) => {
-      return {
-        ...previous,
-        data: {
-          ...previous.data,
-          upcomingMeetups: [...previous.data.upcomingMeetups, { meetup, viewedChatsLastTime }],
-        },
-      };
-    });
-    setMeetups((previous) => [...previous, meetup]);
-    setIsLaunchMeetupConfirmed(false);
-    setLaunchLocation(null);
-    launchMeetupBottomSheetRef.current.close();
-    setLoading(false);
+    // setAuth((previous) => {
+    //   return {
+    //     ...previous,
+    //     data: {
+    //       ...previous.data,
+    //       upcomingMeetups: [...previous.data.upcomingMeetups, { meetup, viewedChatsLastTime }],
+    //     },
+    //   };
+    // });
+    // setMeetups((previous) => [...previous, meetup]);
+    // setIsLaunchMeetupConfirmed(false);
+    // setLaunchLocation(null);
+    // launchMeetupBottomSheetRef.current.close();
+    // setLoading(false);
+    return () => {
+      socketRef.current.off('CREATE_MEETUP');
+    };
   };
 
   const switchComponent = () => {

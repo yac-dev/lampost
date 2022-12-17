@@ -11,21 +11,28 @@ import { backgroundColorsTable, baseTextColor, iconColorsTable } from '../../../
 import ActionButton from '../../../Utils/ActionButton';
 
 const ActionButtons = (props) => {
-  const { auth } = useContext(GlobalContext);
-  const { selectedLibrary, myJoinedLibraries, setMyJoinedLibraries } = useContext(LibrariesContext);
+  const { auth, setSnackBar, setLoading } = useContext(GlobalContext);
+  const { selectedLibrary, myJoinedLibraries, setMyJoinedLibraries, navigation, libraryOverviewBottomSheetRef } =
+    useContext(LibrariesContext);
 
   const joinLibrary = async () => {
     const formData = {
       libraryId: selectedLibrary._id,
       userId: auth.data._id,
     };
+    setLoading(true);
     const result = await lampostAPI.post('/libraryanduserrelationships', formData);
     const { library } = result.data;
     setMyJoinedLibraries((previous) => [...previous, library]);
-  };
-
-  const leaveLibrary = () => {
-    console.log('left this library');
+    setLoading(false);
+    libraryOverviewBottomSheetRef.current.close();
+    setSnackBar({
+      isVisible: true,
+      message: 'Joined successfully.',
+      barType: 'success',
+      duration: 5000,
+    });
+    navigation.navigate('Library', { libraryId: library._id });
   };
 
   if (props.auth.isAuthenticated) {
@@ -34,10 +41,12 @@ const ActionButtons = (props) => {
         <View style={{ marginBottom: 25, flexDirection: 'row' }}>
           {myJoinedLibraries.some((library) => library._id === selectedLibrary._id) ? (
             <ActionButton
-              label='Leave this library'
-              icon={<MaterialCommunityIcons name='exit-run' size={20} color={'white'} />}
-              backgroundColor={iconColorsTable['red1']}
-              onActionButtonPress={leaveLibrary}
+              label='Already joined'
+              icon={<MaterialCommunityIcons name='check' size={20} color={'white'} />}
+              backgroundColor={iconColorsTable['blue1']}
+              onActionButtonPress={() => {
+                return null;
+              }}
             />
           ) : (
             <ActionButton

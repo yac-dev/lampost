@@ -43,7 +43,8 @@ import { setIsSelectedMeetupInfoDetailBottomSheetOpen } from '../../redux/action
 import { iconColorsTable } from '../../utils/colorsTable';
 
 const Map = (props) => {
-  const { auth, loading } = useContext(GlobalContext);
+  // setAuthがありませんよ、てきなerrorを出して欲しいわ。これなんとかならんかな。
+  const { auth, setAuth, loading, setLoading, setSnackBar } = useContext(GlobalContext);
   const [region, setRegion] = useState(null);
   const [currentSnap, setCurrentSnap] = useState();
   const [isLaunchMeetupConfirmationModalOpen, setIsLaunchMeetupConfirmationModalOpen] = useState(false);
@@ -59,26 +60,6 @@ const Map = (props) => {
   const launchMeetupBottomSheetRef = useRef(null);
   const selectedMeetupBottomSheetRef = useRef(null);
   const selectedMeetupDetailBottomSheetRef = useRef(null);
-
-  // console.log('Map is rendered');
-
-  // 手動で閉じたらおかしくなる。。。
-  // const handleSelectedItemBottomSheetChanges = (meetupId) => {
-  //   if (!props.bottomSheet.selectedItem.isOpen) {
-  //     console.log(meetupId);
-  //     props.selectMeetup(meetupId);
-  //     // props.setIsPostBottomSheetOpen(false);
-  //     // postBottomSheetRef.current?.close();
-  //     props.setIsSelectedItemBottomSheetOpen(true);
-  //     selectedItemBottomSheetRef.current?.snapToIndex(0);
-  //   } else if (props.bottomSheet.selectedItem.isOpen) {
-  //     console.log(meetupId);
-  //     props.selectMeetup(meetupId);
-  //     // props.setIsSelectedItemBottomSheetOpen(false);
-  //     // selectedItemBottomSheetRef.current.close();
-  //     // bottomSheetRef.current?.snapToIndex(-1);
-  //   }
-  // };
 
   // 基本は、mapのいずれをtapしてもなにも起きないようにする。launchMeetupがtrueのときだけ、mapをtapしたらlocationをsetして、launchのformを出す。
   const setMeetupLocation = (event) => {
@@ -118,6 +99,71 @@ const Map = (props) => {
   useEffect(() => {
     getMeetups();
   }, []);
+
+  // useEffect(() => {
+  //   if(socketRef.current){
+
+  //   }
+  // },[socketRef.current])
+
+  useEffect(() => {
+    if (auth.socket) {
+      auth.socket.on('CREATED_MEETUP', (data) => {
+        setMeetups((previous) => [...previous, data.meetup]);
+        if (data.launcher === auth.data._id) {
+          setLoading(false);
+          console.log(auth.data);
+          console.log(auth.data);
+          setAuth((previous) => {
+            return {
+              ...previous,
+              data: {
+                ...previous.data,
+                upcomingMeetups: [
+                  ...previous.data.upcomingMeetups,
+                  { meetup: data.meetup, viewedChatsLastTime: data.viewedChatsLastTime },
+                ],
+              },
+            };
+          });
+          setIsLaunchMeetupConfirmed(false);
+          setLaunchLocation(null);
+          launchMeetupBottomSheetRef.current.close();
+          setSnackBar({
+            isVisible: true,
+            message: 'Launched a meetup.',
+            barType: 'success',
+            duration: 5000,
+          });
+        }
+      });
+    }
+  }, [auth.socket]);
+
+  // if (data.launcher === auth.data._id) {
+  //   // setAuth((previous) => {
+  //   //   return {
+  //   //     ...previous,
+  //   //     data: {
+  //   //       ...previous.data,
+  //   //       upcomingMeetups: [
+  //   //         ...previous.data.upcomingMeetups,
+  //   //         { meetup: data.meetup, viewedChatsLastTime: data.viewedChatsLastTime },
+  //   //       ],
+  //   //     },
+  //   //   };
+  //   // });
+  //   setIsLaunchMeetupConfirmed(false);
+  //   setLaunchLocation(null);
+  //   launchMeetupBottomSheetRef.current.close();
+  //   // setLoading(false);
+  //   setSnackbar({
+  //     isVisible: true,
+  //     message: 'Launched a meetup.',
+  //     barType: 'success',
+  //     duration: 5000,
+  //   });
+  // }
 
   // これで、mapを自動で移動させる。launchMeetupの場所へ。
   useEffect(() => {

@@ -5,7 +5,11 @@ import { Server } from 'socket.io';
 import Chat from './models/chat';
 import Library from './models/library';
 import LibraryAndUserRelationship from './models/libraryAndUserRelationship';
-import Roll from './models/roll';
+import Meetup from './models/meetup';
+import User from './models/user';
+import ChatRoom from './models/chatRoom';
+
+import { createMeetup } from './services/socketControllers';
 
 const server = http.createServer(app);
 
@@ -18,9 +22,108 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-  socket.on('CREATE_MEETUP', (data) => {
-    io.emit('SEND_NEW_MEETUP', { meetup: data.meetup });
+  socket.on('CREATE_MEETUP', async (data) => {
+    createMeetup(io, data);
+    // const {
+    //   place,
+    //   badges,
+    //   title,
+    //   startDateAndTime,
+    //   duration,
+    //   applicationDeadline,
+    //   isMeetupAttendeesLimitFree,
+    //   meetupAttendeesLimit,
+    //   isMeetupFeeFree,
+    //   currency,
+    //   fee,
+    //   description,
+    //   isMeetupPublic,
+    //   isMediaAllowed,
+    //   launcher,
+    //   link,
+    // } = data;
+
+    // const badgeIds = badges.map((badge) => badge._id);
+
+    // const meetup = new Meetup({
+    //   place,
+    //   badges: badgeIds,
+    //   title,
+    //   startDateAndTime,
+    //   duration,
+    //   applicationDeadline,
+    //   description,
+    //   link,
+    //   launcher,
+    //   createdAt: new Date(),
+    // });
+
+    // if (isMeetupFeeFree) {
+    //   meetup.isFeeFree = true;
+    // } else {
+    //   meetup.isFeeFree = false;
+    //   meetup.currency = currency;
+    //   meetup.fee = fee;
+    // }
+
+    // if (isMeetupAttendeesLimitFree) {
+    //   meetup.isAttendeesLimitFree = true;
+    // } else {
+    //   meetup.isAttendeesLimitFree = false;
+    //   meetup.attendeesLimit = meetupAttendeesLimit;
+    // }
+
+    // if (isMeetupPublic) {
+    //   meetup.isPublic = true;
+    // } else {
+    //   meetup.isPublic = false;
+    // }
+
+    // if (isMediaAllowed) {
+    //   meetup.isMediaAllowed = true;
+    // } else {
+    //   meetup.isMediaAllowed = false;
+    // }
+
+    // const user = await User.findById(launcher);
+    // const pushing = {
+    //   meetup: meetup._id,
+    //   viewedChatsLastTime: new Date(),
+    // };
+    // user.upcomingMeetups.push(pushing);
+    // user.save();
+
+    // // chatroom作成。
+    // const chatRoom = new ChatRoom({
+    //   createdAt: new Date(),
+    // });
+    // chatRoom.members.push(user._id);
+    // chatRoom.save();
+
+    // meetup.attendees.push(launcher);
+    // meetup.totalAttendees = 1;
+    // meetup.chatRoom = chatRoom._id;
+    // meetup.save();
+    // // const badge = await Badge.findById(badges[0]); これ、持ってきたbadgeをそのまま送る方がいい。
+
+    // const meetupObject = {
+    //   meetup: {
+    //     _id: meetup._id,
+    //     place: meetup.place,
+    //     title: meetup.title,
+    //     startDateAndTime: meetup.startDateAndTime,
+    //     badge: badges[0], // これは、そのまま送る。
+    //   },
+    //   viewedChatsLastTime: new Date(),
+    //   launcher,
+    // };
+    // const obj = {
+    //   launcher: data.launcher,
+    //   message: 'helo',
+    // };
+    // io.emit('CREATED_MEETUP', obj);
   });
+
   socket.on('JOIN_A_LOUNGE', (data) => {
     console.log('someone joined');
     socket.join(data.chatRoom);
@@ -28,26 +131,16 @@ io.on('connection', (socket) => {
     socket.to(data.chatRoom).emit('SOMEONE_JOINED_TO_MY_LOUNGE', { message: 'Someone joined!' });
   });
 
+  // libraryのcrewation
   socket.on('CREATE_LIBRARY', async (data) => {
     const badgeIds = data.badges.map((badge) => {
       return badge._id;
-    });
-    const rollObjects = data.rolls.map((roll) => {
-      return {
-        name: roll,
-        createdAt: new Date(),
-      };
-    });
-    const rolls = await Roll.insertMany(rollObjects);
-    const rollIds = rolls.map((roll) => {
-      return roll._id;
     });
 
     const library = await Library.create({
       name: data.name,
       badges: badgeIds,
       description: data.description,
-      rolls: rollIds,
       launcher: data.launcher._id,
       createdAt: new Date(),
       totalMembers: 1,
@@ -63,7 +156,6 @@ io.on('connection', (socket) => {
       name: library.name,
       badges: data.badges, // これだけは送られたbadgeをそのまま送る。idでの再queryがいちいいちめんどい。
       description: library.description,
-      rolls: rolls, // これは作ったrollをここに。
       launcher: data.launcher, // これも元のdataをそのままで。
       createdAt: library.createdAt,
       totalMembers: 1,
@@ -95,5 +187,3 @@ io.on('connection', (socket) => {
 server.listen(3500, () => {
   console.log('listening on port 3500');
 });
-
-export default io;

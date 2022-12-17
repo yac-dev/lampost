@@ -1,5 +1,5 @@
 // main libraries
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import lampostAPI from './apis/lampost';
 import GlobalContext from './GlobalContext';
 import { connect } from 'react-redux';
@@ -34,7 +34,7 @@ import { getSocket } from './redux/actionCreators/auth';
 // };
 
 const AppStack = (props) => {
-  const [auth, setAuth] = useState({ data: null, isAuthenticated: false, socket: null, currentLocation: null });
+  const [auth, setAuth] = useState({ data: null, socket: null, isAuthenticated: false, currentLocation: null });
   const [loading, setLoading] = useState(false);
   const [snackBar, setSnackBar] = useState({ isVisible: false, message: '', barType: '', duration: null });
   const [routeName, setRouteName] = useState();
@@ -73,18 +73,20 @@ const AppStack = (props) => {
     });
   };
   useEffect(() => {
-    getSocket();
-  }, []);
+    if (auth.isAuthenticated) {
+      getSocket();
+    }
+  }, [auth.isAuthenticated]);
 
-  useEffect(() => {
-    // const socket = io('http://192.168.11.17:3500', {
-    //   path: '/mysocket',
-    // });
-    const socket = io('http://localhost:3500', {
-      path: '/mysocket',
-    });
-    props.getSocket(socket);
-  }, []);
+  // useEffect(() => {
+  //   // const socket = io('http://192.168.11.17:3500', {
+  //   //   path: '/mysocket',
+  //   // });
+  //   const socket = io('http://localhost:3500', {
+  //     path: '/mysocket',
+  //   });
+  //   props.getSocket(socket);
+  // }, []);
 
   // これも、contextを使っていた方がいいな。reduxのstateよりも。refactoringは後でやろうか。authDataみたいな感じで渡して、app全体で使う感じがいいだろう。
   return (

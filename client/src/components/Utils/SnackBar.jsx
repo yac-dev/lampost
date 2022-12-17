@@ -29,9 +29,7 @@ const SnackBar = (props) => {
         onDismiss={() => setSnackBar({ isVisible: false, message: '', barType: '', duration: null })}
         action={{
           label: 'Close',
-          onPress: () => {
-            console.log('snack bar component');
-          },
+          onPress: () => setSnackBar({ isVisible: false, message: '', barType: '', duration: null }),
         }}
       >
         {snackBar.message}

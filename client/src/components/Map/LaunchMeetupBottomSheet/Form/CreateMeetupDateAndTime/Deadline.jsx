@@ -3,10 +3,12 @@ import { View, Text } from 'react-native';
 import { TextInput, Divider, IconButton, Button, Menu, Switch } from 'react-native-paper';
 import { iconColorsTable } from '../../../../../utils/colorsTable';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { Octicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { baseTextColor } from '../../../../../utils/colorsTable';
+import ActionButton from '../../../../Utils/ActionButton';
 
 const Deadline = (props) => {
   const onStartDateConfirm = (date) => {
@@ -43,7 +45,7 @@ const Deadline = (props) => {
     <View>
       <View style={{ marginBottom: 20 }}>
         <Text style={{ fontWeight: 'bold', fontSize: 13, color: baseTextColor, marginBottom: 10 }}>
-          Until when can the users apply for join this meetup?
+          Until when can people apply for join this meetup?
         </Text>
         {/* <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
           <View
@@ -67,13 +69,21 @@ const Deadline = (props) => {
         </View> */}
         <View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Button
+            {/* <Button
               style={{ marginRight: 10, marginBottom: 10 }}
               mode='outlined'
               onPress={() => props.dispatch({ type: 'SET_IS_APPLICATION_DEADLINE_PICKER_VISIBLE', payload: true })}
             >
               Deadline
-            </Button>
+            </Button> */}
+            <ActionButton
+              label='Deadline'
+              backgroundColor={iconColorsTable['blue1']}
+              onActionButtonPress={() =>
+                props.dispatch({ type: 'SET_IS_APPLICATION_DEADLINE_PICKER_VISIBLE', payload: true })
+              }
+              icon={<Octicons name='stop' size={25} color='white' />}
+            />
             {renderDate(props.state.applicationDeadline)}
           </View>
         </View>
