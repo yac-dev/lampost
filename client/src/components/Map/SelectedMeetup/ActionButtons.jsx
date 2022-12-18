@@ -118,7 +118,7 @@ const ActionButtons = (props) => {
                 label='Go to lounge'
                 icon={<MaterialCommunityIcons name='comment-text-multiple' size={25} color={'white'} />}
                 backgroundColor={iconColorsTable['blue1']}
-                onActionButtonPress={() => navigation.navigate('Lounge', { meetupId: selectedMeetup._id })}
+                onActionButtonPress={() => navigation.navigate('Lounge', { meetup: selectedMeetup })}
               />
               <ActionButton
                 label='Launch camera'

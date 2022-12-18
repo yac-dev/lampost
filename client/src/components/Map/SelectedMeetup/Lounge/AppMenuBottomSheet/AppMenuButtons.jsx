@@ -25,7 +25,7 @@ const AppButtons = () => {
         <AppButton
           backgroundColor={backgroundColorsTable['violet1']}
           icon={<FontAwesome5 name='user-astronaut' size={35} color={iconColorsTable['violet1']} />}
-          label='Check my crew'
+          label='Crew'
           onAppMenuButtonPress={() => {
             appMenuBottomSheetRef.current.snapToIndex(0);
             crewBottomSheetRef.current.snapToIndex(0);

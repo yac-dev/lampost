@@ -19,6 +19,7 @@ import pastMeetupAndUserRelationshipsRouter from './routers/pastMeetupAndUserRel
 import badgeAndUserRelationshipsRouter from './routers/badgeAndUserRelationships';
 import assetAndUserRelationshipsRouter from './routers/assetAndUserRelationships';
 import libraryAndAssetRelationshipsRouter from './routers/libraryAndAssetRelationships';
+import loungeChatAndChatRoomRelationshipsRouter from './routers/loungeChatAndChatRoomRelationships';
 
 // import postsRouter from './routers/posts';
 // import usersRouter from './routers/users';
@@ -47,5 +48,6 @@ app.use('/api/pastmeetupanduserrelationships', pastMeetupAndUserRelationshipsRou
 app.use('/api/badgeanduserrelationships', badgeAndUserRelationshipsRouter);
 app.use('/api/assetanduserrelationships', assetAndUserRelationshipsRouter);
 app.use('/api/libraryandassetrelationships', libraryAndAssetRelationshipsRouter);
+app.use('/api/loungechatandchatroomrelationships', loungeChatAndChatRoomRelationshipsRouter);
 
 export default app;

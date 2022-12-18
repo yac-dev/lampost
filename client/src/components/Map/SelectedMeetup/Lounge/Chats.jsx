@@ -77,7 +77,7 @@ const Chats = (props) => {
   if (!chats.length) {
     return (
       <View>
-        <Text style={{ color: baseTextColor }}>No comments yet.</Text>
+        <Text style={{ color: baseTextColor }}>No chats yet.</Text>
       </View>
     );
   } else {

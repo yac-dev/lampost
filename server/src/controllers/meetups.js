@@ -1,6 +1,6 @@
 import Meetup from '../models/meetup';
 import User from '../models/user';
-import Chat from '../models/chat';
+import LoungeChat from '../models/loungeChat';
 import ChatRoom from '../models/chatRoom';
 import Badge from '../models/badge';
 import Comment from '../models/comment';

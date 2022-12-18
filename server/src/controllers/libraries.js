@@ -1,5 +1,6 @@
 import Library from '../models/library';
 import LibraryAndAssetRelationship from '../models/libraryAndAssetRelationship';
+import LibraryAndUserRelationship from '../models/libraryAndUserRelationship';
 // import Roll from '../models/roll';
 import Asset from '../models/asset';
 import User from '../models/user';
@@ -61,6 +62,10 @@ export const createLibrary = async (request, response) => {
       };
     });
     const libraryAndAssetRelationships = await LibraryAndAssetRelationship.insertMany(relations);
+    const libraryAndUserRelationship = await LibraryAndUserRelationship.create({
+      library: library._id,
+      user: launcher._id,
+    });
     response.status(200).json({
       library,
     });

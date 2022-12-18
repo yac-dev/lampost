@@ -1,6 +1,7 @@
 // main libraries
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import LoungeContext from './LoungeContext';
+import GlobalContext from '../../../../GlobalContext';
 import { connect } from 'react-redux';
 import { View } from 'react-native';
 import { Avatar, IconButton } from 'react-native-paper';
@@ -18,77 +19,61 @@ import { setIsTextBoxBottomSheetOpen } from '../../../../redux/actionCreators/bo
 import { setIsCrewBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
 
 const Container = (props) => {
-  const [meetup, setMeetup] = useState(null);
+  const { auth } = useContext(GlobalContext);
+  // const [meetup, setMeetup] = useState();
   const [chats, setChats] = useState([]);
   const appMenuBottomSheetRef = useRef(null);
   const sendChatBottomSheetRef = useRef(null);
   const crewBottomSheetRef = useRef(null);
   const textInputRef = useRef(null);
 
-  const getMeetup = async () => {
-    const result = await lampostAPI.get(`/meetups/${props.route.params.meetupId}`);
-    const { meetup } = result.data;
-    setMeetup(meetup);
-    setChats(meetup.chatRoom.chats);
+  const getChatsByChatRoomId = async () => {
+    const result = await lampostAPI.get(`/loungechatandchatroomrelationships/${props.route.params.meetup.chatRoom}`);
+    const { chats } = result.data;
+    setChats(chats);
   };
-
   useEffect(() => {
-    getMeetup();
+    getChatsByChatRoomId();
   }, []);
 
   useEffect(() => {
-    if (meetup) {
-      props.auth.socket.emit('JOIN_A_LOUNGE', { chatRoom: meetup.chatRoom._id, socketId: props.auth.socket.id });
-
-      props.auth.socket.on('SOMEONE_JOINED_TO_MY_LOUNGE', (data) => {
-        console.log(data.message);
-      });
-    }
-
-    return () => {
-      props.auth.socket.off('SOMEONE_JOINED_TO_MY_LOUNGE');
-    };
-  }, [meetup]);
-
-  useEffect(() => {
-    if (meetup) {
-      props.auth.socket.on('SOMEONE_JOINED_TO_MY_LOUNGE', (data) => {
-        console.log(data.message);
-      });
-    }
-
-    return () => {
-      props.auth.socket.off('SOMEONE_JOINED_TO_MY_LOUNGE');
-    };
-  }, [meetup]);
-
-  useEffect(() => {
-    props.auth.socket.on('SOMEONE_SENT_A_CHAT_TO_MY_GROUP', (data) => {
-      setChats((previous) => [...previous, data.chat]);
+    auth.socket.emit('JOIN_A_LOUNGE', { chatRoom: props.route.params.meetup.chatRoom, socketId: auth.socket.id });
+    auth.socket.on('SOMEONE_JOINED_TO_MY_LOUNGE', (data) => {
+      console.log(data.message);
     });
 
-    // return () => {
-    //   props.auth.socket.off('SOMEONE_SENT_A_CHAT_TO_MY_GROUP');
-    // };
+    return () => {
+      auth.socket.off('JOIN_A_LOUNGE');
+      auth.socket.off('SOMEONE_JOINED_TO_MY_LOUNGE');
+    };
   }, []);
 
-  // useEffect(() => {
-  //   // lounge出た時の時間をapi request送らないといけない。
-  //   return () => {
-  //     if (props.bottomSheet.textBox.isOpen) {
-  //       props.setIsTextBoxBottomSheetOpen(false);
-  //     }
-  //     if (props.bottomSheet.crew.isOpen) {
-  //       props.setIsCrewBottomSheetOpen(false);
-  //     }
-  //   };
-  // });
+  useEffect(() => {
+    auth.socket.on('SOMEONE_JOINED_TO_MY_LOUNGE', (data) => {
+      console.log(data.message);
+    });
+
+    return () => {
+      auth.socket.off('SOMEONE_JOINED_TO_MY_LOUNGE');
+    };
+  }, []);
+
+  useEffect(() => {
+    auth.socket.on('SOMEONE_SENT_A_CHAT_TO_MY_GROUP', (data) => {
+      console.log('got message');
+      setChats((previous) => [...previous, data]);
+    });
+
+    return () => {
+      auth.socket.off('SOMEONE_SENT_A_CHAT_TO_MY_GROUP');
+    };
+  }, []);
 
   // ここに入った時点で、chatroomのidを持っている状態になる。
   return (
     <LoungeContext.Provider
       value={{
-        meetup,
+        meetup: props.route.params.meetup,
         navigation: props.navigation,
         appMenuBottomSheetRef,
         sendChatBottomSheetRef,
@@ -103,7 +88,6 @@ const Container = (props) => {
         <AppMenuBottomSheet />
         <SendChatBottomSheet />
         <CrewBottomSheet />
-        <SnackBar />
       </View>
     </LoungeContext.Provider>
   );

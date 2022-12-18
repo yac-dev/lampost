@@ -41,16 +41,6 @@ const Container = () => {
       barType: 'success',
       duration: 5000,
     });
-    // 正直、socketである必要ないわ。
-    // if (!formData.name) {
-    //   return console.log('no name');
-    // }
-    // auth.socket.emit('CREATE_LIBRARY', body);
-    // これ、完了してからsnack barを出しましょう。
-    // return () => {
-    //   auth.socket.off('CREATE_LIBRARY');
-    // };
-    // const result = await lampostAPI.post('/libraries', body);
   };
 
   return (

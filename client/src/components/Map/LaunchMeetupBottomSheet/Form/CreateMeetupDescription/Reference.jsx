@@ -2,7 +2,12 @@ import React, { useContext } from 'react';
 import MapContext from '../../../MeetupContext';
 import { View, Text, InputAccessoryView, TouchableOpacity, Keyboard } from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { baseTextColor, sectionBackgroundColor, inputBackgroundColor } from '../../../../../utils/colorsTable';
+import {
+  baseTextColor,
+  sectionBackgroundColor,
+  inputBackgroundColor,
+  iconColorsTable,
+} from '../../../../../utils/colorsTable';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 const Reference = (props) => {

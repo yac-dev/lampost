@@ -2,9 +2,9 @@ import Library from '../models/library';
 import LibraryAndUserRelationship from '../models/libraryAndUserRelationship';
 import Meetup from '../models/meetup';
 import User from '../models/user';
+import LoungeChatAndChatRoomRelationship from '../models/loungeCharAndChatRoomRelationship';
+import LoungeChat from '../models/loungeChat';
 import ChatRoom from '../models/chatRoom';
-
-export const createLibrary = (socket) => {};
 
 export const createMeetup = async (io, data) => {
   const {
@@ -101,4 +101,31 @@ export const createMeetup = async (io, data) => {
     launcher,
   };
   io.emit('CREATED_MEETUP', meetupObject);
+};
+
+export const createLoungeChat = async (io, data) => {
+  const loungeChat = await LoungeChat.create({
+    chatRoom: data.chatRoomId,
+    user: data.user._id,
+    content: data.content,
+    type: data.type,
+    createdAt: new Date(),
+  });
+
+  await LoungeChatAndChatRoomRelationship.create({
+    loungeChat: loungeChat._id,
+    chatRoom: loungeChat.chatRoom,
+  });
+
+  const loungeChatObject = {
+    user: {
+      name: data.user.name,
+      photo: data.user.photo,
+    },
+    content: loungeChat.content,
+    type: loungeChat.type,
+    createdAt: loungeChat.createdAt,
+  };
+
+  io.in(data.chatRoomId).emit('SOMEONE_SENT_A_CHAT_TO_MY_GROUP', loungeChatObject);
 };

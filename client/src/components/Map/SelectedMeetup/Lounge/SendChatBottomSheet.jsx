@@ -1,6 +1,7 @@
 import React, { useMemo, useContext, useState } from 'react';
 import { connect } from 'react-redux';
 import lampostAPI from '../../../../apis/lampost';
+import GlobalContext from '../../../../GlobalContext';
 import LoungeContext from './LoungeContext';
 import { View, Text, InputAccessoryView, Keyboard, TouchableOpacity } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
@@ -9,6 +10,7 @@ import { appBottomSheetBackgroundColor, sectionBackgroundColor, baseTextColor } 
 import { addSnackBar } from '../../../../redux/actionCreators/snackBar';
 
 const SendChatBottomSheet = (props) => {
+  const { auth } = useContext(GlobalContext);
   const inputAccessoryViewID = 'SEND_CHAT_INPUT';
   const snapPoints = useMemo(() => ['65%'], []);
   const { appMenuBottomSheetRef, sendChatBottomSheetRef, textInputRef, setChats, meetup } = useContext(LoungeContext);
@@ -17,22 +19,21 @@ const SendChatBottomSheet = (props) => {
 
   const onSendPress = async () => {
     console.log('sending comment');
-    const chatObject = {
-      text: text,
-      chatRoomId: meetup.chatRoom._id,
-      userId: props.auth.data._id,
+    const payload = {
+      chatRoomId: meetup.chatRoom,
+      user: {
+        _id: auth.data._id,
+        name: auth.data.name,
+        photo: auth.data.photo,
+      },
+      content: text,
       type: chatType,
     };
-    // これ、そもそもapi requestである必要あるのかな。。。。普通にsocket eventだけで良くないか？
-    // const result = await lampostAPI.post('/chats', body);
-    // const { chat } = result.data;
-    // setChats((previous) => [...previous, chat]);
-    props.auth.socket.emit('I_SEND_A_CHAT_TO_MY_GROUP', chatObject);
+    auth.socket.emit('I_SEND_A_CHAT_TO_MY_GROUP', payload);
     setText('');
     Keyboard.dismiss();
     sendChatBottomSheetRef.current.close();
     appMenuBottomSheetRef.current.snapToIndex(0);
-    // props.addSnackBar('Message sent successfully!', 'success', 7000);
   };
 
   return (
@@ -46,6 +47,7 @@ const SendChatBottomSheet = (props) => {
       )}
       enablePanDownToClose={true}
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
+      handleIndicatorStyle={{ backgroundColor: 'white' }}
       keyboardBehavior={'extend'}
       onClose={() => setText('')}
     >
