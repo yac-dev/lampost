@@ -21,7 +21,6 @@ import BadgeLabel from '../Utils/BadgeLabel';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import CreateLibraryBottomSheet from './CreateLibraryBottomSheet/Container';
 import LibraryOverviewBottomSheet from './LibraryOverviewBottomSheet/Container';
-import SnackBar from '../Utils/SnackBar';
 
 const Container = (props) => {
   const { auth, setSnackBar } = useContext(GlobalContext);

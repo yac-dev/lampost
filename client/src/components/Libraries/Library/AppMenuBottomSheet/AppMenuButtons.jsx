@@ -9,6 +9,7 @@ import {
 } from '../../../../utils/colorsTable';
 import AppMenuButton from '../../../Utils/AppMenuButton';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { SimpleLineIcons } from '@expo/vector-icons';
 
 const AppMenuButtons = () => {
   const { appMenuBottomSheetRef, navigation, library, setIsLeaveLibraryConfirmationModalOpen } =
@@ -21,6 +22,15 @@ const AppMenuButtons = () => {
           backgroundColor={backgroundColorsTable['red1']}
           icon={<MaterialCommunityIcons name='image-plus' size={35} color={iconColorsTable['red1']} />}
           label='Post my assets'
+          onAppMenuButtonPress={() => {
+            navigation.navigate('Add assets', { libraryId: library._id });
+            appMenuBottomSheetRef.current.snapToIndex(0);
+          }}
+        />
+        <AppMenuButton
+          backgroundColor={backgroundColorsTable['yellow1']}
+          icon={<SimpleLineIcons name='emotsmile' size={35} color={iconColorsTable['yellow1']} />}
+          label='Reactions'
           onAppMenuButtonPress={() => {
             navigation.navigate('Add assets', { libraryId: library._id });
             appMenuBottomSheetRef.current.snapToIndex(0);

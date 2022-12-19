@@ -6,6 +6,8 @@ import { View, Text, TouchableOpacity, ScrollView, Dimensions } from 'react-nati
 import { baseBackgroundColor } from '../../../utils/colorsTable';
 import FastImage from 'react-native-fast-image';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
+import SelectedAssetBottomSheet from './SelectedAssetBottomSheet';
+import AddNewReactionBottomSheet from './AddNewReactionBottomSheet';
 import Header from './Header';
 import BadgeLabels from './BadgeLabels';
 import Description from './Description';
@@ -13,9 +15,12 @@ import ConfirmLeaveLibrary from './ConfirmLeaveLibrary';
 
 const Container = (props) => {
   const appMenuBottomSheetRef = useRef(null);
+  const selectedAssetBottomSheetRef = useRef(null);
+  const addNewReactionBottomSheetRef = useRef(null);
   const [isLeaveLibraryConfirmationModalOpen, setIsLeaveLibraryConfirmationModalOpen] = useState(false);
   const [library, setLibrary] = useState(null);
   const [assets, setAssets] = useState([]);
+  const [selectedAsset, setSelectedAsset] = useState(null);
   const oneAssetWidth = Dimensions.get('window').width / 2;
 
   // ここで、libraryを取ってこないとね。
@@ -79,7 +84,10 @@ const Container = (props) => {
           <TouchableOpacity
             key={index}
             style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
-            onPress={() => props.navigation.navigate('Asset', { asset })}
+            onPress={() => {
+              setSelectedAsset(asset);
+              selectedAssetBottomSheetRef.current.snapToIndex(0);
+            }}
           >
             <FastImage
               style={{ width: '100%', height: '100%' }}
@@ -102,9 +110,13 @@ const Container = (props) => {
     <LibraryContext.Provider
       value={{
         appMenuBottomSheetRef,
+        selectedAssetBottomSheetRef,
+        addNewReactionBottomSheetRef,
         library,
         assets,
         setAssets,
+        selectedAsset,
+        setSelectedAsset,
         navigation: props.navigation,
         isLeaveLibraryConfirmationModalOpen,
         setIsLeaveLibraryConfirmationModalOpen,
@@ -118,6 +130,8 @@ const Container = (props) => {
           {renderAssets()}
         </ScrollView>
         <AppMenuBottomSheet />
+        <SelectedAssetBottomSheet />
+        <AddNewReactionBottomSheet />
         <ConfirmLeaveLibrary />
       </View>
     </LibraryContext.Provider>
