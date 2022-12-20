@@ -1,30 +1,17 @@
-// main libraries
 import React, { useState, useContext } from 'react';
 import lampostAPI from '../../apis/lampost';
 import GlobalContext from '../../GlobalContext';
-import { connect } from 'react-redux';
-import { View, Text, SafeAreaView, StyleSheet, TextInput } from 'react-native';
-import { Button } from 'react-native-paper';
+import { View, Text } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
+import { baseTextColor, iconColorsTable } from '../../utils/colorsTable';
+import ActionButton from '../Utils/ActionButton';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import FormTextInput from './FormTextInput';
 
-// import { Button as ButtonRNE, Icon } from 'react-native-elements';
-
-// ac
-import { logIn } from '../../redux/actionCreators/auth';
-
-const Login = (props) => {
+const Login = () => {
   const { setAuth, setLoading } = useContext(GlobalContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  // const onPressSubmit = () => {
-  //   const formData = {
-  //     email,
-  //     password,
-  //   };
-  //   // props.navigation.navigate('LogInOrSignUp', { screen: 'Map' });
-  //   props.logIn(formData);
-  // };
 
   const login = async () => {
     try {
@@ -49,73 +36,28 @@ const Login = (props) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
-      {/* <Button
-      style={styles.button}
-      title='< Back'
-      onPress={() => {
-        props.navigation.goBack(null);
-      }}
-    /> */}
-      <View style={styles.formContainer}>
-        <Text>Welcome to Lampost</Text>
-
-        <Text>Email</Text>
-        <TextInput
-          placeholder='Email'
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-          style={{
-            borderColor: 'skyblue',
-            borderWidth: 1,
-            borderRadius: 5,
-            margin: 12,
-            padding: 10,
-            height: 40,
-            width: 200,
-          }}
-        />
-        <Text>Password</Text>
-        <TextInput
-          secureTextEntry={true}
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-          placeholder='Password'
-          style={{
-            borderColor: 'skyblue',
-            borderWidth: 1,
-            borderRadius: 5,
-            margin: 12,
-            padding: 10,
-            height: 40,
-            width: 200,
-          }}
+    <View>
+      <View style={{ marginBottom: 15 }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5, color: 'white' }}>Login</Text>
+        <Text style={{ color: baseTextColor }}>Please fill in your email and password.</Text>
+      </View>
+      <View style={{ marginBottom: 15 }}>
+        <FormTextInput label='Email' value={email} onChangeText={(text) => setEmail(text)} />
+      </View>
+      <View style={{ marginBottom: 15 }}>
+        <FormTextInput label='Password' value={password} onChangeText={(text) => setPassword(text)} />
+      </View>
+      <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+        <ActionButton
+          label='Login'
+          backgroundColor={iconColorsTable['blue1']}
+          icon={<MaterialCommunityIcons name='login' color='white' size={25} />}
+          onActionButtonPress={() => login()}
         />
       </View>
-
-      {/* <ButtonRNE
-        icon={<Icon name='mail' size={50} type='entypo' color='white' />}
-        iconRight
-        onPress={() => {
-          onPressSubmit();
-        }}
-      /> */}
-      <Button onPress={() => login()}>Login</Button>
-    </SafeAreaView>
+      {/* <Button onPress={() => login()}>Login</Button> */}
+    </View>
   );
 };
 
-export default connect(null, { logIn })(Login);
-
-const styles = StyleSheet.create({
-  button: {
-    position: 'absolute',
-    left: 0,
-    top: 100,
-  },
-  formContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default Login;

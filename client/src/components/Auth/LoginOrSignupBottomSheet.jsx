@@ -3,16 +3,19 @@ import AuthContext from './AuthContext';
 import { View, Text, Keyboard } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { baseBackgroundColor, iconColorsTable, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
+import LogIn from './LogIn';
+import SignUp from './SignUp';
+
 const LoginOrSignupBottomSheet = () => {
   const { loginOrSignupBottomSheetRef, isLoginOrSignup } = useContext(AuthContext);
-  const snapPoints = useMemo(() => ['65%'], []);
+  const snapPoints = useMemo(() => ['85%'], []);
 
   const renderLoginOrSignup = () => {
     switch (isLoginOrSignup) {
       case 'LOGIN':
-        return <Text>Login</Text>;
+        return <LogIn />;
       case 'SIGNUP':
-        return <Text>Signup</Text>;
+        return <SignUp />;
       default:
         return null;
     }
