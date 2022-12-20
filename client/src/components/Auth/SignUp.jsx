@@ -5,6 +5,7 @@ import { baseTextColor, iconColorsTable } from '../../utils/colorsTable';
 import FormTextInput from './FormTextInput';
 import ActionButton from '../Utils/ActionButton';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import lampostAPI from '../../apis/lampost';
 
 const SignUp = () => {
@@ -45,19 +46,34 @@ const SignUp = () => {
           <Text style={{ color: baseTextColor }}>Please fill in your fullname, email and password.</Text>
         </View>
         <View style={{ marginBottom: 15 }}>
-          <FormTextInput label='Name' value={name} onChangeText={(text) => setName(text)} />
+          <FormTextInput
+            label='Name'
+            value={name}
+            onChangeText={(text) => setName(text)}
+            inputAccessoryViewID={'SIGNUP_NAME_IMPUT'}
+          />
         </View>
         <View style={{ marginBottom: 15 }}>
-          <FormTextInput label='Email' value={email} onChangeText={(text) => setEmail(text)} />
+          <FormTextInput
+            label='Email'
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+            inputAccessoryViewID={'SIGNUP_EMAIL_IMPUT'}
+          />
         </View>
         <View style={{ marginBottom: 15 }}>
-          <FormTextInput label='Password' value={password} onChangeText={(text) => setPassword(text)} />
+          <FormTextInput
+            label='Password'
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+            inputAccessoryViewID={'SIGNUP_PASSWORD_IMPUT'}
+          />
         </View>
         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
           <ActionButton
-            label='Signup'
+            label='Done'
             backgroundColor={iconColorsTable['blue1']}
-            icon={<MaterialCommunityIcons name='plus' color='white' size={25} />}
+            icon={<MaterialIcons name='check' color='white' size={25} />}
             onActionButtonPress={() => onPressSubmit()}
           />
         </View>

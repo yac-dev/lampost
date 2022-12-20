@@ -22,9 +22,7 @@ const LogInOrSignUp = (props) => {
           style={{ justifyContent: 'center', alignItems: 'center', marginTop: 150, paddingLeft: 20, paddingRight: 20 }}
         >
           <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 30, marginBottom: 30 }}>Lampost</Text>
-          <Text style={{ color: 'white', marginBottom: 30 }}>
-            This is an app just for hosting or joining the in-person meetup. On we go meetup and have fun!
-          </Text>
+          <Text style={{ color: 'white', marginBottom: 30 }}>On we go meetup and have fun!</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <ActionButton
               label='Login'
@@ -46,27 +44,8 @@ const LogInOrSignUp = (props) => {
               }}
             />
           </View>
-          <Text style={{ color: 'white' }}>Founded by Yosuke Kojima</Text>
+          {/* <Text style={{ color: 'white' }}>Founded by Yosuke Kojima</Text> */}
         </View>
-        {/* <View style={styles.buttons}>
-        <RNEButton
-          title={'Sign up'}
-          containerStyle={{
-            width: 300,
-            borderRadius: 20,
-          }}
-          onPress={() => props.navigation.navigate('SignUp')}
-        />
-        <Text>Or</Text>
-        <RNEButton
-          title={'Login'}
-          containerStyle={{
-            width: 300,
-            borderRadius: 20,
-          }}
-          onPress={() => props.navigation.navigate('LogIn')}
-        />
-      </View> */}
         <LoginOrSignupBottomSheet />
       </View>
     </AuthContext.Provider>
