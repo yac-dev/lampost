@@ -1,26 +1,54 @@
 // main libraries
-import React from 'react';
-import { View, Text, TouchableOpacity, SafeAreaView, StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, { useRef, useState } from 'react';
+import AuthContext from './AuthContext';
+import { View, Text } from 'react-native';
+import { baseBackgroundColor, iconColorsTable } from '../../utils/colorsTable';
+import ActionButton from '../Utils/ActionButton';
+import LoginOrSignupBottomSheet from './LoginOrSignupBottomSheet';
 
+import { MaterialIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 // react native elements
 import { Button as RNEButton } from '@rneui/themed';
 
-// components
-import SignUp from './SignUp';
-import LogIn from './LogIn';
-const Stack = createNativeStackNavigator();
-
 const LogInOrSignUp = (props) => {
-  return (
-    <SafeAreaView>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Lampost</Text>
-      </View>
+  const loginOrSignupBottomSheetRef = useRef(null);
+  const [isLoginOrSignup, setIsLoginOrSignup] = useState('');
 
-      <Text style={styles.title}>Let's get right into new world!</Text>
-      <View style={styles.buttons}>
+  return (
+    <AuthContext.Provider value={{ loginOrSignupBottomSheetRef, isLoginOrSignup, setIsLoginOrSignup }}>
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+        <View
+          style={{ justifyContent: 'center', alignItems: 'center', marginTop: 150, paddingLeft: 20, paddingRight: 20 }}
+        >
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 30, marginBottom: 30 }}>Lampost</Text>
+          <Text style={{ color: 'white', marginBottom: 30 }}>
+            This is an app just for hosting or joining the in-person meetup. On we go meetup and have fun!
+          </Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <ActionButton
+              label='Login'
+              icon={<MaterialIcons name='login' size={25} color={'white'} />}
+              backgroundColor={iconColorsTable['blue1']}
+              onActionButtonPress={() => {
+                setIsLoginOrSignup('LOGIN');
+                loginOrSignupBottomSheetRef.current.snapToIndex(0);
+              }}
+            />
+            <Text style={{ color: 'white', marginRight: 10 }}>Or</Text>
+            <ActionButton
+              label='Signup'
+              icon={<AntDesign name='plus' size={25} color={'white'} />}
+              backgroundColor={iconColorsTable['blue1']}
+              onActionButtonPress={() => {
+                setIsLoginOrSignup('SIGNUP');
+                loginOrSignupBottomSheetRef.current.snapToIndex(0);
+              }}
+            />
+          </View>
+          <Text style={{ color: 'white' }}>Founded by Yosuke Kojima</Text>
+        </View>
+        {/* <View style={styles.buttons}>
         <RNEButton
           title={'Sign up'}
           containerStyle={{
@@ -38,39 +66,11 @@ const LogInOrSignUp = (props) => {
           }}
           onPress={() => props.navigation.navigate('LogIn')}
         />
+      </View> */}
+        <LoginOrSignupBottomSheet />
       </View>
-      {/* <Stack.Navigator>
-        <Stack.Screen name='SignUp' component={SignUp} options={{ headerShown: false }} />
-        <Stack.Screen name='LogIn' component={LogIn} />
-        <Stack.Screen name='LogIn' component={LogIn} options={{ headerShown: false }} />
-      </Stack.Navigator> */}
-    </SafeAreaView>
+    </AuthContext.Provider>
   );
 };
 
 export default LogInOrSignUp;
-
-const styles = StyleSheet.create({
-  header: {
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // position: 'absolute',
-    // top: 80,
-    // width: '100%',
-    marginTop: 150,
-  },
-  headerText: {
-    fontSize: 40,
-    textAlign: 'center',
-    fontFamily: 'Cochin',
-  },
-  title: {
-    marginTop: 10,
-    textAlign: 'center',
-  },
-  buttons: {
-    marginTop: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
