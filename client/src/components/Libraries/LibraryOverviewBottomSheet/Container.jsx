@@ -1,9 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import LibrariesContext from '../LibrariesContext';
+import SelectedLibraryContext from './SelectedLibraryContext';
 import { View, Text, TouchableOpacity } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 import Body from './Body/Container';
+import InfoDetail from './InfoDetail/Container';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -15,6 +17,7 @@ const Container = (props) => {
   // oncloseでselecteされたlibraryを消すようにすればいい。
   const { libraryOverviewBottomSheetRef, setSelectedLibrary } = useContext(LibrariesContext);
   const snapPoints = ['80%', '100%'];
+  const [selectedDetailComponent, setSelectedDetailComponent] = useState('');
 
   return (
     <GorhomBottomSheet
@@ -34,10 +37,13 @@ const Container = (props) => {
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
       handleIndicatorStyle={{ backgroundColor: 'white' }}
       // keyboardBehavior={'interactive'}
-      onClose={() => setSelectedLibrary(null)}
+      onClose={() => setSelectedDetailComponent('')}
     >
       <BottomSheetView style={{ flex: 1 }}>
-        <Body />
+        <SelectedLibraryContext.Provider value={{ selectedDetailComponent, setSelectedDetailComponent }}>
+          <Body />
+          <InfoDetail />
+        </SelectedLibraryContext.Provider>
       </BottomSheetView>
     </GorhomBottomSheet>
   );

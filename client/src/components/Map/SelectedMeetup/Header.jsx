@@ -60,11 +60,12 @@ const Header = (props) => {
       minute: '2-digit',
     });
     const dateElements = d.split(', ');
-    console.log(duration); // ここは置いておこうか。
+    // console.log(duration); // ここは置いておこうか。
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
         <Ionicons name='time-outline' size={15} color={baseTextColor} style={{ marginRight: 5 }} />
         <Text style={{ color: baseTextColor }}>{dateElements[1]}&nbsp;~</Text>
+        <Text style={{ color: baseTextColor }}>{selectedMeetup.state}</Text>
       </View>
     );
   };
@@ -76,10 +77,9 @@ const Header = (props) => {
         <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>{selectedMeetup.title}</Text>
       </View>
       <View style={{ marginBottom: 10 }}>{renderTime(selectedMeetup.startDateAndTime, selectedMeetup.duration)}</View>
-      <View style={{ marginBottom: 10 }}>
+      <View>
         <Badges />
       </View>
-      <Text style={{ flexShrink: 1, color: baseTextColor }}>{selectedMeetup.description}</Text>
     </View>
   );
 };

@@ -1,8 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { connect } from 'react-redux';
+import GlobalContext from '../../../../GlobalContext';
+import SelectedLibraryContext from '../SelectedLibraryContext';
 import { View, Text, TouchableOpacity } from 'react-native';
 import LibrariesContext from '../../LibrariesContext';
-
 import {
   iconColorsTable,
   backgroundColorsTable,
@@ -16,7 +17,9 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import Menu from '../../../Map/SelectedMeetup/Menu';
 
 const Container = (props) => {
-  const { selectedLibrary, navigation } = useContext(LibrariesContext);
+  const { auth } = useContext(GlobalContext);
+  const { selectedLibrary, navigation, selectedLibraryDetailComponentBottomSheetRef } = useContext(LibrariesContext);
+  const { selectedDetailComponent, setSelectedDetailComponent } = useContext(SelectedLibraryContext);
   const [menus, setMenus] = useState({
     members: { label: 'Members', info: '' },
     rate: { label: 'rate', info: '' },
@@ -36,7 +39,7 @@ const Container = (props) => {
           label='Launcher'
           // onPress={() => navigation.navigate('User', { userId: selectedLibrary.launcher._id })}
           onPressMenu={() => {
-            if (!props.auth.isAuthenticated || props.auth.data._id === selectedLibrary.launcher._id) {
+            if (!auth.data || auth.data._id !== selectedLibrary.launcher._id) {
               navigation.navigate('User', { userId: selectedLibrary.launcher._id });
             }
           }}
@@ -51,36 +54,33 @@ const Container = (props) => {
         />
         <Menu
           label='Description'
-          onPress={() => console.log('hello')}
+          onPressMenu={() => {
+            setSelectedDetailComponent('Description');
+            selectedLibraryDetailComponentBottomSheetRef.current.snapToIndex(0);
+          }}
           backgroundColor={backgroundColorsTable['green1']}
           icon={<MaterialCommunityIcons name='card-text-outline' size={25} color={iconColorsTable['green1']} />}
-          rightInfo={
-            <View>
-              <Text style={{ color: baseTextColor }}>{`>`}</Text>
-            </View>
-          }
+          rightInfo={<Text style={{ color: baseTextColor }}>{`>`}</Text>}
         />
         <Menu
           label='Members'
-          onPress={() => console.log('hello')}
+          onPress={() => {
+            setSelectedDetailComponent('Members');
+            selectedLibraryDetailComponentBottomSheetRef.current.snapToIndex(0);
+          }}
           backgroundColor={backgroundColorsTable['violet1']}
           icon={<FontAwesome5 name='user-astronaut' size={25} color={iconColorsTable['violet1']} />}
-          rightInfo={
-            <View>
-              <Text style={{ color: baseTextColor }}>{`${selectedLibrary.totalMembers} >`}</Text>
-            </View>
-          }
+          rightInfo={<Text style={{ color: baseTextColor }}>{`${selectedLibrary.totalMembers} >`}</Text>}
         />
         <Menu
           label='Rate'
-          onPress={() => console.log('hello2')}
+          onPressMenu={() => {
+            setSelectedDetailComponent('Rate');
+            selectedLibraryDetailComponentBottomSheetRef.current.snapToIndex(0);
+          }}
           backgroundColor={backgroundColorsTable['yellow1']}
           icon={<MaterialIcons name='star-rate' size={25} color={iconColorsTable['yellow1']} />}
-          rightInfo={
-            <View>
-              <Text style={{ color: baseTextColor }}>{`${selectedLibrary.rate} >`}</Text>
-            </View>
-          }
+          rightInfo={<Text style={{ color: baseTextColor }}>{`${selectedLibrary.rate} >`}</Text>}
         />
       </View>
     </View>

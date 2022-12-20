@@ -164,6 +164,17 @@ const Menus = (props) => {
         }}
       />
       <Menu
+        label='Description'
+        onPress={() => console.log('hello')}
+        backgroundColor={backgroundColorsTable['green1']}
+        icon={<MaterialCommunityIcons name='card-text-outline' size={25} color={iconColorsTable['green1']} />}
+        rightInfo={<Text style={{ color: baseTextColor }}>{`>`}</Text>}
+        onPressMenu={() => {
+          setSelectedMeetupDetailComponent('Description');
+          selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
+        }}
+      />
+      <Menu
         label='Crew'
         icon={<FontAwesome5 name='user-astronaut' size={25} color={iconColorsTable['violet1']} />}
         backgroundColor={backgroundColorsTable['violet1']}
@@ -175,8 +186,8 @@ const Menus = (props) => {
       />
       <Menu
         label='Comments'
-        icon={<MaterialCommunityIcons name='chat-question' size={25} color={iconColorsTable['pink1']} />}
-        backgroundColor={backgroundColorsTable['pink1']}
+        icon={<MaterialCommunityIcons name='chat-question' size={25} color={iconColorsTable['blue1']} />}
+        backgroundColor={backgroundColorsTable['blue1']}
         rightInfo={<Text style={{ color: baseTextColor }}>{`${selectedMeetup.comments.length} >`}</Text>}
         onPressMenu={() => {
           setSelectedMeetupDetailComponent('QandAs');
@@ -188,14 +199,14 @@ const Menus = (props) => {
         icon={<Foundation name='dollar-bill' size={25} color={iconColorsTable['yellow1']} />}
         backgroundColor={backgroundColorsTable['yellow1']}
         rightInfo={
-          <Text style={{ color: baseTextColor }}>{selectedMeetup.isFeeFree ? "It's free" : "It's not free"}</Text>
+          <Text style={{ color: baseTextColor }}>{selectedMeetup.isFeeFree ? "It's free >" : "It's not free >"}</Text>
         }
         onPressMenu={() => {
           setSelectedMeetupDetailComponent('Fee');
           selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
         }}
       />
-      <Menu
+      {/* <Menu
         label='Privacy'
         icon={<FontAwesome5 name='photo-video' size={25} color={iconColorsTable['lightBlue1']} />}
         backgroundColor={backgroundColorsTable['lightBlue1']}
@@ -206,12 +217,12 @@ const Menus = (props) => {
           setSelectedMeetupDetailComponent('MediaPermission');
           selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
         }}
-      />
+      /> */}
       <Menu
         label='Link'
         icon={<Entypo name='link' size={25} color={iconColorsTable['grey1']} />}
         backgroundColor={backgroundColorsTable['grey1']}
-        rightInfo={<Text style={{ color: baseTextColor }}>Right</Text>}
+        rightInfo={<Text style={{ color: baseTextColor }}>{`>`}</Text>}
         onPressMenu={() => {
           setSelectedMeetupDetailComponent('Links');
           selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);

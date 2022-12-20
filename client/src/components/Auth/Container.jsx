@@ -11,7 +11,7 @@ import { AntDesign } from '@expo/vector-icons';
 // react native elements
 import { Button as RNEButton } from '@rneui/themed';
 
-const LogInOrSignUp = (props) => {
+const Container = (props) => {
   const loginOrSignupBottomSheetRef = useRef(null);
   const [isLoginOrSignup, setIsLoginOrSignup] = useState('');
 
@@ -52,4 +52,4 @@ const LogInOrSignUp = (props) => {
   );
 };
 
-export default LogInOrSignUp;
+export default Container;

@@ -1,25 +1,17 @@
 import React, { useCallback, useContext } from 'react';
-import MapContext from '../../MeetupContext';
+import LibrariesContext from '../../LibrariesContext';
+import SelectedLibraryContext from '../SelectedLibraryContext';
 import { View, Text } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { appBottomSheetBackgroundColor } from '../../../../utils/colorsTable';
-// components
-import Description from './Description';
-import Badges from './Badges';
-import Crew from './Crew';
-import Fee from './Fee';
-import QandAs from './QandAs';
-import MediaPermission from './MediaPermission';
-
-import { setIsSelectedMeetupInfoDetailBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
 
 const Container = (props) => {
-  const { selectedMeetupDetailComponent, setSelectedMeetupDetailComponent, selectedMeetupDetailBottomSheetRef } =
-    useContext(MapContext);
+  const { selectedLibraryDetailComponentBottomSheetRef } = useContext(LibrariesContext);
+  const { selectedDetailComponent } = useContext(SelectedLibraryContext); // これがfunctionじゃねーんだと。。。
   const snapPoints = ['40%', '90%'];
 
   const switchComponent = () => {
-    switch (selectedMeetupDetailComponent) {
+    switch (selectedDetailComponent) {
       case 'Badges':
         return <Badges />;
       case 'Description':
@@ -43,7 +35,7 @@ const Container = (props) => {
     <GorhomBottomSheet
       index={-1}
       enableOverDrag={true}
-      ref={selectedMeetupDetailBottomSheetRef}
+      ref={selectedLibraryDetailComponentBottomSheetRef}
       snapPoints={snapPoints}
       keyboardBehavior={'extend'}
       backdropComponent={(backdropProps) => (
@@ -52,9 +44,11 @@ const Container = (props) => {
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
       enablePanDownToClose={true}
       handleIndicatorStyle={{ backgroundColor: 'white' }}
-      onClose={() => setSelectedMeetupDetailComponent('')}
+      onClose={() => selectedDetailComponent('')}
     >
-      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>{switchComponent()}</BottomSheetView>
+      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
+        {/* {switchComponent()} */}
+      </BottomSheetView>
     </GorhomBottomSheet>
   );
 };

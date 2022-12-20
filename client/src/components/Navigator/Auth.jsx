@@ -7,7 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 
 // components
-import LogInOrSignUp from '../Auth/LogInOrSignUp';
+import LogInOrSignUp from '../Auth/Container';
 import SignUp from '../Auth/SignUp';
 import LogIn from '../Auth/LogIn';
 
@@ -117,38 +117,6 @@ const Auth = (props) => {
           options={{
             headerShown: true,
             title: 'Welcome to Lampost',
-            headerStyle: {
-              backgroundColor: appBottomSheetBackgroundColor,
-            },
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              color: 'white',
-            },
-            headerTintColor: 'white',
-          }}
-        />
-        <Stack.Screen
-          name='SignUp'
-          component={SignUp}
-          options={{
-            headerShown: true,
-            title: 'Signup',
-            headerStyle: {
-              backgroundColor: appBottomSheetBackgroundColor,
-            },
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              color: 'white',
-            },
-            headerTintColor: 'white',
-          }}
-        />
-        <Stack.Screen
-          name='LogIn'
-          component={LogIn}
-          options={{
-            headerShown: true,
-            title: 'Login',
             headerStyle: {
               backgroundColor: appBottomSheetBackgroundColor,
             },

@@ -22,6 +22,7 @@ import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import CreateLibraryBottomSheet from './CreateLibraryBottomSheet/Container';
 import LibraryOverviewBottomSheet from './LibraryOverviewBottomSheet/Container';
 
+// authenticatedの場合が必要か。
 const Container = (props) => {
   const { auth, setSnackBar } = useContext(GlobalContext);
   const rollsBottomSheetRef = useRef(null);
@@ -34,6 +35,7 @@ const Container = (props) => {
   const appMenuBottomSheetRef = useRef(null);
   const createLibraryBottomSheetRef = useRef(null);
   const libraryOverviewBottomSheetRef = useRef(null);
+  const selectedLibraryDetailComponentBottomSheetRef = useRef(null);
 
   const oneGridWidth = Dimensions.get('window').width / 2;
   const oneGridHeight = Dimensions.get('window').height / 3.5;
@@ -41,20 +43,22 @@ const Container = (props) => {
   const libraryIconWidth = libraryContainerWidth * 0.4;
 
   useEffect(() => {
-    auth.socket.on('CREATED_LIBRARY', (data) => {
-      setLibraries((previous) => [...previous, data]);
-      if (data.launcher._id === auth.data._id) {
-        setSnackBar({
-          isVisible: true,
-          message: 'Successfully created my library.',
-          barType: 'success',
-          duration: 5000,
-        });
-        setMyJoinedLibraries((previous) => [...previous, data]);
-        createLibraryBottomSheetRef.current.close();
-      }
-    });
-  }, []);
+    if (auth.socket) {
+      auth.socket.on('CREATED_LIBRARY', (data) => {
+        setLibraries((previous) => [...previous, data]);
+        if (data.launcher._id === auth.data._id) {
+          setSnackBar({
+            isVisible: true,
+            message: 'Successfully created my library.',
+            barType: 'success',
+            duration: 5000,
+          });
+          setMyJoinedLibraries((previous) => [...previous, data]);
+          createLibraryBottomSheetRef.current.close();
+        }
+      });
+    }
+  }, [auth.socket]);
 
   // libraryから出て行った時用。
   useEffect(() => {
@@ -250,6 +254,7 @@ const Container = (props) => {
         appMenuBottomSheetRef,
         createLibraryBottomSheetRef,
         libraryOverviewBottomSheetRef,
+        selectedLibraryDetailComponentBottomSheetRef,
         libraries,
         setLibraries,
         navigation: props.navigation,

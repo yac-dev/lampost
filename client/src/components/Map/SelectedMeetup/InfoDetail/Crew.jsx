@@ -64,7 +64,7 @@ const Crew = (props) => {
         );
       });
 
-      return <View>{crewList}</View>;
+      return <View style={{ backgroundColor: sectionBackgroundColor, padding: 5, borderRadius: 10 }}>{crewList}</View>;
     } else {
       return <Text style={{ color: 'white' }}>Now loading...</Text>;
     }
@@ -78,10 +78,7 @@ const Crew = (props) => {
       </View>
       <ScrollView
         contentContainerStyle={{
-          paddingBottom: 100,
-          backgroundColor: sectionBackgroundColor,
-          padding: 5,
-          borderRadius: 10,
+          paddingBottom: 50,
         }}
       >
         {renderCrew()}

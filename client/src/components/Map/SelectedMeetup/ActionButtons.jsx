@@ -87,24 +87,28 @@ const ActionButtons = (props) => {
             <View style={{ flexDirection: 'row', paddingTop: 10, paddingBottom: 10 }}>
               {selectedMeetup.launcher._id === auth.data._id ? (
                 <>
-                  <ActionButton // ここ、meetupのstateによってbuttonを切り替える。
-                    label='Start meetup now'
-                    icon={<Feather name='power' size={20} color={'white'} />}
-                    backgroundColor={iconColorsTable['blue1']}
-                    onActionButtonPress={() => console.log('start meetup now')}
-                  />
-                  <ActionButton
-                    label='Finish meetup'
-                    icon={<Feather name='power' size={20} color={'white'} />}
-                    backgroundColor={iconColorsTable['red1']}
-                    onActionButtonPress={() => console.log('start meetup now')}
-                  />
-                  <ActionButton
+                  {selectedMeetup.state === 'upcoming' ? (
+                    <ActionButton // ここ、meetupのstateによってbuttonを切り替える。
+                      label='Start meetup now'
+                      icon={<Feather name='power' size={20} color={'white'} />}
+                      backgroundColor={iconColorsTable['blue1']}
+                      onActionButtonPress={() => console.log('start meetup now')}
+                    />
+                  ) : (
+                    <ActionButton
+                      label='Finish meetup'
+                      icon={<Feather name='power' size={20} color={'white'} />}
+                      backgroundColor={iconColorsTable['red1']}
+                      onActionButtonPress={() => console.log('finish meetup now')}
+                    />
+                  )}
+
+                  {/* <ActionButton
                     label='Edit my meetup'
                     icon={<MaterialCommunityIcons name='file-document-edit-outline' size={20} color={'white'} />}
                     backgroundColor={iconColorsTable['blue1']}
                     onActionButtonPress={() => console.log('edit  my meetup')}
-                  />
+                  /> */}
                 </>
               ) : (
                 <ActionButton

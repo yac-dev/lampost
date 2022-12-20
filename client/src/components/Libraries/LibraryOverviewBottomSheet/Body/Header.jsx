@@ -11,8 +11,13 @@ const Header = () => {
   const { selectedLibrary } = useContext(LibrariesContext);
   return (
     <View style={{ marginBottom: 25, paddingLeft: 20, paddingRight: 20 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
-        <View
+      <View
+        style={{
+          // flexDirection: 'row', alignItems: 'center',
+          marginBottom: 15,
+        }}
+      >
+        {/* <View
           style={{
             backgroundColor: rnDefaultBackgroundColor,
             width: 50,
@@ -33,7 +38,7 @@ const Header = () => {
           >
             <Ionicons name='ios-library' size={30} color={iconColorsTable[selectedLibrary.color]} />
           </View>
-        </View>
+        </View> */}
         <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>{selectedLibrary.name}</Text>
       </View>
       <BadgeLabels />
