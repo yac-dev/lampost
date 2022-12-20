@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { connect } from 'react-redux';
 import GlobalContext from '../../../../GlobalContext';
-import SelectedLibraryContext from '../SelectedLibraryContext';
 import { View, Text, TouchableOpacity } from 'react-native';
 import LibrariesContext from '../../LibrariesContext';
 import {
@@ -18,26 +17,18 @@ import Menu from '../../../Map/SelectedMeetup/Menu';
 
 const Container = (props) => {
   const { auth } = useContext(GlobalContext);
-  const { selectedLibrary, navigation, selectedLibraryDetailComponentBottomSheetRef } = useContext(LibrariesContext);
-  const { selectedDetailComponent, setSelectedDetailComponent } = useContext(SelectedLibraryContext);
-  const [menus, setMenus] = useState({
-    members: { label: 'Members', info: '' },
-    rate: { label: 'rate', info: '' },
-  });
+  const {
+    selectedLibrary,
+    navigation,
+    selectedLibraryDetailComponentBottomSheetRef,
+    setSelectedLibraryDetailComponent,
+  } = useContext(LibrariesContext);
 
   return (
-    <View
-      style={{
-        marginBottom: 25,
-
-        paddingLeft: 20,
-        paddingRight: 20,
-      }}
-    >
+    <View style={{ marginBottom: 25, paddingLeft: 20, paddingRight: 20 }}>
       <View style={{ backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>
         <Menu
           label='Launcher'
-          // onPress={() => navigation.navigate('User', { userId: selectedLibrary.launcher._id })}
           onPressMenu={() => {
             if (!auth.data || auth.data._id !== selectedLibrary.launcher._id) {
               navigation.navigate('User', { userId: selectedLibrary.launcher._id });
@@ -55,7 +46,7 @@ const Container = (props) => {
         <Menu
           label='Description'
           onPressMenu={() => {
-            setSelectedDetailComponent('Description');
+            setSelectedLibraryDetailComponent('Description');
             selectedLibraryDetailComponentBottomSheetRef.current.snapToIndex(0);
           }}
           backgroundColor={backgroundColorsTable['green1']}
@@ -64,8 +55,8 @@ const Container = (props) => {
         />
         <Menu
           label='Members'
-          onPress={() => {
-            setSelectedDetailComponent('Members');
+          onPressMenu={() => {
+            setSelectedLibraryDetailComponent('Members');
             selectedLibraryDetailComponentBottomSheetRef.current.snapToIndex(0);
           }}
           backgroundColor={backgroundColorsTable['violet1']}
@@ -73,9 +64,9 @@ const Container = (props) => {
           rightInfo={<Text style={{ color: baseTextColor }}>{`${selectedLibrary.totalMembers} >`}</Text>}
         />
         <Menu
-          label='Rate'
+          label='Reactions'
           onPressMenu={() => {
-            setSelectedDetailComponent('Rate');
+            setSelectedLibraryDetailComponent('Reactions');
             selectedLibraryDetailComponentBottomSheetRef.current.snapToIndex(0);
           }}
           backgroundColor={backgroundColorsTable['yellow1']}

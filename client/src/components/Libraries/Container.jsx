@@ -11,9 +11,6 @@ import {
   iconColorsTable,
   rnDefaultBackgroundColor,
 } from '../../utils/colorsTable';
-import { SimpleLineIcons } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import BadgeLabel from '../Utils/BadgeLabel';
@@ -21,6 +18,7 @@ import BadgeLabel from '../Utils/BadgeLabel';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import CreateLibraryBottomSheet from './CreateLibraryBottomSheet/Container';
 import LibraryOverviewBottomSheet from './LibraryOverviewBottomSheet/Container';
+import InfoDetailBottomSheet from './LibraryOverviewBottomSheet/InfoDetailBottomSheet/Container';
 
 // authenticatedの場合が必要か。
 const Container = (props) => {
@@ -31,6 +29,7 @@ const Container = (props) => {
   const [selectedLibrary, setSelectedLibrary] = useState(null);
   const [libraryAssets, setLibraryAssets] = useState([]);
   const [myJoinedLibraries, setMyJoinedLibraries] = useState([]);
+  const [selectedLibraryDetailComponent, setSelectedLibraryDetailComponent] = useState('');
 
   const appMenuBottomSheetRef = useRef(null);
   const createLibraryBottomSheetRef = useRef(null);
@@ -266,6 +265,8 @@ const Container = (props) => {
         setLibraryAssets,
         myJoinedLibraries,
         setMyJoinedLibraries,
+        selectedLibraryDetailComponent,
+        setSelectedLibraryDetailComponent,
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
@@ -276,6 +277,7 @@ const Container = (props) => {
         <AppMenuBottomSheet />
         <CreateLibraryBottomSheet />
         <LibraryOverviewBottomSheet />
+        <InfoDetailBottomSheet />
       </View>
     </LibrariesContext.Provider>
   );
