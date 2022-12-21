@@ -8,12 +8,25 @@ import {
   sectionBackgroundColor,
 } from '../../../../utils/colorsTable';
 import AppMenuButton from '../../../Utils/AppMenuButton';
+import lampostAPI from '../../../../apis/lampost';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
 
 const AppMenuButtons = () => {
-  const { appMenuBottomSheetRef, navigation, library, setIsLeaveLibraryConfirmationModalOpen } =
-    useContext(LibraryContext);
+  const {
+    appMenuBottomSheetRef,
+    navigation,
+    library,
+    setIsLeaveLibraryConfirmationModalOpen,
+    setLibraryMembers,
+    membersBottomSheetRef,
+  } = useContext(LibraryContext);
+
+  const getUsersByLibraryId = async () => {
+    const result = await lampostAPI.get(`/libraryanduserrelationships/users/${library._id}`);
+    const { users } = result.data;
+    setLibraryMembers(users);
+  };
 
   return (
     <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 25 }}>
@@ -41,7 +54,8 @@ const AppMenuButtons = () => {
           icon={<MaterialCommunityIcons name='account-group' size={35} color={iconColorsTable['blue1']} />}
           label='Members'
           onAppMenuButtonPress={() => {
-            navigation.navigate('Add assets', { libraryId: library._id });
+            getUsersByLibraryId();
+            membersBottomSheetRef.current.snapToIndex(0);
             appMenuBottomSheetRef.current.snapToIndex(0);
           }}
         />

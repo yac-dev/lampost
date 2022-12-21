@@ -8,6 +8,7 @@ import FastImage from 'react-native-fast-image';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import SelectedAssetBottomSheet from './SelectedAssetBottomSheet';
 import AddNewReactionBottomSheet from './AddNewReactionBottomSheet';
+import MembersBottomSheet from './MembersBottomSheet';
 import Header from './Header';
 import BadgeLabels from './BadgeLabels';
 import Description from './Description';
@@ -17,10 +18,12 @@ const Container = (props) => {
   const appMenuBottomSheetRef = useRef(null);
   const selectedAssetBottomSheetRef = useRef(null);
   const addNewReactionBottomSheetRef = useRef(null);
+  const membersBottomSheetRef = useRef(null);
   const [isLeaveLibraryConfirmationModalOpen, setIsLeaveLibraryConfirmationModalOpen] = useState(false);
   const [library, setLibrary] = useState(null);
   const [assets, setAssets] = useState([]);
   const [selectedAsset, setSelectedAsset] = useState(null);
+  const [libraryMembers, setLibraryMembers] = useState([]);
   const oneAssetWidth = Dimensions.get('window').width / 2;
 
   // ここで、libraryを取ってこないとね。
@@ -112,9 +115,12 @@ const Container = (props) => {
         appMenuBottomSheetRef,
         selectedAssetBottomSheetRef,
         addNewReactionBottomSheetRef,
+        membersBottomSheetRef,
         library,
         assets,
         setAssets,
+        libraryMembers,
+        setLibraryMembers,
         selectedAsset,
         setSelectedAsset,
         navigation: props.navigation,
@@ -132,6 +138,7 @@ const Container = (props) => {
         <AppMenuBottomSheet />
         <SelectedAssetBottomSheet />
         <AddNewReactionBottomSheet />
+        <MembersBottomSheet />
         <ConfirmLeaveLibrary />
       </View>
     </LibraryContext.Provider>

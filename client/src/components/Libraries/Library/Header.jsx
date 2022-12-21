@@ -19,7 +19,7 @@ const Header = () => {
           paddingTop: 20,
         }}
       >
-        <View
+        {/* <View
           style={{
             backgroundColor: rnDefaultBackgroundColor,
             width: 50,
@@ -40,7 +40,7 @@ const Header = () => {
           >
             <Ionicons name='ios-library' size={30} color={iconColorsTable[library.color]} />
           </View>
-        </View>
+        </View> */}
         <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>{library.name}</Text>
       </View>
     );

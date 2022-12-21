@@ -1,34 +1,30 @@
-import React, { useEffect, useState, useContext } from 'react';
-import GlobalContext from '../../../../GlobalContext';
-import MapContext from '../../MeetupContext';
+import React, { useEffect, useContext, useState } from 'react';
+import GlobalContext from '../../../GlobalContext';
+import LibrariesContext from '../LibrariesContext';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { connect } from 'react-redux';
-import lampostAPI from '../../../../apis/lampost';
+import lampostAPI from '../../../apis/lampost';
+import { sectionBackgroundColor, baseTextColor } from '../../../utils/colorsTable';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { baseTextColor, sectionBackgroundColor } from '../../../../utils/colorsTable';
-import Members from '../../../Libraries/InfoDetailBottomSheet/Members';
 
-const Crew = (props) => {
+const Members = () => {
   const { auth } = useContext(GlobalContext);
-  const { selectedMeetup, selectedMeetupDetailComponent, navigation } = useContext(MapContext);
-  const [crew, setCrew] = useState([]);
+  const { selectedLibrary, selectedLibraryDetailComponent, navigation } = useContext(LibrariesContext);
+  const [members, setMembers] = useState([]);
 
-  const getAttendees = async () => {
-    const result = await lampostAPI.get(`/meetups/${selectedMeetup._id}/crew`);
-    const { attendees } = result.data;
-    // console.log(attendees);
-    setCrew((prev) => [...prev, ...attendees]);
+  const getUsersByLibraryId = async () => {
+    const result = await lampostAPI.get(`/libraryanduserrelationships/users/${selectedLibrary._id}`);
+    const { users } = result.data;
+    setMembers(users);
   };
-
   useEffect(() => {
-    if (selectedMeetupDetailComponent === 'Crew') {
-      getAttendees();
+    if (selectedLibraryDetailComponent === 'Members') {
+      getUsersByLibraryId();
     }
-  }, [selectedMeetupDetailComponent]);
+  }, []);
 
-  const renderCrew = () => {
-    if (crew.length) {
-      const crewList = crew.map((user, index) => {
+  const renderMembers = () => {
+    if (members.length) {
+      const membersList = members.map((user, index) => {
         return (
           <TouchableOpacity
             key={index}
@@ -65,18 +61,20 @@ const Crew = (props) => {
         );
       });
 
-      return <View style={{ backgroundColor: sectionBackgroundColor, padding: 5, borderRadius: 10 }}>{crewList}</View>;
-    } else if (crew.length === 0) {
-      return <Text style={{ color: 'white' }}>No users...</Text>;
+      return (
+        <View style={{ backgroundColor: sectionBackgroundColor, padding: 5, borderRadius: 10 }}>{membersList}</View>
+      );
+    } else if (members.length === 0) {
+      return <Text style={{ color: 'white' }}>No users now...</Text>;
     } else {
-      return <Text style={{ color: 'white' }}>Now loading...</Text>;
+      return <Text style={{ color: 'white' }}>Now loading the data...</Text>;
     }
   };
 
   return (
     <View>
       <View style={{ marginBottom: 25 }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 10, color: 'white' }}>Crew</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 15, color: 'white' }}>Members</Text>
         <Text style={{ color: baseTextColor }}>These people attend this meetup. Feel free to join!</Text>
       </View>
       <ScrollView
@@ -84,10 +82,10 @@ const Crew = (props) => {
           paddingBottom: 50,
         }}
       >
-        {renderCrew()}
+        {renderMembers()}
       </ScrollView>
     </View>
   );
 };
 
-export default Crew;
+export default Members;

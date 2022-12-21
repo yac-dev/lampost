@@ -18,7 +18,7 @@ import BadgeLabel from '../Utils/BadgeLabel';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import CreateLibraryBottomSheet from './CreateLibraryBottomSheet/Container';
 import LibraryOverviewBottomSheet from './LibraryOverviewBottomSheet/Container';
-import InfoDetailBottomSheet from './LibraryOverviewBottomSheet/InfoDetailBottomSheet/Container';
+import InfoDetailBottomSheet from './InfoDetailBottomSheet/Container';
 
 // authenticatedの場合が必要か。
 const Container = (props) => {

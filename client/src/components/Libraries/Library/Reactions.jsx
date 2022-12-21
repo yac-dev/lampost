@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const Members = () => {
+const Reactions = () => {
   return (
     <View>
-      <Text>Members</Text>
+      <Text>Reactions</Text>
     </View>
   );
 };
 
-export default Members;
+export default Reactions;

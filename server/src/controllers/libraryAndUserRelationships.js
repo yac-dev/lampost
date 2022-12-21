@@ -50,3 +50,22 @@ export const getMyJoinedLibrary = async (request, response) => {
     });
   } catch (error) {}
 };
+
+export const getUsersByLibraryId = async (request, response) => {
+  try {
+    const libraryAndUserRelationships = await LibraryAndUserRelationship.find({
+      library: request.params.libraryId,
+    }).populate({
+      path: 'user',
+    });
+    const users = libraryAndUserRelationships.map((relationship) => {
+      return relationship.user;
+    });
+
+    response.status(200).json({
+      users,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

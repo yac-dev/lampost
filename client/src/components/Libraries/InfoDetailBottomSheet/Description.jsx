@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import LibrariesContext from '../../LibrariesContext';
+import LibrariesContext from '../LibrariesContext';
 import { View, Text } from 'react-native';
-import { baseTextColor } from '../../../../utils/colorsTable';
+import { baseTextColor } from '../../../utils/colorsTable';
 
 const Description = () => {
   const { selectedLibrary } = useContext(LibrariesContext);

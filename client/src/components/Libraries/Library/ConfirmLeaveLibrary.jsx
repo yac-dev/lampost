@@ -24,7 +24,8 @@ const ConfirmLeaveLibrary = (props) => {
         style={{ backgroundColor: appBottomSheetBackgroundColor, padding: 30 }}
       >
         <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>
-          Are you sure you want to leave from this library?
+          Are you sure you want to leave this library? You can't post or add reaction any more if you get out of this
+          library.
         </Text>
         <Dialog.Actions>
           <Button

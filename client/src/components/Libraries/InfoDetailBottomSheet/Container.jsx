@@ -1,8 +1,8 @@
 import React, { useCallback, useContext, useMemo } from 'react';
-import LibrariesContext from '../../LibrariesContext';
+import LibrariesContext from '../LibrariesContext';
 import { View, Text } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
-import { appBottomSheetBackgroundColor } from '../../../../utils/colorsTable';
+import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 import Description from './Description';
 import Members from './Members';
 import Reactions from './Reactions';
