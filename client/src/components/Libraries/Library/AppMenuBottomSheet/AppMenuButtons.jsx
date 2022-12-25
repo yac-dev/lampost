@@ -20,6 +20,7 @@ const AppMenuButtons = () => {
     setIsLeaveLibraryConfirmationModalOpen,
     setLibraryMembers,
     membersBottomSheetRef,
+    setIsConfirmPostAssetsModalOpen,
   } = useContext(LibraryContext);
 
   const getUsersByLibraryId = async () => {
@@ -36,14 +37,15 @@ const AppMenuButtons = () => {
           icon={<MaterialCommunityIcons name='image-plus' size={35} color={iconColorsTable['red1']} />}
           label='Post my assets'
           onAppMenuButtonPress={() => {
-            navigation.navigate('Add assets', { libraryId: library._id });
+            setIsConfirmPostAssetsModalOpen(true);
             appMenuBottomSheetRef.current.snapToIndex(0);
+            // navigation.navigate('Add assets', { libraryId: library._id, fromComponent: 'ADD_ASSETS_FOR_POSTING' });
           }}
         />
         <AppMenuButton
           backgroundColor={backgroundColorsTable['yellow1']}
-          icon={<SimpleLineIcons name='emotsmile' size={35} color={iconColorsTable['yellow1']} />}
-          label='Reactions'
+          icon={<MaterialCommunityIcons name='history' size={35} color={iconColorsTable['yellow1']} />}
+          label='Logs'
           onAppMenuButtonPress={() => {
             navigation.navigate('Add assets', { libraryId: library._id });
             appMenuBottomSheetRef.current.snapToIndex(0);

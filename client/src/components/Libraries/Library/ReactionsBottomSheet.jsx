@@ -1,5 +1,4 @@
 import React, { useState, useContext, useMemo, useEffect } from 'react';
-import LibrariesContext from '../LibrariesContext';
 import GlobalContext from '../../../GlobalContext';
 import LibraryContext from './LibraryContext';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
@@ -9,63 +8,16 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 const MembersBottomSheet = (props) => {
   const { auth } = useContext(GlobalContext);
-  const { membersBottomSheetRef, setLibraryMembers, libraryMembers } = useContext(LibraryContext);
+  const { reactionsBottomSheetRef, libraryReactions } = useContext(LibraryContext);
   const snapPoints = useMemo(() => ['60%', '90%'], []);
 
-  const renderMembers = () => {
-    if (libraryMembers.length) {
-      const membersList = libraryMembers.map((user, index) => {
-        return (
-          <TouchableOpacity
-            key={index}
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              padding: 10,
-              borderBottomWidth: 0.3,
-              borderBottomColor: '#ABABAB',
-            }}
-            onPress={() => {
-              if (!auth.data || auth.data._id !== user._id) {
-                navigation.navigate('User', { userId: user._id });
-              }
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: 'blue',
-                marginRight: 20,
-                padding: 5,
-                borderRadius: 7,
-                width: 35,
-                height: 35,
-                alignItems: 'center',
-              }}
-            >
-              <FontAwesome5 name='user-astronaut' color='white' size={20} />
-            </View>
-            <View>
-              <Text style={{ color: 'rgb(160,160,160)' }}>{user.name}</Text>
-            </View>
-          </TouchableOpacity>
-        );
-      });
-
-      return (
-        <View style={{ backgroundColor: sectionBackgroundColor, padding: 5, borderRadius: 10 }}>{membersList}</View>
-      );
-    } else if (libraryMembers.length === 0) {
-      return <Text style={{ color: 'white' }}>No users now...</Text>;
-    } else {
-      return <Text style={{ color: 'white' }}>Now loading the data...</Text>;
-    }
-  };
+  const renderReactions = () => {};
 
   return (
     <GorhomBottomSheet
       index={-1}
       enableOverDrag={true}
-      ref={membersBottomSheetRef}
+      ref={reactionsBottomSheetRef}
       snapPoints={snapPoints}
       keyboardBehavior={'extend'}
       backdropComponent={(backdropProps) => (

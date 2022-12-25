@@ -13,12 +13,23 @@ const Container = (props) => {
   const [addedAssets, setAddedAssets] = useState({});
   const oneAssetWidth = Dimensions.get('window').width / 2;
 
+  const onPostPress = async () => {
+    // postを押したらapi requestで、ここのrollにassetのobjectをpostする感じか。
+    // assetsだけのdataを作って、propsで送る感じか。
+    const assets = Object.values(addedAssets);
+    const payload = {
+      assets,
+    };
+    // const result = await lampostAPI.post(`/libraryandassetrelationships/${props.route.params.libraryId}`, payload);
+    props.navigation.navigate('Library', { addedAssets: assets });
+  };
+
   useEffect(() => {
-    if (props.route.params.fromComponent === 'ADD_ASSETS_FOR_LAUNCHING_LIBRARY') {
+    if (props.route.params.fromComponent === 'ADD_ASSETS_FOR_POSTING') {
       props.navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity onPress={() => onPostPress()}>
-            <Text style={{ color: 'white' }}>Post</Text>
+            <Text style={{ color: 'white' }}>Add</Text>
           </TouchableOpacity>
         ),
       });
@@ -50,17 +61,6 @@ const Container = (props) => {
       });
     }
   }, []);
-
-  const onPostPress = async () => {
-    // postを押したらapi requestで、ここのrollにassetのobjectをpostする感じか。
-    // assetsだけのdataを作って、propsで送る感じか。
-    const assets = Object.values(addedAssets);
-    const payload = {
-      assets,
-    };
-    const result = await lampostAPI.post(`/libraryandassetrelationships/${props.route.params.libraryId}`, payload);
-    props.navigation.navigate('Library', { addedAssets: assets });
-  };
 
   const getAssetsByUserId = async () => {
     const result = await lampostAPI.get(`/assetanduserrelationships/${auth.data._id}`);

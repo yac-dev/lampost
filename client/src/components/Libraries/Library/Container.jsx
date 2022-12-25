@@ -8,22 +8,28 @@ import FastImage from 'react-native-fast-image';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import SelectedAssetBottomSheet from './SelectedAssetBottomSheet';
 import AddNewReactionBottomSheet from './AddNewReactionBottomSheet';
+import PostAssetsBottomSheet from './PostAssetsBottomSheet';
 import MembersBottomSheet from './MembersBottomSheet';
 import Header from './Header';
 import BadgeLabels from './BadgeLabels';
 import Description from './Description';
 import ConfirmLeaveLibrary from './ConfirmLeaveLibrary';
+import ConfirmPostAssetModal from './ConfirmPostAssetModal';
 
 const Container = (props) => {
   const appMenuBottomSheetRef = useRef(null);
   const selectedAssetBottomSheetRef = useRef(null);
   const addNewReactionBottomSheetRef = useRef(null);
   const membersBottomSheetRef = useRef(null);
+  const reactionsBottomSheetRef = useRef(null);
+  const postAssetsBottomSheetRef = useRef(null);
   const [isLeaveLibraryConfirmationModalOpen, setIsLeaveLibraryConfirmationModalOpen] = useState(false);
+  const [isConfirmPostAssetsModalOpen, setIsConfirmPostAssetsModalOpen] = useState(false);
   const [library, setLibrary] = useState(null);
   const [assets, setAssets] = useState([]);
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [libraryMembers, setLibraryMembers] = useState([]);
+  const [libraryReactions, setLibraryReactions] = useState([]);
   const oneAssetWidth = Dimensions.get('window').width / 2;
 
   // ここで、libraryを取ってこないとね。
@@ -116,6 +122,8 @@ const Container = (props) => {
         selectedAssetBottomSheetRef,
         addNewReactionBottomSheetRef,
         membersBottomSheetRef,
+        // reactionsBottomSheetRef,
+        postAssetsBottomSheetRef,
         library,
         assets,
         setAssets,
@@ -124,8 +132,11 @@ const Container = (props) => {
         selectedAsset,
         setSelectedAsset,
         navigation: props.navigation,
+        route: props.route,
         isLeaveLibraryConfirmationModalOpen,
         setIsLeaveLibraryConfirmationModalOpen,
+        isConfirmPostAssetsModalOpen,
+        setIsConfirmPostAssetsModalOpen,
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
@@ -137,9 +148,11 @@ const Container = (props) => {
         </ScrollView>
         <AppMenuBottomSheet />
         <SelectedAssetBottomSheet />
-        <AddNewReactionBottomSheet />
+        <PostAssetsBottomSheet />
+        {/* <AddNewReactionBottomSheet /> */}
         <MembersBottomSheet />
         <ConfirmLeaveLibrary />
+        <ConfirmPostAssetModal />
       </View>
     </LibraryContext.Provider>
   );
