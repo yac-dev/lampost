@@ -52,6 +52,6 @@ app.use('/api/badgeanduserrelationships', badgeAndUserRelationshipsRouter);
 app.use('/api/assetanduserrelationships', assetAndUserRelationshipsRouter);
 app.use('/api/libraryandassetrelationships', libraryAndAssetRelationshipsRouter);
 app.use('/api/loungechatandchatroomrelationships', loungeChatAndChatRoomRelationshipsRouter);
-app.use('/api/assetaostandreactionanduserrelationships', assetPostAndReactionAndUserRelationshipsRouter);
+app.use('/api/assetpostandreactionanduserrelationships', assetPostAndReactionAndUserRelationshipsRouter);
 
 export default app;

@@ -20,7 +20,7 @@ const Container = (props) => {
   const { post } = props.route.params;
 
   const getReactionsByAssetPostId = async () => {
-    const result = await lampostAPI.get(`/assetaostandreactionanduserrelationships/${post._id}`);
+    const result = await lampostAPI.get(`/assetpostandreactionanduserrelationships/${post._id}`);
     const { reactions } = result.data;
     setReactions(reactions);
   };
@@ -31,7 +31,12 @@ const Container = (props) => {
 
   const onReactionPress = async (reaction) => {
     if (reaction.users.includes(auth.data._id)) {
-      // const result = await lampostAPI.post(`/`);
+      const payload = {
+        assetPostId: post._id,
+        reactionId: reaction._id,
+        userId: auth.data._id,
+      };
+      const result = await lampostAPI.post('/assetpostandreactionanduserrelationships/downvote', payload);
       setReactions((previous) => {
         const updating = { ...previous };
         updating[reaction._id]['totalCounts']--;
@@ -39,9 +44,14 @@ const Container = (props) => {
         return updating;
       });
     } else {
+      const payload = {
+        assetPostId: post._id,
+        reactionId: reaction._id,
+        userId: auth.data._id,
+      };
+      const result = await lampostAPI.post('/assetpostandreactionanduserrelationships/upvote', payload);
       setReactions((previous) => {
         const updating = { ...previous };
-
         updating[reaction._id]['totalCounts']++;
         updating[reaction._id]['users'].push(auth.data._id);
         return updating;
@@ -58,7 +68,7 @@ const Container = (props) => {
             key={index}
             style={{
               flexDirection: 'row',
-              borderWidth: reaction.users.includes(auth.data._id) ? 1 : 0.3,
+              borderWidth: 0.3,
               borderRadius: 10,
               borderColor: reaction.users.includes(auth.data._id) ? iconColorsTable['blue1'] : 'white',
               padding: 10,

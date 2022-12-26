@@ -1,4 +1,4 @@
-import AssetPostAndReactionAndUser from '../models/assetPostAndReactionAndUserRelationship';
+import AssetPostAndReactionAndUserRelationship from '../models/assetPostAndReactionAndUserRelationship';
 import Reaction from '../models/reaction';
 
 export const createReaction = async (request, response) => {
@@ -8,7 +8,7 @@ export const createReaction = async (request, response) => {
       content,
     });
 
-    const assetPostAndReactionAndUserRelationship = await AssetPostAndReactionAndUser.create({
+    const assetPostAndReactionAndUserRelationship = await AssetPostAndReactionAndUserRelationship.create({
       assetPost: assetPostId,
       reaction: reaction._id,
       user: userId,
@@ -29,7 +29,7 @@ export const createReaction = async (request, response) => {
 
 export const getReactionsByAssetPostId = async (request, response) => {
   try {
-    const assetPostAndReactionAndUserRelationships = await AssetPostAndReactionAndUser.find({
+    const assetPostAndReactionAndUserRelationships = await AssetPostAndReactionAndUserRelationship.find({
       assetPost: request.params.assetPostId,
     }).populate([{ path: 'reaction' }]);
 
@@ -53,6 +53,41 @@ export const getReactionsByAssetPostId = async (request, response) => {
 
     response.status(200).json({
       reactions,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const upvoteReaction = async (request, response) => {
+  try {
+    const { assetPostId, reactionId, userId } = request.body;
+    const assetPostAndReactionAndUserRelationship = await AssetPostAndReactionAndUserRelationship.create({
+      assetPost: assetPostId,
+      reaction: reactionId,
+      user: userId,
+    });
+
+    response.status(200).json({
+      message: 'success',
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const downvoteReaction = async (request, response) => {
+  try {
+    const { assetPostId, reactionId, userId } = request.body;
+    console.log(assetPostId, reactionId, userId);
+    const assetPostAndReactionAndUserRelationship = await AssetPostAndReactionAndUserRelationship.deleteOne({
+      assetPost: assetPostId,
+      reaction: reactionId,
+      user: userId,
+    });
+
+    response.status(200).json({
+      message: 'success',
     });
   } catch (error) {
     console.log(error);
