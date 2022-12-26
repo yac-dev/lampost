@@ -9,6 +9,7 @@ import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import SelectedAssetBottomSheet from './SelectedAssetBottomSheet';
 import AddNewReactionBottomSheet from './AddNewReactionBottomSheet';
 import PostAssetsBottomSheet from './PostAssetsBottomSheet';
+import PostsBottomSheet from './PostsBottomSheet';
 import MembersBottomSheet from './MembersBottomSheet';
 import Header from './Header';
 import BadgeLabels from './BadgeLabels';
@@ -22,6 +23,7 @@ const Container = (props) => {
   const addNewReactionBottomSheetRef = useRef(null);
   const membersBottomSheetRef = useRef(null);
   const reactionsBottomSheetRef = useRef(null);
+  const postsBottomSheetRef = useRef(null);
   const postAssetsBottomSheetRef = useRef(null);
   const [isLeaveLibraryConfirmationModalOpen, setIsLeaveLibraryConfirmationModalOpen] = useState(false);
   const [isConfirmPostAssetsModalOpen, setIsConfirmPostAssetsModalOpen] = useState(false);
@@ -29,7 +31,7 @@ const Container = (props) => {
   const [assets, setAssets] = useState([]);
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [libraryMembers, setLibraryMembers] = useState([]);
-  const [libraryReactions, setLibraryReactions] = useState([]);
+  const [libraryPosts, setLibraryPosts] = useState([]);
   const oneAssetWidth = Dimensions.get('window').width / 2;
 
   // ここで、libraryを取ってこないとね。
@@ -123,12 +125,15 @@ const Container = (props) => {
         addNewReactionBottomSheetRef,
         membersBottomSheetRef,
         // reactionsBottomSheetRef,
+        postsBottomSheetRef,
         postAssetsBottomSheetRef,
         library,
         assets,
         setAssets,
         libraryMembers,
         setLibraryMembers,
+        libraryPosts,
+        setLibraryPosts,
         selectedAsset,
         setSelectedAsset,
         navigation: props.navigation,
@@ -149,6 +154,7 @@ const Container = (props) => {
         <AppMenuBottomSheet />
         <SelectedAssetBottomSheet />
         <PostAssetsBottomSheet />
+        <PostsBottomSheet />
         {/* <AddNewReactionBottomSheet /> */}
         <MembersBottomSheet />
         <ConfirmLeaveLibrary />

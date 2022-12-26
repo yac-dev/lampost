@@ -12,15 +12,27 @@ import {
 } from '../../../utils/colorsTable';
 import { AntDesign } from '@expo/vector-icons';
 import ActionButton from '../../Utils/ActionButton';
+import lampostAPI from '../../../apis/lampost';
 
 const PostAssetsBottomSheet = (props) => {
   const { auth } = useContext(GlobalContext);
-  const { postAssetsBottomSheetRef, route, setAssets } = useContext(LibraryContext);
+  const { postAssetsBottomSheetRef, route, setAssets, library } = useContext(LibraryContext);
   const snapPoints = useMemo(() => ['60%', '90%'], []);
   const [addedAssets, setAddedAssets] = useState([]); // これ、多分library側に持っといた方がいいかも。
   const [caption, setCaption] = useState('');
 
-  const renderReactions = () => {};
+  const onPostAssetPress = async () => {
+    const payload = {
+      caption,
+      userId: auth.data._id,
+      libraryId: library._id,
+      assets: addedAssets,
+    };
+    const result = await lampostAPI.post(`/assetposts`, payload);
+    const { assets } = result.data;
+    setAssets((prev) => [...prev, ...assets]);
+    postAssetsBottomSheetRef.current.close();
+  };
 
   useEffect(() => {
     if (route.params?.addedAssets) {
@@ -67,21 +79,32 @@ const PostAssetsBottomSheet = (props) => {
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
         <View style={{ marginBottom: 25 }}>
-          <TouchableOpacity
-            style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}
-            onPress={() => {
-              setAddedAssets([]);
-              postAssetsBottomSheetRef.current.close();
-            }}
+          <View
+            style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}
           >
-            <AntDesign name='close' size={20} color={baseTextColor} style={{ marginRight: 5 }} />
-            <Text style={{ color: baseTextColor }}>Cancel</Text>
-          </TouchableOpacity>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>Post</Text>
+            <TouchableOpacity
+              style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}
+              onPress={() => {
+                setAddedAssets([]);
+                postAssetsBottomSheetRef.current.close();
+              }}
+            >
+              <AntDesign name='close' size={20} color={baseTextColor} style={{ marginRight: 5 }} />
+              <Text style={{ color: baseTextColor }}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
           <ScrollView horizontal={true}>{renderAddedAssets()}</ScrollView>
         </View>
         <Text style={{ color: baseTextColor, marginBottom: 5 }}>Add caption or comment</Text>
         <BottomSheetTextInput
-          style={{ padding: 10, borderRadius: 10, backgroundColor: inputBackgroundColor, marginBottom: 25 }}
+          style={{
+            padding: 10,
+            borderRadius: 10,
+            backgroundColor: inputBackgroundColor,
+            marginBottom: 25,
+            color: baseTextColor,
+          }}
           placeholder={'Caption in 40 words'}
           placeholderTextColor={baseTextColor}
           value={caption}
@@ -93,8 +116,7 @@ const PostAssetsBottomSheet = (props) => {
             icon={<AntDesign name='plus' size={25} color={'white'} />}
             backgroundColor={iconColorsTable['blue1']}
             onActionButtonPress={() => {
-              console.log('Hello');
-              postAssetsBottomSheetRef.current.close();
+              onPostAssetPress();
             }}
           />
         </View>

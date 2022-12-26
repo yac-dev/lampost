@@ -15,10 +15,12 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 const AppMenuButtons = () => {
   const {
     appMenuBottomSheetRef,
+    postsBottomSheetRef,
     navigation,
     library,
     setIsLeaveLibraryConfirmationModalOpen,
     setLibraryMembers,
+    setLibraryPosts,
     membersBottomSheetRef,
     setIsConfirmPostAssetsModalOpen,
   } = useContext(LibraryContext);
@@ -27,6 +29,12 @@ const AppMenuButtons = () => {
     const result = await lampostAPI.get(`/libraryanduserrelationships/users/${library._id}`);
     const { users } = result.data;
     setLibraryMembers(users);
+  };
+
+  const getLibraryPostsByLibraryId = async () => {
+    const result = await lampostAPI.get(`/assetposts/${library._id}`);
+    const { assetPosts } = result.data;
+    setLibraryPosts(assetPosts);
   };
 
   return (
@@ -43,11 +51,12 @@ const AppMenuButtons = () => {
           }}
         />
         <AppMenuButton
-          backgroundColor={backgroundColorsTable['yellow1']}
-          icon={<MaterialCommunityIcons name='history' size={35} color={iconColorsTable['yellow1']} />}
-          label='Logs'
+          backgroundColor={backgroundColorsTable['pink1']}
+          icon={<MaterialCommunityIcons name='fire' size={35} color={iconColorsTable['pink1']} />}
+          label='Posts'
           onAppMenuButtonPress={() => {
-            navigation.navigate('Add assets', { libraryId: library._id });
+            getLibraryPostsByLibraryId();
+            postsBottomSheetRef.current.snapToIndex(0);
             appMenuBottomSheetRef.current.snapToIndex(0);
           }}
         />
