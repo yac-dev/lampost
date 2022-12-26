@@ -19,12 +19,15 @@ const assetPostSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Library',
   },
-  firstThreeReactions: [
+  firstFourReactions: [
     {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Reaction',
+      reaction: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Reaction',
+      },
+      totalCounts: Number,
     },
-    // ここは、要素3つまで、
+    // ここは、要素4つまで、
   ],
   totalReactions: Number,
   createdAt: Date,

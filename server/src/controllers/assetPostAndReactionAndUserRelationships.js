@@ -1,5 +1,6 @@
 import AssetPostAndReactionAndUserRelationship from '../models/assetPostAndReactionAndUserRelationship';
 import Reaction from '../models/reaction';
+import AssetPost from '../models/assetPost';
 
 export const createReaction = async (request, response) => {
   try {
@@ -13,6 +14,15 @@ export const createReaction = async (request, response) => {
       reaction: reaction._id,
       user: userId,
     });
+
+    const assetPost = await AssetPost.findById(assetPostId);
+    if (assetPost.firstFourReactions.length < 5) {
+      const reactionObject = {
+        reaction: reaction._id,
+        totalCounts: 1,
+      };
+      assetPost.firstFourReactions.push(reactionObject);
+    }
 
     response.status(200).json({
       reaction: {
@@ -68,6 +78,12 @@ export const upvoteReaction = async (request, response) => {
       user: userId,
     });
 
+    const assetPost = await AssetPost.findById(assetPostId);
+    for (i = 0; i < assetPost.firstFourReactions.length; i++) {
+      if (assetPost.firstFourReactions[i].reaction === assetPostId) {
+        assetPost.firstFourReactions[i].totalCounts++;
+      }
+    }
     response.status(200).json({
       message: 'success',
     });
@@ -85,6 +101,13 @@ export const downvoteReaction = async (request, response) => {
       reaction: reactionId,
       user: userId,
     });
+
+    const assetPost = await AssetPost.findById(assetPostId);
+    for (i = 0; i < assetPost.firstFourReactions.length; i++) {
+      if (assetPost.firstFourReactions[i].reaction === assetPostId) {
+        assetPost.firstFourReactions[i].totalCounts--;
+      }
+    }
 
     response.status(200).json({
       message: 'success',

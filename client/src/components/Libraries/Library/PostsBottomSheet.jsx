@@ -19,6 +19,36 @@ const PostsBottomSheet = (props) => {
   const { library, postsBottomSheetRef, libraryPosts, setLibraryPosts, navigation } = useContext(LibraryContext);
   const snapPoints = useMemo(() => ['90%'], []);
 
+  const renderFirstFourReactions = (post) => {
+    if (post.firstFourReactions.length) {
+      console.log(post.firstFourReactions);
+      const reactionsList = post.firstFourReactions.map((reactionObject, index) => {
+        return (
+          <View
+            style={{
+              flexDirection: 'row',
+              borderWidth: 0.3,
+              borderRadius: 10,
+              borderColor: 'white',
+              padding: 10,
+              backgroundColor: sectionBackgroundColor,
+              marginRight: 10,
+              marginBottom: 10,
+            }}
+            key={index}
+          >
+            <Text style={{ color: baseTextColor, marginRight: 5 }}>{reactionObject.reaction.content}</Text>
+            <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>{reactionObject.totalCounts}</Text>
+          </View>
+        );
+      });
+
+      return <View>{reactionsList}</View>;
+    } else {
+      return null;
+    }
+  };
+
   const renderPosts = () => {
     if (libraryPosts.length) {
       const libraryPostsList = libraryPosts.map((post, index) => {
@@ -47,52 +77,7 @@ const PostsBottomSheet = (props) => {
               <Text style={{ color: baseTextColor }}>{post.user.name}</Text>
             </View>
             <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: 25 }}>
-              <TouchableOpacity
-                style={{
-                  flexDirection: 'row',
-                  borderWidth: 0.3,
-                  borderRadius: 10,
-                  borderColor: 'white',
-                  padding: 10,
-                  backgroundColor: sectionBackgroundColor,
-                  marginRight: 10,
-                  marginBottom: 10,
-                }}
-              >
-                <Text style={{ color: baseTextColor, marginRight: 5 }}>Nice photo 😆</Text>
-                <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>150</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  flexDirection: 'row',
-                  borderWidth: 0.3,
-                  borderRadius: 10,
-                  borderColor: 'white',
-                  padding: 10,
-                  backgroundColor: sectionBackgroundColor,
-                  marginRight: 10,
-                  marginBottom: 10,
-                }}
-              >
-                <Text style={{ color: baseTextColor, marginRight: 5 }}>Woooow 😮</Text>
-                <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>234</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  flexDirection: 'row',
-                  borderWidth: 0.3,
-                  borderRadius: 10,
-                  borderColor: 'white',
-                  padding: 10,
-                  backgroundColor: sectionBackgroundColor,
-                  marginRight: 10,
-                  marginBottom: 10,
-                }}
-              >
-                <Text style={{ color: baseTextColor, marginRight: 5 }}>Wanna go there 👍</Text>
-                <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>67</Text>
-              </TouchableOpacity>
-              <Text style={{ color: baseTextColor }}>And more...</Text>
+              {renderFirstFourReactions(post)}
             </View>
           </TouchableOpacity>
         );

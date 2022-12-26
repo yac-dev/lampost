@@ -11,7 +11,7 @@ export const createAssetPost = async (request, response) => {
       library: libraryId,
       createdAt: new Date(),
       totalReactions: 0,
-      firstThreeReactions: [],
+      firstFourReactions: [],
     });
     const assetDatas = assets.map((asset) => {
       return {
@@ -34,6 +34,12 @@ export const getAssetPosts = async (request, response) => {
     const assetPosts = await AssetPost.find({ library: request.params.libraryId }).populate([
       { path: 'user', select: 'name photo' },
       { path: 'assets' },
+      {
+        path: 'firstFourReactions',
+        populate: {
+          path: 'reaction',
+        },
+      },
     ]);
     response.status(200).json({
       assetPosts,
