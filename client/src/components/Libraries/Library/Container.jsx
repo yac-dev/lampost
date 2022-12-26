@@ -7,7 +7,6 @@ import { baseBackgroundColor } from '../../../utils/colorsTable';
 import FastImage from 'react-native-fast-image';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import SelectedAssetBottomSheet from './SelectedAssetBottomSheet';
-import AddNewReactionBottomSheet from './AddNewReactionBottomSheet';
 import PostAssetsBottomSheet from './PostAssetsBottomSheet';
 import PostsBottomSheet from './PostsBottomSheet';
 import MembersBottomSheet from './MembersBottomSheet';
@@ -20,7 +19,6 @@ import ConfirmPostAssetModal from './ConfirmPostAssetModal';
 const Container = (props) => {
   const appMenuBottomSheetRef = useRef(null);
   const selectedAssetBottomSheetRef = useRef(null);
-  const addNewReactionBottomSheetRef = useRef(null);
   const membersBottomSheetRef = useRef(null);
   const reactionsBottomSheetRef = useRef(null);
   const postsBottomSheetRef = useRef(null);
@@ -122,9 +120,7 @@ const Container = (props) => {
       value={{
         appMenuBottomSheetRef,
         selectedAssetBottomSheetRef,
-        addNewReactionBottomSheetRef,
         membersBottomSheetRef,
-        // reactionsBottomSheetRef,
         postsBottomSheetRef,
         postAssetsBottomSheetRef,
         library,
@@ -155,7 +151,6 @@ const Container = (props) => {
         <SelectedAssetBottomSheet />
         <PostAssetsBottomSheet />
         <PostsBottomSheet />
-        {/* <AddNewReactionBottomSheet /> */}
         <MembersBottomSheet />
         <ConfirmLeaveLibrary />
         <ConfirmPostAssetModal />

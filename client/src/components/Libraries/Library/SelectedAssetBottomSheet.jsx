@@ -44,14 +44,14 @@ const SelectedAssetBottomSheet = (props) => {
                 }}
                 resizeMode={FastImage.resizeMode.contain}
               />
-              <View style={{ flexDirection: 'row', alignSelf: 'flex-end' }}>
+              {/* <View style={{ flexDirection: 'row', alignSelf: 'flex-end' }}>
                 <ActionButton
                   label='Add new reaction'
                   icon={<SimpleLineIcons name='emotsmile' size={25} color={'white'} />}
                   backgroundColor={iconColorsTable['blue1']}
                   onActionButtonPress={() => addNewReactionBottomSheetRef.current.snapToIndex(0)}
                 />
-              </View>
+              </View> */}
             </View>
           ) : null}
         </ScrollView>

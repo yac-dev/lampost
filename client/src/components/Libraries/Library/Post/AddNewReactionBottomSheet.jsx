@@ -1,6 +1,6 @@
 import React, { useContext, useMemo, useEffect, useState } from 'react';
-import GlobalContext from '../../../GlobalContext';
-import LibraryContext from './LibraryContext';
+import GlobalContext from '../../../../GlobalContext';
+import PostContext from './PostContext';
 import { View, Text, InputAccessoryView, TouchableOpacity, ScrollView, Image, Keyboard } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import {
@@ -9,23 +9,34 @@ import {
   iconColorsTable,
   sectionBackgroundColor,
   inputBackgroundColor,
-} from '../../../utils/colorsTable';
-import ActionButton from '../../Utils/ActionButton';
+} from '../../../../utils/colorsTable';
+import ActionButton from '../../../Utils/ActionButton';
 
 import { AntDesign } from '@expo/vector-icons';
 
 import EmojiSelector, { Categories } from 'react-native-emoji-selector';
 
 const AddNewReaction = (props) => {
+  const { auth } = useContext(GlobalContext);
   const inputAccessoryViewID = 'ADD_NEW_REACTION_INPUT';
-  const { addNewReactionBottomSheetRef } = useContext(LibraryContext);
-  const snapPoints = useMemo(() => ['65%', '90%'], []);
+  const { addNewReactionBottomSheetRef, post, setReactions } = useContext(PostContext);
+  const snapPoints = useMemo(() => ['70%', '90%'], []);
   const [selectedEmoji, setSelectedEmoji] = useState('😄');
   const [text, setText] = useState('');
 
   const onDoneAddNewReactionDone = () => {
     Keyboard.dismiss();
-    addNewReactionBottomSheetRef.current.close();
+  };
+
+  const onAddNewReactionDone = () => {
+    const payload = {
+      userId: auth.data._id,
+      assetPostId: post._id,
+      content: text + '' + selectedEmoji,
+    };
+    console.log(payload);
+    // const {reaction} = result.data;
+    // setReactions((previous) => [...previous, reaction]);
   };
 
   return (
@@ -52,7 +63,7 @@ const AddNewReaction = (props) => {
           <Text style={{ color: baseTextColor }}>Cancel</Text>
         </TouchableOpacity>
         <Text style={{ color: 'white', marginBottom: 10, fontWeight: 'bold', fontSize: 20 }}>
-          Select a emoji, write a comment and express your feeling.
+          Select a emoji, write a short comment and express your feeling.
         </Text>
         <EmojiSelector
           // showTabs={false}
@@ -61,10 +72,10 @@ const AddNewReaction = (props) => {
           showSearchBar={false}
           category={Categories.symbols}
           onEmojiSelected={(emoji) => setSelectedEmoji(emoji)}
-          style={{ height: 200, marginBottom: 15 }}
+          style={{ height: 250, marginBottom: 15 }}
         />
         {/* <View style={{  marginBottom: 15 }}> */}
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
           <View style={{ backgroundColor: inputBackgroundColor, padding: 10, marginRight: 5, borderRadius: 5 }}>
             <Text>{selectedEmoji}</Text>
           </View>
@@ -95,6 +106,14 @@ const AddNewReaction = (props) => {
             </TouchableOpacity>
           </View>
         </InputAccessoryView>
+        <View style={{ flexDirection: 'row' }}>
+          <ActionButton
+            label='Done'
+            backgroundColor={iconColorsTable['blue1']}
+            icon={<AntDesign name='check' size={25} color='white' />}
+            onActionButtonPress={() => onAddNewReactionDone()}
+          />
+        </View>
         {/* </View> */}
       </BottomSheetView>
     </GorhomBottomSheet>

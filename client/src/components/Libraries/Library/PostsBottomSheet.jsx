@@ -17,7 +17,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 const PostsBottomSheet = (props) => {
   const { auth } = useContext(GlobalContext);
   const { library, postsBottomSheetRef, libraryPosts, setLibraryPosts, navigation } = useContext(LibraryContext);
-  const snapPoints = useMemo(() => ['100%'], []);
+  const snapPoints = useMemo(() => ['90%'], []);
 
   const renderPosts = () => {
     if (libraryPosts.length) {
@@ -27,13 +27,19 @@ const PostsBottomSheet = (props) => {
             key={index}
             style={{ borderBottomColor: baseTextColor, borderBottomWidth: 0.3 }}
             onPress={() => {
-              navigation.navigate('Post', { postId: post._id });
+              navigation.navigate('Post', { post, library });
             }}
           >
             <Text style={{ color: baseTextColor, fontSize: 17, marginBottom: 20 }}>{post.caption}</Text>
             <ScrollView horizontal={true} style={{ marginBottom: 20 }}>
               {post.assets.map((asset, index) => {
-                return <Image key={index} source={{ uri: asset.data }} style={{ width: 150, height: 150 }} />;
+                return (
+                  <Image
+                    key={index}
+                    source={{ uri: asset.data }}
+                    style={{ width: 150, height: 150, marginRight: 10 }}
+                  />
+                );
               })}
             </ScrollView>
             <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end', marginBottom: 20 }}>

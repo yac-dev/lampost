@@ -11,6 +11,7 @@ import AuthNavigator from './Auth';
 import User from '../User/Container';
 import Logs from '../User/Logs/Container';
 import Asset from '../Libraries/Library/Asset/Container';
+import Post from '../Libraries/Library/Post/Container';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
 import AddBadges from '../Utils/AddBadges/Container';
 import AddAssets from '../Utils/AddAssets/Container';
@@ -84,6 +85,19 @@ const LibraryNavigator = () => {
             },
             headerTintColor: 'white',
           })}
+        />
+        <Stack.Screen
+          name='Post'
+          component={Post}
+          options={{
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          }}
         />
         <Stack.Screen
           name='Logs'
