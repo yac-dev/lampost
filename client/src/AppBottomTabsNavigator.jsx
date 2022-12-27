@@ -10,6 +10,7 @@ import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import { createNavigationContainerRef } from '@react-navigation/native';
@@ -21,6 +22,7 @@ import LibraryNavigator from './components/Navigator/Library';
 import AuthNavigator from './components/Navigator/Auth';
 import LoadingSpinner from './components/Utils/LoadingSpinner';
 import SnackBar from './components/Utils/SnackBar';
+import Camera from './components/Camera/Container';
 
 const ref = createNavigationContainerRef();
 const Tab = createBottomTabNavigator();
@@ -38,7 +40,7 @@ const AppStack = (props) => {
   const [loading, setLoading] = useState(false);
   const [snackBar, setSnackBar] = useState({ isVisible: false, message: '', barType: '', duration: null });
   const [routeName, setRouteName] = useState();
-  const hide = routeName === 'Camera' || routeName === 'Meetup' || routeName === 'Dummy2' || routeName === 'Q&A';
+  const hide = routeName === 'Meetup' || routeName === 'Dummy2' || routeName === 'Q&A';
 
   const getJWTToken = async () => {
     const jwtToken = await SecureStore.getItemAsync('secure_token');
@@ -168,7 +170,16 @@ const AppStack = (props) => {
             options={{
               headerShown: false,
               tabBarLabel: 'Library',
-              tabBarIcon: ({ size, color }) => <MaterialIcons name='photo-library' color={color} size={size} />,
+              tabBarIcon: ({ size, color }) => <Ionicons name='ios-library-sharp' color={color} size={size} />,
+            }}
+          />
+          <Tab.Screen
+            name='Camera'
+            component={Camera}
+            options={{
+              headerShown: false,
+              tabBarLabel: 'Camera',
+              tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name='camera' color={color} size={size} />,
             }}
           />
           {/* 全てのcomponent、navigatorを足さないといけないわ。Mapと全く同じように。この状態だと。mapの方のuser page routeに行く。*/}
