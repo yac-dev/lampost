@@ -165,15 +165,6 @@ const AppStack = (props) => {
           }}
         /> */}
           <Tab.Screen
-            name='LibraryNavigator'
-            component={LibraryNavigator}
-            options={{
-              headerShown: false,
-              tabBarLabel: 'Library',
-              tabBarIcon: ({ size, color }) => <Ionicons name='ios-library-sharp' color={color} size={size} />,
-            }}
-          />
-          <Tab.Screen
             name='Camera'
             component={Camera}
             options={{
@@ -182,6 +173,16 @@ const AppStack = (props) => {
               tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name='camera' color={color} size={size} />,
             }}
           />
+          <Tab.Screen
+            name='LibraryNavigator'
+            component={LibraryNavigator}
+            options={{
+              headerShown: false,
+              tabBarLabel: 'Library',
+              tabBarIcon: ({ size, color }) => <Ionicons name='ios-library-sharp' color={color} size={size} />,
+            }}
+          />
+
           {/* 全てのcomponent、navigatorを足さないといけないわ。Mapと全く同じように。この状態だと。mapの方のuser page routeに行く。*/}
           <Tab.Screen
             name='Auth'

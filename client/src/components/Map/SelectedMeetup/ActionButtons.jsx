@@ -124,12 +124,12 @@ const ActionButtons = (props) => {
                 backgroundColor={iconColorsTable['blue1']}
                 onActionButtonPress={() => navigation.navigate('Lounge', { meetup: selectedMeetup })}
               />
-              <ActionButton
+              {/* <ActionButton
                 label='Launch camera'
                 icon={<MaterialCommunityIcons name='camera' size={25} color={'white'} />}
                 backgroundColor={iconColorsTable['blue1']}
                 onActionButtonPress={() => console.log('pressing')}
-              />
+              /> */}
               {/* <ActionButton
                 label='Invite people'
                 icon={<MaterialCommunityIcons name='plus' size={25} color={'white'} />}

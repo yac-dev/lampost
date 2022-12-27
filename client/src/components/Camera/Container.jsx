@@ -5,20 +5,29 @@ import { Text, View, TouchableOpacity } from 'react-native';
 import lampostAPI from '../../apis/lampost';
 import { Camera } from 'expo-camera';
 import AppMenuBottomSheet from './AppMenuBotttomSheet/Container';
-import { appBottomSheetBackgroundColor } from '../../utils/colorsTable';
+import { appBottomSheetBackgroundColor, baseTextColor } from '../../utils/colorsTable';
 import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import WarningModal from './WarningModal';
 
 const Container = (props) => {
   const { auth } = useContext(GlobalContext);
   const appMenuBottomSheetRef = useRef(null);
   const cameraRef = useRef();
+  const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
   const [cameraMode, setCameraMode] = useState('photo');
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [warningMessage, setWarningMessage] = useState('');
   const [hasCameraPermission, setHasCameraPermission] = useState();
 
   // ここで、camera permissionをokにすると。
+  if (hasCameraPermission === null) {
+    return <View />;
+  }
+  if (hasCameraPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
+
   useEffect(() => {
     (async () => {
       const cameraPermission = await Camera.requestCameraPermissionsAsync();
@@ -60,22 +69,11 @@ const Container = (props) => {
         console.log(result.data);
       } else {
         setIsWarningModalOpen(true);
-        setWarningMessage('Camera is only available when you are in the meetup.');
+        setWarningMessage('Camera is only available during the meetup.');
       }
     }
   };
-
-  const takeShot = () => {
-    // modeによって、screen押した時の挙動を変えないといかん。
-    if (cameraMode === 'photo') {
-      takePhoto();
-      // 写真をとったらそのままその写真をbackendに送る。
-    } else if (cameraMode === 'video') {
-      console.log('start recording video');
-    }
-  };
-
-  // 基本的に、10秒以内の動画は保存しないようにする。そのためにサーバー動かすのめんどくさいから。
+  // 基本的に、10秒以内の動画は保存しないようにする.
 
   return (
     <CameraContext.Provider
@@ -100,6 +98,20 @@ const Container = (props) => {
           style={{ position: 'absolute', top: 35, left: 10 }}
           onPress={() => props.navigation.navigate('Map')}
         /> */}
+            {cameraMode === 'video' ? (
+              <View
+                style={{
+                  backgroundColor: appBottomSheetBackgroundColor,
+                  position: 'absolute',
+                  top: 80,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}
+              >
+                <MaterialIcons name='hourglass-top' size={25} color='white' />
+                <Text style={{ color: baseTextColor, fontSize: 15, fontWeight: 'bold' }}>3:00</Text>
+              </View>
+            ) : null}
             <View style={{ flexDirection: 'column', position: 'absolute', top: 80, right: 10 }}>
               <TouchableOpacity
                 style={{
@@ -108,18 +120,14 @@ const Container = (props) => {
                   marginBottom: 10,
                   backgroundColor: appBottomSheetBackgroundColor,
                 }}
-              >
-                <Ionicons name='ios-camera-reverse' size={35} color='white' />
-              </TouchableOpacity>
-              {/* <TouchableOpacity
-                style={{
-                  padding: 10,
-                  borderRadius: 10,
-                  backgroundColor: appBottomSheetBackgroundColor,
+                onPress={() => {
+                  setCameraType(
+                    cameraType === Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back
+                  );
                 }}
               >
                 <Ionicons name='ios-camera-reverse' size={35} color='white' />
-              </TouchableOpacity> */}
+              </TouchableOpacity>
             </View>
           </Camera>
         </TouchableOpacity>

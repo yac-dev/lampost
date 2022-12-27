@@ -53,33 +53,50 @@ const Header = (props) => {
     );
   };
 
+  function toHoursAndMinutes(duration) {
+    const minutes = duration % 60;
+    const hours = Math.floor(duration / 60);
+
+    return `${hours} hours ${minutes} minutes`;
+  }
+
   const renderTime = (date, duration) => {
-    const d = new Date(date).toLocaleDateString('en-US', {
+    const baseTime = new Date(date);
+    const startTime = baseTime.toLocaleDateString('en-US', {
       hourCycle: 'h23',
       hour: '2-digit',
       minute: '2-digit',
     });
-    const dateElements = d.split(', ');
-    // console.log(duration); // ここは置いておこうか。
+    const startDateElements = startTime.split(', ');
+    var endTime = new Date(baseTime);
+    endTime.setMinutes(baseTime.getMinutes() + duration);
+    endTime = endTime.toLocaleDateString('en-US', {
+      hourCycle: 'h23',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    const endDateElements = endTime.split(', ');
+
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
         <Ionicons name='time-outline' size={15} color={baseTextColor} style={{ marginRight: 5 }} />
-        <Text style={{ color: baseTextColor }}>{dateElements[1]}&nbsp;~</Text>
-        <Text style={{ color: baseTextColor }}>{selectedMeetup.state}</Text>
+        <Text style={{ color: baseTextColor }}>
+          {startDateElements[1]}&nbsp;~&nbsp;{endDateElements[1]}
+        </Text>
       </View>
     );
   };
 
   return (
-    <View style={{ marginBottom: 25 }}>
+    <View style={{ marginBottom: 10 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
         {renderDate(selectedMeetup.startDateAndTime)}
         <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>{selectedMeetup.title}</Text>
       </View>
-      <View style={{ marginBottom: 10 }}>{renderTime(selectedMeetup.startDateAndTime, selectedMeetup.duration)}</View>
-      <View>
+      <View style={{ marginBottom: 10 }}>
         <Badges />
       </View>
+      <View>{renderTime(selectedMeetup.startDateAndTime, selectedMeetup.duration)}</View>
     </View>
   );
 };
