@@ -36,7 +36,13 @@ import { getSocket } from './redux/actionCreators/auth';
 // };
 
 const AppStack = (props) => {
-  const [auth, setAuth] = useState({ data: null, socket: null, isAuthenticated: false, currentLocation: null });
+  const [auth, setAuth] = useState({
+    data: null,
+    socket: null,
+    isAuthenticated: false,
+    currentLocation: null,
+    isInMeetup: false,
+  });
   const [loading, setLoading] = useState(false);
   const [snackBar, setSnackBar] = useState({ isVisible: false, message: '', barType: '', duration: null });
   const [routeName, setRouteName] = useState();

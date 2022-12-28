@@ -13,6 +13,8 @@ import { createMeetup, createLoungeChat } from './services/socketControllers';
 
 const server = http.createServer(app);
 
+const timeout = () => {};
+
 const io = new Server(server, {
   cors: {
     origin: '*',

@@ -1,6 +1,6 @@
-// main libraries
 import React, { useState, useEffect, useRef, useCallback, useContext } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
+import * as SecureStore from 'expo-secure-store';
 import lampostAPI from '../../apis/lampost';
 import GlobalContext from '../../GlobalContext';
 import MapContext from './MeetupContext';
@@ -8,16 +8,13 @@ import { connect } from 'react-redux';
 import { StyleSheet, Platform, View, StatusBar, Dimensions, TouchableOpacity, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
-// icons
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // components
 import MapMarkers from './MapMarkers';
-// bottom sheeets
 import SelectedMeetup from './SelectedMeetup/Container';
 import SelectedMeetupInfoDetail from './SelectedMeetup/InfoDetail/Container';
 import AppMenusBottomSheet from './AppMenuBottomSheet/Container';
-
 import ConfirmLaunchMeetupModal from './LaunchMeetupBottomSheet/ConfirmLaunchMeetupModal';
 import CancelLaunchMeetupModal from './LaunchMeetupBottomSheet/CancelLaunchMeetupModal';
 
@@ -74,6 +71,16 @@ const Map = (props) => {
     }
   };
 
+  const loadMe = async () => {
+    const jwtToken = await SecureStore.getItemAsync('secure_token');
+    if (jwtToken) {
+      const result = await lampostAPI.get('/auth/loadMe', { headers: { authorization: `Bearer ${jwtToken}` } });
+      const { user } = result.data;
+      setAuth((previous) => {
+        return { ...previous, data: user };
+      });
+    }
+  };
   const getMeetups = async () => {
     const result = await lampostAPI.get('/meetups');
     const { meetups } = result.data;
@@ -81,6 +88,7 @@ const Map = (props) => {
   };
   useFocusEffect(
     React.useCallback(() => {
+      loadMe();
       getMeetups();
     }, [])
   );

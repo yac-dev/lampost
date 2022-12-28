@@ -1,15 +1,9 @@
-// main libraries
-import React from 'react';
+import React, { useContext } from 'react';
+import GlobalContext from '../../GlobalContext';
 import UserContext from './UserContext';
-import { useContext } from 'react';
-import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
-
-import { Entypo } from '@expo/vector-icons';
-import { SimpleLineIcons } from '@expo/vector-icons';
+import { View, Text, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import {
   baseTextColor,
   rnDefaultBackgroundColor,
@@ -18,7 +12,8 @@ import {
 } from '../../utils/colorsTable';
 
 const Header = (props) => {
-  const { user } = useContext(UserContext);
+  const { auth } = useContext(GlobalContext);
+  const { user, isMyPage, setIsConfirmEditProfileModalOpen } = useContext(UserContext);
   const AvatarWidth = Dimensions.get('window').width / 6;
 
   return (
@@ -32,38 +27,43 @@ const Header = (props) => {
         alignItems: 'center',
       }}
     >
-      <View
-        style={{
-          backgroundColor: iconColorsTable['blue1'],
-          padding: 5,
-          borderRadius: 15,
-          width: AvatarWidth,
-          aspectRatio: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginRight: 30,
-        }}
-      >
-        <FontAwesome5 name='user-astronaut' size={40} color='white' />
-      </View>
+      {isMyPage ? (
+        <TouchableOpacity
+          style={{
+            backgroundColor: iconColorsTable['blue1'],
+            padding: 5,
+            borderRadius: 10,
+            width: AvatarWidth,
+            aspectRatio: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginRight: 30,
+          }}
+          onPress={() => setIsConfirmEditProfileModalOpen(true)}
+        >
+          <FontAwesome5 name='user-astronaut' size={40} color='white' />
+        </TouchableOpacity>
+      ) : (
+        <View
+          style={{
+            backgroundColor: iconColorsTable['blue1'],
+            padding: 5,
+            borderRadius: 10,
+            width: AvatarWidth,
+            aspectRatio: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginRight: 30,
+          }}
+        >
+          <FontAwesome5 name='user-astronaut' size={40} color='white' />
+        </View>
+      )}
+
       <Text style={{ color: 'white', fontSize: 20 }}>{user.name}</Text>
     </View>
   );
 };
 // ここにskill badgesをrenderするようになる。
 
-const mapStateToProps = (state) => {
-  return { auth: state.auth };
-};
-
-export default connect(mapStateToProps, {})(Header);
-{
-  /* <View style={{ flexDirection: 'row' }}>
-          <TouchableOpacity style={{ padding: 10, backgroundColor: 'blue', borderRadius: 15, marginRight: 10 }}>
-            <Text style={{ color: 'white' }}>Subscribe</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{ padding: 10, backgroundColor: 'blue', borderRadius: 15 }}>
-            <Text style={{ color: 'white' }}>Connect</Text>
-          </TouchableOpacity>
-        </View> これ、やっぱやめる。これ入れると、見た目がすげー忙しくなる。*/
-}
+export default Header;

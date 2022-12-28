@@ -1,9 +1,9 @@
-// main libraries
-import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
-import { connect } from 'react-redux';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import GlobalContext from '../../GlobalContext';
 import UserContext from './UserContext';
 import BadgeContext from './BadgeContext';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
 import lampostAPI from '../../apis/lampost';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { baseBackgroundColor, baseTextColor } from '../../utils/colorsTable';
@@ -14,13 +14,18 @@ import Stats from './Stats';
 import Badge from './Badge';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import BadgeDetailBottomSheet from './BadgeDetailBottomSheet/Container';
+import ConfirmEditProfileModal from './ConfirmEditProfileModal';
+import SelectedProfileImage from './SelectedProfileImage';
 
 // badgeを取ってきて、skillも取ってくる。subscriberの数も返すし、connectionの数も返す。
 const Container = (props) => {
+  const { auth } = useContext(GlobalContext);
   const [user, setUser] = useState(null);
   const [badgeDatas, setBadgeDatas] = useState([]);
   const [pressedBadgeData, setPressedBadgeData] = useState(null);
   const [isMyPage, setIsMyPage] = useState();
+  const [isConfirmEditProfileModalOpen, setIsConfirmEditProfileModalOpen] = useState(false);
+  const [selectedProfileImage, setSelectedProfileImage] = useState(null);
   const badgeDetailBottomSheetRef = useRef(null);
   const appMenuBottomSheetRef = useRef(null);
 
@@ -63,8 +68,8 @@ const Container = (props) => {
     if (badgeDatas.length) {
       const badgesList = badgeDatas.map((badgeData, index) => {
         return (
-          <BadgeContext.Provider value={{ badgeData }}>
-            <Badge key={index} />
+          <BadgeContext.Provider value={{ badgeData }} key={index}>
+            <Badge />
           </BadgeContext.Provider>
         );
       });
@@ -89,14 +94,20 @@ const Container = (props) => {
           badgeDetailBottomSheetRef,
           pressedBadgeData,
           setPressedBadgeData,
+          isConfirmEditProfileModalOpen,
+          setIsConfirmEditProfileModalOpen,
+          selectedProfileImage,
+          setSelectedProfileImage,
         }}
       >
         <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+          <SelectedProfileImage />
           <Header />
           <Stats />
           <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
           <AppMenuBottomSheet />
           <BadgeDetailBottomSheet />
+          <ConfirmEditProfileModal />
         </View>
       </UserContext.Provider>
     );
@@ -108,16 +119,6 @@ const Container = (props) => {
     );
   }
 };
-
-const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: '#fff',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-  // },
-});
 
 const mapStateToProps = (state) => {
   return { auth: state.auth };

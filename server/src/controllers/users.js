@@ -118,3 +118,10 @@ export const getUserAssets = async (request, response) => {
     console.log(error);
   }
 };
+
+export const editProfilePhoto = async (request, response) => {
+  try {
+  } catch (error) {
+    console.log(error);
+  }
+};

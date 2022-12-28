@@ -37,7 +37,7 @@ const AppMenusBottomSheet = (props) => {
             // authがある上で、下のcomponentを表示していく。
             <>
               <AppMenuButtons />
-              <UpcomingMeetups />
+              {/* <UpcomingMeetups /> */}
             </>
           ) : (
             <View>
