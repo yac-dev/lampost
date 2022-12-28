@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import GlobalContext from '../../GlobalContext';
 import LibrariesContext from './LibrariesContext';
 import { View, Text, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
@@ -40,6 +41,18 @@ const Container = (props) => {
   const oneGridHeight = Dimensions.get('window').height / 3.5;
   const libraryContainerWidth = oneGridWidth * 0.8;
   const libraryIconWidth = libraryContainerWidth * 0.4;
+
+  const getLibraries = async () => {
+    const result = await lampostAPI.get('/libraries');
+    const { libraries } = result.data;
+    setLibraries(libraries);
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getLibraries();
+    }, [])
+  );
 
   useEffect(() => {
     if (auth.socket) {
@@ -86,15 +99,6 @@ const Container = (props) => {
     const { assets } = res.data;
     setLibraryAssets(assets);
   };
-
-  const getLibraries = async () => {
-    const result = await lampostAPI.get('/libraries');
-    const { libraries } = result.data;
-    setLibraries(libraries);
-  };
-  useEffect(() => {
-    getLibraries();
-  }, []);
 
   // const renderDate = (date) => {
   //   const d = new Date(date).toLocaleDateString('en-US', {

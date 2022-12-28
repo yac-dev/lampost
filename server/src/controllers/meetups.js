@@ -430,3 +430,23 @@ export const updateMeetup = async (request, response) => {
     console.log(error);
   }
 };
+
+export const startMeetup = async (request, response) => {
+  try {
+    const meetup = await Meetup.findById(request.params.meetupId).populate({
+      path: 'attendees',
+    });
+
+    for (let i = 0; i < meetup.attendees; i++) {
+      meetup.attendees[i].isInMeetup = true;
+      meetup.attendees[i].save();
+    }
+    meetup.state = 'ongoing';
+    meetup.save();
+    response.status(200).json({
+      message: 'success',
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

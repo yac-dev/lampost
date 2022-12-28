@@ -10,6 +10,7 @@ import {
   getSelectedMeetup,
   getMeetupComments,
   getMeetupCrew,
+  startMeetup,
 } from '../controllers/meetups';
 
 router.route('/upcoming').post(getUpcomingMeetups);
@@ -20,5 +21,6 @@ router.route('/:id/selected').get(getSelectedMeetup);
 router.route('/:id/comments').get(getMeetupComments);
 router.route('/:id/join').patch(joinMeetup);
 router.route('/:id/leave').patch(leaveMeetup);
+router.route('/:id/start').patch(startMeetup);
 
 export default router;

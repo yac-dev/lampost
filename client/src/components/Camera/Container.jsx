@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import * as SecureStore from 'expo-secure-store';
 import GlobalContext from '../../GlobalContext';
 import CameraContext from './CameraContext';
 import { Text, View, TouchableOpacity } from 'react-native';
@@ -11,7 +13,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import WarningModal from './WarningModal';
 
 const Container = (props) => {
-  const { auth } = useContext(GlobalContext);
+  const { auth, setAuth } = useContext(GlobalContext);
   const appMenuBottomSheetRef = useRef(null);
   const cameraRef = useRef();
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
@@ -20,19 +22,28 @@ const Container = (props) => {
   const [warningMessage, setWarningMessage] = useState('');
   const [hasCameraPermission, setHasCameraPermission] = useState();
 
-  // ここで、camera permissionをokにすると。
-  if (hasCameraPermission === null) {
-    return <View />;
-  }
-  if (hasCameraPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
+  const loadMe = async () => {
+    const jwtToken = await SecureStore.getItemAsync('secure_token');
+    if (jwtToken) {
+      const result = await lampostAPI.get('/auth/loadMe', { headers: { authorization: `Bearer ${jwtToken}` } });
+      const { user } = result.data;
+      setAuth((previous) => {
+        return { ...previous, data: user };
+      });
+    }
+  };
+  useFocusEffect(
+    React.useCallback(() => {
+      loadMe();
+    }, [])
+  );
 
+  const askCameraPermission = async () => {
+    const cameraPermission = await Camera.requestCameraPermissionsAsync();
+    setHasCameraPermission(cameraPermission.status === 'granted');
+  };
   useEffect(() => {
-    (async () => {
-      const cameraPermission = await Camera.requestCameraPermissionsAsync();
-      setHasCameraPermission(cameraPermission.status === 'granted');
-    })();
+    askCameraPermission();
   }, []);
 
   if (hasCameraPermission === undefined) {
@@ -41,12 +52,13 @@ const Container = (props) => {
     return <Text>Permission for camera not granted. Please change this in settings.</Text>;
   }
 
+  // 基本的に、10秒以内の動画は保存しないようにする.
   let takePhoto = async () => {
     if (!auth.data) {
       setIsWarningModalOpen(true);
       setWarningMessage('Please signup or login at first.');
     } else {
-      if (auth.data.state === 'ongoing') {
+      if (auth.data.isInMeetup) {
         let options = {
           quality: 1,
           base64: true,
@@ -67,13 +79,13 @@ const Container = (props) => {
           headers: { 'Content-type': 'multipart/form-data' },
         });
         console.log(result.data);
+        console.log('Youu are now in the meetup');
       } else {
         setIsWarningModalOpen(true);
         setWarningMessage('Camera is only available during the meetup.');
       }
     }
   };
-  // 基本的に、10秒以内の動画は保存しないようにする.
 
   return (
     <CameraContext.Provider

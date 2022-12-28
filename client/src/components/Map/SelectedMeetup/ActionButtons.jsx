@@ -77,6 +77,16 @@ const ActionButtons = (props) => {
     }, 5000);
   };
 
+  const startMeetup = async () => {
+    // const result = await lampostAPI.patch(`/meetups/${selectedMeetup._id}`);
+    setSelectedMeetup((previous) => {
+      return {
+        ...previous,
+        state: 'ongoing',
+      };
+    });
+  };
+
   const renderApp = () => {
     // authがあればaction buttonsをrenderして、ない場合はlogin or signupを促すようにする。
     if (auth.data) {
@@ -92,7 +102,7 @@ const ActionButtons = (props) => {
                       label='Start meetup now'
                       icon={<Feather name='power' size={20} color={'white'} />}
                       backgroundColor={iconColorsTable['blue1']}
-                      onActionButtonPress={() => console.log('start meetup now')}
+                      onActionButtonPress={() => console.log('start meetup now', selectedMeetup._id)}
                     />
                   ) : (
                     <ActionButton

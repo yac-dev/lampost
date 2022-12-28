@@ -18,12 +18,10 @@ const userSchema = new mongoose.Schema({
   photo: {
     type: String,
   },
-  // badges: [
-  //   {
-  //     type: mongoose.Schema.ObjectId,
-  //     ref: 'BadgeStatus',
-  //   },
-  // ],
+  isInMeetup: {
+    type: Boolean,
+    default: false,
+  },
   upcomingMeetups: [
     {
       meetup: {

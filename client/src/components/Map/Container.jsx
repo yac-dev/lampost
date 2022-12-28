@@ -1,5 +1,6 @@
 // main libraries
 import React, { useState, useEffect, useRef, useCallback, useContext } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import lampostAPI from '../../apis/lampost';
 import GlobalContext from '../../GlobalContext';
 import MapContext from './MeetupContext';
@@ -73,6 +74,17 @@ const Map = (props) => {
     }
   };
 
+  const getMeetups = async () => {
+    const result = await lampostAPI.get('/meetups');
+    const { meetups } = result.data;
+    setMeetups(meetups);
+  };
+  useFocusEffect(
+    React.useCallback(() => {
+      getMeetups();
+    }, [])
+  );
+
   useEffect(() => {
     // (async () => {
     //   let { status } = await Location.requestForegroundPermissionsAsync();
@@ -89,15 +101,6 @@ const Map = (props) => {
     //   }));
     // })();
     props.getCurrentLocation();
-  }, []);
-
-  const getMeetups = async () => {
-    const result = await lampostAPI.get('/meetups');
-    const { meetups } = result.data;
-    setMeetups(meetups);
-  };
-  useEffect(() => {
-    getMeetups();
   }, []);
 
   useEffect(() => {
