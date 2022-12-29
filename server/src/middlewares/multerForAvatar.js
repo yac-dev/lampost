@@ -12,8 +12,7 @@ const storage = multer.diskStorage({
   filename: function (request, file, callback) {
     const extension = file.mimetype.split('/')[1];
     console.log(request.body.meetupId); // meetupidとuserIdを使ってfile名を作ろうか
-    const fileName = request.body.meetupId + '-' + request.body.userId + '-' + Date.now() + '.' + extension;
-    console.log(fileName);
+    const fileName = request.params.id + '-' + Date.now() + '.' + extension;
     callback(null, fileName);
   },
 }); // 後で、ffmpegを使った方法に直すことになる。ちゃんとしたmp3に直す。file名に関してはこのやり方でいい。

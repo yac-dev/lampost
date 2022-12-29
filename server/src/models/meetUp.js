@@ -60,10 +60,10 @@ const meetupSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
-  chatRoom: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'ChatRoom',
-  },
+  // chatRoom: {
+  //   type: mongoose.Schema.ObjectId,
+  //   ref: 'ChatRoom',
+  // },
   state: {
     type: String,
     default: '', // 'upcoming', 'ongoing', 'finished'

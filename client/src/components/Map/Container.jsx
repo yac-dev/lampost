@@ -49,9 +49,10 @@ const Map = (props) => {
   const [isCancelLaunchMeetupConfirmationModalOpen, setIsCancelLaunchMeetupConfirmationModalOpen] = useState(false);
   const [isLaunchMeetupConfirmed, setIsLaunchMeetupConfirmed] = useState(false);
   const [launchLocation, setLaunchLocation] = useState(null);
-  const [meetups, setMeetups] = useState([]); // これも必要になるわ。map markersでstateを持つんではなく、ここで持った方がいい。
+  const [meetups, setMeetups] = useState([]);
   const [selectedMeetup, setSelectedMeetup] = useState(null);
   const [selectedMeetupDetailComponent, setSelectedMeetupDetailComponent] = useState('');
+  const [upcomingMeetups, setUpcomingMeetups] = useState({});
 
   const mapRef = useRef(null);
   const appMenuBottomSheetRef = useRef(null);

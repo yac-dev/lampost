@@ -101,12 +101,12 @@ const Container = (props) => {
         }}
       >
         <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-          <SelectedProfileImage />
           <Header />
           <Stats />
           <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
           <AppMenuBottomSheet />
           <BadgeDetailBottomSheet />
+          {/* <SelectedProfileImage /> */}
           <ConfirmEditProfileModal />
         </View>
       </UserContext.Provider>

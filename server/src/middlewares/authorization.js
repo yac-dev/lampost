@@ -10,13 +10,14 @@ export const authorization = async (request, response, next) => {
         console.log('Can not authorize because of no token');
       }
       const decoded = jwt.verify(token, process.env.JWT_PRIVATE_KEY); // decoded {id: _id}っていう形。
-      const user = await User.findById(decoded.id).populate({
-        path: 'upcomingMeetups',
-        populate: {
-          path: 'meetup',
-          model: Meetup,
-        },
-      });
+      const user = await User.findById(decoded.id);
+      // .populate({
+      //   path: 'upcomingMeetups',
+      //   populate: {
+      //     path: 'meetup',
+      //     model: Meetup,
+      //   },
+      // });
       if (!user) {
         throw new Error('Cant find that user');
       }

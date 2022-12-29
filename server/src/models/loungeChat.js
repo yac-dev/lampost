@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
 const loungeChatSchema = new mongoose.Schema({
-  chatRoom: {
+  meetup: {
     type: mongoose.Schema.ObjectId,
-    ref: 'ChatRoom',
+    ref: 'Meetup',
   },
   user: {
     type: mongoose.Schema.ObjectId,
@@ -15,7 +15,7 @@ const loungeChatSchema = new mongoose.Schema({
   replyTo: {
     // どのchat objectに対して付随するか、ってだけ。
     type: mongoose.Schema.ObjectId,
-    ref: 'Chat',
+    ref: 'LoungeChat',
   },
   type: {
     type: String,

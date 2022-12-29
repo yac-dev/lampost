@@ -4,6 +4,7 @@ import Badge from '../models/badge';
 import ChatRoom from '../models/chatRoom';
 import Meetup from '../models/meetup';
 import Asset from '../models/asset';
+import { uploadAvatar } from '../services/s3';
 
 export const getUser = async (request, response) => {
   try {
@@ -121,6 +122,13 @@ export const getUserAssets = async (request, response) => {
 
 export const editProfilePhoto = async (request, response) => {
   try {
+    const user = await User.findById(request.params.id);
+    user.photo = `https://lampost-dev.s3.us-east-2.amazonaws.com/assets/avatars/${request.file.filename}`;
+    user.save();
+    uploadAvatar(request.file.filename);
+    response.status(200).json({
+      user,
+    });
   } catch (error) {
     console.log(error);
   }

@@ -46,6 +46,8 @@ const AppStack = (props) => {
   const [loading, setLoading] = useState(false);
   const [snackBar, setSnackBar] = useState({ isVisible: false, message: '', barType: '', duration: null });
   const [routeName, setRouteName] = useState();
+  const [myUpcomingMeetups, setMyUpcomingMeetups] = useState({});
+  const [unreadLoungeChats, setUnreadLoungeChats] = useState(null);
   const hide = routeName === 'Meetup' || routeName === 'Dummy2' || routeName === 'Q&A';
 
   const getJWTToken = async () => {
@@ -86,6 +88,31 @@ const AppStack = (props) => {
     }
   }, [auth.isAuthenticated]);
 
+  const getMyUpcomingMeetupsByMeetupIds = async () => {
+    const upcomingMeetupIds = auth.data.upcomingMeetups.map((meetupObject) => {
+      return meetupObject.meetup;
+    });
+    const result = await lampostAPI.post(`/loungechats`, { upcomingMeetupIds });
+    const { myUpcomingMeetupsTable } = result.data;
+    const m = { ...myUpcomingMeetupsTable };
+    let totalUnreadLoungeChats = 0;
+    auth.data.upcomingMeetups.forEach((meetupObject) => {
+      m[meetupObject.meetup].viewedChatsLastTime = meetupObject.viewedChatsLastTime;
+      for (let i = 0; i < m[meetupObject.meetup].chats.length; i++) {
+        if (m[meetupObject.meetup].chats[i].createdAt > meetupObject.viewedChatsLastTime) {
+          totalUnreadLoungeChats++;
+        }
+      }
+    });
+    setMyUpcomingMeetups(m);
+    setUnreadLoungeChats(totalUnreadLoungeChats);
+  };
+  useEffect(() => {
+    if (auth.data) {
+      getMyUpcomingMeetupsByMeetupIds();
+    }
+  }, [auth.data]);
+
   // useEffect(() => {
   //   // const socket = io('http://192.168.11.17:3500', {
   //   //   path: '/mysocket',
@@ -98,7 +125,20 @@ const AppStack = (props) => {
 
   // これも、contextを使っていた方がいいな。reduxのstateよりも。refactoringは後でやろうか。authDataみたいな感じで渡して、app全体で使う感じがいいだろう。
   return (
-    <GlobalContext.Provider value={{ auth, setAuth, loading, setLoading, snackBar, setSnackBar }}>
+    <GlobalContext.Provider
+      value={{
+        auth,
+        setAuth,
+        loading,
+        setLoading,
+        snackBar,
+        setSnackBar,
+        myUpcomingMeetups,
+        setMyUpcomingMeetups,
+        unreadLoungeChats,
+        setUnreadLoungeChats,
+      }}
+    >
       <NavigationContainer
         ref={ref}
         onReady={() => {
@@ -144,6 +184,7 @@ const AppStack = (props) => {
               headerShown: false,
               tabBarIcon: ({ size, color }) => <MCIcon name={'map'} color={color} size={size} />,
               tabBarLabel: 'Meetups',
+              tabBarBadge: unreadLoungeChats ? unreadLoungeChats : null,
               // () => {
               //   return null;
               // },
