@@ -159,6 +159,7 @@ const AppStack = (props) => {
             tabBarLabelStyle: {
               fontSize: 12,
             },
+            tabBarActiveTintColor: 'white',
           }}
           // tabBarOptions={{
           //   showLabel: false,
@@ -182,7 +183,9 @@ const AppStack = (props) => {
             component={MapNavigator}
             options={({ route }) => ({
               headerShown: false,
-              tabBarIcon: ({ size, color }) => <MCIcon name={'map'} color={color} size={size} />,
+              tabBarIcon: ({ size, color, focused }) => (
+                <MCIcon name={'map'} color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+              ),
               tabBarLabel: 'Meetups',
               tabBarBadge: unreadLoungeChats ? unreadLoungeChats : null,
               tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
@@ -218,7 +221,9 @@ const AppStack = (props) => {
             options={{
               headerShown: false,
               tabBarLabel: 'Camera',
-              tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name='camera' color={color} size={size} />,
+              tabBarIcon: ({ size, color, focused }) => (
+                <MaterialCommunityIcons name='camera' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+              ),
             }}
           />
           <Tab.Screen
@@ -227,7 +232,9 @@ const AppStack = (props) => {
             options={{
               headerShown: false,
               tabBarLabel: 'Library',
-              tabBarIcon: ({ size, color }) => <Ionicons name='ios-library-sharp' color={color} size={size} />,
+              tabBarIcon: ({ size, color, focused }) => (
+                <Ionicons name='ios-library-sharp' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+              ),
             }}
           />
 
@@ -240,14 +247,8 @@ const AppStack = (props) => {
                 headerShown: false,
                 // headerTransparent: true,
                 // headerLeft: () => <Button onPress={() => navigation.navigate('Add comment')}>User page</Button>,
-                tabBarIcon: ({ size, color }) => (
-                  // <Image
-                  //   color={color}
-                  //   style={{ width: 24, height: 24 }}
-                  //   source={require('../../../assets/app/timeMachine.png')}
-                  // />
-                  <FontAwesome5 name='user-astronaut' color={color} size={size} />
-                  // 本当はtime machineのiconにしたい。
+                tabBarIcon: ({ size, color, focused }) => (
+                  <FontAwesome5 name='user-astronaut' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
                 ),
                 tabBarLabel: 'Profile',
                 // () => {
