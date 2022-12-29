@@ -27,47 +27,47 @@ const Container = (props) => {
   const crewBottomSheetRef = useRef(null);
   const textInputRef = useRef(null);
 
-  const getChatsByChatRoomId = async () => {
-    const result = await lampostAPI.get(`/loungechatandchatroomrelationships/${props.route.params.meetup.chatRoom}`);
-    const { chats } = result.data;
-    setChats(chats);
+  const getLoungeChatsByMeetupId = async () => {
+    const result = await lampostAPI.get(`/loungechats/${props.route.params.meetupId}`);
+    const { loungeChats } = result.data;
+    setChats(loungeChats);
   };
   useEffect(() => {
-    getChatsByChatRoomId();
+    getLoungeChatsByMeetupId();
   }, []);
 
-  useEffect(() => {
-    auth.socket.emit('JOIN_A_LOUNGE', { chatRoom: props.route.params.meetup.chatRoom, socketId: auth.socket.id });
-    auth.socket.on('SOMEONE_JOINED_TO_MY_LOUNGE', (data) => {
-      console.log(data.message);
-    });
+  // useEffect(() => {
+  //   auth.socket.emit('JOIN_A_LOUNGE', { chatRoom: props.route.params.meetup.chatRoom, socketId: auth.socket.id });
+  //   auth.socket.on('SOMEONE_JOINED_TO_MY_LOUNGE', (data) => {
+  //     console.log(data.message);
+  //   });
 
-    return () => {
-      auth.socket.off('JOIN_A_LOUNGE');
-      auth.socket.off('SOMEONE_JOINED_TO_MY_LOUNGE');
-    };
-  }, []);
+  //   return () => {
+  //     auth.socket.off('JOIN_A_LOUNGE');
+  //     auth.socket.off('SOMEONE_JOINED_TO_MY_LOUNGE');
+  //   };
+  // }, []);
 
-  useEffect(() => {
-    auth.socket.on('SOMEONE_JOINED_TO_MY_LOUNGE', (data) => {
-      console.log(data.message);
-    });
+  // useEffect(() => {
+  //   auth.socket.on('SOMEONE_JOINED_TO_MY_LOUNGE', (data) => {
+  //     console.log(data.message);
+  //   });
 
-    return () => {
-      auth.socket.off('SOMEONE_JOINED_TO_MY_LOUNGE');
-    };
-  }, []);
+  //   return () => {
+  //     auth.socket.off('SOMEONE_JOINED_TO_MY_LOUNGE');
+  //   };
+  // }, []);
 
-  useEffect(() => {
-    auth.socket.on('SOMEONE_SENT_A_CHAT_TO_MY_GROUP', (data) => {
-      console.log('got message');
-      setChats((previous) => [...previous, data]);
-    });
+  // useEffect(() => {
+  //   auth.socket.on('SOMEONE_SENT_A_CHAT_TO_MY_GROUP', (data) => {
+  //     console.log('got message');
+  //     setChats((previous) => [...previous, data]);
+  //   });
 
-    return () => {
-      auth.socket.off('SOMEONE_SENT_A_CHAT_TO_MY_GROUP');
-    };
-  }, []);
+  //   return () => {
+  //     auth.socket.off('SOMEONE_SENT_A_CHAT_TO_MY_GROUP');
+  //   };
+  // }, []);
 
   // ここに入った時点で、chatroomのidを持っている状態になる。
   return (

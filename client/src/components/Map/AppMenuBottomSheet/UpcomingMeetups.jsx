@@ -10,7 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 const Container = (props) => {
   const { auth, myUpcomingMeetups } = useContext(GlobalContext);
-  const { appMenuBottomSheetRef, setSelectedMeetup, selectedMeetupBottomSheetRef } = useContext(MapContext);
+  const { appMenuBottomSheetRef, setSelectedMeetup, selectedMeetupBottomSheetRef, navigation } = useContext(MapContext);
   // ここのconditional renderingまじ重要ね。
 
   const renderDate = (date) => {
@@ -61,16 +61,22 @@ const Container = (props) => {
     }
     if (!unreadCount) {
       return (
-        <TouchableOpacity style={{ marginRight: 5 }}>
-          <TouchableOpacity style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}>
+        <View style={{ marginRight: 5 }}>
+          <TouchableOpacity
+            style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}
+            onPress={() => navigation.navigate('Lounge', { meetupId: meetup._id })}
+          >
             <Ionicons size={25} name='ios-chatbubbles' color={'white'} />
           </TouchableOpacity>
-        </TouchableOpacity>
+        </View>
       );
     } else {
       return (
-        <TouchableOpacity style={{ marginRight: 5 }}>
-          <TouchableOpacity style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}>
+        <View style={{ marginRight: 5 }}>
+          <TouchableOpacity
+            style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}
+            onPress={() => navigation.navigate('Lounge', { meetupId: meetup._id })}
+          >
             <Ionicons size={25} name='ios-chatbubbles' color={'white'} />
             <View
               style={{
@@ -78,15 +84,18 @@ const Container = (props) => {
                 top: -10,
                 right: -7,
                 color: 'white',
-                borderRadius: 10,
-                backgroundColor: iconColorsTable['red1'],
-                padding: 5,
+                backgroundColor: iconColorsTable['blue1'],
+                width: 20,
+                height: 20,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 20 / 2,
               }}
             >
               <Text style={{ color: 'white' }}>{unreadCount}</Text>
             </View>
           </TouchableOpacity>
-        </TouchableOpacity>
+        </View>
       );
     }
   };
@@ -134,56 +143,10 @@ const Container = (props) => {
     selectedMeetupBottomSheetRef.current.snapToIndex(0);
   };
 
-  // const renderUpcomingMeetups = () => {
-  //   if (auth.data.upcomingMeetups.length) {
-  //     const upcomingMeetupsList = auth.data.upcomingMeetups.map((meetupObject, index) => {
-  //       return (
-  //         <TouchableOpacity
-  //           key={index}
-  //           style={{
-  //             flexDirection: 'row',
-  //             alignItems: 'center',
-  //             justifyContent: 'space-between',
-  //             paddingTop: 10,
-  //             paddingBottom: 10,
-  //             borderBottomWidth: 0.3,
-  //             borderBottomColor: '#EFEFEF',
-  //           }}
-  //           onPress={() => getMeetup(meetupObject.meetup._id)}
-  //         >
-  //           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-  //             {renderDate(meetupObject.meetup.startDateAndTime)}
-  //             <View style={{}}>
-  //               <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>{meetupObject.meetup.title}</Text>
-  //               {renderTime(meetupObject.meetup.startDateAndTime)}
-  //             </View>
-  //           </View>
-  //           <Entypo size={25} name='chat' color={baseTextColor} onPress={() => console.log('opening chat')} />
-  //         </TouchableOpacity>
-  //       );
-  //     });
-
-  //     return (
-  //       <View style={{ padding: 10, backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>
-  //         {upcomingMeetupsList}
-  //       </View>
-  //     );
-  //   } else {
-  //     return (
-  //       <View>
-  //         <Text style={{ color: baseTextColor }}>I haven't signed up any meetup yet.</Text>
-  //       </View>
-  //     );
-  //   }
-  // };
-
   return (
     <View>
       <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My upcoming meetups</Text>
-      {/* <BottomSheetScrollView contentContainerStyle={{ paddingBottom: 50 }}> */}
       {renderMyUpcomingMeetups()}
-      {/* {renderUpcomingMeetups()} */}
-      {/* </BottomSheetScrollView> */}
     </View>
   );
 };

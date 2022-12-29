@@ -28,3 +28,17 @@ export const getMyLoungeChats = async (request, response) => {
     console.log(error);
   }
 };
+
+export const getSelectedMeetupLoungeChats = async (request, response) => {
+  try {
+    const loungeChats = await LoungeChat.find({ meetup: request.params.meetupId }).populate({
+      path: 'user',
+      select: 'name photo',
+    });
+    response.status(200).json({
+      loungeChats,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -36,7 +36,16 @@ const AppMenusBottomSheet = (props) => {
               Launch your meetup?
             </Text>
             {unreadLoungeChats ? (
-              <View style={{ backgroundColor: iconColorsTable['red1'], padding: 5, borderRadius: 10 }}>
+              <View
+                style={{
+                  backgroundColor: iconColorsTable['blue1'],
+                  width: 20,
+                  height: 20,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 20 / 2,
+                }}
+              >
                 <Text style={{ color: 'white' }}>{unreadLoungeChats}</Text>
               </View>
             ) : null}

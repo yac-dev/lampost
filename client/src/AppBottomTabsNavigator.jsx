@@ -185,6 +185,7 @@ const AppStack = (props) => {
               tabBarIcon: ({ size, color }) => <MCIcon name={'map'} color={color} size={size} />,
               tabBarLabel: 'Meetups',
               tabBarBadge: unreadLoungeChats ? unreadLoungeChats : null,
+              tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
               // () => {
               //   return null;
               // },
