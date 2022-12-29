@@ -20,7 +20,7 @@ const SendChatBottomSheet = (props) => {
   const onSendPress = async () => {
     console.log('sending comment');
     const payload = {
-      chatRoomId: meetup.chatRoom,
+      meetupId: meetup,
       user: {
         _id: auth.data._id,
         name: auth.data.name,
@@ -29,7 +29,7 @@ const SendChatBottomSheet = (props) => {
       content: text,
       type: chatType,
     };
-    auth.socket.emit('I_SEND_A_CHAT_TO_MY_GROUP', payload);
+    auth.socket.emit('I_SEND_A_CHAT', payload);
     setText('');
     Keyboard.dismiss();
     sendChatBottomSheetRef.current.close();

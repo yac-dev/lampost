@@ -62,13 +62,13 @@ io.on('connection', (socket) => {
   //   io.emit('CREATED_LIBRARY', sendingData);
   // });
 
-  socket.on('JOIN_A_LOUNGE', (data) => {
-    console.log('someone joined');
-    socket.join(data.chatRoom);
-    socket.to(data.chatRoom).emit('SOMEONE_JOINED_TO_MY_LOUNGE', { message: 'Someone joined!' });
+  socket.on('JOIN_LOUNGES', (data) => {
+    socket.join(data.meetupIds);
+    // console.log(io.sockets.adapter.rooms); // 全てのrooomをlogする。個別のroomも含めて。
+    // socket.to(data.chatRoom).emit('SOMEONE_JOINED_TO_MY_LOUNGE', { message: 'Someone joined!' });
   });
 
-  socket.on('I_SEND_A_CHAT_TO_MY_GROUP', (data) => {
+  socket.on('I_SEND_A_CHAT', (data) => {
     createLoungeChat(io, data);
   });
 });

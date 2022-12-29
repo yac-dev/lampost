@@ -34,6 +34,7 @@ const Container = (props) => {
   };
   useEffect(() => {
     getLoungeChatsByMeetupId();
+    // setChats(myUpcomingMeetups[props.route.params.meetupId].chats);
   }, []);
 
   // useEffect(() => {
@@ -73,7 +74,7 @@ const Container = (props) => {
   return (
     <LoungeContext.Provider
       value={{
-        meetup: props.route.params.meetup,
+        meetup: props.route.params.meetupId,
         navigation: props.navigation,
         appMenuBottomSheetRef,
         sendChatBottomSheetRef,
@@ -87,7 +88,7 @@ const Container = (props) => {
         <Chats />
         <AppMenuBottomSheet />
         <SendChatBottomSheet />
-        <CrewBottomSheet />
+        {/* <CrewBottomSheet /> */}
       </View>
     </LoungeContext.Provider>
   );

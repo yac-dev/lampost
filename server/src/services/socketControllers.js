@@ -105,27 +105,22 @@ export const createMeetup = async (io, data) => {
 
 export const createLoungeChat = async (io, data) => {
   const loungeChat = await LoungeChat.create({
-    chatRoom: data.chatRoomId,
+    meetup: data.meetupId,
     user: data.user._id,
     content: data.content,
     type: data.type,
     createdAt: new Date(),
   });
 
-  await LoungeChatAndChatRoomRelationship.create({
-    loungeChat: loungeChat._id,
-    chatRoom: loungeChat.chatRoom,
-  });
+  // const loungeChatObject = {
+  //   user: {
+  //     name: data.user.name,
+  //     photo: data.user.photo,
+  //   },
+  //   content: loungeChat.content,
+  //   type: loungeChat.type,
+  //   createdAt: loungeChat.createdAt,
+  // };
 
-  const loungeChatObject = {
-    user: {
-      name: data.user.name,
-      photo: data.user.photo,
-    },
-    content: loungeChat.content,
-    type: loungeChat.type,
-    createdAt: loungeChat.createdAt,
-  };
-
-  io.in(data.chatRoomId).emit('SOMEONE_SENT_A_CHAT_TO_MY_GROUP', loungeChatObject);
+  io.in(data.meetupId).emit('SOMEONE_SENT_A_CHAT', loungeChat);
 };

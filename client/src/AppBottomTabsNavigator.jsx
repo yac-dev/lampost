@@ -113,6 +113,41 @@ const AppStack = (props) => {
     }
   }, [auth.data]);
 
+  // loungeでroom joinする必要はないわ。ただ、chatをlist化したものを並べて見せる、ただそれだけ。
+  useEffect(() => {
+    if (auth.socket) {
+      const meetupIds = auth.data.upcomingMeetups.map((meetupObject) => meetupObject.meetup);
+      auth.socket.emit('JOIN_LOUNGES', { meetupIds });
+
+      return () => {
+        auth.socket.off('JOIN_LOUNGES');
+      };
+    }
+  }, [auth.socket]);
+
+  // あー、これで入っているわ。ok
+  useEffect(() => {
+    if (auth.socket) {
+      auth.socket.on('SOMEONE_SENT_A_CHAT', (data) => {
+        // { meetup: 123, content: '', type: 'general', createdAt: 2022/9/22 }
+        console.log(data.meetup);
+        setMyUpcomingMeetups((previous) => {
+          return {
+            ...previous,
+            [data.meetup]: {
+              ...previous[data.meetup],
+              chats: [...previous[data.meetup].chats, data],
+            },
+          };
+        });
+      });
+
+      return () => {
+        auth.socket.off('SOMEONE_SENT_A_CHAT');
+      };
+    }
+  }, [auth.socket]);
+
   // useEffect(() => {
   //   // const socket = io('http://192.168.11.17:3500', {
   //   //   path: '/mysocket',
@@ -123,7 +158,6 @@ const AppStack = (props) => {
   //   props.getSocket(socket);
   // }, []);
 
-  // これも、contextを使っていた方がいいな。reduxのstateよりも。refactoringは後でやろうか。authDataみたいな感じで渡して、app全体で使う感じがいいだろう。
   return (
     <GlobalContext.Provider
       value={{

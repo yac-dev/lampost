@@ -12,7 +12,7 @@ import { backgroundColorsTable, baseTextColor, iconColorsTable } from '../../../
 import ActionButton from '../../Utils/ActionButton';
 
 const ActionButtons = (props) => {
-  const { auth, setAuth, setLoading, setSnackBar } = useContext(GlobalContext);
+  const { auth, setAuth, setLoading, setSnackBar, myUpcomingMeetups, setMyUpcomingMeetups } = useContext(GlobalContext);
   const { selectedMeetup, setSelectedMeetup, navigation } = useContext(MapContext);
 
   const joinMeetup = async () => {
@@ -87,12 +87,13 @@ const ActionButtons = (props) => {
     });
   };
 
+  // joinしたらmeetupのid使ってroomに入るようにするんだが、、、reloadしたらsocket切れるよな。切れたら、upcomingのmeetupid使って再度roomに入るようにする感じか。
   const renderApp = () => {
     // authがあればaction buttonsをrenderして、ない場合はlogin or signupを促すようにする。
     if (auth.data) {
       for (let i = 0; i < auth.data.upcomingMeetups.length; i++) {
         // everyか？someかな。
-        if (auth.data.upcomingMeetups[i].meetup._id === selectedMeetup._id) {
+        if (auth.data.upcomingMeetups[i].meetup === selectedMeetup._id) {
           return (
             <View style={{ flexDirection: 'row', paddingTop: 10, paddingBottom: 10 }}>
               {selectedMeetup.launcher._id === auth.data._id ? (
