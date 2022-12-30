@@ -31,12 +31,6 @@ const AppButtons = (props) => {
             }}
           />
           <AppButton
-            backgroundColor={backgroundColorsTable['grey1']}
-            icon={<MaterialCommunityIcons name='camera' size={35} color={iconColorsTable['grey1']} />}
-            label='Start camera'
-            onPress={() => console.log('launch camera')}
-          />
-          <AppButton
             backgroundColor={backgroundColorsTable['pink1']}
             icon={<MaterialCommunityIcons name='map-search-outline' size={35} color={iconColorsTable['pink1']} />}
             label='Search library'

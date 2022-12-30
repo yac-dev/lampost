@@ -28,6 +28,7 @@ const Container = (props) => {
   const [addedLibraryBadges, setAddedLibraryBadges] = useState({});
   const [selectedMeetupBadges, setSelectedMeetupBadges] = useState({});
   const [tappedBadge, setTappedBadge] = useState(null);
+  const [tappedBadgeHolders, setTappedBadgeHolders] = useState([]);
 
   const searchBadgeBottomSheetRef = useRef(null);
   const badgeDetailBottomSheetRef = useRef(null);
@@ -177,6 +178,8 @@ const Container = (props) => {
         setQueryType,
         tappedBadge,
         setTappedBadge,
+        tappedBadgeHolders,
+        setTappedBadgeHolders,
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>

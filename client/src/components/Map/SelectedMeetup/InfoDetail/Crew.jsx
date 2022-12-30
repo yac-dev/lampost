@@ -5,7 +5,7 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import lampostAPI from '../../../../apis/lampost';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { baseTextColor, sectionBackgroundColor } from '../../../../utils/colorsTable';
+import { baseTextColor, sectionBackgroundColor, iconColorsTable } from '../../../../utils/colorsTable';
 import Members from '../../../Libraries/InfoDetailBottomSheet/Members';
 
 const Crew = (props) => {
@@ -32,13 +32,7 @@ const Crew = (props) => {
         return (
           <TouchableOpacity
             key={index}
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              padding: 10,
-              borderBottomWidth: 0.3,
-              borderBottomColor: '#ABABAB',
-            }}
+            style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}
             onPress={() => {
               if (!auth.data || auth.data._id !== user._id) {
                 navigation.navigate('User', { userId: user._id });
@@ -47,16 +41,17 @@ const Crew = (props) => {
           >
             <View
               style={{
-                backgroundColor: 'blue',
+                backgroundColor: iconColorsTable['blue1'],
                 marginRight: 20,
                 padding: 5,
                 borderRadius: 7,
-                width: 35,
-                height: 35,
+                width: 50,
+                height: 50,
                 alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
-              <FontAwesome5 name='user-astronaut' color='white' size={20} />
+              <FontAwesome5 name='user-astronaut' color='white' size={30} />
             </View>
             <View>
               <Text style={{ color: 'rgb(160,160,160)' }}>{user.name}</Text>
@@ -65,9 +60,23 @@ const Crew = (props) => {
         );
       });
 
-      return <View style={{ backgroundColor: sectionBackgroundColor, padding: 5, borderRadius: 10 }}>{crewList}</View>;
-    } else if (crew.length === 0) {
-      return <Text style={{ color: 'white' }}>No users...</Text>;
+      return (
+        <View style={{}}>
+          <Text style={{ color: baseTextColor, marginBottom: 10 }}>
+            These people attend this meetup. Feel free to join!
+          </Text>
+          <ScrollView
+            contentContainerStyle={{
+              paddingBottom: 50,
+            }}
+            style={{ backgroundColor: sectionBackgroundColor, borderRadius: 10 }}
+          >
+            {crewList}
+          </ScrollView>
+        </View>
+      );
+    } else if (!crew.length) {
+      return <Text style={{ color: 'white' }}>Nobody attends this meetup yet.</Text>;
     } else {
       return <Text style={{ color: 'white' }}>Now loading...</Text>;
     }
@@ -77,7 +86,6 @@ const Crew = (props) => {
     <View>
       <View style={{ marginBottom: 25 }}>
         <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 10, color: 'white' }}>Crew</Text>
-        <Text style={{ color: baseTextColor }}>These people attend this meetup. Feel free to join!</Text>
       </View>
       <ScrollView
         contentContainerStyle={{

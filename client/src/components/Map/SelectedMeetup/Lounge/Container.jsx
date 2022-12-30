@@ -21,7 +21,7 @@ import { setIsCrewBottomSheetOpen } from '../../../../redux/actionCreators/botto
 const Container = (props) => {
   const { auth, myUpcomingMeetupAndChatsTable, setMyUpcomingMeetupAndChatsTable, setTotalUnreadChatsCount } =
     useContext(GlobalContext);
-  const [meetup, setMeetup] = useState();
+  const [meetup, setMeetup] = useState(null);
   const [chats, setChats] = useState([]);
   const appMenuBottomSheetRef = useRef(null);
   const sendChatBottomSheetRef = useRef(null);
@@ -45,8 +45,6 @@ const Container = (props) => {
 
   useEffect(() => {
     auth.socket.on('SOMEONE_SENT_A_CHAT', (data) => {
-      // { meetup: 123, content: '', type: 'general', createdAt: 2022/9/22 }
-      console.log(data);
       setChats((previous) => [...previous, data]);
     });
 

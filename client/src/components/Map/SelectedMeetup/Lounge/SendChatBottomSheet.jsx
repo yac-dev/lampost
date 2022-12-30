@@ -20,7 +20,7 @@ const SendChatBottomSheet = (props) => {
   const onSendPress = async () => {
     console.log('sending comment');
     const payload = {
-      meetupId: meetup,
+      meetupId: meetup._id,
       user: {
         _id: auth.data._id,
         name: auth.data.name,

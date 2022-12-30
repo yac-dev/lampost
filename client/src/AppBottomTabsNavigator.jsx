@@ -93,8 +93,6 @@ const AppStack = (props) => {
   const getMyUpcomingMeetupsByMeetupIds = async () => {
     const result = await lampostAPI.post(`/loungechats`, { myUpcomingMeetups: auth.data.upcomingMeetups });
     const { myUpcomingMeetupAndChatsTable } = result.data;
-    console.log(myUpcomingMeetupAndChatsTable);
-    console.log('running');
     setMyUpcomingMeetupAndChatsTable(myUpcomingMeetupAndChatsTable);
     const countTotalUnreads = Object.values(myUpcomingMeetupAndChatsTable).forEach((e) => {
       setTotalUnreadChatsCount((previous) => previous + e.unreadChatsCount);
@@ -106,7 +104,6 @@ const AppStack = (props) => {
     }
   }, [auth.isAuthenticated]);
 
-  // loungeでroom joinする必要はないわ。ただ、chatをlist化したものを並べて見せる、ただそれだけ。
   useEffect(() => {
     if (auth.socket) {
       const meetupIds = auth.data.upcomingMeetups.map((meetupObject) => meetupObject.meetup);
@@ -118,24 +115,15 @@ const AppStack = (props) => {
     }
   }, [auth.socket]);
 
-  // あー、これで入っているわ。ok
   useEffect(() => {
     if (auth.socket) {
       auth.socket.on('SOMEONE_SENT_A_CHAT', (data) => {
-        // { meetup: 123, content: '', type: 'general', createdAt: 2022/9/22 }
+        // lounge以外のscreenにいる時でこのsocket eventを受けたら、chatのstateを変える。
         if (routeName !== 'Lounge') {
-          console.log(data.meetup);
-          console.log('not Lounge navigation');
-          setMyUpcomingMeetups((previous) => {
+          setMyUpcomingMeetupAndChatsTable((previous) => {
             const updating = { ...previous };
-            updating[data.meetup].unreadChatsCount++;
+            updating[data.meetup].unreadChatsCount = updating[data.meetup].unreadChatsCount + 1;
             return updating;
-            // return {
-            //   ...previous,
-            //   [data.meetup]: {
-            //     ...previous[data.meetup],
-            //   },
-            // };
           });
           setTotalUnreadChatsCount((previous) => previous + 1);
         }

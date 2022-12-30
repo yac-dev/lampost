@@ -3,7 +3,6 @@ import AddBadgesContext from '../AddBadgesContext';
 import BadgeContext from '../BadgeContext';
 import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
-import { Badge as RNPBadge, IconButton } from 'react-native-paper';
 import FastImage from 'react-native-fast-image';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
@@ -14,7 +13,7 @@ import {
   rnDefaultBackgroundColor,
   baseTextColor,
 } from '../../../../utils/colorsTable';
-
+import lampostAPI from '../../../../apis/lampost';
 // ac
 import { selectBadge } from '../../../../redux/actionCreators/selectItem';
 import { removeBadge } from '../../../../redux/actionCreators/selectItem';
@@ -30,6 +29,8 @@ const Badge = (props) => {
     badgeDetailBottomSheetRef,
     searchBadgeBottomSheetRef,
     setTappedBadge,
+    tappedBadgeHolders,
+    setTappedBadgeHolders,
   } = useContext(AddBadgesContext);
 
   const oneGridWidth = Dimensions.get('window').width / 4;
@@ -186,10 +187,13 @@ const Badge = (props) => {
   //   </View>
   // );
 
-  const onBadgePress = () => {
+  const onBadgePress = async () => {
     searchBadgeBottomSheetRef.current.close();
     badgeDetailBottomSheetRef.current.snapToIndex(0);
     setTappedBadge(badge);
+    const result = await lampostAPI.get(`/badgeanduserrelationships/holders/${badge._id}`);
+    const { badgeHolders } = result.data;
+    setTappedBadgeHolders(badgeHolders);
     console.log('hey');
   };
 

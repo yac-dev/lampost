@@ -75,6 +75,7 @@ export const getBadgeHolders = async (request, response) => {
     const badgeHolders = badgeAndUserRelationship.map((relationship) => {
       return relationship.user;
     });
+    console.log(badgeHolders);
     response.status(200).json({
       badgeHolders,
     });

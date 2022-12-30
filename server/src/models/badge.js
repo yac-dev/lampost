@@ -15,21 +15,9 @@ const badgeSchema = new mongoose.Schema({
     type: String,
     // tech, food, sports etc
   },
-  // subBadgesっていう方がいいかもね。
-  tags: [
-    {
-      badge: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Badge',
-      },
-      users: [
-        {
-          type: mongoose.Schema.ObjectId,
-          ref: 'User',
-        },
-      ],
-    },
-  ],
+  totalHolders: {
+    type: Number,
+  },
   creator: {
     user: {
       type: mongoose.Schema.ObjectId,

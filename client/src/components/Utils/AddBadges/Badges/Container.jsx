@@ -11,16 +11,15 @@ const Container = () => {
   const renderBadges = () => {
     const badgesList = queriedBadges.map((badge, index) => {
       return (
-        <BadgeContext.Provider value={{ badge }}>
+        <BadgeContext.Provider value={{ badge }} key={index}>
           <Badge
-            key={index}
-            // user={props.user}
-            // key={index}
-            // fromComponent={props.fromComponent}
-            // badgeState={props.badgeState}
-            // meetupBadges={props.meetupBadges}
-            // badge={badge}
-            // onBadgePress={props.onBadgePress}
+          // user={props.user}
+          // key={index}
+          // fromComponent={props.fromComponent}
+          // badgeState={props.badgeState}
+          // meetupBadges={props.meetupBadges}
+          // badge={badge}
+          // onBadgePress={props.onBadgePress}
           />
         </BadgeContext.Provider>
       );
