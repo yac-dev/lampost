@@ -3,26 +3,46 @@ import Meetup from '../models/meetup';
 
 export const getMyLoungeChats = async (request, response) => {
   try {
-    const { upcomingMeetupIds } = request.body;
-    const myUpcomingmeetups = await Meetup.find({ _id: { $in: upcomingMeetupIds } }).select({
+    const myUpcomingMeetupAndChatsTable = {};
+    const { myUpcomingMeetups } = request.body;
+    for (let i = 0; i < myUpcomingMeetups.length; i++) {
+      myUpcomingMeetupAndChatsTable[myUpcomingMeetups[i].meetup] = {};
+      myUpcomingMeetupAndChatsTable[myUpcomingMeetups[i].meetup]._id = myUpcomingMeetups[i].meetup;
+      myUpcomingMeetupAndChatsTable[myUpcomingMeetups[i].meetup].viewedChatsLastTime =
+        myUpcomingMeetups[i].viewedChatsLastTime;
+      myUpcomingMeetupAndChatsTable[myUpcomingMeetups[i].meetup].unreadChatsCount = 0;
+    }
+    const upcomingMeetupIds = myUpcomingMeetups.map((meetupObject) => {
+      return meetupObject.meetup;
+    });
+
+    const meetups = await Meetup.find({ _id: { $in: upcomingMeetupIds } }).select({
       title: 1,
       startDateAndTime: 1,
     });
-    const myUpcomingMeetupsTable = {};
-    for (let i = 0; i < myUpcomingmeetups.length; i++) {
-      myUpcomingMeetupsTable[myUpcomingmeetups[i]._id] = {
-        _id: myUpcomingmeetups[i]._id,
-        title: myUpcomingmeetups[i].title,
-        startDateAndTime: myUpcomingmeetups[i].startDateAndTime,
-        chats: [],
-      };
+    // [{_id: 111, title: '', startDateAndTime: 2022/9/1}, {_id: 222, title: '', startDateAndTime: 2022/8/1}]
+    // {
+    //  111: { _id: 111, title: '', startDateAndTime: 2022/9/1, chats: [], viewedChatsLastTime: '' },
+    //  222: { _id: 222, title: '', startDateAndTime: 2022/8/1, chats: [], viewedChatsLastTime: '' }
+    // }
+    for (let i = 0; i < meetups.length; i++) {
+      myUpcomingMeetupAndChatsTable[meetups[i]._id].title = meetups[i].title;
+      myUpcomingMeetupAndChatsTable[meetups[i]._id].startDateAndTime = meetups[i].startDateAndTime;
+      // myUpcomingMeetupAndChatsTable[meetups[i]._id].chats = [];
     }
     const loungeChats = await LoungeChat.find({ meetup: { $in: upcomingMeetupIds } });
     for (let i = 0; i < loungeChats.length; i++) {
-      myUpcomingMeetupsTable[loungeChats[i].meetup]['chats'].push(loungeChats[i]);
+      // myUpcomingMeetupAndChatsTable[loungeChats[i].meetup]['chats'].push(loungeChats[i]);
+      if (
+        new Date(myUpcomingMeetupAndChatsTable[loungeChats[i].meetup].viewedChatsLastTime) <
+        new Date(loungeChats[i].createdAt)
+      ) {
+        myUpcomingMeetupAndChatsTable[loungeChats[i].meetup].unreadChatsCount++;
+        // myUpcomingMeetupAndChatsTable['totalUnreadChatsCount']++;
+      }
     }
     response.status(200).json({
-      myUpcomingMeetupsTable,
+      myUpcomingMeetupAndChatsTable,
     });
   } catch (error) {
     console.log(error);

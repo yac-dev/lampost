@@ -13,7 +13,7 @@ import lampostAPI from '../../../apis/lampost';
 
 const AppMenusBottomSheet = (props) => {
   const snapPoints = useMemo(() => ['8%', '30%', '80%'], []);
-  const { auth, unreadLoungeChats, setUnreadLoungeChats } = useContext(GlobalContext);
+  const { auth, myUpcomingMeetupAndChatsTable, totalUnreadChatsCount } = useContext(GlobalContext);
   const { appMenuBottomSheetRef } = useContext(MapContext);
 
   return (
@@ -35,7 +35,7 @@ const AppMenusBottomSheet = (props) => {
             <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginRight: 10 }}>
               Launch your meetup?
             </Text>
-            {unreadLoungeChats ? (
+            {totalUnreadChatsCount ? (
               <View
                 style={{
                   backgroundColor: iconColorsTable['blue1'],
@@ -46,12 +46,11 @@ const AppMenusBottomSheet = (props) => {
                   borderRadius: 20 / 2,
                 }}
               >
-                <Text style={{ color: 'white' }}>{unreadLoungeChats}</Text>
+                <Text style={{ color: 'white' }}>{totalUnreadChatsCount}</Text>
               </View>
             ) : null}
           </View>
           {auth.data ? (
-            // authがある上で、下のcomponentを表示していく。
             <>
               <AppMenuButtons />
               <UpcomingMeetups />

@@ -29,11 +29,6 @@ const Tab = createBottomTabNavigator();
 // ac
 import { loadMe } from './redux/actionCreators/auth';
 import { getSocket } from './redux/actionCreators/auth';
-// const theme = {
-//   colors: {
-//     background: 'transparent',
-//   },
-// };
 
 const AppStack = (props) => {
   const [auth, setAuth] = useState({
@@ -46,9 +41,16 @@ const AppStack = (props) => {
   const [loading, setLoading] = useState(false);
   const [snackBar, setSnackBar] = useState({ isVisible: false, message: '', barType: '', duration: null });
   const [routeName, setRouteName] = useState();
-  const [myUpcomingMeetups, setMyUpcomingMeetups] = useState({});
-  const [unreadLoungeChats, setUnreadLoungeChats] = useState(null);
+  const [totalUnreadChatsCount, setTotalUnreadChatsCount] = useState(0);
+  const [myUpcomingMeetupAndChatsTable, setMyUpcomingMeetupAndChatsTable] = useState({});
   const hide = routeName === 'Meetup' || routeName === 'Dummy2' || routeName === 'Q&A';
+
+  // { 111: { _id: 111, title: 'Meetup1' , chats: [{content: '', createdAt: '2022/9/1'}], viewedChats: '2022/9/22' },
+  //   222: { _id: 222, title: 'Meetup2' , chats: [{content: '', createdAt: '2022/8/1'}], viewedChats: '2022/7/22' },
+  //}
+  // [{ _id: 111, title: 'Meetup1' , chats: [{content: '', createdAt: '2022/9/1'}], viewedChats: '2022/9/22' },
+  //    { _id: 222, title: 'Meetup2' , chats: [{content: '', createdAt: '2022/8/1'}], viewedChats: '2022/7/22' }
+  //]
 
   const getJWTToken = async () => {
     const jwtToken = await SecureStore.getItemAsync('secure_token');
@@ -89,29 +91,20 @@ const AppStack = (props) => {
   }, [auth.isAuthenticated]);
 
   const getMyUpcomingMeetupsByMeetupIds = async () => {
-    const upcomingMeetupIds = auth.data.upcomingMeetups.map((meetupObject) => {
-      return meetupObject.meetup;
+    const result = await lampostAPI.post(`/loungechats`, { myUpcomingMeetups: auth.data.upcomingMeetups });
+    const { myUpcomingMeetupAndChatsTable } = result.data;
+    console.log(myUpcomingMeetupAndChatsTable);
+    console.log('running');
+    setMyUpcomingMeetupAndChatsTable(myUpcomingMeetupAndChatsTable);
+    const countTotalUnreads = Object.values(myUpcomingMeetupAndChatsTable).forEach((e) => {
+      setTotalUnreadChatsCount((previous) => previous + e.unreadChatsCount);
     });
-    const result = await lampostAPI.post(`/loungechats`, { upcomingMeetupIds });
-    const { myUpcomingMeetupsTable } = result.data;
-    const m = { ...myUpcomingMeetupsTable };
-    let totalUnreadLoungeChats = 0;
-    auth.data.upcomingMeetups.forEach((meetupObject) => {
-      m[meetupObject.meetup].viewedChatsLastTime = meetupObject.viewedChatsLastTime;
-      for (let i = 0; i < m[meetupObject.meetup].chats.length; i++) {
-        if (m[meetupObject.meetup].chats[i].createdAt > meetupObject.viewedChatsLastTime) {
-          totalUnreadLoungeChats++;
-        }
-      }
-    });
-    setMyUpcomingMeetups(m);
-    setUnreadLoungeChats(totalUnreadLoungeChats);
   };
   useEffect(() => {
-    if (auth.data) {
+    if (auth.isAuthenticated) {
       getMyUpcomingMeetupsByMeetupIds();
     }
-  }, [auth.data]);
+  }, [auth.isAuthenticated]);
 
   // loungeでroom joinする必要はないわ。ただ、chatをlist化したものを並べて見せる、ただそれだけ。
   useEffect(() => {
@@ -130,16 +123,22 @@ const AppStack = (props) => {
     if (auth.socket) {
       auth.socket.on('SOMEONE_SENT_A_CHAT', (data) => {
         // { meetup: 123, content: '', type: 'general', createdAt: 2022/9/22 }
-        console.log(data.meetup);
-        setMyUpcomingMeetups((previous) => {
-          return {
-            ...previous,
-            [data.meetup]: {
-              ...previous[data.meetup],
-              chats: [...previous[data.meetup].chats, data],
-            },
-          };
-        });
+        if (routeName !== 'Lounge') {
+          console.log(data.meetup);
+          console.log('not Lounge navigation');
+          setMyUpcomingMeetups((previous) => {
+            const updating = { ...previous };
+            updating[data.meetup].unreadChatsCount++;
+            return updating;
+            // return {
+            //   ...previous,
+            //   [data.meetup]: {
+            //     ...previous[data.meetup],
+            //   },
+            // };
+          });
+          setTotalUnreadChatsCount((previous) => previous + 1);
+        }
       });
 
       return () => {
@@ -147,16 +146,6 @@ const AppStack = (props) => {
       };
     }
   }, [auth.socket]);
-
-  // useEffect(() => {
-  //   // const socket = io('http://192.168.11.17:3500', {
-  //   //   path: '/mysocket',
-  //   // });
-  //   const socket = io('http://localhost:3500', {
-  //     path: '/mysocket',
-  //   });
-  //   props.getSocket(socket);
-  // }, []);
 
   return (
     <GlobalContext.Provider
@@ -167,10 +156,11 @@ const AppStack = (props) => {
         setLoading,
         snackBar,
         setSnackBar,
-        myUpcomingMeetups,
-        setMyUpcomingMeetups,
-        unreadLoungeChats,
-        setUnreadLoungeChats,
+        routeName,
+        myUpcomingMeetupAndChatsTable,
+        setMyUpcomingMeetupAndChatsTable,
+        totalUnreadChatsCount,
+        setTotalUnreadChatsCount,
       }}
     >
       <NavigationContainer
@@ -221,7 +211,7 @@ const AppStack = (props) => {
                 <MCIcon name={'map'} color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
               ),
               tabBarLabel: 'Meetups',
-              tabBarBadge: unreadLoungeChats ? unreadLoungeChats : null,
+              tabBarBadge: totalUnreadChatsCount ? totalUnreadChatsCount : null,
               tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
               // () => {
               //   return null;

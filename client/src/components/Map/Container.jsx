@@ -42,17 +42,8 @@ import { iconColorsTable } from '../../utils/colorsTable';
 
 const Map = (props) => {
   // setAuthがありませんよ、てきなerrorを出して欲しいわ。これなんとかならんかな。
-  const {
-    auth,
-    setAuth,
-    loading,
-    setLoading,
-    setSnackBar,
-    myUpcomingMeetups,
-    setMyUpcomingMeetups,
-    unreadLoungeChats,
-    setUnreadLoungeChats,
-  } = useContext(GlobalContext);
+  const { auth, setAuth, loading, setLoading, setSnackBar, setMyUpcomingMeetupAndChatsTable } =
+    useContext(GlobalContext);
   const [region, setRegion] = useState(null);
   const [currentSnap, setCurrentSnap] = useState();
   const [isLaunchMeetupConfirmationModalOpen, setIsLaunchMeetupConfirmationModalOpen] = useState(false);
@@ -62,7 +53,6 @@ const Map = (props) => {
   const [meetups, setMeetups] = useState([]);
   const [selectedMeetup, setSelectedMeetup] = useState(null);
   const [selectedMeetupDetailComponent, setSelectedMeetupDetailComponent] = useState('');
-  const [upcomingMeetups, setUpcomingMeetups] = useState({});
 
   const mapRef = useRef(null);
   const appMenuBottomSheetRef = useRef(null);

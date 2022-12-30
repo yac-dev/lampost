@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import GlobalContext from '../../../../GlobalContext';
 import LoungeContext from './LoungeContext';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 
@@ -17,7 +18,8 @@ const chatTypeTable = {
 };
 
 const Chats = (props) => {
-  const { chats } = useContext(LoungeContext);
+  const { myUpcomingMeetups } = useContext(GlobalContext);
+  const { chats, meetup } = useContext(LoungeContext);
 
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US');

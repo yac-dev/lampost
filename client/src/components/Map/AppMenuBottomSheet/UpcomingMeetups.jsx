@@ -9,9 +9,8 @@ import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
 const Container = (props) => {
-  const { auth, myUpcomingMeetups } = useContext(GlobalContext);
+  const { auth, myUpcomingMeetupAndChatsTable, totalUnreadChatsCount } = useContext(GlobalContext);
   const { appMenuBottomSheetRef, setSelectedMeetup, selectedMeetupBottomSheetRef, navigation } = useContext(MapContext);
-  // ここのconditional renderingまじ重要ね。
 
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
@@ -52,30 +51,13 @@ const Container = (props) => {
     );
   };
 
-  const countUnreadMessages = (meetup) => {
-    let unreadCount = 0;
-    for (let i = 0; i < meetup.chats.length; i++) {
-      if (meetup.chats[i].createdAt > meetup.viewedChatsLastTime) {
-        unreadCount++;
-      }
-    }
-    if (!unreadCount) {
+  const renderUnreadChatsCount = (meetupAndChatsTable) => {
+    if (meetupAndChatsTable.unreadChatsCount) {
       return (
         <View style={{ marginRight: 5 }}>
           <TouchableOpacity
             style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}
-            onPress={() => navigation.navigate('Lounge', { meetupId: meetup._id })}
-          >
-            <Ionicons size={25} name='ios-chatbubbles' color={'white'} />
-          </TouchableOpacity>
-        </View>
-      );
-    } else {
-      return (
-        <View style={{ marginRight: 5 }}>
-          <TouchableOpacity
-            style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}
-            onPress={() => navigation.navigate('Lounge', { meetupId: meetup._id })}
+            onPress={() => navigation.navigate('Lounge', { meetupId: meetupAndChatsTable._id })}
           >
             <Ionicons size={25} name='ios-chatbubbles' color={'white'} />
             <View
@@ -92,8 +74,19 @@ const Container = (props) => {
                 borderRadius: 20 / 2,
               }}
             >
-              <Text style={{ color: 'white' }}>{unreadCount}</Text>
+              <Text style={{ color: 'white' }}>{meetupAndChatsTable.unreadChatsCount}</Text>
             </View>
+          </TouchableOpacity>
+        </View>
+      );
+    } else {
+      return (
+        <View style={{ marginRight: 5 }}>
+          <TouchableOpacity
+            style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}
+            onPress={() => navigation.navigate('Lounge', { meetupId: meetupAndChatsTable._id })}
+          >
+            <Ionicons size={25} name='ios-chatbubbles' color={'white'} />
           </TouchableOpacity>
         </View>
       );
@@ -101,7 +94,7 @@ const Container = (props) => {
   };
 
   const renderMyUpcomingMeetups = () => {
-    const myUpcomingMeetupslist = Object.values(myUpcomingMeetups).map((meetup, index) => {
+    const myUpcomingMeetupslist = Object.values(myUpcomingMeetupAndChatsTable).map((meetupAndChatsTable, index) => {
       return (
         <TouchableOpacity
           key={index}
@@ -114,16 +107,16 @@ const Container = (props) => {
             borderBottomWidth: 0.3,
             borderBottomColor: '#EFEFEF',
           }}
-          onPress={() => getMeetup(meetup._id)}
+          onPress={() => getMeetup(meetupAndChatsTable._id)}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {renderDate(meetup.startDateAndTime)}
+            {renderDate(meetupAndChatsTable.startDateAndTime)}
             <View style={{}}>
-              <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>{meetup.title}</Text>
-              {renderTime(meetup.startDateAndTime)}
+              <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>{meetupAndChatsTable.title}</Text>
+              {renderTime(meetupAndChatsTable.startDateAndTime)}
             </View>
           </View>
-          {countUnreadMessages(meetup)}
+          {renderUnreadChatsCount(meetupAndChatsTable)}
         </TouchableOpacity>
       );
     });

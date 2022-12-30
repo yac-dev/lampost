@@ -112,15 +112,16 @@ export const createLoungeChat = async (io, data) => {
     createdAt: new Date(),
   });
 
-  // const loungeChatObject = {
-  //   user: {
-  //     name: data.user.name,
-  //     photo: data.user.photo,
-  //   },
-  //   content: loungeChat.content,
-  //   type: loungeChat.type,
-  //   createdAt: loungeChat.createdAt,
-  // };
+  const loungeChatObject = {
+    meetup: loungeChat.meetup,
+    user: {
+      name: data.user.name,
+      photo: data.user.photo,
+    },
+    content: loungeChat.content,
+    type: loungeChat.type,
+    createdAt: loungeChat.createdAt,
+  };
 
-  io.in(data.meetupId).emit('SOMEONE_SENT_A_CHAT', loungeChat);
+  io.in(data.meetupId).emit('SOMEONE_SENT_A_CHAT', loungeChatObject);
 };

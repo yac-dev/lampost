@@ -19,8 +19,9 @@ import { setIsTextBoxBottomSheetOpen } from '../../../../redux/actionCreators/bo
 import { setIsCrewBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
 
 const Container = (props) => {
-  const { auth } = useContext(GlobalContext);
-  // const [meetup, setMeetup] = useState();
+  const { auth, myUpcomingMeetupAndChatsTable, setMyUpcomingMeetupAndChatsTable, setTotalUnreadChatsCount } =
+    useContext(GlobalContext);
+  const [meetup, setMeetup] = useState();
   const [chats, setChats] = useState([]);
   const appMenuBottomSheetRef = useRef(null);
   const sendChatBottomSheetRef = useRef(null);
@@ -32,9 +33,37 @@ const Container = (props) => {
     const { loungeChats } = result.data;
     setChats(loungeChats);
   };
+  const getSelectedMeetup = async () => {
+    const result = await lampostAPI.get(`/meetups/${props.route.params.meetupId}/selected`);
+    const { meetup } = result.data;
+    setMeetup(meetup);
+  };
   useEffect(() => {
     getLoungeChatsByMeetupId();
-    // setChats(myUpcomingMeetups[props.route.params.meetupId].chats);
+    getSelectedMeetup();
+  }, []);
+
+  useEffect(() => {
+    auth.socket.on('SOMEONE_SENT_A_CHAT', (data) => {
+      // { meetup: 123, content: '', type: 'general', createdAt: 2022/9/22 }
+      console.log(data);
+      setChats((previous) => [...previous, data]);
+    });
+
+    return () => {
+      auth.socket.off('SOMEONE_SENT_A_CHAT');
+    };
+  }, []);
+
+  useEffect(() => {
+    const minus = myUpcomingMeetupAndChatsTable[props.route.params.meetupId].unreadChatsCount;
+    setMyUpcomingMeetupAndChatsTable((previous) => {
+      const updating = { ...previous };
+      updating[props.route.params.meetupId].unreadChatsCount =
+        updating[props.route.params.meetupId].unreadChatsCount - minus;
+      return updating;
+    });
+    setTotalUnreadChatsCount((previous) => previous - minus);
   }, []);
 
   // useEffect(() => {
@@ -74,7 +103,7 @@ const Container = (props) => {
   return (
     <LoungeContext.Provider
       value={{
-        meetup: props.route.params.meetupId,
+        meetup,
         navigation: props.navigation,
         appMenuBottomSheetRef,
         sendChatBottomSheetRef,
