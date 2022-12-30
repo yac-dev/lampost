@@ -33,8 +33,8 @@ const Menu = (props) => {
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: 15,
-        borderBottomColor: baseBorderColor,
-        borderBottomWidth: 0.3,
+        // borderBottomColor: baseBorderColor,
+        // borderBottomWidth: 0.3,
       }}
       onPress={() => props.onPressMenu()}
     >

@@ -115,7 +115,7 @@ const Container = (props) => {
         <Chats />
         <AppMenuBottomSheet />
         <SendChatBottomSheet />
-        {/* <CrewBottomSheet /> */}
+        <CrewBottomSheet />
       </View>
     </LoungeContext.Provider>
   );

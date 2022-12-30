@@ -5,8 +5,8 @@ import lampostAPI from '../../../apis/lampost';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { sectionBackgroundColor, baseTextColor, iconColorsTable } from '../../../utils/colorsTable';
-import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
 const Container = (props) => {
   const { auth, myUpcomingMeetupAndChatsTable, totalUnreadChatsCount } = useContext(GlobalContext);
@@ -124,7 +124,20 @@ const Container = (props) => {
               {renderTime(meetupAndChatsTable.startDateAndTime)}
             </View>
           </View>
-          {renderUnreadChatsCount(meetupAndChatsTable)}
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ marginRight: 5 }}>
+              <TouchableOpacity
+                style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}
+                onPress={() => {
+                  appMenuBottomSheetRef.current.snapToIndex(0);
+                }}
+              >
+                <Feather name='power' size={25} color={'white'} />
+              </TouchableOpacity>
+            </View>
+
+            {renderUnreadChatsCount(meetupAndChatsTable)}
+          </View>
         </TouchableOpacity>
       );
     });

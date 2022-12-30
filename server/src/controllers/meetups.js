@@ -249,6 +249,9 @@ export const getSelectedMeetup = async (request, response) => {
       })
       .populate({
         path: 'comments',
+      })
+      .populate({
+        path: 'attendees',
       });
     console.log('meetup selected!', meetup);
     response.status(200).json({

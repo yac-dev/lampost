@@ -38,11 +38,14 @@ const Header = (props) => {
     return (
       <View
         style={{
-          padding: 10,
+          width: 80,
+          height: 50,
           borderRadius: 10,
           borderWidth: 0.3,
           marginRight: 15,
           borderColor: baseTextColor,
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         <Text style={{ fontSize: 13, textAlign: 'center', color: baseTextColor }}>{dateElements[0]}</Text>
@@ -78,7 +81,7 @@ const Header = (props) => {
     const endDateElements = endTime.split(', ');
 
     return (
-      <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Ionicons name='time-outline' size={15} color={baseTextColor} style={{ marginRight: 5 }} />
         <Text style={{ color: baseTextColor }}>
           {startDateElements[1]}&nbsp;~&nbsp;{endDateElements[1]}
@@ -89,14 +92,18 @@ const Header = (props) => {
 
   return (
     <View style={{ marginBottom: 10 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+      <View style={{ flexDirection: 'row', marginBottom: 20 }}>
         {renderDate(selectedMeetup.startDateAndTime)}
-        <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>{selectedMeetup.title}</Text>
+        <View style={{ flexDirection: 'column', flexShrink: 1 }}>
+          <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white', marginBottom: 10 }}>
+            {selectedMeetup.title}
+          </Text>
+          <View>{renderTime(selectedMeetup.startDateAndTime, selectedMeetup.duration)}</View>
+        </View>
       </View>
       <View style={{ marginBottom: 10 }}>
         <Badges />
       </View>
-      <View>{renderTime(selectedMeetup.startDateAndTime, selectedMeetup.duration)}</View>
     </View>
   );
 };

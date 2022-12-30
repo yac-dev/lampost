@@ -131,7 +131,7 @@ const ActionButtons = (props) => {
               )}
               <ActionButton
                 label='Go to lounge'
-                icon={<MaterialCommunityIcons name='comment-text-multiple' size={25} color={'white'} />}
+                icon={<Ionicons name='ios-chatbubbles' size={25} color={'white'} />}
                 backgroundColor={iconColorsTable['blue1']}
                 onActionButtonPress={() => navigation.navigate('Lounge', { meetup: selectedMeetup })}
               />
