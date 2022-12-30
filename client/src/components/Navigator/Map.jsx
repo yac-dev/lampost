@@ -18,7 +18,7 @@ import User from '../User/Container';
 import AddBadges from '../Utils/AddBadges/Container';
 
 import AuthNavigator from './Auth';
-import { appBottomSheetBackgroundColor } from '../../utils/colorsTable';
+import { appBottomSheetBackgroundColor, iconColorsTable } from '../../utils/colorsTable';
 
 // ac
 import { loadMe } from '../../redux/actionCreators/auth';
@@ -60,7 +60,7 @@ const MapNavigator = (props) => {
               fontWeight: 'bold',
               color: 'white',
             },
-            headerTintColor: 'white',
+            // headerTintColor: iconColorsTable['blue1'],
           }}
         />
         <Stack.Screen

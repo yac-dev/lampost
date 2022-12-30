@@ -8,7 +8,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { iconColorsTable, baseTextColor } from '../../../../utils/colorsTable';
+import { iconColorsTable, baseTextColor, appBottomSheetBackgroundColor } from '../../../../utils/colorsTable';
 
 const chatTypeTable = {
   general: iconColorsTable['blue1'],
@@ -22,8 +22,13 @@ const Chats = (props) => {
   const { chats, meetup } = useContext(LoungeContext);
 
   const renderDate = (date) => {
-    const d = new Date(date).toLocaleDateString('en-US');
-    return <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#ABABAB' }}>{d}</Text>;
+    const d = new Date(date).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    return <Text style={{ fontWeight: 'bold', fontSize: 12, color: 'rgb(94, 97, 103)' }}>{d}</Text>;
   };
 
   const renderChatType = (type) => {
@@ -47,33 +52,54 @@ const Chats = (props) => {
     const chatsList = chats.map((chat, index) => {
       // launcherのchatだけは、背景を少し変える。
       return (
-        <TouchableOpacity key={index} style={{ padding: 20, borderBottomWidth: 0.3, borderBottomColor: '#ABABAB' }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-            <View
-              style={{
-                backgroundColor: chatTypeTable[chat.type],
-                padding: 5,
-                borderRadius: 7,
-                width: 25,
-                height: 25,
-                alignItems: 'center',
-                marginRight: 10,
-              }}
-            >
-              {renderChatType(chat.type)}
+        <View key={index} style={{ padding: 10 }}>
+          <View style={{ flexDirection: 'row' }}>
+            {chat.user.photo ? (
+              <Image source={{ uri: chat.user.photo }} style={{ width: 40, height: 40, borderRadius: 10 }} />
+            ) : (
+              <TouchableOpacity
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 10,
+                  marginRight: 20,
+                  backgroundColor: iconColorsTable['blue1'],
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <FontAwesome5 name='user-astronaut' size={20} color='white' />
+                <View
+                  style={{
+                    backgroundColor: chatTypeTable[chat.type],
+                    padding: 2,
+                    borderRadius: 7,
+                    width: 20,
+                    height: 20,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    position: 'absolute',
+                    bottom: -5,
+                    right: -5,
+                  }}
+                >
+                  {renderChatType(chat.type)}
+                </View>
+              </TouchableOpacity>
+            )}
+            <View style={{ flexDirection: 'column' }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                <Text style={{ color: baseTextColor, marginRight: 10, fontSize: 15 }}>{chat.user.name}</Text>
+                {renderDate(chat.createdAt)}
+              </View>
+              <Text style={{ fontSize: 15, marginBottom: 10, color: baseTextColor }}>{chat.content}</Text>
             </View>
-            <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#ABABAB' }}>{renderDate(chat.createdAt)}</Text>
           </View>
-          <Text style={{ fontSize: 15, marginBottom: 10, color: baseTextColor }}>{chat.content}</Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
-            <View style={{ height: 25, width: 25, backgroundColor: 'blue', borderRadius: 5, marginRight: 5 }}></View>
-            <Text>{chat.user.name}</Text>
-          </View>
-        </TouchableOpacity>
+        </View>
       );
     });
 
-    return <View>{chatsList}</View>;
+    return <View style={{ padding: 10 }}>{chatsList}</View>;
   };
 
   if (!chats.length) {

@@ -60,7 +60,10 @@ const Container = (props) => {
         <View style={{ marginRight: 5 }}>
           <TouchableOpacity
             style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}
-            onPress={() => navigation.navigate('Lounge', { meetupId: meetupAndChatsTable._id })}
+            onPress={() => {
+              appMenuBottomSheetRef.current.snapToIndex(0);
+              navigation.navigate('Lounge', { meetupId: meetupAndChatsTable._id });
+            }}
           >
             <Ionicons size={25} name='ios-chatbubbles' color={'white'} />
             <View
@@ -87,7 +90,10 @@ const Container = (props) => {
         <View style={{ marginRight: 5 }}>
           <TouchableOpacity
             style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}
-            onPress={() => navigation.navigate('Lounge', { meetupId: meetupAndChatsTable._id })}
+            onPress={() => {
+              appMenuBottomSheetRef.current.snapToIndex(0);
+              navigation.navigate('Lounge', { meetupId: meetupAndChatsTable._id });
+            }}
           >
             <Ionicons size={25} name='ios-chatbubbles' color={'white'} />
           </TouchableOpacity>
