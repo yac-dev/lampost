@@ -31,7 +31,7 @@ const AppMenusBottomSheet = (props) => {
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
         <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
             <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginRight: 10 }}>
               Launch your meetup?
             </Text>

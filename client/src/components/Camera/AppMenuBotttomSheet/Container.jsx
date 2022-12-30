@@ -47,7 +47,7 @@ const AppMenuBottomSheet = (props) => {
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 15 }}>
+          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 20 }}>
             Camera, video or Live?
           </Text>
           {renderCameraMode()}

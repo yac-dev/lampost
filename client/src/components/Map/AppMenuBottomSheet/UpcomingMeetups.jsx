@@ -22,11 +22,14 @@ const Container = (props) => {
     return (
       <View
         style={{
-          padding: 10,
+          width: 80,
+          height: 50,
           borderRadius: 10,
           borderWidth: 0.3,
           marginRight: 15,
           borderColor: baseTextColor,
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         <Text style={{ fontSize: 13, textAlign: 'center', color: baseTextColor }}>{dateElements[0]}</Text>
@@ -102,17 +105,16 @@ const Container = (props) => {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            paddingTop: 10,
-            paddingBottom: 10,
-            borderBottomWidth: 0.3,
-            borderBottomColor: '#EFEFEF',
+            padding: 10,
           }}
           onPress={() => getMeetup(meetupAndChatsTable._id)}
         >
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', flexShrink: 1 }}>
             {renderDate(meetupAndChatsTable.startDateAndTime)}
-            <View style={{}}>
-              <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>{meetupAndChatsTable.title}</Text>
+            <View style={{ flexDirection: 'column', marginRight: 5, flexShrink: 1 }}>
+              <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white', marginBottom: 5 }}>
+                {meetupAndChatsTable.title}
+              </Text>
               {renderTime(meetupAndChatsTable.startDateAndTime)}
             </View>
           </View>
@@ -121,11 +123,7 @@ const Container = (props) => {
       );
     });
 
-    return (
-      <View style={{ padding: 10, backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>
-        {myUpcomingMeetupslist}
-      </View>
-    );
+    return <View style={{ backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>{myUpcomingMeetupslist}</View>;
   };
 
   const getMeetup = async (meetupId) => {
@@ -138,7 +136,7 @@ const Container = (props) => {
 
   return (
     <View>
-      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My upcoming meetups</Text>
+      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 20 }}>My upcoming meetups</Text>
       {renderMyUpcomingMeetups()}
     </View>
   );

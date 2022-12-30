@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import GlobalContext from '../../../../GlobalContext';
 import MapContext from '../../MeetupContext';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { connect } from 'react-redux';
 import lampostAPI from '../../../../apis/lampost';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -39,22 +39,25 @@ const Crew = (props) => {
               }
             }}
           >
-            <View
-              style={{
-                backgroundColor: iconColorsTable['blue1'],
-                marginRight: 20,
-                padding: 5,
-                borderRadius: 7,
-                width: 50,
-                height: 50,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <FontAwesome5 name='user-astronaut' color='white' size={30} />
-            </View>
+            {user.photo ? (
+              <Image source={{ uri: user.photo }} style={{ width: 50, height: 50 }} />
+            ) : (
+              <View
+                style={{
+                  width: 50,
+                  height: 50,
+                  borderRadius: 10,
+                  marginRight: 20,
+                  backgroundColor: iconColorsTable['blue1'],
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <FontAwesome5 name='user-astronaut' size={25} color='white' />
+              </View>
+            )}
             <View>
-              <Text style={{ color: 'rgb(160,160,160)' }}>{user.name}</Text>
+              <Text style={{ color: baseTextColor }}>{user.name}</Text>
             </View>
           </TouchableOpacity>
         );
@@ -66,9 +69,7 @@ const Crew = (props) => {
             These people attend this meetup. Feel free to join!
           </Text>
           <ScrollView
-            contentContainerStyle={{
-              paddingBottom: 50,
-            }}
+            contentContainerStyle={{ paddingBottom: 50 }}
             style={{ backgroundColor: sectionBackgroundColor, borderRadius: 10 }}
           >
             {crewList}

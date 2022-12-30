@@ -11,7 +11,7 @@ const BadgeHolders = () => {
     if (tappedBadgeHolders.length) {
       const badgeHolders = tappedBadgeHolders.map((user, index) => {
         return (
-          <View key={index} style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View key={index} style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
             {user.photo ? (
               <Image source={{ uri: user.photo }} style={{ width: 50, height: 50 }} />
             ) : (
@@ -20,7 +20,7 @@ const BadgeHolders = () => {
                   width: 50,
                   height: 50,
                   borderRadius: 10,
-                  marginRight: 10,
+                  marginRight: 20,
                   backgroundColor: iconColorsTable['blue1'],
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -39,7 +39,7 @@ const BadgeHolders = () => {
           <Text style={{ color: baseTextColor, marginBottom: 15 }}>These people also have this badge...</Text>
           <ScrollView
             contentContainerStyle={{ paddingBottom: 50 }}
-            style={{ padding: 10, backgroundColor: sectionBackgroundColor, borderRadius: 10 }}
+            style={{ backgroundColor: sectionBackgroundColor, borderRadius: 10 }}
           >
             {badgeHolders}
           </ScrollView>
