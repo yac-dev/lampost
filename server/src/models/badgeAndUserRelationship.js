@@ -12,10 +12,10 @@ const badgeAndUserRelationshipSchema = new mongoose.Schema({
   url: {
     type: String,
   },
-  tags: [
+  badgeTags: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: 'Tag',
+      ref: 'BadgeTag',
     },
   ],
   createdAt: Date,

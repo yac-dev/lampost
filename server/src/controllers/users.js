@@ -1,5 +1,4 @@
 import User from '../models/user';
-import BadgeStatus from '../models/badgeStatus';
 import Badge from '../models/badge';
 import ChatRoom from '../models/chatRoom';
 import Meetup from '../models/meetup';

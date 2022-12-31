@@ -46,11 +46,11 @@ const AppButtons = (props) => {
             navigation.navigate('Add badges', { fromComponent: 'ADD_USER_BADGES' });
           }}
         />
-        <AppButton
+        {/* <AppButton
           backgroundColor={backgroundColorsTable['violet1']}
           icon={<MaterialIcons name='edit' size={35} color={iconColorsTable['violet1']} />}
           label='Edit my profile'
-        />
+        /> */}
         <AppButton
           backgroundColor={backgroundColorsTable['grey1']}
           icon={<Fontisto name='player-settings' size={35} color={iconColorsTable['grey1']} />}

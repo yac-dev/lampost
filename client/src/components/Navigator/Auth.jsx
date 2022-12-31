@@ -26,7 +26,7 @@ const Auth = (props) => {
       <Stack.Navigator>
         <Stack.Group>
           <Stack.Screen
-            name='Personal page'
+            name='Profile'
             component={UserHome}
             initialParams={{ userId: auth.data._id }}
             options={{

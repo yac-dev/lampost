@@ -8,8 +8,9 @@ import {
   backgroundColorsTable,
   iconColorsTable,
 } from '../../../../utils/colorsTable';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ActionButton from '../../../Utils/ActionButton';
+import { Entypo } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Header = () => {
   const { pressedBadgeData, isMyPage } = useContext(UserContext);
@@ -17,84 +18,74 @@ const Header = () => {
   const renderActionButtons = () => {
     if (isMyPage) {
       return (
-        <View style={{ justifyContent: 'flex-start' }}>
-          <ActionButton
-            icon={<MaterialCommunityIcons name='plus' size={20} color={'white'} />}
-            backgroundColor={iconColorsTable['blue1']}
-            onActionButtonPress={() => console.log('selectiong')}
-            label='Add url'
-          />
-          <ActionButton
-            icon={<MaterialCommunityIcons name='plus' size={20} color={'white'} />}
-            backgroundColor={iconColorsTable['blue1']}
-            onActionButtonPress={() => console.log('selectiong')}
-            label='Add tags'
-          />
+        <View style={{ flexDirection: 'column' }}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              // alignSelf: 'center',
+              fontSize: 20,
+              textAlign: 'center',
+              color: 'white',
+              marginBottom: 5,
+            }}
+          >
+            {pressedBadgeData.badge.name}
+          </Text>
+          <View style={{ flexDirection: 'row' }}>
+            <ActionButton
+              icon={<Entypo name='link' size={20} color={'white'} />}
+              backgroundColor={iconColorsTable['blue1']}
+              onActionButtonPress={() => console.log('selectiong')}
+              label='Add my link'
+            />
+            <ActionButton
+              icon={<MaterialCommunityIcons name='tag-multiple' size={20} color={'white'} />}
+              backgroundColor={iconColorsTable['blue1']}
+              onActionButtonPress={() => console.log('selectiong')}
+              label='Add badge tag'
+            />
+          </View>
         </View>
       );
     } else {
-      return (
-        <View>
-          <Text>Hello</Text>
-        </View>
-      );
+      return null;
     }
   };
 
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
       <View
         style={{
-          width: 120, // さらにbadgeを覆う必要がある。textも含めた守備範囲が必要だ。
-          height: 120,
-          // backgroundColor: 'red',
-          alignItems: 'center',
-          // justifyContent: 'center', // これで、verticallyにもcenterにする。
+          backgroundColor: rnDefaultBackgroundColor,
+          width: 85,
+          height: 85,
+          borderRadius: 15,
+          // marginBottom: 5,
+          marginRight: 15,
         }}
       >
-        <View
+        <TouchableOpacity
           style={{
-            backgroundColor: rnDefaultBackgroundColor,
-            width: 85,
-            height: 85,
+            width: '100%',
+            height: '100%',
+            alignItems: 'center', // これと
+            justifyContent: 'center', // これで中のimageを上下左右真ん中にする
             borderRadius: 10,
-            marginBottom: 5,
+            backgroundColor: backgroundColorsTable[pressedBadgeData.badge.color],
+            borderColor: backgroundColorsTable[pressedBadgeData.badge.color],
+            borderWidth: 0.3,
           }}
         >
-          <TouchableOpacity
-            style={{
-              width: '100%',
-              height: '100%',
-              alignItems: 'center', // これと
-              justifyContent: 'center', // これで中のimageを上下左右真ん中にする
-              borderRadius: 10,
-              backgroundColor: backgroundColorsTable[pressedBadgeData.badge.color],
-              borderColor: backgroundColorsTable[pressedBadgeData.badge.color],
-              borderWidth: 0.3,
+          <FastImage
+            style={{ width: 65, height: 65 }}
+            source={{
+              uri: pressedBadgeData.badge.icon,
+              priority: FastImage.priority.normal,
             }}
-          >
-            <FastImage
-              style={{ width: 65, height: 65 }}
-              source={{
-                uri: pressedBadgeData.badge.icon,
-                priority: FastImage.priority.normal,
-              }}
-              tintColor={iconColorsTable[pressedBadgeData.badge.color]}
-              resizeMode={FastImage.resizeMode.contain}
-            />
-          </TouchableOpacity>
-        </View>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            // alignSelf: 'center',
-            fontSize: 12,
-            textAlign: 'center',
-            color: baseTextColor,
-          }}
-        >
-          {pressedBadgeData.badge.name}
-        </Text>
+            tintColor={iconColorsTable[pressedBadgeData.badge.color]}
+            resizeMode={FastImage.resizeMode.contain}
+          />
+        </TouchableOpacity>
       </View>
       {renderActionButtons()}
     </View>

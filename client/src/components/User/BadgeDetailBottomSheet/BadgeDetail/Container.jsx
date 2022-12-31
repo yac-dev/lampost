@@ -1,16 +1,19 @@
 import React, { useContext, useMemo } from 'react';
 import UserContext from '../../UserContext';
-import { connect } from 'react-redux';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import Header from './Header';
-
+import Links from './Links';
+import BadgeTags from './BadgeTags';
+import Communities from './Communities';
 import { AntDesign } from '@expo/vector-icons';
-import { appBottomSheetBackgroundColor, baseTextColor } from '../../../../utils/colorsTable';
 
 const Container = (props) => {
   return (
     <View>
       <Header />
+      <Links />
+      <BadgeTags />
+      <Communities />
     </View>
   );
 };

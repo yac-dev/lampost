@@ -243,7 +243,7 @@ const AppStack = (props) => {
             component={LibraryNavigator}
             options={{
               headerShown: false,
-              tabBarLabel: 'Library',
+              tabBarLabel: 'Libraries',
               tabBarIcon: ({ size, color, focused }) => (
                 <Ionicons name='ios-library-sharp' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
               ),

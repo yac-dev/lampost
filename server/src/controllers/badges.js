@@ -1,5 +1,4 @@
 import Badge from '../models/badge';
-import BadgeStatus from '../models/badgeStatus';
 import BadgeAndUserRelationship from '../models/badgeAndUserRelationship';
 import User from '../models/user';
 import Roll from '../models/roll';

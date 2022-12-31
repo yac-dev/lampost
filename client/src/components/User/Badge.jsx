@@ -4,6 +4,7 @@ import UserContext from './UserContext';
 import BadgeContext from './BadgeContext';
 import lampostAPI from '../../apis/lampost';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 import {
   iconColorsTable,
   backgroundColorsTable,
@@ -17,9 +18,9 @@ const Badge = () => {
   const { badgeData } = useContext(BadgeContext);
   const { setPressedBadgeData, badgeDetailBottomSheetRef } = useContext(UserContext);
   const oneGridWidth = Dimensions.get('window').width / 4;
-  const oneGridHeight = Dimensions.get('window').height / 8;
+  const oneGridHeight = Dimensions.get('window').height / 7.5;
   const badgeContainerWidth = oneGridWidth * 0.6;
-  const badgeIconWidth = badgeContainerWidth * 0.7;
+  const badgeIconWidth = badgeContainerWidth * 0.65;
 
   // const onBadgePress = async () => {
   //   const result = await lampostAPI.get(`/`); // badgeidとuser idでrelationshipを取ってきて、かつbadgeを持っているuserを一覧で出す感じ。
@@ -30,6 +31,7 @@ const Badge = () => {
 
   return (
     <View
+      // このviewは、textも含めての守備範囲のことな。
       style={{
         width: oneGridWidth,
         height: oneGridHeight, // これなんだろね。。。
@@ -37,6 +39,7 @@ const Badge = () => {
         // padding: 10, // これは単純に、25%幅に対して
         // marginBottom: 23,
         // backgroundColor: 'white',
+        paddingTop: 10,
         // backgroundColor: 'red',
         alignItems: 'center',
       }}
@@ -84,6 +87,7 @@ const Badge = () => {
           />
         </View>
       </TouchableOpacity>
+
       <Text
         style={{
           color: baseTextColor,
@@ -101,12 +105,12 @@ const Badge = () => {
       {badgeData.url ? (
         <View
           style={{
-            top: 0,
+            top: 3,
             right: 10,
             position: 'absolute',
           }}
         >
-          <SimpleLineIcons name='paper-clip' size={20} color='white' />
+          <Entypo name='link' size={25} color={'rgb(174, 180, 193)'} />
         </View>
       ) : null}
     </View>

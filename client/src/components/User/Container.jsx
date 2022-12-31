@@ -113,8 +113,8 @@ const Container = (props) => {
     );
   } else {
     return (
-      <View>
-        <Text>Loading...</Text>
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+        <Text style={{ color: baseTextColor }}>Loading...</Text>
       </View>
     );
   }
