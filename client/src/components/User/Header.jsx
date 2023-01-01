@@ -3,13 +3,13 @@ import GlobalContext from '../../GlobalContext';
 import UserContext from './UserContext';
 import { View, Text, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
 import {
   baseTextColor,
   rnDefaultBackgroundColor,
   iconColorsTable,
   backgroundColorsTable,
 } from '../../utils/colorsTable';
+import Stats from './Stats';
 
 const Header = (props) => {
   const { auth } = useContext(GlobalContext);
@@ -22,16 +22,16 @@ const Header = (props) => {
         flexDirection: 'row',
         paddingLeft: 20,
         paddingRight: 20,
-        marginBottom: 10,
         marginTop: 20,
-        alignItems: 'center',
+        marginBottom: 30,
+        // alignItems: 'center',
       }}
     >
       {isMyPage ? (
         <TouchableOpacity
           style={{
             backgroundColor: iconColorsTable['blue1'],
-            padding: 5,
+            // padding: 5,
             borderRadius: 10,
             width: AvatarWidth,
             aspectRatio: 1,
@@ -47,7 +47,7 @@ const Header = (props) => {
         <View
           style={{
             backgroundColor: iconColorsTable['blue1'],
-            padding: 5,
+            // padding: 5,
             borderRadius: 10,
             width: AvatarWidth,
             aspectRatio: 1,
@@ -59,8 +59,10 @@ const Header = (props) => {
           <FontAwesome5 name='user-astronaut' size={40} color='white' />
         </View>
       )}
-
-      <Text style={{ color: 'white', fontSize: 20 }}>{user.name}</Text>
+      <View style={{ flexDirection: 'column' }}>
+        <Text style={{ color: 'white', fontSize: 22, marginBottom: 15, fontWeight: 'bold' }}>{user.name}</Text>
+        <Stats />
+      </View>
     </View>
   );
 };

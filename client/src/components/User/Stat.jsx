@@ -5,10 +5,9 @@ import { baseTextColor } from '../../utils/colorsTable';
 const Stat = (props) => {
   return (
     <TouchableOpacity
-      style={{ flexDirection: 'row', padding: 5, marginRight: 10, alignItems: 'center' }}
+      style={{ flexDirection: 'row', marginRight: 15, alignItems: 'center' }}
       onPress={() => props.onStatPress()}
     >
-      {/* <MaterialCommunityIcons name='history' color={baseTextColor} size={25} style={{ marginRight: 10 }} /> */}
       {props.icon}
       <View style={{ alignItems: 'center' }}>
         <Text style={{ color: baseTextColor }}>{props.label}</Text>

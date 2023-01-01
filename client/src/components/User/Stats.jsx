@@ -14,36 +14,24 @@ const Stats = () => {
 
   return (
     <View>
-      <ScrollView
-        horizontal={true}
-        style={{
-          flexDirection: 'row',
-          paddingLeft: 20,
-          paddingRight: 20,
-          paddingTop: 10,
-          paddingBottom: 10,
-          marginBottom: 25,
-        }}
-      >
+      <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
         <Stat
           label='Logs'
           value={15}
-          icon={<MaterialCommunityIcons name='history' color={baseTextColor} size={25} style={{ marginRight: 10 }} />}
+          icon={<MaterialCommunityIcons name='history' color={baseTextColor} size={25} style={{ marginRight: 5 }} />}
           onStatPress={() => navigation.navigate('Logs', { userId: user._id })}
         />
         <Stat
           label='Assets'
           value={15}
-          icon={
-            <MaterialCommunityIcons name='treasure-chest' color={baseTextColor} size={25} style={{ marginRight: 10 }} />
-          }
+          icon={<Ionicons name='ios-camera' color={baseTextColor} size={25} style={{ marginRight: 5 }} />}
           onStatPress={() => navigation.navigate('Assets', { userId: user._id })}
         />
         <Stat
           label='Connections'
-          value={0}
-          icon={<Entypo name='network' color={baseTextColor} size={25} style={{ marginRight: 10 }} />}
-          onStatPress={() => console.log('opening logs page')}
+          value={'-'}
+          icon={<Entypo name='network' color={baseTextColor} size={25} style={{ marginRight: 5 }} />}
+          onStatPress={() => null}
         />
         {/* <Stat
           label='Supports'
