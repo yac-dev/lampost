@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import GlobalContext from '../../GlobalContext';
 import UserContext from './UserContext';
 import BadgeContext from './BadgeContext';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import lampostAPI from '../../apis/lampost';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -10,11 +10,12 @@ import { baseBackgroundColor, baseTextColor } from '../../utils/colorsTable';
 
 // components
 import Header from './Header';
-import Stats from './Stats';
 import Badge from './Badge';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import BadgeDetailBottomSheet from './BadgeDetailBottomSheet/Container';
+import AddLinkOrBadgeTagsBottomSheet from './AddLinkOrBadgeTagsBottomSheet/Container';
 import ConfirmEditProfileModal from './ConfirmEditProfileModal';
+import ConfirmActionButtonModal from './ConfirmActionButtonModal';
 import SelectedProfileImage from './SelectedProfileImage';
 
 // badgeを取ってきて、skillも取ってくる。subscriberの数も返すし、connectionの数も返す。
@@ -25,9 +26,12 @@ const Container = (props) => {
   const [pressedBadgeData, setPressedBadgeData] = useState(null);
   const [isMyPage, setIsMyPage] = useState();
   const [isConfirmEditProfileModalOpen, setIsConfirmEditProfileModalOpen] = useState(false);
+  const [confirmActionButtonModal, setConfirmActionButtonModal] = useState({ isOpen: false, type: '' });
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
   const badgeDetailBottomSheetRef = useRef(null);
   const appMenuBottomSheetRef = useRef(null);
+  const addLinkOrBadgeTagsBottomSheetRef = useRef(null);
+  const [addLinkOrBadgeTagsBottomSheetType, setAddLinkOrBadgeTagsBottomSheetType] = useState('');
 
   // これで、自分のpageを見ているか、他人のpageを見ているかのstateを管理する。
   useEffect(() => {
@@ -93,10 +97,15 @@ const Container = (props) => {
           navigation: props.navigation,
           appMenuBottomSheetRef,
           badgeDetailBottomSheetRef,
+          addLinkOrBadgeTagsBottomSheetRef,
+          addLinkOrBadgeTagsBottomSheetType,
+          setAddLinkOrBadgeTagsBottomSheetType,
           pressedBadgeData,
           setPressedBadgeData,
           isConfirmEditProfileModalOpen,
           setIsConfirmEditProfileModalOpen,
+          confirmActionButtonModal,
+          setConfirmActionButtonModal,
           selectedProfileImage,
           setSelectedProfileImage,
         }}
@@ -107,8 +116,10 @@ const Container = (props) => {
           <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
           <AppMenuBottomSheet />
           <BadgeDetailBottomSheet />
+          <AddLinkOrBadgeTagsBottomSheet />
           {/* <SelectedProfileImage /> */}
           <ConfirmEditProfileModal />
+          <ConfirmActionButtonModal />
         </View>
       </UserContext.Provider>
     );

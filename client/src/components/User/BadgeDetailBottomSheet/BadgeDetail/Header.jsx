@@ -13,7 +13,7 @@ import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Header = () => {
-  const { pressedBadgeData, isMyPage } = useContext(UserContext);
+  const { pressedBadgeData, isMyPage, setConfirmActionButtonModal } = useContext(UserContext);
 
   const renderActionButtons = () => {
     if (isMyPage) {
@@ -35,13 +35,13 @@ const Header = () => {
             <ActionButton
               icon={<Entypo name='link' size={20} color={'white'} />}
               backgroundColor={iconColorsTable['blue1']}
-              onActionButtonPress={() => console.log('selectiong')}
+              onActionButtonPress={() => setConfirmActionButtonModal({ isOpen: true, type: 'Add my links' })}
               label='Add my link'
             />
             <ActionButton
               icon={<MaterialCommunityIcons name='tag-multiple' size={20} color={'white'} />}
               backgroundColor={iconColorsTable['blue1']}
-              onActionButtonPress={() => console.log('selectiong')}
+              onActionButtonPress={() => setConfirmActionButtonModal({ isOpen: true, type: 'Add badge tags' })}
               label='Add badge tag'
             />
           </View>
