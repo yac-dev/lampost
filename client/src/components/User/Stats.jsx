@@ -6,6 +6,7 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { baseTextColor } from '../../utils/colorsTable';
 import Stat from './Stat';
 
@@ -24,7 +25,7 @@ const Stats = () => {
         <Stat
           label='Assets'
           value={15}
-          icon={<Ionicons name='ios-camera' color={baseTextColor} size={25} style={{ marginRight: 5 }} />}
+          icon={<MaterialIcons name='camera-roll' color={baseTextColor} size={25} style={{ marginRight: 5 }} />}
           onStatPress={() => navigation.navigate('Assets', { userId: user._id })}
         />
         <Stat

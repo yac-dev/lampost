@@ -33,16 +33,16 @@ const Header = () => {
           </Text>
           <View style={{ flexDirection: 'row' }}>
             <ActionButton
-              icon={<Entypo name='link' size={20} color={'white'} />}
-              backgroundColor={iconColorsTable['blue1']}
-              onActionButtonPress={() => setConfirmActionButtonModal({ isOpen: true, type: 'Add my links' })}
-              label='Add my link'
-            />
-            <ActionButton
               icon={<MaterialCommunityIcons name='tag-multiple' size={20} color={'white'} />}
               backgroundColor={iconColorsTable['blue1']}
               onActionButtonPress={() => setConfirmActionButtonModal({ isOpen: true, type: 'Add badge tags' })}
               label='Add badge tag'
+            />
+            <ActionButton
+              icon={<Entypo name='link' size={20} color={'white'} />}
+              backgroundColor={iconColorsTable['blue1']}
+              onActionButtonPress={() => setConfirmActionButtonModal({ isOpen: true, type: 'Add my link' })}
+              label='Add my link'
             />
           </View>
         </View>

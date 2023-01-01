@@ -17,14 +17,19 @@ const ConfirmActionButtonModal = (props) => {
   } = useContext(UserContext);
 
   const renderModalText = () => {
-    if (confirmActionButtonModal.type === 'Add my links') {
+    if (confirmActionButtonModal.type === 'Add my link') {
       return (
         <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>
-          Add your personal links of this badge and explain more.
+          Add your personal links and explain more about this badge.{'\n'} e.g.) https://youtube.com.channel/johndoe/
         </Text>
       );
     } else if (confirmActionButtonModal.type === 'Add badge tags') {
-      return <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>Add tags of this badges.</Text>;
+      return (
+        <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>
+          Add any tags such as position, role, how much experienced and explain more about this badge.
+          {'\n'} e.g.) junior, senior, addicted, enthusiast etc.
+        </Text>
+      );
     } else {
       return null;
     }
@@ -51,7 +56,6 @@ const ConfirmActionButtonModal = (props) => {
             onPress={() => {
               setAddLinkOrBadgeTagsBottomSheetType(confirmActionButtonModal.type);
               setConfirmActionButtonModal({ isOpen: false, type: '' });
-              badgeDetailBottomSheetRef.current.close();
               addLinkOrBadgeTagsBottomSheetRef.current.snapToIndex(0);
             }}
           >

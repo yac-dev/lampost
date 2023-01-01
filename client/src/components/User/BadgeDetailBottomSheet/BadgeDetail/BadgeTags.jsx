@@ -35,8 +35,8 @@ const BadgeTags = () => {
   };
 
   return (
-    <View style={{ marginBottom: 20 }}>
-      <Text style={{ color: 'white', marginBottom: 5, fontWeight: 'bold', fontSize: 20 }}>Badge tags</Text>
+    <View style={{ marginBottom: 25 }}>
+      <Text style={{ color: 'white', marginBottom: 10, fontWeight: 'bold', fontSize: 20 }}>Badge tags</Text>
       {renderTags()}
     </View>
   );
