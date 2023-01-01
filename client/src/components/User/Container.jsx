@@ -41,7 +41,7 @@ const Container = (props) => {
   const getUser = async () => {
     const result = await lampostAPI.get(`/users/${props.route.params.userId}`);
     const { user } = result.data;
-    console.log(user);
+    // console.log(user);
     setUser(user);
   };
   useEffect(() => {
@@ -51,6 +51,7 @@ const Container = (props) => {
   const getBadgeDatasByUserId = async () => {
     const result = await lampostAPI.get(`/badgeanduserrelationships/${props.route.params.userId}`);
     const { userBadgeDatas } = result.data;
+    console.log(userBadgeDatas);
     setBadgeDatas(userBadgeDatas);
   };
   useEffect(() => {

@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// これはあくまで、badgeのpageでtagをpressしたらそのuserたちを全部fetchしてくるためにする。
 const badgeTagAndUserRelationshipSchema = new mongoose.Schema({
   badgeTag: {
     type: mongoose.Schema.ObjectId,

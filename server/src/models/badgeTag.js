@@ -12,5 +12,9 @@ const badgeTagSchema = new mongoose.Schema({
   totalHolders: Number,
 });
 
+// badgeとuser relationship
+// {badge: badgeId, user: userId} // badge側でuserを全部取ってこないといけないしな。
+// user { badges: [{badge: badgeId, url: 'https://', tags: [tagId1, tagId2, tagId3]}, {}]}
+
 const BadgeTag = mongoose.model('BadgeTag', badgeTagSchema);
 export default BadgeTag;

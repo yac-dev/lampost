@@ -1,12 +1,12 @@
-import BadgeTag from './models/badgeTag';
-import BadgeTag from './models/badgeTag';
-import BadgeTagAndUserRelationship from './models/badgeTagAndUserRelationship';
+import BadgeTag from '../models/badgeTag';
+import BadgeTagAndUserRelationship from '../models/badgeTagAndUserRelationship';
 
 export const addNewBadgeTagToUser = async (request, response) => {
   try {
-    const { name } = request.body;
+    const { name, badgeId } = request.body;
     const badgeTag = await BadgeTag.create({
       name,
+      badge: badgeId,
       totalHolders: 1,
     });
 

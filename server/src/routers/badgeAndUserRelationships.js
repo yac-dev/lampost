@@ -3,7 +3,7 @@ const router = express.Router();
 import {
   addBadgesToUser,
   getBadgeDatasByUserId,
-  getBadgeDetailByUserId,
+  // getBadgeDetailByUserId,
   getBadgeHolders,
 } from '../controllers/badgeAndUserRelationships';
 

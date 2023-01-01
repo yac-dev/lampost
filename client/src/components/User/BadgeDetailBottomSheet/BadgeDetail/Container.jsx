@@ -5,7 +5,6 @@ import Header from './Header';
 import Links from './Links';
 import BadgeTags from './BadgeTags';
 import Communities from './Communities';
-import { AntDesign } from '@expo/vector-icons';
 
 const Container = (props) => {
   return (
