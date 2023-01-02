@@ -54,7 +54,7 @@ const Container = (props) => {
             addBadgeTagsBottomSheetRef.current.close();
           }}
         >
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <AntDesign name='closecircleo' size={25} color={baseTextColor} style={{ marginRight: 10 }} />
             <Text style={{ color: baseTextColor }}>Close</Text>
           </View>

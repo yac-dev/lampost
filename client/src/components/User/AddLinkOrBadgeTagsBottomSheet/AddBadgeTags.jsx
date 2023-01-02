@@ -14,6 +14,7 @@ import lampostAPI from '../../../apis/lampost';
 import BadgeTag from './BadgeTag';
 import ActionButton from '../../Utils/ActionButton';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 const AddBadgeTags = () => {
   const { auth } = useContext(GlobalContext);
@@ -145,11 +146,37 @@ const AddBadgeTags = () => {
         >
           <MaterialCommunityIcons name='tag' size={25} color='white' style={{ marginRight: 10 }} />
           <Text style={{ color: 'white', fontWeight: 'bold', marginRight: 5 }}>{badgeTagName}</Text>
+          <TouchableOpacity
+            style={{ position: 'absolute', top: 0, right: -5 }}
+            onPress={() =>
+              setCreatingBadgeTagNames((previous) => {
+                const updating = [...previous];
+                updating.splice(index, 1);
+                return updating;
+              })
+            }
+          >
+            <AntDesign name='closecircleo' size={15} color={baseTextColor} />
+          </TouchableOpacity>
         </View>
       );
     });
 
     return <ScrollView horizontal={true}>{createdBadgeTagsList}</ScrollView>;
+  };
+
+  const renderNote = () => {
+    if (!isOpenCreateBadgeTagTextInput) {
+      return (
+        <TouchableOpacity onPress={() => setIsOpenCreateBadgeTagTextInput(true)}>
+          <Text style={{ color: baseTextColor }}>
+            Couldn't find what you want from above? Let's create a new one from here
+          </Text>
+        </TouchableOpacity>
+      );
+    } else {
+      return null;
+    }
   };
 
   const renderTextInput = () => {
@@ -213,26 +240,24 @@ const AddBadgeTags = () => {
 
   return (
     <View>
-      <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>
-        {addLinkOrBadgeTagsBottomSheetType}
-      </Text>
+      <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Add badge tags</Text>
       {/* <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 20 }}>
         {renderSelectedBadgeTags()}
         {renderCreatingBadgeTags()}
       </View> */}
       {renderAddingBadgeTags()}
-
       {renderBadgeTags()}
+      {renderNote()}
       {renderTextInput()}
       <View style={{ alignSelf: 'flex-end', marginBottom: 10, flexDirection: 'row', alignItems: 'center' }}>
-        {fetchedBadgeTags.length ? (
+        {/* {fetchedBadgeTags.length ? (
           <ActionButton
             label='Create new'
             backgroundColor={iconColorsTable['blue1']}
             icon={<MaterialCommunityIcons name='plus' size={25} color='white' />}
             onActionButtonPress={() => setIsOpenCreateBadgeTagTextInput((previous) => !previous)}
           />
-        ) : null}
+        ) : null} */}
         <ActionButton
           label='Done'
           backgroundColor={iconColorsTable['blue1']}
