@@ -14,8 +14,9 @@ const BadgeTags = () => {
           <TouchableOpacity
             style={{
               backgroundColor: iconColorsTable['lightGreen1'],
-              padding: 5,
+              padding: 7,
               marginRight: 10,
+              marginBottom: 10,
               borderRadius: 10,
               flexDirection: 'row',
               alignItems: 'center',
@@ -23,7 +24,7 @@ const BadgeTags = () => {
             key={index}
           >
             <MaterialCommunityIcons name='tag' size={25} color='white' style={{ marginRight: 10 }} />
-            <Text style={{ color: 'white' }}>{badgeTag.name}</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold' }}>{badgeTag.name}</Text>
           </TouchableOpacity>
         );
       });

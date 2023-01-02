@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import GlobalContext from '../../../GlobalContext';
 import UserContext from '../UserContext';
 import { View, Text, ScrollView, InputAccessoryView, Keyboard, TouchableOpacity } from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
@@ -14,13 +15,19 @@ import ActionButton from '../../Utils/ActionButton';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const AddBadgeTags = () => {
-  const { pressedBadgeData, addLinkOrBadgeTagsBottomSheetRef, addLinkOrBadgeTagsBottomSheetType } =
-    useContext(UserContext);
+  const { auth } = useContext(GlobalContext);
+  const {
+    pressedBadgeData,
+    setPressedBadgeData,
+    addLinkOrBadgeTagsBottomSheetRef,
+    addLinkOrBadgeTagsBottomSheetType,
+    setBadgeDatas,
+  } = useContext(UserContext);
   const [text, setText] = useState('');
   const [badgeTags, setBadgeTags] = useState([]);
-  const [selectedBadgeTags, setSelectedBadgeTags] = useState({});
-  const [isOpenTextInput, setIsOpenTextInput] = useState(true);
-  const [createdTags, setCreatedTags] = useState([]);
+  const [addedBadgeTags, setAddedBadgeTags] = useState({});
+  const [isOpenTextInput, setIsOpenTextInput] = useState(false);
+  const [creatingBadgeTagNames, setCreatingBadgeTagNames] = useState([]);
   const [creatingBadgeTagText, setCreatingBadgeTagText] = useState('');
   const inputAccessoryViewID = 'CREATE_BADGE_TAG';
 
@@ -35,11 +42,33 @@ const AddBadgeTags = () => {
   }, []);
 
   const onDonePress = async () => {
-    const payload = {
-      createdBadgeTags: createdTags,
-      selectedBadgeTags,
-    };
-    const result = await lampostAPI.post(`/badgetags/`, payload);
+    // console.log(addedBadgeTags, creatingBadgeTagNames);
+    const result = await lampostAPI.patch(
+      `/badgeanduserrelationships/add/${pressedBadgeData.badge._id}/${auth.data._id}`,
+      { addedBadgeTags, creatingBadgeTagNames }
+    );
+    const { badgeId, badgeTags } = result.data;
+    setPressedBadgeData((previous) => {
+      return {
+        ...previous,
+        badgeTags: [...previous.badgeTags, ...badgeTags],
+      };
+    });
+    setBadgeDatas((previous) => {
+      const updating = [...previous];
+      for (let i = 0; i < updating.length; i++) {
+        if (updating[i].badge._id === badgeId) {
+          updating[i].badgeTags.push(...badgeTags);
+        }
+      }
+      return updating;
+    });
+
+    const result2 = await lampostAPI.post(`/badgetaganduserrelationships`, { badgeTags, userId: auth.data._id });
+    setAddedBadgeTags({});
+    setBadgeTags([]);
+    setIsOpenTextInput('');
+    addLinkOrBadgeTagsBottomSheetRef.current.close();
   };
 
   const renderBadgeTags = () => {
@@ -49,8 +78,8 @@ const AddBadgeTags = () => {
           <BadgeTag
             key={index}
             badgeTag={badgeTag}
-            selectedBadgeTags={selectedBadgeTags}
-            setSelectedBadgeTags={setSelectedBadgeTags}
+            addedBadgeTags={addedBadgeTags}
+            setAddedBadgeTags={setAddedBadgeTags}
             isOpenTextInput={isOpenTextInput}
             setIsOpenTextInput={setIsOpenTextInput}
           />
@@ -69,7 +98,7 @@ const AddBadgeTags = () => {
   };
 
   const renderSelectedBadgeTags = () => {
-    const selectedBadgeTagsList = Object.values(selectedBadgeTags);
+    const selectedBadgeTagsList = Object.values(addedBadgeTags);
     if (selectedBadgeTagsList.length) {
       const badgeTagsList = selectedBadgeTagsList.map((badgeTag, index) => {
         return (
@@ -101,8 +130,8 @@ const AddBadgeTags = () => {
     }
   };
 
-  const renderCreatedBadgeTags = () => {
-    const createdBadgeTags = createdTags.map((badgeTag, index) => {
+  const renderCreatingBadgeTags = () => {
+    const createdBadgeTagsList = creatingBadgeTagNames.map((badgeTagName, index) => {
       return (
         <View
           style={{
@@ -117,16 +146,12 @@ const AddBadgeTags = () => {
           key={index}
         >
           <MaterialCommunityIcons name='tag' size={25} color='white' style={{ marginRight: 10 }} />
-          <Text style={{ color: 'white', fontWeight: 'bold', marginRight: 5 }}>{badgeTag}</Text>
+          <Text style={{ color: 'white', fontWeight: 'bold', marginRight: 5 }}>{badgeTagName}</Text>
         </View>
       );
     });
 
-    return (
-      <ScrollView horizontal={true} style={{ marginBottom: 20 }}>
-        {createdBadgeTags}
-      </ScrollView>
-    );
+    return <ScrollView horizontal={true}>{createdBadgeTagsList}</ScrollView>;
   };
 
   const renderTextInput = () => {
@@ -148,6 +173,8 @@ const AddBadgeTags = () => {
             }}
             value={creatingBadgeTagText}
             onChangeText={(text) => setCreatingBadgeTagText(text)}
+            mode='outlined'
+            autoCapitalize='none'
           />
           <InputAccessoryView
             nativeID={inputAccessoryViewID}
@@ -159,7 +186,7 @@ const AddBadgeTags = () => {
                 onPress={() => {
                   setIsOpenTextInput(false);
                   setCreatingBadgeTagText('');
-                  setCreatedTags((previous) => [...previous, creatingBadgeTagText]);
+                  setCreatingBadgeTagNames((previous) => [...previous, creatingBadgeTagText]);
                   Keyboard.dismiss();
                 }}
               >
@@ -179,8 +206,10 @@ const AddBadgeTags = () => {
       <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>
         {addLinkOrBadgeTagsBottomSheetType}
       </Text>
-      {renderSelectedBadgeTags()}
-      {renderCreatedBadgeTags()}
+      <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 20 }}>
+        {renderSelectedBadgeTags()}
+        {renderCreatingBadgeTags()}
+      </View>
 
       {renderBadgeTags()}
       {renderTextInput()}
@@ -195,7 +224,7 @@ const AddBadgeTags = () => {
           label='Done'
           backgroundColor={iconColorsTable['blue1']}
           icon={<MaterialCommunityIcons name='check' size={25} color='white' />}
-          onActionButtonPress={() => null}
+          onActionButtonPress={() => onDonePress()}
         />
       </View>
     </View>

@@ -5,7 +5,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const BadgeTag = (props) => {
   const [selected, setSelected] = useState(false);
-  console.log(props.selectedBadgeTags);
 
   if (selected) {
     return (
@@ -22,7 +21,7 @@ const BadgeTag = (props) => {
           marginBottom: 10,
         }}
         onPress={() => {
-          props.setSelectedBadgeTags((previous) => {
+          props.setAddedBadgeTags((previous) => {
             const updating = { ...previous };
             delete updating[props.badgeTag._id];
             return updating;
@@ -52,7 +51,7 @@ const BadgeTag = (props) => {
           marginBottom: 10,
         }}
         onPress={() => {
-          props.setSelectedBadgeTags((previous) => {
+          props.setAddedBadgeTags((previous) => {
             return {
               ...previous,
               [props.badgeTag._id]: props.badgeTag,

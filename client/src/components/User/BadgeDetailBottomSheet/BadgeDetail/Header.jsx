@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import UserContext from '../../UserContext';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {
   baseTextColor,
@@ -13,7 +13,8 @@ import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Header = () => {
-  const { pressedBadgeData, isMyPage, setConfirmActionButtonModal } = useContext(UserContext);
+  const { pressedBadgeData, isMyPage, setConfirmActionButtonModal, badgeDetailBottomSheetRef } =
+    useContext(UserContext);
 
   const renderActionButtons = () => {
     if (isMyPage) {
@@ -24,27 +25,31 @@ const Header = () => {
               fontWeight: 'bold',
               // alignSelf: 'center',
               fontSize: 20,
-              textAlign: 'center',
+              // textAlign: 'center',
               color: 'white',
               marginBottom: 5,
             }}
           >
             {pressedBadgeData.badge.name}
           </Text>
-          <View style={{ flexDirection: 'row' }}>
+          <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
             <ActionButton
               icon={<MaterialCommunityIcons name='tag-multiple' size={20} color={'white'} />}
               backgroundColor={iconColorsTable['blue1']}
-              onActionButtonPress={() => setConfirmActionButtonModal({ isOpen: true, type: 'Add badge tags' })}
+              onActionButtonPress={() => {
+                setConfirmActionButtonModal({ isOpen: true, type: 'Add badge tags' });
+              }}
               label='Add badge tag'
             />
             <ActionButton
               icon={<Entypo name='link' size={20} color={'white'} />}
               backgroundColor={iconColorsTable['blue1']}
-              onActionButtonPress={() => setConfirmActionButtonModal({ isOpen: true, type: 'Add my link' })}
+              onActionButtonPress={() => {
+                setConfirmActionButtonModal({ isOpen: true, type: 'Add my link' });
+              }}
               label='Add my link'
             />
-          </View>
+          </ScrollView>
         </View>
       );
     } else {

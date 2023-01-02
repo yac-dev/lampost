@@ -1,7 +1,8 @@
 import express from 'express';
 const router = express.Router();
-import { addNewBadgeTagToUser } from '../controllers/badgeTagAndUserRelationships';
+import { createBadgeTagAndUserRelationship } from '../controllers/badgeTagAndUserRelationships';
 
-router.route('/').post(addNewBadgeTagToUser);
+// router.route('/').post(addNewBadgeTagToUser);
+router.route('/').post(createBadgeTagAndUserRelationship);
 
 export default router;

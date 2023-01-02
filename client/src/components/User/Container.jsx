@@ -102,6 +102,7 @@ const Container = (props) => {
           setAddLinkOrBadgeTagsBottomSheetType,
           pressedBadgeData,
           setPressedBadgeData,
+          setBadgeDatas,
           isConfirmEditProfileModalOpen,
           setIsConfirmEditProfileModalOpen,
           confirmActionButtonModal,

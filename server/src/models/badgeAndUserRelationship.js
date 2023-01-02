@@ -12,12 +12,13 @@ const badgeAndUserRelationshipSchema = new mongoose.Schema({
   url: {
     type: String,
   },
-  badgeTags: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'BadgeTag',
-    },
-  ],
+  // badgeTags: [
+  //   {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'BadgeTag',
+  //   },
+  // ], // 別にidで持つ必要もない。ここに、20000document入ることもないからね。
+  badgeTags: [{ type: mongoose.Schema.ObjectId, ref: 'BadgeTag' }],
   createdAt: Date,
 });
 
