@@ -4,16 +4,21 @@ import UserContext from './UserContext';
 import { View, Text } from 'react-native';
 import { Button, Dialog, Portal } from 'react-native-paper';
 import { baseTextColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
+import lampostAPI from '../../apis/lampost';
 
 const ConfirmActionButtonModal = (props) => {
   const { auth } = useContext(GlobalContext);
   const {
     isMyPage,
+    pressedBadgeData,
     confirmActionButtonModal,
     setConfirmActionButtonModal,
     badgeDetailBottomSheetRef,
-    addLinkOrBadgeTagsBottomSheetRef,
-    setAddLinkOrBadgeTagsBottomSheetType,
+    addBadgeTagsBottomSheetRef,
+    addLinkBottomSheetRef,
+    setFetchedBadgeTags,
+    isOpenCreateBadgeTagTextInput,
+    setIsOpenCreateBadgeTagTextInput,
   } = useContext(UserContext);
 
   const renderModalText = () => {
@@ -35,6 +40,24 @@ const ConfirmActionButtonModal = (props) => {
     }
   };
 
+  const onNextPress = async () => {
+    if (confirmActionButtonModal.type === 'Add badge tags') {
+      badgeDetailBottomSheetRef.current.snapToIndex(0);
+      setConfirmActionButtonModal({ isOpen: false, type: '' });
+      const result = await lampostAPI.get(`/badgetags/${pressedBadgeData.badge._id}`);
+      const { badgeTags } = result.data;
+      setFetchedBadgeTags(badgeTags);
+      if (!badgeTags.length) {
+        setIsOpenCreateBadgeTagTextInput(true);
+      }
+      addBadgeTagsBottomSheetRef.current.snapToIndex(0);
+    } else if (confirmActionButtonModal.type === 'Add my link') {
+      badgeDetailBottomSheetRef.current.snapToIndex(0);
+      setConfirmActionButtonModal({ isOpen: false, type: '' });
+      addLinkBottomSheetRef.current.snapToIndex(0);
+    }
+  };
+
   return (
     <Portal>
       <Dialog
@@ -52,15 +75,7 @@ const ConfirmActionButtonModal = (props) => {
           >
             Cancel
           </Button>
-          <Button
-            textColor='rgb(58, 126, 224)'
-            onPress={() => {
-              badgeDetailBottomSheetRef.current.snapToIndex(0);
-              setAddLinkOrBadgeTagsBottomSheetType(confirmActionButtonModal.type);
-              setConfirmActionButtonModal({ isOpen: false, type: '' });
-              addLinkOrBadgeTagsBottomSheetRef.current.snapToIndex(0);
-            }}
-          >
+          <Button textColor='rgb(58, 126, 224)' onPress={() => onNextPress()}>
             Next
           </Button>
         </Dialog.Actions>

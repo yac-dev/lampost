@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import GlobalContext from '../../../GlobalContext';
 import UserContext from '../UserContext';
+import AddLinkOrBadgeTagsContext from './AddLinkOrBadgeTagsContext';
 import { View, Text, ScrollView, InputAccessoryView, Keyboard, TouchableOpacity } from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import {
@@ -22,27 +23,24 @@ const AddBadgeTags = () => {
     addLinkOrBadgeTagsBottomSheetRef,
     addLinkOrBadgeTagsBottomSheetType,
     setBadgeDatas,
+    fetchedBadgeTags,
+    setFetchedBadgeTags,
+    isOpenCreateBadgeTagTextInput,
+    setIsOpenCreateBadgeTagTextInput,
   } = useContext(UserContext);
-  const [text, setText] = useState('');
-  const [badgeTags, setBadgeTags] = useState([]);
-  const [addedBadgeTags, setAddedBadgeTags] = useState({});
-  const [isOpenTextInput, setIsOpenTextInput] = useState(false);
-  const [creatingBadgeTagNames, setCreatingBadgeTagNames] = useState([]);
-  const [creatingBadgeTagText, setCreatingBadgeTagText] = useState('');
+  const {
+    addedBadgeTags,
+    setAddedBadgeTags,
+    isOpenTextInput,
+    setIsOpenTextInput,
+    creatingBadgeTagNames,
+    setCreatingBadgeTagNames,
+    creatingBadgeTagText,
+    setCreatingBadgeTagText,
+  } = useContext(AddLinkOrBadgeTagsContext);
   const inputAccessoryViewID = 'CREATE_BADGE_TAG';
 
-  const getBadgeTagsByBadgeId = async () => {
-    const result = await lampostAPI.get(`/badgetags/${pressedBadgeData.badge._id}`);
-    const { badgeTags } = result.data;
-    setBadgeTags(badgeTags);
-  };
-
-  useEffect(() => {
-    getBadgeTagsByBadgeId();
-  }, []);
-
   const onDonePress = async () => {
-    // console.log(addedBadgeTags, creatingBadgeTagNames);
     const result = await lampostAPI.patch(
       `/badgeanduserrelationships/add/${pressedBadgeData.badge._id}/${auth.data._id}`,
       { addedBadgeTags, creatingBadgeTagNames }
@@ -66,14 +64,14 @@ const AddBadgeTags = () => {
 
     const result2 = await lampostAPI.post(`/badgetaganduserrelationships`, { badgeTags, userId: auth.data._id });
     setAddedBadgeTags({});
-    setBadgeTags([]);
+    setFetchedBadgeTags([]);
     setIsOpenTextInput('');
     addLinkOrBadgeTagsBottomSheetRef.current.close();
   };
 
   const renderBadgeTags = () => {
-    if (badgeTags.length) {
-      const badgeTagsList = badgeTags.map((badgeTag, index) => {
+    if (fetchedBadgeTags.length) {
+      const badgeTagsList = fetchedBadgeTags.map((badgeTag, index) => {
         return (
           <BadgeTag
             key={index}
@@ -97,8 +95,8 @@ const AddBadgeTags = () => {
     }
   };
 
-  const renderSelectedBadgeTags = () => {
-    const selectedBadgeTagsList = Object.values(addedBadgeTags);
+  const renderSelectedBadgeTags = (selectedBadgeTagsList) => {
+    // const selectedBadgeTagsList = Object.values(addedBadgeTags);
     if (selectedBadgeTagsList.length) {
       const badgeTagsList = selectedBadgeTagsList.map((badgeTag, index) => {
         return (
@@ -155,7 +153,7 @@ const AddBadgeTags = () => {
   };
 
   const renderTextInput = () => {
-    if (isOpenTextInput) {
+    if (isOpenCreateBadgeTagTextInput) {
       return (
         <View style={{ marginBottom: 25 }}>
           <Text style={{ color: baseTextColor, marginBottom: 10 }}>
@@ -201,25 +199,40 @@ const AddBadgeTags = () => {
     }
   };
 
+  const renderAddingBadgeTags = () => {
+    const selectedBadgeTagsList = Object.values(addedBadgeTags);
+    if (selectedBadgeTagsList.length || creatingBadgeTagNames.length) {
+      return (
+        <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 20 }}>
+          {renderSelectedBadgeTags(selectedBadgeTagsList)}
+          {renderCreatingBadgeTags()}
+        </View>
+      );
+    }
+  };
+
   return (
     <View>
       <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>
         {addLinkOrBadgeTagsBottomSheetType}
       </Text>
-      <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 20 }}>
+      {/* <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 20 }}>
         {renderSelectedBadgeTags()}
         {renderCreatingBadgeTags()}
-      </View>
+      </View> */}
+      {renderAddingBadgeTags()}
 
       {renderBadgeTags()}
       {renderTextInput()}
       <View style={{ alignSelf: 'flex-end', marginBottom: 10, flexDirection: 'row', alignItems: 'center' }}>
-        <ActionButton
-          label='Create new'
-          backgroundColor={iconColorsTable['blue1']}
-          icon={<MaterialCommunityIcons name='plus' size={25} color='white' />}
-          onActionButtonPress={() => setIsOpenTextInput((previous) => !previous)}
-        />
+        {fetchedBadgeTags.length ? (
+          <ActionButton
+            label='Create new'
+            backgroundColor={iconColorsTable['blue1']}
+            icon={<MaterialCommunityIcons name='plus' size={25} color='white' />}
+            onActionButtonPress={() => setIsOpenCreateBadgeTagTextInput((previous) => !previous)}
+          />
+        ) : null}
         <ActionButton
           label='Done'
           backgroundColor={iconColorsTable['blue1']}

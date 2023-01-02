@@ -28,14 +28,17 @@ const Container = (props) => {
   const [isConfirmEditProfileModalOpen, setIsConfirmEditProfileModalOpen] = useState(false);
   const [confirmActionButtonModal, setConfirmActionButtonModal] = useState({ isOpen: false, type: '' });
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
-  const badgeDetailBottomSheetRef = useRef(null);
   const appMenuBottomSheetRef = useRef(null);
-  const addLinkOrBadgeTagsBottomSheetRef = useRef(null);
+  const badgeDetailBottomSheetRef = useRef(null);
+  const addBadgeTagsBottomSheetRef = useRef(null);
+  const addLinkBottomSheetRef = useRef(null);
   const [addLinkOrBadgeTagsBottomSheetType, setAddLinkOrBadgeTagsBottomSheetType] = useState('');
+  const [fetchedBadgeTags, setFetchedBadgeTags] = useState([]);
+  const [isOpenCreateBadgeTagTextInput, setIsOpenCreateBadgeTagTextInput] = useState(false);
 
   // これで、自分のpageを見ているか、他人のpageを見ているかのstateを管理する。
   useEffect(() => {
-    if (props.auth.isAuthenticated && props.route.params.userId === props.auth.data._id) {
+    if (auth.isAuthenticated && props.route.params.userId === auth.data._id) {
       setIsMyPage(true);
     } else {
       setIsMyPage(false);
@@ -97,7 +100,8 @@ const Container = (props) => {
           navigation: props.navigation,
           appMenuBottomSheetRef,
           badgeDetailBottomSheetRef,
-          addLinkOrBadgeTagsBottomSheetRef,
+          addBadgeTagsBottomSheetRef,
+          addLinkBottomSheetRef,
           addLinkOrBadgeTagsBottomSheetType,
           setAddLinkOrBadgeTagsBottomSheetType,
           pressedBadgeData,
@@ -109,6 +113,10 @@ const Container = (props) => {
           setConfirmActionButtonModal,
           selectedProfileImage,
           setSelectedProfileImage,
+          fetchedBadgeTags,
+          setFetchedBadgeTags,
+          isOpenCreateBadgeTagTextInput,
+          setIsOpenCreateBadgeTagTextInput,
         }}
       >
         <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
@@ -133,8 +141,4 @@ const Container = (props) => {
   }
 };
 
-const mapStateToProps = (state) => {
-  return { auth: state.auth };
-};
-
-export default connect(mapStateToProps)(Container);
+export default Container;
