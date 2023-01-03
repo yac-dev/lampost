@@ -10,9 +10,9 @@ const Links = () => {
   return (
     <View style={{ marginBottom: 25 }}>
       <Text style={{ color: 'white', marginBottom: 5, fontWeight: 'bold', fontSize: 20 }}>Links</Text>
-      {pressedBadgeData.url ? (
+      {pressedBadgeData.link ? (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{ color: baseTextColor, marginRight: 10 }}>{pressedBadgeData.url}</Text>
+          <Text style={{ color: baseTextColor, marginRight: 10 }}>{pressedBadgeData.link}</Text>
           <TouchableOpacity>
             <Feather name='external-link' size={20} color={baseTextColor} />
           </TouchableOpacity>

@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import GlobalContext from '../../../GlobalContext';
 import UserContext from '../UserContext';
-import AddLinkOrBadgeTagsContext from './AddLinkOrBadgeTagsContext';
+import AddBadgeTagsContext from './AddBadgeTagsContext';
 import { View, Text, ScrollView, InputAccessoryView, Keyboard, TouchableOpacity } from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import {
@@ -38,7 +38,7 @@ const AddBadgeTags = () => {
     setCreatingBadgeTagNames,
     creatingBadgeTagText,
     setCreatingBadgeTagText,
-  } = useContext(AddLinkOrBadgeTagsContext);
+  } = useContext(AddBadgeTagsContext);
   const inputAccessoryViewID = 'CREATE_BADGE_TAG';
 
   const onDonePress = async () => {

@@ -25,14 +25,15 @@ const ConfirmActionButtonModal = (props) => {
     if (confirmActionButtonModal.type === 'Add my link') {
       return (
         <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>
-          Add your personal links and explain more about this badge.{'\n'} e.g.) https://youtube.com/@johndoe
+          Add your personal link and explain more about your {pressedBadgeData.badge.name} badge.{'\n'} e.g.
+          https://youtube.com/@mychannel
         </Text>
       );
     } else if (confirmActionButtonModal.type === 'Add badge tags') {
       return (
         <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>
           Add any tags such as position, role, how much experienced and explain more about this badge.
-          {'\n'} e.g.) junior, senior, addicted, enthusiast etc.
+          {'\n'} e.g. senior, addicted, enthusiast, inspired etc.
         </Text>
       );
     } else {

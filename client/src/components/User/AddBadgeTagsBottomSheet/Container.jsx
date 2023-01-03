@@ -1,11 +1,10 @@
 import React, { useContext, useMemo, useState } from 'react';
 import UserContext from '../UserContext';
-import AddLinkOrBadgeTagsContext from './AddLinkOrBadgeTagsContext';
+import AddBadgeTagsContext from './AddBadgeTagsContext';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { AntDesign } from '@expo/vector-icons';
 import { appBottomSheetBackgroundColor, baseTextColor, inputBackgroundColor } from '../../../utils/colorsTable';
-import AddLink from './AddLink';
 import AddBadgeTags from './AddBadgeTags';
 
 const Container = (props) => {
@@ -59,7 +58,7 @@ const Container = (props) => {
             <Text style={{ color: baseTextColor }}>Close</Text>
           </View>
         </TouchableOpacity>
-        <AddLinkOrBadgeTagsContext.Provider
+        <AddBadgeTagsContext.Provider
           value={{
             addedBadgeTags,
             setAddedBadgeTags,
@@ -73,7 +72,7 @@ const Container = (props) => {
         >
           <AddBadgeTags />
           {/* {renderBody()} */}
-        </AddLinkOrBadgeTagsContext.Provider>
+        </AddBadgeTagsContext.Provider>
       </BottomSheetView>
     </GorhomBottomSheet>
   );

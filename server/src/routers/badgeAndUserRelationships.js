@@ -6,6 +6,7 @@ import {
   // getBadgeDetailByUserId,
   getBadgeHolders,
   addBadgeTagsToUser,
+  addLinkToUser,
 } from '../controllers/badgeAndUserRelationships';
 
 // router.route('/').post(addBadgesToUser);
@@ -13,6 +14,7 @@ import {
 router.route('/:userId').get(getBadgeDatasByUserId).post(addBadgesToUser);
 router.route('/holders/:badgeId').get(getBadgeHolders);
 router.route('/add/:badgeId/:userId').patch(addBadgeTagsToUser);
+router.route('/link/:badgeId/:userId').patch(addLinkToUser);
 // router.route('/:badgeId/:userId')
 
 export default router;

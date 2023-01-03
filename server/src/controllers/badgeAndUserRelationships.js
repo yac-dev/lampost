@@ -33,7 +33,7 @@ export const getBadgeDatasByUserId = async (request, response) => {
     const userBadgeDatas = badgeAndUserRelationships.map((relationship) => {
       return {
         badge: relationship.badge,
-        url: relationship.url,
+        link: relationship.link,
         badgeTags: relationship.badgeTags,
       };
     });
@@ -194,6 +194,25 @@ export const addBadgeTagsToUser = async (request, response) => {
     response.status(200).json({
       badgeId: request.params.badgeId,
       badgeTags: [...Object.values(addedBadgeTags), ...createdBadgeTags],
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addLinkToUser = async (request, response) => {
+  try {
+    const { linkText } = request.body;
+    const badgeAndUserRelationship = await BadgeAndUserRelationship.findOne({
+      badge: request.params.badgeId,
+      user: request.params.userId,
+    });
+    badgeAndUserRelationship.link = linkText;
+    badgeAndUserRelationship.save();
+
+    response.status(200).json({
+      badgeId: request.params.badgeId,
+      link: linkText,
     });
   } catch (error) {
     console.log(error);

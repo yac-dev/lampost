@@ -13,7 +13,8 @@ import Header from './Header';
 import Badge from './Badge';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import BadgeDetailBottomSheet from './BadgeDetailBottomSheet/Container';
-import AddLinkOrBadgeTagsBottomSheet from './AddLinkOrBadgeTagsBottomSheet/Container';
+import AddBadgeTagsBottomSheet from './AddBadgeTagsBottomSheet/Container';
+import AddLinkBottomSheet from './AddLinkBottomSheet/Container';
 import ConfirmEditProfileModal from './ConfirmEditProfileModal';
 import ConfirmActionButtonModal from './ConfirmActionButtonModal';
 import SelectedProfileImage from './SelectedProfileImage';
@@ -125,7 +126,8 @@ const Container = (props) => {
           <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
           <AppMenuBottomSheet />
           <BadgeDetailBottomSheet />
-          <AddLinkOrBadgeTagsBottomSheet />
+          <AddBadgeTagsBottomSheet />
+          <AddLinkBottomSheet />
           {/* <SelectedProfileImage /> */}
           <ConfirmEditProfileModal />
           <ConfirmActionButtonModal />
