@@ -3,7 +3,6 @@ import GlobalContext from '../../GlobalContext';
 import UserContext from './UserContext';
 import BadgeContext from './BadgeContext';
 import { View, Text, ScrollView } from 'react-native';
-import { connect } from 'react-redux';
 import lampostAPI from '../../apis/lampost';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { baseBackgroundColor, baseTextColor } from '../../utils/colorsTable';
@@ -122,7 +121,6 @@ const Container = (props) => {
       >
         <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
           <Header />
-          {/* <Stats /> */}
           <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
           <AppMenuBottomSheet />
           <BadgeDetailBottomSheet />

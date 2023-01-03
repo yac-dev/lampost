@@ -21,7 +21,7 @@ const AddBadgeTags = () => {
   const {
     pressedBadgeData,
     setPressedBadgeData,
-    addLinkOrBadgeTagsBottomSheetRef,
+    addBadgeTagsBottomSheetRef,
     addLinkOrBadgeTagsBottomSheetType,
     setBadgeDatas,
     fetchedBadgeTags,
@@ -67,7 +67,7 @@ const AddBadgeTags = () => {
     setAddedBadgeTags({});
     setFetchedBadgeTags([]);
     setIsOpenTextInput('');
-    addLinkOrBadgeTagsBottomSheetRef.current.close();
+    addBadgeTagsBottomSheetRef.current.close();
   };
 
   const renderBadgeTags = () => {

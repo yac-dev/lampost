@@ -12,6 +12,9 @@ import SignUp from '../Auth/SignUp';
 import LogIn from '../Auth/LogIn';
 
 import UserHome from '../User/Container';
+import Launched from '../User/Launched/Container';
+import Patrons from '../User/Patrons/Container';
+import Friends from '../User/Friends/Container';
 import Logs from '../User/Logs/Container';
 import Assets from '../User/Assets/Container';
 import Asset from '../User/Assets/Asset/Container';
@@ -43,6 +46,34 @@ const Auth = (props) => {
             {/*  これまた、別でuserhomeのcomponentがひちようだわな。connectionなりで、違うuser pageに飛んでいくから。*/}
           </Stack.Screen>
           <Stack.Screen
+            name='Launched'
+            component={Launched}
+            options={{
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+              // headerTintColor: 'white',
+            }}
+          />
+          <Stack.Screen
+            name='Patrons'
+            component={Patrons}
+            options={{
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+              // headerTintColor: 'white',
+            }}
+          />
+          <Stack.Screen
             name='Logs'
             component={Logs}
             options={{
@@ -53,7 +84,7 @@ const Auth = (props) => {
                 fontWeight: 'bold',
                 color: 'white',
               },
-              headerTintColor: 'white',
+              // headerTintColor: 'white',
             }}
           ></Stack.Screen>
           <Stack.Screen
@@ -67,7 +98,7 @@ const Auth = (props) => {
                 fontWeight: 'bold',
                 color: 'white',
               },
-              headerTintColor: 'white',
+              // headerTintColor: 'white',
             }}
           />
           <Stack.Screen
@@ -81,7 +112,7 @@ const Auth = (props) => {
                 fontWeight: 'bold',
                 color: 'white',
               },
-              headerTintColor: 'white',
+              // headerTintColor: 'white',
             }}
           />
         </Stack.Group>

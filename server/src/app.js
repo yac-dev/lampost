@@ -24,6 +24,7 @@ import libraryAndAssetRelationshipsRouter from './routers/libraryAndAssetRelatio
 import loungeChatAndChatRoomRelationshipsRouter from './routers/loungeChatAndChatRoomRelationships';
 import assetPostAndReactionAndUserRelationshipsRouter from './routers/assetPostAndReactionAndUserRelationships';
 import loungeChatsRouter from './routers/loungeChats';
+import launcherAndPatronRelationshisRouter from './routers/launcherAndPatronRelationshis';
 
 // import postsRouter from './routers/posts';
 // import usersRouter from './routers/users';
@@ -57,5 +58,6 @@ app.use('/api/libraryandassetrelationships', libraryAndAssetRelationshipsRouter)
 app.use('/api/loungechatandchatroomrelationships', loungeChatAndChatRoomRelationshipsRouter);
 app.use('/api/assetpostandreactionanduserrelationships', assetPostAndReactionAndUserRelationshipsRouter);
 app.use('/api/loungechats', loungeChatsRouter);
+app.use('/api/launcherandpatronrelationships', launcherAndPatronRelationshisRouter);
 
 export default app;

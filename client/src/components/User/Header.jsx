@@ -20,10 +20,11 @@ const Header = (props) => {
     <View
       style={{
         flexDirection: 'row',
+        alignItems: 'center',
         paddingLeft: 20,
         paddingRight: 20,
         marginTop: 20,
-        marginBottom: 30,
+        marginBottom: 40,
         // alignItems: 'center',
       }}
     >
@@ -41,7 +42,7 @@ const Header = (props) => {
           }}
           onPress={() => setIsConfirmEditProfileModalOpen(true)}
         >
-          <FontAwesome5 name='user-astronaut' size={40} color='white' />
+          <FontAwesome5 name='user-astronaut' size={30} color='white' />
         </TouchableOpacity>
       ) : (
         <View
@@ -60,7 +61,7 @@ const Header = (props) => {
         </View>
       )}
       <View style={{ flexDirection: 'column' }}>
-        <Text style={{ color: 'white', fontSize: 22, marginBottom: 15, fontWeight: 'bold' }}>{user.name}</Text>
+        <Text style={{ color: 'white', fontSize: 24, marginBottom: 15, fontWeight: 'bold' }}>{user.name}</Text>
         <Stats />
       </View>
     </View>

@@ -31,51 +31,31 @@ const userSchema = new mongoose.Schema({
       viewedChatsLastTime: Date,
     },
   ],
-  // pastMeetups: [
-  //   {
-  //     type: mongoose.Schema.ObjectId,
-  //     ref: 'Meetup',
-  //   },
-  // ],
-  // joinedLibraries: [
-  //   {
-  //     type: mongoose.Schema.ObjectId,
-  //     ref: 'Library',
-  //   },
-  // ],
-  connections: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Connection',
+  statsOverview: {
+    totalLaunched: {
+      type: Number,
+      default: 0,
     },
-    // {
-    //   user: {
-    //     type: mongoose.Schema.ObjectId,
-    //     ref: 'User',
-    //   },
-    //   chatRoom: {
-    //     type: mongoose.Schema.ObjectId,
-    //     ref: 'ChatRoom',
-    //   },
-    //   viewedChatsLastTime: Date,
-    // },
-  ],
+    totalPatrons: {
+      type: Number,
+      default: 0,
+    },
+    totalAssets: {
+      type: Number,
+      default: 0,
+    },
+    totalFriends: {
+      type: Number,
+      default: 0,
+    },
+    totalLogs: {
+      type: Number,
+      default: 0,
+    },
+  },
   createdAt: {
     type: Date,
   },
-  // socials: [
-  //   {
-  //     name: String,
-  //     url: String,
-  //   },
-  // ],
-  // これ多分いらない。代わりにrelationshipのschemaが必要になる。
-  // subscribed: [
-  //   {
-  //     type: mongoose.Schema.ObjectId,
-  //     ref: 'User',
-  //   },
-  // ],
 });
 
 function arrayLimit(val) {

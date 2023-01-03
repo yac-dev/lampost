@@ -102,7 +102,7 @@ const Badge = () => {
       >
         {badgeData.badge.name}
       </Text>
-      {badgeData.url ? (
+      {badgeData.link ? (
         <View
           style={{
             top: 3,
