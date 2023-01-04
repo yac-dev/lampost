@@ -20,11 +20,11 @@ const Header = (props) => {
     <View
       style={{
         flexDirection: 'row',
-        alignItems: 'center',
+        // alignItems: 'center',
         paddingLeft: 20,
         paddingRight: 20,
         marginTop: 20,
-        marginBottom: 40,
+        marginBottom: 20,
         // alignItems: 'center',
       }}
     >
@@ -61,7 +61,7 @@ const Header = (props) => {
         </View>
       )}
       <View style={{ flexDirection: 'column' }}>
-        <Text style={{ color: 'white', fontSize: 24, marginBottom: 15, fontWeight: 'bold' }}>{user.name}</Text>
+        <Text style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}>{user.name}</Text>
         <Stats />
       </View>
     </View>

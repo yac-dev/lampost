@@ -11,50 +11,71 @@ const Stats = () => {
   const { navigation, user } = useContext(UserContext);
 
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-      {user.statsOverview.totalLaunched ? (
+    <ScrollView
+      horizontal={true}
+      contentContainerStyle={{ paddingRight: 100 }}
+      style={{ paddingTop: 20, paddingBottom: 20 }}
+    >
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        {user.statsOverview.totalLaunched ? (
+          <Stat
+            icon={<MaterialCommunityIcons name='rocket-launch' color={'white'} size={25} style={{ marginRight: 10 }} />}
+            backgroundColor={iconColorsTable['red1']}
+            onStatPress={() => navigation.navigate('Launched')}
+            total={user.statsOverview.totalLaunched}
+            type='Launched'
+          />
+        ) : null}
+        {user.statsOverview.totalLaunched ? (
+          <Stat
+            icon={<MaterialCommunityIcons name='fire' color={'white'} size={25} style={{ marginRight: 10 }} />}
+            backgroundColor={iconColorsTable['orange1']}
+            onStatPress={() =>
+              navigation.navigate('Patrons', { user: { _id: user._id, name: user.name, photo: user.photo } })
+            }
+            total={user.statsOverview.totalPatrons}
+            type='Patrons'
+          />
+        ) : null}
+        {user.statsOverview.totalAssets ? (
+          <Stat
+            icon={<MaterialIcons name='camera-roll' color={'white'} size={25} style={{ marginRight: 10 }} />}
+            backgroundColor={iconColorsTable['violet1']}
+            onStatPress={() => navigation.navigate('Assets', { userId: user._id })}
+            total={user.statsOverview.totalAssets}
+            type='Assets'
+          />
+        ) : null}
         <Stat
-          icon={<MaterialCommunityIcons name='rocket-launch' color={'white'} size={22} />}
-          backgroundColor={iconColorsTable['red1']}
-          onStatPress={() => navigation.navigate('Launched')}
-          total={user.statsOverview.totalLaunched}
-          type={'launched'}
+          icon={<MaterialCommunityIcons name='history' color={'white'} size={25} style={{ marginRight: 10 }} />}
+          backgroundColor={iconColorsTable['blue1']}
+          onStatPress={() => null}
+          total={user.statsOverview.totalFriends}
+          type='Logs'
         />
-      ) : null}
-      {user.statsOverview.totalLaunched ? (
-        <Stat
-          icon={<MaterialCommunityIcons name='fire' color={'white'} size={25} />}
-          backgroundColor={iconColorsTable['green1']}
-          onStatPress={() => navigation.navigate('Patrons')}
-          total={user.statsOverview.totalPatrons}
-          type={'patrons'}
-        />
-      ) : null}
-      {user.statsOverview.totalAssets ? (
-        <Stat
-          icon={<MaterialIcons name='camera-roll' color={'white'} size={20} />}
-          backgroundColor={iconColorsTable['violet1']}
-          onStatPress={() => navigation.navigate('Assets', { userId: user._id })}
-          total={user.statsOverview.totalAssets}
-          type={'assets'}
-        />
-      ) : null}
-      <Stat
-        icon={<MaterialCommunityIcons name='human-greeting-variant' color={'white'} size={20} />}
-        backgroundColor={iconColorsTable['pink1']}
-        onStatPress={() => null}
-        total={user.statsOverview.totalFriends}
-        type={'friends'}
-      />
-      <Stat
+        {/* <Stat
+          icon={
+            <MaterialCommunityIcons
+              name='human-greeting-variant'
+              color={'white'}
+              size={25}
+              style={{ marginRight: 10 }}
+            />
+          }
+          backgroundColor={iconColorsTable['blue1']}
+          onStatPress={() => null}
+          total={user.statsOverview.totalFriends}
+          type='Friends'
+        /> */}
+        {/* <Stat
         icon={<MaterialCommunityIcons name='history' color={'white'} size={20} />}
         backgroundColor={iconColorsTable['blue1']}
         onStatPress={() => null}
         total={user.statsOverview.totalLogs}
         type={'logs'}
-      />
-      {/* <ScrollView horizontal={true} style={{ flexDirection: 'row' }}> */}
-      {/* <Stat
+      /> */}
+        {/* <ScrollView horizontal={true} style={{ flexDirection: 'row' }}> */}
+        {/* <Stat
           label='Launched'
           value={15}
           icon={
@@ -68,13 +89,13 @@ const Stats = () => {
           icon={<MaterialIcons name='camera-roll' color={baseTextColor} size={25} style={{ marginRight: 5 }} />}
           onStatPress={() => navigation.navigate('Assets', { userId: user._id })}
         /> */}
-      {/* <Stat
+        {/* <Stat
           label='Logs'
           value={'15'}
           icon={<MaterialCommunityIcons name='history' color={baseTextColor} size={25} style={{ marginRight: 5 }} />}
           onStatPress={() => navigation.navigate('Logs', { userId: user._id })}
         /> */}
-      {/* <Stat
+        {/* <Stat
           label='Supports'
           value={15}
           icon={<MaterialCommunityIcons name='fire' color={baseTextColor} size={25} style={{ marginRight: 10 }} />}
@@ -86,9 +107,9 @@ const Stats = () => {
           icon={<Ionicons name='ios-library' color={baseTextColor} size={25} style={{ marginRight: 10 }} />}
           onStatPress={() => console.log('opening logs page')}
         /> */}
-      {/* </ScrollView> */}
+        {/* </ScrollView> */}
 
-      {/* <TouchableOpacity
+        {/* <TouchableOpacity
         style={{
           flexDirection: 'column',
           backgroundColor: 'rgb(57, 59, 64)',
@@ -132,7 +153,8 @@ const Stats = () => {
           </View>
         </View>
       </TouchableOpacity> */}
-    </View>
+      </View>
+    </ScrollView>
   );
 };
 
