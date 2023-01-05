@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import LaunchedContext from './LaunchedContext';
 import {
   baseBackgroundColor,
   baseTextColor,
@@ -11,13 +12,17 @@ import lampostAPI from '../../../apis/lampost';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import ActionButton from '../../Utils/ActionButton';
+import ImpressionsBottomSheet from './ImpressionsBottomSheet';
+import CrewBottomSheet from './CrewBottomSheet';
 
-// ios-remove-outline
 const Container = (props) => {
   const [user, setUser] = useState(props.route.params.user);
   const [isMyPage, setIsMyPage] = useState(false);
   const [isLaunchedMeetupsDataFetched, setIsLaunchedMeetupsDataFetched] = useState(false);
   const [launchedMeetups, setLaunchedMeetups] = useState([]);
+  const [impressions, setImPressions] = useState([]);
+  const impressionsBottomSheetRef = useRef(null);
+  const crewBottomSheetRef = useRef(null);
 
   const getLaunchedMeetupsByLauncherId = async () => {
     const result = await lampostAPI.get(
@@ -72,9 +77,13 @@ const Container = (props) => {
               </Text>
             </View>
             <View style={{ marginBottom: 10 }}>
-              <Text style={{ color: 'white', fontSize: 20, textAlign: 'center', marginBottom: 15 }}>
-                {launchedMeetupObject.representation}
-              </Text>
+              {launchedMeetupObject.representation ? (
+                <Text style={{ color: 'white', fontSize: 20, textAlign: 'center', marginBottom: 15 }}>
+                  {launchedMeetupObject.representation}
+                </Text>
+              ) : (
+                <Text style={{ color: baseTextColor }}>You'll see the launcher's comment here.</Text>
+              )}
               <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
                 <Ionicons name='ios-remove-outline' size={25} color={'white'} style={{ marginRight: 5 }} />
                 {/* <View style={{ width: 40, height: 40, borderRadius: 10, backgroundColor: 'red', marginRight: 10 }}></View> */}
@@ -86,22 +95,18 @@ const Container = (props) => {
                 label={`Crew ${launchedMeetupObject.meetup.attendees.length}`}
                 backgroundColor={iconColorsTable['blue1']}
                 icon={<MaterialIcons name='groups' size={25} color='white' style={{ marginRight: 5 }} />}
-                onActionButtonPress={() => null}
+                onActionButtonPress={() => {
+                  crewBottomSheetRef.current.snapToIndex(0);
+                }}
               />
               <ActionButton
                 label={`Impressions ${launchedMeetupObject.totalImpressions}`}
                 backgroundColor={iconColorsTable['blue1']}
                 icon={<Ionicons name='ios-chatbubble-sharp' size={25} color='white' style={{ marginRight: 5 }} />}
-                onActionButtonPress={() => null}
+                onActionButtonPress={() => {
+                  impressionsBottomSheetRef.current.snapToIndex(0);
+                }}
               />
-              {/* <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}>
-                <MaterialIcons name='groups' size={25} color='white' style={{ marginRight: 5 }} />
-                <Text style={{ color: 'white' }}>Joined</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Ionicons name='ios-chatbubble-sharp' size={25} color='white' style={{ marginRight: 5 }} />
-                <Text style={{ color: 'white' }}>Impressions</Text>
-              </TouchableOpacity> */}
             </View>
           </View>
         );
@@ -112,7 +117,13 @@ const Container = (props) => {
     }
   };
 
-  return <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>{renderLaunchedMeetups()}</View>;
+  return (
+    <LaunchedContext.Provider value={{ impressionsBottomSheetRef, crewBottomSheetRef }}>
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>{renderLaunchedMeetups()}</View>
+      <ImpressionsBottomSheet />
+      <CrewBottomSheet />
+    </LaunchedContext.Provider>
+  );
 };
 
 export default Container;
