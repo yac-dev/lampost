@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef, useContext, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import GlobalContext from '../../GlobalContext';
 import UserContext from './UserContext';
 import BadgeContext from './BadgeContext';
@@ -54,6 +55,12 @@ const Container = (props) => {
   useEffect(() => {
     getUser();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      getUser();
+    }, [])
+  );
 
   const getBadgeDatasByUserId = async () => {
     const result = await lampostAPI.get(`/badgeanduserrelationships/${props.route.params.userId}`);

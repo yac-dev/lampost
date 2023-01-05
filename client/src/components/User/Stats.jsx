@@ -21,7 +21,7 @@ const Stats = () => {
           <Stat
             icon={<MaterialCommunityIcons name='rocket-launch' color={'white'} size={25} style={{ marginRight: 10 }} />}
             backgroundColor={iconColorsTable['red1']}
-            onStatPress={() => navigation.navigate('Launched')}
+            onStatPress={() => navigation.navigate('Launched', { user: { _id: user._id } })}
             total={user.statsOverview.totalLaunched}
             type='Launched'
           />
@@ -39,8 +39,8 @@ const Stats = () => {
         ) : null}
         {user.statsOverview.totalAssets ? (
           <Stat
-            icon={<MaterialIcons name='camera-roll' color={'white'} size={25} style={{ marginRight: 10 }} />}
-            backgroundColor={iconColorsTable['violet1']}
+            icon={<Ionicons name='ios-camera' color={'white'} size={25} style={{ marginRight: 10 }} />}
+            backgroundColor={iconColorsTable['grey1']}
             onStatPress={() => navigation.navigate('Assets', { userId: user._id })}
             total={user.statsOverview.totalAssets}
             type='Assets'

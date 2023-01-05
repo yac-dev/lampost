@@ -39,3 +39,5 @@ export const baseBorderColor = 'rgb(72, 76, 86)';
 export const appBottomSheetBackgroundColor = 'rgb(32, 34, 37)';
 export const sectionBackgroundColor = 'rgb(42, 44, 49)';
 export const inputBackgroundColor = 'rgb(73, 75, 80)';
+export const screenSectionBackgroundColor = 'rgb(75, 75, 75)';
+export const screenBorderBottomColor = 'rgb(124, 124, 124)';

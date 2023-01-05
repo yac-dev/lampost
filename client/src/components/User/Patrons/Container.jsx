@@ -12,6 +12,7 @@ const Container = (props) => {
   const [user, setUser] = useState(props.route.params.user);
   const [isMyPage, setIsMyPage] = useState(false);
   const [patrons, setPatrons] = useState({});
+  const [isPatronsDataFetched, setIsPatronsDataFetched] = useState(false);
   const AvatarWidth = Dimensions.get('window').width / 6;
 
   const getPatronsByLauncherId = async () => {
@@ -22,6 +23,7 @@ const Container = (props) => {
       patronsTable[patron._id] = patron;
     });
     setPatrons(patronsTable);
+    setIsPatronsDataFetched(true);
   };
 
   useEffect(() => {
@@ -29,8 +31,7 @@ const Container = (props) => {
   }, []);
 
   const onBeAPatronPress = async () => {
-    // loadしているときにbutton 押されると困る。
-    if (!Object.values(patrons).length) {
+    if (!isPatronsDataFetched) {
       console.log('Not yet!');
     } else {
       console.log(`Launcher is ${user.name} and ${auth.data.name} becoming a patron.`);

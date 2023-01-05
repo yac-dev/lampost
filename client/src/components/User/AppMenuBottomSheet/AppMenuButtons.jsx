@@ -11,7 +11,7 @@ import { Entypo } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 import { iconColorsTable, backgroundColorsTable, sectionBackgroundColor } from '../../../utils/colorsTable';
-import AppButton from '../../Utils/AppMenuButton';
+import AppMenuButton from '../../Utils/AppMenuButton';
 
 const AppButtons = (props) => {
   const { setAuth } = useContext(GlobalContext);
@@ -37,7 +37,7 @@ const AppButtons = (props) => {
       }}
     >
       <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
-        <AppButton
+        <AppMenuButton
           backgroundColor={backgroundColorsTable['lightGreen1']}
           icon={<Foundation name='sheriff-badge' size={35} color={iconColorsTable['lightGreen1']} />}
           label='Add badges'
@@ -46,17 +46,26 @@ const AppButtons = (props) => {
             navigation.navigate('Add badges', { fromComponent: 'ADD_USER_BADGES' });
           }}
         />
+        {user.statsOverview.totalLaunched ? (
+          <AppMenuButton
+            backgroundColor={backgroundColorsTable['yellow1']}
+            icon={<Foundation name='dollar' size={35} color={iconColorsTable['yellow1']} />}
+            label='Set membership tier'
+            onAppMenuButtonPress={() => null}
+          />
+        ) : null}
         {/* <AppButton
           backgroundColor={backgroundColorsTable['violet1']}
           icon={<MaterialIcons name='edit' size={35} color={iconColorsTable['violet1']} />}
           label='Edit my profile'
         /> */}
-        <AppButton
+        <AppMenuButton
           backgroundColor={backgroundColorsTable['grey1']}
           icon={<Fontisto name='player-settings' size={35} color={iconColorsTable['grey1']} />}
-          label='Setting'
+          label='Set personal'
+          onAppMenuButtonPress={() => null}
         />
-        <AppButton
+        <AppMenuButton
           backgroundColor={backgroundColorsTable['blue1']}
           icon={<MaterialCommunityIcons name='logout' size={35} color={iconColorsTable['blue1']} />}
           label='Logout'
