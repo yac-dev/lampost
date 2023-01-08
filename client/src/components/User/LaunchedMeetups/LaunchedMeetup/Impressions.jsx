@@ -75,16 +75,16 @@ const Impressions = () => {
   };
 
   const onSendPress = async () => {
-    // const result = await lampostAPI.post(`/pastmeetupanduserrelationship/${launchedMeetup.relationship}`, {
-    //   text: impressionText,
-    //   user: { name: auth.name, photo: auth.photo },
-    // });
-    // const { impression } = result.data;
-    const impression = {
+    const result = await lampostAPI.post(`/pastmeetupanduserrelationships/${launchedMeetup.relationship}`, {
       text: impressionText,
-      user: { name: auth.data.name, photo: auth.data.photo },
-      createdAt: new Date(),
-    };
+      user: { _id: auth.data._id, name: auth.data.name, photo: auth.data.photo },
+    });
+    const { impression } = result.data;
+    // const impression = {
+    //   text: impressionText,
+    //   user: { name: auth.data.name, photo: auth.data.photo },
+    //   createdAt: new Date(),
+    // };
     setImpressions((previous) => [...previous, impression]);
     Keyboard.dismiss();
   };

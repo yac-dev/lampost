@@ -95,6 +95,7 @@ const Container = (props) => {
       const list = launchedMeetups.map((launchedMeetup, index) => {
         return (
           <TouchableOpacity
+            key={index}
             style={{ borderBottomWidth: 0.3, borderBottomColor: screenBorderBottomColor, padding: 20 }}
             onPress={() => props.navigation.navigate('Launched meetup', { launchedMeetup })}
           >

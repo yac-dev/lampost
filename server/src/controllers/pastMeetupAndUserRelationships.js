@@ -89,6 +89,7 @@ export const getPastMeetupDetailByMeetupId = async (request, response) => {
       })
       .populate({
         path: 'impressions',
+        populate: { path: 'user', select: 'name photo' },
       });
 
     console.log('this is a object', pastMeetupAndUserRelationship);
