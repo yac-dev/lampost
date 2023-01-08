@@ -104,6 +104,18 @@ export const getPastMeetupDetailByMeetupId = async (request, response) => {
 
 export const createImpression = async (request, response) => {
   try {
+    const { text, user } = request.body;
+    const pastMeetupAndUserRelationship = await PastMeetupAndUserRelationship.findById(request.params.id);
+    const impressionObject = {
+      text,
+      user: user._id,
+      createdAt: new Date(),
+    };
+    pastMeetupAndUserRelationship.impressions.push(impressionObject);
+    pastMeetupAndUserRelationship.save();
+    response.status(200).json({
+      impression: { text, user: { name: user.name, photo: user.photo }, createdAt: impressionObject.createdAt },
+    });
   } catch (error) {
     console.log(error);
   }

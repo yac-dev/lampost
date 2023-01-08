@@ -161,7 +161,9 @@ const Container = (props) => {
 
   return (
     <LaunchedContext.Provider value={{ navigation: props.navigation }}>
-      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>{renderLaunchedMeetups()}</View>
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+        <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderLaunchedMeetups()}</ScrollView>
+      </View>
     </LaunchedContext.Provider>
   );
 };

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import GlobalContext from '../../../../GlobalContext';
 import LaunchedMeetupContext from './LaunchedMeetup';
 import { baseBackgroundColor, baseTextColor, inputBackgroundColor } from '../../../../utils/colorsTable';
 import MeetupBlogPostBody from '../../../Utils/MeetupBlogPostBody';
@@ -8,7 +9,6 @@ import Crew from './Crew';
 import lampostAPI from '../../../../apis/lampost';
 
 const Container = (props) => {
-  console.log(props.route.params.launchedMeetup);
   const [component, setComponent] = useState('Impressions');
   const [attendees, setAttendees] = useState([]);
   const [impressions, setImpressions] = useState([]);
@@ -38,7 +38,9 @@ const Container = (props) => {
   };
 
   return (
-    <LaunchedMeetupContext.Provider value={{ impressions, setImpressions, attendees }}>
+    <LaunchedMeetupContext.Provider
+      value={{ launchedMeetup: props.route.params.launchedMeetup, impressions, setImpressions, attendees }}
+    >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 20 }}>
         <MeetupBlogPostBody meetup={props.route.params.launchedMeetup} />
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
