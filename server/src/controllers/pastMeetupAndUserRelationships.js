@@ -55,10 +55,19 @@ export const getLaunchedMeetupsByLauncherId = async (request, response) => {
       ],
     });
 
+    console.log(pastMeetupAndUserRelationships);
+
     const launchedMeetups = pastMeetupAndUserRelationships.map((pastMeetupAndUserRelationship) => {
       return {
-        meetup: pastMeetupAndUserRelationship.pastMeetup,
+        relationship: pastMeetupAndUserRelationship._id,
+        title: pastMeetupAndUserRelationship.pastMeetup.title,
+        place: pastMeetupAndUserRelationship.pastMeetup.place,
+        startDateAndTime: pastMeetupAndUserRelationship.pastMeetup.startDateAndTime,
+        badges: pastMeetupAndUserRelationship.pastMeetup.badges,
+        assets: pastMeetupAndUserRelationship.pastMeetup.assets,
+        launcher: pastMeetupAndUserRelationship.pastMeetup.launcher,
         representation: pastMeetupAndUserRelationship.representation,
+        totalAttendees: pastMeetupAndUserRelationship.pastMeetup.attendees.length,
         totalImpressions: pastMeetupAndUserRelationship.impressions.length,
       };
     });
@@ -66,6 +75,35 @@ export const getLaunchedMeetupsByLauncherId = async (request, response) => {
     response.status(200).json({
       launchedMeetups,
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getPastMeetupDetailByMeetupId = async (request, response) => {
+  try {
+    const pastMeetupAndUserRelationship = await PastMeetupAndUserRelationship.findById(request.params.id)
+      .populate({
+        path: 'pastMeetup',
+        populate: { path: 'attendees', select: 'name photo' },
+      })
+      .populate({
+        path: 'impressions',
+      });
+
+    console.log('this is a object', pastMeetupAndUserRelationship);
+
+    response.status(200).json({
+      attendees: pastMeetupAndUserRelationship.pastMeetup.attendees,
+      impressions: pastMeetupAndUserRelationship.impressions,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const createImpression = async (request, response) => {
+  try {
   } catch (error) {
     console.log(error);
   }

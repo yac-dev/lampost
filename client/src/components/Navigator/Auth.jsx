@@ -12,7 +12,8 @@ import SignUp from '../Auth/SignUp';
 import LogIn from '../Auth/LogIn';
 
 import UserHome from '../User/Container';
-import Launched from '../User/Launched/Container';
+import Launched from '../User/LaunchedMeetups/Container';
+import LaunchedMeetup from '../User/LaunchedMeetups/LaunchedMeetup/Container';
 import Patrons from '../User/Patrons/Container';
 import Friends from '../User/Friends/Container';
 import Logs from '../User/Logs/Container';
@@ -48,6 +49,20 @@ const Auth = (props) => {
           <Stack.Screen
             name='Launched'
             component={Launched}
+            options={{
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+              // headerTintColor: 'white',
+            }}
+          />
+          <Stack.Screen
+            name='Launched meetup'
+            component={LaunchedMeetup}
             options={{
               headerStyle: {
                 backgroundColor: appBottomSheetBackgroundColor,

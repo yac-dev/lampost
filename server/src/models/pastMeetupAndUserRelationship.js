@@ -18,6 +18,7 @@ const pastMeetupAndUserRelationshipSchema = new mongoose.Schema({
     {
       text: String,
       user: { type: mongoose.Schema.ObjectId, ref: 'User' },
+      createdAt: Date,
     },
   ],
 });

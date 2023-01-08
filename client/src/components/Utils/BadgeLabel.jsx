@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { rnDefaultBackgroundColor } from '../../utils/colorsTable';
+import { rnDefaultBackgroundColor, iconColorsTable, backgroundColorsTable } from '../../utils/colorsTable';
 import FastImage from 'react-native-fast-image';
 
 const BadgeLabel = (props) => {
@@ -14,7 +14,7 @@ const BadgeLabel = (props) => {
           paddingBottom: 2,
           paddingRight: 10,
           paddingLeft: 5,
-          backgroundColor: props.badgeLableBackgroundColor,
+          backgroundColor: backgroundColorsTable[props.badge.color],
           borderRadius: 10,
         }}
       >
@@ -29,14 +29,14 @@ const BadgeLabel = (props) => {
           <FastImage
             style={{ width: 20, height: 20 }}
             source={{
-              uri: props.badgeIcon,
+              uri: props.badge.icon,
               priority: FastImage.priority.normal,
             }}
-            tintColor={props.badgeIconColor}
+            tintColor={iconColorsTable[props.badge.color]}
             resizeMode={FastImage.resizeMode.contain}
           />
         </View>
-        <Text style={{ color: props.labelTextColor }}>{props.labelText}</Text>
+        <Text style={{ color: iconColorsTable[props.badge.color] }}>{props.badge.name}</Text>
       </TouchableOpacity>
     </View>
   );

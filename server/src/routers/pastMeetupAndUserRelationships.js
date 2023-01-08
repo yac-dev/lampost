@@ -1,7 +1,12 @@
 import express from 'express';
 const router = express.Router();
-import { getPastMeetupsByUserId, getLaunchedMeetupsByLauncherId } from '../controllers/pastMeetupAndUserRelationships';
+import {
+  getPastMeetupsByUserId,
+  getLaunchedMeetupsByLauncherId,
+  getPastMeetupDetailByMeetupId,
+} from '../controllers/pastMeetupAndUserRelationships';
 
+router.route('/:id').get(getPastMeetupDetailByMeetupId);
 router.route('/pastmeetups/:userId').get(getPastMeetupsByUserId);
 router.route('/launchedmeetups/:launcherId').get(getLaunchedMeetupsByLauncherId);
 
