@@ -34,7 +34,7 @@ const Badge = (props) => {
   } = useContext(AddBadgesContext);
 
   const oneGridWidth = Dimensions.get('window').width / 4;
-  const oneGridHeight = Dimensions.get('window').height / 8;
+  const oneGridHeight = Dimensions.get('window').height / 8.5;
   const badgeContainerWidth = oneGridWidth * 0.6;
   const badgeIconWidth = badgeContainerWidth * 0.7;
   // const isBadgeSelectedIconPlace = Dimensions.get('window').width / 100
@@ -98,7 +98,7 @@ const Badge = (props) => {
         return (
           <View
             style={{
-              top: -10,
+              top: -5,
               right: 10,
               position: 'absolute',
               color: '#989898',
@@ -113,7 +113,7 @@ const Badge = (props) => {
         return (
           <View
             style={{
-              top: -10,
+              top: -5,
               right: 10,
               position: 'absolute',
               color: '#989898',
@@ -218,7 +218,7 @@ const Badge = (props) => {
           borderRadius: 15,
           backgroundColor: rnDefaultBackgroundColor,
           borderWidth: 0.3,
-          marginBottom: 10,
+          marginBottom: 5,
         }}
         onPress={() => {
           onBadgePress();
@@ -250,7 +250,10 @@ const Badge = (props) => {
         </View>
       </TouchableOpacity>
       <Text
+        numberOfLines={1}
         style={{
+          paddingLeft: 5,
+          paddingRight: 5,
           color: baseTextColor,
           fontWeight: 'bold',
           alignSelf: 'center',

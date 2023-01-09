@@ -25,7 +25,7 @@ const Container = () => {
       );
     });
 
-    return <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{badgesList}</View>;
+    return <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: 10 }}>{badgesList}</View>;
   };
 
   if (queriedBadges.length) {

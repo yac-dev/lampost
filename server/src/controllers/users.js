@@ -122,11 +122,13 @@ export const getUserAssets = async (request, response) => {
 export const editProfilePhoto = async (request, response) => {
   try {
     const user = await User.findById(request.params.id);
-    user.photo = `https://lampost-dev.s3.us-east-2.amazonaws.com/assets/avatars/${request.file.filename}`;
+    user.photo = `https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/${request.file.filename}`;
     user.save();
     uploadAvatar(request.file.filename);
+    console.log('this is the body data', request.body);
+    console.log('this is the file name', request.file.filename);
     response.status(200).json({
-      user,
+      photo: user.photo,
     });
   } catch (error) {
     console.log(error);

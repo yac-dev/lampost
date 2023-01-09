@@ -50,7 +50,7 @@ const AppButtons = (props) => {
           <AppMenuButton
             backgroundColor={backgroundColorsTable['yellow1']}
             icon={<Foundation name='dollar' size={35} color={iconColorsTable['yellow1']} />}
-            label='Set membership tier'
+            label='Membership tier'
             onAppMenuButtonPress={() => null}
           />
         ) : null}
@@ -62,7 +62,7 @@ const AppButtons = (props) => {
         <AppMenuButton
           backgroundColor={backgroundColorsTable['grey1']}
           icon={<Fontisto name='player-settings' size={35} color={iconColorsTable['grey1']} />}
-          label='Set personal'
+          label='Personal setting'
           onAppMenuButtonPress={() => null}
         />
         <AppMenuButton

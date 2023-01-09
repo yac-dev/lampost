@@ -103,6 +103,7 @@ const Container = (props) => {
       <UserContext.Provider
         value={{
           user,
+          setUser,
           isMyPage,
           navigation: props.navigation,
           appMenuBottomSheetRef,

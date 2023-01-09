@@ -39,7 +39,7 @@ const Container = (props) => {
 
   const oneGridWidth = Dimensions.get('window').width / 2;
   const oneGridHeight = Dimensions.get('window').height / 4;
-  const libraryContainerWidth = oneGridWidth * 0.8;
+  const libraryContainerWidth = oneGridWidth * 0.85;
   const libraryIconWidth = libraryContainerWidth * 0.4;
 
   const getLibraries = async () => {
@@ -211,6 +211,7 @@ const Container = (props) => {
               {/* </View> */}
             </TouchableOpacity>
             <Text
+              numberOfLines={1}
               style={{
                 color: baseTextColor,
                 fontWeight: 'bold',
@@ -218,6 +219,8 @@ const Container = (props) => {
                 fontSize: 15,
                 textAlign: 'center',
                 marginBottom: 5,
+                paddingLeft: 10,
+                paddingRight: 10,
                 // borderWidth: 1,
                 // borderRadius: 5,
                 // padding: 4,

@@ -19,9 +19,17 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   isInMeetup: {
-    type: Boolean,
-    default: false,
+    state: { type: Boolean, default: false },
+    meetup: { type: mongoose.Schema.ObjectId, ref: 'Meetup' },
   },
+  // 4つまでで。
+  topBadges: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Badge',
+    },
+    // 4つまで
+  ],
   upcomingMeetups: [
     {
       meetup: {

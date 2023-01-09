@@ -50,12 +50,6 @@ const meetupSchema = new mongoose.Schema({
     ],
     // validate: [attendeesLimit, 'OOPS! This meetup is full now.'],
   },
-  curious: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'User',
-    },
-  ],
   launcher: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',

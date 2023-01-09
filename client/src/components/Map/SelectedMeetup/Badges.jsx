@@ -50,14 +50,7 @@ const Badges = (props) => {
         //     <Text style={{ color: iconColorsTable[badge.color] }}>{badge.name}</Text>
         //   </TouchableOpacity>
         // </View>
-        <BadgeLabel
-          key={index}
-          badgeIcon={badge.icon}
-          badgeLableBackgroundColor={backgroundColorsTable[badge.color]}
-          badgeIconColor={iconColorsTable[badge.color]}
-          labelTextColor={iconColorsTable[badge.color]}
-          labelText={badge.name}
-        />
+        <BadgeLabel key={index} badge={badge} />
       );
     });
 

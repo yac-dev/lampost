@@ -8,30 +8,51 @@ import { Button, Dialog, Portal, Provider, withTheme } from 'react-native-paper'
 import { baseTextColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
 
 const ConfirmLeaveLibrary = (props) => {
-  const { auth } = useContext(GlobalContext);
-  const { isConfirmEditProfileModalOpen, setIsConfirmEditProfileModalOpen, setSelectedProfileImage } =
+  const { auth, setAuth } = useContext(GlobalContext);
+  const { isConfirmEditProfileModalOpen, setIsConfirmEditProfileModalOpen, setSelectedProfileImage, setUser } =
     useContext(UserContext);
 
   const onYesPress = async () => {
     setIsConfirmEditProfileModalOpen(false);
-    let result = await ImagePicker.launchImageLibraryAsync({
+    let pickedImage = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      quality: 1,
+      aspect: [4, 4],
+      quality: 0,
     });
 
-    if (!result.cancelled) {
+    if (!pickedImage.cancelled && pickedImage.uri) {
       const formData = new FormData();
       // photo fieldよりも後にmeetupIdをappendするとダメなんだよな。。。何でだろ。。。
-      // formData.append('userId', auth.data._id);
-      formData.append('asset', {
+      formData.append('userId', auth.data._id);
+
+      formData.append('avatar', {
         name: `user-${auth.data._id}`,
-        uri: result.uri,
+        uri: pickedImage.uri,
         type: 'image/jpg',
       });
+      console.log(formData);
       const result = await lampostAPI.patch(`/users/${auth.data._id}/profile`, formData, {
         headers: { 'Content-type': 'multipart/form-data' },
       });
+      // console.log(res);
       // setSelectedProfileImage(result.uri);
+      const { photo } = result.data;
+      setAuth((previous) => {
+        return {
+          ...previous,
+          data: {
+            ...previous.data,
+            photo: photo,
+          },
+        };
+      });
+      setUser((previous) => {
+        return {
+          ...previous,
+          photo: photo,
+        };
+      });
     }
   };
 

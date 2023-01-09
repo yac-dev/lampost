@@ -18,7 +18,7 @@ const Badge = () => {
   const { badgeData } = useContext(BadgeContext);
   const { setPressedBadgeData, badgeDetailBottomSheetRef } = useContext(UserContext);
   const oneGridWidth = Dimensions.get('window').width / 4;
-  const oneGridHeight = Dimensions.get('window').height / 7.5;
+  const oneGridHeight = Dimensions.get('window').height / 8.5;
   const badgeContainerWidth = oneGridWidth * 0.6;
   const badgeIconWidth = badgeContainerWidth * 0.65;
 
@@ -89,7 +89,10 @@ const Badge = () => {
       </TouchableOpacity>
 
       <Text
+        numberOfLines={1}
         style={{
+          paddingLeft: 5,
+          paddingRight: 5,
           color: baseTextColor,
           fontWeight: 'bold',
           alignSelf: 'center',
