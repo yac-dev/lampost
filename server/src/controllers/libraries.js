@@ -10,10 +10,14 @@ const colors = ['red1', 'blue1', 'yellow1', 'violet1', 'green1', 'lightBlue1'];
 
 export const getLibraries = async (request, response) => {
   try {
-    const libraries = await Library.find({}).populate({
-      path: 'launcher',
-      select: 'name photo',
-    });
+    const libraries = await Library.find({})
+      .populate({
+        path: 'launcher',
+        select: 'name photo',
+      })
+      .populate({
+        path: 'thumbnail',
+      });
     response.status(200).json({
       libraries,
     });
@@ -48,6 +52,7 @@ export const createLibrary = async (request, response) => {
       badges,
       description,
       launcher: launcher._id,
+      thumbnail: assets[0]._id,
       totalAssets: assets.length,
       totalMembers: 1,
       color: colors[Math.floor(Math.random() * colors.length)],
@@ -55,13 +60,13 @@ export const createLibrary = async (request, response) => {
       createdAt: new Date(),
     });
     // assetsがあれば、libraryとassetsのrelationshipを作ると。
-    const relations = assets.map((asset) => {
+    const relationsships = assets.map((asset) => {
       return {
         library: library._id,
         asset: asset._id,
       };
     });
-    const libraryAndAssetRelationships = await LibraryAndAssetRelationship.insertMany(relations);
+    const libraryAndAssetRelationships = await LibraryAndAssetRelationship.insertMany(relationships);
     const libraryAndUserRelationship = await LibraryAndUserRelationship.create({
       library: library._id,
       user: launcher._id,

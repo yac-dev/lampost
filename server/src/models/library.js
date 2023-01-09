@@ -15,6 +15,10 @@ const librarySchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
+  thumbnail: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Asset',
+  },
   color: String,
   totalAssets: Number,
   totalMembers: Number,

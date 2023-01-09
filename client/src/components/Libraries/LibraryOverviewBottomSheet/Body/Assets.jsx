@@ -6,7 +6,7 @@ import FastImage from 'react-native-fast-image';
 
 const Assets = () => {
   const { selectedLibrary, libraryAssets } = useContext(LibrariesContext);
-  const oneAssetWidth = Dimensions.get('window').width / 2;
+  const oneAssetWidth = Dimensions.get('window').width / 3;
 
   const renderAssets = () => {
     if (libraryAssets.length) {

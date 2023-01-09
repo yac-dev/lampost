@@ -9,16 +9,7 @@ const BadgeLabels = () => {
 
   const renderBadges = () => {
     const badgesList = selectedLibrary.badges.map((badge, index) => {
-      return (
-        <BadgeLabel
-          key={index}
-          badgeIcon={badge.icon}
-          badgeLableBackgroundColor={backgroundColorsTable[badge.color]}
-          badgeIconColor={iconColorsTable[badge.color]}
-          labelTextColor={iconColorsTable[badge.color]}
-          labelText={badge.name}
-        />
-      );
+      return <BadgeLabel key={index} badge={badge} />;
     });
 
     return <View style={{ flexDirection: 'row' }}>{badgesList}</View>;

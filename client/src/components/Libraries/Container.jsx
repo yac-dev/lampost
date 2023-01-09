@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useContext } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import GlobalContext from '../../GlobalContext';
 import LibrariesContext from './LibrariesContext';
-import { View, Text, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Dimensions, Image } from 'react-native';
 import lampostAPI from '../../apis/lampost';
 import {
   baseBackgroundColor,
@@ -38,7 +38,7 @@ const Container = (props) => {
   const selectedLibraryDetailComponentBottomSheetRef = useRef(null);
 
   const oneGridWidth = Dimensions.get('window').width / 2;
-  const oneGridHeight = Dimensions.get('window').height / 3.5;
+  const oneGridHeight = Dimensions.get('window').height / 4;
   const libraryContainerWidth = oneGridWidth * 0.8;
   const libraryIconWidth = libraryContainerWidth * 0.4;
 
@@ -173,11 +173,11 @@ const Container = (props) => {
                 // height: 0,
                 aspectRatio: 1,
                 // height: '100%',
-                alignItems: 'center', // これと
-                justifyContent: 'center', // これで中のimageを上下左右真ん中にする
+                // alignItems: 'center', // これと
+                // justifyContent: 'center', // これで中のimageを上下左右真ん中にする
                 borderRadius: 15,
-                backgroundColor: rnDefaultBackgroundColor,
-                borderWidth: 0.3,
+                // backgroundColor: rnDefaultBackgroundColor,
+                // borderWidth: 0.3,
                 marginBottom: 10,
               }}
               onPress={() => selectLibrary(library._id)}
@@ -187,7 +187,7 @@ const Container = (props) => {
               //   console.log('hey');
               // }}
             >
-              <View
+              {/* <View
                 style={{
                   width: '100%',
                   height: '100%',
@@ -198,16 +198,17 @@ const Container = (props) => {
                   borderWidth: 0.3,
                   borderColor: backgroundColorsTable[library.color],
                 }}
-              >
-                <Ionicons name='ios-library' size={libraryIconWidth} color={iconColorsTable[library.color]} />
+              > */}
+              <Image source={{ uri: library.thumbnail.data }} style={{ width: '100%', height: '100%' }} />
+              {/* <Ionicons name='ios-library' size={libraryIconWidth} color={iconColorsTable[library.color]} />
 
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <MaterialCommunityIcons name='fire' color={iconColorsTable[library.color]} size={20} />
                   <Text style={{ color: iconColorsTable[library.color], fontWeight: 'bold', fontSize: 15 }}>
                     {library.totalAssets}
                   </Text>
-                </View>
-              </View>
+                </View> */}
+              {/* </View> */}
             </TouchableOpacity>
             <Text
               style={{
