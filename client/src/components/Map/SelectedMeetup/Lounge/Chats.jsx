@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import GlobalContext from '../../../../GlobalContext';
 import LoungeContext from './LoungeContext';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -28,7 +28,7 @@ const Chats = (props) => {
       hour: '2-digit',
       minute: '2-digit',
     });
-    return <Text style={{ fontWeight: 'bold', fontSize: 12, color: 'rgb(94, 97, 103)' }}>{d}</Text>;
+    return <Text style={{ fontWeight: 'bold', fontSize: 12, color: 'rgb(118, 120, 124)' }}>{d}</Text>;
   };
 
   const renderChatType = (type) => {
@@ -55,9 +55,27 @@ const Chats = (props) => {
         <View key={index} style={{ padding: 10 }}>
           <View style={{ flexDirection: 'row' }}>
             {chat.user.photo ? (
-              <Image source={{ uri: chat.user.photo }} style={{ width: 40, height: 40, borderRadius: 10 }} />
+              <View style={{ width: 40, height: 40, borderRadius: 10, marginRight: 20 }}>
+                <Image source={{ uri: chat.user.photo }} style={{ width: '100%', height: '100%', borderRadius: 10 }} />
+                <View
+                  style={{
+                    backgroundColor: chatTypeTable[chat.type],
+                    padding: 2,
+                    borderRadius: 7,
+                    width: 20,
+                    height: 20,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    position: 'absolute',
+                    bottom: -10,
+                    right: -10,
+                  }}
+                >
+                  {renderChatType(chat.type)}
+                </View>
+              </View>
             ) : (
-              <TouchableOpacity
+              <View
                 style={{
                   width: 40,
                   height: 40,
@@ -79,17 +97,19 @@ const Chats = (props) => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     position: 'absolute',
-                    bottom: -5,
-                    right: -5,
+                    bottom: -10,
+                    right: -10,
                   }}
                 >
                   {renderChatType(chat.type)}
                 </View>
-              </TouchableOpacity>
+              </View>
             )}
-            <View style={{ flexDirection: 'column' }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-                <Text style={{ color: baseTextColor, marginRight: 10, fontSize: 15 }}>{chat.user.name}</Text>
+            <View style={{ flexDirection: 'column', flexShrink: 1 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, flexShrink: 1 }}>
+                <Text style={{ color: baseTextColor, marginRight: 10, fontSize: 15, fontWeight: 'bold' }}>
+                  {chat.user.name}
+                </Text>
                 {renderDate(chat.createdAt)}
               </View>
               <Text style={{ fontSize: 15, marginBottom: 10, color: baseTextColor }}>{chat.content}</Text>

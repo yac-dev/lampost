@@ -30,7 +30,7 @@ const Container = (props) => {
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [libraryMembers, setLibraryMembers] = useState([]);
   const [libraryPosts, setLibraryPosts] = useState([]);
-  const oneAssetWidth = Dimensions.get('window').width / 2;
+  const oneAssetWidth = Dimensions.get('window').width / 3;
 
   // ここで、libraryを取ってこないとね。
   const getLibrary = async () => {
@@ -42,6 +42,7 @@ const Container = (props) => {
   useEffect(() => {
     getLibrary();
   }, []);
+  console.log(library);
 
   useEffect(() => {
     if (props.route.params?.addedAssets) {

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import GlobalContext from '../../../GlobalContext';
 import LibrariesContext from '../LibrariesContext';
 import { connect } from 'react-redux';
-import { View, Text, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Dimensions, Image } from 'react-native';
 import lampostAPI from '../../../apis/lampost';
 import {
   baseTextColor,
@@ -43,12 +43,16 @@ const Container = (props) => {
               style={{
                 width: 40,
                 height: 40,
-                backgroundColor: rnDefaultBackgroundColor,
+                // backgroundColor: rnDefaultBackgroundColor,
                 marginRight: 15,
                 borderRadius: 10,
               }}
             >
-              <View
+              <Image
+                source={{ uri: library.thumbnail.data }}
+                style={{ width: '100%', height: '100%', borderRadius: 10 }}
+              />
+              {/* <View
                 style={{
                   width: '100%',
                   height: '100%',
@@ -59,7 +63,7 @@ const Container = (props) => {
                 }}
               >
                 <Ionicons name='ios-library' size={30} color={iconColorsTable[library.color]} />
-              </View>
+              </View> */}
             </View>
 
             <Text style={{ color: baseTextColor }}>{library.name}</Text>

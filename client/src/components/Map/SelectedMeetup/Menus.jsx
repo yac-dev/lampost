@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import GlobalContext from '../../../GlobalContext';
 import MapContext from '../MeetupContext';
 import { connect } from 'react-redux';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Image } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -152,7 +152,14 @@ const Menus = (props) => {
         backgroundColor={backgroundColorsTable['red1']}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'red', width: 35, height: 35, borderRadius: 7, marginRight: 5 }}></View>
+            {selectedMeetup.launcher.photo ? (
+              <Image
+                source={{ uri: selectedMeetup.launcher.photo }}
+                style={{ width: 35, height: 35, borderRadius: 10, marginRight: 10 }}
+              />
+            ) : (
+              <View style={{ backgroundColor: 'red', width: 35, height: 35, borderRadius: 7, marginRight: 5 }}></View>
+            )}
             <Text style={{ color: baseTextColor }}>{`${selectedMeetup.launcher.name} >`}</Text>
           </View>
         }

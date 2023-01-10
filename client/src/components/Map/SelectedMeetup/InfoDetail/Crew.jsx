@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import lampostAPI from '../../../../apis/lampost';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { baseTextColor, sectionBackgroundColor, iconColorsTable } from '../../../../utils/colorsTable';
-import Members from '../../../Libraries/InfoDetailBottomSheet/Members';
+import UserInfo from '../../../Utils/UserInfo';
 
 const Crew = (props) => {
   const { auth } = useContext(GlobalContext);
@@ -39,7 +39,8 @@ const Crew = (props) => {
               }
             }}
           >
-            {user.photo ? (
+            <UserInfo user={user} />
+            {/* {user.photo ? (
               <Image source={{ uri: user.photo }} style={{ width: 50, height: 50 }} />
             ) : (
               <View
@@ -58,7 +59,7 @@ const Crew = (props) => {
             )}
             <View>
               <Text style={{ color: baseTextColor }}>{user.name}</Text>
-            </View>
+            </View> */}
           </TouchableOpacity>
         );
       });
@@ -68,12 +69,7 @@ const Crew = (props) => {
           <Text style={{ color: baseTextColor, marginBottom: 10 }}>
             These people attend this meetup. Feel free to join!
           </Text>
-          <ScrollView
-            contentContainerStyle={{ paddingBottom: 50 }}
-            style={{ backgroundColor: sectionBackgroundColor, borderRadius: 10 }}
-          >
-            {crewList}
-          </ScrollView>
+          <View style={{ backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>{crewList}</View>
         </View>
       );
     } else if (!crew.length) {
@@ -85,7 +81,7 @@ const Crew = (props) => {
 
   return (
     <View>
-      <View style={{ marginBottom: 25 }}>
+      <View style={{ marginBottom: 0 }}>
         <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 10, color: 'white' }}>Crew</Text>
       </View>
       <ScrollView

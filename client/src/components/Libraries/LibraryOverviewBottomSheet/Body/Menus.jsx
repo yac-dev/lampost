@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { connect } from 'react-redux';
 import GlobalContext from '../../../../GlobalContext';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import LibrariesContext from '../../LibrariesContext';
 import {
   iconColorsTable,
@@ -38,7 +38,17 @@ const Container = (props) => {
           icon={<MaterialCommunityIcons name='rocket-launch' size={25} color={iconColorsTable['red1']} />}
           rightInfo={
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <View style={{ backgroundColor: 'red', width: 35, height: 35, borderRadius: 7, marginRight: 5 }}></View>
+              {selectedLibrary.launcher.photo ? (
+                <Image
+                  source={{ uri: selectedLibrary.launcher.photo }}
+                  style={{ width: 35, height: 35, borderRadius: 7, marginRight: 10 }}
+                />
+              ) : (
+                <View
+                  style={{ backgroundColor: 'red', width: 35, height: 35, borderRadius: 7, marginRight: 10 }}
+                ></View>
+              )}
+              {/* <View style={{ backgroundColor: 'red', width: 35, height: 35, borderRadius: 7, marginRight: 5 }}></View> */}
               <Text style={{ color: baseTextColor }}>{`${selectedLibrary.launcher.name} >`}</Text>
             </View>
           }

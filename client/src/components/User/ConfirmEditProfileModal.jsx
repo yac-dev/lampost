@@ -9,7 +9,7 @@ import { baseTextColor, appBottomSheetBackgroundColor } from '../../utils/colors
 
 const ConfirmLeaveLibrary = (props) => {
   const { auth, setAuth } = useContext(GlobalContext);
-  const { isConfirmEditProfileModalOpen, setIsConfirmEditProfileModalOpen, setSelectedProfileImage, setUser } =
+  const { isConfirmEditProfileModalOpen, setIsConfirmEditProfileModalOpen, setSelectedProfileImage, setUser, user } =
     useContext(UserContext);
 
   const onYesPress = async () => {
@@ -31,13 +31,13 @@ const ConfirmLeaveLibrary = (props) => {
         uri: pickedImage.uri,
         type: 'image/jpg',
       });
-      console.log(formData);
       const result = await lampostAPI.patch(`/users/${auth.data._id}/profile`, formData, {
         headers: { 'Content-type': 'multipart/form-data' },
       });
       // console.log(res);
       // setSelectedProfileImage(result.uri);
       const { photo } = result.data;
+      console.log('this is my photo', photo);
       setAuth((previous) => {
         return {
           ...previous,
@@ -55,6 +55,8 @@ const ConfirmLeaveLibrary = (props) => {
       });
     }
   };
+
+  // console.log('user data', user);
 
   return (
     <Portal>

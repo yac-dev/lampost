@@ -9,7 +9,11 @@ export const joinLibrary = async (request, response) => {
       user: userId,
     });
 
-    await libraryAndUserRelationship.populate({ path: 'library', select: 'name color' });
+    await libraryAndUserRelationship.populate({
+      path: 'library',
+      select: 'name color thumbnail',
+      populate: { path: 'thumbnail' },
+    });
     response.status(201).json({
       // relationshipのobjectをそのまま渡さないことね。populateしたobjectをそのまま渡す。
       library: libraryAndUserRelationship.library,
@@ -38,6 +42,7 @@ export const getMyJoinedLibrary = async (request, response) => {
       .populate({
         path: 'library',
         select: 'name color',
+        populate: { path: 'thumbnail' },
       });
     // [ {library: {name: 'qqqqq', description: 'hfuhoifhiqw'}, user: {'11111'} ]って面倒だからね。
     // 少なくとも、relationshipをまんま渡すのはやだわ。ごっちゃになる。
