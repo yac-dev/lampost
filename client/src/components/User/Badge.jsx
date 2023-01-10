@@ -37,11 +37,12 @@ const Badge = () => {
         height: oneGridHeight, // これなんだろね。。。
         // aspectRatio: 1,
         // padding: 10, // これは単純に、25%幅に対して
-        // marginBottom: 23,
+        // marginBottom: 10,
         // backgroundColor: 'white',
         paddingTop: 10,
         // backgroundColor: 'red',
         alignItems: 'center',
+        // backgroundColor: 'red',
       }}
     >
       <TouchableOpacity
@@ -56,7 +57,7 @@ const Badge = () => {
           borderRadius: 15,
           backgroundColor: rnDefaultBackgroundColor,
           borderWidth: 0.3,
-          marginBottom: 10,
+          // marginBottom: 10,
         }}
         onPress={() => {
           badgeDetailBottomSheetRef.current.snapToIndex(0);

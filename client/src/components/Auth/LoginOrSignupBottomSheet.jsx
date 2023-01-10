@@ -8,7 +8,7 @@ import SignUp from './SignUp';
 
 const LoginOrSignupBottomSheet = () => {
   const { loginOrSignupBottomSheetRef, isLoginOrSignup, setIsLoginOrSignup } = useContext(AuthContext);
-  const snapPoints = useMemo(() => ['85%'], []);
+  const snapPoints = useMemo(() => ['100%'], []);
 
   const renderLoginOrSignup = () => {
     switch (isLoginOrSignup) {

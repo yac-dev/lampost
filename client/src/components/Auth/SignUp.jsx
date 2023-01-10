@@ -7,6 +7,7 @@ import ActionButton from '../Utils/ActionButton';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import lampostAPI from '../../apis/lampost';
+import * as SecureStore from 'expo-secure-store';
 
 const SignUp = () => {
   const { setAuth, setLoading } = useContext(GlobalContext);
@@ -29,6 +30,7 @@ const SignUp = () => {
         return {
           ...previous,
           data: user,
+          isAuthenticated: true,
         };
       });
       setLoading(false);
@@ -63,6 +65,7 @@ const SignUp = () => {
         </View>
         <View style={{ marginBottom: 15 }}>
           <FormTextInput
+            isSecure={true}
             label='Password'
             value={password}
             onChangeText={(text) => setPassword(text)}

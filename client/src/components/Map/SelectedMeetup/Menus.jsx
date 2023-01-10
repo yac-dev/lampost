@@ -206,16 +206,21 @@ const Menus = (props) => {
           selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
         }}
       />
-      {/* <Menu
+      <Menu
         label='Comments'
         icon={<MaterialCommunityIcons name='chat-question' size={25} color={iconColorsTable['blue1']} />}
         backgroundColor={backgroundColorsTable['blue1']}
-        rightInfo={<Text style={{ color: baseTextColor }}>{`${selectedMeetup.comments.length} >`}</Text>}
+        rightInfo={
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ color: baseTextColor }}>{selectedMeetup.comments.length}</Text>
+            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
+          </View>
+        }
         onPressMenu={() => {
           setSelectedMeetupDetailComponent('QandAs');
           selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
         }}
-      /> */}
+      />
       <Menu
         label='Fee'
         icon={<Foundation name='dollar-bill' size={25} color={iconColorsTable['yellow1']} />}

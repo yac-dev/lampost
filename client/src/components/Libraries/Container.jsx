@@ -38,7 +38,7 @@ const Container = (props) => {
   const selectedLibraryDetailComponentBottomSheetRef = useRef(null);
 
   const oneGridWidth = Dimensions.get('window').width / 2;
-  const oneGridHeight = Dimensions.get('window').height / 4;
+  const oneGridHeight = Dimensions.get('window').height / 3;
   const libraryContainerWidth = oneGridWidth * 0.85;
   const libraryIconWidth = libraryContainerWidth * 0.4;
 

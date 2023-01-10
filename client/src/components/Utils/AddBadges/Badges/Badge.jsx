@@ -34,7 +34,7 @@ const Badge = (props) => {
   } = useContext(AddBadgesContext);
 
   const oneGridWidth = Dimensions.get('window').width / 4;
-  const oneGridHeight = Dimensions.get('window').height / 8.5;
+  const oneGridHeight = Dimensions.get('window').height / 7;
   const badgeContainerWidth = oneGridWidth * 0.6;
   const badgeIconWidth = badgeContainerWidth * 0.7;
   // const isBadgeSelectedIconPlace = Dimensions.get('window').width / 100

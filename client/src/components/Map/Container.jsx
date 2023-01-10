@@ -59,6 +59,8 @@ const Map = (props) => {
   const launchMeetupBottomSheetRef = useRef(null);
   const selectedMeetupBottomSheetRef = useRef(null);
   const selectedMeetupDetailBottomSheetRef = useRef(null);
+  const [isStartMeetupConfirmationModalOpen, setIsStartMeetupConfirmationModalOpen] = useState(false);
+  const [isFinishMeetupConfirmationModalOpen, setIsFinishMeetupConfirmationModalOpen] = useState(false);
 
   // 基本は、mapのいずれをtapしてもなにも起きないようにする。launchMeetupがtrueのときだけ、mapをtapしたらlocationをsetして、launchのformを出す。
   const setMeetupLocation = (event) => {
@@ -115,11 +117,10 @@ const Map = (props) => {
   useEffect(() => {
     if (auth.socket) {
       auth.socket.on('CREATED_MEETUP', (data) => {
+        console.log(data.meetup);
         setMeetups((previous) => [...previous, data.meetup]);
         if (data.launcher === auth.data._id) {
           setLoading(false);
-          console.log(auth.data);
-          console.log(auth.data);
           setAuth((previous) => {
             return {
               ...previous,
@@ -194,6 +195,10 @@ const Map = (props) => {
           selectedMeetupDetailComponent,
           setSelectedMeetupDetailComponent,
           selectedMeetupDetailBottomSheetRef,
+          isStartMeetupConfirmationModalOpen,
+          setIsStartMeetupConfirmationModalOpen,
+          isFinishMeetupConfirmationModalOpen,
+          setIsFinishMeetupConfirmationModalOpen,
         }}
       >
         <View style={styles.container}>

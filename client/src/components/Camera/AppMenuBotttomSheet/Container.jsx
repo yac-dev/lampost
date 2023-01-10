@@ -15,7 +15,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 const AppMenuBottomSheet = (props) => {
   const { auth } = useContext(GlobalContext);
   const { appMenuBottomSheetRef, cameraMode } = useContext(CameraContext);
-  const snapPoints = useMemo(() => ['8%', '30%', '80%'], []);
+  const snapPoints = useMemo(() => ['10%', '30%', '80%'], []);
 
   const renderCameraMode = () => {
     switch (cameraMode) {
@@ -46,10 +46,15 @@ const AppMenuBottomSheet = (props) => {
       // onClose={() => onSelectedItemBottomSheetClose()}
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 20 }}>
-            Camera, video or Live?
-          </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: 20,
+          }}
+        >
+          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>Camera, video or Live?</Text>
           {renderCameraMode()}
         </View>
         <AppMenuButtons />

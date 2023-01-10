@@ -7,7 +7,7 @@ import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom
 
 import AppMenuButtons from './AppMenuButtons';
 import UpcomingMeetups from './UpcomingMeetups';
-import { appBottomSheetBackgroundColor, iconColorsTable } from '../../../utils/colorsTable';
+import { appBottomSheetBackgroundColor, baseTextColor, iconColorsTable } from '../../../utils/colorsTable';
 import { setIsConfirmHostMeetupModalOpen } from '../../../redux/actionCreators/modal';
 import lampostAPI from '../../../apis/lampost';
 
@@ -57,7 +57,7 @@ const AppMenusBottomSheet = (props) => {
             </>
           ) : (
             <View>
-              <Text>Please login or signup to take some actions.</Text>
+              <Text style={{ color: baseTextColor }}>Please login or signup to take some actions.</Text>
             </View>
           )}
         </ScrollView>

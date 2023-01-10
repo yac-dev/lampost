@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import AuthContext from './AuthContext';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { View, Text, InputAccessoryView, TouchableOpacity, Keyboard } from 'react-native';
+import { View, Text, InputAccessoryView, TouchableOpacity, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { baseTextColor, inputBackgroundColor, sectionBackgroundColor } from '../../utils/colorsTable';
 
 const FormTextInput = (props) => {
@@ -10,7 +10,9 @@ const FormTextInput = (props) => {
   return (
     <View>
       <Text style={{ marginBottom: 10, color: 'white' }}>{props.label}</Text>
+      {/* <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding'> */}
       <BottomSheetTextInput
+        secureTextEntry={props.isSecure ? true : false}
         placeholderTextColor={baseTextColor}
         inputAccessoryViewID={props.inputAccessoryViewID}
         style={{
@@ -41,6 +43,7 @@ const FormTextInput = (props) => {
           </TouchableOpacity>
         </View>
       </InputAccessoryView>
+      {/* </KeyboardAvoidingView> */}
     </View>
   );
 };

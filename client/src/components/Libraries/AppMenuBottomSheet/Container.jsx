@@ -13,7 +13,7 @@ import MyLibraries from './MyLibraries';
 
 const AppMenuBottomSheet = (props) => {
   const { appMenuBottomSheetRef, handleCreateLibraryBottomSheet } = useContext(LibrariesContext);
-  const snapPoints = useMemo(() => ['8%', '30%', '80%'], []);
+  const snapPoints = useMemo(() => ['10%', '30%', '80%'], []);
 
   return (
     <GorhomBottomSheet

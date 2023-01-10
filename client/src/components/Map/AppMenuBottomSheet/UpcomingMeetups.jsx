@@ -4,7 +4,12 @@ import MapContext from '../MeetupContext';
 import lampostAPI from '../../../apis/lampost';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { sectionBackgroundColor, baseTextColor, iconColorsTable } from '../../../utils/colorsTable';
+import {
+  sectionBackgroundColor,
+  baseTextColor,
+  iconColorsTable,
+  screenSectionBackgroundColor,
+} from '../../../utils/colorsTable';
 import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 
@@ -27,9 +32,10 @@ const Container = (props) => {
           borderRadius: 10,
           borderWidth: 0.3,
           marginRight: 15,
-          borderColor: baseTextColor,
+          borderColor: screenSectionBackgroundColor,
           alignItems: 'center',
           justifyContent: 'center',
+          backgroundColor: screenSectionBackgroundColor,
         }}
       >
         <Text style={{ fontSize: 13, textAlign: 'center', color: baseTextColor }}>{dateElements[0]}</Text>
@@ -125,7 +131,7 @@ const Container = (props) => {
             </View>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View style={{ marginRight: 5 }}>
+            {/* <View style={{ marginRight: 5 }}>
               <TouchableOpacity
                 style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}
                 onPress={() => {
@@ -134,7 +140,7 @@ const Container = (props) => {
               >
                 <Feather name='power' size={25} color={'white'} />
               </TouchableOpacity>
-            </View>
+            </View> */}
 
             {renderUnreadChatsCount(meetupAndChatsTable)}
           </View>
@@ -155,7 +161,7 @@ const Container = (props) => {
 
   return (
     <View>
-      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 20 }}>My upcoming meetups</Text>
+      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 20 }}>My upcomingg meetups</Text>
       {renderMyUpcomingMeetups()}
     </View>
   );

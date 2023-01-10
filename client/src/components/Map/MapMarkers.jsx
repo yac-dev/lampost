@@ -1,17 +1,13 @@
-// main libraries
 import React, { useContext, useEffect } from 'react';
 import lampostAPI from '../../apis/lampost';
 import MapContext from './MeetupContext';
 import { connect } from 'react-redux';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, ImageBackground } from 'react-native';
 import { Marker } from 'react-native-maps';
 import FastImage from 'react-native-fast-image';
 import { iconColorsTable, backgroundColorsTable, rnDefaultBackgroundColor } from '../../utils/colorsTable';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
+import MeetupMarker from './MeetupMarker';
 
-// ac
 import { getMeetups } from '../../redux/actionCreators/meetups';
 import { selectMeetup } from '../../redux/actionCreators/selectItem';
 
@@ -90,54 +86,12 @@ const MapMarkers = (props) => {
         //     </View>
         //   );
         // } else {
-        return (
-          <View key={index}>
-            <Marker
-              tracksViewChanges={false}
-              coordinate={{ latitude: meetup.place.coordinates[1], longitude: meetup.place.coordinates[0] }}
-              pinColor='black'
-              onPress={() => {
-                getSelectedMeetup(meetup._id);
-              }}
-            >
-              <View
-                style={{
-                  width: 40,
-                  aspectRatio: 1,
-                  backgroundColor: rnDefaultBackgroundColor,
-                  borderRadius: 10,
-                }}
-              >
-                <TouchableOpacity
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    alignItems: 'center', // これと
-                    justifyContent: 'center', // これで中のimageを上下左右真ん中にする
-                    borderRadius: 10,
-                    backgroundColor: backgroundColorsTable[meetup.badge.color],
-                    borderColor: backgroundColorsTable[meetup.badge.color],
-                    borderWidth: 0.5,
-                  }}
-                >
-                  <FastImage
-                    style={{ width: 30, height: 30 }}
-                    source={{
-                      uri: meetup.badge.icon,
-                      priority: FastImage.priority.normal,
-                    }}
-                    tintColor={iconColorsTable[meetup.badge.color]}
-                    resizeMode={FastImage.resizeMode.contain}
-                  />
-                </TouchableOpacity>
-              </View>
-            </Marker>
-          </View>
-        );
+        return <MeetupMarker key={index} meetup={meetup} />;
         // }
       });
 
-      return <View>{meetupsList}</View>;
+      // まさか、ここが仇になるとはね。まあよかった。
+      return <>{meetupsList}</>;
     } else {
       return null;
     }

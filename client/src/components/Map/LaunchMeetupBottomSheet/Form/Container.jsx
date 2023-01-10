@@ -1,8 +1,8 @@
-// main libraries
 import React, { useState, useEffect, useReducer, useContext } from 'react';
 import GlobalContext from '../../../../GlobalContext';
 import lampostAPI from '../../../../apis/lampost';
 import { View, Text, TouchableOpacity, Keyboard } from 'react-native';
+import GorhomBottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import MapContext from '../../MeetupContext';
 import { connect } from 'react-redux';
 import { AntDesign } from '@expo/vector-icons';
@@ -203,7 +203,7 @@ const Container = (props) => {
   };
 
   return (
-    <View style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
+    <BottomSheetScrollView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
       <View style={{ alignSelf: 'flex-end', marginBottom: 5 }}>
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center' }}
@@ -214,7 +214,7 @@ const Container = (props) => {
         </TouchableOpacity>
       </View>
       {switchComponent()}
-    </View>
+    </BottomSheetScrollView>
   );
 };
 

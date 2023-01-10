@@ -1,6 +1,7 @@
 import React, { useContext, useMemo } from 'react';
-import { connect } from 'react-redux';
+import GlobalContext from '../../../GlobalContext';
 import UserContext from '../UserContext';
+import { connect } from 'react-redux';
 // import UserContext from './Context';
 import { View, Text, TouchableOpacity } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
@@ -13,11 +14,11 @@ import MyConnections from './MyConnections/Container';
 import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 
 const AppMenuBottomSheet = (props) => {
+  const { auth } = useContext(GlobalContext);
   const { appMenuBottomSheetRef, isMyPage } = useContext(UserContext);
-  const snapPoints = useMemo(() => ['8%', '30%', '80%'], []);
-
+  const snapPoints = useMemo(() => ['10%', '30%', '80%'], []);
   // ここに関しては、authじゃない限り、表示しないようにする。
-  if (!props.auth.isAuthenticated || !isMyPage) {
+  if (!auth.isAuthenticated || !isMyPage) {
     return null;
   } else {
     return (

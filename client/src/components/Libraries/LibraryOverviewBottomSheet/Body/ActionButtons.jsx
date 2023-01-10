@@ -35,7 +35,7 @@ const ActionButtons = (props) => {
     navigation.navigate('Library', { libraryId: library._id });
   };
 
-  if (props.auth.isAuthenticated) {
+  if (auth.isAuthenticated) {
     return (
       <ScrollView horizontal={'true'} style={{ paddingLeft: 20, paddingRight: 20 }}>
         <View style={{ marginBottom: 25, flexDirection: 'row' }}>

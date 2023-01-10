@@ -52,6 +52,8 @@ const AppStack = (props) => {
   //    { _id: 222, title: 'Meetup2' , chats: [{content: '', createdAt: '2022/8/1'}], viewedChats: '2022/7/22' }
   //]
 
+  // console.log(myUpcomingMeetupAndChatsTable);
+
   const getJWTToken = async () => {
     const jwtToken = await SecureStore.getItemAsync('secure_token');
     if (jwtToken) {
@@ -77,7 +79,7 @@ const AppStack = (props) => {
   }, []);
 
   const getSocket = () => {
-    const socket = io('http://localhost:3500', {
+    const socket = io('http://192.168.11.5:3500', {
       path: '/mysocket',
     });
     setAuth((previous) => {

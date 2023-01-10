@@ -30,6 +30,7 @@ const Login = () => {
         return {
           ...previous,
           data: user,
+          isAuthenticated: true,
         };
       });
       setLoading(false);
