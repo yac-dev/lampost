@@ -55,7 +55,7 @@ const SendChatBottomSheet = (props) => {
         <View style={{ height: '100%', flexDirection: 'row' }}>
           <BottomSheetTextInput
             multiline={true}
-            placeholder='Add a message'
+            placeholder='Add a chat message...'
             placeholderTextColor={baseTextColor}
             inputAccessoryViewID={inputAccessoryViewID}
             style={{

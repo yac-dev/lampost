@@ -252,6 +252,8 @@ export const getSelectedMeetup = async (request, response) => {
       })
       .populate({
         path: 'attendees',
+        select: 'name photo topBadges',
+        populate: { path: 'topBadges' },
       });
     console.log('meetup selected!', meetup);
     response.status(200).json({

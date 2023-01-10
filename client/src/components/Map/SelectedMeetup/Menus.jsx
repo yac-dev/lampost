@@ -152,15 +152,18 @@ const Menus = (props) => {
         backgroundColor={backgroundColorsTable['red1']}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {selectedMeetup.launcher.photo ? (
-              <Image
-                source={{ uri: selectedMeetup.launcher.photo }}
-                style={{ width: 35, height: 35, borderRadius: 10, marginRight: 10 }}
-              />
-            ) : (
-              <View style={{ backgroundColor: 'red', width: 35, height: 35, borderRadius: 7, marginRight: 5 }}></View>
-            )}
-            <Text style={{ color: baseTextColor }}>{`${selectedMeetup.launcher.name} >`}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              {selectedMeetup.launcher.photo ? (
+                <Image
+                  source={{ uri: selectedMeetup.launcher.photo }}
+                  style={{ width: 35, height: 35, borderRadius: 10, marginRight: 10 }}
+                />
+              ) : (
+                <View style={{ backgroundColor: 'red', width: 35, height: 35, borderRadius: 7, marginRight: 5 }}></View>
+              )}
+              <Text style={{ color: baseTextColor }}>{selectedMeetup.launcher.name}</Text>
+            </View>
+            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
           </View>
         }
         onPressMenu={() => {
@@ -175,7 +178,14 @@ const Menus = (props) => {
         onPress={() => console.log('hello')}
         backgroundColor={backgroundColorsTable['green1']}
         icon={<MaterialCommunityIcons name='card-text-outline' size={25} color={iconColorsTable['green1']} />}
-        rightInfo={<Text style={{ color: baseTextColor }}>{`>`}</Text>}
+        rightInfo={
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text numberOfLines={1} style={{ color: baseTextColor, width: 100 }}>
+              {selectedMeetup.description}
+            </Text>
+            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
+          </View>
+        }
         onPressMenu={() => {
           setSelectedMeetupDetailComponent('Description');
           selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
@@ -185,13 +195,18 @@ const Menus = (props) => {
         label='Crew'
         icon={<FontAwesome5 name='user-astronaut' size={25} color={iconColorsTable['violet1']} />}
         backgroundColor={backgroundColorsTable['violet1']}
-        rightInfo={<Text style={{ color: baseTextColor }}>{`${selectedMeetup.totalAttendees} >`}</Text>}
+        rightInfo={
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ color: baseTextColor }}>{selectedMeetup.totalAttendees}</Text>
+            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
+          </View>
+        }
         onPressMenu={() => {
           setSelectedMeetupDetailComponent('Crew');
           selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
         }}
       />
-      <Menu
+      {/* <Menu
         label='Comments'
         icon={<MaterialCommunityIcons name='chat-question' size={25} color={iconColorsTable['blue1']} />}
         backgroundColor={backgroundColorsTable['blue1']}
@@ -200,13 +215,16 @@ const Menus = (props) => {
           setSelectedMeetupDetailComponent('QandAs');
           selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
         }}
-      />
+      /> */}
       <Menu
         label='Fee'
         icon={<Foundation name='dollar-bill' size={25} color={iconColorsTable['yellow1']} />}
         backgroundColor={backgroundColorsTable['yellow1']}
         rightInfo={
-          <Text style={{ color: baseTextColor }}>{selectedMeetup.isFeeFree ? "It's free >" : "It's not free >"}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ color: baseTextColor }}>{selectedMeetup.isFeeFree ? "It's free" : "It's not free"}</Text>
+            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
+          </View>
         }
         onPressMenu={() => {
           setSelectedMeetupDetailComponent('Fee');
@@ -229,7 +247,7 @@ const Menus = (props) => {
         label='Link'
         icon={<Entypo name='link' size={25} color={iconColorsTable['grey1']} />}
         backgroundColor={backgroundColorsTable['grey1']}
-        rightInfo={<Text style={{ color: baseTextColor }}>{`>`}</Text>}
+        rightInfo={<MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />}
         onPressMenu={() => {
           setSelectedMeetupDetailComponent('Links');
           selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);

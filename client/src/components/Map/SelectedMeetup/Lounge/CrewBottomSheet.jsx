@@ -10,6 +10,7 @@ import {
   iconColorsTable,
   sectionBackgroundColor,
 } from '../../../../utils/colorsTable';
+import UserInfo from '../../../Utils/UserInfo';
 
 const CrewBottomSheet = (props) => {
   const snapPoints = useMemo(() => ['30%', '80%'], []);
@@ -31,7 +32,8 @@ const CrewBottomSheet = (props) => {
               }
             }}
           >
-            <View
+            <UserInfo user={user} />
+            {/* <View
               style={{
                 backgroundColor: iconColorsTable['blue1'],
                 marginRight: 20,
@@ -47,7 +49,7 @@ const CrewBottomSheet = (props) => {
             <View>
               <Text style={{ color: baseTextColor }}>{user.name}</Text>
               <Text style={{ color: baseTextColor }}>Badges in here</Text>
-            </View>
+            </View> */}
           </TouchableOpacity>
         );
       });
@@ -55,11 +57,7 @@ const CrewBottomSheet = (props) => {
       return (
         <View>
           <Text style={{ color: baseTextColor, marginBottom: 10 }}>These people are joining this meetup.</Text>
-          <ScrollView
-            contentContainerStyle={{ paddingBottom: 50, backgroundColor: sectionBackgroundColor, borderRadius: 10 }}
-          >
-            {crewList}
-          </ScrollView>
+          <View style={{ backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>{crewList}</View>
         </View>
       );
     } else {

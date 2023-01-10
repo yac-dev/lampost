@@ -12,6 +12,7 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { Octicons } from '@expo/vector-icons';
 // import Menu from './Menu';
 import Menu from '../../../Map/SelectedMeetup/Menu';
 
@@ -38,18 +39,20 @@ const Container = (props) => {
           icon={<MaterialCommunityIcons name='rocket-launch' size={25} color={iconColorsTable['red1']} />}
           rightInfo={
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              {selectedLibrary.launcher.photo ? (
-                <Image
-                  source={{ uri: selectedLibrary.launcher.photo }}
-                  style={{ width: 35, height: 35, borderRadius: 7, marginRight: 10 }}
-                />
-              ) : (
-                <View
-                  style={{ backgroundColor: 'red', width: 35, height: 35, borderRadius: 7, marginRight: 10 }}
-                ></View>
-              )}
-              {/* <View style={{ backgroundColor: 'red', width: 35, height: 35, borderRadius: 7, marginRight: 5 }}></View> */}
-              <Text style={{ color: baseTextColor }}>{`${selectedLibrary.launcher.name} >`}</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {selectedLibrary.launcher.photo ? (
+                  <Image
+                    source={{ uri: selectedLibrary.launcher.photo }}
+                    style={{ width: 35, height: 35, borderRadius: 7, marginRight: 10 }}
+                  />
+                ) : (
+                  <View
+                    style={{ backgroundColor: 'red', width: 35, height: 35, borderRadius: 7, marginRight: 10 }}
+                  ></View>
+                )}
+                <Text style={{ color: baseTextColor }}>{selectedLibrary.launcher.name}</Text>
+              </View>
+              <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
             </View>
           }
         />
@@ -61,7 +64,14 @@ const Container = (props) => {
           }}
           backgroundColor={backgroundColorsTable['green1']}
           icon={<MaterialCommunityIcons name='card-text-outline' size={25} color={iconColorsTable['green1']} />}
-          rightInfo={<Text style={{ color: baseTextColor }}>{`>`}</Text>}
+          rightInfo={
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text numberOfLines={1} style={{ color: baseTextColor, width: 150, marginRight: 5 }}>
+                {selectedLibrary.description}
+              </Text>
+              <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
+            </View>
+          }
         />
         <Menu
           label='Members'
@@ -71,9 +81,14 @@ const Container = (props) => {
           }}
           backgroundColor={backgroundColorsTable['violet1']}
           icon={<FontAwesome5 name='user-astronaut' size={25} color={iconColorsTable['violet1']} />}
-          rightInfo={<Text style={{ color: baseTextColor }}>{`${selectedLibrary.totalMembers} >`}</Text>}
+          rightInfo={
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={{ color: baseTextColor, marginRight: 5 }}>{selectedLibrary.totalMembers}</Text>
+              <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
+            </View>
+          }
         />
-        <Menu
+        {/* <Menu
           label='Reactions'
           onPressMenu={() => {
             setSelectedLibraryDetailComponent('Reactions');
@@ -82,7 +97,7 @@ const Container = (props) => {
           backgroundColor={backgroundColorsTable['yellow1']}
           icon={<MaterialIcons name='star-rate' size={25} color={iconColorsTable['yellow1']} />}
           rightInfo={<Text style={{ color: baseTextColor }}>{`${selectedLibrary.rate} >`}</Text>}
-        />
+        /> */}
       </View>
     </View>
   );

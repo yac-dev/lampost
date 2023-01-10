@@ -62,6 +62,7 @@ export const getUsersByLibraryId = async (request, response) => {
       library: request.params.libraryId,
     }).populate({
       path: 'user',
+      populate: { path: 'topBadges' },
     });
     const users = libraryAndUserRelationships.map((relationship) => {
       return relationship.user;

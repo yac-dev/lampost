@@ -40,26 +40,6 @@ const Crew = (props) => {
             }}
           >
             <UserInfo user={user} />
-            {/* {user.photo ? (
-              <Image source={{ uri: user.photo }} style={{ width: 50, height: 50 }} />
-            ) : (
-              <View
-                style={{
-                  width: 50,
-                  height: 50,
-                  borderRadius: 10,
-                  marginRight: 20,
-                  backgroundColor: iconColorsTable['blue1'],
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <FontAwesome5 name='user-astronaut' size={25} color='white' />
-              </View>
-            )}
-            <View>
-              <Text style={{ color: baseTextColor }}>{user.name}</Text>
-            </View> */}
           </TouchableOpacity>
         );
       });
