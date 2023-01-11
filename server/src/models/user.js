@@ -18,6 +18,9 @@ const userSchema = new mongoose.Schema({
   photo: {
     type: String,
   },
+  pushToken: {
+    type: String,
+  },
   isInMeetup: {
     state: { type: Boolean, default: false },
     meetup: { type: mongoose.Schema.ObjectId, ref: 'Meetup' },

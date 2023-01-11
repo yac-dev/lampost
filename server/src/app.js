@@ -3,6 +3,7 @@ import cors from 'cors';
 import './databases/mongoose';
 
 // routers
+import labRouter from './routers/labs';
 import authRouter from './routers/auth';
 import usersRouter from './routers/users';
 import meetupsRouter from './routers/meetups';
@@ -55,5 +56,6 @@ app.use('/api/loungechatandchatroomrelationships', loungeChatAndChatRoomRelation
 app.use('/api/assetpostandreactionanduserrelationships', assetPostAndReactionAndUserRelationshipsRouter);
 app.use('/api/loungechats', loungeChatsRouter);
 app.use('/api/launcherandpatronrelationships', launcherAndPatronRelationshisRouter);
+app.use('/api/lab', labRouter);
 
 export default app;

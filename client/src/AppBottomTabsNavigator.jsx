@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { View, Text, Platform } from 'react-native';
 import lampostAPI from './apis/lampost';
 import GlobalContext from './GlobalContext';
 import { connect } from 'react-redux';
@@ -28,6 +29,54 @@ const Tab = createBottomTabNavigator();
 import { loadMe } from './redux/actionCreators/auth';
 import { getSocket } from './redux/actionCreators/auth';
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({ shouldShowAlert: true, shouldPlaySound: false, shouldSetBadge: false }),
+});
+
+const schedulePushNotification = async () => {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "You've got mail! 📬",
+      body: 'Here is the notification body',
+      data: { message: 'goes here' },
+    },
+    trigger: { seconds: 10 },
+  });
+};
+
+const registerForPushNotificationsAsync = async () => {
+  let token;
+
+  // 今は、androidやらない。
+  // if (Platform.OS === 'android') {
+  //   await Notifications.setNotificationChannelAsync('default', {
+  //     name: 'default',
+  //     importance: Notifications.AndroidImportance.MAX,
+  //     vibrationPattern: [0, 250, 250, 250],
+  //     lightColor: '#FF231F7C',
+  //   });
+  // }
+
+  if (Device.isDevice) {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync({ experienceId: '@yosuke_kojima/client' })).data;
+    console.log(token);
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
+
+  return token;
+};
+
 const AppStack = (props) => {
   const [auth, setAuth] = useState({
     data: null,
@@ -38,6 +87,10 @@ const AppStack = (props) => {
   });
   const [loading, setLoading] = useState(false);
   const [snackBar, setSnackBar] = useState({ isVisible: false, message: '', barType: '', duration: null });
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
   const [routeName, setRouteName] = useState();
   const [totalUnreadChatsCount, setTotalUnreadChatsCount] = useState(0);
   const [myUpcomingMeetupAndChatsTable, setMyUpcomingMeetupAndChatsTable] = useState({});
@@ -51,6 +104,25 @@ const AppStack = (props) => {
   //]
 
   // console.log(myUpcomingMeetupAndChatsTable);
+
+  useEffect(() => {
+    // 多分、ここでdeviceのtokenを取得して、stateに保存してくれるんだろう。
+    registerForPushNotificationsAsync().then((token) => setExpoPushToken(token));
+
+    notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+      setNotification(notification);
+      console.log(notification);
+    });
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+      console.log(response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
   const getJWTToken = async () => {
     const jwtToken = await SecureStore.getItemAsync('secure_token');
@@ -149,6 +221,11 @@ const AppStack = (props) => {
         setMyUpcomingMeetupAndChatsTable,
         totalUnreadChatsCount,
         setTotalUnreadChatsCount,
+        schedulePushNotification,
+        expoPushToken,
+        setExpoPushToken,
+        notification,
+        setNotification,
       }}
     >
       <NavigationContainer

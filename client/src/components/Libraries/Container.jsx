@@ -23,7 +23,15 @@ import InfoDetailBottomSheet from './InfoDetailBottomSheet/Container';
 
 // authenticatedの場合が必要か。
 const Container = (props) => {
-  const { auth, setSnackBar } = useContext(GlobalContext);
+  const {
+    auth,
+    setSnackBar,
+    schedulePushNotification,
+    expoPushToken,
+    setExpoPushToken,
+    notification,
+    setNotification,
+  } = useContext(GlobalContext);
   const rollsBottomSheetRef = useRef(null);
   const [selected, setSelected] = useState(null);
   const [libraries, setLibraries] = useState([]);
@@ -41,6 +49,17 @@ const Container = (props) => {
   const oneGridHeight = Dimensions.get('window').height / 3;
   const libraryContainerWidth = oneGridWidth * 0.85;
   const libraryIconWidth = libraryContainerWidth * 0.4;
+
+  const experimentSendPushNotification = async () => {
+    const pushNotificationObject = {
+      to: 'ExponentPushToken[rl0CZGA2qvVsWqorA1rqGG]',
+      title: 'Sent by my lampost backend server',
+      body: 'This push notification was sent by a Lampost.',
+      data: { message: 'Did you get this?' },
+    };
+
+    const result = await lampostAPI.post('/lab', { pushToken: 'ExponentPushToken[rl0CZGA2qvVsWqorA1rqGG]' });
+  };
 
   const getLibraries = async () => {
     const result = await lampostAPI.get('/libraries');
@@ -278,6 +297,17 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+        <Text style={{ color: 'red' }}>Your expo push token: {expoPushToken}</Text>
+        {/* <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{ color: 'red' }}>Title: {notification && notification.request.content.title} </Text>
+          <Text style={{ color: 'red' }}>Body: {notification && notification.request.content.body}</Text>
+          <Text style={{ color: 'red' }}>
+            Data: {notification && JSON.stringify(notification.request.content.data)}
+          </Text>
+        </View> */}
+        <TouchableOpacity onPress={async () => experimentSendPushNotification()}>
+          <Text style={{ color: 'yellow' }}>Press here</Text>
+        </TouchableOpacity>
         <Text style={{ fontSize: 23, fontWeight: 'bold', padding: 10, color: 'white', marginBottom: 10 }}>
           Recently launched
         </Text>
