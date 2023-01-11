@@ -54,6 +54,22 @@ const Container = (props) => {
   }, []);
 
   useEffect(() => {
+    return () => {
+      console.log('cleaing up');
+      // ここでapi requestをする。viewd chats last timeの。ok.
+      setMyUpcomingMeetupAndChatsTable((previous) => {
+        return {
+          ...previous,
+          [props.route.params.meetupId]: {
+            ...previous[props.route.params.meetupId],
+            viewedChatsLastTime: new Date(),
+          },
+        };
+      });
+    };
+  }, []);
+
+  useEffect(() => {
     const minus = myUpcomingMeetupAndChatsTable[props.route.params.meetupId].unreadChatsCount;
     setMyUpcomingMeetupAndChatsTable((previous) => {
       const updating = { ...previous };

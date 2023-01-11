@@ -4,6 +4,7 @@ import UserContext from './UserContext';
 import { View, Text, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import {
   baseTextColor,
   rnDefaultBackgroundColor,
@@ -95,8 +96,26 @@ const Header = (props) => {
         </View>
       )} */}
       <View style={{ flexDirection: 'column' }}>
-        <Text style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}>{user.name}</Text>
-        <Stats />
+        <Text style={{ color: 'white', fontSize: 24, fontWeight: 'bold', marginBottom: 10 }}>{user.name}</Text>
+        {/* <Stats /> */}
+        {user.leadership.total ? (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <MaterialCommunityIcons name='fire' color={baseTextColor} size={30} style={{ marginRight: 5 }} />
+              <View style={{ flexDirection: 'column', marginRight: 20, alignItems: 'center' }}>
+                <Text style={{ color: baseTextColor }}>Leadership</Text>
+                <Text style={{ color: baseTextColor }}>256</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <MaterialIcons name='groups' size={30} color={baseTextColor} style={{ marginRight: 5 }} />
+              <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+                <Text style={{ color: baseTextColor }}>Patrons</Text>
+                <Text style={{ color: baseTextColor }}>453</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        ) : null}
       </View>
     </View>
   );

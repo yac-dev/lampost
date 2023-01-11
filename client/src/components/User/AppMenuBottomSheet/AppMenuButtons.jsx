@@ -46,7 +46,7 @@ const AppButtons = (props) => {
             navigation.navigate('Add badges', { fromComponent: 'ADD_USER_BADGES' });
           }}
         />
-        {user.statsOverview.totalLaunched ? (
+        {user.leadership.total ? (
           <AppMenuButton
             backgroundColor={backgroundColorsTable['yellow1']}
             icon={<Foundation name='dollar' size={35} color={iconColorsTable['yellow1']} />}

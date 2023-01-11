@@ -131,7 +131,7 @@ const Chats = (props) => {
   } else {
     return (
       <View>
-        <ScrollView contentContainerStyle={{ paddingBottom: 50 }}>{renderChats()}</ScrollView>
+        <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderChats()}</ScrollView>
       </View>
     );
   }

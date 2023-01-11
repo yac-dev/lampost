@@ -12,7 +12,8 @@ import { backgroundColorsTable, baseTextColor, iconColorsTable } from '../../../
 import ActionButton from '../../Utils/ActionButton';
 
 const ActionButtons = (props) => {
-  const { auth, setAuth, setLoading, setSnackBar, myUpcomingMeetups, setMyUpcomingMeetups } = useContext(GlobalContext);
+  const { auth, setAuth, setLoading, setSnackBar, myUpcomingMeetupAndChatsTable, setMyUpcomingMeetupAndChatsTable } =
+    useContext(GlobalContext);
   const { selectedMeetup, setSelectedMeetup, navigation } = useContext(MapContext);
 
   const joinMeetup = async () => {
@@ -28,6 +29,19 @@ const ActionButtons = (props) => {
         },
       };
     });
+    setMyUpcomingMeetupAndChatsTable((previous) => {
+      return {
+        ...previous,
+        [selectedMeetup._id]: {
+          _id: selectedMeetup._id,
+          startDateAndTime: selectedMeetup.startDateAndTime,
+          title: selectedMeetup.title,
+          unreadChatsCount: 0,
+          viewedChatsLastTime: new Date(),
+        },
+      };
+    });
+    auth.socket.emit('JOIN_A_LOUNGE', { meetupId: selectedMeetup._id });
     setSelectedMeetup((previous) => {
       return {
         ...previous,
@@ -60,6 +74,13 @@ const ActionButtons = (props) => {
         },
       };
     });
+    setMyUpcomingMeetupAndChatsTable((previous) => {
+      const updating = { ...previous };
+      delete updating[selectedMeetup._id];
+      return updating;
+    });
+    // socketのgroupから抜ける。
+    auth.socket.emit('LEAVE_A_LOUNGE', { meetupId: selectedMeetup._id });
     setSelectedMeetup((previous) => {
       return {
         ...previous,
@@ -86,7 +107,6 @@ const ActionButtons = (props) => {
       };
     });
   };
-
   // joinしたらmeetupのid使ってroomに入るようにするんだが、、、reloadしたらsocket切れるよな。切れたら、upcomingのmeetupid使って再度roomに入るようにする感じか。
   const renderApp = () => {
     // authがあればaction buttonsをrenderして、ない場合はlogin or signupを促すようにする。
@@ -133,20 +153,8 @@ const ActionButtons = (props) => {
                 label='Go to lounge'
                 icon={<Ionicons name='ios-chatbubbles' size={25} color={'white'} />}
                 backgroundColor={iconColorsTable['blue1']}
-                onActionButtonPress={() => navigation.navigate('Lounge', { meetup: selectedMeetup })}
+                onActionButtonPress={() => navigation.navigate('Lounge', { meetupId: selectedMeetup._id })}
               />
-              {/* <ActionButton
-                label='Launch camera'
-                icon={<MaterialCommunityIcons name='camera' size={25} color={'white'} />}
-                backgroundColor={iconColorsTable['blue1']}
-                onActionButtonPress={() => console.log('pressing')}
-              /> */}
-              {/* <ActionButton
-                label='Invite people'
-                icon={<MaterialCommunityIcons name='plus' size={25} color={'white'} />}
-                backgroundColor={iconColorsTable['blue1']}
-                onActionButtonPress={() => console.log('pressing')}
-              /> */}
             </View>
           );
         }

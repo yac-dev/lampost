@@ -92,7 +92,7 @@ const Container = (props) => {
     } else {
       return (
         <View>
-          <Text style={{ color: baseTextColor }}>No badges add yet...</Text>
+          <Text style={{ color: baseTextColor, textAlign: 'center' }}>You'll see all the badges you have.</Text>
         </View>
       );
     }
@@ -129,6 +129,7 @@ const Container = (props) => {
       >
         <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
           <Header />
+
           <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
           <AppMenuBottomSheet />
           <BadgeDetailBottomSheet />

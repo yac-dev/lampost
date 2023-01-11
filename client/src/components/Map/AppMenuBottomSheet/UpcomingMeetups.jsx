@@ -15,7 +15,8 @@ import { Feather } from '@expo/vector-icons';
 
 const Container = (props) => {
   const { auth, myUpcomingMeetupAndChatsTable, totalUnreadChatsCount } = useContext(GlobalContext);
-  const { appMenuBottomSheetRef, setSelectedMeetup, selectedMeetupBottomSheetRef, navigation } = useContext(MapContext);
+  const { appMenuBottomSheetRef, selectedMeetup, setSelectedMeetup, selectedMeetupBottomSheetRef, navigation } =
+    useContext(MapContext);
 
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
@@ -109,46 +110,40 @@ const Container = (props) => {
   };
 
   const renderMyUpcomingMeetups = () => {
-    const myUpcomingMeetupslist = Object.values(myUpcomingMeetupAndChatsTable).map((meetupAndChatsTable, index) => {
-      return (
-        <TouchableOpacity
-          key={index}
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: 10,
-          }}
-          onPress={() => getMeetup(meetupAndChatsTable._id)}
-        >
-          <View style={{ flexDirection: 'row', alignItems: 'center', flexShrink: 1 }}>
-            {renderDate(meetupAndChatsTable.startDateAndTime)}
-            <View style={{ flexDirection: 'column', marginRight: 5, flexShrink: 1 }}>
-              <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white', marginBottom: 5 }}>
-                {meetupAndChatsTable.title}
-              </Text>
-              {renderTime(meetupAndChatsTable.startDateAndTime)}
+    const myUpcomingMeetupsArr = Object.values(myUpcomingMeetupAndChatsTable);
+    if (myUpcomingMeetupsArr.length) {
+      const myUpcomingMeetupslist = myUpcomingMeetupsArr.map((meetupAndChatsTable, index) => {
+        return (
+          <TouchableOpacity
+            key={index}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: 10,
+            }}
+            onPress={() => getMeetup(meetupAndChatsTable._id)}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center', flexShrink: 1 }}>
+              {renderDate(meetupAndChatsTable.startDateAndTime)}
+              <View style={{ flexDirection: 'column', marginRight: 5, flexShrink: 1 }}>
+                <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white', marginBottom: 5 }}>
+                  {meetupAndChatsTable.title}
+                </Text>
+                {renderTime(meetupAndChatsTable.startDateAndTime)}
+              </View>
             </View>
-          </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {/* <View style={{ marginRight: 5 }}>
-              <TouchableOpacity
-                style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}
-                onPress={() => {
-                  appMenuBottomSheetRef.current.snapToIndex(0);
-                }}
-              >
-                <Feather name='power' size={25} color={'white'} />
-              </TouchableOpacity>
-            </View> */}
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              {renderUnreadChatsCount(meetupAndChatsTable)}
+            </View>
+          </TouchableOpacity>
+        );
+      });
 
-            {renderUnreadChatsCount(meetupAndChatsTable)}
-          </View>
-        </TouchableOpacity>
-      );
-    });
-
-    return <View style={{ backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>{myUpcomingMeetupslist}</View>;
+      return <View style={{ backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>{myUpcomingMeetupslist}</View>;
+    } else {
+      return <Text style={{ color: baseTextColor }}>You'll see all the meetups that you've joined.</Text>;
+    }
   };
 
   const getMeetup = async (meetupId) => {
@@ -161,7 +156,7 @@ const Container = (props) => {
 
   return (
     <View>
-      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 20 }}>My upcomingg meetups</Text>
+      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 20 }}>My upcoming meetups</Text>
       {renderMyUpcomingMeetups()}
     </View>
   );

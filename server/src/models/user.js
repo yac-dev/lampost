@@ -42,27 +42,16 @@ const userSchema = new mongoose.Schema({
       viewedChatsLastTime: Date,
     },
   ],
-  statsOverview: {
-    totalLaunched: {
-      type: Number,
-      default: 0,
-    },
-    totalPatrons: {
-      type: Number,
-      default: 0,
-    },
-    totalAssets: {
-      type: Number,
-      default: 0,
-    },
-    totalFriends: {
-      type: Number,
-      default: 0,
-    },
-    totalLogs: {
-      type: Number,
-      default: 0,
-    },
+  leadership: {
+    total: Number,
+    teamManagement: Number,
+    communication: Number,
+    creativity: Number,
+    courage: Number,
+    integrity: Number,
+  },
+  patrons: {
+    type: Number,
   },
   createdAt: {
     type: Date,

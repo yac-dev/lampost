@@ -104,14 +104,14 @@ const AppStack = (props) => {
   //]
 
   // console.log(myUpcomingMeetupAndChatsTable);
-
+  console.log(myUpcomingMeetupAndChatsTable);
   useEffect(() => {
     // 多分、ここでdeviceのtokenを取得して、stateに保存してくれるんだろう。
     registerForPushNotificationsAsync().then((token) => setExpoPushToken(token));
 
     notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
       setNotification(notification);
-      console.log(notification);
+      // console.log(notification);
     });
 
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
