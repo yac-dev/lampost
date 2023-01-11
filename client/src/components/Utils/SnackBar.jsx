@@ -2,10 +2,10 @@
 import React, { useContext, useEffect } from 'react';
 import GlobalContext from '../../GlobalContext';
 import { connect } from 'react-redux';
-import { View, Text } from 'react-native';
+import { Text } from 'react-native';
 import { Snackbar } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { iconColorsTable } from '../../utils/colorsTable';
+import { baseTextColor, iconColorsTable } from '../../utils/colorsTable';
 // ac
 import { removeSnackBar } from '../../redux/actionCreators/snackBar';
 
@@ -32,7 +32,7 @@ const SnackBar = (props) => {
           onPress: () => setSnackBar({ isVisible: false, message: '', barType: '', duration: null }),
         }}
       >
-        {snackBar.message}
+        <Text style={{ color: baseTextColor }}>{snackBar.message}</Text>
       </Snackbar>
     );
   } else {

@@ -1,18 +1,16 @@
-// main libraries
 import React, { useEffect, useState, useRef } from 'react';
 import lampostAPI from './apis/lampost';
 import GlobalContext from './GlobalContext';
 import { connect } from 'react-redux';
 import { io } from 'socket.io-client';
-import { StyleSheet, Text, View, StatusBar, SafeAreaView, Image } from 'react-native';
-import { Button } from 'react-native-paper';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
 import { createNavigationContainerRef } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { appBottomSheetBackgroundColor, iconColorsTable } from './utils/colorsTable';

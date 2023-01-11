@@ -4,7 +4,6 @@ import LibraryAndUserRelationship from '../models/libraryAndUserRelationship';
 // import Roll from '../models/roll';
 import Asset from '../models/asset';
 import User from '../models/user';
-import Roll from '../models/roll';
 
 const colors = ['red1', 'blue1', 'yellow1', 'violet1', 'green1', 'lightBlue1'];
 

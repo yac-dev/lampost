@@ -1,7 +1,6 @@
 import Badge from '../models/badge';
 import BadgeAndUserRelationship from '../models/badgeAndUserRelationship';
 import User from '../models/user';
-import Roll from '../models/roll';
 import Asset from '../models/asset';
 
 export const getBadges = async (request, response) => {
