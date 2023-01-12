@@ -69,7 +69,7 @@ const registerForPushNotificationsAsync = async () => {
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync({ experienceId: '@yosuke_kojima/client' })).data;
-    console.log(token);
+    // console.log(token);
   } else {
     alert('Must use physical device for Push Notifications');
   }
@@ -91,7 +91,7 @@ const AppStack = (props) => {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
-  const [routeName, setRouteName] = useState();
+  const [routeName, setRouteName] = useState('');
   const [totalUnreadChatsCount, setTotalUnreadChatsCount] = useState(0);
   const [myUpcomingMeetupAndChatsTable, setMyUpcomingMeetupAndChatsTable] = useState({});
   const hide = routeName === 'Meetup' || routeName === 'Dummy2' || routeName === 'Q&A';
@@ -102,8 +102,6 @@ const AppStack = (props) => {
   // [{ _id: 111, title: 'Meetup1' , chats: [{content: '', createdAt: '2022/9/1'}], viewedChats: '2022/9/22' },
   //    { _id: 222, title: 'Meetup2' , chats: [{content: '', createdAt: '2022/8/1'}], viewedChats: '2022/7/22' }
   //]
-
-  // console.log(myUpcomingMeetupAndChatsTable);
   console.log(myUpcomingMeetupAndChatsTable);
   useEffect(() => {
     // 多分、ここでdeviceのtokenを取得して、stateに保存してくれるんだろう。
@@ -162,7 +160,7 @@ const AppStack = (props) => {
     }
   }, [auth.isAuthenticated]);
 
-  const getMyUpcomingMeetupsByMeetupIds = async () => {
+  const getMyUpcomingMeetupsAndLoungeChatsByMeetupIds = async () => {
     const result = await lampostAPI.post(`/loungechats`, { myUpcomingMeetups: auth.data.upcomingMeetups });
     const { myUpcomingMeetupAndChatsTable } = result.data;
     setMyUpcomingMeetupAndChatsTable(myUpcomingMeetupAndChatsTable);
@@ -172,7 +170,7 @@ const AppStack = (props) => {
   };
   useEffect(() => {
     if (auth.isAuthenticated) {
-      getMyUpcomingMeetupsByMeetupIds();
+      getMyUpcomingMeetupsAndLoungeChatsByMeetupIds();
     }
   }, [auth.isAuthenticated]);
 
@@ -189,14 +187,21 @@ const AppStack = (props) => {
 
   useEffect(() => {
     if (auth.socket) {
+      // 待機開始。
       auth.socket.on('SOMEONE_SENT_A_CHAT', (data) => {
         // lounge以外のscreenにいる時でこのsocket eventを受けたら、chatのstateを変える。
-        if (routeName !== 'Lounge') {
-          setMyUpcomingMeetupAndChatsTable((previous) => {
-            const updating = { ...previous };
+        // if (routeName !== 'Lounge') {
+        // }
+        console.log(routeName);
+        setMyUpcomingMeetupAndChatsTable((previous) => {
+          const updating = { ...previous };
+          if (routeName !== 'Lounge') {
             updating[data.meetup].unreadChatsCount = updating[data.meetup].unreadChatsCount + 1;
-            return updating;
-          });
+          }
+          updating[data.meetup].chats.push(data);
+          return updating;
+        });
+        if (routeName !== 'Lounge') {
           setTotalUnreadChatsCount((previous) => previous + 1);
         }
       });
@@ -205,7 +210,7 @@ const AppStack = (props) => {
         auth.socket.off('SOMEONE_SENT_A_CHAT');
       };
     }
-  }, [auth.socket]);
+  }, [auth.socket, routeName]);
 
   return (
     <GlobalContext.Provider
@@ -217,6 +222,7 @@ const AppStack = (props) => {
         snackBar,
         setSnackBar,
         routeName,
+        setRouteName,
         myUpcomingMeetupAndChatsTable,
         setMyUpcomingMeetupAndChatsTable,
         totalUnreadChatsCount,

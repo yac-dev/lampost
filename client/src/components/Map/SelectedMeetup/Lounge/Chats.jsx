@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import GlobalContext from '../../../../GlobalContext';
 import LoungeContext from './LoungeContext';
 import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
@@ -18,7 +18,7 @@ const chatTypeTable = {
 };
 
 const Chats = (props) => {
-  const { myUpcomingMeetups } = useContext(GlobalContext);
+  const scrollViewRef = useRef();
   const { chats, meetup } = useContext(LoungeContext);
 
   const renderDate = (date) => {
@@ -49,92 +49,104 @@ const Chats = (props) => {
   };
 
   const renderChats = () => {
-    const chatsList = chats.map((chat, index) => {
-      // launcherのchatだけは、背景を少し変える。
-      return (
-        <View key={index} style={{ padding: 10 }}>
-          <View style={{ flexDirection: 'row' }}>
-            {chat.user.photo ? (
-              <View style={{ width: 40, height: 40, borderRadius: 10, marginRight: 20 }}>
-                <Image source={{ uri: chat.user.photo }} style={{ width: '100%', height: '100%', borderRadius: 10 }} />
+    // const chats = myUpcomingMeetupAndChatsTable[meetup._id];
+    if (chats.length) {
+      const chatsList = chats.map((chat, index) => {
+        // launcherのchatだけは、背景を少し変える。
+        return (
+          <View key={index} style={{ padding: 10 }}>
+            <View style={{ flexDirection: 'row' }}>
+              {chat.user.photo ? (
+                <View style={{ width: 40, height: 40, borderRadius: 10, marginRight: 20 }}>
+                  <Image
+                    source={{ uri: chat.user.photo }}
+                    style={{ width: '100%', height: '100%', borderRadius: 10 }}
+                  />
+                  <View
+                    style={{
+                      backgroundColor: chatTypeTable[chat.type],
+                      padding: 2,
+                      borderRadius: 7,
+                      width: 20,
+                      height: 20,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      position: 'absolute',
+                      bottom: -10,
+                      right: -10,
+                    }}
+                  >
+                    {renderChatType(chat.type)}
+                  </View>
+                </View>
+              ) : (
                 <View
                   style={{
-                    backgroundColor: chatTypeTable[chat.type],
-                    padding: 2,
-                    borderRadius: 7,
-                    width: 20,
-                    height: 20,
+                    width: 40,
+                    height: 40,
+                    borderRadius: 10,
+                    marginRight: 20,
+                    backgroundColor: iconColorsTable['blue1'],
                     alignItems: 'center',
                     justifyContent: 'center',
-                    position: 'absolute',
-                    bottom: -10,
-                    right: -10,
                   }}
                 >
-                  {renderChatType(chat.type)}
+                  <FontAwesome5 name='user-astronaut' size={20} color='white' />
+                  <View
+                    style={{
+                      backgroundColor: chatTypeTable[chat.type],
+                      padding: 2,
+                      borderRadius: 7,
+                      width: 20,
+                      height: 20,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      position: 'absolute',
+                      bottom: -10,
+                      right: -10,
+                    }}
+                  >
+                    {renderChatType(chat.type)}
+                  </View>
                 </View>
-              </View>
-            ) : (
-              <View
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 10,
-                  marginRight: 20,
-                  backgroundColor: iconColorsTable['blue1'],
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <FontAwesome5 name='user-astronaut' size={20} color='white' />
-                <View
-                  style={{
-                    backgroundColor: chatTypeTable[chat.type],
-                    padding: 2,
-                    borderRadius: 7,
-                    width: 20,
-                    height: 20,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    position: 'absolute',
-                    bottom: -10,
-                    right: -10,
-                  }}
-                >
-                  {renderChatType(chat.type)}
+              )}
+              <View style={{ flexDirection: 'column', flexShrink: 1 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, flexShrink: 1 }}>
+                  <Text style={{ color: baseTextColor, marginRight: 10, fontSize: 15, fontWeight: 'bold' }}>
+                    {chat.user.name}
+                  </Text>
+                  {renderDate(chat.createdAt)}
                 </View>
+                <Text style={{ fontSize: 15, marginBottom: 10, color: baseTextColor }}>{chat.content}</Text>
               </View>
-            )}
-            <View style={{ flexDirection: 'column', flexShrink: 1 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, flexShrink: 1 }}>
-                <Text style={{ color: baseTextColor, marginRight: 10, fontSize: 15, fontWeight: 'bold' }}>
-                  {chat.user.name}
-                </Text>
-                {renderDate(chat.createdAt)}
-              </View>
-              <Text style={{ fontSize: 15, marginBottom: 10, color: baseTextColor }}>{chat.content}</Text>
             </View>
           </View>
+        );
+      });
+
+      return <View style={{ padding: 10 }}>{chatsList}</View>;
+    } else {
+      return (
+        <View>
+          <Text style={{ color: baseTextColor, textAlign: 'center', marginTop: 50 }}>
+            You'll see all the chats of this meetup group.
+          </Text>
         </View>
       );
-    });
-
-    return <View style={{ padding: 10 }}>{chatsList}</View>;
+    }
   };
 
-  if (!chats.length) {
-    return (
-      <View>
-        <Text style={{ color: baseTextColor }}>No chats yet.</Text>
-      </View>
-    );
-  } else {
-    return (
-      <View>
-        <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderChats()}</ScrollView>
-      </View>
-    );
-  }
+  return (
+    <View>
+      <ScrollView
+        ref={scrollViewRef}
+        onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
+        contentContainerStyle={{ paddingBottom: 100 }}
+      >
+        {renderChats()}
+      </ScrollView>
+    </View>
+  );
 };
 
 export default Chats;

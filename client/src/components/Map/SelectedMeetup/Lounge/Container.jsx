@@ -19,37 +19,50 @@ import { setIsTextBoxBottomSheetOpen } from '../../../../redux/actionCreators/bo
 import { setIsCrewBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
 
 const Container = (props) => {
-  const { auth, myUpcomingMeetupAndChatsTable, setMyUpcomingMeetupAndChatsTable, setTotalUnreadChatsCount } =
-    useContext(GlobalContext);
+  const {
+    auth,
+    myUpcomingMeetupAndChatsTable,
+    setMyUpcomingMeetupAndChatsTable,
+    setTotalUnreadChatsCount,
+    routeName,
+    setRouteName,
+  } = useContext(GlobalContext);
   const [meetup, setMeetup] = useState(null);
-  const [chats, setChats] = useState([]);
+  const [chats, setChats] = useState(myUpcomingMeetupAndChatsTable[props.route.params.meetupId].chats);
   const appMenuBottomSheetRef = useRef(null);
   const sendChatBottomSheetRef = useRef(null);
   const crewBottomSheetRef = useRef(null);
   const textInputRef = useRef(null);
 
-  const getLoungeChatsByMeetupId = async () => {
-    const result = await lampostAPI.get(`/loungechats/${props.route.params.meetupId}`);
-    const { loungeChats } = result.data;
-    setChats(loungeChats);
-  };
+  // const getLoungeChatsByMeetupId = async () => {
+  //   const result = await lampostAPI.get(`/loungechats/${props.route.params.meetupId}`);
+  //   const { loungeChats } = result.data;
+  //   setChats(loungeChats);
+  // };
   const getSelectedMeetup = async () => {
     const result = await lampostAPI.get(`/meetups/${props.route.params.meetupId}/selected`);
     const { meetup } = result.data;
     setMeetup(meetup);
   };
   useEffect(() => {
-    getLoungeChatsByMeetupId();
+    // getLoungeChatsByMeetupId();
     getSelectedMeetup();
   }, []);
 
-  useEffect(() => {
-    auth.socket.on('SOMEONE_SENT_A_CHAT', (data) => {
-      setChats((previous) => [...previous, data]);
-    });
+  // useEffect(() => {
+  //   auth.socket.on('SOMEONE_SENT_A_CHAT', (data) => {
+  //     setChats((previous) => [...previous, data]);
+  //   });
 
+  //   return () => {
+  //     auth.socket.off('SOMEONE_SENT_A_CHAT');
+  //   };
+  // }, []);
+  console.log('Now in', routeName);
+  useEffect(() => {
+    setRouteName('Lounge');
     return () => {
-      auth.socket.off('SOMEONE_SENT_A_CHAT');
+      setRouteName('');
     };
   }, []);
 

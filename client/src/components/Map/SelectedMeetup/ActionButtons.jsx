@@ -109,46 +109,37 @@ const ActionButtons = (props) => {
   };
   // joinしたらmeetupのid使ってroomに入るようにするんだが、、、reloadしたらsocket切れるよな。切れたら、upcomingのmeetupid使って再度roomに入るようにする感じか。
   const renderApp = () => {
-    // authがあればaction buttonsをrenderして、ない場合はlogin or signupを促すようにする。
+    // まず、authの確認。login状態なら、action buttonsをrenderする。
     if (auth.data) {
-      for (let i = 0; i < auth.data.upcomingMeetups.length; i++) {
-        // everyか？someかな。
-        if (auth.data.upcomingMeetups[i].meetup === selectedMeetup._id) {
+      // selectedMmeetupをlaunchした人が自分だった場合のmenu
+      if (myUpcomingMeetupAndChatsTable[selectedMeetup._id].launcher === auth.data._id) {
+        return (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <ActionButton
+              label='Start meetup now'
+              icon={<Feather name='power' size={20} color={'white'} />}
+              backgroundColor={iconColorsTable['blue1']}
+              onActionButtonPress={() => console.log('start meetup now', selectedMeetup._id)}
+            />
+            <ActionButton
+              label='Go to lounge'
+              icon={<Ionicons name='ios-chatbubbles' size={25} color={'white'} />}
+              backgroundColor={iconColorsTable['blue1']}
+              onActionButtonPress={() => navigation.navigate('Lounge', { meetupId: selectedMeetup._id })}
+            />
+          </View>
+        );
+      } else {
+        // それ以外。
+        if (myUpcomingMeetupAndChatsTable[selectedMeetup._id]) {
           return (
-            <View style={{ flexDirection: 'row', paddingTop: 10, paddingBottom: 10 }}>
-              {selectedMeetup.launcher._id === auth.data._id ? (
-                <>
-                  {selectedMeetup.state === 'upcoming' ? (
-                    <ActionButton // ここ、meetupのstateによってbuttonを切り替える。
-                      label='Start meetup now'
-                      icon={<Feather name='power' size={20} color={'white'} />}
-                      backgroundColor={iconColorsTable['blue1']}
-                      onActionButtonPress={() => console.log('start meetup now', selectedMeetup._id)}
-                    />
-                  ) : (
-                    <ActionButton
-                      label='Finish meetup'
-                      icon={<Feather name='power' size={20} color={'white'} />}
-                      backgroundColor={iconColorsTable['red1']}
-                      onActionButtonPress={() => console.log('finish meetup now')}
-                    />
-                  )}
-
-                  {/* <ActionButton
-                    label='Edit my meetup'
-                    icon={<MaterialCommunityIcons name='file-document-edit-outline' size={20} color={'white'} />}
-                    backgroundColor={iconColorsTable['blue1']}
-                    onActionButtonPress={() => console.log('edit  my meetup')}
-                  /> */}
-                </>
-              ) : (
-                <ActionButton
-                  label='Leave this meetup'
-                  icon={<MaterialCommunityIcons name='exit-run' size={25} color={'white'} />}
-                  backgroundColor={iconColorsTable['red1']}
-                  onActionButtonPress={() => leaveMeetup()}
-                />
-              )}
+            <View style={{ flexDirection: 'row' }}>
+              <ActionButton
+                label='Leave this meetup'
+                icon={<MaterialCommunityIcons name='exit-run' size={25} color={'white'} />}
+                backgroundColor={iconColorsTable['red1']}
+                onActionButtonPress={() => leaveMeetup()}
+              />
               <ActionButton
                 label='Go to lounge'
                 icon={<Ionicons name='ios-chatbubbles' size={25} color={'white'} />}
@@ -157,28 +148,79 @@ const ActionButtons = (props) => {
               />
             </View>
           );
+        } else {
+          return (
+            <ActionButton
+              label='Join this meetup'
+              icon={<MaterialCommunityIcons name='human-greeting-variant' size={25} color={'white'} />}
+              backgroundColor={iconColorsTable['blue1']}
+              onActionButtonPress={() => joinMeetup(selectedMeetup._id)}
+            />
+          );
         }
       }
-      return (
-        <View style={{}}>
-          <ActionButton
-            label='Join this meetup'
-            icon={<MaterialCommunityIcons name='human-greeting-variant' size={25} color={'white'} />}
-            backgroundColor={iconColorsTable['blue1']}
-            onActionButtonPress={() => joinMeetup(selectedMeetup._id)}
-          />
-        </View>
-      );
     } else {
+      // loginしていない場合はlogin or signupをさせるようにする。
       return (
         <ActionButton
           label='Please login or signup from "Profile" to join'
           icon={<Ionicons name='ios-enter' size={25} color={'white'} />}
           backgroundColor={iconColorsTable['blue1']}
-          onActionButtonPress={() => console.log('pressing')}
+          onActionButtonPress={() => null}
         />
       );
     }
+    // for (let i = 0; i < auth.data.upcomingMeetups.length; i++) {
+    //   // everyか？someかな。
+    //   if (auth.data.upcomingMeetups[i].meetup === selectedMeetup._id) {
+    //     return (
+    //       <View style={{ flexDirection: 'row', paddingTop: 10, paddingBottom: 10 }}>
+    //         {selectedMeetup.launcher._id === auth.data._id ? (
+    //           <>
+    //             {selectedMeetup.state === 'upcoming' ? (
+    //               <ActionButton // ここ、meetupのstateによってbuttonを切り替える。
+    //                 label='Start meetup now'
+    //                 icon={<Feather name='power' size={20} color={'white'} />}
+    //                 backgroundColor={iconColorsTable['blue1']}
+    //                 onActionButtonPress={() => console.log('start meetup now', selectedMeetup._id)}
+    //               />
+    //             ) : (
+    //               <ActionButton
+    //                 label='Finish meetup'
+    //                 icon={<Feather name='power' size={20} color={'white'} />}
+    //                 backgroundColor={iconColorsTable['red1']}
+    //                 onActionButtonPress={() => console.log('finish meetup now')}
+    //               />
+    //             )}
+    //           </>
+    //         ) : (
+    //           <ActionButton
+    //             label='Leave this meetup'
+    //             icon={<MaterialCommunityIcons name='exit-run' size={25} color={'white'} />}
+    //             backgroundColor={iconColorsTable['red1']}
+    //             onActionButtonPress={() => leaveMeetup()}
+    //           />
+    //         )}
+    //         <ActionButton
+    //           label='Go to lounge'
+    //           icon={<Ionicons name='ios-chatbubbles' size={25} color={'white'} />}
+    //           backgroundColor={iconColorsTable['blue1']}
+    //           onActionButtonPress={() => navigation.navigate('Lounge', { meetupId: selectedMeetup._id })}
+    //         />
+    //       </View>
+    //     );
+    //   }
+    // }
+    // return (
+    //   <View style={{}}>
+    //     <ActionButton
+    //       label='Join this meetup'
+    //       icon={<MaterialCommunityIcons name='human-greeting-variant' size={25} color={'white'} />}
+    //       backgroundColor={iconColorsTable['blue1']}
+    //       onActionButtonPress={() => joinMeetup(selectedMeetup._id)}
+    //     />
+    //   </View>
+    // );
   };
 
   return (

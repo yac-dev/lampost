@@ -62,10 +62,18 @@ io.on('connection', (socket) => {
   //   io.emit('CREATED_LIBRARY', sendingData);
   // });
 
+  // 最初のloginやらsignup、app reload時に、一気に自分のupcoming meetupのroomにjoinする。
   socket.on('JOIN_LOUNGES', (data) => {
     socket.join(data.meetupIds);
-    // console.log(io.sockets.adapter.rooms); // 全てのrooomをlogする。個別のroomも含めて。
-    // socket.to(data.chatRoom).emit('SOMEONE_JOINED_TO_MY_LOUNGE', { message: 'Someone joined!' });
+    console.log(io.sockets.adapter.rooms);
+  });
+  // meetupにjoinした時に、そのmeetupのloungeに入る。
+  socket.on('JOIN_A_LOUNGE', (data) => {
+    socket.join(data.meetupId);
+  });
+
+  socket.on('LEAVE_A_LOUNGE', (data) => {
+    socket.leave(data.meetupId);
   });
 
   socket.on('I_SEND_A_CHAT', (data) => {

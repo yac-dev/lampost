@@ -5,13 +5,21 @@ export const getMyLoungeChats = async (request, response) => {
   try {
     const myUpcomingMeetupAndChatsTable = {};
     const { myUpcomingMeetups } = request.body;
+    // [ {meetup: 'meetupId', viewedChatsLastTime: 2022/9/3 20:00},
+    //   {meetup: 'meetupid', viewedChatsLastTime: 2022/10/12 03:21} ] //みたいな感じ
     for (let i = 0; i < myUpcomingMeetups.length; i++) {
-      myUpcomingMeetupAndChatsTable[myUpcomingMeetups[i].meetup] = {};
+      myUpcomingMeetupAndChatsTable[myUpcomingMeetups[i].meetup] = {}; // { meetupId: {} }を作る。
       myUpcomingMeetupAndChatsTable[myUpcomingMeetups[i].meetup]._id = myUpcomingMeetups[i].meetup;
+      // { meetupのId: {_id: 'meetupのId'}}
       myUpcomingMeetupAndChatsTable[myUpcomingMeetups[i].meetup].viewedChatsLastTime =
         myUpcomingMeetups[i].viewedChatsLastTime;
+      // { meetupのId: { _id: 'meetupのId', viewedChatsLastTime: '2022/9/1'} }
       myUpcomingMeetupAndChatsTable[myUpcomingMeetups[i].meetup].unreadChatsCount = 0;
+      myUpcomingMeetupAndChatsTable[myUpcomingMeetups[i].meetup].chats = [];
+      // { meetupのId: { _id: 'meetupのId', viewedChatsLastTime: '2022/9/1', unreadChatsCount: 0} }
     }
+    // ここまでで、objectの準備をする。
+
     const upcomingMeetupIds = myUpcomingMeetups.map((meetupObject) => {
       return meetupObject.meetup;
     });
@@ -19,6 +27,7 @@ export const getMyLoungeChats = async (request, response) => {
     const meetups = await Meetup.find({ _id: { $in: upcomingMeetupIds } }).select({
       title: 1,
       startDateAndTime: 1,
+      launcher: 1,
     });
     // [{_id: 111, title: '', startDateAndTime: 2022/9/1}, {_id: 222, title: '', startDateAndTime: 2022/8/1}]
     // {
@@ -28,11 +37,17 @@ export const getMyLoungeChats = async (request, response) => {
     for (let i = 0; i < meetups.length; i++) {
       myUpcomingMeetupAndChatsTable[meetups[i]._id].title = meetups[i].title;
       myUpcomingMeetupAndChatsTable[meetups[i]._id].startDateAndTime = meetups[i].startDateAndTime;
+      myUpcomingMeetupAndChatsTable[meetups[i]._id].launcher = meetups[i].launcher;
       // myUpcomingMeetupAndChatsTable[meetups[i]._id].chats = [];
     }
-    const loungeChats = await LoungeChat.find({ meetup: { $in: upcomingMeetupIds } });
+    // loungechatsのcollectionから、upcomingのmeetupのやつだけまず取ってくる。
+    const loungeChats = await LoungeChat.find({ meetup: { $in: upcomingMeetupIds } }).populate({
+      path: 'user',
+      select: 'name photo',
+    });
     for (let i = 0; i < loungeChats.length; i++) {
-      // myUpcomingMeetupAndChatsTable[loungeChats[i].meetup]['chats'].push(loungeChats[i]);
+      myUpcomingMeetupAndChatsTable[loungeChats[i].meetup]['chats'].push(loungeChats[i]);
+      //そのloungechatsが該当するmeetuptableのlastviewedより、loungechatsのcreatedが新しい場合、unreadをinrementする。
       if (
         new Date(myUpcomingMeetupAndChatsTable[loungeChats[i].meetup].viewedChatsLastTime) <
         new Date(loungeChats[i].createdAt)
