@@ -114,7 +114,7 @@ const Container = (props) => {
     if (myUpcomingMeetupsArr.length) {
       const myUpcomingMeetupslist = myUpcomingMeetupsArr.map((meetupAndChatsTable, index) => {
         return (
-          <TouchableOpacity
+          <View
             key={index}
             style={{
               flexDirection: 'row',
@@ -122,9 +122,11 @@ const Container = (props) => {
               justifyContent: 'space-between',
               padding: 10,
             }}
-            onPress={() => getMeetup(meetupAndChatsTable._id)}
           >
-            <View style={{ flexDirection: 'row', alignItems: 'center', flexShrink: 1 }}>
+            <TouchableOpacity
+              style={{ flexDirection: 'row', alignItems: 'center', flexShrink: 1 }}
+              onPress={() => getMeetup(meetupAndChatsTable._id)}
+            >
               {renderDate(meetupAndChatsTable.startDateAndTime)}
               <View style={{ flexDirection: 'column', marginRight: 5, flexShrink: 1 }}>
                 <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white', marginBottom: 5 }}>
@@ -132,11 +134,11 @@ const Container = (props) => {
                 </Text>
                 {renderTime(meetupAndChatsTable.startDateAndTime)}
               </View>
-            </View>
+            </TouchableOpacity>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               {renderUnreadChatsCount(meetupAndChatsTable)}
             </View>
-          </TouchableOpacity>
+          </View>
         );
       });
 

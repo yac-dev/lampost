@@ -66,16 +66,24 @@ const Container = (props) => {
     };
   }, []);
 
+  const updateviewedChatsLastTime = async (dateTime) => {
+    const result = await lampostAPI.patch(`/users/${auth.data._id}/viewedchatslasttime`, {
+      meetupId: props.route.params.meetupId,
+      dateTime,
+    });
+  };
   useEffect(() => {
     return () => {
+      const dateTime = new Date();
       console.log('cleaing up');
       // ここでapi requestをする。viewd chats last timeの。ok.
+      updateviewedChatsLastTime(dateTime);
       setMyUpcomingMeetupAndChatsTable((previous) => {
         return {
           ...previous,
           [props.route.params.meetupId]: {
             ...previous[props.route.params.meetupId],
-            viewedChatsLastTime: new Date(),
+            viewedChatsLastTime: dateTime,
           },
         };
       });

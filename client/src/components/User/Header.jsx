@@ -10,13 +10,15 @@ import {
   rnDefaultBackgroundColor,
   iconColorsTable,
   backgroundColorsTable,
+  screenSectionBackgroundColor,
 } from '../../utils/colorsTable';
 import Stats from './Stats';
 
 const Header = (props) => {
   const { auth } = useContext(GlobalContext);
   const { user, isMyPage, setIsConfirmEditProfileModalOpen } = useContext(UserContext);
-  const AvatarWidth = Dimensions.get('window').width / 6;
+  const avatarContainer = Dimensions.get('window').width / 3.2;
+  const avatarWidth = avatarContainer * 0.7;
 
   const renderAvatar = () => {
     if (user.photo) {
@@ -28,41 +30,52 @@ const Header = (props) => {
     <View
       style={{
         flexDirection: 'row',
-        // alignItems: 'center',
-        paddingLeft: 20,
-        paddingRight: 20,
+        paddingLeft: 10,
+        paddingRight: 10,
         paddingTop: 20,
-        marginBottom: 20,
-        // alignItems: 'center',
+        marginBottom: 25,
+        // backgroundColor: 'red', // 確認用で使える。
       }}
     >
       <View
         style={{
-          backgroundColor: user.photo ? null : iconColorsTable['blue1'],
-          // padding: 5,
-          borderRadius: 10,
-          width: AvatarWidth,
+          width: avatarContainer,
           aspectRatio: 1,
+          flexDirection: 'column',
+          // backgroundColor: 'green', //確認用で使える
           alignItems: 'center',
-          justifyContent: 'center',
-          marginRight: 30,
+          marginRight: 10,
         }}
       >
-        {user.photo ? (
-          <Image source={{ uri: user.photo }} style={{ width: '100%', height: '100%', borderRadius: 10 }} />
-        ) : (
-          <FontAwesome5 name='user-astronaut' size={30} color='white' />
-        )}
-        {/* <FontAwesome5 name='user-astronaut' size={30} color='white' /> */}
-        {isMyPage ? (
-          <TouchableOpacity
-            style={{ position: 'absolute', bottom: -5, right: -5 }}
-            onPress={() => setIsConfirmEditProfileModalOpen(true)}
-          >
-            <MaterialCommunityIcons name='camera-plus' size={20} color='white' />
-          </TouchableOpacity>
-        ) : null}
+        <View
+          style={{
+            backgroundColor: user.photo ? 'yellow' : iconColorsTable['blue1'],
+            // padding: 5,
+            borderRadius: 10,
+            width: avatarWidth,
+            aspectRatio: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginBottom: 5,
+          }}
+        >
+          {user.photo ? (
+            <Image source={{ uri: user.photo }} style={{ width: '100%', height: '100%', borderRadius: 10 }} />
+          ) : (
+            <FontAwesome5 name='user-astronaut' size={30} color='white' />
+          )}
+          {isMyPage ? (
+            <TouchableOpacity
+              style={{ position: 'absolute', bottom: -5, right: -5 }}
+              onPress={() => setIsConfirmEditProfileModalOpen(true)}
+            >
+              <MaterialCommunityIcons name='camera-plus' size={20} color='white' />
+            </TouchableOpacity>
+          ) : null}
+        </View>
+        <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold' }}>{user.name}</Text>
       </View>
+      <Stats />
       {/* {isMyPage ? (
         <TouchableOpacity
           style={{
@@ -95,9 +108,7 @@ const Header = (props) => {
           <FontAwesome5 name='user-astronaut' size={40} color='white' />
         </View>
       )} */}
-      <View style={{ flexDirection: 'column' }}>
-        <Text style={{ color: 'white', fontSize: 24, fontWeight: 'bold', marginBottom: 10 }}>{user.name}</Text>
-        {/* <Stats /> */}
+      {/* <View style={{ flexDirection: 'column', backgroundColor: screenSectionBackgroundColor }}>
         {user.leadership.total ? (
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -116,7 +127,7 @@ const Header = (props) => {
             </TouchableOpacity>
           </View>
         ) : null}
-      </View>
+      </View> */}
     </View>
   );
 };

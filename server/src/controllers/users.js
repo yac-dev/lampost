@@ -134,3 +134,26 @@ export const editProfilePhoto = async (request, response) => {
     console.log(error);
   }
 };
+
+export const updateViewedChatsLastTime = async (request, response) => {
+  try {
+    console.log(request.body);
+    const user = await User.findById(request.params.id);
+    // const up = user.upcomingMeetups.forEach((meetupObject) => {
+    //   if (meetupObject.meetup === request.body.meetupId) {
+    //     meetupObject.viewedChatsLastTime = request.body.dateTime;
+    //   }
+    // });
+    for (let i = 0; i < user.upcomingMeetups.length; i++) {
+      if (user.upcomingMeetups[i].meetup.toString() === request.body.meetupId) {
+        user.upcomingMeetups[i].viewedChatsLastTime = request.body.dateTime;
+      }
+    }
+    user.save();
+    response.status(200).json({
+      message: 'success',
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
