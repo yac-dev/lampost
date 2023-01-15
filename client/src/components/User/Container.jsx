@@ -128,9 +128,9 @@ const Container = (props) => {
         }}
       >
         <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-          <View style={{ flexDirection: 'row' }}>
-            <Header />
-          </View>
+          {/* <View style={{ flexDirection: 'row' }}> */}
+          <Header />
+          {/* </View> */}
 
           <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
           <AppMenuBottomSheet />

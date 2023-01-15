@@ -24,6 +24,7 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
+  console.log(`Welcome! ${socket.id} is connected now.`, io.sockets.adapter.rooms);
   socket.on('CREATE_MEETUP', async (data) => {
     createMeetup(io, data);
   });
@@ -63,6 +64,10 @@ io.on('connection', (socket) => {
   // });
 
   // 最初のloginやらsignup、app reload時に、一気に自分のupcoming meetupのroomにjoinする。
+  socket.on('SEND_TEST_MESSAGE', (data) => {
+    io.to(data.id).emit('YOUR_TEST_MESSAGE_OK', { message: 'SUCCESS!' });
+  });
+
   socket.on('JOIN_LOUNGES', (data) => {
     socket.join(data.meetupIds);
     console.log(io.sockets.adapter.rooms);
@@ -78,6 +83,10 @@ io.on('connection', (socket) => {
 
   socket.on('I_SEND_A_CHAT', (data) => {
     createLoungeChat(io, data);
+  });
+
+  socket.on('disconnect', () => {
+    console.log(`${socket.id} lefted.`, io.sockets.adapter.rooms);
   });
 });
 

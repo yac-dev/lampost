@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, Text, Platform } from 'react-native';
+import { View, Text, Platform, AppState } from 'react-native';
 import lampostAPI from './apis/lampost';
 import GlobalContext from './GlobalContext';
 import { connect } from 'react-redux';
@@ -85,6 +85,7 @@ const AppStack = (props) => {
     currentLocation: null,
     isInMeetup: false,
   });
+  const [appState, setAppState] = useState(AppState.currentState);
   const [loading, setLoading] = useState(false);
   const [snackBar, setSnackBar] = useState({ isVisible: false, message: '', barType: '', duration: null });
   const [expoPushToken, setExpoPushToken] = useState('');
@@ -102,7 +103,7 @@ const AppStack = (props) => {
   // [{ _id: 111, title: 'Meetup1' , chats: [{content: '', createdAt: '2022/9/1'}], viewedChats: '2022/9/22' },
   //    { _id: 222, title: 'Meetup2' , chats: [{content: '', createdAt: '2022/8/1'}], viewedChats: '2022/7/22' }
   //]
-  console.log(myUpcomingMeetupAndChatsTable);
+  // console.log(myUpcomingMeetupAndChatsTable);
   useEffect(() => {
     // 多分、ここでdeviceのtokenを取得して、stateに保存してくれるんだろう。
     registerForPushNotificationsAsync().then((token) => setExpoPushToken(token));
@@ -121,6 +122,44 @@ const AppStack = (props) => {
       Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
+
+  // const onAppStateChange = (nextAppState) => {
+  //   if (appState.match(/inactive|background/) && nextAppState === 'active') {
+  //     console.log('App has come to the foreground!');
+  //   }
+  //   setAppState(nextAppState);
+  // };
+
+  useEffect(() => {
+    // 最初のrenderで、このsubscription functionが登録される。
+    if (auth.socket) {
+      const appStateListener = AppState.addEventListener('change', (nextAppState) => {
+        if (appState.match(/inactive|background/) && nextAppState === 'active') {
+          console.log('App has come to the foreground! Socket connected again.');
+          //ここで再度connectして、server のconnectのlogする。
+          getSocket();
+        } else if (appState === 'active' && nextAppState === 'inactive') {
+          // socket disconnect する。ここで。serverでdisconnectのlogを確認する。
+          auth.socket.disconnect();
+          console.log('disconnected');
+        }
+        console.log('Next AppState is: ', nextAppState);
+        // auth.socket.disconnect();
+        setAppState(nextAppState); // backgroundになる。
+      });
+
+      // subscriptionを発生させる。
+      return () => {
+        appStateListener.remove();
+      };
+    }
+  }, [auth.socket, appState]);
+
+  // useEffect(() => {
+  //   if (appState === 'background') {
+  //     console.log('background');
+  //   }
+  // }, [appState]); // こういう使い方はできないいんだ。上の、applistennerでしか多分使えない。
 
   const getJWTToken = async () => {
     const jwtToken = await SecureStore.getItemAsync('secure_token');
@@ -154,6 +193,8 @@ const AppStack = (props) => {
       return { ...previous, socket: socket };
     });
   };
+
+  // loginされたら、socketを取る。
   useEffect(() => {
     if (auth.isAuthenticated) {
       getSocket();
@@ -171,9 +212,11 @@ const AppStack = (props) => {
   useEffect(() => {
     if (auth.isAuthenticated) {
       getMyUpcomingMeetupsAndLoungeChatsByMeetupIds();
+      // ここも、appStateが変わるたびに動かさなきゃいけない。
     }
   }, [auth.isAuthenticated]);
 
+  // socketが接続されたら、loungeに入る。
   useEffect(() => {
     if (auth.socket) {
       const meetupIds = auth.data.upcomingMeetups.map((meetupObject) => meetupObject.meetup);
@@ -181,6 +224,7 @@ const AppStack = (props) => {
 
       return () => {
         auth.socket.off('JOIN_LOUNGES');
+        console.log('hello');
       };
     }
   }, [auth.socket]);

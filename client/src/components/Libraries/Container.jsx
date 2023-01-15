@@ -73,23 +73,24 @@ const Container = (props) => {
     }, [])
   );
 
-  useEffect(() => {
-    if (auth.socket) {
-      auth.socket.on('CREATED_LIBRARY', (data) => {
-        setLibraries((previous) => [...previous, data]);
-        if (data.launcher._id === auth.data._id) {
-          setSnackBar({
-            isVisible: true,
-            message: 'Successfully created my library.',
-            barType: 'success',
-            duration: 5000,
-          });
-          setMyJoinedLibraries((previous) => [...previous, data]);
-          createLibraryBottomSheetRef.current.close();
-        }
-      });
-    }
-  }, [auth.socket]);
+  // useEffect(() => {
+  //   if (auth.socket) {
+  //     auth.socket.on('CREATED_LIBRARY', (data) => {
+  //       setLibraries((previous) => [...previous, data]);
+  //       if (data.launcher._id === auth.data._id) {
+  //         setSnackBar({
+  //           isVisible: true,
+  //           message: 'Successfully created my library.',
+  //           barType: 'success',
+  //           duration: 5000,
+  //         });
+  //         setMyJoinedLibraries((previous) => [...previous, data]);
+  //         createLibraryBottomSheetRef.current.close();
+  //       }
+  //     });
+  //   }
+  // }, [auth.socket]);
+  //ここで、socketを使う必要ない。
 
   // libraryから出て行った時用。
   useEffect(() => {

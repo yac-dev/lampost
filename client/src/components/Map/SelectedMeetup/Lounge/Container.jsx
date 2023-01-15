@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef, useContext } from 'react';
 import LoungeContext from './LoungeContext';
 import GlobalContext from '../../../../GlobalContext';
 import { connect } from 'react-redux';
-import { View } from 'react-native';
+import { Touchable, View, TouchableOpacity, Text } from 'react-native';
 import { Avatar, IconButton } from 'react-native-paper';
 import lampostAPI from '../../../../apis/lampost';
 import { baseBackgroundColor } from '../../../../utils/colorsTable';
@@ -33,6 +33,7 @@ const Container = (props) => {
   const sendChatBottomSheetRef = useRef(null);
   const crewBottomSheetRef = useRef(null);
   const textInputRef = useRef(null);
+  const [dummyCount, setDummyCount] = useState(0);
 
   // const getLoungeChatsByMeetupId = async () => {
   //   const result = await lampostAPI.get(`/loungechats/${props.route.params.meetupId}`);
@@ -49,6 +50,20 @@ const Container = (props) => {
     getSelectedMeetup();
   }, []);
 
+  // experiment
+  // useEffect(() => {
+  //   auth.socket.on('YOUR_TEST_MESSAGE_OK', (data) => {
+  //     console.log('Got message successfully', data);
+  //     console.log('Count is', dummyCount);
+  //   });
+  // }, [dummyCount]);
+  //　こういうことやると、多分dummyCountが更新されるたびに、registrationが追加されていくんだろう。いわゆる、
+  // auth.socket.on()
+  // auth.socket.on()
+  // auth.socket.on()っていう感じで、多分registrationが増える、多分そうだろうね。なんか分かった。
+  // しかも面白いことに、その時点でのstateそのまま記憶して、logしている。面白い実験だ。
+  // あと、socket connectが繰り返されても同じことが起こるだろう。。。
+
   // useEffect(() => {
   //   auth.socket.on('SOMEONE_SENT_A_CHAT', (data) => {
   //     setChats((previous) => [...previous, data]);
@@ -58,7 +73,7 @@ const Container = (props) => {
   //     auth.socket.off('SOMEONE_SENT_A_CHAT');
   //   };
   // }, []);
-  console.log('Now in', routeName);
+  // console.log('Now in', routeName);
   useEffect(() => {
     setRouteName('Lounge');
     return () => {
@@ -135,6 +150,9 @@ const Container = (props) => {
   // }, []);
 
   // ここに入った時点で、chatroomのidを持っている状態になる。
+  const sendTestMessage = () => {
+    auth.socket.emit('SEND_TEST_MESSAGE', { message: 'hello', id: auth.socket.id });
+  };
   return (
     <LoungeContext.Provider
       value={{
@@ -149,6 +167,14 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+        <TouchableOpacity
+          onPress={() => {
+            sendTestMessage();
+            setDummyCount((previous) => previous + 1);
+          }}
+        >
+          <Text style={{ color: 'red', fontSize: 30 }}>Press to send message</Text>
+        </TouchableOpacity>
         <Chats />
         <AppMenuBottomSheet />
         <SendChatBottomSheet />

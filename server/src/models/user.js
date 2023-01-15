@@ -53,6 +53,12 @@ const userSchema = new mongoose.Schema({
   patrons: {
     type: Number,
   },
+  assets: {
+    type: Number,
+  },
+  logs: {
+    type: Number,
+  },
   createdAt: {
     type: Date,
   },

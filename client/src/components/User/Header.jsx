@@ -44,12 +44,12 @@ const Header = (props) => {
           flexDirection: 'column',
           // backgroundColor: 'green', //確認用で使える
           alignItems: 'center',
-          marginRight: 10,
+          marginRight: 5,
         }}
       >
         <View
           style={{
-            backgroundColor: user.photo ? 'yellow' : iconColorsTable['blue1'],
+            backgroundColor: user.photo ? null : iconColorsTable['blue1'],
             // padding: 5,
             borderRadius: 10,
             width: avatarWidth,
@@ -75,7 +75,11 @@ const Header = (props) => {
         </View>
         <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold' }}>{user.name}</Text>
       </View>
+      {/* <View style={{ width: 80, height: 80, backgroundColor: 'red' }}></View> */}
+      {/* <View style={{ flexDirection: 'column' }}> */}
       <Stats />
+      {/* <Text>Bea friend</Text> */}
+      {/* </View> */}
       {/* {isMyPage ? (
         <TouchableOpacity
           style={{
