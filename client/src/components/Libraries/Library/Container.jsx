@@ -100,7 +100,7 @@ const Container = (props) => {
             }}
           >
             <FastImage
-              style={{ width: '100%', height: '100%' }}
+              style={{ width: '100%', height: '100%', borderRadius: 7 }}
               source={{
                 uri: asset.data,
                 priority: FastImage.priority.normal,
@@ -151,7 +151,7 @@ const Container = (props) => {
         <AppMenuBottomSheet />
         <SelectedAssetBottomSheet />
         <PostAssetsBottomSheet />
-        <PostsBottomSheet />
+        {/* <PostsBottomSheet /> */}
         <MembersBottomSheet />
         <ConfirmLeaveLibrary />
         <ConfirmPostAssetModal />

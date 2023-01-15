@@ -41,7 +41,8 @@ export const getReactionsByAssetPostId = async (request, response) => {
   try {
     const assetPostAndReactionAndUserRelationships = await AssetPostAndReactionAndUserRelationship.find({
       assetPost: request.params.assetPostId,
-    }).populate([{ path: 'reaction' }]);
+    }).populate([{ path: 'reaction' }, { path: 'user' }]);
+    console.log(assetPostAndReactionAndUserRelationships);
 
     const reactions = {};
     for (let i = 0; i < assetPostAndReactionAndUserRelationships.length; i++) {

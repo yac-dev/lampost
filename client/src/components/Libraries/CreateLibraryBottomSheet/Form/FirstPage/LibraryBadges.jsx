@@ -44,7 +44,7 @@ const LibraryBadges = (props) => {
         <Text style={{ fontWeight: 'bold', fontSize: 17, marginLeft: 15, color: 'white' }}>Badges</Text>
       </View>
       <Text style={{ fontWeight: 'bold', fontSize: 12, color: baseTextColor, marginBottom: 10 }}>
-        What kind of photos can people post in here?
+        What kind of photos/videos people post in here?
       </Text>
       <TouchableOpacity
         style={{

@@ -22,7 +22,7 @@ import SecondPage from './Form/SecondPage/Container';
 
 const Container = (props) => {
   const { createLibraryBottomSheetRef } = useContext(LibrariesContext);
-  const snapPoints = ['75%'];
+  const snapPoints = ['100%'];
   const [page, setPage] = useState('FIRST_PAGE');
   // const [formData, setFormData] = useState({ name: '', badges: {}, description: '', rolls: ['', ''] });
   const [formData, setFormData] = useState({ name: '', badges: {}, description: '', assets: {} });

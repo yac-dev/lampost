@@ -323,9 +323,10 @@ const AppStack = (props) => {
             options={({ route }) => ({
               headerShown: false,
               tabBarIcon: ({ size, color, focused }) => (
-                <MCIcon name={'map'} color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+                <MCIcon name={'map'} color={focused ? 'white' : 'rgb(102, 104, 109)'} size={20} />
               ),
               tabBarLabel: 'Meetups',
+              // tabBarLabelStyle: { padding: 5 },
               tabBarBadge: totalUnreadChatsCount ? totalUnreadChatsCount : null,
               tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
               // () => {

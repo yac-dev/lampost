@@ -33,7 +33,7 @@ const RollDescription = (props) => {
         <Text style={{ fontWeight: 'bold', fontSize: 17, marginLeft: 15, color: 'white' }}>Description</Text>
       </View>
       <Text style={{ fontWeight: 'bold', fontSize: 12, color: baseTextColor, marginBottom: 10 }}>
-        Please describe about your library.
+        Please describe about this library.
       </Text>
       <BottomSheetTextInput
         style={{

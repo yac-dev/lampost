@@ -184,6 +184,7 @@ const Container = (props) => {
               // backgroundColor: 'white',
               // backgroundColor: 'red',
               alignItems: 'center',
+              borderRadius: 5,
             }}
           >
             <TouchableOpacity
@@ -195,7 +196,7 @@ const Container = (props) => {
                 // height: '100%',
                 // alignItems: 'center', // これと
                 // justifyContent: 'center', // これで中のimageを上下左右真ん中にする
-                borderRadius: 15,
+
                 // backgroundColor: rnDefaultBackgroundColor,
                 // borderWidth: 0.3,
                 marginBottom: 10,
@@ -219,7 +220,10 @@ const Container = (props) => {
                   borderColor: backgroundColorsTable[library.color],
                 }}
               > */}
-              <Image source={{ uri: library.thumbnail.data }} style={{ width: '100%', height: '100%' }} />
+              <Image
+                source={{ uri: library.thumbnail.data }}
+                style={{ width: '100%', height: '100%', borderRadius: 5 }}
+              />
               {/* <Ionicons name='ios-library' size={libraryIconWidth} color={iconColorsTable[library.color]} />
 
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -298,17 +302,10 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        <Text style={{ color: 'red' }}>Your expo push token: {expoPushToken}</Text>
-        {/* <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={{ color: 'red' }}>Title: {notification && notification.request.content.title} </Text>
-          <Text style={{ color: 'red' }}>Body: {notification && notification.request.content.body}</Text>
-          <Text style={{ color: 'red' }}>
-            Data: {notification && JSON.stringify(notification.request.content.data)}
-          </Text>
-        </View> */}
+        {/* <Text style={{ color: 'red' }}>Your expo push token: {expoPushToken}</Text>
         <TouchableOpacity onPress={async () => experimentSendPushNotification()}>
           <Text style={{ color: 'yellow' }}>Press here</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <Text style={{ fontSize: 23, fontWeight: 'bold', padding: 10, color: 'white', marginBottom: 10 }}>
           Recently launched
         </Text>

@@ -55,9 +55,10 @@ const AppMenuButtons = () => {
           icon={<MaterialCommunityIcons name='fire' size={35} color={iconColorsTable['pink1']} />}
           label='Posts'
           onAppMenuButtonPress={() => {
-            getLibraryPostsByLibraryId();
-            postsBottomSheetRef.current.snapToIndex(0);
-            appMenuBottomSheetRef.current.snapToIndex(0);
+            // getLibraryPostsByLibraryId();
+            // postsBottomSheetRef.current.snapToIndex(0);
+            // appMenuBottomSheetRef.current.snapToIndex(0);
+            navigation.navigate('Posts', { libraryId: library._id });
           }}
         />
         <AppMenuButton

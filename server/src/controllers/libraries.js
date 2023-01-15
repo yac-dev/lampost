@@ -59,7 +59,7 @@ export const createLibrary = async (request, response) => {
       createdAt: new Date(),
     });
     // assetsがあれば、libraryとassetsのrelationshipを作ると。
-    const relationsships = assets.map((asset) => {
+    const relationships = assets.map((asset) => {
       return {
         library: library._id,
         asset: asset._id,
