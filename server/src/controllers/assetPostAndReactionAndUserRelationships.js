@@ -4,24 +4,23 @@ import AssetPost from '../models/assetPost';
 
 export const createReaction = async (request, response) => {
   try {
-    const { assetPostId, userId, content } = request.body;
+    const { libraryPostId, user, text, selectedEmoji } = request.body;
+    const reactionContent = text + ' ' + selectedEmoji;
     const reaction = await Reaction.create({
-      content,
+      content: reactionContent,
     });
 
     const assetPostAndReactionAndUserRelationship = await AssetPostAndReactionAndUserRelationship.create({
-      assetPost: assetPostId,
+      assetPost: libraryPostId,
       reaction: reaction._id,
-      user: userId,
+      user: user._id,
     });
 
-    const assetPost = await AssetPost.findById(assetPostId);
-    if (assetPost.firstFourReactions.length < 5) {
-      const reactionObject = {
-        reaction: reaction._id,
-        totalCounts: 1,
-      };
-      assetPost.firstFourReactions.push(reactionObject);
+    const assetPost = await AssetPost.findById(libraryPostId);
+    assetPost.topEmojis.push(); // reaction contentのemoji部分だけをarrayにpush したい。
+    if (assetPost.topEmojis.length < 100) {
+      assetPost.topEmojis.push(selectedEmoji);
+      assetPost.save();
     }
 
     response.status(200).json({
@@ -29,7 +28,7 @@ export const createReaction = async (request, response) => {
         _id: reaction._id,
         content: reaction.content,
         totalCounts: 1,
-        users: [userId],
+        users: { [user._id]: user },
       },
     });
   } catch (error) {
@@ -41,26 +40,28 @@ export const getReactionsByAssetPostId = async (request, response) => {
   try {
     const assetPostAndReactionAndUserRelationships = await AssetPostAndReactionAndUserRelationship.find({
       assetPost: request.params.assetPostId,
-    }).populate([{ path: 'reaction' }, { path: 'user' }]);
+    }).populate([{ path: 'reaction' }, { path: 'user', select: 'name photo' }]);
     console.log(assetPostAndReactionAndUserRelationships);
 
     const reactions = {};
     for (let i = 0; i < assetPostAndReactionAndUserRelationships.length; i++) {
-      const object = {};
       if (reactions[assetPostAndReactionAndUserRelationships[i].reaction._id]) {
-        reactions[assetPostAndReactionAndUserRelationships[i].users].push(
-          assetPostAndReactionAndUserRelationships[i].user
-        );
+        reactions[assetPostAndReactionAndUserRelationships[i].users][
+          assetPostAndReactionAndUserRelationships[i].user._id
+        ] = assetPostAndReactionAndUserRelationships[i].user; // hash tableでまとめる。
         reactions[assetPostAndReactionAndUserRelationships[i].totalCounts]++;
       } else {
         const object = {};
         object['_id'] = assetPostAndReactionAndUserRelationships[i].reaction._id;
         object['content'] = assetPostAndReactionAndUserRelationships[i].reaction.content;
         object['totalCounts'] = 1;
-        object['users'] = [assetPostAndReactionAndUserRelationships[i].user];
+        object['users'] = {
+          [assetPostAndReactionAndUserRelationships[i].user._id]: assetPostAndReactionAndUserRelationships[i].user,
+        };
         reactions[assetPostAndReactionAndUserRelationships[i].reaction._id] = object;
       }
     }
+    //{11111: {_id: 11111, content: 'Nice emoji', totalCounts: 3, users: [{_id: 111, name: 'aaaa', photo: 'some url'}]}}
 
     response.status(200).json({
       reactions,
@@ -72,18 +73,17 @@ export const getReactionsByAssetPostId = async (request, response) => {
 
 export const upvoteReaction = async (request, response) => {
   try {
-    const { assetPostId, reactionId, userId } = request.body;
+    const { assetPostId, reaction, userId } = request.body;
     const assetPostAndReactionAndUserRelationship = await AssetPostAndReactionAndUserRelationship.create({
       assetPost: assetPostId,
-      reaction: reactionId,
+      reaction: reaction._id,
       user: userId,
     });
 
     const assetPost = await AssetPost.findById(assetPostId);
-    for (i = 0; i < assetPost.firstFourReactions.length; i++) {
-      if (assetPost.firstFourReactions[i].reaction === assetPostId) {
-        assetPost.firstFourReactions[i].totalCounts++;
-      }
+    if (assetPost.topEmojis.length < 30) {
+      assetPost.topEmojis.push(reaction.emoji);
+      assetPost.save();
     }
     response.status(200).json({
       message: 'success',
@@ -102,14 +102,6 @@ export const downvoteReaction = async (request, response) => {
       reaction: reactionId,
       user: userId,
     });
-
-    const assetPost = await AssetPost.findById(assetPostId);
-    for (i = 0; i < assetPost.firstFourReactions.length; i++) {
-      if (assetPost.firstFourReactions[i].reaction === assetPostId) {
-        assetPost.firstFourReactions[i].totalCounts--;
-      }
-    }
-
     response.status(200).json({
       message: 'success',
     });

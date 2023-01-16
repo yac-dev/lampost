@@ -10,6 +10,5 @@ import {
 router.route('/').post(createReaction);
 router.route('/:assetPostId').get(getReactionsByAssetPostId);
 router.route('/upvote').post(upvoteReaction);
-router.route('/downvote').post(downvoteReaction);
 
 export default router;

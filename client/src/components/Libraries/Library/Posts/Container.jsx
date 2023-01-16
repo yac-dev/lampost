@@ -1,19 +1,10 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
 import GlobalContext from '../../../../GlobalContext';
-import PostContext from './PostContext';
 import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
-import {
-  baseTextColor,
-  sectionBackgroundColor,
-  baseBackgroundColor,
-  iconColorsTable,
-} from '../../../../utils/colorsTable';
-import ActionButton from '../../../Utils/ActionButton';
-import { Entypo } from '@expo/vector-icons';
-import AddNewReaction from './AddNewReactionBottomSheet';
+import { baseTextColor, baseBackgroundColor } from '../../../../utils/colorsTable';
 import lampostAPI from '../../../../apis/lampost';
 
-const Container = (props) => {
+const PostsContainer = (props) => {
   const { auth } = useContext(GlobalContext);
   const [libraryPosts, setLibraryPosts] = useState([]);
 
@@ -27,12 +18,37 @@ const Container = (props) => {
     getLibraryPostsByLibraryId();
   }, []);
 
+  const renderDate = (date) => {
+    const dateString = new Date(date).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+    });
+    const dateTable = { ...dateString.split(' ') };
+    return (
+      <Text style={{ color: baseTextColor }}>
+        {dateTable['0']}&nbsp;{dateTable['1']}
+      </Text>
+    );
+  };
+
   const renderLibraryPosts = () => {
     if (libraryPosts.length) {
       console.log(libraryPosts);
       const list = libraryPosts.map((libraryPost, index) => {
         return (
           <View key={index}>
+            <TouchableOpacity onPress={() => props.navigation.navigate('Post', { libraryPost })}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                <Image
+                  style={{ width: 35, height: 35, marginRight: 10, borderRadius: 10 }}
+                  source={{ uri: libraryPost.user.photo }}
+                />
+                <Text style={{ color: 'white' }}>{libraryPost.user.name}</Text>
+              </View>
+              <Text style={{ color: 'white', fontSize: 15, marginBottom: 10 }}>
+                {libraryPost.caption}&nbsp;&nbsp;{renderDate(libraryPost.createdAt)}
+              </Text>
+            </TouchableOpacity>
             <View style={{ flexDirection: 'row' }}>
               {libraryPost.assets.map((asset, index) => {
                 return (
@@ -44,25 +60,17 @@ const Container = (props) => {
                 );
               })}
             </View>
-            <TouchableOpacity onPress={() => props.navigation.navigate('Post', { libraryPost })}>
-              <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-                {libraryPost.topEmojis.map((emoji, index) => {
-                  return (
-                    <Text key={index} style={{ marginRight: 5, fontSize: 25 }}>
-                      {emoji}
-                    </Text>
-                  );
-                })}
-                {/* <Text style={{ color: baseTextColor }}>and more...</Text> */}
-              </View>
-              <Text style={{ color: 'white', fontSize: 15, marginBottom: 10 }}>{libraryPost.caption}</Text>
-              <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
-                <Image
-                  style={{ width: 35, height: 35, marginRight: 10, borderRadius: 10 }}
-                  source={{ uri: libraryPost.user.photo }}
-                />
-                <Text style={{ color: baseTextColor }}>{libraryPost.user.name}</Text>
-              </View>
+            <TouchableOpacity
+              style={{ flexDirection: 'row', marginBottom: 10, flexWrap: 'wrap' }}
+              onPress={() => props.navigation.navigate('Post', { libraryPost })}
+            >
+              {libraryPost.topEmojis.map((emoji, index) => {
+                return (
+                  <Text key={index} style={{ marginRight: 5, fontSize: 25 }}>
+                    {emoji}
+                  </Text>
+                );
+              })}
             </TouchableOpacity>
           </View>
         );
@@ -79,14 +87,12 @@ const Container = (props) => {
   };
 
   return (
-    <PostContext.Provider value={{ navigation: props.navigation }}>
-      <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 20 }}>
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
-          {renderLibraryPosts()}
-        </ScrollView>
-      </View>
-    </PostContext.Provider>
+    <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 20 }}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
+        {renderLibraryPosts()}
+      </ScrollView>
+    </View>
   );
 };
 
-export default Container;
+export default PostsContainer;

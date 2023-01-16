@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 const assetPostSchema = new mongoose.Schema({
   caption: {
     type: String,
-    maxLength: 40,
   },
   assets: [
     {

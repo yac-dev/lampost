@@ -12,7 +12,7 @@ import User from '../User/Container';
 import Logs from '../User/Logs/Container';
 import Asset from '../Libraries/Library/Asset/Container';
 import Posts from '../Libraries/Library/Posts/Container';
-import Post from '../Libraries/Library/Posts/Post';
+import Post from '../Libraries/Library/Posts/Post/Container';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
 import AddBadges from '../Utils/AddBadges/Container';
 import AddAssets from '../Utils/AddAssets/Container';
