@@ -167,14 +167,14 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => {
             sendTestMessage();
             setDummyCount((previous) => previous + 1);
           }}
         >
           <Text style={{ color: 'red', fontSize: 30 }}>Press to send message</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <Chats />
         <AppMenuBottomSheet />
         <SendChatBottomSheet />

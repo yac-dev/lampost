@@ -1,7 +1,8 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
 import GlobalContext from '../../../../GlobalContext';
 import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
-import { baseTextColor, baseBackgroundColor } from '../../../../utils/colorsTable';
+import { baseTextColor, baseBackgroundColor, iconColorsTable } from '../../../../utils/colorsTable';
+import { FontAwesome5 } from '@expo/vector-icons';
 import lampostAPI from '../../../../apis/lampost';
 
 const PostsContainer = (props) => {
@@ -36,14 +37,30 @@ const PostsContainer = (props) => {
       console.log(libraryPosts);
       const list = libraryPosts.map((libraryPost, index) => {
         return (
-          <View key={index}>
+          <View key={index} style={{ marginBottom: 20 }}>
             <TouchableOpacity onPress={() => props.navigation.navigate('Post', { libraryPost })}>
               <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-                <Image
-                  style={{ width: 35, height: 35, marginRight: 10, borderRadius: 10 }}
-                  source={{ uri: libraryPost.user.photo }}
-                />
-                <Text style={{ color: 'white' }}>{libraryPost.user.name}</Text>
+                {libraryPost.user.photo ? (
+                  <Image
+                    style={{ width: 35, height: 35, marginRight: 15, borderRadius: 7 }}
+                    source={{ uri: libraryPost.user.photo }}
+                  />
+                ) : (
+                  <View
+                    style={{
+                      backgroundColor: iconColorsTable['blue1'],
+                      width: 35,
+                      height: 35,
+                      borderRadius: 7,
+                      marginRight: 15,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <FontAwesome5 name='user-astronaut' size={20} color={'white'} />
+                  </View>
+                )}
+                <Text style={{ color: 'white', fontSize: 17 }}>{libraryPost.user.name}</Text>
               </View>
               <Text style={{ color: 'white', fontSize: 15, marginBottom: 10 }}>
                 {libraryPost.caption}&nbsp;&nbsp;{renderDate(libraryPost.createdAt)}

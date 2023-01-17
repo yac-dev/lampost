@@ -73,16 +73,16 @@ export const getReactionsByAssetPostId = async (request, response) => {
 
 export const upvoteReaction = async (request, response) => {
   try {
-    const { assetPostId, reaction, userId } = request.body;
+    const { libraryPostId, reaction, userId } = request.body;
     const assetPostAndReactionAndUserRelationship = await AssetPostAndReactionAndUserRelationship.create({
-      assetPost: assetPostId,
+      assetPost: libraryPostId,
       reaction: reaction._id,
       user: userId,
     });
 
-    const assetPost = await AssetPost.findById(assetPostId);
-    if (assetPost.topEmojis.length < 30) {
-      assetPost.topEmojis.push(reaction.emoji);
+    const assetPost = await AssetPost.findById(libraryPostId);
+    if (assetPost.topEmojis.length < 100) {
+      assetPost.topEmojis.push(reaction.content); // ここ、絵文字の部分だけpopしていれる。
       assetPost.save();
     }
     response.status(200).json({

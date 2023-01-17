@@ -154,7 +154,6 @@ const AppStack = (props) => {
       };
     }
   }, [auth.socket, appState]);
-
   // useEffect(() => {
   //   if (appState === 'background') {
   //     console.log('background');
@@ -323,7 +322,7 @@ const AppStack = (props) => {
             options={({ route }) => ({
               headerShown: false,
               tabBarIcon: ({ size, color, focused }) => (
-                <MCIcon name={'map'} color={focused ? 'white' : 'rgb(102, 104, 109)'} size={20} />
+                <MCIcon name={'map'} color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
               ),
               tabBarLabel: 'Meetups',
               // tabBarLabelStyle: { padding: 5 },

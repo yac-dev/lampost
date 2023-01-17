@@ -116,7 +116,8 @@ const reducer = (state, action) => {
 
 const Container = (props) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-  const { auth, setAuth, setLoading } = useContext(GlobalContext);
+  const { auth, setAuth, setLoading, myUpcomingMeetupAndChatsTable, setMyUpcomingMeetupAndChatsTable, setSnackBar } =
+    useContext(GlobalContext);
   const {
     setIsCancelLaunchMeetupConfirmationModalOpen,
     launchLocation,
@@ -154,12 +155,48 @@ const Container = (props) => {
       link: state.link,
       launcher: auth.data._id,
     };
-    // console.log(formData);
-    // props.setIsHostMeetupOpen(false);
-    // props.setMeetupLocation('');
-    // props.createMeetup(formData);
-    // const result = await lampostAPI.post('/meetups', formData);
-    auth.socket.emit('CREATE_MEETUP', payload);
+    const result = await lampostAPI.post('/meetups', payload);
+    const { meetup, viewedChatsLastTime, launcher } = result.data;
+    setMeetups((previous) => [...previous, meetup]);
+    if (launcher === auth.data._id) {
+      setLoading(false);
+      setAuth((previous) => {
+        return {
+          ...previous,
+          data: {
+            ...previous.data,
+            upcomingMeetups: [
+              ...previous.data.upcomingMeetups,
+              { meetup: meetup._id, viewedChatsLastTime: viewedChatsLastTime },
+            ],
+          },
+        };
+      });
+      setMyUpcomingMeetupAndChatsTable((previous) => {
+        return {
+          ...previous,
+          [meetup._id]: {
+            _id: meetup._id,
+            title: meetup.title,
+            chats: [],
+            startDateAndTime: meetup.startDateAndTime,
+            viewedChatsLastTime: viewedChatsLastTime,
+            launcher: launcher,
+          },
+        };
+      });
+      setIsLaunchMeetupConfirmed(false);
+      setLaunchLocation(null);
+      launchMeetupBottomSheetRef.current.close();
+      setSnackBar({
+        isVisible: true,
+        message: 'Launched a meetup.',
+        barType: 'success',
+        duration: 5000,
+      });
+    }
+    // setMeetups((previous) => [...previous, meetup]);
+    // auth.socket.emit('CREATE_MEETUP', payload);
     // const { meetup, viewedChatsLastTime } = result.data;
     Keyboard.dismiss();
     // setAuth((previous) => {
@@ -176,9 +213,9 @@ const Container = (props) => {
     // setLaunchLocation(null);
     // launchMeetupBottomSheetRef.current.close();
     // setLoading(false);
-    return () => {
-      socketRef.current.off('CREATE_MEETUP');
-    };
+    // return () => {
+    //   socketRef.current.off('CREATE_MEETUP');
+    // };
   };
 
   const switchComponent = () => {

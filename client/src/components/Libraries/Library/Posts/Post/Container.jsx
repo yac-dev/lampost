@@ -12,6 +12,7 @@ import AddNewReactionBottomSheet from './AddNewReactionBottomSheet';
 import ActionButton from '../../../../Utils/ActionButton';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const PostContainer = (props) => {
   const { auth } = useContext(GlobalContext);
@@ -114,7 +115,11 @@ const PostContainer = (props) => {
                 setReactions((previous) => {
                   const updating = { ...previous };
                   updating[reaction._id].totalCounts = updating[reaction._id].totalCounts + 1;
-                  updating[reaction._id].users.push(auth.data._id);
+                  updating[reaction._id].users[auth.data._id] = {
+                    _id: auth.data._id,
+                    name: auth.data.name,
+                    photo: auth.data.photo,
+                  };
                   return updating;
                 });
               }}
@@ -136,11 +141,27 @@ const PostContainer = (props) => {
     <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 20 }}>
       <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-          <Image
-            style={{ width: 35, height: 35, marginRight: 15, borderRadius: 7 }}
-            source={{ uri: libraryPost.user.photo }}
-          />
-          <Text style={{ color: 'white' }}>{libraryPost.user.name}</Text>
+          {libraryPost.user.photo ? (
+            <Image
+              style={{ width: 35, height: 35, marginRight: 15, borderRadius: 7 }}
+              source={{ uri: libraryPost.user.photo }}
+            />
+          ) : (
+            <View
+              style={{
+                backgroundColor: iconColorsTable['blue1'],
+                width: 35,
+                height: 35,
+                borderRadius: 7,
+                marginRight: 15,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <FontAwesome5 name='user-astronaut' size={20} color={'white'} />
+            </View>
+          )}
+          <Text style={{ color: 'white', fontSize: 17 }}>{libraryPost.user.name}</Text>
         </View>
         <Text style={{ color: 'white', marginBottom: 10 }}>
           {libraryPost.caption}&nbsp;&nbsp;

@@ -75,9 +75,11 @@ export const createMeetup = async (request, response) => {
       link,
     } = request.body;
 
+    const badgeIds = badges.map((badge) => badge._id);
+
     const meetup = new Meetup({
       place,
-      badges,
+      badges: badgeIds,
       // preferredBadges,
       title,
       startDateAndTime,
@@ -86,6 +88,7 @@ export const createMeetup = async (request, response) => {
       description,
       link,
       launcher,
+      totalAttendees: 0,
       createdAt: new Date(),
       // endDateAndTime,
     });
@@ -127,23 +130,24 @@ export const createMeetup = async (request, response) => {
     user.upcomingMeetups.push(pushing);
     user.save();
 
-    // chatroom作成。
-    const chatRoom = new ChatRoom({
-      createdAt: new Date(),
-    });
-    chatRoom.members.push(user._id);
-    chatRoom.save();
-
     meetup.attendees.push(launcher);
     meetup.totalAttendees++;
-    meetup.chatRoom = chatRoom._id;
     meetup.save();
-    const badge = await Badge.findById(badges[0]);
 
     // scheduleStartMeetup(meetup.startDateAndTime, meetup._id);
     // scheduleEndMeetup(meetup.endDateAndTime, meetup._id);
 
     // const populatingBadges = await Badge.find({ _id: { $in: badges } });
+
+    // meetup: {
+    //   _id: meetup._id,
+    //   place: meetup.place,
+    //   title: meetup.title,
+    //   startDateAndTime: meetup.startDateAndTime,
+    //   badge: badges[0],
+    // },
+    // viewedChatsLastTime: new Date(),
+    // launcher,
 
     response.status(201).json({
       meetup: {
@@ -151,15 +155,12 @@ export const createMeetup = async (request, response) => {
         place: meetup.place,
         title: meetup.title,
         startDateAndTime: meetup.startDateAndTime,
-        badge: {
-          _id: badge._id,
-          icon: badge.icon,
-          color: badge.color,
-        },
+        badge: badges[0],
         // startDateAndTime: meetup.startDateAndTime,
         // badges: populatingBadges,
       },
       viewedChatsLastTime: new Date(),
+      launcher,
       // badge: {
       //   icon: badge.icon,
       // }

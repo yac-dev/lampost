@@ -10,6 +10,7 @@ import {
 import AppMenuButton from '../../../Utils/AppMenuButton';
 import lampostAPI from '../../../../apis/lampost';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
 
 const AppMenuButtons = () => {
@@ -42,7 +43,7 @@ const AppMenuButtons = () => {
       <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
         <AppMenuButton
           backgroundColor={backgroundColorsTable['red1']}
-          icon={<MaterialCommunityIcons name='image-plus' size={35} color={iconColorsTable['red1']} />}
+          icon={<MaterialCommunityIcons name='plus' size={35} color={iconColorsTable['red1']} />}
           label='Post my assets'
           onAppMenuButtonPress={() => {
             setIsConfirmPostAssetsModalOpen(true);
@@ -52,13 +53,14 @@ const AppMenuButtons = () => {
         />
         <AppMenuButton
           backgroundColor={backgroundColorsTable['pink1']}
-          icon={<MaterialCommunityIcons name='fire' size={35} color={iconColorsTable['pink1']} />}
-          label='Posts'
+          icon={<Ionicons name='ios-search' size={35} color={iconColorsTable['pink1']} />}
+          label='Discover'
           onAppMenuButtonPress={() => {
             // getLibraryPostsByLibraryId();
             // postsBottomSheetRef.current.snapToIndex(0);
             // appMenuBottomSheetRef.current.snapToIndex(0);
             navigation.navigate('Posts', { libraryId: library._id });
+            appMenuBottomSheetRef.current.snapToIndex(0);
           }}
         />
         <AppMenuButton

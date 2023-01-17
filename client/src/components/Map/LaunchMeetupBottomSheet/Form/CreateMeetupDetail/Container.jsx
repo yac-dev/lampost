@@ -20,8 +20,8 @@ const Container = (props) => {
       {/* <ScrollView contentContainerStyle={{ paddingBottom: 150 }}> */}
       <HeaderFee />
       <MeetupFee state={props.state} dispatch={props.dispatch} />
-      <HeaderPermission />
-      <MediaPermission state={props.state} dispatch={props.dispatch} />
+      {/* <HeaderPermission />
+      <MediaPermission state={props.state} dispatch={props.dispatch} /> */}
       {/* <MeetupAttendeesLimit state={props.state} dispatch={props.dispatch} /> */}
       <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
         <ActionButton
