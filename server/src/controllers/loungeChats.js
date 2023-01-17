@@ -28,6 +28,7 @@ export const getMyLoungeChats = async (request, response) => {
       title: 1,
       startDateAndTime: 1,
       launcher: 1,
+      state: 1,
     });
     // [{_id: 111, title: '', startDateAndTime: 2022/9/1}, {_id: 222, title: '', startDateAndTime: 2022/8/1}]
     // {
@@ -38,6 +39,7 @@ export const getMyLoungeChats = async (request, response) => {
       myUpcomingMeetupAndChatsTable[meetups[i]._id].title = meetups[i].title;
       myUpcomingMeetupAndChatsTable[meetups[i]._id].startDateAndTime = meetups[i].startDateAndTime;
       myUpcomingMeetupAndChatsTable[meetups[i]._id].launcher = meetups[i].launcher;
+      myUpcomingMeetupAndChatsTable[meetups[i]._id].state = meetups[i].state;
       // myUpcomingMeetupAndChatsTable[meetups[i]._id].chats = [];
     }
     // loungechatsのcollectionから、upcomingのmeetupのやつだけまず取ってくる。

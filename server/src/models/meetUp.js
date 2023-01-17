@@ -71,6 +71,14 @@ const meetupSchema = new mongoose.Schema({
       ref: 'Asset',
     },
   ],
+  representation: String,
+  impressions: [
+    {
+      text: String,
+      user: { type: mongoose.Schema.ObjectId, ref: 'User' },
+      createdAt: Date,
+    },
+  ],
   // isStartDateAndTimeUpdated: Boolean,
   // isDuratonUpdated: Boolean,
   // endDateAndTime: Date,

@@ -14,9 +14,19 @@ import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 
 const Container = (props) => {
-  const { auth, myUpcomingMeetupAndChatsTable, totalUnreadChatsCount } = useContext(GlobalContext);
-  const { appMenuBottomSheetRef, selectedMeetup, setSelectedMeetup, selectedMeetupBottomSheetRef, navigation } =
-    useContext(MapContext);
+  const { auth, myUpcomingMeetupAndChatsTable, setMyUpcomingMeetupAndChatsTable, totalUnreadChatsCount } =
+    useContext(GlobalContext);
+  const {
+    appMenuBottomSheetRef,
+    selectedMeetup,
+    setSelectedMeetup,
+    selectedMeetupBottomSheetRef,
+    navigation,
+    setIsFinishMeetupConfirmationModalOpen,
+    setIsStartMeetupConfirmationModalOpen,
+    setStartingMeetup,
+    setFinishingMeetup,
+  } = useContext(MapContext);
 
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
@@ -59,6 +69,57 @@ const Container = (props) => {
         {dateTable[2]}
       </Text>
     );
+  };
+
+  const renderStartButton = (meetupAndChatsTable) => {
+    if (meetupAndChatsTable.state === 'upcoming') {
+      return (
+        <TouchableOpacity
+          style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10, marginRight: 5 }}
+          onPress={() => {
+            // まず確認のmodalをだす。
+            // ここで、時間の確認を必ずしないといけない。10分前っていうことを。
+            // const result = await lampostAPI.patch(`/meetups/${meetupAndChatsTable._id}/start`);
+            setStartingMeetup(meetupAndChatsTable._id);
+            setIsStartMeetupConfirmationModalOpen(true);
+            // setMyUpcomingMeetupAndChatsTable((previous) => {
+            //   return {
+            //     ...previous,
+            //     [meetupAndChatsTable._id]: {
+            //       ...previous[meetupAndChatsTable._id],
+            //       state: 'ongoing',
+            //     },
+            //   };
+            // });
+          }}
+        >
+          <Ionicons size={25} name='power' color={'white'} />
+        </TouchableOpacity>
+      );
+    } else if (meetupAndChatsTable.state === 'ongoing') {
+      return (
+        <TouchableOpacity
+          style={{ backgroundColor: iconColorsTable['red1'], padding: 5, borderRadius: 10, marginRight: 5 }}
+          onPress={() => {
+            // ここでも、確認のmodalを出す。
+            // ここのfinishはいつでもいいとしよう。
+            setFinishingMeetup(meetupAndChatsTable._id);
+            setIsFinishMeetupConfirmationModalOpen(true);
+            // setMyUpcomingMeetupAndChatsTable((previous) => {
+            //   return {
+            //     ...previous,
+            //     [meetupAndChatsTable._id]: {
+            //       ...previous[meetupAndChatsTable._id],
+            //       state: 'upcoming',
+            //     },
+            //   };
+            // });
+          }}
+        >
+          <Ionicons size={25} name='power' color={'white'} />
+        </TouchableOpacity>
+      );
+    }
   };
 
   const renderUnreadChatsCount = (meetupAndChatsTable) => {
@@ -136,6 +197,9 @@ const Container = (props) => {
               </View>
             </TouchableOpacity>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              {meetupAndChatsTable.launcher === auth.data._id ? (
+                <>{renderStartButton(meetupAndChatsTable)}</> // launcherじゃなければ、これをrenderしない。
+              ) : null}
               {renderUnreadChatsCount(meetupAndChatsTable)}
             </View>
           </View>

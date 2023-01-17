@@ -5,54 +5,56 @@ import ChatRoom from '../models/chatRoom';
 import Badge from '../models/badge';
 import Comment from '../models/comment';
 import schedule from 'node-schedule';
+import PastMeetupAndUserRelationship from '../models/pastMeetupAndUserRelationship';
 
 // この二つも、さらに一つのfunctionにまとめるべき。後で。
-const scheduleStartMeetup = async (startDateAndTime, meetupId) => {
-  schedule.scheduleJob(new Date(startDateAndTime), async () => {
-    // まず、ここでdeleteされたかの確認。
-    const meetup = await Meetup.findById(meetupId);
-    // deleteあsれてなければ
-    if (meetup) {
-      //updateされたかの確認。あとは、recursion
-      if (meetup.isStartDateAndTimeUpdated) {
-        scheduleStartMeetup(meetup.startDateAndTime, meetup._id);
-      } else {
-        meetup.state = 'ongoing';
-        console.log('meetup started');
-        meetup.save();
-        return;
-      }
-    }
-    // deleteされていれば、なんも動かさない。
-    else {
-      console.log('deleted...');
-    }
-  });
-};
+// const scheduleStartMeetup = async (startDateAndTime, meetupId) => {
+//   schedule.scheduleJob(new Date(startDateAndTime), async () => {
+//     // まず、ここでdeleteされたかの確認。
+//     const meetup = await Meetup.findById(meetupId);
+//     // deleteあsれてなければ
+//     if (meetup) {
+//       //updateされたかの確認。あとは、recursion
+//       if (meetup.isStartDateAndTimeUpdated) {
+//         scheduleStartMeetup(meetup.startDateAndTime, meetup._id);
+//       } else {
+//         meetup.state = 'ongoing';
+//         console.log('meetup started');
+//         meetup.save();
+//         return;
+//       }
+//     }
+//     // deleteされていれば、なんも動かさない。
+//     else {
+//       console.log('deleted...');
+//     }
+//   });
+// };
 
-const scheduleEndMeetup = async (endDateAndTime, meetupId) => {
-  schedule.scheduleJob(new Date(endDateAndTime), async () => {
-    // まず、ここでdeleteされたかの確認。
-    const meetup = await Meetup.findById(meetupId);
-    // deleteあsれてなければ
-    if (meetup) {
-      //updateされたかの確認。あとは、recursion
-      if (meetup.isEndDateAndTimeUpdated) {
-        scheduleStartMeetup(meetup.endDateAndTime, meetup._id);
-      } else {
-        meetup.state = 'end';
-        console.log('finished schedule');
-        meetup.save();
-        return;
-      }
-    }
-    // deleteされていれば、なんも動かさない。
-    else {
-      console.log('deleted...');
-    }
-  });
-};
+// const scheduleEndMeetup = async (endDateAndTime, meetupId) => {
+//   schedule.scheduleJob(new Date(endDateAndTime), async () => {
+//     // まず、ここでdeleteされたかの確認。
+//     const meetup = await Meetup.findById(meetupId);
+//     // deleteあsれてなければ
+//     if (meetup) {
+//       //updateされたかの確認。あとは、recursion
+//       if (meetup.isEndDateAndTimeUpdated) {
+//         scheduleStartMeetup(meetup.endDateAndTime, meetup._id);
+//       } else {
+//         meetup.state = 'end';
+//         console.log('finished schedule');
+//         meetup.save();
+//         return;
+//       }
+//     }
+//     // deleteされていれば、なんも動かさない。
+//     else {
+//       console.log('deleted...');
+//     }
+//   });
+// };
 
+// これ、scheduleだけ、違うrouterでやった方がいいかな。
 export const createMeetup = async (request, response) => {
   try {
     const {
@@ -132,6 +134,15 @@ export const createMeetup = async (request, response) => {
 
     meetup.attendees.push(launcher);
     meetup.totalAttendees++;
+    meetup.state = 'upcoming';
+
+    // schedule.scheduleJob(new Date(startDateAndTime), () => {
+    //   console.log('Starting now', meetup._id);
+    //   // meetup.state = 'ongoing';
+    // });
+    // // end timeに関しては、自分で計算しないといけないな。
+    // schedule.scheduleJob(new Date(endDateAndTime), () => {});
+
     meetup.save();
 
     // scheduleStartMeetup(meetup.startDateAndTime, meetup._id);
@@ -170,9 +181,60 @@ export const createMeetup = async (request, response) => {
   }
 };
 
+// meetupのstateを変えて、かつuserのstateもかえないといけない。
+export const startMeetup = async (request, response) => {
+  try {
+    const meetup = await Meetup.findById(request.params.id);
+    meetup.state = 'ongoing'; //
+    meetup.save();
+    const users = await User.find({ _id: { $in: meetup.attendees } });
+    users.forEach((user) => {
+      user.isInMeetup = request.params.id;
+      user.save();
+    });
+
+    response.status(200).json({
+      meetupId: meetup._id,
+      state: 'ongoing',
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// meetupのstateを変えて、かつmeetupとuserのpastmeetupのrelationshipを作る。
+export const finishMeetup = async (request, response) => {
+  try {
+    const meetup = await Meetup.findById(request.params.id);
+    meetup.state = 'finished';
+    meetup.save();
+    const users = await User.find({ _id: { $in: meetup.attendees } });
+    users.forEach((user) => {
+      user.isInMeetup = ''; // 当然、なにもなしね。
+      user.logs = user.logs + 1;
+      user.save();
+    });
+    const insertingArray = users.forEach((user) => {
+      return {
+        pastMeetup: request.params.id,
+        user: user,
+      };
+    });
+
+    const pastMeetupAndUserRelationship = await PastMeetupAndUserRelationship.insertMeny(insertingArray);
+    // pastmeetupのinsertmanyをやる感じか。。。。
+    response.status(200).json({
+      meetupId: meetup._id,
+      state: 'finished',
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getMeetups = async (request, response) => {
   try {
-    const meetups = await Meetup.find()
+    const meetups = await Meetup.find({ state: 'upcoming' })
       .select({ _id: 1, place: 1, startDateAndTime: 1, badges: 1 })
       .populate({
         path: 'badges',
@@ -440,22 +502,22 @@ export const updateMeetup = async (request, response) => {
   }
 };
 
-export const startMeetup = async (request, response) => {
-  try {
-    const meetup = await Meetup.findById(request.params.meetupId).populate({
-      path: 'attendees',
-    });
+// export const startMeetup = async (request, response) => {
+//   try {
+//     const meetup = await Meetup.findById(request.params.meetupId).populate({
+//       path: 'attendees',
+//     });
 
-    for (let i = 0; i < meetup.attendees; i++) {
-      meetup.attendees[i].isInMeetup = true;
-      meetup.attendees[i].save();
-    }
-    meetup.state = 'ongoing';
-    meetup.save();
-    response.status(200).json({
-      message: 'success',
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     for (let i = 0; i < meetup.attendees; i++) {
+//       meetup.attendees[i].isInMeetup = true;
+//       meetup.attendees[i].save();
+//     }
+//     meetup.state = 'ongoing';
+//     meetup.save();
+//     response.status(200).json({
+//       message: 'success',
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };

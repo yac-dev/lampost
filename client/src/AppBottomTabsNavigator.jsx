@@ -96,7 +96,6 @@ const AppStack = (props) => {
   const [totalUnreadChatsCount, setTotalUnreadChatsCount] = useState(0);
   const [myUpcomingMeetupAndChatsTable, setMyUpcomingMeetupAndChatsTable] = useState({});
   const hide = routeName === 'Meetup' || routeName === 'Dummy2' || routeName === 'Q&A';
-
   // { 111: { _id: 111, title: 'Meetup1' , chats: [{content: '', createdAt: '2022/9/1'}], viewedChats: '2022/9/22' },
   //   222: { _id: 222, title: 'Meetup2' , chats: [{content: '', createdAt: '2022/8/1'}], viewedChats: '2022/7/22' },
   //}

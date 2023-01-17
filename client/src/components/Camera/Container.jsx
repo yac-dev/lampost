@@ -59,39 +59,39 @@ const Container = (props) => {
       setWarningMessage('Please signup or login at first.');
     } else {
       // ここでいちなりapi requestをするんだよ。
-      // if (auth.data.isInMeetup.state) {
-      let options = {
-        quality: 1,
-        base64: true,
-        exif: false,
-      };
+      if (auth.data.ongoingMeetup.state) {
+        let options = {
+          quality: 1,
+          base64: true,
+          exif: false,
+        };
 
-      let newPhoto = await cameraRef.current.takePictureAsync(options);
-      const formData = new FormData();
-      // photo fieldよりも後にmeetupIdをappendするとダメなんだよな。。。何でだろ。。。
-      // formData.append('meetupId', props.route.params.meetupId);
-      formData.append('userId', auth.data._id);
-      formData.append('asset', {
-        name: newPhoto.uri.split('/').pop(),
-        uri: newPhoto.uri,
-        type: 'image/jpg',
-      });
-      // userIdを使ってまず、userのmeetup中かを調べる。
-      try {
-        const result = await lampostAPI.post(`/assets/photos`, formData, {
-          headers: { 'Content-type': 'multipart/form-data' },
+        let newPhoto = await cameraRef.current.takePictureAsync(options);
+        const formData = new FormData();
+        // photo fieldよりも後にmeetupIdをappendするとダメなんだよな。。。何でだろ。。。
+        formData.append('meetupId', auth.data.ongoingMeetup.meetup);
+        formData.append('userId', auth.data._id);
+        formData.append('asset', {
+          name: newPhoto.uri.split('/').pop(),
+          uri: newPhoto.uri,
+          type: 'image/jpg',
         });
-        console.log('Youu are now in the meetup');
-      } catch (error) {
-        console.log(error);
-        console.log(error.response.data);
-        // まあとりあえず、ここでerror catchできている。
-        // modalかなんかでerrorの内容を表示してあげればいい。
+        // userIdを使ってまず、userのmeetup中かを調べる。
+        try {
+          const result = await lampostAPI.post(`/assets/photos`, formData, {
+            headers: { 'Content-type': 'multipart/form-data' },
+          });
+          console.log('Youu are now in the meetup');
+        } catch (error) {
+          console.log(error);
+          console.log(error.response.data);
+          // まあとりあえず、ここでerror catchできている。
+          // modalかなんかでerrorの内容を表示してあげればいい。
+        }
+      } else {
+        setIsWarningModalOpen(true);
+        setWarningMessage('Camera is only available during the meetup.');
       }
-      // } else {
-      //   setIsWarningModalOpen(true);
-      //   setWarningMessage('Camera is only available during the meetup.');
-      // }
     }
   };
 

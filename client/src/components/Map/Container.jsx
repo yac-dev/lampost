@@ -17,6 +17,8 @@ import SelectedMeetupInfoDetail from './SelectedMeetup/InfoDetail/Container';
 import AppMenusBottomSheet from './AppMenuBottomSheet/Container';
 import ConfirmLaunchMeetupModal from './LaunchMeetupBottomSheet/ConfirmLaunchMeetupModal';
 import CancelLaunchMeetupModal from './LaunchMeetupBottomSheet/CancelLaunchMeetupModal';
+import ConfirmStartMeetup from './ConfirmStartMeetup';
+import ConfirmFinishMeetup from './ConfirmFinishMeetup';
 
 import LaunchMeetupBottomSheet from './LaunchMeetupBottomSheet/BottomSheet';
 import SnackBar from '../Utils/SnackBar';
@@ -61,6 +63,8 @@ const Map = (props) => {
   const selectedMeetupDetailBottomSheetRef = useRef(null);
   const [isStartMeetupConfirmationModalOpen, setIsStartMeetupConfirmationModalOpen] = useState(false);
   const [isFinishMeetupConfirmationModalOpen, setIsFinishMeetupConfirmationModalOpen] = useState(false);
+  const [startingMeetup, setStartingMeetup] = useState('');
+  const [finishingMeetup, setFinishingMeetup] = useState('');
 
   // 基本は、mapのいずれをtapしてもなにも起きないようにする。launchMeetupがtrueのときだけ、mapをtapしたらlocationをsetして、launchのformを出す。
   const setMeetupLocation = (event) => {
@@ -199,6 +203,10 @@ const Map = (props) => {
           setIsStartMeetupConfirmationModalOpen,
           isFinishMeetupConfirmationModalOpen,
           setIsFinishMeetupConfirmationModalOpen,
+          startingMeetup,
+          setStartingMeetup,
+          finishingMeetup,
+          setFinishingMeetup,
         }}
       >
         <View style={styles.container}>
@@ -239,6 +247,8 @@ const Map = (props) => {
 
           <ConfirmLaunchMeetupModal />
           <CancelLaunchMeetupModal />
+          <ConfirmStartMeetup />
+          <ConfirmFinishMeetup />
           {/* <SnackBar /> */}
 
           <AppMenusBottomSheet />

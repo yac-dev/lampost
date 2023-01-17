@@ -116,43 +116,6 @@ const Container = (props) => {
     setTotalUnreadChatsCount((previous) => previous - minus);
   }, []);
 
-  // useEffect(() => {
-  //   auth.socket.emit('JOIN_A_LOUNGE', { chatRoom: props.route.params.meetup.chatRoom, socketId: auth.socket.id });
-  //   auth.socket.on('SOMEONE_JOINED_TO_MY_LOUNGE', (data) => {
-  //     console.log(data.message);
-  //   });
-
-  //   return () => {
-  //     auth.socket.off('JOIN_A_LOUNGE');
-  //     auth.socket.off('SOMEONE_JOINED_TO_MY_LOUNGE');
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   auth.socket.on('SOMEONE_JOINED_TO_MY_LOUNGE', (data) => {
-  //     console.log(data.message);
-  //   });
-
-  //   return () => {
-  //     auth.socket.off('SOMEONE_JOINED_TO_MY_LOUNGE');
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   auth.socket.on('SOMEONE_SENT_A_CHAT_TO_MY_GROUP', (data) => {
-  //     console.log('got message');
-  //     setChats((previous) => [...previous, data]);
-  //   });
-
-  //   return () => {
-  //     auth.socket.off('SOMEONE_SENT_A_CHAT_TO_MY_GROUP');
-  //   };
-  // }, []);
-
-  // ここに入った時点で、chatroomのidを持っている状態になる。
-  const sendTestMessage = () => {
-    auth.socket.emit('SEND_TEST_MESSAGE', { message: 'hello', id: auth.socket.id });
-  };
   return (
     <LoungeContext.Provider
       value={{

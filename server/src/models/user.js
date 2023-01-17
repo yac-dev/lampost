@@ -21,9 +21,12 @@ const userSchema = new mongoose.Schema({
   pushToken: {
     type: String,
   },
-  isInMeetup: {
-    state: { type: Boolean, default: false },
-    meetup: { type: mongoose.Schema.ObjectId, ref: 'Meetup' },
+  ongoingMeetup: {
+    meetup: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Meetup',
+    },
+    state: false,
   },
   // 4つまでで。
   topBadges: [

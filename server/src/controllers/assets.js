@@ -7,7 +7,7 @@ export const createPhoto = async (request, response) => {
   try {
     const { meetupId, userId } = request.body;
     const user = await User.findById(userId);
-    if (!user.isInMeetup.state) {
+    if (!user.ongoingMeetup.state) {
       // ここでerrorを返すのか。
       throw new Error('This is the error');
     } else {

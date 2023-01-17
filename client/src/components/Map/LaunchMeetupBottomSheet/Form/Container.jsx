@@ -127,11 +127,6 @@ const Container = (props) => {
     setMeetups,
   } = useContext(MapContext);
 
-  const formValidation = () => {
-    // formのvalidationをここに書いていくことになる。
-    return true;
-  };
-
   const onSubmit = async () => {
     setLoading(true);
     const payload = {
@@ -179,6 +174,7 @@ const Container = (props) => {
             _id: meetup._id,
             title: meetup.title,
             chats: [],
+            unreadChatsCount: 0,
             startDateAndTime: meetup.startDateAndTime,
             viewedChatsLastTime: viewedChatsLastTime,
             launcher: launcher,

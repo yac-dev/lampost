@@ -9,18 +9,18 @@ const pastMeetupAndUserRelationshipSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
-  launcher: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User',
-  },
-  representation: String,
-  impressions: [
-    {
-      text: String,
-      user: { type: mongoose.Schema.ObjectId, ref: 'User' },
-      createdAt: Date,
-    },
-  ],
+  // launcher: {
+  //   type: mongoose.Schema.ObjectId,
+  //   ref: 'User',
+  // },
+  // representation: String,
+  // impressions: [
+  //   {
+  //     text: String,
+  //     user: { type: mongoose.Schema.ObjectId, ref: 'User' },
+  //     createdAt: Date,
+  //   },
+  // ],
 });
 
 const PastMeetupAndUserRelationship = mongoose.model(
