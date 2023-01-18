@@ -17,7 +17,7 @@ import FormContainer from './Form/Container';
 
 const BottomSheet = (props) => {
   const { launchMeetupBottomSheetRef } = useContext(MapContext);
-  const snapPoints = ['55%'];
+  const snapPoints = ['55%', '90%'];
 
   // if (props.hostMeetup.isOpen && props.hostMeetup.setLocation) {
   return (
@@ -26,6 +26,7 @@ const BottomSheet = (props) => {
       enableOverDrag={true}
       ref={launchMeetupBottomSheetRef}
       snapPoints={snapPoints}
+      keyboardBehavior={'extend'}
       // enablePanDownToClose={true}
       // onClose={() => onFormBottomSheetClose()}
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}

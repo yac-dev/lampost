@@ -47,7 +47,7 @@ const Crew = (props) => {
       return (
         <View style={{}}>
           <Text style={{ color: baseTextColor, marginBottom: 10 }}>
-            These people attend this meetup. Feel free to join!
+            These people are attending this meetup. Feel free to join!.
           </Text>
           <View style={{ backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>{crewList}</View>
         </View>

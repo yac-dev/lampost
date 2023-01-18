@@ -152,16 +152,10 @@ const Menus = (props) => {
         backgroundColor={backgroundColorsTable['red1']}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              {selectedMeetup.launcher.photo ? (
-                <Image
-                  source={{ uri: selectedMeetup.launcher.photo }}
-                  style={{ width: 35, height: 35, borderRadius: 10, marginRight: 10 }}
-                />
-              ) : (
-                <View style={{ backgroundColor: 'red', width: 35, height: 35, borderRadius: 7, marginRight: 5 }}></View>
-              )}
-              <Text style={{ color: baseTextColor }}>{selectedMeetup.launcher.name}</Text>
+            <View style={{ width: 80 }}>
+              <Text numberOfLines={1} style={{ color: baseTextColor }}>
+                {selectedMeetup.launcher.name}
+              </Text>
             </View>
             <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
           </View>
@@ -175,14 +169,15 @@ const Menus = (props) => {
       />
       <Menu
         label='Description'
-        onPress={() => console.log('hello')}
         backgroundColor={backgroundColorsTable['green1']}
         icon={<MaterialCommunityIcons name='card-text-outline' size={25} color={iconColorsTable['green1']} />}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text numberOfLines={1} style={{ color: baseTextColor, width: 100 }}>
-              {selectedMeetup.description}
-            </Text>
+            <View style={{ width: 80 }}>
+              <Text numberOfLines={1} style={{ color: baseTextColor }}>
+                {selectedMeetup.description}
+              </Text>
+            </View>
             <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
           </View>
         }

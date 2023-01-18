@@ -2,6 +2,7 @@ import Asset from '../models/asset';
 import Meetup from '../models/meetup';
 import User from '../models/user';
 import { uploadPhoto } from '../services/s3';
+import AssetAndUserRelationship from '../models/AssetAndUserRelationship';
 
 export const createPhoto = async (request, response) => {
   try {
@@ -18,6 +19,11 @@ export const createPhoto = async (request, response) => {
         createdBy: userId,
         createdAt: new Date(),
       });
+      // これ、いらないね。created Byを持てるから。
+      // const assetAndUserRelationship = await AssetAndUserRelationship.create({
+      //   asset: asset._id,
+      //   user: userId,
+      // });
       const meetup = await Meetup.findById(meetupId);
       meetup.assets.push(asset);
       meetup.save();

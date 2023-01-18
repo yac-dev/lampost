@@ -28,6 +28,7 @@ const Container = (props) => {
     setFinishingMeetup,
   } = useContext(MapContext);
 
+  // console.log(myUpcomingMeetupAndChatsTable);
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
       weekday: 'short',
@@ -208,7 +209,7 @@ const Container = (props) => {
 
       return <View style={{ backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>{myUpcomingMeetupslist}</View>;
     } else {
-      return <Text style={{ color: baseTextColor }}>You'll see all the meetups that you've joined.</Text>;
+      return <Text style={{ color: baseTextColor }}>You'll see all the meetups that you've launched or joined.</Text>;
     }
   };
 

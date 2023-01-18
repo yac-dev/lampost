@@ -40,7 +40,7 @@ const MapNavigator = (props) => {
             headerTransparent: true,
             headerTitleStyle: {
               fontWeight: 'bold',
-              color: 'white',
+              // color: 'white',
             },
             // headerLeft: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
             // headerRight: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,

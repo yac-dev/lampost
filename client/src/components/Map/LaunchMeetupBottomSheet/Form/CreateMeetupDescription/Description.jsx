@@ -12,7 +12,7 @@ const Description = (props) => {
     <View style={{ marginBottom: 20 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Text style={{ fontWeight: 'bold', fontSize: 13, color: baseTextColor, flexShrink: 1, marginBottom: 10 }}>
-          Please write a message to the attendees or more detail.
+          Please write a message to the attendees or more detail info.
         </Text>
         <Text style={{ fontSize: 13, color: baseTextColor }}>{props.state.description.length}/300</Text>
       </View>

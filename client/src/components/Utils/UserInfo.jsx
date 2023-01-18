@@ -51,7 +51,7 @@ const UserInfo = (props) => {
         </View>
       )}
       <View style={{ flexDirection: 'column' }}>
-        <Text style={{ color: baseTextColor, marginBottom: 3 }}>{props.user.name}</Text>
+        <Text style={{ color: 'white', marginBottom: 3, fontSize: 15 }}>{props.user.name}</Text>
         {renderTopBadges(props.user.topBadges)}
       </View>
     </View>

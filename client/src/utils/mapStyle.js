@@ -8,7 +8,6 @@ export const mapStyle = [
       },
     ],
   },
-
   {
     featureType: 'administrative.country',
     stylers: [
@@ -17,7 +16,6 @@ export const mapStyle = [
       },
     ],
   },
-
   {
     featureType: 'administrative.province',
     stylers: [
@@ -35,7 +33,6 @@ export const mapStyle = [
       },
     ],
   },
-
   {
     featureType: 'all',
     elementType: 'geometry',
@@ -45,7 +42,6 @@ export const mapStyle = [
       },
     ],
   },
-
   {
     featureType: 'landscape',
     elementType: 'geometry',

@@ -52,7 +52,7 @@ const Map = (props) => {
   const [isCancelLaunchMeetupConfirmationModalOpen, setIsCancelLaunchMeetupConfirmationModalOpen] = useState(false);
   const [isLaunchMeetupConfirmed, setIsLaunchMeetupConfirmed] = useState(false);
   const [launchLocation, setLaunchLocation] = useState(null);
-  const [meetups, setMeetups] = useState([]);
+  const [meetups, setMeetups] = useState({});
   const [selectedMeetup, setSelectedMeetup] = useState(null);
   const [selectedMeetupDetailComponent, setSelectedMeetupDetailComponent] = useState('');
 
@@ -91,7 +91,11 @@ const Map = (props) => {
   const getMeetups = async () => {
     const result = await lampostAPI.get('/meetups');
     const { meetups } = result.data;
-    setMeetups(meetups);
+    const hashTable = {};
+    meetups.forEach((meetup) => {
+      hashTable[meetup._id] = meetup;
+    });
+    setMeetups(hashTable);
   };
   useFocusEffect(
     React.useCallback(() => {

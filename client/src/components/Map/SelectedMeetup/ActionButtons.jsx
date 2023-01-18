@@ -29,6 +29,7 @@ const ActionButtons = (props) => {
         },
       };
     });
+    // launcherが必要か。
     setMyUpcomingMeetupAndChatsTable((previous) => {
       return {
         ...previous,
@@ -36,8 +37,11 @@ const ActionButtons = (props) => {
           _id: selectedMeetup._id,
           startDateAndTime: selectedMeetup.startDateAndTime,
           title: selectedMeetup.title,
+          chats: meetupObject.loungeChats,
           unreadChatsCount: 0,
           viewedChatsLastTime: new Date(),
+          launcher: meetupObject.launcher,
+          state: meetupObject.state,
         },
       };
     });
@@ -49,14 +53,7 @@ const ActionButtons = (props) => {
       };
     });
     setLoading(false);
-    setSnackBar({ isVisible: true, message: 'Joined the meetup successfully.', barType: 'success' });
-    setTimeout(() => {
-      setSnackBar({
-        isVisible: false,
-        message: '',
-        barType: '',
-      });
-    }, 5000);
+    setSnackBar({ isVisible: true, message: 'Joined the meetup successfully.', barType: 'success', duration: 5000 });
   };
 
   const leaveMeetup = async () => {
@@ -88,14 +85,7 @@ const ActionButtons = (props) => {
       };
     });
     setLoading(false);
-    setSnackBar({ isVisible: true, message: 'Left the meetup successfully.', barType: 'success' });
-    setTimeout(() => {
-      setSnackBar({
-        isVisible: false,
-        message: '',
-        barType: '',
-      });
-    }, 5000);
+    setSnackBar({ isVisible: true, message: 'Left the meetup successfully.', barType: 'success', duration: 5000 });
   };
 
   const startMeetup = async () => {
@@ -112,15 +102,15 @@ const ActionButtons = (props) => {
     // まず、authの確認。login状態なら、action buttonsをrenderする。
     if (auth.data) {
       // selectedMmeetupをlaunchした人が自分だった場合のmenu
-      if (myUpcomingMeetupAndChatsTable[selectedMeetup._id].launcher === auth.data._id) {
+      if (myUpcomingMeetupAndChatsTable[selectedMeetup._id]?.launcher === auth.data._id) {
         return (
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <ActionButton
+            {/* <ActionButton
               label='Start meetup now'
               icon={<Feather name='power' size={20} color={'white'} />}
               backgroundColor={iconColorsTable['blue1']}
               onActionButtonPress={() => console.log('start meetup now', selectedMeetup._id)}
-            />
+            /> */}
             <ActionButton
               label='Go to lounge'
               icon={<Ionicons name='ios-chatbubbles' size={25} color={'white'} />}
@@ -224,7 +214,7 @@ const ActionButtons = (props) => {
   };
 
   return (
-    <ScrollView horizontal={true} style={{ marginBottom: 25 }}>
+    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginBottom: 25 }}>
       {renderApp()}
     </ScrollView>
   );

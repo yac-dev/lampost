@@ -152,7 +152,13 @@ const Container = (props) => {
     };
     const result = await lampostAPI.post('/meetups', payload);
     const { meetup, viewedChatsLastTime, launcher } = result.data;
-    setMeetups((previous) => [...previous, meetup]);
+    console.log('this is the launcher');
+    setMeetups((previous) => {
+      return {
+        ...previous,
+        [meetup._id]: meetup,
+      };
+    });
     if (launcher === auth.data._id) {
       setLoading(false);
       setAuth((previous) => {
@@ -167,6 +173,7 @@ const Container = (props) => {
           },
         };
       });
+      // ここでも、chat roomにjoinしなきゃいけない。
       setMyUpcomingMeetupAndChatsTable((previous) => {
         return {
           ...previous,
@@ -178,9 +185,11 @@ const Container = (props) => {
             startDateAndTime: meetup.startDateAndTime,
             viewedChatsLastTime: viewedChatsLastTime,
             launcher: launcher,
+            state: meetup.state,
           },
         };
       });
+      auth.socket.emit('JOIN_A_LOUNGE', { meetupId: meetup._id });
       setIsLaunchMeetupConfirmed(false);
       setLaunchLocation(null);
       launchMeetupBottomSheetRef.current.close();

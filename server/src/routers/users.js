@@ -3,7 +3,6 @@ const router = express.Router();
 import multer from '../middlewares/multerForAvatar';
 import {
   getUser,
-  connectUser,
   addBadges,
   getPastMeetups,
   getUserAssets,

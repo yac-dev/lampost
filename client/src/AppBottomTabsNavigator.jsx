@@ -321,7 +321,11 @@ const AppStack = (props) => {
             options={({ route }) => ({
               headerShown: false,
               tabBarIcon: ({ size, color, focused }) => (
-                <MCIcon name={'map'} color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+                <MaterialCommunityIcons
+                  name={'rocket-launch'}
+                  color={focused ? 'white' : 'rgb(102, 104, 109)'}
+                  size={size}
+                />
               ),
               tabBarLabel: 'Meetups',
               // tabBarLabelStyle: { padding: 5 },

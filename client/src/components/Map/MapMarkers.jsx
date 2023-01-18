@@ -35,8 +35,9 @@ const MapMarkers = (props) => {
 
   // badgeだけ、また別で作った方がいいわ。
   const renderMeetups = () => {
-    if (meetups.length) {
-      const meetupsList = meetups.map((meetup, index) => {
+    const meetupsArray = Object.values(meetups);
+    if (meetupsArray.length) {
+      const meetupsList = meetupsArray.map((meetup, index) => {
         // if (selectedMeetup && selectedMeetup._id === meetup._id) {
         //   return (
         //     <View key={index}>

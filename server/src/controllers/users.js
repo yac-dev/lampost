@@ -1,6 +1,5 @@
 import User from '../models/user';
 import Badge from '../models/badge';
-import ChatRoom from '../models/chatRoom';
 import Meetup from '../models/meetup';
 import Asset from '../models/asset';
 import { uploadAvatar } from '../services/s3';
@@ -16,26 +15,6 @@ export const getUser = async (request, response) => {
     //     model: Badge,
     //   },
     // });
-    response.status(200).json({
-      user,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const connectUser = async (request, response) => {
-  try {
-    const { userId } = request.body;
-    const user = await User.findById(request.params.id);
-    const chatRoom = await ChatRoom.create({});
-    const connectionObject = {
-      user: userId,
-      chatRoom: chatRoom._id,
-      viewedChatsLastTime: new Date(),
-    };
-    user.connections.push(connectionObject);
-    user.save();
     response.status(200).json({
       user,
     });

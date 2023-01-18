@@ -7,8 +7,8 @@ import { baseTextColor, appBottomSheetBackgroundColor } from '../../utils/colors
 import lampostAPI from '../../apis/lampost';
 
 const ConfirmFinishMeetup = (props) => {
-  const { auth } = useContext(GlobalContext);
-  const { isFinishMeetupConfirmationModalOpen, setIsFinishMeetupConfirmationModalOpen, finishingMeetup } =
+  const { auth, setAuth, setMyUpcomingMeetupAndChatsTable } = useContext(GlobalContext);
+  const { isFinishMeetupConfirmationModalOpen, setIsFinishMeetupConfirmationModalOpen, finishingMeetup, setMeetups } =
     useContext(MapContext);
 
   return (
@@ -34,7 +34,7 @@ const ConfirmFinishMeetup = (props) => {
                   ...previous,
                   data: {
                     ...previous.data,
-                    isInMeetup: '',
+                    ongoingMeetup: { state: false },
                   },
                 };
               });
@@ -43,7 +43,13 @@ const ConfirmFinishMeetup = (props) => {
                 delete updating[finishingMeetup];
                 return updating;
               });
+              auth.socket.emit('LEAVE_A_LOUNGE', { meetupId: finishingMeetup });
               setIsFinishMeetupConfirmationModalOpen(false);
+              setMeetups((previous) => {
+                const updating = { ...previous };
+                delete updating[finishingMeetup];
+                return updating;
+              });
               // ここで、meetupを地図から消さないといかん。
             }}
           >

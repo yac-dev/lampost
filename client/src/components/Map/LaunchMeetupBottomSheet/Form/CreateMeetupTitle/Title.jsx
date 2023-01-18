@@ -8,7 +8,12 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
-import { iconColorsTable, baseTextColor, sectionBackgroundColor } from '../../../../../utils/colorsTable';
+import {
+  iconColorsTable,
+  baseTextColor,
+  sectionBackgroundColor,
+  inputBackgroundColor,
+} from '../../../../../utils/colorsTable';
 
 const Title = (props) => {
   const { launchMeetupBottomSheetRef } = useContext(MapContext);
@@ -26,7 +31,7 @@ const Title = (props) => {
           style={{
             flex: 1,
             padding: 10,
-            backgroundColor: sectionBackgroundColor,
+            backgroundColor: inputBackgroundColor,
             color: baseTextColor,
             borderRadius: 5,
           }}

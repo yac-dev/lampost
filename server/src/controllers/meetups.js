@@ -1,7 +1,6 @@
 import Meetup from '../models/meetup';
 import User from '../models/user';
 import LoungeChat from '../models/loungeChat';
-import ChatRoom from '../models/chatRoom';
 import Badge from '../models/badge';
 import Comment from '../models/comment';
 import schedule from 'node-schedule';
@@ -95,7 +94,7 @@ export const createMeetup = async (request, response) => {
       // endDateAndTime,
     });
 
-    console.log(request.body);
+    // console.log(request.body);
 
     if (isMeetupFeeFree) {
       meetup.isFeeFree = true;
@@ -165,6 +164,8 @@ export const createMeetup = async (request, response) => {
         _id: meetup._id,
         place: meetup.place,
         title: meetup.title,
+        state: meetup.state, // upcomingなはず。
+        launcher: meetup.launcher,
         startDateAndTime: meetup.startDateAndTime,
         badge: badges[0],
         // startDateAndTime: meetup.startDateAndTime,
@@ -189,7 +190,7 @@ export const startMeetup = async (request, response) => {
     meetup.save();
     const users = await User.find({ _id: { $in: meetup.attendees } });
     users.forEach((user) => {
-      user.isInMeetup = request.params.id;
+      user.ongoingMeetup = { meetup: request.params.id, state: true };
       user.save();
     });
 
@@ -209,19 +210,39 @@ export const finishMeetup = async (request, response) => {
     meetup.state = 'finished';
     meetup.save();
     const users = await User.find({ _id: { $in: meetup.attendees } });
+    // users.forEach((user) => {
+    //   user.ongoingMeetup = { state: false };
+    //   user.logs = user.logs + 1;
+    //   for (let i = 0; i < user.upcomingMeetups.length; i++) {
+    //     if (user.upcomingMeetups[i].meetup.toString() === meetup._id) {
+    //       console.log('removing');
+    //       user.upcomingMeetups.splice(i, 1);
+    //     }
+    //   }
+    //   user.save();
+    // });
+
+    for (let i = 0; i < users.length; i++) {
+      users[i].ongoingMeetup = { state: false };
+      users[i].logs = users[i].logs + 1;
+      for (let j = 0; j < users[i].upcomingMeetups.length; j++) {
+        if (users[i].upcomingMeetups[j].meetup.toString() === meetup._id) {
+          console.log('removing');
+          users[i].upcomingMeetups.splice(j, 1);
+        }
+      }
+      users[i].save();
+    }
+    const insertingArray = [];
+    // forEachって、新しいarrayを返してくんなかったけ？？
     users.forEach((user) => {
-      user.isInMeetup = ''; // 当然、なにもなしね。
-      user.logs = user.logs + 1;
-      user.save();
-    });
-    const insertingArray = users.forEach((user) => {
-      return {
-        pastMeetup: request.params.id,
-        user: user,
-      };
+      insertingArray.push({
+        pastMeetup: meetup._id,
+        user: user._id,
+      });
     });
 
-    const pastMeetupAndUserRelationship = await PastMeetupAndUserRelationship.insertMeny(insertingArray);
+    const pastMeetupAndUserRelationship = await PastMeetupAndUserRelationship.insertMany(insertingArray);
     // pastmeetupのinsertmanyをやる感じか。。。。
     response.status(200).json({
       meetupId: meetup._id,
@@ -329,24 +350,10 @@ export const getSelectedMeetup = async (request, response) => {
 
 export const getMeetup = async (request, response) => {
   try {
-    const meetup = await Meetup.findById(request.params.id)
-      .populate({
-        path: 'attendees',
-        model: User,
-      })
-      .populate({
-        path: 'chatRoom',
-        model: ChatRoom,
-        populate: {
-          path: 'chats',
-          model: Chat,
-          populate: {
-            path: 'user',
-            model: User,
-            select: 'name _id',
-          },
-        },
-      });
+    const meetup = await Meetup.findById(request.params.id).populate({
+      path: 'attendees',
+      model: User,
+    });
     // console.log(meetup);
     response.status(200).json({
       meetup,
@@ -443,14 +450,22 @@ export const joinMeetup = async (request, response) => {
     user.upcomingMeetups.push(meetupObj);
     user.save();
 
+    const loungeChats = await LoungeChat.find({ meetup: meetup._id }).populate({
+      path: 'user',
+      select: 'name photo',
+    });
+
     response.status(200).json({
       meetupObject: {
         meetup: {
           _id: meetup._id,
           title: meetup.title,
+          state: meetup.state,
+          launcher: meetup.launcher,
           startDataAndTime: meetup.startDateAndTime,
         },
         viewedChatsLastTime: new Date(),
+        loungeChats,
       },
       totalAttendees: meetup.totalAttendees,
     });
