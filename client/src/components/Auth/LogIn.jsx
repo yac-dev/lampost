@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import lampostAPI from '../../apis/lampost';
 import GlobalContext from '../../GlobalContext';
 import AuthContext from './AuthContext';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { baseTextColor, iconColorsTable } from '../../utils/colorsTable';
 import ActionButton from '../Utils/ActionButton';
@@ -33,16 +33,16 @@ const Login = () => {
           isAuthenticated: true,
         };
       });
-      setLoading(false);
-      setIsLoginOrSignup('');
       loginOrSignupBottomSheetRef.current.close();
+      setIsLoginOrSignup('');
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <View>
+    <ScrollView>
       <View style={{ marginBottom: 15 }}>
         <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5, color: 'white' }}>Login</Text>
         <Text style={{ color: baseTextColor }}>Please fill in your email and password.</Text>
@@ -61,6 +61,7 @@ const Login = () => {
           value={password}
           onChangeText={(text) => setPassword(text)}
           inputAccessoryViewID={'LOGIN_PASSWORD_IMPUT'}
+          isSecure={true}
         />
       </View>
       <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
@@ -72,7 +73,7 @@ const Login = () => {
         />
       </View>
       {/* <Button onPress={() => login()}>Login</Button> */}
-    </View>
+    </ScrollView>
   );
 };
 

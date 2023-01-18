@@ -22,7 +22,7 @@ const Container = (props) => {
           style={{ justifyContent: 'center', alignItems: 'center', marginTop: 150, paddingLeft: 20, paddingRight: 20 }}
         >
           <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 30, marginBottom: 30 }}>Lampost</Text>
-          <Text style={{ color: 'white', marginBottom: 30 }}>On we go meetup and have fun!</Text>
+          <Text style={{ color: 'white', marginBottom: 30 }}>On we go meetup and share your special moment!</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <ActionButton
               label='Login'

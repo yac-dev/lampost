@@ -192,6 +192,8 @@ const AppStack = (props) => {
     });
   };
 
+  console.log(auth);
+  console.log(myUpcomingMeetupAndChatsTable);
   // loginされたら、socketを取る。
   useEffect(() => {
     if (auth.isAuthenticated) {

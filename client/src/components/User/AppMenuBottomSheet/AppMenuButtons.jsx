@@ -14,7 +14,7 @@ import { iconColorsTable, backgroundColorsTable, sectionBackgroundColor } from '
 import AppMenuButton from '../../Utils/AppMenuButton';
 
 const AppButtons = (props) => {
-  const { setAuth } = useContext(GlobalContext);
+  const { auth, setAuth, setMyUpcomingMeetupAndChatsTable, setTotalUnreadChatsCount } = useContext(GlobalContext);
   const { user, navigation, appMenuBottomSheetRef } = useContext(UserContext);
 
   const logout = async () => {
@@ -24,6 +24,9 @@ const AppButtons = (props) => {
       socket: null,
       currentLocation: null,
     });
+    setMyUpcomingMeetupAndChatsTable({});
+    setTotalUnreadChatsCount(0);
+    auth.socket.disconnect();
   };
 
   return (
