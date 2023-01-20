@@ -6,7 +6,7 @@ import FastImage from 'react-native-fast-image';
 
 const Assets = () => {
   const { selectedLibrary, libraryAssets } = useContext(LibrariesContext);
-  const oneAssetWidth = Dimensions.get('window').width / 3;
+  const oneAssetWidth = Dimensions.get('window').width / 2;
 
   const renderAssets = () => {
     if (libraryAssets.length) {
@@ -14,7 +14,7 @@ const Assets = () => {
         return (
           <TouchableOpacity key={index} style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}>
             <FastImage
-              style={{ width: '100%', height: '100%' }}
+              style={{ width: '100%', height: '100%', borderRadius: 7 }}
               source={{
                 uri: asset.data,
                 priority: FastImage.priority.normal,

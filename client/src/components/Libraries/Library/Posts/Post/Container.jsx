@@ -13,6 +13,7 @@ import ActionButton from '../../../../Utils/ActionButton';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import PostAssets from '../PostAssets';
 
 const PostContainer = (props) => {
   const { auth } = useContext(GlobalContext);
@@ -163,21 +164,11 @@ const PostContainer = (props) => {
           )}
           <Text style={{ color: 'white', fontSize: 17 }}>{libraryPost.user.name}</Text>
         </View>
-        <Text style={{ color: 'white', marginBottom: 10 }}>
+        <Text style={{ color: 'white', marginBottom: 0 }}>
           {libraryPost.caption}&nbsp;&nbsp;
           {renderDate(libraryPost.createdAt)}
         </Text>
-        <View style={{ flexDirection: 'row' }}>
-          {libraryPost.assets.map((asset, index) => {
-            return (
-              <Image
-                key={index}
-                style={{ width: '90%', aspectRatio: 1, marginBottom: 10, marginRight: 5 }}
-                source={{ uri: asset.data }}
-              />
-            );
-          })}
-        </View>
+        <PostAssets assets={libraryPost.assets} />
         <View style={{ flexDirection: 'row', alignSelf: 'flex-end', marginBottom: 10 }}>
           <ActionButton
             label='Add new reaction'

@@ -1,13 +1,16 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
 import GlobalContext from '../../../../GlobalContext';
-import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Image, Dimensions } from 'react-native';
 import { baseTextColor, baseBackgroundColor, iconColorsTable } from '../../../../utils/colorsTable';
 import { FontAwesome5 } from '@expo/vector-icons';
 import lampostAPI from '../../../../apis/lampost';
+import FastImage from 'react-native-fast-image';
+import PostAssets from './PostAssets';
 
 const PostsContainer = (props) => {
   const { auth } = useContext(GlobalContext);
   const [libraryPosts, setLibraryPosts] = useState([]);
+  const win = Dimensions.get('window');
 
   const getLibraryPostsByLibraryId = async () => {
     const result = await lampostAPI.get(`/assetposts/${props.route.params.libraryId}`);
@@ -62,21 +65,11 @@ const PostsContainer = (props) => {
                 )}
                 <Text style={{ color: 'white', fontSize: 17 }}>{libraryPost.user.name}</Text>
               </View>
-              <Text style={{ color: 'white', fontSize: 15, marginBottom: 10 }}>
+              <Text style={{ color: 'white', fontSize: 15, marginBottom: 0 }}>
                 {libraryPost.caption}&nbsp;&nbsp;{renderDate(libraryPost.createdAt)}
               </Text>
             </TouchableOpacity>
-            <View style={{ flexDirection: 'row' }}>
-              {libraryPost.assets.map((asset, index) => {
-                return (
-                  <Image
-                    key={index}
-                    style={{ width: '90%', aspectRatio: 1, marginBottom: 10, marginRight: 5 }}
-                    source={{ uri: asset.data }}
-                  />
-                );
-              })}
-            </View>
+            <PostAssets assets={libraryPost.assets} />
             <TouchableOpacity
               style={{ flexDirection: 'row', marginBottom: 10, flexWrap: 'wrap' }}
               onPress={() => props.navigation.navigate('Post', { libraryPost })}

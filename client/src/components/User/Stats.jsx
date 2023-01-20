@@ -18,7 +18,7 @@ const Stats = () => {
   const { navigation, user } = useContext(UserContext);
 
   return (
-    <ScrollView horizontal={true}>
+    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         {user.leadership.total ? (
           // leadershipがある人のみにこれをrenderする。

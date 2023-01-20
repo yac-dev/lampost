@@ -49,7 +49,7 @@ const Container = (props) => {
   if (hasCameraPermission === undefined) {
     return (
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        <Text style={{ color: baseTextColor }}>Accessing your camera...</Text>;
+        <Text style={{ color: baseTextColor }}>Accessing your camera...</Text>
       </View>
     );
   } else if (!hasCameraPermission) {

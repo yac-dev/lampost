@@ -30,7 +30,7 @@ const Container = (props) => {
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [libraryMembers, setLibraryMembers] = useState([]);
   const [libraryPosts, setLibraryPosts] = useState([]);
-  const oneAssetWidth = Dimensions.get('window').width / 3;
+  const oneAssetWidth = Dimensions.get('window').width / 2;
 
   // ここで、libraryを取ってこないとね。
   const getLibrary = async () => {
@@ -112,7 +112,7 @@ const Container = (props) => {
       });
       return <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{assetsList}</View>;
     } else {
-      return <Text>Now loading...</Text>;
+      return <Text style={{ color: 'white', textAlign: 'center' }}>Now loading...</Text>;
     }
   };
 
