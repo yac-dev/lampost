@@ -191,9 +191,6 @@ const AppStack = (props) => {
       return { ...previous, socket: socket };
     });
   };
-
-  console.log(auth);
-  console.log(myUpcomingMeetupAndChatsTable);
   // loginされたら、socketを取る。
   useEffect(() => {
     if (auth.isAuthenticated) {
@@ -214,7 +211,7 @@ const AppStack = (props) => {
       getMyUpcomingMeetupsAndLoungeChatsByMeetupIds();
       // ここも、appStateが変わるたびに動かさなきゃいけない。
     }
-  }, [auth.isAuthenticated]);
+  }, [auth.isAuthenticated, auth.data?.ongoingMeetup]);
 
   // socketが接続されたら、loungeに入る。
   useEffect(() => {

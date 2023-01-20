@@ -38,11 +38,11 @@ const ConfirmFinishMeetup = (props) => {
                   },
                 };
               });
-              setMyUpcomingMeetupAndChatsTable((previous) => {
-                const updating = { ...previous };
-                delete updating[finishingMeetup];
-                return updating;
-              });
+              // setMyUpcomingMeetupAndChatsTable((previous) => {
+              //   const updating = { ...previous };
+              //   delete updating[finishingMeetup];
+              //   return updating;
+              // });
               auth.socket.emit('LEAVE_A_LOUNGE', { meetupId: finishingMeetup });
               setIsFinishMeetupConfirmationModalOpen(false);
               setMeetups((previous) => {

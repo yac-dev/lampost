@@ -207,25 +207,13 @@ export const startMeetup = async (request, response) => {
 export const finishMeetup = async (request, response) => {
   try {
     const meetup = await Meetup.findById(request.params.id);
-    // meetup.state = 'finished';
-    // meetup.save();
+    meetup.state = 'finished';
+    meetup.save();
     const users = await User.find({ _id: { $in: meetup.attendees } });
-    console.log(users);
-    // users.forEach((user) => {
-    //   user.ongoingMeetup = { state: false };
-    //   user.logs = user.logs + 1;
-    //   for (let i = 0; i < user.upcomingMeetups.length; i++) {
-    //     if (user.upcomingMeetups[i].meetup.toString() === meetup._id) {
-    //       console.log('removing');
-    //       user.upcomingMeetups.splice(i, 1);
-    //     }
-    //   }
-    //   user.save();
-    // });
 
     for (let i = 0; i < users.length; i++) {
-      // users[i].ongoingMeetup = { state: false };
-      // users[i].logs++;
+      users[i].ongoingMeetup = { state: false };
+      users[i].logs++;
       for (let j = 0; j < users[i].upcomingMeetups.length; j++) {
         // console.log('heeeeeeeey', users[i].upcomingMeetups[j].meetup.toString(), meetup._id);
         // これ見ると、queryしてきたdocumentのidもObjectIdのinstance扱いになるんだな。。。このidの比較、面倒だな。
@@ -236,16 +224,16 @@ export const finishMeetup = async (request, response) => {
       }
       users[i].save();
     }
-    // const insertingArray = [];
-    // // forEachって、新しいarrayを返してくんなかったけ？？
-    // users.forEach((user) => {
-    //   insertingArray.push({
-    //     pastMeetup: meetup._id,
-    //     user: user._id,
-    //   });
-    // });
+    const insertingArray = [];
+    // forEachって、新しいarrayを返してくんなかったけ？？
+    users.forEach((user) => {
+      insertingArray.push({
+        pastMeetup: meetup._id,
+        user: user._id,
+      });
+    });
 
-    // const pastMeetupAndUserRelationship = await PastMeetupAndUserRelationship.insertMany(insertingArray);
+    const pastMeetupAndUserRelationship = await PastMeetupAndUserRelationship.insertMany(insertingArray);
     // pastmeetupのinsertmanyをやる感じか。。。。
     response.status(200).json({
       meetupId: meetup._id,
