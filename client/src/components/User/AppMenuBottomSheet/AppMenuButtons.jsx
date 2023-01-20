@@ -16,7 +16,7 @@ import AppMenuButton from '../../Utils/AppMenuButton';
 const AppButtons = (props) => {
   const { auth, setAuth, setMyUpcomingMeetupAndChatsTable, setTotalUnreadChatsCount, setIsNotAvailableModalOpen } =
     useContext(GlobalContext);
-  const { user, navigation, appMenuBottomSheetRef } = useContext(UserContext);
+  const { user, navigation, appMenuBottomSheetRef, setIsConfirmLogoutModalOpen } = useContext(UserContext);
 
   const logout = async () => {
     await SecureStore.deleteItemAsync('secure_token');
@@ -73,11 +73,11 @@ const AppButtons = (props) => {
         />
         <AppMenuButton
           backgroundColor={backgroundColorsTable['blue1']}
-          icon={<MaterialCommunityIcons name='logout' size={35} color={iconColorsTable['blue1']} />}
+          icon={<MaterialCommunityIcons name='exit-run' size={35} color={iconColorsTable['blue1']} />}
           label='Logout'
           onAppMenuButtonPress={() => {
             // ここは、authを消すだけだよね。。。ただ、httpでrequestするっていう方がいいのかもな。
-            logout();
+            setIsConfirmLogoutModalOpen(true);
           }}
         />
       </ScrollView>

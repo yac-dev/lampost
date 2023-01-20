@@ -4,7 +4,7 @@ import GlobalContext from '../../GlobalContext';
 import AuthContext from './AuthContext';
 import { View, Text, ScrollView } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
-import { baseTextColor, iconColorsTable } from '../../utils/colorsTable';
+import { baseBackgroundColor, baseTextColor, iconColorsTable } from '../../utils/colorsTable';
 import ActionButton from '../Utils/ActionButton';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -12,7 +12,6 @@ import FormTextInput from './FormTextInput';
 
 const Login = () => {
   const { setAuth, setLoading } = useContext(GlobalContext);
-  const { loginOrSignupBottomSheetRef, setIsLoginOrSignup } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -33,8 +32,6 @@ const Login = () => {
           isAuthenticated: true,
         };
       });
-      loginOrSignupBottomSheetRef.current.close();
-      setIsLoginOrSignup('');
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -42,9 +39,11 @@ const Login = () => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView
+      style={{ flex: 1, backgroundColor: baseBackgroundColor, paddingLeft: 20, paddingRight: 20, paddingTop: 20 }}
+    >
       <View style={{ marginBottom: 15 }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5, color: 'white' }}>Login</Text>
+        {/* <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5, color: 'white' }}>Login</Text> */}
         <Text style={{ color: baseTextColor }}>Please fill in your email and password.</Text>
       </View>
       <View style={{ marginBottom: 15 }}>
@@ -72,7 +71,6 @@ const Login = () => {
           onActionButtonPress={() => login()}
         />
       </View>
-      {/* <Button onPress={() => login()}>Login</Button> */}
     </ScrollView>
   );
 };

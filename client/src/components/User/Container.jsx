@@ -17,7 +17,7 @@ import AddBadgeTagsBottomSheet from './AddBadgeTagsBottomSheet/Container';
 import AddLinkBottomSheet from './AddLinkBottomSheet/Container';
 import ConfirmEditProfileModal from './ConfirmEditProfileModal';
 import ConfirmActionButtonModal from './ConfirmActionButtonModal';
-import SelectedProfileImage from './SelectedProfileImage';
+import ConfirmLogout from './ConfirmLogout';
 
 // badgeを取ってきて、skillも取ってくる。subscriberの数も返すし、connectionの数も返す。
 const Container = (props) => {
@@ -27,6 +27,7 @@ const Container = (props) => {
   const [pressedBadgeData, setPressedBadgeData] = useState(null);
   const [isMyPage, setIsMyPage] = useState();
   const [isConfirmEditProfileModalOpen, setIsConfirmEditProfileModalOpen] = useState(false);
+  const [isConfirmLogoutModalOpen, setIsConfirmLogoutModalOpen] = useState(false);
   const [confirmActionButtonModal, setConfirmActionButtonModal] = useState({ isOpen: false, type: '' });
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
   const appMenuBottomSheetRef = useRef(null);
@@ -143,6 +144,8 @@ const Container = (props) => {
           setBadgeDatas,
           isConfirmEditProfileModalOpen,
           setIsConfirmEditProfileModalOpen,
+          isConfirmLogoutModalOpen,
+          setIsConfirmLogoutModalOpen,
           confirmActionButtonModal,
           setConfirmActionButtonModal,
           selectedProfileImage,
@@ -166,6 +169,7 @@ const Container = (props) => {
           {/* <SelectedProfileImage /> */}
           <ConfirmEditProfileModal />
           <ConfirmActionButtonModal />
+          <ConfirmLogout />
         </View>
       </UserContext.Provider>
     );

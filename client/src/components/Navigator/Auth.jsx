@@ -173,6 +173,36 @@ const Auth = (props) => {
             headerTintColor: 'white',
           }}
         />
+        <Stack.Screen
+          name='Login'
+          component={LogIn}
+          options={{
+            headerShown: true,
+            title: 'Login',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          }}
+        />
+        <Stack.Screen
+          name='Signup'
+          component={SignUp}
+          options={{
+            headerShown: true,
+            title: 'Welcome to Lampost',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          }}
+        />
       </Stack.Navigator>
     );
   }
