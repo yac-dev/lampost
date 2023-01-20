@@ -14,7 +14,8 @@ import { iconColorsTable, backgroundColorsTable, sectionBackgroundColor } from '
 import AppMenuButton from '../../Utils/AppMenuButton';
 
 const AppButtons = (props) => {
-  const { auth, setAuth, setMyUpcomingMeetupAndChatsTable, setTotalUnreadChatsCount } = useContext(GlobalContext);
+  const { auth, setAuth, setMyUpcomingMeetupAndChatsTable, setTotalUnreadChatsCount, setIsNotAvailableModalOpen } =
+    useContext(GlobalContext);
   const { user, navigation, appMenuBottomSheetRef } = useContext(UserContext);
 
   const logout = async () => {
@@ -54,7 +55,8 @@ const AppButtons = (props) => {
             backgroundColor={backgroundColorsTable['yellow1']}
             icon={<Foundation name='dollar' size={35} color={iconColorsTable['yellow1']} />}
             label='Membership tier'
-            onAppMenuButtonPress={() => null}
+            onAppMenuButtonPress={() => setIsNotAvailableModalOpen(true)}
+            isDisabled={true}
           />
         ) : null}
         {/* <AppButton
@@ -66,7 +68,8 @@ const AppButtons = (props) => {
           backgroundColor={backgroundColorsTable['grey1']}
           icon={<Fontisto name='player-settings' size={35} color={iconColorsTable['grey1']} />}
           label='Personal setting'
-          onAppMenuButtonPress={() => null}
+          onAppMenuButtonPress={() => setIsNotAvailableModalOpen(true)}
+          isDisabled={true}
         />
         <AppMenuButton
           backgroundColor={backgroundColorsTable['blue1']}

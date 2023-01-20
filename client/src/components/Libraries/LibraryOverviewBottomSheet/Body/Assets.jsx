@@ -19,7 +19,7 @@ const Assets = () => {
                 uri: asset.data,
                 priority: FastImage.priority.normal,
               }}
-              resizeMode={FastImage.resizeMode.contain}
+              resizeMode={FastImage.resizeMode.stretch}
             />
           </TouchableOpacity>
         );

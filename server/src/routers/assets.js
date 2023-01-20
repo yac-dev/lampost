@@ -5,6 +5,7 @@ import { createPhoto, createVideo, getUserAssets, getAsset } from '../controller
 import { authorization } from '../middlewares/authorization';
 
 // router.route('/').get(getUserAssets);
+router.route('/').post(getUserAssets);
 router.route('/photos').post(multer.single('asset'), createPhoto);
 router.route('/videos').post(createVideo);
 

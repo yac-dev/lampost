@@ -47,7 +47,7 @@ const Stats = () => {
                     <MaterialCommunityIcons name='fire' color={'white'} size={25} />
                   </View>
                 </View>
-                <Text style={{ color: 'white', fontSize: 20 }}>256</Text>
+                <Text style={{ color: 'white', fontSize: 20 }}>{user.leadership.total}</Text>
               </View>
               <Text style={{ color: baseTextColor, fontSize: 17 }}>Leadership</Text>
             </TouchableOpacity>
@@ -76,7 +76,7 @@ const Stats = () => {
                     <MaterialIcons name='groups' size={25} color={'white'} />
                   </View>
                 </View>
-                <Text style={{ color: 'white', fontSize: 20 }}>256</Text>
+                <Text style={{ color: 'white', fontSize: 20 }}>{user.patrons}</Text>
               </View>
               <Text style={{ color: baseTextColor, fontSize: 17 }}>Patrons</Text>
             </TouchableOpacity>
@@ -107,7 +107,7 @@ const Stats = () => {
                 <MaterialCommunityIcons name='camera' color={'white'} size={25} />
               </View>
             </View>
-            <Text style={{ color: 'white', fontSize: 20 }}>256</Text>
+            <Text style={{ color: 'white', fontSize: 20 }}>{user.assets}</Text>
           </View>
           <Text style={{ color: baseTextColor, fontSize: 17 }}>Assets</Text>
         </TouchableOpacity>
@@ -135,7 +135,7 @@ const Stats = () => {
                 <MaterialCommunityIcons name='history' color={'white'} size={25} />
               </View>
             </View>
-            <Text style={{ color: 'white', fontSize: 20 }}>13</Text>
+            <Text style={{ color: 'white', fontSize: 20 }}>{user.logs}</Text>
           </View>
           <Text style={{ color: baseTextColor, fontSize: 17 }}>Logs</Text>
         </TouchableOpacity>

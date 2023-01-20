@@ -3,7 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, Dimensions } from 'react-nati
 import GlobalContext from '../../../GlobalContext';
 import lampostAPI from '../../../apis/lampost';
 import FastImage from 'react-native-fast-image';
-import { baseBackgroundColor } from '../../../utils/colorsTable';
+import { baseBackgroundColor, baseTextColor } from '../../../utils/colorsTable';
 import Asset from './Asset';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -63,7 +63,7 @@ const Container = (props) => {
   }, []);
 
   const getAssetsByUserId = async () => {
-    const result = await lampostAPI.get(`/assetanduserrelationships/${auth.data._id}`);
+    const result = await lampostAPI.post('/assets/', { userId: auth.data._id });
     const { assets } = result.data;
     setAssets(assets);
   };
@@ -86,37 +86,41 @@ const Container = (props) => {
   };
 
   const renderUserAssets = () => {
-    const assetsList = assets.map((asset, index) => {
-      return (
-        <TouchableOpacity
-          key={index}
-          style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
-          onPress={() => onAssetPress(asset)}
-        >
-          <FastImage
-            style={{ width: '100%', height: '100%' }}
-            source={{
-              uri: asset.data,
-              priority: FastImage.priority.normal,
-            }}
-            resizeMode={FastImage.resizeMode.contain}
-          />
-          {addedAssets[asset._id] ? (
-            <View
-              style={{
-                top: -10,
-                right: 0,
-                position: 'absolute',
-                color: '#989898',
+    if (assets.length) {
+      const assetsList = assets.map((asset, index) => {
+        return (
+          <TouchableOpacity
+            key={index}
+            style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
+            onPress={() => onAssetPress(asset)}
+          >
+            <FastImage
+              style={{ width: '100%', height: '100%' }}
+              source={{
+                uri: asset.data,
+                priority: FastImage.priority.normal,
               }}
-            >
-              <AntDesign name='check' size={25} color='#49CF13' />
-            </View>
-          ) : null}
-        </TouchableOpacity>
-      );
-    });
-    return <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{assetsList}</View>;
+              resizeMode={FastImage.resizeMode.stretch}
+            />
+            {addedAssets[asset._id] ? (
+              <View
+                style={{
+                  top: -10,
+                  right: 0,
+                  position: 'absolute',
+                  color: '#989898',
+                }}
+              >
+                <AntDesign name='check' size={25} color='#49CF13' />
+              </View>
+            ) : null}
+          </TouchableOpacity>
+        );
+      });
+      return <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: 5 }}>{assetsList}</View>;
+    } else {
+      return <Text style={{ color: baseTextColor, textAlign: 'center' }}>Fetching datas now ...</Text>;
+    }
   };
 
   return <ScrollView style={{ flex: 1, backgroundColor: baseBackgroundColor }}>{renderUserAssets()}</ScrollView>;

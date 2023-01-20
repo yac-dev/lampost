@@ -19,7 +19,7 @@ export const createPhoto = async (request, response) => {
         createdBy: userId,
         createdAt: new Date(),
       });
-      user.assets++;
+      user.assets = user.assets + 1;
       user.save();
       // これ、いらないね。created Byを持てるから。
       // const assetAndUserRelationship = await AssetAndUserRelationship.create({
@@ -51,7 +51,9 @@ export const createVideo = () => {
 
 export const getUserAssets = async (request, response) => {
   try {
+    console.log(request.body.userId);
     const assets = await Asset.find({ createdBy: request.body.userId });
+    console.log(assets);
     response.status(200).json({
       assets,
     });

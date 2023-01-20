@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import {
   iconColorsTable,
   backgroundColorsTable,
@@ -14,7 +15,7 @@ import {
 import AppButton from '../../Utils/AppMenuButton';
 
 const AppButtons = (props) => {
-  const { auth } = useContext(GlobalContext);
+  const { auth, setIsNotAvailableModalOpen } = useContext(GlobalContext);
   const { appMenuBottomSheetRef, createLibraryBottomSheetRef } = useContext(LibrariesContext);
 
   if (auth.data) {
@@ -23,8 +24,8 @@ const AppButtons = (props) => {
         <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
           <AppButton
             backgroundColor={backgroundColorsTable['red1']}
-            icon={<MaterialCommunityIcons name='rocket-launch' size={35} color={iconColorsTable['red1']} />}
-            label='Launch library'
+            icon={<MaterialIcons name='create-new-folder' size={35} color={iconColorsTable['red1']} />}
+            label='Create a library'
             onAppMenuButtonPress={() => {
               appMenuBottomSheetRef.current.snapToIndex(0);
               createLibraryBottomSheetRef.current.snapToIndex(0);
@@ -34,6 +35,8 @@ const AppButtons = (props) => {
             backgroundColor={backgroundColorsTable['pink1']}
             icon={<MaterialCommunityIcons name='map-search-outline' size={35} color={iconColorsTable['pink1']} />}
             label='Search library'
+            onAppMenuButtonPress={() => setIsNotAvailableModalOpen(true)}
+            isDisabled={true}
           />
         </ScrollView>
       </View>

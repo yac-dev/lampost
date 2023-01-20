@@ -13,6 +13,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const AppMenuButtons = (props) => {
   // 何だろう。。。scrollviewをtopのcomponentにするとなんかバグる。
+  const { setIsNotAvailableModalOpen } = useContext(GlobalContext);
   const { appMenuBottomSheetRef, setIsLaunchMeetupConfirmationModalOpen } = useContext(MapContext);
   return (
     <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 25 }}>
@@ -26,17 +27,19 @@ const AppMenuButtons = (props) => {
             appMenuBottomSheetRef.current.close();
           }}
         />
-        <AppMenuButton
+        {/* <AppMenuButton
           backgroundColor={backgroundColorsTable['green1']}
           icon={<MaterialCommunityIcons name='history' size={35} color={iconColorsTable['green1']} />}
           label='Meetup logs'
           onAppMenuButtonPress={() => console.log('See meetup logs')}
-        />
+          isDisabled={true}
+        /> */}
         <AppMenuButton
           backgroundColor={backgroundColorsTable['blue1']}
           icon={<MaterialCommunityIcons name='map-search-outline' size={35} color={iconColorsTable['blue1']} />}
           label='Search meetup'
-          onAppMenuButtonPress={() => console.log('Search for meetup')}
+          onAppMenuButtonPress={() => setIsNotAvailableModalOpen(true)}
+          isDisabled={true}
         />
       </ScrollView>
     </View>

@@ -38,21 +38,29 @@ const Container = (props) => {
           backgroundColor={backgroundColorsTable['red1']}
           icon={<MaterialCommunityIcons name='rocket-launch' size={25} color={iconColorsTable['red1']} />}
           rightInfo={
+            // <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            //   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            //     {selectedLibrary.launcher.photo ? (
+            //       <Image
+            //         source={{ uri: selectedLibrary.launcher.photo }}
+            //         style={{ width: 35, height: 35, borderRadius: 7, marginRight: 10 }}
+            //       />
+            //     ) : (
+            //       <View
+            //         style={{ backgroundColor: 'red', width: 35, height: 35, borderRadius: 7, marginRight: 10 }}
+            //       ></View>
+            //     )}
+            //     <Text style={{ color: baseTextColor }}>{selectedLibrary.launcher.name}</Text>
+            //   </View>
+            //   <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
+            // </View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                {selectedLibrary.launcher.photo ? (
-                  <Image
-                    source={{ uri: selectedLibrary.launcher.photo }}
-                    style={{ width: 35, height: 35, borderRadius: 7, marginRight: 10 }}
-                  />
-                ) : (
-                  <View
-                    style={{ backgroundColor: 'red', width: 35, height: 35, borderRadius: 7, marginRight: 10 }}
-                  ></View>
-                )}
-                <Text style={{ color: baseTextColor }}>{selectedLibrary.launcher.name}</Text>
+              <View style={{ width: 80 }}>
+                <Text numberOfLines={1} style={{ color: baseTextColor }}>
+                  {selectedLibrary.launcher.name}
+                </Text>
               </View>
-              <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
+              <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
             </View>
           }
         />
@@ -65,11 +73,19 @@ const Container = (props) => {
           backgroundColor={backgroundColorsTable['green1']}
           icon={<MaterialCommunityIcons name='card-text-outline' size={25} color={iconColorsTable['green1']} />}
           rightInfo={
+            // <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            //   <Text numberOfLines={1} style={{ color: baseTextColor, width: 150, marginRight: 5 }}>
+            //     {selectedLibrary.description}
+            //   </Text>
+            //   <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
+            // </View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text numberOfLines={1} style={{ color: baseTextColor, width: 150, marginRight: 5 }}>
-                {selectedLibrary.description}
-              </Text>
-              <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
+              <View style={{ width: 80 }}>
+                <Text numberOfLines={1} style={{ color: baseTextColor, alignSelf: 'flex-end' }}>
+                  {selectedLibrary.description}
+                </Text>
+              </View>
+              <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
             </View>
           }
         />
@@ -80,7 +96,7 @@ const Container = (props) => {
             selectedLibraryDetailComponentBottomSheetRef.current.snapToIndex(0);
           }}
           backgroundColor={backgroundColorsTable['violet1']}
-          icon={<FontAwesome5 name='user-astronaut' size={25} color={iconColorsTable['violet1']} />}
+          icon={<MaterialIcons name='groups' size={25} color={iconColorsTable['violet1']} />}
           rightInfo={
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={{ color: baseTextColor, marginRight: 5 }}>{selectedLibrary.totalMembers}</Text>

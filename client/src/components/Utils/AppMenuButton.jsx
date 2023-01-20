@@ -8,6 +8,8 @@ import {
   baseTextColor,
 } from '../../utils/colorsTable';
 
+import { Foundation } from '@expo/vector-icons';
+
 const AppButton = (props) => {
   return (
     <View
@@ -33,6 +35,7 @@ const AppButton = (props) => {
         onPress={() => {
           props.onAppMenuButtonPress();
         }}
+        disabled={props.isDisabled}
       >
         <View
           style={{
@@ -48,6 +51,9 @@ const AppButton = (props) => {
         >
           {props.icon}
         </View>
+        {props.isDisabled ? (
+          <Foundation name='prohibited' size={15} color={'red'} style={{ position: 'absolute', bottom: 0, right: 5 }} />
+        ) : null}
       </TouchableOpacity>
       <Text
         style={{

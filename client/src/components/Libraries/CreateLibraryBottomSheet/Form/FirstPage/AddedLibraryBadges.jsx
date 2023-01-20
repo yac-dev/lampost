@@ -21,6 +21,7 @@ const AddedLibraryBadges = (props) => {
     const addedBadgesList = badges.map((badge, index) => {
       return (
         <View
+          key={index}
           style={{
             width: 90, // さらにbadgeを覆う必要がある。textも含めた守備範囲が必要だ。
             height: 110,

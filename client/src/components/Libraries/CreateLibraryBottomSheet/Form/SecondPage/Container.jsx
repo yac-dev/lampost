@@ -55,7 +55,7 @@ const Container = () => {
           onActionButtonPress={() => setPage('FIRST_PAGE')}
         />
         <ActionButton
-          label='Launch'
+          label='Done'
           backgroundColor={iconColorsTable['blue1']}
           icon={<MaterialCommunityIcons name='rocket-launch' color={'white'} size={25} />}
           onActionButtonPress={() => onLaunchPress()}

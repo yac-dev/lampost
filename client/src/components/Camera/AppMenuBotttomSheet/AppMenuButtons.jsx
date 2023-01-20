@@ -39,6 +39,7 @@ const AppMenuButtons = (props) => {
               setCameraMode('video');
               appMenuBottomSheetRef.current.snapToIndex(0);
             }}
+            isDisabled={true}
           />
           <AppMenuButton
             backgroundColor={backgroundColorsTable['pink1']}
@@ -48,6 +49,7 @@ const AppMenuButtons = (props) => {
               setCameraMode('live');
               appMenuBottomSheetRef.current.snapToIndex(0);
             }}
+            isDisabled={true}
           />
         </ScrollView>
       </View>

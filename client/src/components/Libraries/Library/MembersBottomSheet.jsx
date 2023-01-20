@@ -6,6 +6,7 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { appBottomSheetBackgroundColor, baseTextColor, sectionBackgroundColor } from '../../../utils/colorsTable';
 import { FontAwesome5 } from '@expo/vector-icons';
+import UserInfo from '../../Utils/UserInfo';
 
 const MembersBottomSheet = (props) => {
   const { auth } = useContext(GlobalContext);
@@ -22,8 +23,6 @@ const MembersBottomSheet = (props) => {
               flexDirection: 'row',
               alignItems: 'center',
               padding: 10,
-              borderBottomWidth: 0.3,
-              borderBottomColor: '#ABABAB',
             }}
             onPress={() => {
               if (!auth.data || auth.data._id !== user._id) {
@@ -31,22 +30,7 @@ const MembersBottomSheet = (props) => {
               }
             }}
           >
-            <View
-              style={{
-                backgroundColor: 'blue',
-                marginRight: 20,
-                padding: 5,
-                borderRadius: 7,
-                width: 35,
-                height: 35,
-                alignItems: 'center',
-              }}
-            >
-              <FontAwesome5 name='user-astronaut' color='white' size={20} />
-            </View>
-            <View>
-              <Text style={{ color: 'rgb(160,160,160)' }}>{user.name}</Text>
-            </View>
+            <UserInfo user={user} />
           </TouchableOpacity>
         );
       });

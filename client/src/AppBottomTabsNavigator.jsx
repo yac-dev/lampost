@@ -20,6 +20,7 @@ import MapNavigator from './components/Navigator/Map';
 import LibraryNavigator from './components/Navigator/Library';
 import AuthNavigator from './components/Navigator/Auth';
 import LoadingSpinner from './components/Utils/LoadingSpinner';
+import NotAvailableModal from './components/Utils/NotAvailableModal';
 import SnackBar from './components/Utils/SnackBar';
 import Camera from './components/Camera/Container';
 
@@ -88,6 +89,7 @@ const AppStack = (props) => {
   const [appState, setAppState] = useState(AppState.currentState);
   const [loading, setLoading] = useState(false);
   const [snackBar, setSnackBar] = useState({ isVisible: false, message: '', barType: '', duration: null });
+  const [isNotAvailableModalOpen, setIsNotAvailableModalOpen] = useState(false);
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
@@ -262,6 +264,8 @@ const AppStack = (props) => {
         setLoading,
         snackBar,
         setSnackBar,
+        isNotAvailableModalOpen,
+        setIsNotAvailableModalOpen,
         routeName,
         setRouteName,
         myUpcomingMeetupAndChatsTable,
@@ -429,6 +433,7 @@ const AppStack = (props) => {
       </NavigationContainer>
       <LoadingSpinner />
       <SnackBar />
+      <NotAvailableModal />
     </GlobalContext.Provider>
   );
 };

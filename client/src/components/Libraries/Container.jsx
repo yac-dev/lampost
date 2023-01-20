@@ -273,7 +273,9 @@ const Container = (props) => {
     } else {
       return (
         <View>
-          <Text>Loading...</Text>
+          <Text style={{ color: baseTextColor, textAlign: 'center' }}>
+            You'll see all the libraries which were created.
+          </Text>
         </View>
       );
     }
@@ -307,7 +309,7 @@ const Container = (props) => {
           <Text style={{ color: 'yellow' }}>Press here</Text>
         </TouchableOpacity> */}
         <Text style={{ fontSize: 23, fontWeight: 'bold', padding: 10, color: 'white', marginBottom: 10 }}>
-          Recently launched
+          Recently created
         </Text>
         {renderLibraries()}
         <AppMenuBottomSheet />

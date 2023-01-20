@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { View, Text, ScrollView } from 'react-native';
+import GlobalContext from '../../../../GlobalContext';
 import LibraryContext from '../LibraryContext';
 import {
   baseBackgroundColor,
@@ -14,6 +15,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
 
 const AppMenuButtons = () => {
+  const { auth } = useContext(GlobalContext);
   const {
     appMenuBottomSheetRef,
     postsBottomSheetRef,
@@ -54,7 +56,7 @@ const AppMenuButtons = () => {
         <AppMenuButton
           backgroundColor={backgroundColorsTable['pink1']}
           icon={<Ionicons name='ios-search' size={35} color={iconColorsTable['pink1']} />}
-          label='Discover'
+          label='Discover posts'
           onAppMenuButtonPress={() => {
             // getLibraryPostsByLibraryId();
             // postsBottomSheetRef.current.snapToIndex(0);
@@ -73,15 +75,17 @@ const AppMenuButtons = () => {
             appMenuBottomSheetRef.current.snapToIndex(0);
           }}
         />
-        <AppMenuButton
-          backgroundColor={backgroundColorsTable['green1']}
-          icon={<MaterialCommunityIcons name='exit-run' size={35} color={iconColorsTable['green1']} />}
-          label='Leave this library'
-          onAppMenuButtonPress={() => {
-            setIsLeaveLibraryConfirmationModalOpen(true);
-            appMenuBottomSheetRef.current.snapToIndex(0);
-          }}
-        />
+        {library?.launcher._id === auth.data._id ? null : (
+          <AppMenuButton
+            backgroundColor={backgroundColorsTable['green1']}
+            icon={<MaterialCommunityIcons name='exit-run' size={35} color={iconColorsTable['green1']} />}
+            label='Leave this library'
+            onAppMenuButtonPress={() => {
+              setIsLeaveLibraryConfirmationModalOpen(true);
+              appMenuBottomSheetRef.current.snapToIndex(0);
+            }}
+          />
+        )}
       </ScrollView>
     </View>
   );
