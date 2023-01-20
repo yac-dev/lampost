@@ -13,14 +13,14 @@ const BadgeHolders = () => {
         return (
           <View key={index} style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
             {user.photo ? (
-              <Image source={{ uri: user.photo }} style={{ width: 50, height: 50 }} />
+              <Image source={{ uri: user.photo }} style={{ width: 45, height: 45, borderRadius: 7, marginRight: 15 }} />
             ) : (
               <View
                 style={{
                   width: 50,
                   height: 50,
                   borderRadius: 10,
-                  marginRight: 20,
+                  marginRight: 15,
                   backgroundColor: iconColorsTable['blue1'],
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -37,11 +37,8 @@ const BadgeHolders = () => {
       return (
         <View>
           <Text style={{ color: baseTextColor, marginBottom: 15 }}>These people also have this badge...</Text>
-          <ScrollView
-            contentContainerStyle={{ paddingBottom: 50 }}
-            style={{ backgroundColor: sectionBackgroundColor, borderRadius: 10 }}
-          >
-            {badgeHolders}
+          <ScrollView contentContainerStyle={{ paddingBottom: 50 }}>
+            <View style={{ backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>{badgeHolders}</View>
           </ScrollView>
         </View>
       );

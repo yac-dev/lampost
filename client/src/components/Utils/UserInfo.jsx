@@ -19,6 +19,7 @@ const UserInfo = (props) => {
           horizontal={true}
           contentContainerStyle={{ paddingRight: 100 }}
           style={{ flexDirection: 'row', padding: 5 }}
+          showsHorizontalScrollIndicator={false}
         >
           {list}
         </ScrollView>
@@ -41,7 +42,7 @@ const UserInfo = (props) => {
             width: 50,
             height: 50,
             borderRadius: 10,
-            marginRight: 20,
+            marginRight: 10,
             backgroundColor: iconColorsTable['blue1'],
             alignItems: 'center',
             justifyContent: 'center',

@@ -5,9 +5,9 @@ import GlobalContext from '../../GlobalContext';
 import CameraContext from './CameraContext';
 import { Text, View, TouchableOpacity } from 'react-native';
 import lampostAPI from '../../apis/lampost';
-import { Camera } from 'expo-camera';
+import { Camera, CameraType } from 'expo-camera';
 import AppMenuBottomSheet from './AppMenuBotttomSheet/Container';
-import { appBottomSheetBackgroundColor, baseTextColor } from '../../utils/colorsTable';
+import { appBottomSheetBackgroundColor, baseBackgroundColor, baseTextColor } from '../../utils/colorsTable';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import WarningModal from './WarningModal';
@@ -47,9 +47,19 @@ const Container = (props) => {
   }, []);
 
   if (hasCameraPermission === undefined) {
-    return <Text>Requesting permissions...</Text>;
+    return (
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+        <Text style={{ color: baseTextColor }}>Accessing your camera...</Text>;
+      </View>
+    );
   } else if (!hasCameraPermission) {
-    return <Text>Permission for camera not granted. Please change this in settings.</Text>;
+    return (
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+        <Text style={{ color: baseTextColor }}>
+          Permission for camera not granted. Please change this in settings of your phone.
+        </Text>
+      </View>
+    );
   }
 
   // 基本的に、10秒以内の動画は保存しないようにする.
@@ -109,7 +119,7 @@ const Container = (props) => {
     >
       <View style={{ flex: 1 }}>
         <TouchableOpacity style={{ flex: 1 }} onPress={() => takePhoto()}>
-          <Camera style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} ref={cameraRef}>
+          <Camera style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} ref={cameraRef} type={cameraType}>
             {/* <StatusBar hidden={true} style='auto' /> */}
             {/* <IconButton
           icon='close'
@@ -141,8 +151,8 @@ const Container = (props) => {
                   backgroundColor: appBottomSheetBackgroundColor,
                 }}
                 onPress={() => {
-                  setCameraType(
-                    cameraType === Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back
+                  setCameraType((currentCameraType) =>
+                    currentCameraType === CameraType.back ? CameraType.front : CameraType.back
                   );
                 }}
               >

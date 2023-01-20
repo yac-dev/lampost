@@ -10,12 +10,13 @@ import { baseBackgroundColor } from '../../../utils/colorsTable';
 import Badges from './Badges/Container';
 import SearchBadgeBottomSheet from './SearchBadgeBottomSheet/Container';
 import BadgeDetailBottomSheet from './BadgeDetailBottomSheet/Container';
+import LoadingSpinner from '../LoadingSpinner';
 
 // ac
 import { setIsTappedBadgeBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
 
 const Container = (props) => {
-  const { auth } = useContext(GlobalContext);
+  const { auth, setLoading } = useContext(GlobalContext);
   const [meetupBadges, setMeetupBadges] = useState({});
   const [fromComponent, setFromComponent] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -41,7 +42,7 @@ const Container = (props) => {
       props.navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity onPress={() => onDoneAddUserBadgesPress()}>
-            <Text style={{ color: 'white' }}>Done</Text>
+            <Text style={{ color: 'white', fontSize: 20 }}>Done</Text>
           </TouchableOpacity>
         ),
       });
@@ -49,16 +50,19 @@ const Container = (props) => {
   }, [selectedUserBadges]);
   const onDoneAddUserBadgesPress = async () => {
     // api requestではbadge idsとuserIdをpost dataとして送るのはよし。client側では、単純にbadge dataを送るだけでいい。
+    setLoading(true);
     const badgeIds = Object.keys(selectedUserBadges);
     console.log('Sending these badge ids', badgeIds);
     const result = await lampostAPI.post(`/badgeanduserrelationships/${auth.data._id}`, { badgeIds });
     const newBadgeDatas = Object.values(selectedUserBadges).map((selectedUserBadge) => {
       return {
         badge: selectedUserBadge,
-        url: '',
+        badgeTags: [],
+        link: '',
       };
     });
-    props.navigation.navigate('Personal page', { userId: auth.data._id, addedUserBadges: newBadgeDatas });
+    props.navigation.navigate('Profile', { userId: auth.data._id, addedUserBadges: newBadgeDatas });
+    setLoading(false);
   };
 
   // ADD_MEETUP_BADGESの時。
@@ -183,31 +187,9 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        <Badges
-        // badgeState={badge}
-        // meetupBadges={meetupBadges}
-        // badges={badges}
-        // onBadgePress={onBadgePress}
-        // fromComponent={fromComponent}
-        />
-        {/* <SearchBadgeBottomSheet
-        searchBadgeBottomSheetRef={searchBadgeBottomSheetRef}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        queryType={queryType}
-        setQueryType={setQueryType}
-        /> */}
+        <Badges />
         <BadgeDetailBottomSheet />
-        <SearchBadgeBottomSheet />
-        {/* <TappedBadgeBottomSheet
-          fromComponent={fromComponent}
-          badge={badge}
-          setBadge={setBadge}
-          meetupBadges={meetupBadges}
-          setMeetupBadges={setMeetupBadges}
-          tappedBadgeBottomSheetRef={tappedBadgeBottomSheetRef}
-          closeTappedBadgeBottomSheet={closeTappedBadgeBottomSheet}
-        /> */}
+        <LoadingSpinner />
       </View>
     </AddBadgesContext.Provider>
   );

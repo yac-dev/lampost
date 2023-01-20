@@ -3,10 +3,10 @@ import { useFocusEffect } from '@react-navigation/native';
 import GlobalContext from '../../GlobalContext';
 import UserContext from './UserContext';
 import BadgeContext from './BadgeContext';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import lampostAPI from '../../apis/lampost';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { baseBackgroundColor, baseTextColor } from '../../utils/colorsTable';
+import { baseBackgroundColor, baseTextColor, iconColorsTable } from '../../utils/colorsTable';
 
 // components
 import Header from './Header';
@@ -92,7 +92,33 @@ const Container = (props) => {
     } else {
       return (
         <View>
-          <Text style={{ color: baseTextColor, textAlign: 'center' }}>You'll see all the badges you have.</Text>
+          {user._id === auth.data._id ? (
+            <View>
+              <Text style={{ color: baseTextColor, textAlign: 'center', marginBottom: 10 }}>
+                Let's add some badges and express yourself more.
+              </Text>
+              <TouchableOpacity
+                style={{
+                  alignSelf: 'center',
+                  padding: 10,
+                  backgroundColor: iconColorsTable['blue1'],
+                  borderRadius: 10,
+                }}
+                onPress={() => props.navigation.navigate('Add badges', { fromComponent: 'ADD_USER_BADGES' })}
+              >
+                <Text
+                  style={{
+                    // textAlign: 'center',
+                    color: 'white',
+                  }}
+                >
+                  Add here
+                </Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <Text style={{ color: baseTextColor, textAlign: 'center' }}>You'll see all the badges of this user.</Text>
+          )}
         </View>
       );
     }
@@ -146,7 +172,7 @@ const Container = (props) => {
   } else {
     return (
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        <Text style={{ color: baseTextColor }}>Loading...</Text>
+        <Text style={{ color: baseTextColor, textAlign: 'center' }}>Fetching the data now...</Text>
       </View>
     );
   }

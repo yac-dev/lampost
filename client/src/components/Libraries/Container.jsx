@@ -15,6 +15,7 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import BadgeLabel from '../Utils/BadgeLabel';
+import FastImage from 'react-native-fast-image';
 
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import CreateLibraryBottomSheet from './CreateLibraryBottomSheet/Container';
@@ -220,10 +221,18 @@ const Container = (props) => {
                   borderColor: backgroundColorsTable[library.color],
                 }}
               > */}
-              <Image
+              <FastImage
+                style={{ width: '100%', height: '100%', borderRadius: 5 }}
+                source={{
+                  uri: library.thumbnail.data,
+                  // priority: FastImage.priority.normal,
+                }}
+                resizeMode={FastImage.resizeMode.stretch}
+              />
+              {/* <Image
                 source={{ uri: library.thumbnail.data }}
                 style={{ width: '100%', height: '100%', borderRadius: 5 }}
-              />
+              /> */}
               {/* <Ionicons name='ios-library' size={libraryIconWidth} color={iconColorsTable[library.color]} />
 
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>

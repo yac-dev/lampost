@@ -11,6 +11,7 @@ import {
   rnDefaultBackgroundColor,
 } from '../../../utils/colorsTable';
 import { Ionicons } from '@expo/vector-icons';
+import FastImage from 'react-native-fast-image';
 
 const Container = (props) => {
   const { auth } = useContext(GlobalContext);
@@ -48,9 +49,17 @@ const Container = (props) => {
                 borderRadius: 10,
               }}
             >
-              <Image
+              {/* <Image
                 source={{ uri: library.thumbnail.data }}
-                style={{ width: '100%', height: '100%', borderRadius: 10 }}
+                style={{ width: '100%', height: '100%', borderRadius: 5 }}
+              /> */}
+              <FastImage
+                style={{ width: '100%', height: '100%', borderRadius: 5 }}
+                source={{
+                  uri: library.thumbnail.data,
+                  // priority: FastImage.priority.normal,
+                }}
+                resizeMode={FastImage.resizeMode.stretch}
               />
               {/* <View
                 style={{

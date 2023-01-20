@@ -14,12 +14,12 @@ import BadgeDetail from './BadgeDetail/Container';
 import { setIsTappedBadgeBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
 
 const Container = (props) => {
-  const snapPoints = useMemo(() => ['35%', '80%', '100%'], []);
+  const snapPoints = useMemo(() => ['50%', '80%', '100%'], []);
   const { badgeDetailBottomSheetRef, searchBadgeBottomSheetRef, tappedBadge } = useContext(AddBadgesContext);
 
-  const onBadgeDetailBottomSheetClose = () => {
-    searchBadgeBottomSheetRef.current.snapToIndex(0);
-  };
+  // const onBadgeDetailBottomSheetClose = () => {
+  //   searchBadgeBottomSheetRef.current.snapToIndex(0);
+  // };
 
   return (
     <GorhomBottomSheet
@@ -32,8 +32,8 @@ const Container = (props) => {
       //   <BottomSheetBackdrop {...backdropProps} appearsOnIndex={1} disappearsOnIndex={0} pressBehavior={0} />
       // )} 後でこれを割り当てるかも。api requestでbadgeのdetailを取ってくるようにする場合は。
       handleIndicatorStyle={{ backgroundColor: 'white' }}
-      enablePanDownToClose={true}
-      onClose={() => onBadgeDetailBottomSheetClose()}
+      enablePanDownToClose={false}
+      // onClose={() => onBadgeDetailBottomSheetClose()}
     >
       <BottomSheetView style={{ flex: 1, paddingLeft: 20, paddingRight: 20 }}>
         <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => badgeDetailBottomSheetRef.current.close()}>

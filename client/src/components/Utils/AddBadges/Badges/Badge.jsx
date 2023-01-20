@@ -98,7 +98,7 @@ const Badge = (props) => {
         return (
           <View
             style={{
-              top: -5,
+              top: -10,
               right: 10,
               position: 'absolute',
               color: '#989898',
@@ -188,7 +188,7 @@ const Badge = (props) => {
   // );
 
   const onBadgePress = async () => {
-    searchBadgeBottomSheetRef.current.close();
+    // searchBadgeBottomSheetRef.current.close();
     badgeDetailBottomSheetRef.current.snapToIndex(0);
     setTappedBadge(badge);
     const result = await lampostAPI.get(`/badgeanduserrelationships/holders/${badge._id}`);

@@ -1,6 +1,7 @@
 import BadgeAndUserRelationship from '../models/badgeAndUserRelationship';
 import BadgeTag from '../models/badgeTag';
 import BadgeTagAndUserRelationship from '../models/badgeTagAndUserRelationship';
+import User from '../models/user';
 
 export const addBadgesToUser = async (request, response) => {
   try {
@@ -9,9 +10,19 @@ export const addBadgesToUser = async (request, response) => {
       return {
         badge: badgeId,
         user: request.params.userId,
+        badgeTags: [],
+        link: '',
         createdAt: new Date(),
       };
     });
+    const user = await User.findById(request.params.userId);
+    if (user.topBadges.length <= 4) {
+      const restSpace = 4 - user.topBadges.length;
+      const copiedBadges = [...badgeIds];
+      const spliced = copiedBadges.splice(0, restSpace);
+      user.topBadges.push(...spliced);
+      user.save();
+    }
     // これ、array of objects [{badgeId: 111, userId: 3333, url: '', createdAt: new Date()}, {badgeId: 2222, userId: 3333}]でinsertManyだな。
     const badgeAndUserRelationships = await BadgeAndUserRelationship.insertMany(relationshipObjects);
     response.status(200).json({

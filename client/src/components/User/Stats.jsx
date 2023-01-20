@@ -27,7 +27,7 @@ const Stats = () => {
               style={{
                 flexDirection: 'column',
                 alignItems: 'center',
-                marginRight: 15,
+                marginRight: 20,
                 backgroundColor: screenSectionBackgroundColor,
                 padding: 7,
                 borderRadius: 10,
@@ -56,7 +56,7 @@ const Stats = () => {
               style={{
                 flexDirection: 'column',
                 alignItems: 'center',
-                marginRight: 15,
+                marginRight: 20,
                 backgroundColor: screenSectionBackgroundColor,
                 padding: 7,
                 borderRadius: 10,
@@ -87,7 +87,7 @@ const Stats = () => {
           style={{
             flexDirection: 'column',
             alignItems: 'center',
-            marginRight: 15,
+            marginRight: 20,
             backgroundColor: screenSectionBackgroundColor,
             padding: 7,
             borderRadius: 10,
@@ -115,7 +115,7 @@ const Stats = () => {
           style={{
             flexDirection: 'column',
             alignItems: 'center',
-            marginRight: 15,
+            marginRight: 20,
             backgroundColor: screenSectionBackgroundColor,
             padding: 7,
             borderRadius: 10,
