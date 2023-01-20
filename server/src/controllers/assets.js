@@ -19,6 +19,8 @@ export const createPhoto = async (request, response) => {
         createdBy: userId,
         createdAt: new Date(),
       });
+      user.assets++;
+      user.save();
       // これ、いらないね。created Byを持てるから。
       // const assetAndUserRelationship = await AssetAndUserRelationship.create({
       //   asset: asset._id,
