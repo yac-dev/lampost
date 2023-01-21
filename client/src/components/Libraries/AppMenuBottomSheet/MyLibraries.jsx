@@ -94,7 +94,7 @@ const Container = (props) => {
     return (
       <View>
         <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My joined libraries</Text>
-        <ScrollView>{renderMyJoinedLibraries()}</ScrollView>
+        <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderMyJoinedLibraries()}</ScrollView>
       </View>
     );
   } else {

@@ -224,7 +224,7 @@ const Container = (props) => {
   return (
     <View>
       <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 20 }}>My upcoming meetups</Text>
-      {renderMyUpcomingMeetups()}
+      <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderMyUpcomingMeetups()}</ScrollView>
     </View>
   );
 };

@@ -30,37 +30,35 @@ const AppMenusBottomSheet = (props) => {
       handleIndicatorStyle={{ backgroundColor: 'white' }}
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
-        <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
-            <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginRight: 10 }}>
-              Launch your meetup?
-            </Text>
-            {totalUnreadChatsCount ? (
-              <View
-                style={{
-                  backgroundColor: iconColorsTable['blue1'],
-                  width: 20,
-                  height: 20,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 20 / 2,
-                }}
-              >
-                <Text style={{ color: 'white' }}>{totalUnreadChatsCount}</Text>
-              </View>
-            ) : null}
-          </View>
-          {auth.data ? (
-            <>
-              <AppMenuButtons />
-              <UpcomingMeetups />
-            </>
-          ) : (
-            <View>
-              <Text style={{ color: baseTextColor }}>Please login or signup to take some actions.</Text>
+        {/* <ScrollView contentContainerStyle={{ paddingBottom: 100 }}> */}
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
+          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginRight: 10 }}>Launch your meetup?</Text>
+          {totalUnreadChatsCount ? (
+            <View
+              style={{
+                backgroundColor: iconColorsTable['blue1'],
+                width: 20,
+                height: 20,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 20 / 2,
+              }}
+            >
+              <Text style={{ color: 'white' }}>{totalUnreadChatsCount}</Text>
             </View>
-          )}
-        </ScrollView>
+          ) : null}
+        </View>
+        {auth.data ? (
+          <>
+            <AppMenuButtons />
+            <UpcomingMeetups />
+          </>
+        ) : (
+          <View>
+            <Text style={{ color: baseTextColor }}>Please login or signup to take some actions.</Text>
+          </View>
+        )}
+        {/* </ScrollView> */}
       </BottomSheetView>
     </GorhomBottomSheet>
   );
