@@ -20,7 +20,7 @@ const Container = (props) => {
     const payload = {
       assets,
     };
-    // const result = await lampostAPI.post(`/libraryandassetrelationships/${props.route.params.libraryId}`, payload);
+    const result = await lampostAPI.post(`/libraryandassetrelationships/${props.route.params.libraryId}`, payload);
     props.navigation.navigate('Library', { addedAssets: assets });
   };
 
@@ -29,7 +29,7 @@ const Container = (props) => {
       props.navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity onPress={() => onPostPress()}>
-            <Text style={{ color: 'white' }}>Add</Text>
+            <Text style={{ color: 'white', fontSize: 20 }}>Post</Text>
           </TouchableOpacity>
         ),
       });

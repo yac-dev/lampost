@@ -42,7 +42,6 @@ const Container = (props) => {
   useEffect(() => {
     getLibrary();
   }, []);
-  console.log(library);
 
   useEffect(() => {
     if (props.route.params?.addedAssets) {
@@ -95,8 +94,12 @@ const Container = (props) => {
             key={index}
             style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
             onPress={() => {
-              setSelectedAsset(asset);
-              selectedAssetBottomSheetRef.current.snapToIndex(0);
+              // setSelectedAsset(asset);
+              // selectedAssetBottomSheetRef.current.snapToIndex(0);
+              props.navigation.navigate('Asset', {
+                asset: { _id: asset._id, data: asset.data },
+                libraryId: library._id,
+              });
             }}
           >
             <FastImage
@@ -149,9 +152,6 @@ const Container = (props) => {
           {renderAssets()}
         </ScrollView>
         <AppMenuBottomSheet />
-        <SelectedAssetBottomSheet />
-        <PostAssetsBottomSheet />
-        {/* <PostsBottomSheet /> */}
         <MembersBottomSheet />
         <ConfirmLeaveLibrary />
         <ConfirmPostAssetModal />

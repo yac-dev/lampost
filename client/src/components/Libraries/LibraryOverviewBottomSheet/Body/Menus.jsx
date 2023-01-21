@@ -25,6 +25,15 @@ const Container = (props) => {
     setSelectedLibraryDetailComponent,
   } = useContext(LibrariesContext);
 
+  const renderEmojis = () => {
+    const emojis = selectedLibrary.emotions.join('');
+    return (
+      <Text numberOfLines={1} style={{ fontSize: 17 }}>
+        {emojis}
+      </Text>
+    );
+  };
+
   return (
     <View style={{ marginBottom: 25, paddingLeft: 20, paddingRight: 20 }}>
       <View style={{ backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>
@@ -95,11 +104,25 @@ const Container = (props) => {
             setSelectedLibraryDetailComponent('Members');
             selectedLibraryDetailComponentBottomSheetRef.current.snapToIndex(0);
           }}
-          backgroundColor={backgroundColorsTable['violet1']}
-          icon={<MaterialIcons name='groups' size={25} color={iconColorsTable['violet1']} />}
+          backgroundColor={backgroundColorsTable['blue1']}
+          icon={<MaterialIcons name='groups' size={25} color={iconColorsTable['blue1']} />}
           rightInfo={
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={{ color: baseTextColor, marginRight: 5 }}>{selectedLibrary.totalMembers}</Text>
+              <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
+            </View>
+          }
+        />
+        <Menu
+          label='Emotions'
+          onPressMenu={() => {
+            null;
+          }}
+          backgroundColor={backgroundColorsTable['pink1']}
+          icon={<MaterialCommunityIcons name='heart-multiple' size={25} color={iconColorsTable['pink1']} />}
+          rightInfo={
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              {renderEmojis()}
               <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
             </View>
           }

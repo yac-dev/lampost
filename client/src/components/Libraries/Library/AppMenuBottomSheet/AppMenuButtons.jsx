@@ -53,7 +53,7 @@ const AppMenuButtons = () => {
             // navigation.navigate('Add assets', { libraryId: library._id, fromComponent: 'ADD_ASSETS_FOR_POSTING' });
           }}
         />
-        <AppMenuButton
+        {/* <AppMenuButton
           backgroundColor={backgroundColorsTable['pink1']}
           icon={<Ionicons name='ios-search' size={35} color={iconColorsTable['pink1']} />}
           label='Discover posts'
@@ -64,7 +64,7 @@ const AppMenuButtons = () => {
             navigation.navigate('Posts', { libraryId: library._id });
             appMenuBottomSheetRef.current.snapToIndex(0);
           }}
-        />
+        /> */}
         <AppMenuButton
           backgroundColor={backgroundColorsTable['blue1']}
           icon={<MaterialCommunityIcons name='account-group' size={35} color={iconColorsTable['blue1']} />}

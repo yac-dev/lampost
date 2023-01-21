@@ -1,5 +1,5 @@
 import React, { useContext, useMemo, useEffect, useState } from 'react';
-import GlobalContext from '../../../../../GlobalContext';
+import GlobalContext from '../../../../GlobalContext';
 import { View, Text, InputAccessoryView, TouchableOpacity, Keyboard } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import {
@@ -8,9 +8,9 @@ import {
   iconColorsTable,
   sectionBackgroundColor,
   inputBackgroundColor,
-} from '../../../../../utils/colorsTable';
-import ActionButton from '../../../../Utils/ActionButton';
-import lampostAPI from '../../../../../apis/lampost';
+} from '../../../../utils/colorsTable';
+import ActionButton from '../../../Utils/ActionButton';
+import lampostAPI from '../../../../apis/lampost';
 
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -24,30 +24,19 @@ const AddNewReactionBottomSheet = (props) => {
   const [selectedEmoji, setSelectedEmoji] = useState('😄');
   const [text, setText] = useState('');
 
-  // const createReaction = async () => {
-  //   const result = await lampostAPI.post(`/assetpostandreactionanduserrelationships`, {});
-  //   const { reaction } = result.data;
-  //   setReactions((previous) => {
-  //     return {
-  //       ...previous,
-  //       [reaction._id]: reaction,
-  //     };
-  //   });
-  // };
-
   const onDonePress = () => {
     Keyboard.dismiss();
   };
 
   const createNewReaction = async () => {
     const reactionContent = text + ' ' + selectedEmoji;
-    const result = await lampostAPI.post(`/assetpostandreactionanduserrelationships`, {
+    const result = await lampostAPI.post(`/assetandreactionanduserrelationships`, {
       text,
       selectedEmoji,
       user: { _id: auth.data._id, name: auth.data.name, photo: auth.data.photo },
-      libraryPostId: props.libraryPost._id,
+      assetId: props.routeParams.asset._id,
+      libraryId: props.routeParams.libraryId,
     });
-    console.log('reaction is', reaction);
     const { reaction } = result.data;
     props.setReactions((previous) => {
       return {
@@ -57,17 +46,6 @@ const AddNewReactionBottomSheet = (props) => {
     });
     props.addNewReactionBottomSheetRef.current.close();
   };
-
-  // const onAddNewReactionDone = () => {
-  //   const payload = {
-  //     userId: auth.data._id,
-  //     assetPostId: post._id,
-  //     content: text + '' + selectedEmoji,
-  //   };
-  //   console.log(payload);
-  //   // const {reaction} = result.data;
-  //   // setReactions((previous) => [...previous, reaction]);
-  // };
 
   return (
     <GorhomBottomSheet
@@ -142,7 +120,9 @@ const AddNewReactionBottomSheet = (props) => {
             label='Send'
             backgroundColor={iconColorsTable['blue1']}
             icon={<Ionicons name='ios-send' size={25} color='white' />}
-            onActionButtonPress={() => createNewReaction()}
+            onActionButtonPress={() => {
+              createNewReaction();
+            }}
           />
         </View>
       </BottomSheetView>

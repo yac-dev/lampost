@@ -8,7 +8,7 @@ import {
   iconColorsTable,
   rnDefaultBackgroundColor,
 } from '../../../../../utils/colorsTable';
-import AddNewReactionBottomSheet from './AddNewReactionBottomSheet';
+// import AddNewReactionBottomSheet from './AddNewReactionBottomSheet';
 import ActionButton from '../../../../Utils/ActionButton';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -180,11 +180,11 @@ const PostContainer = (props) => {
 
         {renderReactions()}
       </ScrollView>
-      <AddNewReactionBottomSheet
+      {/* <AddNewReactionBottomSheet
         addNewReactionBottomSheetRef={addNewReactionBottomSheetRef}
         setReactions={setReactions}
         libraryPost={libraryPost}
-      />
+      /> */}
     </View>
   );
 };
