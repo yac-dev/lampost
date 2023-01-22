@@ -1,18 +1,30 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
-import { View, Text, Dimensions, ScrollView } from 'react-native';
+import { View, Text, Dimensions, ScrollView, TouchableOpacity, Image } from 'react-native';
 import GlobalContext from '../../../../GlobalContext';
 import lampostAPI from '../../../../apis/lampost';
 import FastImage from 'react-native-fast-image';
-import { baseBackgroundColor, backgroundColorsTable, iconColorsTable } from '../../../../utils/colorsTable';
+import {
+  baseBackgroundColor,
+  backgroundColorsTable,
+  iconColorsTable,
+  baseTextColor,
+} from '../../../../utils/colorsTable';
 import ActionButton from '../../../Utils/ActionButton';
 import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AddNewReactionBottomSheet from './AddNewReactionBottomSheet';
 
 const Asset = (props) => {
   const { auth } = useContext(GlobalContext);
   const win = Dimensions.get('window');
-  const [asset, setAsset] = useState({ _id: props.route.params.asset._id, data: props.route.params.asset.data });
+  const [asset, setAsset] = useState({
+    _id: props.route.params.asset._id,
+    data: props.route.params.asset.data,
+    badges: [],
+    createdBy: null,
+  });
   const [reactions, setReactions] = useState({});
   const addNewReactionBottomSheetRef = useRef(null);
 
@@ -112,38 +124,72 @@ const Asset = (props) => {
   };
 
   const renderBadgeLikeButton = (badges) => {
-    const list = badges.map((badgeObject, index) => {
-      return (
-        <View style={{ padding: 10 }} key={index}>
-          <Text>{badgeObject.badge.name}</Text>
-          <Text>{badgeObject.totalCounts}</Text>
-        </View>
-      );
-    });
+    if (asset.badges.length) {
+      const list = badges.map((badgeObject, index) => {
+        return (
+          <TouchableOpacity style={{ padding: 10, alignItems: 'center' }} key={index}>
+            <FastImage
+              source={{ uri: badgeObject.badge.icon }}
+              resizeMode={FastImage.resizeMode.contain}
+              style={{ marginBottom: 10, width: 35, height: 35 }}
+              // tintColor={iconColorsTable[badgeObject.badge.color]}
+              tintColor={baseTextColor}
+            />
+            <Text style={{ color: baseTextColor }}>{badgeObject.totalCounts}</Text>
+          </TouchableOpacity>
+        );
+      });
 
-    return <View style={{ flexDirection: 'row' }}>{list}</View>;
+      return <View style={{ flexDirection: 'column', position: 'absolute', bottom: 0, right: 0 }}>{list}</View>;
+    } else {
+      return null;
+    }
+  };
+
+  const leftActionButtons = () => {
+    return (
+      <View style={{ flexDirection: 'column', position: 'absolute', bottom: 0, left: 0 }}>
+        <View style={{ alignItems: 'center', padding: 10 }}>
+          <MaterialIcons name='groups' size={30} color={baseTextColor} />
+          <Text style={{ color: baseTextColor }}>0</Text>
+        </View>
+        <View style={{ alignItems: 'center', padding: 10 }}>
+          <MaterialCommunityIcons name='map-marker-radius' size={30} color={baseTextColor} />
+        </View>
+        <View style={{ alignItems: 'center', padding: 10 }}>
+          <MaterialCommunityIcons name='rocket-launch' size={30} color={baseTextColor} />
+        </View>
+        {asset.createdBy ? (
+          <View style={{ alignItems: 'center', padding: 10 }}>
+            <Image source={{ uri: asset.createdBy.photo }} style={{ width: 35, height: 35, borderRadius: 7 }} />
+          </View>
+        ) : null}
+      </View>
+    );
   };
 
   return (
     // <AssetContext.Provider value={{ appMenuBottomSheetRef, isMyPage, asset }}>
-    <View style={{ flex: 1, backgroundColor: baseBackgroundColor, paddingRight: 20, paddingLeft: 20 }}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+      <View>
         <FastImage
-          style={{ flex: 1, alignSelf: 'stretch', width: win.width, height: win.height, borderRadius: 10 }}
+          style={{ width: '100%', aspectRatio: 1, borderRadius: 10 }}
           source={{ uri: asset.data }}
           resizeMode={FastImage.resizeMode.contain}
         />
-        {renderReactions()}
-        <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 20, paddingRight: 20 }}>
-          <ActionButton
-            label='Add new reaction'
-            backgroundColor={iconColorsTable['blue1']}
-            icon={<Entypo name='emoji-happy' color={'white'} size={20} />}
-            onActionButtonPress={() => addNewReactionBottomSheetRef.current.snapToIndex(0)}
-          />
-        </View>
         {renderBadgeLikeButton(asset.badges)}
-      </ScrollView>
+        {leftActionButtons()}
+      </View>
+
+      {/* {renderReactions()} */}
+      {/* <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 20, paddingRight: 20 }}>
+        <ActionButton
+          label='Add new reaction'
+          backgroundColor={iconColorsTable['blue1']}
+          icon={<Entypo name='emoji-happy' color={'white'} size={20} />}
+          onActionButtonPress={() => addNewReactionBottomSheetRef.current.snapToIndex(0)}
+        />
+      </View> */}
 
       <AddNewReactionBottomSheet
         routeParams={props.route.params}
