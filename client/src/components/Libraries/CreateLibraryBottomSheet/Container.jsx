@@ -25,7 +25,7 @@ const Container = (props) => {
   const snapPoints = ['100%'];
   const [page, setPage] = useState('FIRST_PAGE');
   // const [formData, setFormData] = useState({ name: '', badges: {}, description: '', rolls: ['', ''] });
-  const [formData, setFormData] = useState({ name: '', badges: {}, description: '', assets: {} });
+  const [formData, setFormData] = useState({ name: '', badges: {}, description: '', asset: null });
 
   const switchPage = () => {
     switch (page) {

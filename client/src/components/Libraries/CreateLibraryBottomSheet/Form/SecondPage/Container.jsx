@@ -26,7 +26,11 @@ const Container = () => {
       name: formData.name,
       badges: Object.values(formData.badges),
       description: formData.description,
-      assets: Object.values(formData.assets), // assetのひとつ目だけ返す感じ。
+      asset: {
+        _id: formData.asset._id,
+        badges: formData.asset.badges,
+        data: formData.asset.data,
+      },
       launcher,
     };
 

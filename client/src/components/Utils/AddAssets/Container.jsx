@@ -6,11 +6,13 @@ import FastImage from 'react-native-fast-image';
 import { baseBackgroundColor, baseTextColor } from '../../../utils/colorsTable';
 import Asset from './Asset';
 import { AntDesign } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 const Container = (props) => {
   const { auth } = useContext(GlobalContext);
   const [assets, setAssets] = useState([]);
   const [addedAssets, setAddedAssets] = useState({});
+  const [addedAsset, setAddedAsset] = useState(null);
   const oneAssetWidth = Dimensions.get('window').width / 2;
 
   const onPostPress = async () => {
@@ -41,24 +43,19 @@ const Container = (props) => {
       props.navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity onPress={() => onDoneAddAssetsPress()}>
-            <Text style={{ color: 'white' }}>Done</Text>
+            <Text style={{ color: 'white', fontSize: 20 }}>Done</Text>
           </TouchableOpacity>
         ),
       });
     }
-  }, [addedAssets]);
+  }, [addedAsset]);
   const onDoneAddAssetsPress = () => {
-    props.navigation.navigate('Libraries', { addedAssets });
+    props.navigation.navigate('Libraries', { addedAsset });
   };
 
   useEffect(() => {
-    if (props.route.params?.addedAssets) {
-      setAddedAssets((previous) => {
-        return {
-          ...previous,
-          ...props.route.params.addedAssets,
-        };
-      });
+    if (props.route.params?.addedAsset) {
+      setAddedAsset(props.route.params.addedAsset);
     }
   }, []);
 
@@ -72,16 +69,24 @@ const Container = (props) => {
   }, []);
 
   const onAssetPress = (asset) => {
-    if (addedAssets[asset._id]) {
-      setAddedAssets((previous) => {
-        const updating = { ...previous };
-        delete updating[asset._id];
-        return updating;
-      });
+    setAddedAsset(asset);
+  };
+
+  const renderCheck = (asset) => {
+    if (addedAsset && addedAsset._id === asset._id) {
+      return (
+        <View
+          style={{
+            top: 0,
+            right: 0,
+            position: 'absolute',
+          }}
+        >
+          <Ionicons name='checkmark-circle' size={30} color='#49CF13' />
+        </View>
+      );
     } else {
-      setAddedAssets((previous) => {
-        return { ...previous, [asset._id]: asset };
-      });
+      null;
     }
   };
 
@@ -92,7 +97,7 @@ const Container = (props) => {
           <TouchableOpacity
             key={index}
             style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
-            onPress={() => onAssetPress(asset)}
+            onPress={() => setAddedAsset(asset)}
           >
             <FastImage
               style={{ width: '100%', height: '100%' }}
@@ -102,18 +107,7 @@ const Container = (props) => {
               }}
               resizeMode={FastImage.resizeMode.stretch}
             />
-            {addedAssets[asset._id] ? (
-              <View
-                style={{
-                  top: -10,
-                  right: 0,
-                  position: 'absolute',
-                  color: '#989898',
-                }}
-              >
-                <AntDesign name='check' size={25} color='#49CF13' />
-              </View>
-            ) : null}
+            {renderCheck(asset)}
           </TouchableOpacity>
         );
       });

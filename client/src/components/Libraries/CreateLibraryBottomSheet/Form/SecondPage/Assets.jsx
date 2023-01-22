@@ -14,48 +14,50 @@ const Assets = () => {
   const oneAssetWidth = Dimensions.get('window').width / 3;
 
   useEffect(() => {
-    if (route.params?.addedAssets) {
-      console.log('These are assets for launching', route.params.addedAssets);
+    if (route.params?.addedAsset) {
+      console.log('These are assets for launching', route.params.addedAsset);
       setFormData((previous) => {
         return {
           ...previous,
-          assets: route.params.addedAssets,
+          asset: route.params.addedAsset,
         };
       });
     }
-  }, [route.params?.addedAssets]);
+  }, [route.params?.addedAsset]);
 
-  const renderAddedAssets = () => {
-    const assetsList = Object.values(formData.assets).map((asset, index) => {
-      return (
-        <View
-          key={index}
-          style={{ width: oneAssetWidth, height: oneAssetWidth, marginRight: 10 }}
-          onPress={() => onAssetPress(asset)}
-        >
-          <FastImage
-            style={{ width: '100%', height: '100%' }}
-            source={{
-              uri: asset.data,
-              priority: FastImage.priority.normal,
-            }}
-            resizeMode={FastImage.resizeMode.stretch}
-          />
-          {/* <View
-            style={{
-              top: -10,
-              right: 0,
-              position: 'absolute',
-              color: '#989898',
-            }}
-          >
-            <AntDesign name='close' size={25} color='red' />
-          </View> */}
-        </View>
-      );
-    });
-    return <ScrollView horizontal={true}>{assetsList}</ScrollView>;
-  };
+  // const renderAddedAssets = () => {
+  //   const assetsList = Object.values(formData.assets).map((asset, index) => {
+  //     return (
+  //       <View
+  //         key={index}
+  //         style={{ width: oneAssetWidth, height: oneAssetWidth, marginRight: 10 }}
+  //         onPress={() => onAssetPress(asset)}
+  //       >
+  //         <FastImage
+  //           style={{ width: '100%', height: '100%' }}
+  //           source={{
+  //             uri: asset.data,
+  //             priority: FastImage.priority.normal,
+  //           }}
+  //           resizeMode={FastImage.resizeMode.stretch}
+  //         />
+  //         {/* <View
+  //           style={{
+  //             top: -10,
+  //             right: 0,
+  //             position: 'absolute',
+  //             color: '#989898',
+  //           }}
+  //         >
+  //           <AntDesign name='close' size={25} color='red' />
+  //         </View> */}
+  //       </View>
+  //     );
+  //   });
+  //   return <ScrollView horizontal={true}>{assetsList}</ScrollView>;
+  // };
+
+  console.log(formData);
 
   return (
     <View style={{ marginBottom: 25 }}>
@@ -72,10 +74,10 @@ const Assets = () => {
         >
           <Ionicons name='ios-images' size={25} color='white' />
         </View>
-        <Text style={{ fontWeight: 'bold', fontSize: 17, marginLeft: 15, color: 'white' }}>Assets</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 17, marginLeft: 15, color: 'white' }}>Asset</Text>
       </View>
       <Text style={{ fontWeight: 'bold', fontSize: 12, color: baseTextColor, marginBottom: 10 }}>
-        Please add your photos or videos to upload.
+        Please select your photo or video to upload.
       </Text>
       <TouchableOpacity
         style={{
@@ -87,7 +89,7 @@ const Assets = () => {
         onPress={() => {
           navigation.navigate('Add assets', {
             fromComponent: 'ADD_ASSETS_FOR_LAUNCHING_LIBRARY',
-            addedAssets: formData.assets,
+            addedAsset: formData.asset,
           });
           console.log('open my assets page!');
         }}
@@ -95,7 +97,19 @@ const Assets = () => {
         <SimpleLineIcons name='magnifier-add' size={20} color={baseTextColor} style={{ marginRight: 5 }} />
         <Text style={{ color: baseTextColor }}>Add</Text>
       </TouchableOpacity>
-      {renderAddedAssets()}
+      {formData.asset ? (
+        <View style={{ width: oneAssetWidth, height: oneAssetWidth, marginRight: 10 }}>
+          <FastImage
+            style={{ width: '100%', height: '100%', borderRadius: 7 }}
+            source={{
+              uri: formData.asset.data,
+              priority: FastImage.priority.normal,
+            }}
+            resizeMode={FastImage.resizeMode.stretch}
+          />
+        </View>
+      ) : null}
+      {/* {renderAddedAssets()} */}
     </View>
   );
 };

@@ -12,6 +12,7 @@ import AddNewReactionBottomSheet from './AddNewReactionBottomSheet';
 const Asset = (props) => {
   const { auth } = useContext(GlobalContext);
   const win = Dimensions.get('window');
+  const [asset, setAsset] = useState({ _id: props.route.params.asset._id, data: props.route.params.asset.data });
   const [reactions, setReactions] = useState({});
   const addNewReactionBottomSheetRef = useRef(null);
 
@@ -23,23 +24,19 @@ const Asset = (props) => {
   //     users: {user3: {_id: user3, name: 'c'}}
   //    ,}
   //   }
+  const getAssetById = async () => {
+    const result = await lampostAPI.get(`/assets/${props.route.params.asset._id}`);
+    const { asset } = result.data;
+    setAsset(asset);
+  };
+  useEffect(() => {
+    getAssetById();
+  }, []);
 
-  // const renderDate = (date) => {
-  //   const dateString = new Date(date).toLocaleDateString('en-US', {
-  //     month: 'short',
-  //     day: 'numeric',
-  //   });
-  //   const dateTable = { ...dateString.split(' ') };
-  //   return (
-  //     <Text style={{ color: baseTextColor }}>
-  //       {dateTable['0']}&nbsp;{dateTable['1']}
-  //     </Text>
-  //   );
-  // };
-  console.log(reactions);
+  console.log(asset);
 
   const getReactionsByAssetId = async () => {
-    const result = await lampostAPI.get(`/assetandreactionanduserrelationships/${props.route.params.asset._id}`);
+    const result = await lampostAPI.get(`/assetandreactionanduserrelationships/${asset._id}`);
     const { reactions } = result.data;
     setReactions(reactions);
   };
@@ -114,13 +111,26 @@ const Asset = (props) => {
     }
   };
 
+  const renderBadgeLikeButton = (badges) => {
+    const list = badges.map((badgeObject, index) => {
+      return (
+        <View style={{ padding: 10 }} key={index}>
+          <Text>{badgeObject.badge.name}</Text>
+          <Text>{badgeObject.totalCounts}</Text>
+        </View>
+      );
+    });
+
+    return <View style={{ flexDirection: 'row' }}>{list}</View>;
+  };
+
   return (
     // <AssetContext.Provider value={{ appMenuBottomSheetRef, isMyPage, asset }}>
     <View style={{ flex: 1, backgroundColor: baseBackgroundColor, paddingRight: 20, paddingLeft: 20 }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <FastImage
           style={{ flex: 1, alignSelf: 'stretch', width: win.width, height: win.height, borderRadius: 10 }}
-          source={{ uri: props.route.params.asset.data }}
+          source={{ uri: asset.data }}
           resizeMode={FastImage.resizeMode.contain}
         />
         {renderReactions()}
@@ -132,7 +142,9 @@ const Asset = (props) => {
             onActionButtonPress={() => addNewReactionBottomSheetRef.current.snapToIndex(0)}
           />
         </View>
+        {renderBadgeLikeButton(asset.badges)}
       </ScrollView>
+
       <AddNewReactionBottomSheet
         routeParams={props.route.params}
         addNewReactionBottomSheetRef={addNewReactionBottomSheetRef}
