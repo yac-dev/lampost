@@ -21,6 +21,7 @@ import assetAndUserRelationshipsRouter from './routers/assetAndUserRelationships
 import libraryAndAssetRelationshipsRouter from './routers/libraryAndAssetRelationships';
 import assetPostAndReactionAndUserRelationshipsRouter from './routers/assetPostAndReactionAndUserRelationships';
 import assetAndReactionAndUserRelationshipsRouter from './routers/assetAndReactionAndUserRelationships';
+import assetAndBadgeAndUserRelationshipsRouter from './routers/assetAndBadgeAndUserRelationships';
 import loungeChatsRouter from './routers/loungeChats';
 import launcherAndPatronRelationshisRouter from './routers/launcherAndPatronRelationshis';
 
@@ -49,6 +50,7 @@ app.use('/api/badgeanduserrelationships', badgeAndUserRelationshipsRouter);
 app.use('/api/badgetags', badgeTagsRouter);
 app.use('/api/badgetaganduserrelationships', badgeTagAndUserRelationshipsRouter);
 app.use('/api/assetandreactionanduserrelationships', assetAndReactionAndUserRelationshipsRouter);
+app.use('/api/assetandbadgeanduserrelationships', assetAndBadgeAndUserRelationshipsRouter);
 app.use('/api/assetanduserrelationships', assetAndUserRelationshipsRouter);
 app.use('/api/libraryandassetrelationships', libraryAndAssetRelationshipsRouter);
 app.use('/api/assetpostandreactionanduserrelationships', assetPostAndReactionAndUserRelationshipsRouter);

@@ -37,6 +37,7 @@ const Container = (props) => {
     // console.log(props.route.params.libraryId);
     const result = await lampostAPI.get(`/libraries/${props.route.params.libraryId}`);
     const { library } = result.data;
+    console.log(library);
     setLibrary(library);
   };
   useEffect(() => {
@@ -88,6 +89,7 @@ const Container = (props) => {
       // return (
       //   <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingLeft: 5, paddingTop: 5 }}>{assetsList}</View>
       // );
+
       const assetsList = assets.map((asset, index) => {
         return (
           <TouchableOpacity
@@ -97,7 +99,7 @@ const Container = (props) => {
               // setSelectedAsset(asset);
               // selectedAssetBottomSheetRef.current.snapToIndex(0);
               props.navigation.navigate('Asset', {
-                asset: { _id: asset._id, data: asset.data },
+                asset: asset,
                 libraryId: library._id,
               });
             }}

@@ -8,6 +8,7 @@ export const getAssetsByLibraryId = async (request, response) => {
       library: request.params.libraryId,
     }).populate({
       path: 'asset',
+      populate: { path: 'badges', populate: { path: 'badge', select: '_id icon color' } },
     });
 
     const assets = libraryAndAssetRelationships.map((relationship) => {
