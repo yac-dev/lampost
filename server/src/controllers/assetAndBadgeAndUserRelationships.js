@@ -1,6 +1,37 @@
 import AssetAndBadgeAndUserRelationship from '../models/assetAndBadgeAndUserRelationships';
 import Asset from '../models/asset';
 
+export const getAssetAndBadgeAndUserRelationship = async (request, response) => {
+  try {
+    const asset = await Asset.findById(request.params.assetId).populate([
+      {
+        path: 'badges',
+        populate: { path: 'badge', select: '_id name icon color' },
+      },
+      { path: 'createdBy', select: '_id name photo' },
+    ]);
+    const assetAndBadgeAndUserRelationships = await AssetAndBadgeAndUserRelationship.find({
+      asset: request.params.assetId,
+    });
+    // そう。relationship baseだと、結局見つからない場合があるわけ。
+    const table = {};
+    for (let i = 0; i < asset.badges.length; i++) {
+      console.log(asset.badges[i]._id);
+      table[asset.badges[i].badge._id] = { data: asset.badges[i].badge, users: [] };
+    }
+    for (let i = 0; i < assetAndBadgeAndUserRelationships.length; i++) {
+      table[assetAndBadgeAndUserRelationships[i].badge]['users'].push(assetAndBadgeAndUserRelationships[i].user);
+    }
+    console.log(table);
+    response.status(200).json({
+      asset,
+      table,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const upvoteBadgeLike = async (request, response) => {
   try {
     const { assetId, badgeId, userId } = request.body;

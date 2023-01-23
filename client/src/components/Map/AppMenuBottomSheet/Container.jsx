@@ -55,7 +55,7 @@ const AppMenusBottomSheet = (props) => {
           </>
         ) : (
           <View>
-            <Text style={{ color: baseTextColor }}>Please login or signup to take some actions.</Text>
+            <Text style={{ color: baseTextColor }}>Please login or signup if you want to launch or join a meetup.</Text>
           </View>
         )}
         {/* </ScrollView> */}

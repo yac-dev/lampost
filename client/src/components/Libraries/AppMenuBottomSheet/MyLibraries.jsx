@@ -23,10 +23,10 @@ const Container = (props) => {
     setMyJoinedLibraries(myJoinedLibraries);
   };
   useEffect(() => {
-    if (auth.data) {
+    if (auth.isAuthenticated) {
       getMyJoinedLibraries();
     }
-  }, []);
+  }, [auth.isAuthenticated]);
 
   const renderMyJoinedLibraries = () => {
     if (myJoinedLibraries.length) {

@@ -121,34 +121,6 @@ const Container = (props) => {
     setLibraryAssets(assets);
   };
 
-  // const renderDate = (date) => {
-  //   const d = new Date(date).toLocaleDateString('en-US', {
-  //     month: 'short',
-  //     day: 'numeric',
-  //   });
-  //   const dateTable = { ...d.split(' ') };
-  //   return (
-  //     <View
-  //       style={{
-  //         width: 50,
-  //         height: 50,
-  //         padding: 10,
-  //         borderRadius: 10,
-  //         borderWidth: 0.3,
-  //         marginRight: 10,
-  //         borderColor: baseTextColor,
-  //       }}
-  //     >
-  //       <Text style={{ fontSize: 15, fontWeight: 'bold', textAlign: 'center', color: baseTextColor }}>
-  //         {dateTable['0']}
-  //       </Text>
-  //       <Text style={{ fontSize: 13, fontWeight: 'bold', textAlign: 'center', color: baseTextColor }}>
-  //         {dateTable['1']}
-  //       </Text>
-  //     </View>
-  //   );
-  // };
-
   const renderBadgeLabels = (badges) => {
     const badgeLabels = badges.map((badge, index) => {
       return (
@@ -209,18 +181,6 @@ const Container = (props) => {
               //   console.log('hey');
               // }}
             >
-              {/* <View
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 15,
-                  backgroundColor: backgroundColorsTable[library.color],
-                  borderWidth: 0.3,
-                  borderColor: backgroundColorsTable[library.color],
-                }}
-              > */}
               <FastImage
                 style={{ width: '100%', height: '100%', borderRadius: 5 }}
                 source={{
@@ -229,19 +189,6 @@ const Container = (props) => {
                 }}
                 resizeMode={FastImage.resizeMode.stretch}
               />
-              {/* <Image
-                source={{ uri: library.thumbnail.data }}
-                style={{ width: '100%', height: '100%', borderRadius: 5 }}
-              /> */}
-              {/* <Ionicons name='ios-library' size={libraryIconWidth} color={iconColorsTable[library.color]} />
-
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <MaterialCommunityIcons name='fire' color={iconColorsTable[library.color]} size={20} />
-                  <Text style={{ color: iconColorsTable[library.color], fontWeight: 'bold', fontSize: 15 }}>
-                    {library.totalAssets}
-                  </Text>
-                </View> */}
-              {/* </View> */}
             </TouchableOpacity>
             <Text
               numberOfLines={1}
@@ -261,15 +208,6 @@ const Container = (props) => {
             >
               {library.name}
             </Text>
-            {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <MaterialCommunityIcons
-                name='rocket-launch'
-                style={{ marginRight: 5 }}
-                size={20}
-                color={iconColorsTable['red1']}
-              />
-              <Text style={{ color: baseTextColor }}>Yosuke Kojima</Text>
-            </View> */}
           </View>
         );
       });
@@ -313,10 +251,6 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        {/* <Text style={{ color: 'red' }}>Your expo push token: {expoPushToken}</Text>
-        <TouchableOpacity onPress={async () => experimentSendPushNotification()}>
-          <Text style={{ color: 'yellow' }}>Press here</Text>
-        </TouchableOpacity> */}
         <Text style={{ fontSize: 23, fontWeight: 'bold', padding: 10, color: 'white', marginBottom: 10 }}>
           Recently created
         </Text>

@@ -11,23 +11,20 @@ import { Ionicons } from '@expo/vector-icons';
 const Container = (props) => {
   const { auth } = useContext(GlobalContext);
   const [assets, setAssets] = useState([]);
-  const [addedAssets, setAddedAssets] = useState({});
   const [addedAsset, setAddedAsset] = useState(null);
   const oneAssetWidth = Dimensions.get('window').width / 2;
 
+  console.log(addedAsset);
+
   const onPostPress = async () => {
-    // postを押したらapi requestで、ここのrollにassetのobjectをpostする感じか。
-    // assetsだけのdataを作って、propsで送る感じか。
-    const assets = Object.values(addedAssets);
-    const payload = {
-      assets,
-    };
-    const result = await lampostAPI.post(`/libraryandassetrelationships/${props.route.params.libraryId}`, payload);
-    props.navigation.navigate('Library', { addedAssets: assets });
+    const result = await lampostAPI.post(`/libraryandassetrelationships/${props.route.params.libraryId}`, {
+      assetId: addedAsset._id,
+    });
+    props.navigation.navigate('Library', { addedAsset });
   };
 
   useEffect(() => {
-    if (props.route.params.fromComponent === 'ADD_ASSETS_FOR_POSTING') {
+    if (props.route.params.fromComponent === 'ADD_ASSET_FOR_POSTING') {
       props.navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity onPress={() => onPostPress()}>
@@ -36,7 +33,7 @@ const Container = (props) => {
         ),
       });
     }
-  }, [addedAssets]);
+  }, [addedAsset]);
 
   useEffect(() => {
     if (props.route.params.fromComponent === 'ADD_ASSETS_FOR_LAUNCHING_LIBRARY') {
@@ -53,6 +50,7 @@ const Container = (props) => {
     props.navigation.navigate('Libraries', { addedAsset });
   };
 
+  // これは、libraryをlaunchする時の場合ね。向こうからassetがくるから。
   useEffect(() => {
     if (props.route.params?.addedAsset) {
       setAddedAsset(props.route.params.addedAsset);
@@ -67,10 +65,6 @@ const Container = (props) => {
   useEffect(() => {
     getAssetsByUserId();
   }, []);
-
-  const onAssetPress = (asset) => {
-    setAddedAsset(asset);
-  };
 
   const renderCheck = (asset) => {
     if (addedAsset && addedAsset._id === asset._id) {

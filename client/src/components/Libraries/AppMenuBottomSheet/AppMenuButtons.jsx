@@ -43,8 +43,8 @@ const AppButtons = (props) => {
     );
   } else {
     return (
-      <Text style={{ color: baseTextColor, fontWeight: 'bold', fontSize: 20 }}>
-        Please login or signup to take some actions
+      <Text style={{ color: baseTextColor }}>
+        Please login or signup if you want to post assets or create a library.
       </Text>
     );
   }

@@ -38,15 +38,10 @@ const Container = (props) => {
   }, []);
 
   useEffect(() => {
-    if (props.route.params?.addedAssets) {
-      // console.log('this is the badges...', props.route.params.addedMeetupBadges);
-      // props.dispatch({ type: 'SET_MEETUP_BADGES', payload: props.route.params.addedMeetupBadges });
-      // まあ、単純に写真を表示するだけだから。。。
-      console.log(props.route.params?.addedAssets);
-      setAssets((previous) => [...previous, ...props.route.params?.addedAssets]);
-      // ここであとはassetsをsetするだけと。
+    if (props.route.params?.addedAsset) {
+      setAssets((previous) => [...previous, props.route.params?.addedAsset]);
     }
-  }, [props.route.params?.addedAssets]);
+  }, [props.route.params?.addedAsset]);
 
   const getAssetsByLibraryId = async () => {
     const result = await lampostAPI.get(`/libraryandassetrelationships/${library._id}`);
@@ -60,7 +55,7 @@ const Container = (props) => {
   }, [library]);
 
   const renderAssets = () => {
-    if (assets.length) {
+    if (('these are my assets', assets.length)) {
       // const assetsList = assets.map((asset, index) => {
       //   return (
       //     <TouchableOpacity
@@ -113,6 +108,8 @@ const Container = (props) => {
       return <Text style={{ color: 'white', textAlign: 'center' }}>Now loading...</Text>;
     }
   };
+
+  console.log(assets);
 
   return (
     <LibraryContext.Provider

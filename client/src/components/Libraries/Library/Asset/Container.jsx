@@ -17,19 +17,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AddNewReactionBottomSheet from './AddNewReactionBottomSheet';
 
 const Asset = (props) => {
-  const { auth } = useContext(GlobalContext);
+  const { auth, setSnackBar } = useContext(GlobalContext);
   const win = Dimensions.get('window');
   const [asset, setAsset] = useState(props.route.params.asset);
-  const [badgeLikes, setBadgeLikes] = useState(() => {
-    const table = {};
-    for (let i = 0; i < props.route.params.asset.badges.length; i++) {
-      table[props.route.params.asset.badges[i].badge._id] = {};
-      table[props.route.params.asset.badges[i].badge._id]['data'] = props.route.params.asset.badges[i].badge;
-      table[props.route.params.asset.badges[i].badge._id]['users'] = [];
-    }
-    return table;
-  });
-  const addNewReactionBottomSheetRef = useRef(null);
+  const [badgeLikes, setBadgeLikes] = useState(null);
 
   // data structure
   //  {
@@ -40,19 +31,14 @@ const Asset = (props) => {
   //    ,}
   //   }
 
-  const getBadgeLiked = async () => {
+  const getAssetAndBadgeAndUserRelationships = async () => {
     const result = await lampostAPI.get(`/assetandbadgeanduserrelationships/${props.route.params.asset._id}`);
-    const { table } = result.data;
-    setBadgeLikes((previous) => {
-      const updating = { ...previous };
-      for (const i in table) {
-        updating[i]['users'] = table[i];
-      }
-      return updating;
-    });
+    const { table, asset } = result.data;
+    setBadgeLikes(table);
+    setAsset(asset);
   };
   useEffect(() => {
-    getBadgeLiked();
+    getAssetAndBadgeAndUserRelationships();
   }, []);
 
   const upvoteBadge = async (badgeId) => {
@@ -66,6 +52,7 @@ const Asset = (props) => {
       updating[badgeId].users.push(auth.data._id);
       return updating;
     });
+    setSnackBar({ isVisible: true, message: 'Upvoted', barType: 'success', duration: 5000 });
   };
 
   // <FastImage
@@ -75,48 +62,57 @@ const Asset = (props) => {
   //     />
 
   const renderBadgeLikeButton = () => {
-    const arr = Object.values(badgeLikes);
-    const list = arr.map((badgeTable, index) => {
-      if (badgeTable.users.includes(auth.data._id)) {
-        return (
-          <View style={{ padding: 10, alignItems: 'center' }} key={index}>
-            <FastImage
-              source={{ uri: badgeTable.data.icon }}
-              resizeMode={FastImage.resizeMode.contain}
-              style={{ marginBottom: 10, width: 30, height: 30 }}
-              // tintColor={iconColorsTable[badgeObject.badge.color]}
-              tintColor={iconColorsTable[badgeTable.data.color]}
-            />
-            <Text style={{ color: baseTextColor }}>{badgeTable.users.length}</Text>
-          </View>
-        );
-      } else {
-        return (
-          <TouchableOpacity
-            style={{ padding: 10, alignItems: 'center' }}
-            key={index}
-            onPress={() => {
-              // console.log(`badgeid ${badgeObject.badge._id}`, `assetId ${asset._id}`, `userId ${auth.data._id}`);
-              upvoteBadge(badgeTable.data._id);
-            }}
-          >
-            <FastImage
-              source={{ uri: badgeTable.data.icon }}
-              resizeMode={FastImage.resizeMode.contain}
-              style={{ marginBottom: 10, width: 30, height: 30 }}
-              // tintColor={iconColorsTable[badgeObject.badge.color]}
-              tintColor={baseTextColor}
-            />
-            <Text style={{ color: baseTextColor }}>{badgeTable.users.length}</Text>
-          </TouchableOpacity>
-        );
-      }
-    });
+    if (badgeLikes) {
+      const arr = Object.values(badgeLikes);
+      const list = arr.map((badgeAndUsersRelationship, index) => {
+        if (auth.isAuthenticated && badgeAndUsersRelationship.users.includes(auth.data._id)) {
+          return (
+            <View style={{ padding: 10, alignItems: 'center' }} key={index}>
+              <FastImage
+                source={{ uri: badgeAndUsersRelationship.data.icon }}
+                resizeMode={FastImage.resizeMode.contain}
+                style={{ marginBottom: 10, width: 30, height: 30 }}
+                // tintColor={iconColorsTable[badgeObject.badge.color]}
+                tintColor={iconColorsTable[badgeAndUsersRelationship.data.color]}
+              />
+              <Text style={{ color: baseTextColor }}>{badgeAndUsersRelationship.users.length}</Text>
+            </View>
+          );
+        } else {
+          return (
+            <TouchableOpacity
+              style={{ padding: 10, alignItems: 'center' }}
+              key={index}
+              onPress={() => {
+                // console.log(`badgeid ${badgeObject.badge._id}`, `assetId ${asset._id}`, `userId ${auth.data._id}`);
+                upvoteBadge(badgeAndUsersRelationship.data._id);
+              }}
+            >
+              <FastImage
+                source={{ uri: badgeAndUsersRelationship.data.icon }}
+                resizeMode={FastImage.resizeMode.contain}
+                style={{ marginBottom: 10, width: 30, height: 30 }}
+                // tintColor={iconColorsTable[badgeObject.badge.color]}
+                tintColor={baseTextColor}
+              />
+              <Text style={{ color: baseTextColor }}>{badgeAndUsersRelationship.users.length}</Text>
+            </TouchableOpacity>
+          );
+        }
+      });
 
-    return <View style={{ flexDirection: 'column', position: 'absolute', bottom: 0, right: 0 }}>{list}</View>;
+      return (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{ flexDirection: 'column', position: 'absolute', bottom: 0, right: 0 }}
+        >
+          {list}
+        </ScrollView>
+      );
+    } else {
+      return null;
+    }
   };
-
-  console.log(asset);
 
   const leftActionButtons = () => {
     return (

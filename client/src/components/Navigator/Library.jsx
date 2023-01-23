@@ -134,7 +134,7 @@ const LibraryNavigator = () => {
           options={({ navigation }) => ({
             headerLeft: () => (
               <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text style={{ color: 'white' }}>Cancel</Text>
+                <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
               </TouchableOpacity>
             ),
             headerTitle: 'Add assets',

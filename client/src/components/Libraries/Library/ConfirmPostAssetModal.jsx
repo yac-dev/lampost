@@ -31,7 +31,7 @@ const ConfirmPostAssetModal = () => {
           <Button
             textColor='rgb(58, 126, 224)'
             onPress={() => {
-              navigation.navigate('Add assets', { libraryId: library._id, fromComponent: 'ADD_ASSETS_FOR_POSTING' });
+              navigation.navigate('Add assets', { libraryId: library._id, fromComponent: 'ADD_ASSET_FOR_POSTING' });
               setIsConfirmPostAssetsModalOpen(false);
             }}
           >
