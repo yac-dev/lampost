@@ -17,8 +17,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AddNewReactionBottomSheet from './AddNewReactionBottomSheet';
 
 const Asset = (props) => {
-  // まあ、assetでまずrelationshipsをとってくるのは前提として、
-  // {badge1: {data: badge1Data, users: [user1, user2]}, badge2: {data: badge2Data, users: []}}
   const { auth } = useContext(GlobalContext);
   const win = Dimensions.get('window');
   const [asset, setAsset] = useState(props.route.params.asset);
@@ -32,7 +30,6 @@ const Asset = (props) => {
     return table;
   });
   const addNewReactionBottomSheetRef = useRef(null);
-  console.log(badgeLikes);
 
   // data structure
   //  {
@@ -58,11 +55,6 @@ const Asset = (props) => {
     getBadgeLiked();
   }, []);
 
-  // badgeIdだけはとているからね。
-  // const getBadgeLiked = async () => {
-  //   const result = await lampostAPI.post();
-  // };
-
   const upvoteBadge = async (badgeId) => {
     const result = await lampostAPI.post('/assetandbadgeanduserrelationships', {
       assetId: asset._id,
@@ -76,81 +68,11 @@ const Asset = (props) => {
     });
   };
 
-  // const getReactionsByAssetId = async () => {
-  //   const result = await lampostAPI.get(`/assetandreactionanduserrelationships/${asset._id}`);
-  //   const { reactions } = result.data;
-  //   setReactions(reactions);
-  // };
-  // useEffect(() => {
-  //   getReactionsByAssetId();
-  // }, []);
-
-  // const renderReactions = () => {
-  //   const reactionsArray = Object.values(reactions);
-  //   if (reactionsArray.length) {
-  //     const list = reactionsArray.map((reaction, index) => {
-  //       if (reaction.users[auth.data._id]) {
-  //         return (
-  //           // <View style={{ backgroundColor: rnDefaultBackgroundColor, borderRadius: 10 }} key={index}>
-  //           <View
-  //             key={index}
-  //             style={{
-  //               flexDirection: 'row',
-  //               alignItems: 'center',
-  //               padding: 10,
-  //               borderWidth: 0.3,
-  //               borderColor: iconColorsTable['lightGreen1'],
-  //               borderRadius: 10,
-  //               backgroundColor: iconColorsTable['lightGreen1'],
-  //               marginRight: 10,
-  //               marginBottom: 10,
-  //             }}
-  //             // downvoteというか、取り消しはできなくする。めんどいし。
-  //           >
-  //             <Text style={{ color: 'white', marginRight: 10 }}>{reaction.content}</Text>
-  //             <Text style={{ color: 'white' }}>{reaction.totalCounts}</Text>
-  //           </View>
-  //           // </View>
-  //         );
-  //       } else {
-  //         return (
-  //           <TouchableOpacity
-  //             key={index}
-  //             style={{
-  //               flexDirection: 'row',
-  //               alignItems: 'center',
-  //               padding: 10,
-  //               borderWidth: 0.3,
-  //               borderColor: 'white',
-  //               borderRadius: 10,
-  //               marginRight: 10,
-  //               marginBottom: 10,
-  //             }}
-  //             onPress={() => {
-  //               setReactions((previous) => {
-  //                 const updating = { ...previous };
-  //                 updating[reaction._id].totalCounts = updating[reaction._id].totalCounts + 1;
-  //                 updating[reaction._id].users[auth.data._id] = {
-  //                   _id: auth.data._id,
-  //                   name: auth.data.name,
-  //                   photo: auth.data.photo,
-  //                 };
-  //                 return updating;
-  //               });
-  //             }}
-  //           >
-  //             <Text style={{ color: 'white', marginRight: 10 }}>{reaction.content}</Text>
-  //             <Text style={{ color: 'white' }}>{reaction.totalCounts}</Text>
-  //           </TouchableOpacity>
-  //         );
-  //       }
-  //     });
-
-  //     return <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: 10 }}>{list}</View>;
-  //   } else {
-  //     return null;
-  //   }
-  // };
+  // <FastImage
+  //       style={{ flex: 1, alignSelf: 'stretch', width: win.width, height: win.height, borderRadius: 10 }}
+  //       source={{ uri: selectedAsset.data }}
+  //       resizeMode={FastImage.resizeMode.contain}
+  //     />
 
   const renderBadgeLikeButton = () => {
     const arr = Object.values(badgeLikes);
@@ -194,12 +116,14 @@ const Asset = (props) => {
     return <View style={{ flexDirection: 'column', position: 'absolute', bottom: 0, right: 0 }}>{list}</View>;
   };
 
+  console.log(asset);
+
   const leftActionButtons = () => {
     return (
       <View style={{ flexDirection: 'column', position: 'absolute', bottom: 0, left: 0 }}>
         <View style={{ alignItems: 'center', padding: 10 }}>
           <MaterialIcons name='groups' size={30} color={baseTextColor} />
-          <Text style={{ color: baseTextColor }}>0</Text>
+          <Text style={{ color: baseTextColor }}>{asset.taggedPeople.length}</Text>
         </View>
         <View style={{ alignItems: 'center', padding: 10 }}>
           <MaterialCommunityIcons name='map-marker-radius' size={30} color={baseTextColor} />

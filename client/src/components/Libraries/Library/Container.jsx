@@ -6,9 +6,6 @@ import { View, Text, TouchableOpacity, ScrollView, Dimensions } from 'react-nati
 import { baseBackgroundColor } from '../../../utils/colorsTable';
 import FastImage from 'react-native-fast-image';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
-import SelectedAssetBottomSheet from './SelectedAssetBottomSheet';
-import PostAssetsBottomSheet from './PostAssetsBottomSheet';
-import PostsBottomSheet from './PostsBottomSheet';
 import MembersBottomSheet from './MembersBottomSheet';
 import Header from './Header';
 import BadgeLabels from './BadgeLabels';
@@ -21,13 +18,10 @@ const Container = (props) => {
   const selectedAssetBottomSheetRef = useRef(null);
   const membersBottomSheetRef = useRef(null);
   const reactionsBottomSheetRef = useRef(null);
-  const postsBottomSheetRef = useRef(null);
-  const postAssetsBottomSheetRef = useRef(null);
   const [isLeaveLibraryConfirmationModalOpen, setIsLeaveLibraryConfirmationModalOpen] = useState(false);
   const [isConfirmPostAssetsModalOpen, setIsConfirmPostAssetsModalOpen] = useState(false);
   const [library, setLibrary] = useState(null);
   const [assets, setAssets] = useState([]);
-  const [selectedAsset, setSelectedAsset] = useState(null);
   const [libraryMembers, setLibraryMembers] = useState([]);
   const [libraryPosts, setLibraryPosts] = useState([]);
   const oneAssetWidth = Dimensions.get('window').width / 2;
@@ -37,7 +31,6 @@ const Container = (props) => {
     // console.log(props.route.params.libraryId);
     const result = await lampostAPI.get(`/libraries/${props.route.params.libraryId}`);
     const { library } = result.data;
-    console.log(library);
     setLibrary(library);
   };
   useEffect(() => {
@@ -127,8 +120,6 @@ const Container = (props) => {
         appMenuBottomSheetRef,
         selectedAssetBottomSheetRef,
         membersBottomSheetRef,
-        postsBottomSheetRef,
-        postAssetsBottomSheetRef,
         library,
         assets,
         setAssets,
@@ -136,8 +127,6 @@ const Container = (props) => {
         setLibraryMembers,
         libraryPosts,
         setLibraryPosts,
-        selectedAsset,
-        setSelectedAsset,
         navigation: props.navigation,
         route: props.route,
         isLeaveLibraryConfirmationModalOpen,
