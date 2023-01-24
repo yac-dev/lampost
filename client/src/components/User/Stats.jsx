@@ -100,7 +100,7 @@ const Stats = () => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   padding: 5,
-                  backgroundColor: iconColorsTable['grey1'],
+                  backgroundColor: iconColorsTable['pink1'],
                   borderRadius: 10,
                 }}
               >

@@ -33,7 +33,7 @@ const AppMenuBottomSheet = (props) => {
       // onClose={() => onSelectedItemBottomSheetClose()}
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 15 }}>Wanna post?</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 15 }}>Post your asset?</Text>
         <AppMenuButtons />
         {/* ここに、自分がpostした写真をrenderして、deleteとかを簡単にできるようにしたい。 */}
       </BottomSheetView>

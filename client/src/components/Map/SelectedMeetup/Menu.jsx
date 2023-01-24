@@ -32,7 +32,7 @@ const Menu = (props) => {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 15,
+        padding: 7,
         // borderBottomColor: baseBorderColor,
         // borderBottomWidth: 0.3,
       }}

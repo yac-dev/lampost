@@ -43,7 +43,11 @@ const MapNavigator = (props) => {
               color: 'white',
             },
             // headerLeft: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
-            // headerRight: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
+            headerRight: () => (
+              <TouchableOpacity onPress={() => navigation.navigate('My page')}>
+                <Text style={{ color: 'red' }}>User</Text>
+              </TouchableOpacity>
+            ),
           })}
         />
         <Stack.Screen name='Camera' component={Camera} options={{ headerShown: false }} />
@@ -88,7 +92,7 @@ const MapNavigator = (props) => {
           name='My page'
           component={AuthNavigator}
           options={({ navigation }) => ({
-            headerLeft: () => <Button onPress={() => navigation.goBack()}>Close</Button>,
+            headerShown: false,
           })}
         />
         <Stack.Screen
@@ -97,7 +101,7 @@ const MapNavigator = (props) => {
           options={({ navigation }) => ({
             headerLeft: () => (
               <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text style={{ color: 'white' }}>Cancel</Text>
+                <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
               </TouchableOpacity>
             ),
             headerStyle: {

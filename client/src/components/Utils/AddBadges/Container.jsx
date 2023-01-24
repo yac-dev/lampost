@@ -78,7 +78,7 @@ const Container = (props) => {
       props.navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity onPress={() => onAddMeetupBadgesDone()}>
-            <Text style={{ color: 'white' }}>Done(meet)</Text>
+            <Text style={{ color: 'white', fontSize: 20 }}>Done</Text>
           </TouchableOpacity>
         ),
       });
@@ -109,7 +109,7 @@ const Container = (props) => {
       props.navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity onPress={() => onAddLibraryBadgesDone()}>
-            <Text style={{ color: 'white' }}>Done(library)</Text>
+            <Text style={{ color: 'white', fontSize: 20 }}>Done</Text>
           </TouchableOpacity>
         ),
       });
@@ -133,7 +133,7 @@ const Container = (props) => {
   // query
   useEffect(() => {
     if (props.route.params.fromComponent === 'ADD_USER_BADGES') {
-      queryBadges(props.auth.data._id);
+      queryBadges(auth.data._id);
     } else if (props.route.params.fromComponent === 'ADD_MEETUP_BADGES') {
       queryBadges();
     } else if (props.route.params.fromComponent === 'ADD_LIBRARY_BADGES') {
@@ -195,8 +195,4 @@ const Container = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return { auth: state.auth, selectedBadges: Object.values(state.selectedItem.badges) };
-};
-
-export default connect(mapStateToProps, { setIsTappedBadgeBottomSheetOpen })(Container);
+export default Container;

@@ -73,6 +73,7 @@ const Container = (props) => {
     getBadgeDatasByUserId();
   }, []);
 
+  console.log(auth.data);
   useEffect(() => {
     if (props.route.params?.addedUserBadges) {
       setBadgeDatas((previous) => [...previous, ...props.route.params.addedUserBadges]);
@@ -96,7 +97,8 @@ const Container = (props) => {
           {user._id === auth.data._id ? (
             <View>
               <Text style={{ color: baseTextColor, textAlign: 'center', marginBottom: 10 }}>
-                Let's add some badges and express yourself more.
+                Let's add some badges and express yourself more.{'\n'} e.g.) Your profession, foods you like,{'\n'} your
+                favorite musicians, what you are learning etc
               </Text>
               <TouchableOpacity
                 style={{

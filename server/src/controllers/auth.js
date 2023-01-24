@@ -14,6 +14,17 @@ export const signup = async (request, response) => {
       email,
       password,
       createdAt: new Date(),
+      leadership: {
+        total: 0,
+        teamManagement: 0,
+        communication: 0,
+        creativity: 0,
+        courage: 0,
+        integrity: 0,
+      },
+      patrons: 0,
+      assets: 0,
+      logs: 0,
     });
 
     const salt = await bcrypt.genSalt(10);

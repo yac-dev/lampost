@@ -7,7 +7,7 @@ import { appBottomSheetBackgroundColor } from '../../../../../utils/colorsTable'
 import AppMenuButtons from './AppMenuButtons';
 
 const AppMenusBottomSheet = (props) => {
-  const snapPoints = useMemo(() => ['15%', '45%'], []);
+  const snapPoints = useMemo(() => ['10%', '45%'], []);
   const { appMenuBottomSheetRef } = useContext(LoungeContext);
 
   return (

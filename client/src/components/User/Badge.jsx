@@ -18,7 +18,7 @@ const Badge = () => {
   const { badgeData } = useContext(BadgeContext);
   const { setPressedBadgeData, badgeDetailBottomSheetRef } = useContext(UserContext);
   const oneGridWidth = Dimensions.get('window').width / 4;
-  const oneGridHeight = Dimensions.get('window').height / 8.5;
+  const oneGridHeight = Dimensions.get('window').height / 7.5;
   const badgeContainerWidth = oneGridWidth * 0.6;
   const badgeIconWidth = badgeContainerWidth * 0.65;
 
@@ -38,11 +38,13 @@ const Badge = () => {
         // aspectRatio: 1,
         // padding: 10, // これは単純に、25%幅に対して
         // marginBottom: 10,
-        // backgroundColor: 'white',
+        // backgroundColor: 'red',
         paddingTop: 10,
         // backgroundColor: 'red',
         alignItems: 'center',
         // backgroundColor: 'red',
+        // marginBottom: 10,
+        // paddingBottom: 10,
       }}
     >
       <TouchableOpacity
@@ -57,7 +59,7 @@ const Badge = () => {
           borderRadius: 15,
           backgroundColor: rnDefaultBackgroundColor,
           borderWidth: 0.3,
-          // marginBottom: 10,
+          marginBottom: 5,
         }}
         onPress={() => {
           badgeDetailBottomSheetRef.current.snapToIndex(0);
@@ -86,6 +88,44 @@ const Badge = () => {
             tintColor={iconColorsTable[badgeData.badge.color]}
             resizeMode={FastImage.resizeMode.contain}
           />
+          {badgeData.badgeTags.length ? (
+            <View
+              style={{
+                backgroundColor: rnDefaultBackgroundColor,
+                width: 20,
+                height: 20,
+                top: -5,
+                right: -5,
+                position: 'absolute',
+                borderRadius: 10,
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: iconColorsTable[badgeData.badge.color],
+                  width: '100%',
+                  height: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 10,
+                }}
+              >
+                <Text style={{ color: 'white' }}>{badgeData.badgeTags.length}</Text>
+              </View>
+            </View>
+          ) : null}
+          {badgeData.link ? (
+            <View
+              style={{
+                top: -7,
+                left: -7,
+                position: 'absolute',
+                transform: [{ rotateY: '180deg' }],
+              }}
+            >
+              <Entypo name='link' size={20} color={'rgb(174, 180, 193)'} />
+            </View>
+          ) : null}
         </View>
       </TouchableOpacity>
 
@@ -106,17 +146,6 @@ const Badge = () => {
       >
         {badgeData.badge.name}
       </Text>
-      {badgeData.link ? (
-        <View
-          style={{
-            top: 3,
-            right: 10,
-            position: 'absolute',
-          }}
-        >
-          <Entypo name='link' size={25} color={'rgb(174, 180, 193)'} />
-        </View>
-      ) : null}
     </View>
   );
 };

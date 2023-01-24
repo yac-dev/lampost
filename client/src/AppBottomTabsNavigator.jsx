@@ -161,15 +161,15 @@ const AppStack = (props) => {
   //   }
   // }, [appState]); // こういう使い方はできないいんだ。上の、applistennerでしか多分使えない。
 
-  const getJWTToken = async () => {
-    const jwtToken = await SecureStore.getItemAsync('secure_token');
-    if (jwtToken) {
-      props.loadMe(jwtToken);
-    }
-  };
-  useEffect(() => {
-    getJWTToken();
-  }, []);
+  // const getJWTToken = async () => {
+  //   const jwtToken = await SecureStore.getItemAsync('secure_token');
+  //   if (jwtToken) {
+  //     props.loadMe(jwtToken);
+  //   }
+  // };
+  // useEffect(() => {
+  //   getJWTToken();
+  // }, []);
 
   const loadMe = async () => {
     const jwtToken = await SecureStore.getItemAsync('secure_token');

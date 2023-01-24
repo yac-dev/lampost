@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import UserContext from '../../UserContext';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { iconColorsTable, baseTextColor } from '../../../../utils/colorsTable';
+import { iconColorsTable, baseTextColor, screenSectionBackgroundColor } from '../../../../utils/colorsTable';
 
 const BadgeTags = () => {
   const { pressedBadgeData, isMyPage } = useContext(UserContext);
@@ -13,18 +13,18 @@ const BadgeTags = () => {
         return (
           <TouchableOpacity
             style={{
-              backgroundColor: iconColorsTable['lightGreen1'],
+              backgroundColor: screenSectionBackgroundColor,
               padding: 7,
               marginRight: 10,
               marginBottom: 10,
-              borderRadius: 10,
+              borderRadius: 5,
               flexDirection: 'row',
               alignItems: 'center',
             }}
             key={index}
           >
-            <MaterialCommunityIcons name='tag' size={25} color='white' style={{ marginRight: 10 }} />
-            <Text style={{ color: 'white', fontWeight: 'bold' }}>{badgeTag.name}</Text>
+            <MaterialCommunityIcons name='tag' size={20} color='white' style={{ marginRight: 10 }} />
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>{badgeTag.name}</Text>
           </TouchableOpacity>
         );
       });

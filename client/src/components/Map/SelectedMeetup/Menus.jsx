@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { View, Text, ScrollView, Image } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
@@ -148,7 +149,7 @@ const Menus = (props) => {
     <View style={{ padding: 5, borderRadius: 10, backgroundColor: sectionBackgroundColor }}>
       <Menu
         label='Launcher'
-        icon={<MaterialCommunityIcons name='rocket-launch' size={25} color={iconColorsTable['red1']} />}
+        icon={<MaterialCommunityIcons name='rocket-launch' size={20} color={iconColorsTable['red1']} />}
         backgroundColor={backgroundColorsTable['red1']}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -170,7 +171,7 @@ const Menus = (props) => {
       <Menu
         label='Description'
         backgroundColor={backgroundColorsTable['green1']}
-        icon={<MaterialCommunityIcons name='card-text-outline' size={25} color={iconColorsTable['green1']} />}
+        icon={<MaterialCommunityIcons name='card-text-outline' size={20} color={iconColorsTable['green1']} />}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ width: 80 }}>
@@ -187,8 +188,8 @@ const Menus = (props) => {
         }}
       />
       <Menu
-        label='Crew'
-        icon={<FontAwesome5 name='user-astronaut' size={25} color={iconColorsTable['violet1']} />}
+        label='Members'
+        icon={<MaterialIcons name='groups' size={20} color={iconColorsTable['violet1']} />}
         backgroundColor={backgroundColorsTable['violet1']}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -203,7 +204,7 @@ const Menus = (props) => {
       />
       <Menu
         label='Comments'
-        icon={<MaterialCommunityIcons name='chat-question' size={25} color={iconColorsTable['blue1']} />}
+        icon={<MaterialCommunityIcons name='chat-question' size={20} color={iconColorsTable['blue1']} />}
         backgroundColor={backgroundColorsTable['blue1']}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -218,7 +219,7 @@ const Menus = (props) => {
       />
       <Menu
         label='Fee'
-        icon={<Foundation name='dollar-bill' size={25} color={iconColorsTable['yellow1']} />}
+        icon={<Foundation name='dollar-bill' size={20} color={iconColorsTable['yellow1']} />}
         backgroundColor={backgroundColorsTable['yellow1']}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -245,7 +246,7 @@ const Menus = (props) => {
       /> */}
       <Menu
         label='Link'
-        icon={<Entypo name='link' size={25} color={iconColorsTable['grey1']} />}
+        icon={<Entypo name='link' size={20} color={iconColorsTable['grey1']} />}
         backgroundColor={backgroundColorsTable['grey1']}
         rightInfo={<MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />}
         onPressMenu={() => {

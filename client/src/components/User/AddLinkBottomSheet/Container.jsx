@@ -44,7 +44,7 @@ const Container = () => {
       const updating = [...previous];
       for (let i = 0; i < updating.length; i++) {
         if (updating[i].badge._id === badgeId) {
-          updating[i].url = link;
+          updating[i].link = link;
         }
       }
       return updating;
