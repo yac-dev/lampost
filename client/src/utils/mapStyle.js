@@ -4,7 +4,7 @@ export const mapStyle = [
     elementType: 'labels',
     stylers: [
       {
-        visibility: 'on',
+        visibility: 'off',
       },
     ],
   },

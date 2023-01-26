@@ -33,6 +33,7 @@ const AppMenuBottomSheet = (props) => {
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
         <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 15 }}>Create a library?</Text>
         <AppMenuButtons />
+        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My joined libraries</Text>
         <MyLibraries />
       </BottomSheetView>
     </GorhomBottomSheet>

@@ -1,33 +1,14 @@
-// main libraries
 import React from 'react';
-import { View, Text } from 'react-native';
-import { Menu, Switch, TextInput, Button } from 'react-native-paper';
-
-import { iconColorsTable } from '../../../../../utils/colorsTable';
-import { FontAwesome } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Foundation } from '@expo/vector-icons';
-import { baseTextColor } from '../../../../../utils/colorsTable';
+import { View, Text, InputAccessoryView, TouchableOpacity, Keyboard } from 'react-native';
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { Menu, Switch, Button } from 'react-native-paper';
+import { Fontisto } from '@expo/vector-icons';
+import { baseTextColor, inputBackgroundColor, sectionBackgroundColor } from '../../../../../utils/colorsTable';
 
 const currencyOptions = ['$USD', '£GBP', '€EUR', '¥JPY', '$CAD'];
 
 const MeetupFee = (props) => {
-  const renderCurrencies = () => {
-    const currencies = currencyOptions.map((element, index) => {
-      return (
-        <Menu.Item
-          key={index}
-          onPress={() => {
-            props.dispatch({ type: 'SET_CURRENCY', payload: element });
-            props.dispatch({ type: 'SET_IS_CURRENCY_MENU_VISIBLE', payload: false });
-          }}
-          title={element}
-        />
-      );
-    });
-    return <>{currencies}</>;
-  };
+  const inputAccessoryViewID = 'FEE_INPUT';
 
   const renderSwitchState = () => {
     if (props.state.isMeetupFeeFree) {
@@ -41,25 +22,44 @@ const MeetupFee = (props) => {
     if (!props.state.isMeetupFeeFree) {
       return (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Menu
-            visible={props.state.isCurrencyMenuVisible}
-            onDismiss={() => props.dispatch({ type: 'SET_IS_CURRENCY_MENU_VISIBLE', payload: false })}
-            anchor={
-              <Button onPress={() => props.dispatch({ type: 'SET_IS_CURRENCY_MENU_VISIBLE', payload: true })}>
-                {props.state.currency ? props.state.currency : 'Select'}
-              </Button>
-            }
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: 25,
+              backgroundColor: inputBackgroundColor,
+              borderRadius: 10,
+            }}
           >
-            {renderCurrencies()}
-          </Menu>
-          {/* <Text>{props.state.currency}</Text> */}
-          <TextInput
-            style={{ width: 200, marginLeft: 10 }}
-            mode='outlined'
-            label='How much is it?'
-            value={props.state.fee}
-            onChangeText={(text) => props.dispatch({ type: 'SET_MEETUP_FEE', payload: text })}
-          />
+            <Fontisto name='dollar' size={15} color={baseTextColor} style={{ paddingLeft: 10, paddingRight: 10 }} />
+            <BottomSheetTextInput
+              style={{
+                flex: 1,
+                padding: 10,
+                color: baseTextColor,
+                borderRadius: 5,
+              }}
+              keyboardType='numeric'
+              placeholder='Please type how much it is'
+              placeholderTextColor={baseTextColor}
+              inputAccessoryViewID={inputAccessoryViewID}
+              value={props.state.meetupFee}
+              onChangeText={(text) => props.dispatch({ type: 'SET_MEETUP_FEE', payload: text })}
+              autoCapitalize='none'
+            />
+            <InputAccessoryView nativeID={inputAccessoryViewID} backgroundColor={sectionBackgroundColor}>
+              <View style={{ alignItems: 'flex-end' }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    Keyboard.dismiss();
+                  }}
+                >
+                  <Text style={{ color: 'white', padding: 10, fontWeight: 'bold' }}>Done</Text>
+                </TouchableOpacity>
+              </View>
+            </InputAccessoryView>
+          </View>
         </View>
       );
     } else {
@@ -67,22 +67,11 @@ const MeetupFee = (props) => {
     }
   };
   return (
-    // <View style={{ marginTop: 20 }}>
-    //   <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Is this meetup free to join?</Text>
-    //   <View style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center' }}>
-    //     {renderSwitchState()}
-    //     <Switch
-    //       value={props.state.isMeetupFeeFree}
-    //       onValueChange={() => props.dispatch({ type: 'SET_IS_MEETUP_FEE_FREE', payload: '' })}
-    //     />
-    //     {renderFeeForm()}
-    //   </View>
-    // </View>
     <View style={{ marginBottom: 20 }}>
       <Text style={{ fontWeight: 'bold', fontSize: 13, color: baseTextColor, marginBottom: 10 }}>
         Is this meetup free to join?
       </Text>
-      <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
         <Switch
           value={props.state.isMeetupFeeFree}
           onValueChange={() => props.dispatch({ type: 'SET_IS_MEETUP_FEE_FREE', payload: '' })}
@@ -91,34 +80,6 @@ const MeetupFee = (props) => {
         {renderSwitchState()}
       </View>
       {renderFeeForm()}
-      {/* <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
-        <View
-          style={{
-            backgroundColor: iconColorsTable['yellow1'],
-            padding: 5,
-            borderRadius: 7,
-            width: 35,
-            height: 35,
-            alignItems: 'center',
-          }}
-        >
-          <Foundation name='dollar-bill' size={25} color='white' />
-        </View>
-        <View style={{ marginLeft: 15 }}>
-          <View style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-            <Text style={{ fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Fee</Text>
-            <Switch
-              value={props.state.isMeetupFeeFree}
-              onValueChange={() => props.dispatch({ type: 'SET_IS_MEETUP_FEE_FREE', payload: '' })}
-              style={{ marginRight: 10 }}
-            />
-            {renderSwitchState()}
-          </View>
-          <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#9E9E9E' }}>Is this meetup free to join?</Text>
-        </View>
-      </View> */}
-
-      {/* {renderFeeForm()} */}
     </View>
   );
 };

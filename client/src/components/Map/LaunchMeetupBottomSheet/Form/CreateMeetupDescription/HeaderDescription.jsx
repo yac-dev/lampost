@@ -18,7 +18,7 @@ const Header = () => {
       >
         <MaterialCommunityIcons name='message-text' size={25} color='white' />
       </View>
-      <Text style={{ fontWeight: 'bold', fontSize: 17, marginLeft: 15, color: 'white' }}>Message</Text>
+      <Text style={{ fontWeight: 'bold', fontSize: 17, marginLeft: 15, color: 'white' }}>Description/Message</Text>
     </View>
   );
 };

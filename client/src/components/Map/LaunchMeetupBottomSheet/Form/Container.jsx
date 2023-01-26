@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useReducer, useContext } from 'react';
 import GlobalContext from '../../../../GlobalContext';
 import lampostAPI from '../../../../apis/lampost';
-import { View, Text, TouchableOpacity, Keyboard } from 'react-native';
+import { View, Text, TouchableOpacity, Keyboard, KeyboardAvoidingView } from 'react-native';
 import GorhomBottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import MapContext from '../../MeetupContext';
 import { connect } from 'react-redux';
@@ -13,6 +13,7 @@ import { baseTextColor } from '../../../../utils/colorsTable';
 // components
 // import CreateMeetupBadge from './CreateMeetupBadge';
 import CreateMeetupTitle from './CreateMeetupTitle/Container';
+import CreateMeetupBadges from './CreateMeetupBadges/Container';
 import CreateMeetupPeople from './CreateMeetupPeople/Container';
 import CreateMeetupDateAndTime from './CreateMeetupDateAndTime/Container';
 import CreateMeetupDetail from './CreateMeetupDetail/Container';
@@ -41,22 +42,26 @@ const INITIAL_STATE = {
   // endDateAndTime: null,
   // isEndDatePickerVisible: false,
   isMeetupAttendeesLimitFree: true,
-  meetupAttendeesLimit: 10,
+  meetupAttendeesLimit: '',
   isMeetupFeeFree: true,
   isCurrencyMenuVisible: false,
   isMediaAllowed: true,
   currency: '',
-  meetupFee: 0,
+  meetupFee: '',
   description: '',
   link: '',
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'GO_TO_MEETUP_PEOPLE':
-      return { ...state, component: 'MeetupPeople' };
+    case 'GO_TO_MEETUP_BADGES':
+      return { ...state, component: 'MeetupBadges' };
     case 'BACK_TO_MEETUP_TITLE':
       return { ...state, component: 'MeetupTitle' };
+    case 'GO_TO_MEETUP_PEOPLE':
+      return { ...state, component: 'MeetupPeople' };
+    case 'BACK_TO_MEETUP_BADGES':
+      return { ...state, component: 'MeetupBadges' };
     case 'GO_TO_MEETUP_DATE_AND_TIME':
       return { ...state, component: 'MeetupDateAndTime' };
     case 'BACK_TO_MEETUP_PEOPLE':
@@ -109,6 +114,10 @@ const reducer = (state, action) => {
       return { ...state, description: action.payload };
     case 'SET_LINK':
       return { ...state, link: action.payload };
+    case 'LAUNCHED':
+      return INITIAL_STATE;
+    case 'CANCEL_LAUNCHING':
+      return INITIAL_STATE;
     default:
       return { ...state };
   }
@@ -139,88 +148,76 @@ const Container = (props) => {
       startDateAndTime: state.startDateAndTime,
       duration: state.duration,
       applicationDeadline: state.applicationDeadline,
-      endDateAndTime: state.endDateAndTime,
       isMeetupAttendeesLimitFree: state.isMeetupAttendeesLimitFree,
       meetupAttendeesLimit: state.meetupAttendeesLimit,
       isMeetupFeeFree: state.isMeetupFeeFree,
-      currency: state.currency,
       fee: state.meetupFee,
-      isMediaAllowed: state.isMediaAllowed,
       description: state.description,
-      link: state.link,
       launcher: auth.data._id,
     };
-    const result = await lampostAPI.post('/meetups', payload);
-    const { meetup, viewedChatsLastTime, launcher } = result.data;
-    console.log('this is the launcher');
-    setMeetups((previous) => {
-      return {
-        ...previous,
-        [meetup._id]: meetup,
-      };
-    });
-    if (launcher === auth.data._id) {
-      setLoading(false);
-      setAuth((previous) => {
-        return {
-          ...previous,
-          data: {
-            ...previous.data,
-            upcomingMeetups: [
-              ...previous.data.upcomingMeetups,
-              { meetup: meetup._id, viewedChatsLastTime: viewedChatsLastTime },
-            ],
-          },
-        };
-      });
-      // ここでも、chat roomにjoinしなきゃいけない。
-      setMyUpcomingMeetupAndChatsTable((previous) => {
-        return {
-          ...previous,
-          [meetup._id]: {
-            _id: meetup._id,
-            title: meetup.title,
-            chats: [],
-            unreadChatsCount: 0,
-            startDateAndTime: meetup.startDateAndTime,
-            viewedChatsLastTime: viewedChatsLastTime,
-            launcher: launcher,
-            state: meetup.state,
-          },
-        };
-      });
-      auth.socket.emit('JOIN_A_LOUNGE', { meetupId: meetup._id });
-      setIsLaunchMeetupConfirmed(false);
-      setLaunchLocation(null);
-      launchMeetupBottomSheetRef.current.close();
-      setSnackBar({
-        isVisible: true,
-        message: 'Launched a meetup.',
-        barType: 'success',
-        duration: 5000,
-      });
-    }
-    // setMeetups((previous) => [...previous, meetup]);
-    // auth.socket.emit('CREATE_MEETUP', payload);
-    // const { meetup, viewedChatsLastTime } = result.data;
+    // const result = await lampostAPI.post('/meetups', payload);
+    // const { meetup, viewedChatsLastTime, launcher } = result.data;
+    // console.log('this is the launcher');
+    // // setMeetups((previous) => {
+    // //   return {
+    // //     ...previous,
+    // //     [meetup._id]: meetup,
+    // //   };
+    // // });
+    // // if (launcher === auth.data._id) {
+    // //   setLoading(false);
+    // //   setAuth((previous) => {
+    // //     return {
+    // //       ...previous,
+    // //       data: {
+    // //         ...previous.data,
+    // //         upcomingMeetups: [
+    // //           ...previous.data.upcomingMeetups,
+    // //           { meetup: meetup._id, viewedChatsLastTime: viewedChatsLastTime },
+    // //         ],
+    // //       },
+    // //     };
+    // //   });
+    // //   // ここでも、chat roomにjoinしなきゃいけない。
+    // //   setMyUpcomingMeetupAndChatsTable((previous) => {
+    // //     return {
+    // //       ...previous,
+    // //       [meetup._id]: {
+    // //         _id: meetup._id,
+    // //         title: meetup.title,
+    // //         chats: [],
+    // //         unreadChatsCount: 0,
+    // //         startDateAndTime: meetup.startDateAndTime,
+    // //         viewedChatsLastTime: viewedChatsLastTime,
+    // //         launcher: launcher,
+    // //         state: meetup.state,
+    // //       },
+    // //     };
+    // //   });
+    // //   auth.socket.emit('JOIN_A_LOUNGE', { meetupId: meetup._id });
+    // //   setIsLaunchMeetupConfirmed(false);
+    // //   setLaunchLocation(null);
+    // //   launchMeetupBottomSheetRef.current.close();
+    // //   setSnackBar({
+    // //     isVisible: true,
+    // //     message: 'Launched a meetup.',
+    // //     barType: 'success',
+    // //     duration: 5000,
+    // //   });
+    // // }
     Keyboard.dismiss();
-    // setAuth((previous) => {
-    //   return {
-    //     ...previous,
-    //     data: {
-    //       ...previous.data,
-    //       upcomingMeetups: [...previous.data.upcomingMeetups, { meetup, viewedChatsLastTime }],
-    //     },
-    //   };
-    // });
-    // setMeetups((previous) => [...previous, meetup]);
-    // setIsLaunchMeetupConfirmed(false);
-    // setLaunchLocation(null);
-    // launchMeetupBottomSheetRef.current.close();
-    // setLoading(false);
-    // return () => {
-    //   socketRef.current.off('CREATE_MEETUP');
-    // };
+    console.log(payload);
+    dispatch({ type: 'LAUNCHED', payload: '' });
+    setLoading(false);
+    setIsLaunchMeetupConfirmed(false);
+    setLaunchLocation(null);
+    launchMeetupBottomSheetRef.current.close();
+    setSnackBar({
+      isVisible: true,
+      message: 'Launched a meetup.',
+      barType: 'success',
+      duration: 5000,
+    });
   };
 
   const switchComponent = () => {
@@ -228,6 +225,10 @@ const Container = (props) => {
       case 'MeetupTitle':
         return (
           <CreateMeetupTitle state={state} dispatch={dispatch} navigation={props.navigation} route={props.route} />
+        );
+      case 'MeetupBadges':
+        return (
+          <CreateMeetupBadges state={state} dispatch={dispatch} navigation={props.navigation} route={props.route} />
         );
       case 'MeetupPeople':
         return (
@@ -246,7 +247,7 @@ const Container = (props) => {
 
   return (
     <BottomSheetScrollView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
-      <View style={{ alignSelf: 'flex-end', marginBottom: 5 }}>
+      {/* <View style={{ alignSelf: 'flex-end', marginBottom: 5 }}>
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center' }}
           onPress={() => setIsCancelLaunchMeetupConfirmationModalOpen(true)}
@@ -254,7 +255,7 @@ const Container = (props) => {
           <AntDesign name='close' size={20} color={baseTextColor} style={{ marginRight: 5 }} />
           <Text style={{ color: baseTextColor }}>Cancel</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
       {switchComponent()}
     </BottomSheetScrollView>
   );

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Touchable, View, TouchableOpacity, Text } from 'react-native';
 import { Avatar, IconButton } from 'react-native-paper';
 import lampostAPI from '../../../../apis/lampost';
+import { enableScreens } from 'react-native-screens';
 import { baseBackgroundColor } from '../../../../utils/colorsTable';
 // components
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';

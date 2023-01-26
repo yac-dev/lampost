@@ -27,7 +27,7 @@ const Badge = (props) => {
   return (
     <View style={{ marginBottom: 20 }}>
       <Text style={{ fontWeight: 'bold', fontSize: 13, color: baseTextColor, marginBottom: 10 }}>
-        Please add some badges so attendees know what your meetup is about. (up to 5)
+        Please add some badges so attendees know what your meetup is about.
       </Text>
       <TouchableOpacity
         style={{

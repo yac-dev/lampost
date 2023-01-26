@@ -30,7 +30,7 @@ const Auth = (props) => {
       <Stack.Navigator>
         <Stack.Group>
           <Stack.Screen
-            name='Profile'
+            name='My page'
             component={UserHome}
             initialParams={{ userId: auth.data._id }}
             options={{

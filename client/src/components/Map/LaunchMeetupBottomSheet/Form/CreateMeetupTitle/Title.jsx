@@ -18,13 +18,22 @@ import {
 const Title = (props) => {
   const { launchMeetupBottomSheetRef } = useContext(MapContext);
   const inputAccessoryViewID = 'TITLE_INPUT';
+
+  const renderTitleLength = () => {
+    if (props.state.title.length <= 40) {
+      return <Text style={{ fontSize: 13, color: baseTextColor }}>{props.state.title.length}/40</Text>;
+    } else {
+      return <Text style={{ fontSize: 13, color: 'red' }}>OOPS! {props.state.title.length}/40</Text>;
+    }
+  };
+
   return (
     <View style={{ marginBottom: 20 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
         <Text style={{ fontWeight: 'bold', fontSize: 13, color: baseTextColor, marginRight: 10 }}>
           Please write the meetup title.
         </Text>
-        <Text style={{ fontSize: 13, color: baseTextColor }}>{props.state.title.length}/40</Text>
+        {renderTitleLength()}
       </View>
       <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 15 }}>
         <BottomSheetTextInput

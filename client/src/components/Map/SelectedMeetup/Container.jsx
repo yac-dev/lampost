@@ -17,7 +17,7 @@ import Badges from './Badges';
 import Menus from './Menus';
 
 const Container = (props) => {
-  const snapPoints = useMemo(() => ['50%', '70%', '85%'], []);
+  const snapPoints = useMemo(() => ['60%', '85%'], []);
   const { selectedMeetup, selectedMeetupBottomSheetRef } = useContext(MapContext);
 
   const renderSelectedMeetup = () => {
@@ -50,9 +50,7 @@ const Container = (props) => {
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
       handleIndicatorStyle={{ backgroundColor: 'white' }}
     >
-      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
-        <ScrollView>{renderSelectedMeetup()}</ScrollView>
-      </BottomSheetView>
+      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>{renderSelectedMeetup()}</BottomSheetView>
     </GorhomBottomSheet>
   );
 };

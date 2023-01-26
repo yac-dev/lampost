@@ -97,7 +97,7 @@ const AppStack = (props) => {
   const [routeName, setRouteName] = useState('');
   const [totalUnreadChatsCount, setTotalUnreadChatsCount] = useState(0);
   const [myUpcomingMeetupAndChatsTable, setMyUpcomingMeetupAndChatsTable] = useState({});
-  const hide = routeName === 'Meetup' || routeName === 'Dummy2' || routeName === 'Q&A';
+  const hide = routeName === 'Dummy2' || routeName === 'Q&A';
   // { 111: { _id: 111, title: 'Meetup1' , chats: [{content: '', createdAt: '2022/9/1'}], viewedChats: '2022/9/22' },
   //   222: { _id: 222, title: 'Meetup2' , chats: [{content: '', createdAt: '2022/8/1'}], viewedChats: '2022/7/22' },
   //}
@@ -349,17 +349,6 @@ const AppStack = (props) => {
               // })(route),
             })}
           />
-          {/* <Tab.Screen
-          name='Feed'
-          component={Feed}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({ size, color }) => <FontAwesome name='feed' color={color} size={size} />,
-            tabBarLabel: () => {
-              return null;
-            },
-          }}
-        /> */}
           <Tab.Screen
             name='Camera'
             component={Camera}
@@ -384,7 +373,7 @@ const AppStack = (props) => {
           />
 
           {/* 全てのcomponent、navigatorを足さないといけないわ。Mapと全く同じように。この状態だと。mapの方のuser page routeに行く。*/}
-          <Tab.Screen
+          {/* <Tab.Screen
             name='Auth'
             component={AuthNavigator}
             options={
@@ -415,7 +404,7 @@ const AppStack = (props) => {
               //   },
               // }
             }
-          />
+          /> */}
 
           {/* <Tab.Screen
           name='Notifications'

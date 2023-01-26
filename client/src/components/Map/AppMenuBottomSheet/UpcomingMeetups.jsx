@@ -76,7 +76,14 @@ const Container = (props) => {
     if (meetupAndChatsTable.state === 'upcoming') {
       return (
         <TouchableOpacity
-          style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10, marginRight: 5 }}
+          style={{
+            backgroundColor: iconColorsTable['blue1'],
+            padding: 5,
+            borderRadius: 10,
+            marginRight: 5,
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
           onPress={() => {
             // まず確認のmodalをだす。
             // ここで、時間の確認を必ずしないといけない。10分前っていうことを。
@@ -94,13 +101,21 @@ const Container = (props) => {
             // });
           }}
         >
-          <Ionicons size={25} name='power' color={'white'} />
+          <Ionicons size={25} name='power' color={'white'} style={{ marginRight: 5 }} />
+          <Text style={{ color: 'white' }}>Stat meetup</Text>
         </TouchableOpacity>
       );
     } else if (meetupAndChatsTable.state === 'ongoing') {
       return (
         <TouchableOpacity
-          style={{ backgroundColor: iconColorsTable['red1'], padding: 5, borderRadius: 10, marginRight: 5 }}
+          style={{
+            backgroundColor: iconColorsTable['red1'],
+            padding: 5,
+            borderRadius: 10,
+            marginRight: 5,
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
           onPress={() => {
             // ここでも、確認のmodalを出す。
             // ここのfinishはいつでもいいとしよう。
@@ -117,7 +132,8 @@ const Container = (props) => {
             // });
           }}
         >
-          <Ionicons size={25} name='power' color={'white'} />
+          <Ionicons size={25} name='power' color={'white'} style={{ marginRight: 5 }} />
+          <Text style={{ color: 'white' }}>Stat meetup</Text>
         </TouchableOpacity>
       );
     }
@@ -134,7 +150,10 @@ const Container = (props) => {
               navigation.navigate('Lounge', { meetupId: meetupAndChatsTable._id });
             }}
           >
-            <Ionicons size={25} name='ios-chatbubbles' color={'white'} />
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Ionicons size={25} name='ios-chatbubbles' color={'white'} style={{ marginRight: 5 }} />
+              <Text style={{ color: 'white' }}>Lounge</Text>
+            </View>
             <View
               style={{
                 position: 'absolute',
@@ -164,7 +183,10 @@ const Container = (props) => {
               navigation.navigate('Lounge', { meetupId: meetupAndChatsTable._id });
             }}
           >
-            <Ionicons size={25} name='ios-chatbubbles' color={'white'} />
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Ionicons size={25} name='ios-chatbubbles' color={'white'} style={{ marginRight: 5 }} />
+              <Text style={{ color: 'white' }}>Lounge</Text>
+            </View>
           </TouchableOpacity>
         </View>
       );
@@ -179,14 +201,12 @@ const Container = (props) => {
           <View
             key={index}
             style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
+              flexDirection: 'column',
               padding: 10,
             }}
           >
             <TouchableOpacity
-              style={{ flexDirection: 'row', alignItems: 'center', flexShrink: 1 }}
+              style={{ flexDirection: 'row', alignItems: 'center', flexShrink: 1, marginBottom: 10 }}
               onPress={() => getMeetup(meetupAndChatsTable._id)}
             >
               {renderDate(meetupAndChatsTable.startDateAndTime)}
@@ -222,10 +242,7 @@ const Container = (props) => {
   };
 
   return (
-    <View>
-      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 20 }}>My upcoming meetups</Text>
-      <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderMyUpcomingMeetups()}</ScrollView>
-    </View>
+    <BottomSheetScrollView showsVerticalScrollIndicator={false}>{renderMyUpcomingMeetups()}</BottomSheetScrollView>
   );
 };
 

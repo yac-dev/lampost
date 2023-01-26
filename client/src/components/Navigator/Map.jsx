@@ -1,7 +1,6 @@
-// main libraries
-import React, { useEffect } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
-import { connect } from 'react-redux';
+import React, { useEffect, useContext } from 'react';
+import GlobalContext from '../../GlobalContext';
+import { Text, TouchableOpacity, Image } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Button } from 'react-native-paper';
 const Stack = createNativeStackNavigator();
@@ -25,6 +24,7 @@ import { loadMe } from '../../redux/actionCreators/auth';
 import { getSocket } from '../../redux/actionCreators/auth';
 
 const MapNavigator = (props) => {
+  const { auth } = useContext(GlobalContext);
   // mapの画面から、どんなcomponentへの遷移があるか、それが重要なのかもな。mainのmapはもちろん、そっからカメラのcomponent, 各userのpage, chat component、、、ここは色々多くなるはず。
   // 基本、map画面における全てのroutingをここに登録しておく。
 
@@ -42,12 +42,25 @@ const MapNavigator = (props) => {
               fontWeight: 'bold',
               color: 'white',
             },
-            // headerLeft: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
-            headerRight: () => (
-              <TouchableOpacity onPress={() => navigation.navigate('My page')}>
-                <Text style={{ color: 'red' }}>User</Text>
-              </TouchableOpacity>
-            ),
+            // headerLeft: () => {
+            //   return (
+            //     <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+            //       <Text style={{ color: 'red' }}>Camera</Text>
+            //     </TouchableOpacity>
+            //   );
+            // },
+            headerRight: () => {
+              if (auth?.data) {
+                return (
+                  // あとは、photoがあるかないかのチェックね。
+                  <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+                    <Image source={{ uri: auth.data.photo }} style={{ width: 35, height: 35, borderRadius: 10 }} />
+                  </TouchableOpacity>
+                );
+              } else {
+                return null;
+              }
+            },
           })}
         />
         <Stack.Screen name='Camera' component={Camera} options={{ headerShown: false }} />
@@ -89,7 +102,7 @@ const MapNavigator = (props) => {
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
         <Stack.Screen
-          name='My page'
+          name='Profile'
           component={AuthNavigator}
           options={({ navigation }) => ({
             headerShown: false,

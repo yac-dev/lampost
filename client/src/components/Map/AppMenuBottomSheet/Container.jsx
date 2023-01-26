@@ -51,6 +51,9 @@ const AppMenusBottomSheet = (props) => {
         {auth.data ? (
           <>
             <AppMenuButtons />
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 20 }}>
+              My upcoming meetups
+            </Text>
             <UpcomingMeetups />
           </>
         ) : (

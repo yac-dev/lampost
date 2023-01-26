@@ -4,6 +4,7 @@ import LibrariesContext from '../LibrariesContext';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView, TouchableOpacity, Dimensions, Image } from 'react-native';
 import lampostAPI from '../../../apis/lampost';
+import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import {
   baseTextColor,
   iconColorsTable,
@@ -92,10 +93,12 @@ const Container = (props) => {
 
   if (auth.data) {
     return (
-      <View>
-        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My joined libraries</Text>
-        <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderMyJoinedLibraries()}</ScrollView>
-      </View>
+      // <View>
+      //   <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My joined libraries</Text>
+
+      // </View>
+      // このbottomsheetのscrollviewって、viewで囲うとダメみたい。
+      <BottomSheetScrollView showsVerticalScrollIndicator={false}>{renderMyJoinedLibraries()}</BottomSheetScrollView>
     );
   } else {
     return null;

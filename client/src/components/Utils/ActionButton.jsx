@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { iconColorsTable, screenSectionBackgroundColor } from '../../utils/colorsTable';
 
-const ActionButtonNew = (props) => {
+const ActionButton = (props) => {
   return (
     <TouchableOpacity
       style={{
@@ -11,11 +12,12 @@ const ActionButtonNew = (props) => {
         paddingBottom: 2,
         paddingRight: 10,
         paddingLeft: 5,
-        backgroundColor: props.backgroundColor,
+        backgroundColor: props.isDisabled ? screenSectionBackgroundColor : props.backgroundColor,
         marginRight: 10,
         borderRadius: 10,
       }}
       onPress={() => props.onActionButtonPress()}
+      disabled={props.isDisabled}
     >
       <View
         style={{
@@ -32,4 +34,4 @@ const ActionButtonNew = (props) => {
   );
 };
 
-export default ActionButtonNew;
+export default ActionButton;
