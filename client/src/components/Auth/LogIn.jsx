@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import lampostAPI from '../../apis/lampost';
 import GlobalContext from '../../GlobalContext';
 import AuthContext from './AuthContext';
@@ -9,11 +9,22 @@ import ActionButton from '../Utils/ActionButton';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import FormTextInput from './FormTextInput';
+import LoadingSpinner from '../Utils/LoadingSpinner';
+import SnackBar from '../Utils/SnackBar';
 
 const Login = () => {
-  const { setAuth, setLoading } = useContext(GlobalContext);
+  const [isDisabledDone, setIsDisabledDone] = useState(true);
+  const { setAuth, setLoading, setSnackBar } = useContext(GlobalContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    if (email.length && password.length) {
+      setIsDisabledDone(false);
+    } else {
+      setIsDisabledDone(true);
+    }
+  }, [email, password]);
 
   const login = async () => {
     try {
@@ -34,6 +45,13 @@ const Login = () => {
       });
       setLoading(false);
     } catch (error) {
+      setLoading(false);
+      setSnackBar({
+        isVisible: true,
+        message: 'OOPS! Something wrong with your email or password. Please type again.',
+        barType: 'error',
+        duration: 7000,
+      });
       console.log(error);
     }
   };
@@ -69,8 +87,11 @@ const Login = () => {
           backgroundColor={iconColorsTable['blue1']}
           icon={<MaterialIcons name='check' color='white' size={25} />}
           onActionButtonPress={() => login()}
+          isDisabled={isDisabledDone}
         />
       </View>
+      <LoadingSpinner />
+      <SnackBar />
     </ScrollView>
   );
 };

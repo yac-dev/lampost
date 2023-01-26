@@ -6,8 +6,9 @@ import { Button } from 'react-native-paper';
 const Stack = createNativeStackNavigator();
 import * as SecureStore from 'expo-secure-store';
 import { io } from 'socket.io-client';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Fontisto } from '@expo/vector-icons';
 
-// components
 import Map from '../Map/Container';
 import Camera from '../Camera/Container';
 import Schedule from '../Schedule/Container';
@@ -44,21 +45,36 @@ const MapNavigator = (props) => {
             },
             // headerLeft: () => {
             //   return (
-            //     <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-            //       <Text style={{ color: 'red' }}>Camera</Text>
+            //     <TouchableOpacity onPress={() => navigation.navigate('About lampost')}>
+            //       <MaterialCommunityIcons name='information' size={20} color={'white'} />
             //     </TouchableOpacity>
             //   );
             // },
             headerRight: () => {
               if (auth?.data) {
+                if (auth?.data.photo) {
+                  return (
+                    // あとは、photoがあるかないかのチェックね。
+                    <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+                      <Image source={{ uri: auth.data.photo }} style={{ width: 35, height: 35, borderRadius: 10 }} />
+                    </TouchableOpacity>
+                  );
+                } else {
+                  return (
+                    // user icon
+                    <Text>User</Text>
+                  );
+                }
+              } else {
                 return (
-                  // あとは、photoがあるかないかのチェックね。
-                  <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-                    <Image source={{ uri: auth.data.photo }} style={{ width: 35, height: 35, borderRadius: 10 }} />
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('Profile')}
+                    style={{ flexDirection: 'row', alignItems: 'center' }}
+                  >
+                    <MaterialCommunityIcons name='login' size={15} color={'white'} style={{ marginRight: 5 }} />
+                    <Text style={{ color: 'white', fontSize: 17 }}>Login</Text>
                   </TouchableOpacity>
                 );
-              } else {
-                return null;
               }
             },
           })}

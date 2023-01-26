@@ -9,7 +9,7 @@ import { baseTextColor, appBottomSheetBackgroundColor } from '../../utils/colors
 
 const ConfirmLeaveLibrary = (props) => {
   const { auth, setAuth, setMyUpcomingMeetupAndChatsTable, setTotalUnreadChatsCount } = useContext(GlobalContext);
-  const { isConfirmLogoutModalOpen, setIsConfirmLogoutModalOpen } = useContext(UserContext);
+  const { isConfirmLogoutModalOpen, setIsConfirmLogoutModalOpen, navigation } = useContext(UserContext);
 
   const logout = async () => {
     await SecureStore.deleteItemAsync('secure_token');
@@ -21,6 +21,7 @@ const ConfirmLeaveLibrary = (props) => {
     setMyUpcomingMeetupAndChatsTable({});
     setTotalUnreadChatsCount(0);
     auth.socket.disconnect();
+    // navigation.goBack();
   };
 
   return (

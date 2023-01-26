@@ -102,7 +102,7 @@ const Container = (props) => {
           }}
         >
           <Ionicons size={25} name='power' color={'white'} style={{ marginRight: 5 }} />
-          <Text style={{ color: 'white' }}>Stat meetup</Text>
+          <Text style={{ color: 'white' }}>Start meetup</Text>
         </TouchableOpacity>
       );
     } else if (meetupAndChatsTable.state === 'ongoing') {
@@ -133,7 +133,7 @@ const Container = (props) => {
           }}
         >
           <Ionicons size={25} name='power' color={'white'} style={{ marginRight: 5 }} />
-          <Text style={{ color: 'white' }}>Stat meetup</Text>
+          <Text style={{ color: 'white' }}>Finish meetup</Text>
         </TouchableOpacity>
       );
     }

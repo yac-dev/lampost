@@ -63,7 +63,7 @@ export const login = async (request, response) => {
   } catch (error) {
     console.log(error.message, error.name);
     response.status(400).send({
-      message: 'OOPS! Please enter your email and password again.',
+      message: 'OOPS! Something wrong with your email or password. Please enter your email and password again.',
     });
   }
 };

@@ -151,14 +151,7 @@ const ActionButtons = (props) => {
       }
     } else {
       // loginしていない場合はlogin or signupをさせるようにする。
-      return (
-        <ActionButton
-          label='Please login or signup from "Profile" to join'
-          icon={<Ionicons name='ios-enter' size={25} color={'white'} />}
-          backgroundColor={iconColorsTable['blue1']}
-          onActionButtonPress={() => null}
-        />
-      );
+      return <Text style={{ color: baseTextColor }}>It is required to login or signup to join the meetup.</Text>;
     }
     // for (let i = 0; i < auth.data.upcomingMeetups.length; i++) {
     //   // everyか？someかな。

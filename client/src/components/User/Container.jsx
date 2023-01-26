@@ -7,6 +7,7 @@ import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import lampostAPI from '../../apis/lampost';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { baseBackgroundColor, baseTextColor, iconColorsTable } from '../../utils/colorsTable';
+import { Provider as PaperProvider } from 'react-native-paper';
 
 // components
 import Header from './Header';
@@ -94,7 +95,7 @@ const Container = (props) => {
     } else {
       return (
         <View>
-          {user._id === auth.data._id ? (
+          {auth.data && user._id === auth.data._id ? (
             <View>
               <Text style={{ color: baseTextColor, textAlign: 'center', marginBottom: 10 }}>
                 Let's add some badges and express yourself more.{'\n'} e.g.) Your profession, foods you like,{'\n'} your
@@ -158,21 +159,23 @@ const Container = (props) => {
           setIsOpenCreateBadgeTagTextInput,
         }}
       >
-        <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-          {/* <View style={{ flexDirection: 'row' }}> */}
-          <Header />
-          {/* </View> */}
+        <PaperProvider>
+          <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+            {/* <View style={{ flexDirection: 'row' }}> */}
+            <Header />
+            {/* </View> */}
 
-          <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
-          <AppMenuBottomSheet />
-          <BadgeDetailBottomSheet />
-          <AddBadgeTagsBottomSheet />
-          <AddLinkBottomSheet />
-          {/* <SelectedProfileImage /> */}
-          <ConfirmEditProfileModal />
-          <ConfirmActionButtonModal />
-          <ConfirmLogout />
-        </View>
+            <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
+            <AppMenuBottomSheet />
+            <BadgeDetailBottomSheet />
+            <AddBadgeTagsBottomSheet />
+            <AddLinkBottomSheet />
+            {/* <SelectedProfileImage /> */}
+            <ConfirmEditProfileModal />
+            <ConfirmActionButtonModal />
+            <ConfirmLogout />
+          </View>
+        </PaperProvider>
       </UserContext.Provider>
     );
   } else {

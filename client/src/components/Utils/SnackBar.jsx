@@ -28,11 +28,11 @@ const SnackBar = (props) => {
         visible={snackBar.isVisible}
         onDismiss={() => setSnackBar({ isVisible: false, message: '', barType: '', duration: null })}
         action={{
-          label: 'Close',
+          label: <Text style={{ color: 'white' }}>Close</Text>,
           onPress: () => setSnackBar({ isVisible: false, message: '', barType: '', duration: null }),
         }}
       >
-        <Text style={{ color: baseTextColor }}>{snackBar.message}</Text>
+        <Text style={{ color: 'white' }}>{snackBar.message}</Text>
       </Snackbar>
     );
   } else {

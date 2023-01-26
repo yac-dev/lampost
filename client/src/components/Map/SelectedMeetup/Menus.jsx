@@ -22,7 +22,7 @@ import {
 import Menu from './Menu';
 
 const Menus = (props) => {
-  const { auth } = useContext(GlobalContext);
+  const { auth, setIsPleaseLoginModalOpen } = useContext(GlobalContext);
   const {
     selectedMeetup,
     navigation,
@@ -163,10 +163,14 @@ const Menus = (props) => {
           </View>
         }
         onPressMenu={() => {
+          // if (!auth.data) {
+          //   setIsPleaseLoginModalOpen(true);
+          // } else {
           // Map tab内では、自分のpageを見せないようにする。ごちゃごちゃになってめんどいからね。
           if (!auth.data || auth.data._id !== selectedMeetup.launcher._id) {
             navigation.navigate('User', { userId: selectedMeetup.launcher._id });
           }
+          // }
         }}
       />
       <Menu
@@ -184,6 +188,7 @@ const Menus = (props) => {
           </View>
         }
         onPressMenu={() => {
+          // navigation.navigate('Description', { description: selectedMeetup.description });
           setSelectedMeetupDetailComponent('Description');
           selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
         }}

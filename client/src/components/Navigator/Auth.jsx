@@ -175,7 +175,11 @@ const Auth = (props) => {
               fontWeight: 'bold',
               color: 'white',
             },
-            headerTintColor: 'white',
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => props.navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+              </TouchableOpacity>
+            ),
           }}
         />
         <Stack.Screen
