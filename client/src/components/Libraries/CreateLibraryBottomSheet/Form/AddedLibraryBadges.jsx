@@ -1,7 +1,7 @@
 // main libraries
 import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
-import FormContext from '../../FormContext';
+import FormContext from '../FormContext';
 import { connect } from 'react-redux';
 import { AntDesign } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
@@ -10,7 +10,7 @@ import {
   rnDefaultBackgroundColor,
   backgroundColorsTable,
   iconColorsTable,
-} from '../../../../../utils/colorsTable';
+} from '../../../../utils/colorsTable';
 import FastImage from 'react-native-fast-image';
 
 const AddedLibraryBadges = (props) => {

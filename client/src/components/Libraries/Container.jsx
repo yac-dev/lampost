@@ -12,8 +12,7 @@ import {
   iconColorsTable,
   rnDefaultBackgroundColor,
 } from '../../utils/colorsTable';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
+
 import BadgeLabel from '../Utils/BadgeLabel';
 import FastImage from 'react-native-fast-image';
 
@@ -21,6 +20,7 @@ import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import CreateLibraryBottomSheet from './CreateLibraryBottomSheet/Container';
 import LibraryOverviewBottomSheet from './LibraryOverviewBottomSheet/Container';
 import InfoDetailBottomSheet from './InfoDetailBottomSheet/Container';
+import ConfirmCancelCreatingLibraryModal from './ConfirmCancelCreatingLibraryModal';
 
 // authenticatedの場合が必要か。
 const Container = (props) => {
@@ -33,13 +33,13 @@ const Container = (props) => {
     notification,
     setNotification,
   } = useContext(GlobalContext);
-  const rollsBottomSheetRef = useRef(null);
   const [selected, setSelected] = useState(null);
   const [libraries, setLibraries] = useState([]);
   const [selectedLibrary, setSelectedLibrary] = useState(null);
   const [libraryAssets, setLibraryAssets] = useState([]);
   const [myJoinedLibraries, setMyJoinedLibraries] = useState([]);
   const [selectedLibraryDetailComponent, setSelectedLibraryDetailComponent] = useState('');
+  const [isConfirmCancelCreatingLibraryModalOpen, setIsConfirmCancelCreatingLibraryModalOpen] = useState(false);
 
   const appMenuBottomSheetRef = useRef(null);
   const createLibraryBottomSheetRef = useRef(null);
@@ -248,6 +248,8 @@ const Container = (props) => {
         setMyJoinedLibraries,
         selectedLibraryDetailComponent,
         setSelectedLibraryDetailComponent,
+        isConfirmCancelCreatingLibraryModalOpen,
+        setIsConfirmCancelCreatingLibraryModalOpen,
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
@@ -259,6 +261,7 @@ const Container = (props) => {
         <CreateLibraryBottomSheet />
         <LibraryOverviewBottomSheet />
         <InfoDetailBottomSheet />
+        <ConfirmCancelCreatingLibraryModal />
       </View>
     </LibrariesContext.Provider>
   );

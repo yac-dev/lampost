@@ -7,39 +7,37 @@ import GorhomBottomSheet, {
   BottomSheetView,
   BottomSheetBackdrop,
   BottomSheetBackgroundProps,
+  BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
 import { appBottomSheetBackgroundColor, baseTextColor } from '../../../utils/colorsTable';
-
-import { AntDesign } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
-import { Fontisto } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-
-import FirstPage from './Form/FirstPage/Container';
-import SecondPage from './Form/SecondPage/Container';
+import LibraryName from './Form/LibraryName';
+import LibraryBadges from './Form/LibraryBadges';
+import LibraryDescription from './Form/LibraryDescription';
+import LibraryAsset from './Form/LibraryAsset';
 
 const Container = (props) => {
   const { createLibraryBottomSheetRef } = useContext(LibrariesContext);
-  const snapPoints = ['100%'];
-  const [page, setPage] = useState('FIRST_PAGE');
+  const snapPoints = ['65%'];
+  const [component, setComponent] = useState('LIBRARY_NAME');
   // const [formData, setFormData] = useState({ name: '', badges: {}, description: '', rolls: ['', ''] });
   const [formData, setFormData] = useState({ name: '', badges: {}, description: '', asset: null });
 
-  const switchPage = () => {
-    switch (page) {
-      case 'FIRST_PAGE':
-        return <FirstPage />;
-      case 'SECOND_PAGE':
-        return <SecondPage />;
+  const switchComponent = () => {
+    switch (component) {
+      case 'LIBRARY_NAME':
+        return <LibraryName />;
+      case 'LIBRARY_BADGES':
+        return <LibraryBadges />;
+      case 'LIBRARY_DESCRIPTION':
+        return <LibraryDescription />;
+      case 'LIBRARY_ASSET':
+        return <LibraryAsset />;
       default:
         return null;
     }
   };
-
   return (
-    <FormContext.Provider value={{ formData, setFormData, page, setPage }}>
+    <FormContext.Provider value={{ formData, setFormData, component, setComponent }}>
       <GorhomBottomSheet
         index={-1}
         enableOverDrag={true}
@@ -51,19 +49,11 @@ const Container = (props) => {
         enablePanDownToClose={false}
         backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
         handleIndicatorStyle={{ backgroundColor: 'white' }}
-        // keyboardBehavior={'interactive'}
+        keyboardBehavior={'extend'}
         // onClose={() => onSelectedItemBottomSheetClose()}
       >
         <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
-          <TouchableOpacity
-            style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}
-            onPress={() => createLibraryBottomSheetRef.current.close()} // stateをからにするのも必要。本当は。
-          >
-            <AntDesign name='close' size={20} color={baseTextColor} style={{ marginRight: 5 }} />
-            <Text style={{ color: baseTextColor }}>Cancel</Text>
-          </TouchableOpacity>
-          {/* <Form /> */}
-          {switchPage()}
+          <BottomSheetScrollView>{switchComponent()}</BottomSheetScrollView>
         </BottomSheetView>
       </GorhomBottomSheet>
     </FormContext.Provider>

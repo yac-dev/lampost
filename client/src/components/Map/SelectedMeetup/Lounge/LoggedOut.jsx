@@ -19,7 +19,7 @@ const LoggedOutModal = () => {
   return (
     <Portal>
       <Dialog visible={isLoggedOutModalOpen} style={{ backgroundColor: appBottomSheetBackgroundColor, padding: 30 }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>You are already logged out.</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>You've logged out.</Text>
         <Dialog.Actions>
           <Button
             textColor='rgb(58, 126, 224)'
