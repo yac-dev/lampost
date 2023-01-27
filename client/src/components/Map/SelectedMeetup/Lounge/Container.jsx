@@ -13,7 +13,7 @@ import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import SendChatBottomSheet from './SendChatBottomSheet';
 import CrewBottomSheet from './CrewBottomSheet';
 import Chats from './Chats';
-import SnackBar from '../../../Utils/SnackBar';
+import LoggedOut from './LoggedOut';
 
 // ac
 import { setIsTextBoxBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
@@ -29,26 +29,42 @@ const Container = (props) => {
     setRouteName,
   } = useContext(GlobalContext);
   const [meetup, setMeetup] = useState(null);
-  const [chats, setChats] = useState(myUpcomingMeetupAndChatsTable[props.route.params.meetupId].chats);
+  const [chats, setChats] = useState([]);
   const appMenuBottomSheetRef = useRef(null);
   const sendChatBottomSheetRef = useRef(null);
   const crewBottomSheetRef = useRef(null);
   const textInputRef = useRef(null);
+  const [isLoggedOutModalOpen, setIsLoggedOutModalOpen] = useState(false);
   const [dummyCount, setDummyCount] = useState(0);
 
-  // const getLoungeChatsByMeetupId = async () => {
-  //   const result = await lampostAPI.get(`/loungechats/${props.route.params.meetupId}`);
-  //   const { loungeChats } = result.data;
-  //   setChats(loungeChats);
-  // };
+  const getLoungeChatsByMeetupId = async () => {
+    const result = await lampostAPI.get(`/loungechats/${props.route.params.meetupId}`);
+    const { loungeChats } = result.data;
+    setChats(loungeChats);
+  };
+
   const getSelectedMeetup = async () => {
     const result = await lampostAPI.get(`/meetups/${props.route.params.meetupId}/selected`);
     const { meetup } = result.data;
     setMeetup(meetup);
   };
   useEffect(() => {
-    // getLoungeChatsByMeetupId();
+    getLoungeChatsByMeetupId();
     getSelectedMeetup();
+  }, []);
+  // loungechatsも、apiで持ってくる必要がる。
+  useEffect(() => {
+    if (auth.socket) {
+      // 待機開始。
+      auth.socket.on('I_GOT_A_CHAT_IN_THE_ROOM', (data) => {
+        setChats((previous) => [...previous, data]);
+        console.log('now in lounge', routeName);
+      });
+
+      // return () => {
+      //   auth.socket.off('SOMEONE_SENT_A_CHAT');
+      // };
+    }
   }, []);
 
   // experiment
@@ -90,10 +106,11 @@ const Container = (props) => {
   };
   useEffect(() => {
     return () => {
+      // これも、authがある時のみに動かさなきゃ毛ない。だから、dependencyも入れなきゃかも。最初の状態でregisterしているかもしれんから。
       const dateTime = new Date();
       console.log('cleaing up');
       // ここでapi requestをする。viewd chats last timeの。ok.
-      updateviewedChatsLastTime(dateTime);
+      updateviewedChatsLastTime(dateTime); // これは必要。
       setMyUpcomingMeetupAndChatsTable((previous) => {
         return {
           ...previous,
@@ -128,6 +145,8 @@ const Container = (props) => {
         textInputRef,
         chats,
         setChats,
+        isLoggedOutModalOpen,
+        setIsLoggedOutModalOpen,
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>

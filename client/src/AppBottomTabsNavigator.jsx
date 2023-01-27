@@ -233,7 +233,7 @@ const AppStack = (props) => {
   useEffect(() => {
     if (auth.socket) {
       // 待機開始。
-      auth.socket.on('SOMEONE_SENT_A_CHAT', (data) => {
+      auth.socket.on('I_GOT_A_CHAT_OUT_OF_THE_ROOM.GO_CHECK_OUT_THE_LOUNGE', (data) => {
         // lounge以外のscreenにいる時でこのsocket eventを受けたら、chatのstateを変える。
         // if (routeName !== 'Lounge') {
         // }
@@ -243,7 +243,6 @@ const AppStack = (props) => {
           if (routeName !== 'Lounge') {
             updating[data.meetup].unreadChatsCount = updating[data.meetup].unreadChatsCount + 1;
           }
-          updating[data.meetup].chats.push(data);
           return updating;
         });
         if (routeName !== 'Lounge') {
@@ -252,7 +251,7 @@ const AppStack = (props) => {
       });
 
       return () => {
-        auth.socket.off('SOMEONE_SENT_A_CHAT');
+        auth.socket.off('I_GOT_A_CHAT_OUT_OF_THE_ROOM.GO_CHECK_OUT_THE_LOUNGE');
       };
     }
   }, [auth.socket, routeName]);
@@ -377,7 +376,7 @@ const AppStack = (props) => {
           />
 
           {/* 全てのcomponent、navigatorを足さないといけないわ。Mapと全く同じように。この状態だと。mapの方のuser page routeに行く。*/}
-          {/* <Tab.Screen
+          <Tab.Screen
             name='Auth'
             component={AuthNavigator}
             options={
@@ -408,7 +407,7 @@ const AppStack = (props) => {
               //   },
               // }
             }
-          /> */}
+          />
 
           {/* <Tab.Screen
           name='Notifications'

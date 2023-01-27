@@ -8,6 +8,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import lampostAPI from '../../apis/lampost';
 import * as SecureStore from 'expo-secure-store';
+import LoadingSpinner from '../Utils/LoadingSpinner';
 
 const SignUp = () => {
   const { setAuth, setLoading } = useContext(GlobalContext);
@@ -19,7 +20,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if (name.length && email.length && isEmailValid && password.length) {
-      if (password.length < 11) {
+      if (password.length < 10) {
         setIsDisabledDone(true);
       } else {
         setIsDisabledDone(false);
@@ -113,6 +114,7 @@ const SignUp = () => {
           isDisabled={isDisabledDone}
         />
       </View>
+      <LoadingSpinner />
     </View>
   );
 };

@@ -48,7 +48,7 @@ const Login = () => {
       setLoading(false);
       setSnackBar({
         isVisible: true,
-        message: 'OOPS! Something wrong with your email or password. Please type again.',
+        message: 'Something wrong with your email or password. Please type again.',
         barType: 'error',
         duration: 7000,
       });
@@ -62,7 +62,7 @@ const Login = () => {
     >
       <View style={{ marginBottom: 15 }}>
         {/* <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5, color: 'white' }}>Login</Text> */}
-        <Text style={{ color: baseTextColor }}>Please fill in your email and password.</Text>
+        <Text style={{ color: baseTextColor }}>Please type your email and password.</Text>
       </View>
       <View style={{ marginBottom: 15 }}>
         <FormTextInput

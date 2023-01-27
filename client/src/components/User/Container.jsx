@@ -74,7 +74,6 @@ const Container = (props) => {
     getBadgeDatasByUserId();
   }, []);
 
-  console.log(auth.data);
   useEffect(() => {
     if (props.route.params?.addedUserBadges) {
       setBadgeDatas((previous) => [...previous, ...props.route.params.addedUserBadges]);

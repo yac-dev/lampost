@@ -39,13 +39,23 @@ const AddBadgeTags = () => {
     creatingBadgeTagText,
     setCreatingBadgeTagText,
   } = useContext(AddBadgeTagsContext);
+  const [isDisabledDone, setIsDisabledDone] = useState(true);
   const inputAccessoryViewID = 'CREATE_BADGE_TAG';
+
+  useEffect(() => {
+    if (Object.values(creatingBadgeTagNames).length) {
+      setIsDisabledDone(false);
+    } else {
+      setIsDisabledDone(true);
+    }
+  }, [creatingBadgeTagNames]);
 
   const onDonePress = async () => {
     const result = await lampostAPI.patch(
       `/badgeanduserrelationships/add/${pressedBadgeData.badge._id}/${auth.data._id}`,
       { addedBadgeTags, creatingBadgeTagNames }
     );
+    setCreatingBadgeTagNames([]);
     const { badgeId, badgeTags } = result.data;
     setPressedBadgeData((previous) => {
       return {
@@ -241,10 +251,6 @@ const AddBadgeTags = () => {
   return (
     <View>
       <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Add badge tags</Text>
-      {/* <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 20 }}>
-        {renderSelectedBadgeTags()}
-        {renderCreatingBadgeTags()}
-      </View> */}
       {renderAddingBadgeTags()}
       {renderBadgeTags()}
       {renderNote()}
@@ -263,6 +269,7 @@ const AddBadgeTags = () => {
           backgroundColor={iconColorsTable['blue1']}
           icon={<MaterialCommunityIcons name='check' size={25} color='white' />}
           onActionButtonPress={() => onDonePress()}
+          isDisabled={isDisabledDone}
         />
       </View>
     </View>

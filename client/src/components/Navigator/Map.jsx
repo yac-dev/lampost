@@ -7,6 +7,7 @@ const Stack = createNativeStackNavigator();
 import * as SecureStore from 'expo-secure-store';
 import { io } from 'socket.io-client';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 
 import Map from '../Map/Container';
@@ -50,33 +51,46 @@ const MapNavigator = (props) => {
             //     </TouchableOpacity>
             //   );
             // },
-            headerRight: () => {
-              if (auth?.data) {
-                if (auth?.data.photo) {
-                  return (
-                    // あとは、photoがあるかないかのチェックね。
-                    <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-                      <Image source={{ uri: auth.data.photo }} style={{ width: 35, height: 35, borderRadius: 10 }} />
-                    </TouchableOpacity>
-                  );
-                } else {
-                  return (
-                    // user icon
-                    <Text>User</Text>
-                  );
-                }
-              } else {
-                return (
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate('Profile')}
-                    style={{ flexDirection: 'row', alignItems: 'center' }}
-                  >
-                    <MaterialCommunityIcons name='login' size={15} color={'white'} style={{ marginRight: 5 }} />
-                    <Text style={{ color: 'white', fontSize: 17 }}>Login</Text>
-                  </TouchableOpacity>
-                );
-              }
-            },
+            // headerRight: () => {
+            //   if (auth?.data) {
+            //     if (auth?.data.photo) {
+            //       return (
+            //         // あとは、photoがあるかないかのチェックね。
+            //         <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+            //           <Image source={{ uri: auth.data.photo }} style={{ width: 35, height: 35, borderRadius: 10 }} />
+            //         </TouchableOpacity>
+            //       );
+            //     } else {
+            //       return (
+            //         // user icon
+            //         <TouchableOpacity
+            //           style={{
+            //             width: 35,
+            //             height: 35,
+            //             borderRadius: 10,
+            //             marginRight: 10,
+            //             backgroundColor: iconColorsTable['blue1'],
+            //             alignItems: 'center',
+            //             justifyContent: 'center',
+            //           }}
+            //           onPress={() => navigation.navigate('Profile')}
+            //         >
+            //           <FontAwesome5 name='user-astronaut' size={25} color='white' />
+            //         </TouchableOpacity>
+            //       );
+            //     }
+            //   } else {
+            //     return (
+            //       <TouchableOpacity
+            //         onPress={() => navigation.navigate('Profile')}
+            //         style={{ flexDirection: 'row', alignItems: 'center' }}
+            //       >
+            //         <MaterialCommunityIcons name='login' size={15} color={'white'} style={{ marginRight: 5 }} />
+            //         <Text style={{ color: 'white', fontSize: 17 }}>Login</Text>
+            //       </TouchableOpacity>
+            //     );
+            //   }
+            // },
           })}
         />
         <Stack.Screen name='Camera' component={Camera} options={{ headerShown: false }} />

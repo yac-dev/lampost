@@ -33,17 +33,17 @@ const LibraryNavigator = () => {
               fontWeight: 'bold',
               color: 'white',
             },
-            headerRight: () => {
-              if (auth?.data) {
-                return (
-                  <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-                    <Image source={{ uri: auth.data.photo }} style={{ width: 35, height: 35, borderRadius: 10 }} />
-                  </TouchableOpacity>
-                );
-              } else {
-                return null; // login用のあれを出す感じ。
-              }
-            },
+            // headerRight: () => {
+            //   if (auth?.data) {
+            //     return (
+            //       <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+            //         <Image source={{ uri: auth.data.photo }} style={{ width: 35, height: 35, borderRadius: 10 }} />
+            //       </TouchableOpacity>
+            //     );
+            //   } else {
+            //     return null; // login用のあれを出す感じ。
+            //   }
+            // },
             // headerTransparent: true,
             // headerTransparent: true,
             // reduxのdata._idを使えばいいだけか。

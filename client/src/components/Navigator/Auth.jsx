@@ -30,7 +30,7 @@ const Auth = (props) => {
       <Stack.Navigator>
         <Stack.Group>
           <Stack.Screen
-            name='My page'
+            name='Profile'
             component={UserHome}
             initialParams={{ userId: auth.data._id }}
             options={{
@@ -42,11 +42,11 @@ const Auth = (props) => {
                 fontWeight: 'bold',
                 color: 'white',
               },
-              headerLeft: () => (
-                <TouchableOpacity onPress={() => props.navigation.goBack()}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
-                </TouchableOpacity>
-              ),
+              // headerLeft: () => (
+              //   <TouchableOpacity onPress={() => props.navigation.goBack()}>
+              //     <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+              //   </TouchableOpacity>
+              // ),
             }}
           >
             {/*  これまた、別でuserhomeのcomponentがひちようだわな。connectionなりで、違うuser pageに飛んでいくから。*/}
@@ -175,11 +175,11 @@ const Auth = (props) => {
               fontWeight: 'bold',
               color: 'white',
             },
-            headerLeft: () => (
-              <TouchableOpacity onPress={() => props.navigation.goBack()}>
-                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
-              </TouchableOpacity>
-            ),
+            // headerLeft: () => (
+            //   <TouchableOpacity onPress={() => props.navigation.goBack()}>
+            //     <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+            //   </TouchableOpacity>
+            // ),
           }}
         />
         <Stack.Screen
