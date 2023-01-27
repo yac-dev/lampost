@@ -162,6 +162,7 @@ const Container = (props) => {
         <AppMenuBottomSheet />
         <SendChatBottomSheet />
         <CrewBottomSheet />
+        <LoggedOut />
       </View>
     </LoungeContext.Provider>
   );

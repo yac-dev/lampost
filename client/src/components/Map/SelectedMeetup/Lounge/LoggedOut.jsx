@@ -8,7 +8,7 @@ import { baseTextColor, appBottomSheetBackgroundColor } from '../../../../utils/
 
 const LoggedOutModal = () => {
   const { auth } = useContext(GlobalContext);
-  const { isLoggedOutModalOpen, setIsLoggedOutModalOpen } = useContext(LoungeContext);
+  const { isLoggedOutModalOpen, setIsLoggedOutModalOpen, navigation } = useContext(LoungeContext);
 
   useEffect(() => {
     if (!auth.isAuthenticated) {
@@ -23,10 +23,10 @@ const LoggedOutModal = () => {
         <Dialog.Actions>
           <Button
             textColor='rgb(58, 126, 224)'
-            onPress={() =>
-              // ここで、home stackに戻す。// navigationで戻す感じ。
-              setIsLoggedOutModalOpen(false)
-            }
+            onPress={() => {
+              navigation.reset({ index: 0, routes: [{ name: 'Meetups' }] });
+              setIsLoggedOutModalOpen(false);
+            }}
           >
             Ok
           </Button>
