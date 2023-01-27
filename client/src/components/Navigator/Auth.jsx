@@ -202,7 +202,7 @@ const Auth = (props) => {
           component={SignUp}
           options={{
             headerShown: true,
-            title: 'Welcome to Lampost',
+            title: 'Signup',
             headerStyle: {
               backgroundColor: appBottomSheetBackgroundColor,
             },

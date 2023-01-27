@@ -1,14 +1,18 @@
 // Schema
 import User from '../models/user';
-
+import AppError from '../utils/appError';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
-export const signup = async (request, response) => {
+export const signup = async (request, response, next) => {
   try {
     console.log(request.body);
     const { name, email, password } = request.body;
-
+    if (password.length < 10) {
+      // messageと、error type。
+      // throw new AppError('Password should be at least 10 characters.', 400, 'PasswordLengthError');
+      return next(new AppError('Password has to be at least 10 characters long.', 400, 'PasswordLengthError'));
+    }
     const user = new User({
       name,
       email,
@@ -37,11 +41,16 @@ export const signup = async (request, response) => {
       jwtToken,
     });
   } catch (error) {
-    console.log(error);
+    console.log(error.name);
+    console.log(error.message);
+    next(error);
+    // response.status(400).json({
+    //   message: error,
+    // });
   }
 };
 
-export const login = async (request, response) => {
+export const login = async (request, response, next) => {
   try {
     const { email, password } = request.body;
     const user = await User.findOne({ email });

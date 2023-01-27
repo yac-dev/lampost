@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import GlobalContext from '../../GlobalContext';
 import { baseBackgroundColor, baseTextColor, iconColorsTable } from '../../utils/colorsTable';
@@ -11,9 +11,23 @@ import * as SecureStore from 'expo-secure-store';
 
 const SignUp = () => {
   const { setAuth, setLoading } = useContext(GlobalContext);
+  const [isDisabledDone, setIsDisabledDone] = useState(true);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [isEmailValid, setIsEmailValid] = useState(false);
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    if (name.length && email.length && isEmailValid && password.length) {
+      if (password.length < 11) {
+        setIsDisabledDone(true);
+      } else {
+        setIsDisabledDone(false);
+      }
+    } else {
+      setIsDisabledDone(true);
+    }
+  }, [name, email, isEmailValid, password]);
 
   const onPressSubmit = async () => {
     try {
@@ -35,9 +49,26 @@ const SignUp = () => {
       });
       setLoading(false);
     } catch (error) {
+      console.log(error.response.data.message);
+      setLoading(false);
       console.log(error);
     }
     // props.signUp(formData);
+  };
+
+  const validate = (text) => {
+    console.log(text);
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    if (reg.test(text) === false) {
+      console.log('Email is Not Correct');
+      setEmail(text);
+      setIsEmailValid(false);
+      return false;
+    } else {
+      setEmail(text);
+      setIsEmailValid(true);
+      console.log('Email is Correct');
+    }
   };
 
   return (
@@ -57,14 +88,17 @@ const SignUp = () => {
         <FormTextInput
           label='Email'
           value={email}
-          onChangeText={(text) => setEmail(text)}
+          onChangeText={(text) => {
+            setEmail(text);
+            validate(text);
+          }}
           inputAccessoryViewID={'SIGNUP_EMAIL_IMPUT'}
         />
       </View>
       <View style={{ marginBottom: 15 }}>
         <FormTextInput
           isSecure={true}
-          label='Password'
+          label='Password (at least 10 characters long)'
           value={password}
           onChangeText={(text) => setPassword(text)}
           inputAccessoryViewID={'SIGNUP_PASSWORD_IMPUT'}
@@ -76,6 +110,7 @@ const SignUp = () => {
           backgroundColor={iconColorsTable['blue1']}
           icon={<MaterialIcons name='check' color='white' size={25} />}
           onActionButtonPress={() => onPressSubmit()}
+          isDisabled={isDisabledDone}
         />
       </View>
     </View>
