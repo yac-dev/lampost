@@ -6,9 +6,9 @@ import * as SecureStore from 'expo-secure-store';
 import { Button, Dialog, Portal, Provider, withTheme } from 'react-native-paper';
 import { baseTextColor, appBottomSheetBackgroundColor } from '../../../../utils/colorsTable';
 
-const LoggedOutModal = () => {
-  const { auth } = useContext(GlobalContext);
-  const { isLoggedOutModalOpen, setIsLoggedOutModalOpen, navigation } = useContext(LoungeContext);
+const LoggedOutModal = (props) => {
+  const { auth, isLoggedOutModalOpen, setIsLoggedOutModalOpen } = useContext(GlobalContext);
+  // const { navigation } = useContext(LoungeContext);
 
   useEffect(() => {
     if (!auth.isAuthenticated) {
@@ -24,7 +24,7 @@ const LoggedOutModal = () => {
           <Button
             textColor='rgb(58, 126, 224)'
             onPress={() => {
-              navigation.reset({ index: 0, routes: [{ name: 'Meetups' }] });
+              props.navigation.reset({ index: 0, routes: [{ name: 'Meetups' }] });
               setIsLoggedOutModalOpen(false);
             }}
           >

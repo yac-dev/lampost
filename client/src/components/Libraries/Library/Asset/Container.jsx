@@ -14,13 +14,21 @@ import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import AddNewReactionBottomSheet from './AddNewReactionBottomSheet';
+import LoggedOutModal from '../../../Map/SelectedMeetup/Lounge/LoggedOut';
 
 const Asset = (props) => {
   const { auth, setSnackBar } = useContext(GlobalContext);
   const win = Dimensions.get('window');
   const [asset, setAsset] = useState(props.route.params.asset);
   const [badgeLikes, setBadgeLikes] = useState(null);
+
+  useEffect(() => {
+    if (!auth.isAuthenticated) {
+      setIsLoggedOutModalOpen(true);
+    }
+  }, [auth.isAuthenticated]);
 
   // data structure
   //  {
@@ -67,11 +75,11 @@ const Asset = (props) => {
       const list = arr.map((badgeAndUsersRelationship, index) => {
         if (auth.isAuthenticated && badgeAndUsersRelationship.users.includes(auth.data._id)) {
           return (
-            <View style={{ padding: 10, alignItems: 'center' }} key={index}>
+            <View style={{ alignItems: 'center', flexDirection: 'row', marginRight: 10 }} key={index}>
               <FastImage
                 source={{ uri: badgeAndUsersRelationship.data.icon }}
                 resizeMode={FastImage.resizeMode.contain}
-                style={{ marginBottom: 10, width: 30, height: 30 }}
+                style={{ marginRight: 5, width: 30, height: 30 }}
                 // tintColor={iconColorsTable[badgeObject.badge.color]}
                 tintColor={iconColorsTable[badgeAndUsersRelationship.data.color]}
               />
@@ -81,7 +89,7 @@ const Asset = (props) => {
         } else {
           return (
             <TouchableOpacity
-              style={{ padding: 10, alignItems: 'center' }}
+              style={{ alignItems: 'center', flexDirection: 'row', marginRight: 10 }}
               key={index}
               onPress={() => {
                 // console.log(`badgeid ${badgeObject.badge._id}`, `assetId ${asset._id}`, `userId ${auth.data._id}`);
@@ -91,7 +99,7 @@ const Asset = (props) => {
               <FastImage
                 source={{ uri: badgeAndUsersRelationship.data.icon }}
                 resizeMode={FastImage.resizeMode.contain}
-                style={{ marginBottom: 10, width: 30, height: 30 }}
+                style={{ width: 30, height: 30, marginRight: 5 }}
                 // tintColor={iconColorsTable[badgeObject.badge.color]}
                 tintColor={baseTextColor}
               />
@@ -102,11 +110,8 @@ const Asset = (props) => {
       });
 
       return (
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={{ flexDirection: 'column', position: 'absolute', bottom: 0, right: 0 }}
-        >
-          {list}
+        <ScrollView showsHorizontalScrollIndicator={false} style={{ padding: 10 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>{list}</View>
         </ScrollView>
       );
     } else {
@@ -127,31 +132,68 @@ const Asset = (props) => {
         <View style={{ alignItems: 'center', padding: 10 }}>
           <MaterialCommunityIcons name='rocket-launch' size={30} color={baseTextColor} />
         </View>
-        {asset.createdBy ? (
-          <View style={{ alignItems: 'center', padding: 10 }}>
-            <Image source={{ uri: asset.createdBy.photo }} style={{ width: 35, height: 35, borderRadius: 7 }} />
-          </View>
-        ) : null}
       </View>
+    );
+  };
+
+  const renderDate = (date) => {
+    const d = new Date(date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+    const dateElements = d.split('/');
+
+    return (
+      <Text
+        style={{
+          fontSize: 17,
+          textAlign: 'center',
+          color: 'orange',
+          fontStyle: 'italic',
+          position: 'absolute',
+          bottom: 10,
+          right: 10,
+        }}
+      >
+        {dateElements[2]}&nbsp;&nbsp;{dateElements[0]}&nbsp;&nbsp;{dateElements[1]}
+      </Text>
     );
   };
 
   return (
     // <AssetContext.Provider value={{ appMenuBottomSheetRef, isMyPage, asset }}>
-    <View style={{ flex: 1, backgroundColor: baseBackgroundColor, paddingRight: 10, paddingLeft: 10 }}>
+    <ScrollView style={{ flex: 1, backgroundColor: baseBackgroundColor, paddingRight: 10, paddingLeft: 10 }}>
       <View style={{ marginBottom: 10 }}>
-        <FastImage
-          style={{ width: '100%', aspectRatio: 1, borderRadius: 10 }}
-          source={{ uri: asset.data }}
-          resizeMode={FastImage.resizeMode.contain}
-        />
+        <View style={{ marginBottom: 10 }}>
+          <FastImage
+            style={{ width: '100%', aspectRatio: 1, borderRadius: 10 }}
+            source={{ uri: asset.data }}
+            resizeMode={FastImage.resizeMode.contain}
+          />
+          {renderDate(asset.createdAt)}
+        </View>
+        {asset.createdBy.photo ? (
+          <View style={{ alignItems: 'center', flexDirection: 'row', alignSelf: 'flex-end' }}>
+            <Image
+              source={{ uri: asset.createdBy.photo }}
+              style={{ width: 35, height: 35, borderRadius: 7, marginRight: 10 }}
+            />
+            <Text style={{ color: 'white' }}>{asset.createdBy.name}</Text>
+          </View>
+        ) : (
+          <View style={{ alignItems: 'center', flexDirection: 'row', alignSelf: 'flex-end' }}>
+            <FontAwesome5 name='user-astronaut' size={25} style={{ width: 35, height: 35, borderRadius: 7 }} />
+            <Text style={{ color: 'white' }}>{asset.createdBy.name}</Text>
+          </View>
+        )}
+
         {renderBadgeLikeButton()}
-        {leftActionButtons()}
+
+        {/* {leftActionButtons()} */}
       </View>
       <Text style={{ color: 'white', fontSize: 20, marginBottom: 20 }}>Comments</Text>
-      <ScrollView>
-        <Text style={{ color: baseTextColor, textAlign: 'center' }}>You'll see all the comments of this asset.</Text>
-      </ScrollView>
+      <Text style={{ color: baseTextColor, textAlign: 'center' }}>You'll see all the comments of this asset.</Text>
 
       {/* {renderReactions()} */}
       {/* <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 20, paddingRight: 20 }}>
@@ -168,7 +210,8 @@ const Asset = (props) => {
         addNewReactionBottomSheetRef={addNewReactionBottomSheetRef}
         setReactions={setReactions}
       /> */}
-    </View>
+      <LoggedOutModal navigation={props.navigation} />
+    </ScrollView>
   );
 };
 

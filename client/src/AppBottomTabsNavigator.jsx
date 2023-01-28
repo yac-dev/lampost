@@ -92,6 +92,7 @@ const AppStack = (props) => {
   const [snackBar, setSnackBar] = useState({ isVisible: false, message: '', barType: '', duration: null });
   const [isNotAvailableModalOpen, setIsNotAvailableModalOpen] = useState(false);
   const [isPleaseLoginModalOpen, setIsPleaseLoginModalOpen] = useState(false);
+  const [isLoggedOutModalOpen, setIsLoggedOutModalOpen] = useState(false);
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
@@ -225,7 +226,7 @@ const AppStack = (props) => {
 
       return () => {
         auth.socket.off('JOIN_LOUNGES');
-        console.log('hello');
+        // console.log('hello');
       };
     }
   }, [auth.socket]);
@@ -237,7 +238,7 @@ const AppStack = (props) => {
         // lounge以外のscreenにいる時でこのsocket eventを受けたら、chatのstateを変える。
         // if (routeName !== 'Lounge') {
         // }
-        console.log(routeName);
+        // console.log(routeName);
         setMyUpcomingMeetupAndChatsTable((previous) => {
           const updating = { ...previous };
           if (routeName !== 'Lounge') {
@@ -280,6 +281,8 @@ const AppStack = (props) => {
         setExpoPushToken,
         notification,
         setNotification,
+        isLoggedOutModalOpen,
+        setIsLoggedOutModalOpen,
       }}
     >
       <NavigationContainer

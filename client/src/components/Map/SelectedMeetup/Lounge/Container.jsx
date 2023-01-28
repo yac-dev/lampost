@@ -145,8 +145,8 @@ const Container = (props) => {
         textInputRef,
         chats,
         setChats,
-        isLoggedOutModalOpen,
-        setIsLoggedOutModalOpen,
+        // isLoggedOutModalOpen,
+        // setIsLoggedOutModalOpen,
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
@@ -162,7 +162,7 @@ const Container = (props) => {
         <AppMenuBottomSheet />
         <SendChatBottomSheet />
         <CrewBottomSheet />
-        <LoggedOut />
+        <LoggedOut navigation={props.navigation} />
       </View>
     </LoungeContext.Provider>
   );

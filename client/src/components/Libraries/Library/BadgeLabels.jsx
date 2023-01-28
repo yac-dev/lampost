@@ -24,7 +24,7 @@ const BadgeLabels = () => {
   };
 
   return (
-    <ScrollView horizontal={true} style={{ marginBottom: 15 }}>
+    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginBottom: 15 }}>
       {renderBadges()}
     </ScrollView>
   );

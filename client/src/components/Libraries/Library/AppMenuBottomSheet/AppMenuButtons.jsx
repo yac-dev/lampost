@@ -75,7 +75,7 @@ const AppMenuButtons = () => {
             appMenuBottomSheetRef.current.snapToIndex(0);
           }}
         />
-        {library?.launcher._id === auth.data._id ? null : (
+        {library?.launcher._id === auth.data?._id ? null : (
           <AppMenuButton
             backgroundColor={backgroundColorsTable['green1']}
             icon={<MaterialCommunityIcons name='exit-run' size={35} color={iconColorsTable['green1']} />}

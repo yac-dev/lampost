@@ -12,8 +12,10 @@ import BadgeLabels from './BadgeLabels';
 import Description from './Description';
 import ConfirmLeaveLibrary from './ConfirmLeaveLibrary';
 import ConfirmPostAssetModal from './ConfirmPostAssetModal';
+import LoggedOutModal from '../../Map/SelectedMeetup/Lounge/LoggedOut';
 
 const Container = (props) => {
+  const { auth, setIsLoggedOutModalOpen } = useContext(GlobalContext);
   const appMenuBottomSheetRef = useRef(null);
   const selectedAssetBottomSheetRef = useRef(null);
   const membersBottomSheetRef = useRef(null);
@@ -25,6 +27,12 @@ const Container = (props) => {
   const [libraryMembers, setLibraryMembers] = useState([]);
   const [libraryPosts, setLibraryPosts] = useState([]);
   const oneAssetWidth = Dimensions.get('window').width / 2;
+
+  useEffect(() => {
+    if (!auth.isAuthenticated) {
+      setIsLoggedOutModalOpen(true);
+    }
+  }, [auth.isAuthenticated]);
 
   // ここで、libraryを取ってこないとね。
   const getLibrary = async () => {
@@ -143,6 +151,7 @@ const Container = (props) => {
         <MembersBottomSheet />
         <ConfirmLeaveLibrary />
         <ConfirmPostAssetModal />
+        <LoggedOutModal navigation={props.navigation} />
       </View>
     </LibraryContext.Provider>
   );

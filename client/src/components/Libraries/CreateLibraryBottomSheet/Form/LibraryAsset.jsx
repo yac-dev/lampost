@@ -46,7 +46,7 @@ const Assets = () => {
     }
   }, [formData.asset]);
 
-  const onLaunchPress = async () => {
+  const onCreatePress = async () => {
     const launcher = {
       _id: auth.data._id,
       name: auth.data.name,
@@ -92,7 +92,7 @@ const Assets = () => {
             label='Finish'
             backgroundColor={iconColorsTable['blue1']}
             icon={<MaterialCommunityIcons name='check' color={'white'} size={25} />}
-            onActionButtonPress={() => console.log('CREATING!!')}
+            onActionButtonPress={() => onCreatePress()}
             isDisabled={isDisabledNext}
           />
         </View>
