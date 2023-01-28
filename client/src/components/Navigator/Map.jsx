@@ -8,7 +8,7 @@ import * as SecureStore from 'expo-secure-store';
 import { io } from 'socket.io-client';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { Fontisto } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 import Map from '../Map/Container';
 import Camera from '../Camera/Container';
@@ -17,6 +17,7 @@ import QandA from '../Map/SelectedMeetup/QandA/Container';
 import Lounge from '../Map/SelectedMeetup/Lounge/Container';
 import User from '../User/Container';
 import AddBadges from '../Utils/AddBadges/Container';
+import AboutLampost from '../Utils/AboutLampost';
 
 import AuthNavigator from './Auth';
 import { appBottomSheetBackgroundColor, iconColorsTable } from '../../utils/colorsTable';
@@ -44,13 +45,13 @@ const MapNavigator = (props) => {
               fontWeight: 'bold',
               color: 'white',
             },
-            // headerLeft: () => {
-            //   return (
-            //     <TouchableOpacity onPress={() => navigation.navigate('About lampost')}>
-            //       <MaterialCommunityIcons name='information' size={20} color={'white'} />
-            //     </TouchableOpacity>
-            //   );
-            // },
+            headerLeft: () => {
+              return (
+                <TouchableOpacity onPress={() => navigation.navigate('About lampost')}>
+                  <Ionicons name='information-circle' size={25} color={'white'} />
+                </TouchableOpacity>
+              );
+            },
             // headerRight: () => {
             //   if (auth?.data) {
             //     if (auth?.data.photo) {
@@ -123,6 +124,24 @@ const MapNavigator = (props) => {
               color: 'white',
             },
             headerTintColor: 'white',
+            // title: '',
+            // headerTransparent: true,
+            // headerLeft: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
+            // headerRight: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
+          })}
+        />
+        <Stack.Screen
+          name='About lampost'
+          component={AboutLampost}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
             // title: '',
             // headerTransparent: true,
             // headerLeft: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
