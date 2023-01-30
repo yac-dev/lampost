@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "client",
-    "slug": "client",
-    "version": "1.0.0",
+    "name": "lampost",
+    "slug": "lampost",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/lampost-icon.png",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/lampost-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "black"
+      "backgroundColor": "#2A2B2C"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -18,13 +18,14 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.lampost.lampost",
-      "buildNumber": "1.0.0"
+      "buildNumber": "1.0.1"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.lampost.lampost"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -41,7 +42,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "e5ea72c0-56f9-4cb2-b57d-42ca8127b355"
+        "projectId": "d7972bf3-aa9a-4bfe-bfa3-2b0c344352d6"
       }
     }
   }

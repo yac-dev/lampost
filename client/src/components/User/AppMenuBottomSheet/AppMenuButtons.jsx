@@ -16,7 +16,8 @@ import AppMenuButton from '../../Utils/AppMenuButton';
 const AppButtons = (props) => {
   const { auth, setAuth, setMyUpcomingMeetupAndChatsTable, setTotalUnreadChatsCount, setIsNotAvailableModalOpen } =
     useContext(GlobalContext);
-  const { user, navigation, appMenuBottomSheetRef, setIsConfirmLogoutModalOpen } = useContext(UserContext);
+  const { user, navigation, appMenuBottomSheetRef, setIsConfirmLogoutModalOpen, setIsConfirmDeleteAccountModalOpen } =
+    useContext(UserContext);
 
   const logout = async () => {
     await SecureStore.deleteItemAsync('secure_token');
@@ -78,6 +79,15 @@ const AppButtons = (props) => {
           onAppMenuButtonPress={() => {
             // ここは、authを消すだけだよね。。。ただ、httpでrequestするっていう方がいいのかもな。
             setIsConfirmLogoutModalOpen(true);
+          }}
+        />
+        <AppMenuButton
+          backgroundColor={backgroundColorsTable['yellow1']}
+          icon={<Foundation name='alert' size={35} color={iconColorsTable['yellow1']} />}
+          label='Delete my account'
+          onAppMenuButtonPress={() => {
+            // ここは、authを消すだけだよね。。。ただ、httpでrequestするっていう方がいいのかもな。
+            setIsConfirmDeleteAccountModalOpen(true);
           }}
         />
       </ScrollView>

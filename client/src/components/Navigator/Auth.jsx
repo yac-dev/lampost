@@ -21,6 +21,7 @@ import Assets from '../User/Assets/Container';
 import Asset from '../User/Assets/Asset/Container';
 import AddBadges from '../Utils/AddBadges/Container';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
+import DeleteAccount from '../User/DeleteAccount';
 
 const Auth = (props) => {
   // ここらへん、一つにできるね。まあ、後で。
@@ -124,6 +125,20 @@ const Auth = (props) => {
           <Stack.Screen
             name='Asset'
             component={Asset}
+            options={{
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+              // headerTintColor: 'white',
+            }}
+          />
+          <Stack.Screen
+            name='Delete my account'
+            component={DeleteAccount}
             options={{
               headerStyle: {
                 backgroundColor: appBottomSheetBackgroundColor,
