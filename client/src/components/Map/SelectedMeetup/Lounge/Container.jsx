@@ -1,4 +1,3 @@
-// main libraries
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import LoungeContext from './LoungeContext';
 import GlobalContext from '../../../../GlobalContext';
@@ -8,18 +7,12 @@ import { Avatar, IconButton } from 'react-native-paper';
 import lampostAPI from '../../../../apis/lampost';
 import { enableScreens } from 'react-native-screens';
 import { baseBackgroundColor } from '../../../../utils/colorsTable';
-// components
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import SendChatBottomSheet from './SendChatBottomSheet';
 import CrewBottomSheet from './CrewBottomSheet';
 import Chats from './Chats';
-import LoggedOut from './LoggedOut';
 
-// ac
-import { setIsTextBoxBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
-import { setIsCrewBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
-
-const Container = (props) => {
+const LoungeContainer = (props) => {
   const {
     auth,
     myUpcomingMeetupAndChatsTable,
@@ -162,14 +155,9 @@ const Container = (props) => {
         <AppMenuBottomSheet />
         <SendChatBottomSheet />
         <CrewBottomSheet />
-        <LoggedOut navigation={props.navigation} />
       </View>
     </LoungeContext.Provider>
   );
 };
 
-const mapStateToProps = (state) => {
-  return { bottomSheet: state.bottomSheet, auth: state.auth };
-};
-
-export default connect(mapStateToProps, { setIsTextBoxBottomSheetOpen, setIsCrewBottomSheetOpen })(Container);
+export default LoungeContainer;

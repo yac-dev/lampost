@@ -28,12 +28,6 @@ const Container = (props) => {
   const [libraryPosts, setLibraryPosts] = useState([]);
   const oneAssetWidth = Dimensions.get('window').width / 2;
 
-  useEffect(() => {
-    if (!auth.isAuthenticated) {
-      setIsLoggedOutModalOpen(true);
-    }
-  }, [auth.isAuthenticated]);
-
   // ここで、libraryを取ってこないとね。
   const getLibrary = async () => {
     // console.log(props.route.params.libraryId);
@@ -141,6 +135,9 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+        <TouchableOpacity onPress={() => props.navigation.reset({ index: 0, routes: [{ name: 'Meetups' }] })}>
+          <Text style={{ color: 'red', padding: 20 }}>Press to back</Text>
+        </TouchableOpacity>
         <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
           <Header />
           <BadgeLabels />
@@ -151,7 +148,6 @@ const Container = (props) => {
         <MembersBottomSheet />
         <ConfirmLeaveLibrary />
         <ConfirmPostAssetModal />
-        <LoggedOutModal navigation={props.navigation} />
       </View>
     </LibraryContext.Provider>
   );

@@ -2,7 +2,6 @@
 import React, { useState, useContext } from 'react';
 import GlobalContext from '../../GlobalContext';
 import { Text, TouchableOpacity } from 'react-native';
-import { connect } from 'react-redux';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 
@@ -232,8 +231,4 @@ const Auth = (props) => {
   }
 };
 
-const mapStateToProps = (state) => {
-  return { auth: state.auth };
-};
-
-export default connect(mapStateToProps)(Auth);
+export default Auth;

@@ -13,7 +13,7 @@ import lampostAPI from '../../../apis/lampost';
 
 const AppMenusBottomSheet = (props) => {
   const snapPoints = useMemo(() => ['8%', '30%', '80%'], []);
-  const { auth, myUpcomingMeetupAndChatsTable, totalUnreadChatsCount } = useContext(GlobalContext);
+  const { auth, myUpcomingMeetupAndChatsTable, totalUnreadChatsCount, navigation } = useContext(GlobalContext);
   const { appMenuBottomSheetRef } = useContext(MapContext);
 
   return (

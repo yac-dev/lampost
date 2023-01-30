@@ -16,19 +16,12 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import AddNewReactionBottomSheet from './AddNewReactionBottomSheet';
-import LoggedOutModal from '../../../Map/SelectedMeetup/Lounge/LoggedOut';
 
 const Asset = (props) => {
   const { auth, setSnackBar } = useContext(GlobalContext);
   const win = Dimensions.get('window');
   const [asset, setAsset] = useState(props.route.params.asset);
   const [badgeLikes, setBadgeLikes] = useState(null);
-
-  useEffect(() => {
-    if (!auth.isAuthenticated) {
-      setIsLoggedOutModalOpen(true);
-    }
-  }, [auth.isAuthenticated]);
 
   // data structure
   //  {
@@ -210,7 +203,6 @@ const Asset = (props) => {
         addNewReactionBottomSheetRef={addNewReactionBottomSheetRef}
         setReactions={setReactions}
       /> */}
-      <LoggedOutModal navigation={props.navigation} />
     </ScrollView>
   );
 };

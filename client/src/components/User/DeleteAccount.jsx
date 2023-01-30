@@ -20,18 +20,17 @@ const DeleteAccount = (props) => {
 
   const deleteAccount = async () => {
     const result = await lampostAPI.delete(`/auth/${auth.data._id}`);
+    await SecureStore.deleteItemAsync('secure_token');
     // ここで、front側のdataを全て消す。
     auth.socket.disconnect();
+    setMyUpcomingMeetupAndChatsTable({});
+    setTotalUnreadChatsCount(0);
     setAuth({
       data: null,
       socket: null,
       currentLocation: null,
     });
-    await SecureStore.deleteItemAsync('secure_token');
-    setMyUpcomingMeetupAndChatsTable({});
-    setTotalUnreadChatsCount(0);
-    auth.socket.disconnect();
-    props.navigation.goBack('Deleted account');
+    props.navigation.navigate('LogInOrSignUp', { userHasGone: true });
   };
 
   return (

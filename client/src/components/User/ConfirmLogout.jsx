@@ -7,7 +7,7 @@ import * as SecureStore from 'expo-secure-store';
 import { Button, Dialog, Portal, Provider, withTheme } from 'react-native-paper';
 import { baseTextColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
 
-const ConfirmLeaveLibrary = (props) => {
+const ConfirmLogout = (props) => {
   const { auth, setAuth, setMyUpcomingMeetupAndChatsTable, setTotalUnreadChatsCount } = useContext(GlobalContext);
   const { isConfirmLogoutModalOpen, setIsConfirmLogoutModalOpen, navigation } = useContext(UserContext);
 
@@ -21,6 +21,7 @@ const ConfirmLeaveLibrary = (props) => {
     setMyUpcomingMeetupAndChatsTable({});
     setTotalUnreadChatsCount(0);
     auth.socket.disconnect();
+    navigation.navigate('LogInOrSignUp', { userHasGone: true });
     // navigation.goBack();
   };
 
@@ -44,4 +45,4 @@ const ConfirmLeaveLibrary = (props) => {
   );
 };
 
-export default ConfirmLeaveLibrary;
+export default ConfirmLogout;

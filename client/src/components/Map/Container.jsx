@@ -260,6 +260,7 @@ const Map = (props) => {
           <LaunchMeetupBottomSheet navigation={props.navigation} route={props.route} />
           <SelectedMeetup />
           <SelectedMeetupInfoDetail />
+
           {/* <LoggedOutModal navigation={props.navigation} /> */}
           {/* <LoadingSpinner /> */}
         </View>

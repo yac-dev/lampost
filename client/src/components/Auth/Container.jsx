@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import AuthContext from './AuthContext';
 import { View, Text } from 'react-native';
 import { baseBackgroundColor, iconColorsTable } from '../../utils/colorsTable';
@@ -8,6 +8,13 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
 const Container = (props) => {
+  useEffect(() => {
+    if (props.route.params?.userHasGone) {
+      props.navigation.reset({ index: 0, routes: [{ name: 'Meetups' }] });
+      // console.log('Loggedou now!');
+    }
+  }, [props.route.params?.userHasGone]);
+
   return (
     <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
       <View
