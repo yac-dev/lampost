@@ -48,6 +48,106 @@ const Chats = (props) => {
     }
   };
 
+  const renderUserAvatar = (chat) => {
+    if (chat.user) {
+      if (chat.user.photo) {
+        return (
+          <View style={{ width: 40, height: 40, borderRadius: 10, marginRight: 20 }}>
+            <Image source={{ uri: chat.user.photo }} style={{ width: '100%', height: '100%', borderRadius: 10 }} />
+            <View
+              style={{
+                backgroundColor: chatTypeTable[chat.type],
+                padding: 2,
+                borderRadius: 7,
+                width: 20,
+                height: 20,
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'absolute',
+                bottom: -10,
+                right: -10,
+              }}
+            >
+              {renderChatType(chat.type)}
+            </View>
+          </View>
+        );
+      } else {
+        return (
+          <View
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 10,
+              marginRight: 20,
+              backgroundColor: iconColorsTable['blue1'],
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <FontAwesome5 name='user-astronaut' size={20} color='white' />
+            <View
+              style={{
+                backgroundColor: chatTypeTable[chat.type],
+                padding: 2,
+                borderRadius: 7,
+                width: 20,
+                height: 20,
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'absolute',
+                bottom: -10,
+                right: -10,
+              }}
+            >
+              {renderChatType(chat.type)}
+            </View>
+          </View>
+        );
+      }
+    } else {
+      return (
+        <View
+          style={{
+            width: 40,
+            height: 40,
+            borderRadius: 10,
+            marginRight: 20,
+            backgroundColor: iconColorsTable['blue1'],
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <MaterialCommunityIcons name='ghost' size={20} color='white' />
+          <View
+            style={{
+              backgroundColor: chatTypeTable[chat.type],
+              padding: 2,
+              borderRadius: 7,
+              width: 20,
+              height: 20,
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'absolute',
+              bottom: -10,
+              right: -10,
+            }}
+          >
+            {renderChatType(chat.type)}
+          </View>
+        </View>
+      );
+    }
+  };
+
+  const renderChatSenderName = (chat) => {
+    if (chat.user) {
+      return chat.user.name;
+    } else {
+      return "This user doesn't exist.";
+    }
+  };
+
   const renderChats = () => {
     // const chats = myUpcomingMeetupAndChatsTable[meetup._id];
     if (chats.length) {
@@ -56,7 +156,8 @@ const Chats = (props) => {
         return (
           <View key={index} style={{ padding: 10 }}>
             <View style={{ flexDirection: 'row' }}>
-              {chat.user.photo ? (
+              {renderUserAvatar(chat)}
+              {/* {chat.user?.photo ? (
                 <View style={{ width: 40, height: 40, borderRadius: 10, marginRight: 20 }}>
                   <Image
                     source={{ uri: chat.user.photo }}
@@ -109,11 +210,13 @@ const Chats = (props) => {
                     {renderChatType(chat.type)}
                   </View>
                 </View>
-              )}
+              )} */}
+
               <View style={{ flexDirection: 'column', flexShrink: 1 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, flexShrink: 1 }}>
+                <View style={{ flexDirection: 'column', marginBottom: 5, flexShrink: 1 }}>
                   <Text style={{ color: baseTextColor, marginRight: 10, fontSize: 15, fontWeight: 'bold' }}>
-                    {chat.user.name}
+                    {/* {chat.user?.name} */}
+                    {renderChatSenderName(chat)}
                   </Text>
                   {renderDate(chat.createdAt)}
                 </View>

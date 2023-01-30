@@ -8,13 +8,31 @@ import {
   inputBackgroundColor,
   sectionBackgroundColor,
 } from '../../utils/colorsTable';
+import lampostAPI from '../../apis/lampost';
+import * as SecureStore from 'expo-secure-store';
 
 const DeleteAccount = (props) => {
-  const { auth } = useContext(GlobalContext);
+  const { auth, setAuth, setMyUpcomingMeetupAndChatsTable, setTotalUnreadChatsCount } = useContext(GlobalContext);
   const emailInputAccessoryViewID = 'DELETE_ACCOUNT_EMAIL_INPUT';
   const passwordInputAccessoryViewID = 'DELETE_ACCOUNT_PASSWORD_INPUT';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const deleteAccount = async () => {
+    const result = await lampostAPI.delete(`/auth/${auth.data._id}`);
+    // ここで、front側のdataを全て消す。
+    auth.socket.disconnect();
+    setAuth({
+      data: null,
+      socket: null,
+      currentLocation: null,
+    });
+    await SecureStore.deleteItemAsync('secure_token');
+    setMyUpcomingMeetupAndChatsTable({});
+    setTotalUnreadChatsCount(0);
+    auth.socket.disconnect();
+    props.navigation.goBack('Deleted account');
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: baseBackgroundColor, paddingLeft: 20, paddingRight: 20, paddingTop: 10 }}>
@@ -77,7 +95,7 @@ const DeleteAccount = (props) => {
       </View>
       <TouchableOpacity
         style={{ padding: 10, backgroundColor: iconColorsTable['red1'], alignSelf: 'center', borderRadius: 7 }}
-        onPress={() => console.log('deleting')}
+        onPress={() => deleteAccount()}
       >
         <Text style={{ color: 'white' }}>Permanently delete</Text>
       </TouchableOpacity>
