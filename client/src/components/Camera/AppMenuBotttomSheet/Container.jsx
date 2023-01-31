@@ -54,7 +54,7 @@ const AppMenuBottomSheet = (props) => {
             marginBottom: 20,
           }}
         >
-          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>Camera, video or Live?</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>Tag people?</Text>
           {renderCameraMode()}
         </View>
         <AppMenuButtons />

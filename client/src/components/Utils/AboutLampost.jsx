@@ -24,7 +24,7 @@ const Info = () => {
       <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 10, marginBottom: 20, borderRadius: 10 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
           <MaterialCommunityIcons name='handshake' size={25} color={'pink'} style={{ marginRight: 10 }} />
-          <Text style={{ color: 'white', fontSize: 23 }}>Third parties</Text>
+          <Text style={{ color: 'white', fontSize: 23 }}>Powered by</Text>
         </View>
         <View style={{ marginBottom: 10 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
@@ -36,7 +36,8 @@ const Info = () => {
             </View>
           </View>
           <Text style={{ color: baseTextColor }}>
-            Lampost is using a lot of fancy and lovely looking icons. Some of them are powered by Icons8.
+            Lampost is using a lot of fancy and lovely looking icons. Some of them are powered by Icons8, which is a
+            great platform.
           </Text>
         </View>
         <View>
@@ -46,7 +47,7 @@ const Info = () => {
               <Text style={{ color: baseTextColor }}>https://developers.google.com/maps</Text>
             </View>
           </View>
-          <Text style={{ color: baseTextColor }}>Lampost is also powered by Google maps api.</Text>
+          <Text style={{ color: baseTextColor }}>Lampost is also using the Google maps api on the home screen.</Text>
         </View>
       </View>
 

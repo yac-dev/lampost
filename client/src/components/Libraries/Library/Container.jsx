@@ -12,7 +12,6 @@ import BadgeLabels from './BadgeLabels';
 import Description from './Description';
 import ConfirmLeaveLibrary from './ConfirmLeaveLibrary';
 import ConfirmPostAssetModal from './ConfirmPostAssetModal';
-import LoggedOutModal from '../../Map/SelectedMeetup/Lounge/LoggedOut';
 
 const Container = (props) => {
   const { auth, setIsLoggedOutModalOpen } = useContext(GlobalContext);
@@ -135,9 +134,6 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        <TouchableOpacity onPress={() => props.navigation.reset({ index: 0, routes: [{ name: 'Meetups' }] })}>
-          <Text style={{ color: 'red', padding: 20 }}>Press to back</Text>
-        </TouchableOpacity>
         <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
           <Header />
           <BadgeLabels />

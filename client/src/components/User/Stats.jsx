@@ -29,27 +29,27 @@ const Stats = () => {
                 alignItems: 'center',
                 marginRight: 20,
                 backgroundColor: screenSectionBackgroundColor,
-                padding: 7,
+                padding: 20,
                 borderRadius: 10,
               }}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-                <View style={{ backgroundColor: rnDefaultBackgroundColor, borderRadius: 10, marginRight: 10 }}>
-                  <View
+                {/* <View style={{ backgroundColor: rnDefaultBackgroundColor, borderRadius: 10, marginRight: 10 }}> */}
+                {/* <View
                     style={{
                       alignItems: 'center',
                       justifyContent: 'center',
                       padding: 5,
-                      backgroundColor: iconColorsTable['red1'],
+                      backgroundColor: iconColorsTable['grey1'],
                       borderRadius: 10,
                     }}
-                  >
-                    <MaterialCommunityIcons name='fire' color={'white'} size={25} />
-                  </View>
-                </View>
-                <Text style={{ color: 'white', fontSize: 20 }}>{user.leadership.total}</Text>
+                  > */}
+                <MaterialCommunityIcons name='fire' color={'white'} size={40} style={{ marginRight: 5 }} />
+                {/* </View> */}
+                {/* </View> */}
+                <Text style={{ color: 'white', fontSize: 40 }}>{user.leadership.total}</Text>
               </View>
-              <Text style={{ color: baseTextColor, fontSize: 17 }}>Leadership</Text>
+              <Text style={{ color: baseTextColor, fontSize: 40 }}>Leadership</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -58,27 +58,15 @@ const Stats = () => {
                 alignItems: 'center',
                 marginRight: 20,
                 backgroundColor: screenSectionBackgroundColor,
-                padding: 7,
+                padding: 20,
                 borderRadius: 10,
               }}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-                <View style={{ backgroundColor: rnDefaultBackgroundColor, borderRadius: 10, marginRight: 10 }}>
-                  <View
-                    style={{
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      padding: 5,
-                      backgroundColor: iconColorsTable['orange1'],
-                      borderRadius: 10,
-                    }}
-                  >
-                    <MaterialIcons name='groups' size={25} color={'white'} />
-                  </View>
-                </View>
-                <Text style={{ color: 'white', fontSize: 20 }}>{user.patrons}</Text>
+                <MaterialIcons name='groups' size={40} color={'white'} style={{ marginRight: 5 }} />
+                <Text style={{ color: 'white', fontSize: 40 }}>{user.patrons}</Text>
               </View>
-              <Text style={{ color: baseTextColor, fontSize: 17 }}>Patrons</Text>
+              <Text style={{ color: baseTextColor, fontSize: 40 }}>Patrons</Text>
             </TouchableOpacity>
           </>
         ) : null}
@@ -89,27 +77,15 @@ const Stats = () => {
             alignItems: 'center',
             marginRight: 20,
             backgroundColor: screenSectionBackgroundColor,
-            padding: 7,
+            padding: 20,
             borderRadius: 10,
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-            <View style={{ backgroundColor: rnDefaultBackgroundColor, borderRadius: 10, marginRight: 10 }}>
-              <View
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: 5,
-                  backgroundColor: iconColorsTable['pink1'],
-                  borderRadius: 10,
-                }}
-              >
-                <MaterialCommunityIcons name='camera' color={'white'} size={25} />
-              </View>
-            </View>
-            <Text style={{ color: 'white', fontSize: 20 }}>{user.assets}</Text>
+            <MaterialCommunityIcons name='camera' color={'white'} size={40} style={{ marginRight: 5 }} />
+            <Text style={{ color: 'white', fontSize: 40 }}>{user.assets}</Text>
           </View>
-          <Text style={{ color: baseTextColor, fontSize: 17 }}>Assets</Text>
+          <Text style={{ color: baseTextColor, fontSize: 40 }}>Assets</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -117,27 +93,15 @@ const Stats = () => {
             alignItems: 'center',
             marginRight: 20,
             backgroundColor: screenSectionBackgroundColor,
-            padding: 7,
+            padding: 20,
             borderRadius: 10,
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-            <View style={{ backgroundColor: rnDefaultBackgroundColor, borderRadius: 10, marginRight: 10 }}>
-              <View
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: 5,
-                  backgroundColor: iconColorsTable['blue1'],
-                  borderRadius: 10,
-                }}
-              >
-                <MaterialCommunityIcons name='history' color={'white'} size={25} />
-              </View>
-            </View>
-            <Text style={{ color: 'white', fontSize: 20 }}>{user.logs}</Text>
+            <MaterialCommunityIcons name='history' color={'white'} size={40} style={{ marginRight: 5 }} />
+            <Text style={{ color: 'white', fontSize: 40 }}>{user.logs}</Text>
           </View>
-          <Text style={{ color: baseTextColor, fontSize: 17 }}>Logs</Text>
+          <Text style={{ color: baseTextColor, fontSize: 40 }}>Logs</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

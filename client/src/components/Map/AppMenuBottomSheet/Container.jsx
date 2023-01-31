@@ -2,7 +2,7 @@ import React, { useMemo, useContext, useState, useEffect } from 'react';
 import GlobalContext from '../../../GlobalContext';
 import MapContext from '../MeetupContext';
 import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 
 import AppMenuButtons from './AppMenuButtons';
@@ -15,6 +15,7 @@ const AppMenusBottomSheet = (props) => {
   const snapPoints = useMemo(() => ['8%', '30%', '80%'], []);
   const { auth, myUpcomingMeetupAndChatsTable, totalUnreadChatsCount, navigation } = useContext(GlobalContext);
   const { appMenuBottomSheetRef } = useContext(MapContext);
+  const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
 
   return (
     <GorhomBottomSheet
@@ -29,10 +30,14 @@ const AppMenusBottomSheet = (props) => {
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
       handleIndicatorStyle={{ backgroundColor: 'white' }}
     >
-      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
+      <BottomSheetView
+        style={{ paddingLeft: isIpad ? 35 : 20, paddingRight: isIpad ? 35 : 20, paddingTop: isIpad ? 20 : 10, flex: 1 }}
+      >
         {/* <ScrollView contentContainerStyle={{ paddingBottom: 100 }}> */}
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
-          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginRight: 10 }}>Launch your meetup?</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: isIpad ? 35 : 20 }}>
+          <Text style={{ fontWeight: 'bold', fontSize: isIpad ? 35 : 20, color: 'white', marginRight: 10 }}>
+            Launch your meetup?
+          </Text>
           {totalUnreadChatsCount ? (
             <View
               style={{

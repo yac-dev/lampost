@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useContext } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import GlobalContext from '../../GlobalContext';
 import LibrariesContext from './LibrariesContext';
-import { View, Text, TouchableOpacity, ScrollView, Dimensions, Image } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Dimensions, Image, Platform } from 'react-native';
 import lampostAPI from '../../apis/lampost';
 import {
   baseBackgroundColor,
@@ -45,9 +45,10 @@ const Container = (props) => {
   const createLibraryBottomSheetRef = useRef(null);
   const libraryOverviewBottomSheetRef = useRef(null);
   const selectedLibraryDetailComponentBottomSheetRef = useRef(null);
+  const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
 
-  const oneGridWidth = Dimensions.get('window').width / 2;
-  const oneGridHeight = Dimensions.get('window').height / 3;
+  const oneGridWidth = isIpad ? Dimensions.get('window').width / 3 : Dimensions.get('window').width / 2;
+  const oneGridHeight = isIpad ? Dimensions.get('window').height / 3.5 : Dimensions.get('window').height / 3.5;
   const libraryContainerWidth = oneGridWidth * 0.85;
   const libraryIconWidth = libraryContainerWidth * 0.4;
 
@@ -196,9 +197,9 @@ const Container = (props) => {
                 color: baseTextColor,
                 fontWeight: 'bold',
                 alignSelf: 'center',
-                fontSize: 15,
+                fontSize: isIpad ? 23 : 15,
                 textAlign: 'center',
-                marginBottom: 5,
+                // marginBottom: 5,
                 paddingLeft: 10,
                 paddingRight: 10,
                 // borderWidth: 1,
@@ -253,7 +254,7 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        <Text style={{ fontSize: 23, fontWeight: 'bold', padding: 10, color: 'white', marginBottom: 10 }}>
+        <Text style={{ fontSize: isIpad ? 37 : 23, fontWeight: 'bold', padding: 10, color: 'white', marginBottom: 10 }}>
           Recently created
         </Text>
         {renderLibraries()}

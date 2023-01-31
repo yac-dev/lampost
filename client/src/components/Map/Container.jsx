@@ -41,7 +41,6 @@ import { setIsConfirmHostMeetupModalOpen } from '../../redux/actionCreators/moda
 import { setIsCancelLaunchMeetupModalOpen } from '../../redux/actionCreators/modal';
 import { setIsSelectedMeetupInfoDetailBottomSheetOpen } from '../../redux/actionCreators/bottomSheet';
 import { iconColorsTable } from '../../utils/colorsTable';
-import LoggedOutModal from './SelectedMeetup/Lounge/LoggedOut';
 
 const Map = (props) => {
   // setAuthがありませんよ、てきなerrorを出して欲しいわ。これなんとかならんかな。

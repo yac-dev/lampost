@@ -62,7 +62,7 @@ const Crew = (props) => {
   return (
     <View>
       <View style={{ marginBottom: 0 }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 10, color: 'white' }}>Crew</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 10, color: 'white' }}>Members</Text>
       </View>
       <ScrollView
         contentContainerStyle={{

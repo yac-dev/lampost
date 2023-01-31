@@ -10,7 +10,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
 } from 'react-native';
-import { baseTextColor, inputBackgroundColor, sectionBackgroundColor } from '../../utils/colorsTable';
+import { baseTextColor, iconColorsTable, inputBackgroundColor, sectionBackgroundColor } from '../../utils/colorsTable';
 
 const FormTextInput = (props) => {
   const { loginOrSignupBottomSheetRef } = useContext(AuthContext);
@@ -47,7 +47,7 @@ const FormTextInput = (props) => {
               Keyboard.dismiss();
             }}
           >
-            <Text style={{ color: 'white', fontWeight: 'bold' }}>Done</Text>
+            <Text style={{ color: iconColorsTable['blue1'], fontWeight: 'bold' }}>Done</Text>
           </TouchableOpacity>
         </View>
       </InputAccessoryView>
