@@ -3,7 +3,7 @@ import GlobalContext from '../../../GlobalContext';
 import UserContext from '../UserContext';
 import { connect } from 'react-redux';
 // import UserContext from './Context';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Platform } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 
 import { Entypo } from '@expo/vector-icons';
@@ -16,6 +16,7 @@ import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 const AppMenuBottomSheet = (props) => {
   const { auth } = useContext(GlobalContext);
   const { appMenuBottomSheetRef, isMyPage } = useContext(UserContext);
+  const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
   const snapPoints = useMemo(() => ['10%', '30%', '80%'], []);
   // ここに関しては、authじゃない限り、表示しないようにする。
   if (!auth.isAuthenticated || !isMyPage) {
@@ -36,8 +37,19 @@ const AppMenuBottomSheet = (props) => {
         // keyboardBehavior={'interactive'}
         // onClose={() => onSelectedItemBottomSheetClose()}
       >
-        <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
-          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 15 }}>Add badges?</Text>
+        <BottomSheetView
+          style={{
+            paddingLeft: isIpad ? 35 : 20,
+            paddingRight: isIpad ? 35 : 20,
+            paddingTop: isIpad ? 15 : 5,
+            flex: 1,
+          }}
+        >
+          <Text
+            style={{ fontWeight: 'bold', fontSize: isIpad ? 35 : 20, color: 'white', marginBottom: isIpad ? 35 : 20 }}
+          >
+            Add badges?
+          </Text>
           <AppButtons />
           <MyConnections />
           {/* <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: 10, marginBottom: 15 }}>

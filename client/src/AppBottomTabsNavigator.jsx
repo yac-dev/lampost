@@ -80,6 +80,7 @@ const registerForPushNotificationsAsync = async () => {
 };
 
 const AppStack = (props) => {
+  const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
   const [auth, setAuth] = useState({
     data: null,
     socket: null,
@@ -303,7 +304,7 @@ const AppStack = (props) => {
               backgroundColor: appBottomSheetBackgroundColor,
             },
             tabBarLabelStyle: {
-              fontSize: 12,
+              fontSize: isIpad ? 23 : 12,
             },
             tabBarActiveTintColor: 'white',
           }}

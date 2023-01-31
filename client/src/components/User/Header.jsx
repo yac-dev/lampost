@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import GlobalContext from '../../GlobalContext';
 import UserContext from './UserContext';
-import { View, Text, TouchableOpacity, Dimensions, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, Image, Platform } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -17,7 +17,8 @@ import Stats from './Stats';
 const Header = (props) => {
   const { auth } = useContext(GlobalContext);
   const { user, isMyPage, setIsConfirmEditProfileModalOpen } = useContext(UserContext);
-  const avatarContainer = Dimensions.get('window').width / 3.2;
+  const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
+  const avatarContainer = isIpad ? Dimensions.get('window').width / 4 : Dimensions.get('window').width / 3.2;
   const avatarWidth = avatarContainer * 0.7;
 
   const renderAvatar = () => {
@@ -69,11 +70,13 @@ const Header = (props) => {
               style={{ position: 'absolute', bottom: -5, right: -5 }}
               onPress={() => setIsConfirmEditProfileModalOpen(true)}
             >
-              <MaterialCommunityIcons name='camera-plus' size={20} color='white' />
+              <MaterialCommunityIcons name='camera-plus' size={isIpad ? 35 : 20} color='white' />
             </TouchableOpacity>
           ) : null}
         </View>
-        <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold' }}>{user.name}</Text>
+        <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold', fontSize: isIpad ? 23 : 15 }}>
+          {user.name}
+        </Text>
       </View>
       {/* <View style={{ width: 80, height: 80, backgroundColor: 'red' }}></View> */}
       {/* <View style={{ flexDirection: 'column' }}> */}

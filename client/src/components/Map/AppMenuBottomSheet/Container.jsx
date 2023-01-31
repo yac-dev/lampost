@@ -31,7 +31,7 @@ const AppMenusBottomSheet = (props) => {
       handleIndicatorStyle={{ backgroundColor: 'white' }}
     >
       <BottomSheetView
-        style={{ paddingLeft: isIpad ? 35 : 20, paddingRight: isIpad ? 35 : 20, paddingTop: isIpad ? 20 : 10, flex: 1 }}
+        style={{ paddingLeft: isIpad ? 35 : 20, paddingRight: isIpad ? 35 : 20, paddingTop: isIpad ? 15 : 5, flex: 1 }}
       >
         {/* <ScrollView contentContainerStyle={{ paddingBottom: 100 }}> */}
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: isIpad ? 35 : 20 }}>

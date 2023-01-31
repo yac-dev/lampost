@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import UserContext from './UserContext';
-import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Text, TouchableOpacity, Platform } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -16,6 +16,7 @@ import Stat from './Stat';
 
 const Stats = () => {
   const { navigation, user } = useContext(UserContext);
+  const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
 
   return (
     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -27,9 +28,9 @@ const Stats = () => {
               style={{
                 flexDirection: 'column',
                 alignItems: 'center',
-                marginRight: 20,
+                marginRight: isIpad ? 30 : 15,
                 backgroundColor: screenSectionBackgroundColor,
-                padding: 20,
+                padding: isIpad ? 20 : 10,
                 borderRadius: 10,
               }}
             >
@@ -44,29 +45,39 @@ const Stats = () => {
                       borderRadius: 10,
                     }}
                   > */}
-                <MaterialCommunityIcons name='fire' color={'white'} size={40} style={{ marginRight: 5 }} />
+                <MaterialCommunityIcons
+                  name='fire'
+                  color={'white'}
+                  size={isIpad ? 35 : 25}
+                  style={{ marginRight: isIpad ? 10 : 5 }}
+                />
                 {/* </View> */}
                 {/* </View> */}
-                <Text style={{ color: 'white', fontSize: 40 }}>{user.leadership.total}</Text>
+                <Text style={{ color: 'white', fontSize: isIpad ? 30 : 20 }}>{user.leadership.total}</Text>
               </View>
-              <Text style={{ color: baseTextColor, fontSize: 40 }}>Leadership</Text>
+              <Text style={{ color: baseTextColor, fontSize: isIpad ? 30 : 20 }}>Leadership</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={{
                 flexDirection: 'column',
                 alignItems: 'center',
-                marginRight: 20,
+                marginRight: isIpad ? 30 : 15,
                 backgroundColor: screenSectionBackgroundColor,
-                padding: 20,
+                padding: isIpad ? 20 : 10,
                 borderRadius: 10,
               }}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-                <MaterialIcons name='groups' size={40} color={'white'} style={{ marginRight: 5 }} />
-                <Text style={{ color: 'white', fontSize: 40 }}>{user.patrons}</Text>
+                <MaterialIcons
+                  name='groups'
+                  size={isIpad ? 35 : 25}
+                  color={'white'}
+                  style={{ marginRight: isIpad ? 10 : 5 }}
+                />
+                <Text style={{ color: 'white', fontSize: isIpad ? 30 : 20 }}>{user.patrons}</Text>
               </View>
-              <Text style={{ color: baseTextColor, fontSize: 40 }}>Patrons</Text>
+              <Text style={{ color: baseTextColor, fontSize: isIpad ? 30 : 20 }}>Patrons</Text>
             </TouchableOpacity>
           </>
         ) : null}
@@ -75,33 +86,43 @@ const Stats = () => {
           style={{
             flexDirection: 'column',
             alignItems: 'center',
-            marginRight: 20,
+            marginRight: isIpad ? 30 : 15,
             backgroundColor: screenSectionBackgroundColor,
-            padding: 20,
+            padding: isIpad ? 20 : 10,
             borderRadius: 10,
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-            <MaterialCommunityIcons name='camera' color={'white'} size={40} style={{ marginRight: 5 }} />
-            <Text style={{ color: 'white', fontSize: 40 }}>{user.assets}</Text>
+            <MaterialCommunityIcons
+              name='camera'
+              color={'white'}
+              size={isIpad ? 35 : 25}
+              style={{ marginRight: isIpad ? 10 : 5 }}
+            />
+            <Text style={{ color: 'white', fontSize: isIpad ? 30 : 20 }}>{user.assets}</Text>
           </View>
-          <Text style={{ color: baseTextColor, fontSize: 40 }}>Assets</Text>
+          <Text style={{ color: baseTextColor, fontSize: isIpad ? 30 : 20 }}>Assets</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={{
             flexDirection: 'column',
             alignItems: 'center',
-            marginRight: 20,
+            marginRight: isIpad ? 30 : 15,
             backgroundColor: screenSectionBackgroundColor,
-            padding: 20,
+            padding: isIpad ? 20 : 10,
             borderRadius: 10,
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-            <MaterialCommunityIcons name='history' color={'white'} size={40} style={{ marginRight: 5 }} />
-            <Text style={{ color: 'white', fontSize: 40 }}>{user.logs}</Text>
+            <MaterialCommunityIcons
+              name='history'
+              color={'white'}
+              size={isIpad ? 35 : 25}
+              style={{ marginRight: isIpad ? 10 : 5 }}
+            />
+            <Text style={{ color: 'white', fontSize: isIpad ? 30 : 20 }}>{user.logs}</Text>
           </View>
-          <Text style={{ color: baseTextColor, fontSize: 40 }}>Logs</Text>
+          <Text style={{ color: baseTextColor, fontSize: isIpad ? 30 : 20 }}>Logs</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
