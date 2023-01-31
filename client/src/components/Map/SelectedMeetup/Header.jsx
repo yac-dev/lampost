@@ -39,18 +39,18 @@ const Header = (props) => {
     return (
       <View
         style={{
-          width: isIpad ? 160 : 80,
-          height: isIpad ? 100 : 50,
-          borderRadius: isIpad ? 20 : 10,
+          width: 80,
+          height: 50,
+          borderRadius: 10,
           borderWidth: 0.3,
-          marginRight: isIpad ? 30 : 15,
+          marginRight: 15,
           borderColor: baseTextColor,
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
-        <Text style={{ fontSize: isIpad ? 25 : 13, textAlign: 'center', color: baseTextColor }}>{dateElements[0]}</Text>
-        <Text style={{ fontSize: isIpad ? 30 : 16, fontWeight: 'bold', textAlign: 'center', color: baseTextColor }}>
+        <Text style={{ fontSize: 13, textAlign: 'center', color: baseTextColor }}>{dateElements[0]}</Text>
+        <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center', color: baseTextColor }}>
           {dateElements[1]}&nbsp;{dateElements[2]}
         </Text>
       </View>
@@ -83,13 +83,8 @@ const Header = (props) => {
 
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Ionicons
-          name='time-outline'
-          size={isIpad ? 25 : 15}
-          color={baseTextColor}
-          style={{ marginRight: isIpad ? 10 : 5 }}
-        />
-        <Text style={{ color: baseTextColor, fontSize: isIpad ? 25 : 15 }}>
+        <Ionicons name='time-outline' size={15} color={baseTextColor} style={{ marginRight: 5 }} />
+        <Text style={{ color: baseTextColor, fontSize: 15 }}>
           {startDateElements[1]}&nbsp;~&nbsp;{endDateElements[1]}
         </Text>
       </View>
@@ -98,18 +93,16 @@ const Header = (props) => {
 
   return (
     <View style={{ marginBottom: 10 }}>
-      <View style={{ flexDirection: 'row', marginBottom: isIpad ? 35 : 20 }}>
+      <View style={{ flexDirection: 'row', marginBottom: 20 }}>
         {renderDate(selectedMeetup.startDateAndTime)}
         <View style={{ flexDirection: 'column', flexShrink: 1 }}>
-          <Text
-            style={{ fontWeight: 'bold', fontSize: isIpad ? 27 : 16, color: 'white', marginBottom: isIpad ? 25 : 10 }}
-          >
+          <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white', marginBottom: 10 }}>
             {selectedMeetup.title}
           </Text>
           <View>{renderTime(selectedMeetup.startDateAndTime, selectedMeetup.duration)}</View>
         </View>
       </View>
-      <View style={{ marginBottom: isIpad ? 25 : 10 }}>
+      <View style={{ marginBottom: 10 }}>
         <Badges />
       </View>
     </View>

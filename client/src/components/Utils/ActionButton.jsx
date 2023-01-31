@@ -11,28 +11,28 @@ const ActionButton = (props) => {
       style={{
         flexDirection: 'row',
         alignItems: 'center',
-        paddingTop: isIpad ? 5 : 2,
-        paddingBottom: isIpad ? 5 : 2,
-        paddingRight: isIpad ? 20 : 10,
-        paddingLeft: isIpad ? 10 : 5,
+        paddingTop: 2,
+        paddingBottom: 2,
+        paddingRight: 10,
+        paddingLeft: 5,
         backgroundColor: props.isDisabled ? screenSectionBackgroundColor : props.backgroundColor,
-        marginRight: isIpad ? 20 : 10,
-        borderRadius: isIpad ? 20 : 10,
+        marginRight: 10,
+        borderRadius: 10,
       }}
       onPress={() => props.onActionButtonPress()}
       disabled={props.isDisabled}
     >
       <View
         style={{
-          width: isIpad ? 80 : 40,
-          height: isIpad ? 80 : 40,
+          width: 40,
+          height: 40,
           alignItems: 'center', // これと
           justifyContent: 'center', // これで中のimageを上下左右真ん中にする
         }}
       >
         {props.icon}
       </View>
-      <Text style={{ color: 'white', fontSize: isIpad ? 25 : 15 }}>{props.label}</Text>
+      <Text style={{ color: 'white', fontSize: 15 }}>{props.label}</Text>
     </TouchableOpacity>
   );
 };

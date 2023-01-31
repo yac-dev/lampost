@@ -18,7 +18,7 @@ const Badge = () => {
   const { badgeData } = useContext(BadgeContext);
   const { setPressedBadgeData, badgeDetailBottomSheetRef } = useContext(UserContext);
   const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
-  const oneGridWidth = isIpad ? Dimensions.get('window').width / 5 : Dimensions.get('window').width / 4;
+  const oneGridWidth = isIpad ? Dimensions.get('window').width / 6 : Dimensions.get('window').width / 4;
   const oneGridHeight = isIpad ? Dimensions.get('window').height / 7.5 : Dimensions.get('window').height / 7.5;
   const badgeContainerWidth = oneGridWidth * 0.6;
   const badgeIconWidth = badgeContainerWidth * 0.65;
@@ -57,10 +57,10 @@ const Badge = () => {
           // height: '100%',
           alignItems: 'center', // これと
           justifyContent: 'center', // これで中のimageを上下左右真ん中にする
-          borderRadius: isIpad ? 25 : 15,
+          borderRadius: 15,
           backgroundColor: rnDefaultBackgroundColor,
           borderWidth: 0.3,
-          marginBottom: isIpad ? 10 : 5,
+          marginBottom: 5,
         }}
         onPress={() => {
           badgeDetailBottomSheetRef.current.snapToIndex(0);
@@ -74,7 +74,7 @@ const Badge = () => {
             height: '100%',
             alignItems: 'center',
             justifyContent: 'center',
-            borderRadius: isIpad ? 25 : 15,
+            borderRadius: 15,
             backgroundColor: backgroundColorsTable[badgeData.badge.color],
             borderWidth: 0.3,
             borderColor: backgroundColorsTable[badgeData.badge.color],
@@ -93,12 +93,12 @@ const Badge = () => {
             <View
               style={{
                 backgroundColor: rnDefaultBackgroundColor,
-                width: isIpad ? 35 : 20,
-                height: isIpad ? 35 : 20,
-                top: isIpad ? -10 : -5,
-                right: isIpad ? -10 : -5,
+                width: isIpad ? 25 : 20,
+                height: isIpad ? 25 : 20,
+                top: isIpad ? -7 : -5,
+                right: isIpad ? -7 : -5,
                 position: 'absolute',
-                borderRadius: isIpad ? 25 : 10,
+                borderRadius: isIpad ? 12.5 : 10,
               }}
             >
               <View
@@ -108,18 +108,18 @@ const Badge = () => {
                   height: '100%',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  borderRadius: isIpad ? 25 : 10,
+                  borderRadius: isIpad ? 12.5 : 10,
                 }}
               >
-                <Text style={{ color: 'white', fontSize: isIpad ? 23 : 15 }}>{badgeData.badgeTags.length}</Text>
+                <Text style={{ color: 'white', fontSize: 15 }}>{badgeData.badgeTags.length}</Text>
               </View>
             </View>
           ) : null}
           {badgeData.link ? (
             <View
               style={{
-                top: -7,
-                left: -7,
+                top: isIpad ? -9 : -7,
+                left: isIpad ? -9 : -7,
                 position: 'absolute',
                 transform: [{ rotateY: '180deg' }],
               }}
@@ -138,7 +138,7 @@ const Badge = () => {
           color: baseTextColor,
           fontWeight: 'bold',
           alignSelf: 'center',
-          fontSize: isIpad ? 17 : 12,
+          fontSize: 12,
           textAlign: 'center',
           // borderWidth: 1,
           // borderRadius: 5,

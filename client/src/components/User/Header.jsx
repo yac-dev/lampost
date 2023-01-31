@@ -18,7 +18,7 @@ const Header = (props) => {
   const { auth } = useContext(GlobalContext);
   const { user, isMyPage, setIsConfirmEditProfileModalOpen } = useContext(UserContext);
   const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
-  const avatarContainer = isIpad ? Dimensions.get('window').width / 4 : Dimensions.get('window').width / 3.2;
+  const avatarContainer = isIpad ? Dimensions.get('window').width / 4.5 : Dimensions.get('window').width / 3.2;
   const avatarWidth = avatarContainer * 0.7;
 
   const renderAvatar = () => {
@@ -52,7 +52,7 @@ const Header = (props) => {
           style={{
             backgroundColor: user.photo ? null : iconColorsTable['blue1'],
             // padding: 5,
-            borderRadius: 10,
+            borderRadius: isIpad ? 20 : 10,
             width: avatarWidth,
             aspectRatio: 1,
             alignItems: 'center',
@@ -61,7 +61,10 @@ const Header = (props) => {
           }}
         >
           {user.photo ? (
-            <Image source={{ uri: user.photo }} style={{ width: '100%', height: '100%', borderRadius: 10 }} />
+            <Image
+              source={{ uri: user.photo }}
+              style={{ width: '100%', height: '100%', borderRadius: isIpad ? 20 : 10 }}
+            />
           ) : (
             <FontAwesome5 name='user-astronaut' size={30} color='white' />
           )}
@@ -70,13 +73,11 @@ const Header = (props) => {
               style={{ position: 'absolute', bottom: -5, right: -5 }}
               onPress={() => setIsConfirmEditProfileModalOpen(true)}
             >
-              <MaterialCommunityIcons name='camera-plus' size={isIpad ? 35 : 20} color='white' />
+              <MaterialCommunityIcons name='camera-plus' size={20} color='white' />
             </TouchableOpacity>
           ) : null}
         </View>
-        <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold', fontSize: isIpad ? 23 : 15 }}>
-          {user.name}
-        </Text>
+        <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold', fontSize: 15 }}>{user.name}</Text>
       </View>
       {/* <View style={{ width: 80, height: 80, backgroundColor: 'red' }}></View> */}
       {/* <View style={{ flexDirection: 'column' }}> */}

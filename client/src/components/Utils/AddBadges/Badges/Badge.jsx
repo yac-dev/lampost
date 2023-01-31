@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import AddBadgesContext from '../AddBadgesContext';
 import BadgeContext from '../BadgeContext';
 import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, Platform } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
@@ -20,6 +20,7 @@ import { removeBadge } from '../../../../redux/actionCreators/selectItem';
 import { setIsTappedBadgeBottomSheetOpen } from '../../../../redux/actionCreators/bottomSheet';
 
 const Badge = (props) => {
+  const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
   const { badge } = useContext(BadgeContext);
   const {
     fromComponent,
@@ -33,8 +34,9 @@ const Badge = (props) => {
     setTappedBadgeHolders,
   } = useContext(AddBadgesContext);
 
-  const oneGridWidth = Dimensions.get('window').width / 4;
-  const oneGridHeight = Dimensions.get('window').height / 7;
+  const oneGridWidth = isIpad ? Dimensions.get('window').width / 6 : Dimensions.get('window').width / 4;
+  const oneGridHeight = isIpad ? Dimensions.get('window').height / 7.5 : Dimensions.get('window').height / 7.5;
+  // const oneGridHeight = Dimensions.get('window').height / 7;
   const badgeContainerWidth = oneGridWidth * 0.6;
   const badgeIconWidth = badgeContainerWidth * 0.7;
   // const isBadgeSelectedIconPlace = Dimensions.get('window').width / 100

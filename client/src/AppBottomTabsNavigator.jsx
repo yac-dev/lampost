@@ -305,7 +305,7 @@ const AppStack = (props) => {
               backgroundColor: appBottomSheetBackgroundColor,
             },
             tabBarLabelStyle: {
-              fontSize: isIpad ? 23 : 12,
+              fontSize: 12,
             },
             tabBarActiveTintColor: 'white',
           }}

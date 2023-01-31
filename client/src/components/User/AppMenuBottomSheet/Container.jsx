@@ -17,7 +17,7 @@ const AppMenuBottomSheet = (props) => {
   const { auth } = useContext(GlobalContext);
   const { appMenuBottomSheetRef, isMyPage } = useContext(UserContext);
   const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
-  const snapPoints = useMemo(() => ['10%', '30%', '80%'], []);
+  const snapPoints = useMemo(() => ['8%', '30%', '80%'], []);
   // ここに関しては、authじゃない限り、表示しないようにする。
   if (!auth.isAuthenticated || !isMyPage) {
     return null;
@@ -39,17 +39,13 @@ const AppMenuBottomSheet = (props) => {
       >
         <BottomSheetView
           style={{
-            paddingLeft: isIpad ? 35 : 20,
-            paddingRight: isIpad ? 35 : 20,
-            paddingTop: isIpad ? 15 : 5,
+            paddingLeft: 20,
+            paddingRight: 20,
+            padding: 10,
             flex: 1,
           }}
         >
-          <Text
-            style={{ fontWeight: 'bold', fontSize: isIpad ? 35 : 20, color: 'white', marginBottom: isIpad ? 35 : 20 }}
-          >
-            Add badges?
-          </Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 35 }}>Add badges?</Text>
           <AppButtons />
           <MyConnections />
           {/* <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: 10, marginBottom: 15 }}>

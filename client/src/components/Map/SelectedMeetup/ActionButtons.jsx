@@ -120,7 +120,7 @@ const ActionButtons = (props) => {
             /> */}
             <ActionButton
               label='Go to lounge'
-              icon={<Ionicons name='ios-chatbubbles' size={isIpad ? 40 : 25} color={'white'} />}
+              icon={<Ionicons name='ios-chatbubbles' size={25} color={'white'} />}
               backgroundColor={iconColorsTable['blue1']}
               onActionButtonPress={() => navigation.navigate('Lounge', { meetupId: selectedMeetup._id })}
             />
@@ -133,13 +133,13 @@ const ActionButtons = (props) => {
             <View style={{ flexDirection: 'row' }}>
               <ActionButton
                 label='Leave this meetup'
-                icon={<MaterialCommunityIcons name='exit-run' size={isIpad ? 40 : 25} color={'white'} />}
+                icon={<MaterialCommunityIcons name='exit-run' size={25} color={'white'} />}
                 backgroundColor={iconColorsTable['red1']}
                 onActionButtonPress={() => leaveMeetup()}
               />
               <ActionButton
                 label='Go to lounge'
-                icon={<Ionicons name='ios-chatbubbles' size={isIpad ? 40 : 25} color={'white'} />}
+                icon={<Ionicons name='ios-chatbubbles' size={25} color={'white'} />}
                 backgroundColor={iconColorsTable['blue1']}
                 onActionButtonPress={() => navigation.navigate('Lounge', { meetupId: selectedMeetup._id })}
               />
@@ -149,7 +149,7 @@ const ActionButtons = (props) => {
           return (
             <ActionButton
               label='Join this meetup'
-              icon={<MaterialCommunityIcons name='human-greeting-variant' size={isIpad ? 40 : 25} color={'white'} />}
+              icon={<MaterialCommunityIcons name='human-greeting-variant' size={25} color={'white'} />}
               backgroundColor={iconColorsTable['blue1']}
               onActionButtonPress={() => joinMeetup(selectedMeetup._id)}
             />

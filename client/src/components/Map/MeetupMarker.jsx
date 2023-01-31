@@ -34,10 +34,10 @@ const MapMarker = (props) => {
     >
       <View
         style={{
-          width: isIpad ? 80 : 40,
+          width: 40,
           aspectRatio: 1,
           backgroundColor: rnDefaultBackgroundColor,
-          borderRadius: isIpad ? 20 : 10,
+          borderRadius: 10,
         }}
       >
         <TouchableOpacity
@@ -46,13 +46,13 @@ const MapMarker = (props) => {
             height: '100%',
             alignItems: 'center', // これと
             justifyContent: 'center', // これで中のimageを上下左右真ん中にする
-            borderRadius: isIpad ? 20 : 10,
+            borderRadius: 10,
             backgroundColor: backgroundColorsTable[props.meetup.badge.color],
             borderColor: backgroundColorsTable[props.meetup.badge.color],
             borderWidth: 0.5,
           }}
         >
-          <SVG width={isIpad ? 60 : 30} height={isIpad ? 60 : 30}>
+          <SVG width={30} height={30}>
             {/* <Image href={{ uri: props.meetup.badge.icon }} width={'100%'} height={'100%'} /> */}
             <FastImage
               // onLoadEnd={() => setTrackView(false)}

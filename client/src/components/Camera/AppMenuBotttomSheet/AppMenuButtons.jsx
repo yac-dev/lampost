@@ -20,12 +20,12 @@ const AppMenuButtons = (props) => {
 
   if (auth.data) {
     return (
-      <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 15 }}>
+      <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 25 }}>
         <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
           <AppMenuButton
             backgroundColor={backgroundColorsTable['red1']}
             icon={<Ionicons name='camera' size={35} color={iconColorsTable['red1']} />}
-            label='Photo mode'
+            label='Normal'
             onAppMenuButtonPress={() => {
               setCameraMode('photo');
               appMenuBottomSheetRef.current.snapToIndex(0);

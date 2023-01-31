@@ -33,7 +33,8 @@ const Menu = (props) => {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: isIpad ? 20 : 7,
+        padding: 20,
+        // backgroundColor: 'red',
         // borderBottomColor: baseBorderColor,
         // borderBottomWidth: 0.3,
       }}
@@ -43,10 +44,10 @@ const Menu = (props) => {
         <View
           style={{
             backgroundColor: '#EFEFEF',
-            width: isIpad ? 70 : 35,
-            height: isIpad ? 70 : 35,
-            borderRadius: isIpad ? 15 : 7,
-            marginRight: isIpad ? 30 : 15,
+            width: 35,
+            height: 35,
+            borderRadius: 7,
+            marginRight: 15,
           }}
           // onPress={() => props.onPress()}
         >
@@ -57,13 +58,13 @@ const Menu = (props) => {
               backgroundColor: props.backgroundColor,
               alignItems: 'center',
               justifyContent: 'center',
-              borderRadius: isIpad ? 15 : 7,
+              borderRadius: 7,
             }}
           >
             {props.icon}
           </View>
         </View>
-        <Text style={{ color: baseTextColor, fontSize: isIpad ? 25 : 15 }}>{props.label}</Text>
+        <Text style={{ color: baseTextColor, fontSize: 15 }}>{props.label}</Text>
       </View>
       {props.rightInfo}
     </TouchableOpacity>

@@ -5,6 +5,7 @@ import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { appBottomSheetBackgroundColor, baseTextColor } from '../../../utils/colorsTable';
 import AppMenuButtons from './AppMenuButtons';
+import AddEffect from './AddEffect';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -15,7 +16,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 const AppMenuBottomSheet = (props) => {
   const { auth } = useContext(GlobalContext);
   const { appMenuBottomSheetRef, cameraMode } = useContext(CameraContext);
-  const snapPoints = useMemo(() => ['10%', '30%', '80%'], []);
+  const snapPoints = useMemo(() => ['8%', '30%', '80%'], []);
 
   const renderCameraMode = () => {
     switch (cameraMode) {
@@ -45,19 +46,20 @@ const AppMenuBottomSheet = (props) => {
       // keyboardBehavior={'interactive'}
       // onClose={() => onSelectedItemBottomSheetClose()}
     >
-      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
+      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 10, flex: 1 }}>
         <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            marginBottom: 20,
+            marginBottom: 35,
           }}
         >
-          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>Tag people?</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>Change the mode?</Text>
           {renderCameraMode()}
         </View>
         <AppMenuButtons />
+        <AddEffect />
       </BottomSheetView>
     </GorhomBottomSheet>
   );

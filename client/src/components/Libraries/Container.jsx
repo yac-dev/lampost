@@ -197,7 +197,7 @@ const Container = (props) => {
                 color: baseTextColor,
                 fontWeight: 'bold',
                 alignSelf: 'center',
-                fontSize: isIpad ? 23 : 15,
+                fontSize: 15,
                 textAlign: 'center',
                 // marginBottom: 5,
                 paddingLeft: 10,
@@ -254,7 +254,7 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        <Text style={{ fontSize: isIpad ? 37 : 23, fontWeight: 'bold', padding: 10, color: 'white', marginBottom: 10 }}>
+        <Text style={{ fontSize: 23, fontWeight: 'bold', padding: 10, color: 'white', marginBottom: 10 }}>
           Recently created
         </Text>
         {renderLibraries()}

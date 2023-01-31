@@ -13,7 +13,7 @@ import MyLibraries from './MyLibraries';
 
 const AppMenuBottomSheet = (props) => {
   const { appMenuBottomSheetRef, handleCreateLibraryBottomSheet } = useContext(LibrariesContext);
-  const snapPoints = useMemo(() => ['10%', '30%', '80%'], []);
+  const snapPoints = useMemo(() => ['8%', '30%', '80%'], []);
 
   return (
     <GorhomBottomSheet
@@ -30,8 +30,8 @@ const AppMenuBottomSheet = (props) => {
       // keyboardBehavior={'interactive'}
       // onClose={() => onSelectedItemBottomSheetClose()}
     >
-      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 15 }}>Create a library?</Text>
+      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 10, flex: 1 }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 35 }}>Create a library?</Text>
         <AppMenuButtons />
         <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My joined libraries</Text>
         <MyLibraries />

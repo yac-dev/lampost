@@ -147,19 +147,19 @@ const Menus = (props) => {
   // };
 
   return (
-    <View style={{ padding: 5, borderRadius: 10, backgroundColor: sectionBackgroundColor }}>
+    <View style={{ borderRadius: 10, backgroundColor: sectionBackgroundColor }}>
       <Menu
         label='Launcher'
-        icon={<MaterialCommunityIcons name='rocket-launch' size={isIpad ? 40 : 20} color={iconColorsTable['red1']} />}
+        icon={<MaterialCommunityIcons name='rocket-launch' size={20} color={iconColorsTable['red1']} />}
         backgroundColor={backgroundColorsTable['red1']}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View style={{ width: isIpad ? 200 : 80 }}>
-              <Text numberOfLines={1} style={{ color: baseTextColor, fontSize: isIpad ? 25 : 15 }}>
+            <View style={{ width: 80 }}>
+              <Text numberOfLines={1} style={{ color: baseTextColor, fontSize: 15 }}>
                 {selectedMeetup.launcher.name}
               </Text>
             </View>
-            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={isIpad ? 40 : 20} />
+            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
           </View>
         }
         onPressMenu={() => {
@@ -176,17 +176,15 @@ const Menus = (props) => {
       <Menu
         label='Description'
         backgroundColor={backgroundColorsTable['green1']}
-        icon={
-          <MaterialCommunityIcons name='card-text-outline' size={isIpad ? 40 : 20} color={iconColorsTable['green1']} />
-        }
+        icon={<MaterialCommunityIcons name='card-text-outline' size={20} color={iconColorsTable['green1']} />}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View style={{ width: isIpad ? 200 : 80 }}>
-              <Text numberOfLines={1} style={{ color: baseTextColor, fontSize: isIpad ? 25 : 15 }}>
+            <View style={{ width: 80 }}>
+              <Text numberOfLines={1} style={{ color: baseTextColor, fontSize: 15 }}>
                 {selectedMeetup.description}
               </Text>
             </View>
-            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={isIpad ? 40 : 20} />
+            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
           </View>
         }
         onPressMenu={() => {
@@ -197,12 +195,12 @@ const Menus = (props) => {
       />
       <Menu
         label='Members'
-        icon={<MaterialIcons name='groups' size={isIpad ? 40 : 20} color={iconColorsTable['violet1']} />}
+        icon={<MaterialIcons name='groups' size={20} color={iconColorsTable['violet1']} />}
         backgroundColor={backgroundColorsTable['violet1']}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ color: baseTextColor, fontSize: isIpad ? 25 : 15 }}>{selectedMeetup.totalAttendees}</Text>
-            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={isIpad ? 40 : 20} />
+            <Text style={{ color: baseTextColor, fontSize: 15 }}>{selectedMeetup.totalAttendees}</Text>
+            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
           </View>
         }
         onPressMenu={() => {
@@ -212,12 +210,12 @@ const Menus = (props) => {
       />
       <Menu
         label='Comments'
-        icon={<MaterialCommunityIcons name='chat-question' size={isIpad ? 40 : 20} color={iconColorsTable['blue1']} />}
+        icon={<MaterialCommunityIcons name='chat-question' size={20} color={iconColorsTable['blue1']} />}
         backgroundColor={backgroundColorsTable['blue1']}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ color: baseTextColor, fontSize: isIpad ? 25 : 15 }}>{selectedMeetup.comments.length}</Text>
-            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={isIpad ? 40 : 20} />
+            <Text style={{ color: baseTextColor, fontSize: 15 }}>{selectedMeetup.comments.length}</Text>
+            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
           </View>
         }
         onPressMenu={() => {
@@ -227,14 +225,14 @@ const Menus = (props) => {
       />
       <Menu
         label='Fee'
-        icon={<Foundation name='dollar-bill' size={isIpad ? 40 : 20} color={iconColorsTable['yellow1']} />}
+        icon={<Foundation name='dollar-bill' size={20} color={iconColorsTable['yellow1']} />}
         backgroundColor={backgroundColorsTable['yellow1']}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ color: baseTextColor, fontSize: isIpad ? 25 : 15 }}>
+            <Text style={{ color: baseTextColor, fontSize: 15 }}>
               {selectedMeetup.isFeeFree ? "It's free" : "It's not free"}
             </Text>
-            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={isIpad ? 40 : 20} />
+            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
           </View>
         }
         onPressMenu={() => {
@@ -256,9 +254,9 @@ const Menus = (props) => {
       /> */}
       <Menu
         label='Link'
-        icon={<Entypo name='link' size={isIpad ? 40 : 20} color={iconColorsTable['grey1']} />}
+        icon={<Entypo name='link' size={20} color={iconColorsTable['grey1']} />}
         backgroundColor={backgroundColorsTable['grey1']}
-        rightInfo={<MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={isIpad ? 40 : 20} />}
+        rightInfo={<MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />}
         onPressMenu={() => {
           setSelectedMeetupDetailComponent('Links');
           selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);

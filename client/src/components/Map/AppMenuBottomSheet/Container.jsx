@@ -30,12 +30,10 @@ const AppMenusBottomSheet = (props) => {
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
       handleIndicatorStyle={{ backgroundColor: 'white' }}
     >
-      <BottomSheetView
-        style={{ paddingLeft: isIpad ? 35 : 20, paddingRight: isIpad ? 35 : 20, paddingTop: isIpad ? 15 : 5, flex: 1 }}
-      >
+      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 10, flex: 1 }}>
         {/* <ScrollView contentContainerStyle={{ paddingBottom: 100 }}> */}
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: isIpad ? 35 : 20 }}>
-          <Text style={{ fontWeight: 'bold', fontSize: isIpad ? 35 : 20, color: 'white', marginRight: 10 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginRight: 10, marginBottom: 35 }}>
             Launch your meetup?
           </Text>
           {totalUnreadChatsCount ? (
