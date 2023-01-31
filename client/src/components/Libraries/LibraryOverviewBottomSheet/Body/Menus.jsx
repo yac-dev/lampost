@@ -17,7 +17,7 @@ import { Octicons } from '@expo/vector-icons';
 import Menu from '../../../Map/SelectedMeetup/Menu';
 
 const Container = (props) => {
-  const { auth } = useContext(GlobalContext);
+  const { auth, isIpad } = useContext(GlobalContext);
   const {
     selectedLibrary,
     navigation,
@@ -35,7 +35,7 @@ const Container = (props) => {
   };
 
   return (
-    <View style={{ marginBottom: 25, paddingLeft: 20, paddingRight: 20 }}>
+    <View style={{ marginBottom: isIpad ? 45 : 25, paddingLeft: 20, paddingRight: 20 }}>
       <View style={{ backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>
         <Menu
           label='Launcher'
@@ -45,7 +45,7 @@ const Container = (props) => {
             }
           }}
           backgroundColor={backgroundColorsTable['red1']}
-          icon={<MaterialCommunityIcons name='rocket-launch' size={25} color={iconColorsTable['red1']} />}
+          icon={<MaterialCommunityIcons name='rocket-launch' size={isIpad ? 40 : 25} color={iconColorsTable['red1']} />}
           rightInfo={
             // <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             //   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -64,12 +64,12 @@ const Container = (props) => {
             //   <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
             // </View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <View style={{ width: 80 }}>
-                <Text numberOfLines={1} style={{ color: baseTextColor }}>
+              <View style={{ width: isIpad ? 200 : 80 }}>
+                <Text numberOfLines={1} style={{ color: baseTextColor, fontSize: isIpad ? 25 : 15 }}>
                   {selectedLibrary.launcher.name}
                 </Text>
               </View>
-              <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
+              <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={isIpad ? 40 : 20} />
             </View>
           }
         />
@@ -80,7 +80,13 @@ const Container = (props) => {
             selectedLibraryDetailComponentBottomSheetRef.current.snapToIndex(0);
           }}
           backgroundColor={backgroundColorsTable['green1']}
-          icon={<MaterialCommunityIcons name='card-text-outline' size={25} color={iconColorsTable['green1']} />}
+          icon={
+            <MaterialCommunityIcons
+              name='card-text-outline'
+              size={isIpad ? 40 : 25}
+              color={iconColorsTable['green1']}
+            />
+          }
           rightInfo={
             // <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             //   <Text numberOfLines={1} style={{ color: baseTextColor, width: 150, marginRight: 5 }}>
@@ -89,12 +95,15 @@ const Container = (props) => {
             //   <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
             // </View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <View style={{ width: 80 }}>
-                <Text numberOfLines={1} style={{ color: baseTextColor, alignSelf: 'flex-end' }}>
+              <View style={{ width: isIpad ? 200 : 80 }}>
+                <Text
+                  numberOfLines={1}
+                  style={{ color: baseTextColor, alignSelf: 'flex-end', fontSize: isIpad ? 25 : 15 }}
+                >
                   {selectedLibrary.description}
                 </Text>
               </View>
-              <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
+              <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={isIpad ? 40 : 20} />
             </View>
           }
         />
@@ -105,11 +114,13 @@ const Container = (props) => {
             selectedLibraryDetailComponentBottomSheetRef.current.snapToIndex(0);
           }}
           backgroundColor={backgroundColorsTable['blue1']}
-          icon={<MaterialIcons name='groups' size={25} color={iconColorsTable['blue1']} />}
+          icon={<MaterialIcons name='groups' size={isIpad ? 40 : 25} color={iconColorsTable['blue1']} />}
           rightInfo={
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={{ color: baseTextColor, marginRight: 5 }}>{selectedLibrary.totalMembers}</Text>
-              <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
+              <Text style={{ color: baseTextColor, marginRight: isIpad ? 15 : 5, fontSize: isIpad ? 25 : 15 }}>
+                {selectedLibrary.totalMembers}
+              </Text>
+              <MaterialCommunityIcons name='chevron-right' size={isIpad ? 40 : 20} color={baseTextColor} />
             </View>
           }
         />
@@ -119,11 +130,13 @@ const Container = (props) => {
             null;
           }}
           backgroundColor={backgroundColorsTable['pink1']}
-          icon={<MaterialCommunityIcons name='heart-multiple' size={25} color={iconColorsTable['pink1']} />}
+          icon={
+            <MaterialCommunityIcons name='heart-multiple' size={isIpad ? 40 : 25} color={iconColorsTable['pink1']} />
+          }
           rightInfo={
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               {renderEmojis()}
-              <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
+              <MaterialCommunityIcons name='chevron-right' size={isIpad ? 40 : 20} color={baseTextColor} />
             </View>
           }
         />

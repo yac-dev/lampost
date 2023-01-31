@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
-import { View, Text, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Dimensions, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import LibrariesContext from '../../LibrariesContext';
 import { baseTextColor } from '../../../../utils/colorsTable';
 import FastImage from 'react-native-fast-image';
 
 const Assets = () => {
   const { selectedLibrary, libraryAssets } = useContext(LibrariesContext);
-  const oneAssetWidth = Dimensions.get('window').width / 2;
+  const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
+  const oneAssetWidth = isIpad ? Dimensions.get('window').width / 4 : Dimensions.get('window').width / 2;
 
   const renderAssets = () => {
     if (libraryAssets.length) {

@@ -261,6 +261,7 @@ const AppStack = (props) => {
   return (
     <GlobalContext.Provider
       value={{
+        isIpad,
         auth,
         setAuth,
         loading,

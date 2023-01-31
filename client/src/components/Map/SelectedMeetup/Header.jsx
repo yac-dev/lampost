@@ -1,5 +1,5 @@
-// main libraries
 import React, { useContext } from 'react';
+import GlobalContext from '../../../GlobalContext';
 import MapContext from '../MeetupContext';
 import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity } from 'react-native';
@@ -15,6 +15,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Badges from './Badges';
 
 const Header = (props) => {
+  const { isIpad } = useContext(GlobalContext);
   const { selectedMeetup } = useContext(MapContext);
   // const renderDate = (date) => {
   //   return (
@@ -38,18 +39,18 @@ const Header = (props) => {
     return (
       <View
         style={{
-          width: 80,
-          height: 50,
-          borderRadius: 10,
+          width: isIpad ? 160 : 80,
+          height: isIpad ? 100 : 50,
+          borderRadius: isIpad ? 20 : 10,
           borderWidth: 0.3,
-          marginRight: 15,
+          marginRight: isIpad ? 30 : 15,
           borderColor: baseTextColor,
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
-        <Text style={{ fontSize: 13, textAlign: 'center', color: baseTextColor }}>{dateElements[0]}</Text>
-        <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center', color: baseTextColor }}>
+        <Text style={{ fontSize: isIpad ? 25 : 13, textAlign: 'center', color: baseTextColor }}>{dateElements[0]}</Text>
+        <Text style={{ fontSize: isIpad ? 30 : 16, fontWeight: 'bold', textAlign: 'center', color: baseTextColor }}>
           {dateElements[1]}&nbsp;{dateElements[2]}
         </Text>
       </View>
@@ -82,8 +83,13 @@ const Header = (props) => {
 
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Ionicons name='time-outline' size={15} color={baseTextColor} style={{ marginRight: 5 }} />
-        <Text style={{ color: baseTextColor }}>
+        <Ionicons
+          name='time-outline'
+          size={isIpad ? 25 : 15}
+          color={baseTextColor}
+          style={{ marginRight: isIpad ? 10 : 5 }}
+        />
+        <Text style={{ color: baseTextColor, fontSize: isIpad ? 25 : 15 }}>
           {startDateElements[1]}&nbsp;~&nbsp;{endDateElements[1]}
         </Text>
       </View>
@@ -92,16 +98,18 @@ const Header = (props) => {
 
   return (
     <View style={{ marginBottom: 10 }}>
-      <View style={{ flexDirection: 'row', marginBottom: 20 }}>
+      <View style={{ flexDirection: 'row', marginBottom: isIpad ? 35 : 20 }}>
         {renderDate(selectedMeetup.startDateAndTime)}
         <View style={{ flexDirection: 'column', flexShrink: 1 }}>
-          <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white', marginBottom: 10 }}>
+          <Text
+            style={{ fontWeight: 'bold', fontSize: isIpad ? 27 : 16, color: 'white', marginBottom: isIpad ? 25 : 10 }}
+          >
             {selectedMeetup.title}
           </Text>
           <View>{renderTime(selectedMeetup.startDateAndTime, selectedMeetup.duration)}</View>
         </View>
       </View>
-      <View style={{ marginBottom: 10 }}>
+      <View style={{ marginBottom: isIpad ? 25 : 10 }}>
         <Badges />
       </View>
     </View>

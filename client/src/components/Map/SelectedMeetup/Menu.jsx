@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Platform } from 'react-native';
 import { baseTextColor, baseBorderColor } from '../../../utils/colorsTable';
 
 const Menu = (props) => {
+  const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
   return (
     // <TouchableOpacity
     //   style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}
@@ -32,7 +33,7 @@ const Menu = (props) => {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 7,
+        padding: isIpad ? 20 : 7,
         // borderBottomColor: baseBorderColor,
         // borderBottomWidth: 0.3,
       }}
@@ -42,10 +43,10 @@ const Menu = (props) => {
         <View
           style={{
             backgroundColor: '#EFEFEF',
-            width: 35,
-            height: 35,
-            borderRadius: 7,
-            marginRight: 15,
+            width: isIpad ? 70 : 35,
+            height: isIpad ? 70 : 35,
+            borderRadius: isIpad ? 15 : 7,
+            marginRight: isIpad ? 30 : 15,
           }}
           // onPress={() => props.onPress()}
         >
@@ -56,12 +57,13 @@ const Menu = (props) => {
               backgroundColor: props.backgroundColor,
               alignItems: 'center',
               justifyContent: 'center',
+              borderRadius: isIpad ? 15 : 7,
             }}
           >
             {props.icon}
           </View>
         </View>
-        <Text style={{ color: baseTextColor, fontSize: 15 }}>{props.label}</Text>
+        <Text style={{ color: baseTextColor, fontSize: isIpad ? 25 : 15 }}>{props.label}</Text>
       </View>
       {props.rightInfo}
     </TouchableOpacity>

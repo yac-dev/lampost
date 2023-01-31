@@ -2,7 +2,7 @@ import React, { useContext, useRef, useEffect, useState } from 'react';
 import LibraryContext from './LibraryContext';
 import GlobalContext from '../../../GlobalContext';
 import lampostAPI from '../../../apis/lampost';
-import { View, Text, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Dimensions, Platform } from 'react-native';
 import { baseBackgroundColor } from '../../../utils/colorsTable';
 import FastImage from 'react-native-fast-image';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
@@ -14,6 +14,7 @@ import ConfirmLeaveLibrary from './ConfirmLeaveLibrary';
 import ConfirmPostAssetModal from './ConfirmPostAssetModal';
 
 const Container = (props) => {
+  const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
   const { auth, setIsLoggedOutModalOpen } = useContext(GlobalContext);
   const appMenuBottomSheetRef = useRef(null);
   const selectedAssetBottomSheetRef = useRef(null);
@@ -25,7 +26,7 @@ const Container = (props) => {
   const [assets, setAssets] = useState([]);
   const [libraryMembers, setLibraryMembers] = useState([]);
   const [libraryPosts, setLibraryPosts] = useState([]);
-  const oneAssetWidth = Dimensions.get('window').width / 2;
+  const oneAssetWidth = isIpad ? Dimensions.get('window').width / 4 : Dimensions.get('window').width / 2;
 
   // ここで、libraryを取ってこないとね。
   const getLibrary = async () => {

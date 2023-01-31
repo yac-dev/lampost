@@ -19,6 +19,7 @@ const chatTypeTable = {
 
 const Chats = (props) => {
   const scrollViewRef = useRef();
+  const { isIpad } = useContext(GlobalContext);
   const { chats, meetup } = useContext(LoungeContext);
 
   const renderDate = (date) => {
@@ -28,19 +29,19 @@ const Chats = (props) => {
       hour: '2-digit',
       minute: '2-digit',
     });
-    return <Text style={{ fontWeight: 'bold', fontSize: 12, color: 'rgb(118, 120, 124)' }}>{d}</Text>;
+    return <Text style={{ fontWeight: 'bold', fontSize: isIpad ? 22 : 12, color: 'rgb(118, 120, 124)' }}>{d}</Text>;
   };
 
   const renderChatType = (type) => {
     switch (type) {
       case 'general':
-        return <MaterialCommunityIcons name='comment-text' size={15} color={'white'} />;
+        return <MaterialCommunityIcons name='comment-text' size={isIpad ? 25 : 15} color={'white'} />;
       case 'idea':
-        return <Ionicons name='bulb-outline' size={15} color={'white'} />;
+        return <Ionicons name='bulb-outline' size={isIpad ? 25 : 15} color={'white'} />;
       case 'questionOrHelp':
-        return <FontAwesome5 name='question' size={15} color={'white'} />;
+        return <FontAwesome5 name='question' size={isIpad ? 25 : 15} color={'white'} />;
       case 'announcement':
-        return <Entypo name='megaphone' size={15} color={'white'} />;
+        return <Entypo name='megaphone' size={isIpad ? 25 : 15} color={'white'} />;
       case 'launched':
         return <Text>Launched</Text>;
       default:
@@ -52,20 +53,30 @@ const Chats = (props) => {
     if (chat.user) {
       if (chat.user.photo) {
         return (
-          <View style={{ width: 40, height: 40, borderRadius: 10, marginRight: 20 }}>
-            <Image source={{ uri: chat.user.photo }} style={{ width: '100%', height: '100%', borderRadius: 10 }} />
+          <View
+            style={{
+              width: isIpad ? 70 : 40,
+              height: isIpad ? 70 : 40,
+              borderRadius: isIpad ? 20 : 10,
+              marginRight: isIpad ? 40 : 20,
+            }}
+          >
+            <Image
+              source={{ uri: chat.user.photo }}
+              style={{ width: '100%', height: '100%', borderRadius: isIpad ? 20 : 10 }}
+            />
             <View
               style={{
                 backgroundColor: chatTypeTable[chat.type],
                 padding: 2,
-                borderRadius: 7,
-                width: 20,
-                height: 20,
+                borderRadius: isIpad ? 15 : 7,
+                width: isIpad ? 40 : 20,
+                height: isIpad ? 40 : 20,
                 alignItems: 'center',
                 justifyContent: 'center',
                 position: 'absolute',
-                bottom: -10,
-                right: -10,
+                bottom: isIpad ? -20 : -10,
+                right: isIpad ? -20 : -10,
               }}
             >
               {renderChatType(chat.type)}
@@ -76,28 +87,28 @@ const Chats = (props) => {
         return (
           <View
             style={{
-              width: 40,
-              height: 40,
-              borderRadius: 10,
-              marginRight: 20,
+              width: isIpad ? 70 : 40,
+              height: isIpad ? 70 : 40,
+              borderRadius: isIpad ? 20 : 10,
+              marginRight: isIpad ? 40 : 20,
               backgroundColor: iconColorsTable['blue1'],
               alignItems: 'center',
               justifyContent: 'center',
             }}
           >
-            <FontAwesome5 name='user-astronaut' size={20} color='white' />
+            <FontAwesome5 name='user-astronaut' size={isIpad ? 40 : 20} color='white' />
             <View
               style={{
                 backgroundColor: chatTypeTable[chat.type],
                 padding: 2,
-                borderRadius: 7,
-                width: 20,
-                height: 20,
+                borderRadius: isIpad ? 15 : 7,
+                width: isIpad ? 40 : 20,
+                height: isIpad ? 40 : 20,
                 alignItems: 'center',
                 justifyContent: 'center',
                 position: 'absolute',
-                bottom: -10,
-                right: -10,
+                bottom: isIpad ? -20 : -10,
+                right: isIpad ? -20 : -10,
               }}
             >
               {renderChatType(chat.type)}
@@ -154,7 +165,7 @@ const Chats = (props) => {
       const chatsList = chats.map((chat, index) => {
         // launcherのchatだけは、背景を少し変える。
         return (
-          <View key={index} style={{ padding: 10 }}>
+          <View key={index} style={{ padding: isIpad ? 20 : 10 }}>
             <View style={{ flexDirection: 'row' }}>
               {renderUserAvatar(chat)}
               {/* {chat.user?.photo ? (
@@ -213,14 +224,23 @@ const Chats = (props) => {
               )} */}
 
               <View style={{ flexDirection: 'column', flexShrink: 1 }}>
-                <View style={{ flexDirection: 'column', marginBottom: 5, flexShrink: 1 }}>
-                  <Text style={{ color: baseTextColor, marginRight: 10, fontSize: 15, fontWeight: 'bold' }}>
-                    {/* {chat.user?.name} */}
+                <View style={{ flexDirection: 'column', marginBottom: isIpad ? 10 : 5, flexShrink: 1 }}>
+                  <Text
+                    style={{
+                      color: baseTextColor,
+                      marginRight: isIpad ? 20 : 10,
+                      fontSize: isIpad ? 25 : 15,
+                      fontWeight: 'bold',
+                      marginBottom: isIpad ? 10 : 5,
+                    }}
+                  >
                     {renderChatSenderName(chat)}
                   </Text>
                   {renderDate(chat.createdAt)}
                 </View>
-                <Text style={{ fontSize: 15, marginBottom: 10, color: baseTextColor }}>{chat.content}</Text>
+                <Text style={{ fontSize: isIpad ? 30 : 15, marginBottom: isIpad ? 20 : 10, color: baseTextColor }}>
+                  {chat.content}
+                </Text>
               </View>
             </View>
           </View>
@@ -231,7 +251,7 @@ const Chats = (props) => {
     } else {
       return (
         <View>
-          <Text style={{ color: baseTextColor, textAlign: 'center', marginTop: 50 }}>
+          <Text style={{ color: baseTextColor, textAlign: 'center', marginTop: 50, fontSize: isIpad ? 25 : 15 }}>
             You'll see all the chats of this meetup group.
           </Text>
         </View>

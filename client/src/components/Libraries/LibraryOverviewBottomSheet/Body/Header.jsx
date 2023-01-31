@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { View, Text } from 'react-native';
+import GlobalContext from '../../../../GlobalContext';
 import LibrariesContext from '../../LibrariesContext';
 import { baseTextColor } from '../../../../utils/colorsTable';
 import { Ionicons } from '@expo/vector-icons';
@@ -8,9 +9,10 @@ import { iconColorsTable, rnDefaultBackgroundColor, backgroundColorsTable } from
 import BadgeLabels from './BadgeLabels';
 
 const Header = () => {
+  const { isIpad } = useContext(GlobalContext);
   const { selectedLibrary } = useContext(LibrariesContext);
   return (
-    <View style={{ marginBottom: 25, paddingLeft: 20, paddingRight: 20 }}>
+    <View style={{ marginBottom: isIpad ? 40 : 25, paddingLeft: 20, paddingRight: 20 }}>
       <View
         style={{
           // flexDirection: 'row', alignItems: 'center',
@@ -39,7 +41,7 @@ const Header = () => {
             <Ionicons name='ios-library' size={30} color={iconColorsTable[selectedLibrary.color]} />
           </View>
         </View> */}
-        <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>{selectedLibrary.name}</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: isIpad ? 35 : 20, color: 'white' }}>{selectedLibrary.name}</Text>
       </View>
       <BadgeLabels />
     </View>

@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import GlobalContext from '../../GlobalContext';
 import MapContext from './MeetupContext';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { Marker } from 'react-native-maps';
@@ -9,6 +10,7 @@ import { iconColorsTable, backgroundColorsTable, rnDefaultBackgroundColor } from
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const MapMarker = (props) => {
+  const { isIpad } = useContext(GlobalContext);
   const { selectedMeetup, setSelectedMeetup, selectedMeetupBottomSheetRef } = useContext(MapContext);
   // const [trackView, setTrackView] = useState(true);
   const [initialRender, setInitialRender] = useState(true);
@@ -32,10 +34,10 @@ const MapMarker = (props) => {
     >
       <View
         style={{
-          width: 40,
+          width: isIpad ? 80 : 40,
           aspectRatio: 1,
           backgroundColor: rnDefaultBackgroundColor,
-          borderRadius: 10,
+          borderRadius: isIpad ? 20 : 10,
         }}
       >
         <TouchableOpacity
@@ -44,13 +46,13 @@ const MapMarker = (props) => {
             height: '100%',
             alignItems: 'center', // これと
             justifyContent: 'center', // これで中のimageを上下左右真ん中にする
-            borderRadius: 10,
+            borderRadius: isIpad ? 20 : 10,
             backgroundColor: backgroundColorsTable[props.meetup.badge.color],
             borderColor: backgroundColorsTable[props.meetup.badge.color],
             borderWidth: 0.5,
           }}
         >
-          <SVG width={30} height={30}>
+          <SVG width={isIpad ? 60 : 30} height={isIpad ? 60 : 30}>
             {/* <Image href={{ uri: props.meetup.badge.icon }} width={'100%'} height={'100%'} /> */}
             <FastImage
               // onLoadEnd={() => setTrackView(false)}
