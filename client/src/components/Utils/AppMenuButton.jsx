@@ -14,8 +14,9 @@ const AppButton = (props) => {
   return (
     <View
       style={{
+        paddingTop: 10,
         width: 80,
-        height: 100,
+        height: 120,
         alignItems: 'center',
         // backgroundColor: 'red',
       }}

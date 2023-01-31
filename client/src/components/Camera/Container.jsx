@@ -9,6 +9,7 @@ import { Camera, CameraType } from 'expo-camera';
 import AppMenuBottomSheet from './AppMenuBotttomSheet/Container';
 import { appBottomSheetBackgroundColor, baseBackgroundColor, baseTextColor } from '../../utils/colorsTable';
 import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import WarningModal from './WarningModal';
 
@@ -18,6 +19,7 @@ const Container = (props) => {
   const cameraRef = useRef();
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
   const [cameraMode, setCameraMode] = useState('photo');
+  const [photoEffect, setPhotoEffect] = useState('normal');
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [warningMessage, setWarningMessage] = useState('');
   const [hasCameraPermission, setHasCameraPermission] = useState();
@@ -111,6 +113,8 @@ const Container = (props) => {
         appMenuBottomSheetRef,
         cameraMode,
         setCameraMode,
+        photoEffect,
+        setPhotoEffect,
         isWarningModalOpen,
         setIsWarningModalOpen,
         warningMessage,
@@ -118,7 +122,7 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1 }}>
-        <TouchableOpacity style={{ flex: 1 }} onPress={() => takePhoto()}>
+        <View style={{ flex: 1 }}>
           <Camera style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} ref={cameraRef} type={cameraType}>
             {/* <StatusBar hidden={true} style='auto' /> */}
             {/* <IconButton
@@ -142,12 +146,22 @@ const Container = (props) => {
                 <Text style={{ color: baseTextColor, fontSize: 15, fontWeight: 'bold' }}>3:00</Text>
               </View>
             ) : null}
-            <View style={{ flexDirection: 'column', position: 'absolute', top: 80, right: 10 }}>
+            <View style={{ flexDirection: 'row', position: 'absolute', bottom: 120 }}>
               <TouchableOpacity
                 style={{
                   padding: 10,
                   borderRadius: 10,
-                  marginBottom: 10,
+                  marginRight: 10,
+                  backgroundColor: appBottomSheetBackgroundColor,
+                }}
+                onPress={() => takePhoto()}
+              >
+                <MaterialCommunityIcons name='camera-iris' size={35} color='white' />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  padding: 10,
+                  borderRadius: 10,
                   backgroundColor: appBottomSheetBackgroundColor,
                 }}
                 onPress={() => {
@@ -160,7 +174,7 @@ const Container = (props) => {
               </TouchableOpacity>
             </View>
           </Camera>
-        </TouchableOpacity>
+        </View>
         <AppMenuBottomSheet />
         <WarningModal />
       </View>

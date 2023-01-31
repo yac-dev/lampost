@@ -16,31 +16,57 @@ import AppMenuButton from '../../Utils/AppMenuButton';
 
 const AppMenuButtons = (props) => {
   const { auth } = useContext(GlobalContext);
-  const { appMenuBottomSheetRef, setCameraMode } = useContext(CameraContext);
+  const { appMenuBottomSheetRef, setCameraMode, cameraMode } = useContext(CameraContext);
 
   if (auth.data) {
     return (
       <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 25 }}>
         <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
-          <AppMenuButton
-            backgroundColor={backgroundColorsTable['red1']}
-            icon={<Ionicons name='camera' size={35} color={iconColorsTable['red1']} />}
-            label='Normal'
-            onAppMenuButtonPress={() => {
-              setCameraMode('photo');
-              appMenuBottomSheetRef.current.snapToIndex(0);
-            }}
-          />
-          <AppMenuButton
-            backgroundColor={backgroundColorsTable['blue1']}
-            icon={<Ionicons name='videocam' size={35} color={iconColorsTable['blue1']} />}
-            label='Video mode'
-            onAppMenuButtonPress={() => {
-              setCameraMode('video');
-              appMenuBottomSheetRef.current.snapToIndex(0);
-            }}
-            isDisabled={true}
-          />
+          <View>
+            <AppMenuButton
+              backgroundColor={backgroundColorsTable['red1']}
+              icon={<Ionicons name='camera' size={35} color={iconColorsTable['red1']} />}
+              label='Camera'
+              onAppMenuButtonPress={() => {
+                setCameraMode('photo');
+                appMenuBottomSheetRef.current.snapToIndex(0);
+              }}
+            />
+            {cameraMode === 'photo' ? (
+              <View
+                style={{
+                  top: 5,
+                  right: 5,
+                  position: 'absolute',
+                }}
+              >
+                <Ionicons name='checkmark-circle' size={20} color='#49CF13' />
+              </View>
+            ) : null}
+          </View>
+          <View>
+            <AppMenuButton
+              backgroundColor={backgroundColorsTable['blue1']}
+              icon={<Ionicons name='videocam' size={35} color={iconColorsTable['blue1']} />}
+              label='Video mode'
+              onAppMenuButtonPress={() => {
+                setCameraMode('video');
+                appMenuBottomSheetRef.current.snapToIndex(0);
+              }}
+              isDisabled={true}
+            />
+            {cameraMode === 'video' ? (
+              <View
+                style={{
+                  top: 5,
+                  right: 5,
+                  position: 'absolute',
+                }}
+              >
+                <Ionicons name='checkmark-circle' size={20} color='#49CF13' />
+              </View>
+            ) : null}
+          </View>
           <AppMenuButton
             backgroundColor={backgroundColorsTable['pink1']}
             icon={<Ionicons name='radio' size={35} color={iconColorsTable['pink1']} />}
