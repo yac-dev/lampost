@@ -19,7 +19,7 @@ const Container = (props) => {
   const cameraRef = useRef();
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
   const [cameraMode, setCameraMode] = useState('photo');
-  const [photoEffect, setPhotoEffect] = useState('normal');
+  const [photoEffect, setPhotoEffect] = useState('auto');
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [warningMessage, setWarningMessage] = useState('');
   const [hasCameraPermission, setHasCameraPermission] = useState();
@@ -106,7 +106,7 @@ const Container = (props) => {
       }
     }
   };
-
+  // incandescent, cloudy, sunny, shadow, fluorescent, auto
   return (
     <CameraContext.Provider
       value={{
@@ -123,7 +123,13 @@ const Container = (props) => {
     >
       <View style={{ flex: 1 }}>
         <View style={{ flex: 1 }}>
-          <Camera style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} ref={cameraRef} type={cameraType}>
+          <Camera
+            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+            flashMode={'on'}
+            ref={cameraRef}
+            type={cameraType}
+            whiteBalance={photoEffect}
+          >
             {/* <StatusBar hidden={true} style='auto' /> */}
             {/* <IconButton
           icon='close'

@@ -5,7 +5,7 @@ import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { appBottomSheetBackgroundColor, baseTextColor } from '../../../utils/colorsTable';
 import AppMenuButtons from './AppMenuButtons';
-import AddEffect from './AddEffect';
+import AddAssetEffect from './AddAssetEffectMenu/Container';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -59,7 +59,7 @@ const AppMenuBottomSheet = (props) => {
           {renderCameraMode()}
         </View>
         <AppMenuButtons />
-        <AddEffect />
+        <AddAssetEffect />
       </BottomSheetView>
     </GorhomBottomSheet>
   );
