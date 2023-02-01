@@ -6,12 +6,7 @@ import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom
 import { appBottomSheetBackgroundColor, baseTextColor } from '../../../utils/colorsTable';
 import AppMenuButtons from './AppMenuButtons';
 import AddAssetEffect from './AddAssetEffectMenu/Container';
-
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
-import { Fontisto } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
 
 const AppMenuBottomSheet = (props) => {
   const { auth, isIpad } = useContext(GlobalContext);
