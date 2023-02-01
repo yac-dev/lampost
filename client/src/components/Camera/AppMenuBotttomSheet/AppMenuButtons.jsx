@@ -26,7 +26,7 @@ const AppMenuButtons = (props) => {
             <AppMenuButton
               backgroundColor={backgroundColorsTable['red1']}
               icon={<Ionicons name='camera' size={35} color={iconColorsTable['red1']} />}
-              label='Camera'
+              label='Camera mode'
               onAppMenuButtonPress={() => {
                 setCameraMode('photo');
                 appMenuBottomSheetRef.current.snapToIndex(0);

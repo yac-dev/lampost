@@ -18,7 +18,7 @@ const AddEffect = () => {
   if (auth.data) {
     return (
       <View>
-        <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 20 }}>Add effect</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 20 }}>Photo effect</Text>
         <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 25 }}>
           <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
             <AppMenuButton

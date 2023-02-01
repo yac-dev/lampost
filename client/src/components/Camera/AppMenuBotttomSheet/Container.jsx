@@ -14,9 +14,9 @@ import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const AppMenuBottomSheet = (props) => {
-  const { auth } = useContext(GlobalContext);
+  const { auth, isIpad } = useContext(GlobalContext);
   const { appMenuBottomSheetRef, cameraMode } = useContext(CameraContext);
-  const snapPoints = useMemo(() => ['8%', '30%', '80%'], []);
+  const snapPoints = useMemo(() => ['8%', '45%', '80%'], []);
 
   const renderCameraMode = () => {
     switch (cameraMode) {
@@ -46,13 +46,13 @@ const AppMenuBottomSheet = (props) => {
       // keyboardBehavior={'interactive'}
       // onClose={() => onSelectedItemBottomSheetClose()}
     >
-      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 10, flex: 1 }}>
+      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, paddingTop: isIpad ? 10 : 0, flex: 1 }}>
         <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            marginBottom: 35,
+            marginBottom: isIpad ? 35 : 20,
           }}
         >
           <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>Change the mode?</Text>

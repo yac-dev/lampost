@@ -4,7 +4,7 @@ import GlobalContext from '../../../GlobalContext';
 import AddBadgesContext from './AddBadgesContext';
 import lampostAPI from '../../../apis/lampost';
 import { connect } from 'react-redux';
-import { baseBackgroundColor } from '../../../utils/colorsTable';
+import { baseBackgroundColor, baseTextColor } from '../../../utils/colorsTable';
 
 // components
 import Badges from './Badges/Container';
@@ -41,8 +41,13 @@ const Container = (props) => {
       setFromComponent('ADD_USER_BADGES');
       props.navigation.setOptions({
         headerRight: () => (
-          <TouchableOpacity onPress={() => onDoneAddUserBadgesPress()}>
-            <Text style={{ color: 'white', fontSize: 20 }}>Done</Text>
+          <TouchableOpacity
+            onPress={() => onDoneAddUserBadgesPress()}
+            disabled={Object.keys(selectedUserBadges).length ? false : true}
+          >
+            <Text style={{ color: Object.keys(selectedUserBadges).length ? 'white' : baseTextColor, fontSize: 20 }}>
+              Done
+            </Text>
           </TouchableOpacity>
         ),
       });

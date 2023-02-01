@@ -48,7 +48,7 @@ const Container = (props) => {
   const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
 
   const oneGridWidth = isIpad ? Dimensions.get('window').width / 4 : Dimensions.get('window').width / 2;
-  const oneGridHeight = isIpad ? Dimensions.get('window').height / 4 : Dimensions.get('window').height / 3.5;
+  const oneGridHeight = isIpad ? Dimensions.get('window').height / 4 : Dimensions.get('window').height / 3.2;
   const libraryContainerWidth = oneGridWidth * 0.85;
   const libraryIconWidth = libraryContainerWidth * 0.4;
 

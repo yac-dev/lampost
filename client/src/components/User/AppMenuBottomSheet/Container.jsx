@@ -14,10 +14,9 @@ import MyConnections from './MyConnections/Container';
 import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 
 const AppMenuBottomSheet = (props) => {
-  const { auth } = useContext(GlobalContext);
+  const { auth, isIpad } = useContext(GlobalContext);
   const { appMenuBottomSheetRef, isMyPage } = useContext(UserContext);
-  const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
-  const snapPoints = useMemo(() => ['8%', '30%', '80%'], []);
+  const snapPoints = useMemo(() => ['8%', '45%', '80%'], []);
   // ここに関しては、authじゃない限り、表示しないようにする。
   if (!auth.isAuthenticated || !isMyPage) {
     return null;
@@ -41,11 +40,13 @@ const AppMenuBottomSheet = (props) => {
           style={{
             paddingLeft: 20,
             paddingRight: 20,
-            padding: 10,
+            paddingTop: isIpad ? 10 : 0,
             flex: 1,
           }}
         >
-          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 35 }}>Add badges?</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: isIpad ? 35 : 20 }}>
+            Add badges?
+          </Text>
           <AppButtons />
           <MyConnections />
           {/* <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: 10, marginBottom: 15 }}>

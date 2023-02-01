@@ -39,6 +39,7 @@ const Menu = (props) => {
         // borderBottomWidth: 0.3,
       }}
       onPress={() => props.onPressMenu()}
+      disabled={props.isDisabled}
     >
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <View

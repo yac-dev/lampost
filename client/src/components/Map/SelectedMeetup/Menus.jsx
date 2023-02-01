@@ -209,21 +209,6 @@ const Menus = (props) => {
         }}
       />
       <Menu
-        label='Comments'
-        icon={<MaterialCommunityIcons name='chat-question' size={20} color={iconColorsTable['blue1']} />}
-        backgroundColor={backgroundColorsTable['blue1']}
-        rightInfo={
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ color: baseTextColor, fontSize: 15 }}>{selectedMeetup.comments.length}</Text>
-            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
-          </View>
-        }
-        onPressMenu={() => {
-          setSelectedMeetupDetailComponent('QandAs');
-          selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
-        }}
-      />
-      <Menu
         label='Fee'
         icon={<Foundation name='dollar-bill' size={20} color={iconColorsTable['yellow1']} />}
         backgroundColor={backgroundColorsTable['yellow1']}
@@ -240,6 +225,17 @@ const Menus = (props) => {
           selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
         }}
       />
+      <Menu
+        isDisabled={true}
+        label='Q&As'
+        icon={<MaterialCommunityIcons name='chat-question' size={20} color={iconColorsTable['blue1']} />}
+        backgroundColor={backgroundColorsTable['blue1']}
+        rightInfo={<Foundation name='prohibited' color={iconColorsTable['red1']} size={20} />}
+        onPressMenu={() => {
+          setSelectedMeetupDetailComponent('QandAs');
+          selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
+        }}
+      />
       {/* <Menu
         label='Privacy'
         icon={<FontAwesome5 name='photo-video' size={25} color={iconColorsTable['lightBlue1']} />}
@@ -252,7 +248,7 @@ const Menus = (props) => {
           selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
         }}
       /> */}
-      <Menu
+      {/* <Menu
         label='Link'
         icon={<Entypo name='link' size={20} color={iconColorsTable['grey1']} />}
         backgroundColor={backgroundColorsTable['grey1']}
@@ -261,7 +257,7 @@ const Menus = (props) => {
           setSelectedMeetupDetailComponent('Links');
           selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
         }}
-      />
+      /> */}
     </View>
   );
 };
