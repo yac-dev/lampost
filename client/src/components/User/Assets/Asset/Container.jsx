@@ -34,8 +34,6 @@ const Asset = (props) => {
     getAsset();
   }, []);
 
-  console.log(asset);
-
   const renderAsset = () => {
     if (asset) {
       return (

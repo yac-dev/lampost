@@ -81,6 +81,9 @@ const Stats = () => {
             padding: 10,
             borderRadius: 10,
           }}
+          onPress={() => {
+            navigation.navigate('Assets', { userId: user._id });
+          }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
             <MaterialCommunityIcons name='camera' color={'white'} size={25} style={{ marginRight: 5 }} />

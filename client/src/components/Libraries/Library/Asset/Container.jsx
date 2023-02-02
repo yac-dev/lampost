@@ -156,9 +156,25 @@ const Asset = (props) => {
 
   return (
     // <AssetContext.Provider value={{ appMenuBottomSheetRef, isMyPage, asset }}>
-    <ScrollView style={{ flex: 1, backgroundColor: baseBackgroundColor, paddingRight: 10, paddingLeft: 10 }}>
+    <ScrollView
+      style={{ flex: 1, backgroundColor: baseBackgroundColor, paddingRight: 10, paddingLeft: 10, paddingTop: 10 }}
+    >
       <View style={{ marginBottom: 10 }}>
         <View style={{ marginBottom: 10 }}>
+          {asset.createdBy.photo ? (
+            <View style={{ alignItems: 'center', flexDirection: 'row', marginBottom: 10 }}>
+              <Image
+                source={{ uri: asset.createdBy.photo }}
+                style={{ width: 35, height: 35, borderRadius: 7, marginRight: 10 }}
+              />
+              <Text style={{ color: 'white' }}>{asset.createdBy.name}</Text>
+            </View>
+          ) : (
+            <View style={{ alignItems: 'center', flexDirection: 'row', marginBottom: 10 }}>
+              <FontAwesome5 name='user-astronaut' size={25} style={{ width: 35, height: 35, borderRadius: 7 }} />
+              <Text style={{ color: 'white' }}>{asset.createdBy.name}</Text>
+            </View>
+          )}
           <FastImage
             style={{ width: '100%', aspectRatio: 1, borderRadius: 10 }}
             source={{ uri: asset.data }}
@@ -166,43 +182,12 @@ const Asset = (props) => {
           />
           {renderDate(asset.createdAt)}
         </View>
-        {asset.createdBy.photo ? (
-          <View style={{ alignItems: 'center', flexDirection: 'row', alignSelf: 'flex-end' }}>
-            <Image
-              source={{ uri: asset.createdBy.photo }}
-              style={{ width: 35, height: 35, borderRadius: 7, marginRight: 10 }}
-            />
-            <Text style={{ color: 'white' }}>{asset.createdBy.name}</Text>
-          </View>
-        ) : (
-          <View style={{ alignItems: 'center', flexDirection: 'row', alignSelf: 'flex-end' }}>
-            <FontAwesome5 name='user-astronaut' size={25} style={{ width: 35, height: 35, borderRadius: 7 }} />
-            <Text style={{ color: 'white' }}>{asset.createdBy.name}</Text>
-          </View>
-        )}
-
         {renderBadgeLikeButton()}
 
         {/* {leftActionButtons()} */}
       </View>
       <Text style={{ color: 'white', fontSize: 20, marginBottom: 20 }}>Comments</Text>
       <Text style={{ color: baseTextColor, textAlign: 'center' }}>You'll see all the comments of this asset.</Text>
-
-      {/* {renderReactions()} */}
-      {/* <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 20, paddingRight: 20 }}>
-        <ActionButton
-          label='Add new reaction'
-          backgroundColor={iconColorsTable['blue1']}
-          icon={<Entypo name='emoji-happy' color={'white'} size={20} />}
-          onActionButtonPress={() => addNewReactionBottomSheetRef.current.snapToIndex(0)}
-        />
-      </View> */}
-
-      {/* <AddNewReactionBottomSheet
-        routeParams={props.route.params}
-        addNewReactionBottomSheetRef={addNewReactionBottomSheetRef}
-        setReactions={setReactions}
-      /> */}
     </ScrollView>
   );
 };

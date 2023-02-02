@@ -15,7 +15,7 @@ const ConfirmLeaveLibrary = (props) => {
         <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>{warningMessage}</Text>
         <Dialog.Actions>
           <Button textColor='rgb(58, 126, 224)' onPress={() => setIsWarningModalOpen(false)}>
-            Got it.
+            Gotcha 👍
           </Button>
         </Dialog.Actions>
       </Dialog>

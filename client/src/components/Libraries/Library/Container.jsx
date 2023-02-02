@@ -111,8 +111,6 @@ const Container = (props) => {
     }
   };
 
-  console.log(assets);
-
   return (
     <LibraryContext.Provider
       value={{

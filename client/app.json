@@ -14,7 +14,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.lampost.lampost",
@@ -42,7 +44,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "d7972bf3-aa9a-4bfe-bfa3-2b0c344352d6"
+        "projectId": "54a6d35a-f54e-475a-8a59-81408e123199"
       }
     }
   }
