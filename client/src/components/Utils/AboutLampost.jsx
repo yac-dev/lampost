@@ -14,16 +14,18 @@ const Info = () => {
       <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 10, marginBottom: 20, borderRadius: 10 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
           <Ionicons name='logo-javascript' size={25} color={'yellow'} style={{ marginRight: 10 }} />
+          <Ionicons name='nodejs' size={25} color={'yellow'} style={{ marginRight: 10 }} />
+          <Ionicons name='react' size={25} color={'yellow'} style={{ marginRight: 10 }} />
           <Text style={{ color: 'white', fontSize: 23 }}>Tech stack</Text>
         </View>
         <Text style={{ color: baseTextColor, marginBottom: 10 }}>
-          Lampost 1.0.0 is fully built in JavaScript technologies and its libraries.
+          Lampost 1.0.0 is fully built in JavaScript technology and its libraries.
         </Text>
       </View>
 
       <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 10, marginBottom: 20, borderRadius: 10 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-          <MaterialCommunityIcons name='handshake' size={25} color={'pink'} style={{ marginRight: 10 }} />
+          <MaterialCommunityIcons name='fire' size={25} color={'pink'} style={{ marginRight: 10 }} />
           <Text style={{ color: 'white', fontSize: 23 }}>Powered by</Text>
         </View>
         <View style={{ marginBottom: 10 }}>
