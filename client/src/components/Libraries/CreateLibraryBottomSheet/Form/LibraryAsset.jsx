@@ -13,7 +13,7 @@ import FastImage from 'react-native-fast-image';
 import ActionButton from '../../../Utils/ActionButton';
 
 const Assets = () => {
-  const { auth, setSnackBar } = useContext(GlobalContext);
+  const { auth, setSnackBar, setLoading } = useContext(GlobalContext);
   const {
     navigation,
     route,
@@ -64,15 +64,18 @@ const Assets = () => {
       },
       launcher,
     };
+    // console.log('created');
 
+    setLoading(true);
     const result = await lampostAPI.post(`/libraries`, payload);
     const { library } = result.data;
     setMyJoinedLibraries((previous) => [...previous, library]);
     setLibraries((previous) => [...previous, library]);
     createLibraryBottomSheetRef.current.close();
+    setLoading(false);
     setSnackBar({
       isVisible: true,
-      message: 'Launched your library.',
+      message: 'Launched a library.',
       barType: 'success',
       duration: 5000,
     });

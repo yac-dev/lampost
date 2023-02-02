@@ -46,7 +46,7 @@ const AppMenuButtons = () => {
         <AppMenuButton
           backgroundColor={backgroundColorsTable['red1']}
           icon={<MaterialCommunityIcons name='plus' size={35} color={iconColorsTable['red1']} />}
-          label='Post my assets'
+          label='Post my asset'
           onAppMenuButtonPress={() => {
             setIsConfirmPostAssetsModalOpen(true);
             appMenuBottomSheetRef.current.snapToIndex(0);

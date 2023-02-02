@@ -16,7 +16,7 @@ const ConfirmPostAssetModal = () => {
         style={{ backgroundColor: appBottomSheetBackgroundColor, padding: 30 }}
       >
         <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>
-          Please select your assets you wanna post.
+          Please select an asset you wanna post.
         </Text>
         <Dialog.Actions>
           <Button
@@ -35,7 +35,7 @@ const ConfirmPostAssetModal = () => {
               setIsConfirmPostAssetsModalOpen(false);
             }}
           >
-            Next
+            Next 👍
           </Button>
         </Dialog.Actions>
       </Dialog>

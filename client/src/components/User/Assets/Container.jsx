@@ -4,7 +4,7 @@ import GlobalContext from '../../../GlobalContext';
 import AssetsContext from './AssetsContext';
 import lampostAPI from '../../../apis/lampost';
 import FastImage from 'react-native-fast-image';
-import { baseBackgroundColor } from '../../../utils/colorsTable';
+import { baseBackgroundColor, baseTextColor } from '../../../utils/colorsTable';
 
 const Container = (props) => {
   const { auth, isIpad } = useContext(GlobalContext);
@@ -34,32 +34,40 @@ const Container = (props) => {
   };
 
   const renderUserAssets = () => {
-    const assetsList = assets.map((asset, index) => {
+    if (assets.length) {
+      const assetsList = assets.map((asset, index) => {
+        return (
+          // このheight undefinedが効く。なぜか分からんが。
+          // <TouchableOpacity
+          //   key={index}
+          //   style={{ width: '50%', height: undefined, aspectRatio: 1, paddingRight: 5, paddingBottom: 5 }}
+          //   onPress={() => onAssetPress(asset._id)}
+          // >
+          <TouchableOpacity
+            key={index}
+            style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
+            // onPress={() => onAssetPress(asset._id)}
+            // ここ、直さないとな。。。
+          >
+            <FastImage
+              style={{ width: '100%', height: '100%', borderRadius: 7 }}
+              source={{
+                uri: asset.data,
+                priority: FastImage.priority.normal,
+              }}
+              resizeMode={FastImage.resizeMode.stretch}
+            />
+          </TouchableOpacity>
+        );
+      });
+      return <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{assetsList}</View>;
+    } else {
       return (
-        // このheight undefinedが効く。なぜか分からんが。
-        // <TouchableOpacity
-        //   key={index}
-        //   style={{ width: '50%', height: undefined, aspectRatio: 1, paddingRight: 5, paddingBottom: 5 }}
-        //   onPress={() => onAssetPress(asset._id)}
-        // >
-        <TouchableOpacity
-          key={index}
-          style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
-          // onPress={() => onAssetPress(asset._id)}
-          // ここ、直さないとな。。。
-        >
-          <FastImage
-            style={{ width: '100%', height: '100%', borderRadius: 7 }}
-            source={{
-              uri: asset.data,
-              priority: FastImage.priority.normal,
-            }}
-            resizeMode={FastImage.resizeMode.stretch}
-          />
-        </TouchableOpacity>
+        <Text style={{ color: baseTextColor, textAlign: 'center', paddingTop: 30 }}>
+          You'll all the assets of this user.
+        </Text>
       );
-    });
-    return <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{assetsList}</View>;
+    }
   };
 
   return (

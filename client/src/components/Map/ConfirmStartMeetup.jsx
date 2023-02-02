@@ -22,7 +22,7 @@ const ConfirmStartMeetup = (props) => {
         style={{ backgroundColor: appBottomSheetBackgroundColor, padding: 30 }}
       >
         <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>
-          Do you want to start a meetup?{'\n'}If yes, you and attendees can use a camera until the end of meetup.
+          Do you want to start a meetup?{'\n'}From now, you and your members can use a camera until the end of meetup.
         </Text>
         <Dialog.Actions>
           <Button textColor='rgb(58, 126, 224)' onPress={() => setIsStartMeetupConfirmationModalOpen(false)}>
@@ -57,7 +57,7 @@ const ConfirmStartMeetup = (props) => {
               setIsStartMeetupConfirmationModalOpen(false);
             }}
           >
-            Yes
+            Yes 👍
           </Button>
         </Dialog.Actions>
       </Dialog>

@@ -57,7 +57,7 @@ const Container = (props) => {
   }, [library]);
 
   const renderAssets = () => {
-    if (('these are my assets', assets.length)) {
+    if (assets.length) {
       // const assetsList = assets.map((asset, index) => {
       //   return (
       //     <TouchableOpacity

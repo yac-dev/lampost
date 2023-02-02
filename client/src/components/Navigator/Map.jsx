@@ -47,7 +47,7 @@ const MapNavigator = (props) => {
             },
             headerLeft: () => {
               return (
-                <TouchableOpacity onPress={() => navigation.navigate('About lampost')}>
+                <TouchableOpacity onPress={() => navigation.navigate('About Lampost')}>
                   <Ionicons name='information-circle' size={25} color={'white'} />
                 </TouchableOpacity>
               );
@@ -131,7 +131,7 @@ const MapNavigator = (props) => {
           })}
         />
         <Stack.Screen
-          name='About lampost'
+          name='About Lampost'
           component={AboutLampost}
           options={({ navigation }) => ({
             headerShown: true,

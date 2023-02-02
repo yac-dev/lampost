@@ -14,7 +14,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import WarningModal from './WarningModal';
 
 const Container = (props) => {
-  const { auth, setAuth } = useContext(GlobalContext);
+  const { auth, setAuth, setSnackBar } = useContext(GlobalContext);
   const appMenuBottomSheetRef = useRef(null);
   const cameraRef = useRef();
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
@@ -72,6 +72,12 @@ const Container = (props) => {
     } else {
       // ここでいちなりapi requestをするんだよ。
       if (auth.data.ongoingMeetup.state) {
+        setSnackBar({
+          isVisible: true,
+          message: 'Nice shot!',
+          barType: 'success',
+          duration: 1500,
+        });
         let options = {
           quality: 1,
           base64: true,

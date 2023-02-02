@@ -17,9 +17,7 @@ const ConfirmFinishMeetup = (props) => {
         visible={isFinishMeetupConfirmationModalOpen}
         style={{ backgroundColor: appBottomSheetBackgroundColor, padding: 30 }}
       >
-        <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>
-          Are you sure you want to finish? You and attendees can't user a camera any more for this meetup.
-        </Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>Are you sure you want to finish?</Text>
         <Dialog.Actions>
           <Button textColor='rgb(58, 126, 224)' onPress={() => setIsFinishMeetupConfirmationModalOpen(false)}>
             No
@@ -35,14 +33,17 @@ const ConfirmFinishMeetup = (props) => {
                   data: {
                     ...previous.data,
                     ongoingMeetup: { state: false },
+                    upcomingMeetups: [...previous.data.upcomingMeetups].filter(
+                      (element) => element.meetup !== finishingMeetup
+                    ),
                   },
                 };
               });
-              // setMyUpcomingMeetupAndChatsTable((previous) => {
-              //   const updating = { ...previous };
-              //   delete updating[finishingMeetup];
-              //   return updating;
-              // });
+              setMyUpcomingMeetupAndChatsTable((previous) => {
+                const updating = { ...previous };
+                delete updating[finishingMeetup];
+                return updating;
+              });
               auth.socket.emit('LEAVE_A_LOUNGE', { meetupId: finishingMeetup });
               setIsFinishMeetupConfirmationModalOpen(false);
               setMeetups((previous) => {

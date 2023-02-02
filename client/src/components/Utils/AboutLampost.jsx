@@ -14,8 +14,8 @@ const Info = () => {
       <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 10, marginBottom: 20, borderRadius: 10 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
           <Ionicons name='logo-javascript' size={25} color={'yellow'} style={{ marginRight: 10 }} />
-          <Ionicons name='nodejs' size={25} color={'yellow'} style={{ marginRight: 10 }} />
-          <Ionicons name='react' size={25} color={'yellow'} style={{ marginRight: 10 }} />
+          <Ionicons name='logo-nodejs' size={25} color={'green'} style={{ marginRight: 10 }} />
+          <Ionicons name='logo-react' size={25} color={'violet'} style={{ marginRight: 10 }} />
           <Text style={{ color: 'white', fontSize: 23 }}>Tech stack</Text>
         </View>
         <Text style={{ color: baseTextColor, marginBottom: 10 }}>
@@ -25,7 +25,7 @@ const Info = () => {
 
       <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 10, marginBottom: 20, borderRadius: 10 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-          <MaterialCommunityIcons name='fire' size={25} color={'pink'} style={{ marginRight: 10 }} />
+          <MaterialCommunityIcons name='fire' size={25} color={'red'} style={{ marginRight: 10 }} />
           <Text style={{ color: 'white', fontSize: 23 }}>Powered by</Text>
         </View>
         <View style={{ marginBottom: 10 }}>
@@ -38,8 +38,7 @@ const Info = () => {
             </View>
           </View>
           <Text style={{ color: baseTextColor }}>
-            Lampost is using a lot of fancy and lovely looking icons. Some of them are powered by Icons8, which is a
-            great platform.
+            Lampost is using a lot of fancy and lovely looking icons. Some of them are powered by Icons8.
           </Text>
         </View>
         <View>
@@ -59,8 +58,8 @@ const Info = () => {
           <Text style={{ color: 'white', fontSize: 23 }}>Developer</Text>
         </View>
         <Text style={{ color: baseTextColor, marginBottom: 5 }}>
-          Hello folks. I'm Yosuke Kojima, founded lampost. Thank you for joining here. Please contact me if you have any
-          questions.
+          Hello folks. I'm Yosuke Kojima, founded Lampost. Thank you for joining here. Feel free to ask me if you have
+          any questions or found any issues 😃
         </Text>
         <View>
           <View>

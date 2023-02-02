@@ -58,7 +58,7 @@ const Container = (props) => {
   }, []);
 
   const getAssetsByUserId = async () => {
-    const result = await lampostAPI.post('/assets/', { userId: auth.data._id });
+    const result = await lampostAPI.get(`/assets/createdby/${auth.data._id}`, { userId: auth.data._id });
     const { assets } = result.data;
     setAssets(assets);
   };

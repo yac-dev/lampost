@@ -155,69 +155,84 @@ const Container = (props) => {
       description: state.description,
       launcher: auth.data._id,
     };
-    // const result = await lampostAPI.post('/meetups', payload);
-    // const { meetup, viewedChatsLastTime, launcher } = result.data;
-    // console.log('this is the launcher');
-    // // setMeetups((previous) => {
-    // //   return {
-    // //     ...previous,
-    // //     [meetup._id]: meetup,
-    // //   };
-    // // });
-    // // if (launcher === auth.data._id) {
-    // //   setLoading(false);
-    // //   setAuth((previous) => {
-    // //     return {
-    // //       ...previous,
-    // //       data: {
-    // //         ...previous.data,
-    // //         upcomingMeetups: [
-    // //           ...previous.data.upcomingMeetups,
-    // //           { meetup: meetup._id, viewedChatsLastTime: viewedChatsLastTime },
-    // //         ],
-    // //       },
-    // //     };
-    // //   });
-    // //   // ここでも、chat roomにjoinしなきゃいけない。
-    // //   setMyUpcomingMeetupAndChatsTable((previous) => {
-    // //     return {
-    // //       ...previous,
-    // //       [meetup._id]: {
-    // //         _id: meetup._id,
-    // //         title: meetup.title,
-    // //         chats: [],
-    // //         unreadChatsCount: 0,
-    // //         startDateAndTime: meetup.startDateAndTime,
-    // //         viewedChatsLastTime: viewedChatsLastTime,
-    // //         launcher: launcher,
-    // //         state: meetup.state,
-    // //       },
-    // //     };
-    // //   });
-    // //   auth.socket.emit('JOIN_A_LOUNGE', { meetupId: meetup._id });
-    // //   setIsLaunchMeetupConfirmed(false);
-    // //   setLaunchLocation(null);
-    // //   launchMeetupBottomSheetRef.current.close();
-    // //   setSnackBar({
-    // //     isVisible: true,
-    // //     message: 'Launched a meetup.',
-    // //     barType: 'success',
-    // //     duration: 5000,
-    // //   });
-    // // }
-    Keyboard.dismiss();
-    console.log(payload);
-    dispatch({ type: 'LAUNCHED', payload: '' });
-    setLoading(false);
-    setIsLaunchMeetupConfirmed(false);
-    setLaunchLocation(null);
-    launchMeetupBottomSheetRef.current.close();
-    setSnackBar({
-      isVisible: true,
-      message: 'Launched a meetup.',
-      barType: 'success',
-      duration: 5000,
+    const result = await lampostAPI.post('/meetups', payload);
+    const { meetup, viewedChatsLastTime, launcher } = result.data;
+    console.log('this is the launcher');
+    setMeetups((previous) => {
+      return {
+        ...previous,
+        [meetup._id]: meetup,
+      };
     });
+    if (launcher === auth.data._id) {
+      setLoading(false);
+      setAuth((previous) => {
+        return {
+          ...previous,
+          data: {
+            ...previous.data,
+            upcomingMeetups: [
+              ...previous.data.upcomingMeetups,
+              { meetup: meetup._id, viewedChatsLastTime: viewedChatsLastTime },
+            ],
+          },
+        };
+      });
+      // ここでも、chat roomにjoinしなきゃいけない。
+      setMyUpcomingMeetupAndChatsTable((previous) => {
+        return {
+          ...previous,
+          [meetup._id]: {
+            _id: meetup._id,
+            title: meetup.title,
+            chats: [],
+            unreadChatsCount: 0,
+            startDateAndTime: meetup.startDateAndTime,
+            viewedChatsLastTime: viewedChatsLastTime,
+            launcher: launcher,
+            state: meetup.state,
+          },
+        };
+      });
+      auth.socket.emit('JOIN_A_LOUNGE', { meetupId: meetup._id });
+      // setIsLaunchMeetupConfirmed(false);
+      // setLaunchLocation(null);
+      // launchMeetupBottomSheetRef.current.close();
+      // setSnackBar({
+      //   isVisible: true,
+      //   message: 'Launched a meetup.',
+      //   barType: 'success',
+      //   duration: 5000,
+      // });
+      Keyboard.dismiss();
+      console.log(payload);
+      dispatch({ type: 'LAUNCHED', payload: '' });
+      setLoading(false);
+      setIsLaunchMeetupConfirmed(false);
+      setLaunchLocation(null);
+      launchMeetupBottomSheetRef.current.close();
+      setSnackBar({
+        isVisible: true,
+        message: 'Launched a meetup.',
+        barType: 'success',
+        duration: 5000,
+      });
+    }
+
+    // ここは、ただの確認用。
+    // Keyboard.dismiss();
+    // console.log(payload);
+    // dispatch({ type: 'LAUNCHED', payload: '' });
+    // setLoading(false);
+    // setIsLaunchMeetupConfirmed(false);
+    // setLaunchLocation(null);
+    // launchMeetupBottomSheetRef.current.close();
+    // setSnackBar({
+    //   isVisible: true,
+    //   message: 'Launched a meetup.',
+    //   barType: 'success',
+    //   duration: 5000,
+    // });
   };
 
   const switchComponent = () => {
