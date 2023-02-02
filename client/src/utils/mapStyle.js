@@ -1,44 +1,36 @@
-import { iconColorsTable } from './colorsTable';
+import { iconColorsTable, sectionBackgroundColor } from './colorsTable';
 export const mapStyle = [
   {
-    elementType: 'labels',
+    elementType: 'labels.icon',
     stylers: [
       {
         visibility: 'off',
       },
     ],
   },
-  {
-    featureType: 'administrative.country',
-    stylers: [
-      {
-        visibility: 'on',
-      },
-    ],
-  },
-  {
-    featureType: 'administrative.province',
-    stylers: [
-      {
-        visibility: 'on',
-      },
-    ],
-  },
-
-  {
-    featureType: 'administrative.locality',
-    stylers: [
-      {
-        visibility: 'on',
-      },
-    ],
-  },
+  // {
+  //   featureType: 'administrative.province',
+  //   stylers: [
+  //     {
+  //       visibility: 'on',
+  //     },
+  //   ],
+  // },
+  // {
+  //   featureType: 'administrative.locality',
+  //   stylers: [
+  //     {
+  //       visibility: 'on',
+  //     },
+  //   ],
+  // },
   {
     featureType: 'all',
     elementType: 'geometry',
     stylers: [
       {
-        color: '#172F51',
+        // color: '#172F51',
+        color: '#4D4D4D',
       },
     ],
   },
@@ -53,21 +45,20 @@ export const mapStyle = [
         saturation: '9',
       },
       {
-        color: '#29446b',
+        // color: '#29446b',
+        color: '#202225',
         // color: '641860',
       },
     ],
   },
-
-  // 海の色
   {
     featureType: 'water',
     elementType: 'all',
     stylers: [
       {
         lightness: -20,
-        color: '#0B1673',
-        // color: iconColorsTable['red1'],
+        // color: '#0B1673',
+        color: '#006CFF',
       },
     ],
   },
