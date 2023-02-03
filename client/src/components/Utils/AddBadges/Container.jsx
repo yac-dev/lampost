@@ -1,16 +1,22 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import GlobalContext from '../../../GlobalContext';
 import AddBadgesContext from './AddBadgesContext';
 import lampostAPI from '../../../apis/lampost';
 import { connect } from 'react-redux';
-import { baseBackgroundColor, baseTextColor } from '../../../utils/colorsTable';
+import { baseBackgroundColor, baseTextColor, screenSectionBackgroundColor } from '../../../utils/colorsTable';
 
 // components
 import Badges from './Badges/Container';
 import SearchBadgeBottomSheet from './SearchBadgeBottomSheet/Container';
 import BadgeDetailBottomSheet from './BadgeDetailBottomSheet/Container';
 import LoadingSpinner from '../LoadingSpinner';
+
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
+const Tab = createMaterialTopTabNavigator();
+import Home from './Home';
+import Sports from './Sports';
 
 // ac
 import { setIsTappedBadgeBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
@@ -192,9 +198,50 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        <Badges />
+        {/* <Badges />
         <BadgeDetailBottomSheet />
-        <LoadingSpinner />
+        <LoadingSpinner /> */}
+        <View style={{ height: 50 }}>
+          <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
+            {/* <View style={{ flexDirection: 'row' }}> */}
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                backgroundColor: screenSectionBackgroundColor,
+                justifyContent: 'center',
+                borderRadius: 10,
+                marginRight: 10,
+              }}
+            >
+              <Text style={{ color: 'white' }}>Foods & Drink</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                backgroundColor: screenSectionBackgroundColor,
+                justifyContent: 'center',
+                borderRadius: 10,
+                marginRight: 10,
+              }}
+            >
+              <Text style={{ color: 'white' }}>Foods & Drink</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                backgroundColor: screenSectionBackgroundColor,
+                justifyContent: 'center',
+                borderRadius: 10,
+                marginRight: 10,
+              }}
+            >
+              <Text style={{ color: 'white' }}>Foods & Drink</Text>
+            </TouchableOpacity>
+
+            {/* </View> */}
+          </ScrollView>
+        </View>
+        <Text style={{ color: 'red' }}>Currently selected</Text>
       </View>
     </AddBadgesContext.Provider>
   );

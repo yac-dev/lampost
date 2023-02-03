@@ -30,6 +30,7 @@ const Tab = createBottomTabNavigator();
 // ac
 import { loadMe } from './redux/actionCreators/auth';
 import { getSocket } from './redux/actionCreators/auth';
+import Constants from 'expo-constants';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({ shouldShowAlert: true, shouldPlaySound: false, shouldSetBadge: false }),
@@ -48,17 +49,6 @@ const schedulePushNotification = async () => {
 
 const registerForPushNotificationsAsync = async () => {
   let token;
-
-  // 今は、androidやらない。
-  // if (Platform.OS === 'android') {
-  //   await Notifications.setNotificationChannelAsync('default', {
-  //     name: 'default',
-  //     importance: Notifications.AndroidImportance.MAX,
-  //     vibrationPattern: [0, 250, 250, 250],
-  //     lightColor: '#FF231F7C',
-  //   });
-  // }
-
   if (Device.isDevice) {
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
@@ -67,10 +57,12 @@ const registerForPushNotificationsAsync = async () => {
       finalStatus = status;
     }
     if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
+      // alert('Failed to get push token for push notification!');
+      console.log('not gained push token');
       return;
     }
-    token = (await Notifications.getExpoPushTokenAsync({ experienceId: '@yosuke_kojima/client' })).data;
+    token = (await Notifications.getExpoPushTokenAsync({ experienceId: '@yosuke_kojima/Lampost' })).data;
+    console.log('this is a token', token);
     // console.log(token);
   } else {
     alert('Must use physical device for Push Notifications');
@@ -110,23 +102,52 @@ const AppStack = (props) => {
   //]
   // console.log(myUpcomingMeetupAndChatsTable);
   useEffect(() => {
+    if (auth.data) {
+      if (!auth.data.pushToken) {
+        registerForPushNotificationsAsync().then(async (token) => {
+          setExpoPushToken(token);
+          const result = await lampostAPI.patch(`/users/${auth.data._id}/pushToken`, { pushToken: token });
+          const { pushToken } = result.data;
+          setAuth((previous) => {
+            return {
+              ...previous,
+              pushToken,
+            };
+          });
+        });
+      }
+    }
     // 多分、ここでdeviceのtokenを取得して、stateに保存してくれるんだろう。
-    registerForPushNotificationsAsync().then((token) => setExpoPushToken(token));
+  }, [auth.data]);
 
-    notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-      setNotification(notification);
-      // console.log(notification);
-    });
+  useEffect(() => {
+    if (auth.data) {
+      if (auth.data.pushToken) {
+        notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+          if (notification.request.content.data.notificationType === 'loungeChat') {
+            setMyUpcomingMeetupAndChatsTable((previous) => {
+              const updating = { ...previous };
+              updating[notification.request.content.data.meetupId].unreadChatsCount =
+                updating[notification.request.content.data.meetupId].unreadChatsCount + 1;
+              return updating;
+            });
+            setTotalUnreadChatsCount((previous) => previous + 1);
+          }
+          setNotification(notification);
+          // console.log(notification);
+        });
 
-    responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
-      console.log(response);
-    });
+        responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+          console.log(response);
+        });
 
-    return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, []);
+        return () => {
+          Notifications.removeNotificationSubscription(notificationListener.current);
+          Notifications.removeNotificationSubscription(responseListener.current);
+        };
+      }
+    }
+  }, [auth.data]);
 
   // const onAppStateChange = (nextAppState) => {
   //   if (appState.match(/inactive|background/) && nextAppState === 'active') {
@@ -135,14 +156,25 @@ const AppStack = (props) => {
   //   setAppState(nextAppState);
   // };
 
+  const getMyUpcomingMeetupsAndLoungeChatsByMeetupIds = async () => {
+    const result = await lampostAPI.post(`/loungechats`, { myUpcomingMeetups: auth.data.upcomingMeetups });
+    const { myUpcomingMeetupAndChatsTable } = result.data;
+    setMyUpcomingMeetupAndChatsTable(myUpcomingMeetupAndChatsTable);
+    console.log('is this?????');
+    const countTotalUnreads = Object.values(myUpcomingMeetupAndChatsTable).forEach((e) => {
+      setTotalUnreadChatsCount((previous) => previous + e.unreadChatsCount);
+    });
+  };
+
   useEffect(() => {
     // 最初のrenderで、このsubscription functionが登録される。
-    if (auth.socket) {
+    if (auth.isAuthenticated && auth.socket) {
       const appStateListener = AppState.addEventListener('change', (nextAppState) => {
         if (appState.match(/inactive|background/) && nextAppState === 'active') {
           console.log('App has come to the foreground! Socket connected again.');
           //ここで再度connectして、server のconnectのlogする。
           getSocket();
+          getMyUpcomingMeetupsAndLoungeChatsByMeetupIds();
         } else if (appState === 'active' && nextAppState === 'inactive') {
           // socket disconnect する。ここで。serverでdisconnectのlogを確認する。
           auth.socket.disconnect();
@@ -158,7 +190,7 @@ const AppStack = (props) => {
         appStateListener.remove();
       };
     }
-  }, [auth.socket, appState]);
+  }, [auth.isAuthenticated, auth.socket, appState]);
   // useEffect(() => {
   //   if (appState === 'background') {
   //     console.log('background');
@@ -189,8 +221,13 @@ const AppStack = (props) => {
     loadMe();
   }, []);
 
+  // あー。このapiのendpointが。。。
   const getSocket = () => {
-    const socket = io('http://192.168.11.5:3500', {
+    // 'https://lampost-server-production.onrender.com/api'
+    // 'http://192.168.11.5:3500'
+    // console.log(Constants.manifest.extra.socketEndpoint);
+    const { socketEndpoint } = Constants.manifest.extra;
+    const socket = io(socketEndpoint, {
       path: '/mysocket',
     });
     setAuth((previous) => {
@@ -204,20 +241,14 @@ const AppStack = (props) => {
     }
   }, [auth.isAuthenticated]);
 
-  const getMyUpcomingMeetupsAndLoungeChatsByMeetupIds = async () => {
-    const result = await lampostAPI.post(`/loungechats`, { myUpcomingMeetups: auth.data.upcomingMeetups });
-    const { myUpcomingMeetupAndChatsTable } = result.data;
-    setMyUpcomingMeetupAndChatsTable(myUpcomingMeetupAndChatsTable);
-    const countTotalUnreads = Object.values(myUpcomingMeetupAndChatsTable).forEach((e) => {
-      setTotalUnreadChatsCount((previous) => previous + e.unreadChatsCount);
-    });
-  };
+  // これ、なんでこんなに動いている？そもそも.
   useEffect(() => {
     if (auth.isAuthenticated) {
       getMyUpcomingMeetupsAndLoungeChatsByMeetupIds();
-      // ここも、appStateが変わるたびに動かさなきゃいけない。
+      // ここも、appStateが変わるたびに動かさなきゃいけない。→  app stateごとに動かすのは上で。
     }
-  }, [auth.isAuthenticated, auth.data?.ongoingMeetup]);
+  }, [auth.isAuthenticated]);
+  // [auth.isAuthenticated, auth.data?.ongoingMeetup] dependencyがこれだと、毎回動いていた。つまり、多分auth.dataのupdateにつれて動いていたんだろうね。。。これまた発見。
 
   // socketが接続されたら、loungeに入る。
   useEffect(() => {
@@ -231,24 +262,26 @@ const AppStack = (props) => {
       };
     }
   }, [auth.socket]);
+  // console.log(myUpcomingMeetupAndChatsTable);
 
   useEffect(() => {
-    if (auth.socket) {
-      // 待機開始。
+    if (auth.socket && routeName !== 'Lounge') {
       auth.socket.on('I_GOT_A_CHAT_OUT_OF_THE_ROOM.GO_CHECK_OUT_THE_LOUNGE', (data) => {
         // lounge以外のscreenにいる時でこのsocket eventを受けたら、chatのstateを変える。
         // if (routeName !== 'Lounge') {
         // }
         // console.log(routeName);
-        setMyUpcomingMeetupAndChatsTable((previous) => {
-          const updating = { ...previous };
+        if (data.user._id !== auth.data._id) {
+          setMyUpcomingMeetupAndChatsTable((previous) => {
+            const updating = { ...previous };
+            if (routeName !== 'Lounge') {
+              updating[data.meetup].unreadChatsCount = updating[data.meetup].unreadChatsCount + 1;
+            }
+            return updating;
+          });
           if (routeName !== 'Lounge') {
-            updating[data.meetup].unreadChatsCount = updating[data.meetup].unreadChatsCount + 1;
+            setTotalUnreadChatsCount((previous) => previous + 1);
           }
-          return updating;
-        });
-        if (routeName !== 'Lounge') {
-          setTotalUnreadChatsCount((previous) => previous + 1);
         }
       });
 

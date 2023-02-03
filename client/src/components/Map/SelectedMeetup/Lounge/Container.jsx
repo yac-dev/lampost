@@ -15,6 +15,7 @@ import Chats from './Chats';
 const LoungeContainer = (props) => {
   const {
     auth,
+    setAuth,
     myUpcomingMeetupAndChatsTable,
     setMyUpcomingMeetupAndChatsTable,
     setTotalUnreadChatsCount,
@@ -27,6 +28,8 @@ const LoungeContainer = (props) => {
   const sendChatBottomSheetRef = useRef(null);
   const crewBottomSheetRef = useRef(null);
   const textInputRef = useRef(null);
+  const [replyingTo, setReplyingTo] = useState(null);
+  const [sendingText, setSendingText] = useState('');
   const [isLoggedOutModalOpen, setIsLoggedOutModalOpen] = useState(false);
   const [dummyCount, setDummyCount] = useState(0);
 
@@ -47,19 +50,18 @@ const LoungeContainer = (props) => {
   }, []);
   // loungechatsも、apiで持ってくる必要がる。
   useEffect(() => {
-    if (auth.socket) {
-      // 待機開始。
-      auth.socket.on('I_GOT_A_CHAT_IN_THE_ROOM', (data) => {
-        setChats((previous) => [...previous, data]);
-        console.log('now in lounge', routeName);
-      });
+    // if (auth.socket && routeName === 'Lounge') {
+    // 待機開始。
+    auth.socket.on('I_GOT_A_CHAT_IN_THE_ROOM', (data) => {
+      setChats((previous) => [...previous, data]);
+      console.log('now in lounge', routeName);
+    });
 
-      // return () => {
-      //   auth.socket.off('SOMEONE_SENT_A_CHAT');
-      // };
-    }
+    return () => {
+      auth.socket.off('I_GOT_A_CHAT_IN_THE_ROOM');
+    };
   }, []);
-
+  console.log('replying this', replyingTo);
   // experiment
   // useEffect(() => {
   //   auth.socket.on('YOUR_TEST_MESSAGE_OK', (data) => {
@@ -113,6 +115,20 @@ const LoungeContainer = (props) => {
           },
         };
       });
+      // setAuth((previous) => {
+      //   return {
+      //     ...previous,
+      //     data: {
+      //       ...previous.data,
+      //       upcomingMeetups: [...previous.data.upcomingMeetups].forEach((element) => {
+      //         if (element.meetup === props.route.params.meetupId) {
+      //           element.viewedChatsLastTime = dateTime;
+      //           return element;
+      //         }
+      //       }),
+      //     },
+      //   };
+      // });
     };
   }, []);
 
@@ -135,6 +151,10 @@ const LoungeContainer = (props) => {
         appMenuBottomSheetRef,
         sendChatBottomSheetRef,
         crewBottomSheetRef,
+        sendingText,
+        setSendingText,
+        replyingTo,
+        setReplyingTo,
         textInputRef,
         chats,
         setChats,

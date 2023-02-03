@@ -122,38 +122,38 @@ const Map = (props) => {
     props.getCurrentLocation();
   }, []);
 
-  useEffect(() => {
-    if (auth.socket) {
-      auth.socket.on('CREATED_MEETUP', (data) => {
-        console.log(data.meetup);
-        setMeetups((previous) => [...previous, data.meetup]);
-        if (data.launcher === auth.data._id) {
-          setLoading(false);
-          setAuth((previous) => {
-            return {
-              ...previous,
-              data: {
-                ...previous.data,
-                upcomingMeetups: [
-                  ...previous.data.upcomingMeetups,
-                  { meetup: data.meetup, viewedChatsLastTime: data.viewedChatsLastTime },
-                ],
-              },
-            };
-          });
-          setIsLaunchMeetupConfirmed(false);
-          setLaunchLocation(null);
-          launchMeetupBottomSheetRef.current.close();
-          setSnackBar({
-            isVisible: true,
-            message: 'Launched a meetup.',
-            barType: 'success',
-            duration: 5000,
-          });
-        }
-      });
-    }
-  }, [auth.socket]);
+  // useEffect(() => {
+  //   if (auth.socket) {
+  //     auth.socket.on('CREATED_MEETUP', (data) => {
+  //       console.log(data.meetup);
+  //       setMeetups((previous) => [...previous, data.meetup]);
+  //       if (data.launcher === auth.data._id) {
+  //         setLoading(false);
+  //         setAuth((previous) => {
+  //           return {
+  //             ...previous,
+  //             data: {
+  //               ...previous.data,
+  //               upcomingMeetups: [
+  //                 ...previous.data.upcomingMeetups,
+  //                 { meetup: data.meetup, viewedChatsLastTime: data.viewedChatsLastTime },
+  //               ],
+  //             },
+  //           };
+  //         });
+  //         setIsLaunchMeetupConfirmed(false);
+  //         setLaunchLocation(null);
+  //         launchMeetupBottomSheetRef.current.close();
+  //         setSnackBar({
+  //           isVisible: true,
+  //           message: 'Launched a meetup.',
+  //           barType: 'success',
+  //           duration: 5000,
+  //         });
+  //       }
+  //     });
+  //   }
+  // }, [auth.socket]);
 
   // これで、mapを自動で移動させる。launchMeetupの場所へ。
   useEffect(() => {

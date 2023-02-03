@@ -8,19 +8,25 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { iconColorsTable, baseTextColor, appBottomSheetBackgroundColor } from '../../../../utils/colorsTable';
+import {
+  iconColorsTable,
+  baseTextColor,
+  appBottomSheetBackgroundColor,
+  screenSectionBackgroundColor,
+} from '../../../../utils/colorsTable';
 
 const chatTypeTable = {
   general: iconColorsTable['blue1'],
   idea: iconColorsTable['yellow1'],
   questionOrHelp: iconColorsTable['blue1'],
   announcement: iconColorsTable['red1'],
+  reply: iconColorsTable['green1'],
 };
 
 const Chats = (props) => {
   const scrollViewRef = useRef();
   const { isIpad } = useContext(GlobalContext);
-  const { chats, meetup } = useContext(LoungeContext);
+  const { chats, meetup, sendChatBottomSheetRef, textInputRef, replyingTo, setReplyingTo } = useContext(LoungeContext);
 
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
@@ -36,6 +42,8 @@ const Chats = (props) => {
     switch (type) {
       case 'general':
         return <MaterialCommunityIcons name='comment-text' size={15} color={'white'} />;
+      case 'reply':
+        return <MaterialCommunityIcons name='reply' size={15} color={'white'} />;
       case 'idea':
         return <Ionicons name='bulb-outline' size={15} color={'white'} />;
       case 'questionOrHelp':
@@ -72,8 +80,8 @@ const Chats = (props) => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 position: 'absolute',
-                bottom: -10,
-                right: -10,
+                bottom: -7,
+                right: -7,
               }}
             >
               {renderChatType(chat.type)}
@@ -104,8 +112,8 @@ const Chats = (props) => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 position: 'absolute',
-                bottom: -10,
-                right: -10,
+                bottom: -7,
+                right: -7,
               }}
             >
               {renderChatType(chat.type)}
@@ -137,8 +145,8 @@ const Chats = (props) => {
               alignItems: 'center',
               justifyContent: 'center',
               position: 'absolute',
-              bottom: -10,
-              right: -10,
+              bottom: -7,
+              right: -7,
             }}
           >
             {renderChatType(chat.type)}
@@ -165,63 +173,8 @@ const Chats = (props) => {
           <View key={index} style={{ padding: 10 }}>
             <View style={{ flexDirection: 'row' }}>
               {renderUserAvatar(chat)}
-              {/* {chat.user?.photo ? (
-                <View style={{ width: 40, height: 40, borderRadius: 10, marginRight: 20 }}>
-                  <Image
-                    source={{ uri: chat.user.photo }}
-                    style={{ width: '100%', height: '100%', borderRadius: 10 }}
-                  />
-                  <View
-                    style={{
-                      backgroundColor: chatTypeTable[chat.type],
-                      padding: 2,
-                      borderRadius: 7,
-                      width: 20,
-                      height: 20,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      position: 'absolute',
-                      bottom: -10,
-                      right: -10,
-                    }}
-                  >
-                    {renderChatType(chat.type)}
-                  </View>
-                </View>
-              ) : (
-                <View
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 10,
-                    marginRight: 20,
-                    backgroundColor: iconColorsTable['blue1'],
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <FontAwesome5 name='user-astronaut' size={20} color='white' />
-                  <View
-                    style={{
-                      backgroundColor: chatTypeTable[chat.type],
-                      padding: 2,
-                      borderRadius: 7,
-                      width: 20,
-                      height: 20,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      position: 'absolute',
-                      bottom: -10,
-                      right: -10,
-                    }}
-                  >
-                    {renderChatType(chat.type)}
-                  </View>
-                </View>
-              )} */}
-
               <View style={{ flexDirection: 'column', flexShrink: 1 }}>
-                <View style={{ flexDirection: 'column', marginBottom: 5, flexShrink: 1 }}>
+                <View style={{ flexDirection: 'row', marginBottom: 5, flexShrink: 1 }}>
                   <Text
                     style={{
                       color: baseTextColor,
@@ -236,6 +189,44 @@ const Chats = (props) => {
                   {renderDate(chat.createdAt)}
                 </View>
                 <Text style={{ fontSize: 15, marginBottom: 10, color: baseTextColor }}>{chat.content}</Text>
+                {chat.replyTo ? (
+                  <View style={{ paddingLeft: 15, marginBottom: 10 }}>
+                    <View>
+                      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+                        <Text style={{ color: iconColorsTable['blue1'], marginRight: 5 }}>
+                          @ {chat.replyTo.user.name}
+                        </Text>
+                        {renderDate(chat.replyTo.createdAt)}
+                      </View>
+                      <Text style={{ color: 'rgb(118, 120, 124)' }}>{chat.replyTo.content}</Text>
+                    </View>
+                  </View>
+                ) : null}
+
+                {chat.user ? (
+                  <View style={{ flexDirection: 'row' }}>
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        backgroundColor: screenSectionBackgroundColor,
+                        paddingTop: 5,
+                        paddingBottom: 5,
+                        paddingLeft: 7,
+                        paddingRight: 7,
+                        borderRadius: 7,
+                      }}
+                      onPress={() => {
+                        setReplyingTo(chat);
+                        sendChatBottomSheetRef.current.snapToIndex(0);
+                        textInputRef.current.focus();
+                      }}
+                    >
+                      <MaterialCommunityIcons name='reply' size={20} color={baseTextColor} style={{ marginRight: 5 }} />
+                      <Text style={{ color: baseTextColor }}>Reply</Text>
+                    </TouchableOpacity>
+                  </View>
+                ) : null}
               </View>
             </View>
           </View>

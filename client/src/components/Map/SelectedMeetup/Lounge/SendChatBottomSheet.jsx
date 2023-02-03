@@ -5,7 +5,12 @@ import GlobalContext from '../../../../GlobalContext';
 import LoungeContext from './LoungeContext';
 import { View, Text, InputAccessoryView, Keyboard, TouchableOpacity } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { appBottomSheetBackgroundColor, sectionBackgroundColor, baseTextColor } from '../../../../utils/colorsTable';
+import {
+  appBottomSheetBackgroundColor,
+  sectionBackgroundColor,
+  baseTextColor,
+  iconColorsTable,
+} from '../../../../utils/colorsTable';
 
 import { addSnackBar } from '../../../../redux/actionCreators/snackBar';
 
@@ -13,24 +18,45 @@ const SendChatBottomSheet = (props) => {
   const { auth } = useContext(GlobalContext);
   const inputAccessoryViewID = 'SEND_CHAT_INPUT';
   const snapPoints = useMemo(() => ['65%'], []);
-  const { appMenuBottomSheetRef, sendChatBottomSheetRef, textInputRef, setChats, meetup } = useContext(LoungeContext);
+  const {
+    appMenuBottomSheetRef,
+    sendChatBottomSheetRef,
+    textInputRef,
+    setChats,
+    meetup,
+    sendingText,
+    setSendingText,
+    replyingTo,
+    setReplyingTo,
+  } = useContext(LoungeContext);
   const [text, setText] = useState('');
   const [chatType, setChatType] = useState('general');
 
   const onSendPress = async () => {
     console.log('sending comment');
     const payload = {
+      launcher: meetup.launcher._id === auth.data._id ? '' : meetup.launcher._id,
       meetupId: meetup._id,
       user: {
         _id: auth.data._id,
         name: auth.data.name,
         photo: auth.data.photo,
       },
-      content: text,
-      type: chatType,
+      content: sendingText,
+      type: replyingTo ? 'reply' : chatType,
+      replyTo: replyingTo
+        ? {
+            _id: replyingTo._id,
+            content: replyingTo.content,
+            user: replyingTo.user,
+            createdAt: replyingTo.createdAt,
+          }
+        : null,
     };
+    // console.log(payload);
     auth.socket.emit('I_SEND_A_CHAT', payload);
-    setText('');
+    setSendingText('');
+    setReplyingTo(null);
     Keyboard.dismiss();
     sendChatBottomSheetRef.current.close();
     appMenuBottomSheetRef.current.snapToIndex(0);
@@ -52,6 +78,11 @@ const SendChatBottomSheet = (props) => {
       onClose={() => setText('')}
     >
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
+        {replyingTo ? (
+          <View style={{ paddingLeft: 10 }}>
+            <Text style={{ color: iconColorsTable['blue1'] }}>@ {replyingTo.user.name}</Text>
+          </View>
+        ) : null}
         <View style={{ height: '100%', flexDirection: 'row' }}>
           <BottomSheetTextInput
             multiline={true}
@@ -67,8 +98,8 @@ const SendChatBottomSheet = (props) => {
             }}
             color={baseTextColor}
             ref={textInputRef}
-            value={text}
-            onChangeText={setText}
+            value={sendingText}
+            onChangeText={setSendingText}
             autoCapitalize='none'
           />
           {/* <View style={{ height: '100%', width: '10%' }}> ここ、後で修正する。
@@ -135,14 +166,16 @@ const SendChatBottomSheet = (props) => {
                 style={{ padding: 10 }}
                 onPress={() => {
                   Keyboard.dismiss();
+                  setSendingText('');
+                  setReplyingTo(null);
                   sendChatBottomSheetRef.current.close();
                   appMenuBottomSheetRef.current.snapToIndex(0);
                 }}
               >
-                <Text style={{ color: 'white', fontWeight: 'bold' }}>Cancel</Text>
+                <Text style={{ color: iconColorsTable['blue1'], fontWeight: 'bold' }}>Cancel</Text>
               </TouchableOpacity>
               <TouchableOpacity style={{ padding: 10 }} onPress={() => onSendPress()}>
-                <Text style={{ color: 'white', fontWeight: 'bold' }}>Send</Text>
+                <Text style={{ color: iconColorsTable['blue1'], fontWeight: 'bold' }}>Send</Text>
               </TouchableOpacity>
             </View>
           </View>
