@@ -167,7 +167,7 @@ const Container = (props) => {
       queryString = queryString + '&type=' + queryTypes[i];
       // }
     }
-    console.log(queryString);
+    // console.log(queryString);
     const result = await lampostAPI.post(`/badges/${queryString}`, postBody);
     const { badges } = result.data;
     setQueriedBadges(badges);
@@ -198,12 +198,11 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        {/* <Badges />
+        <Badges />
         <BadgeDetailBottomSheet />
-        <LoadingSpinner /> */}
-        <View style={{ height: 50 }}>
+        <LoadingSpinner />
+        {/* <View style={{ height: 50 }}>
           <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
-            {/* <View style={{ flexDirection: 'row' }}> */}
             <TouchableOpacity
               style={{
                 padding: 10,
@@ -237,11 +236,9 @@ const Container = (props) => {
             >
               <Text style={{ color: 'white' }}>Foods & Drink</Text>
             </TouchableOpacity>
-
-            {/* </View> */}
           </ScrollView>
         </View>
-        <Text style={{ color: 'red' }}>Currently selected</Text>
+        <Text style={{ color: 'red' }}>Currently selected</Text> */}
       </View>
     </AddBadgesContext.Provider>
   );

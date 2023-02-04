@@ -76,6 +76,10 @@ export const createLoungeChat = async (io, socket, data) => {
     const launcher = await User.findById(data.launcher);
     sendPushNotification(launcher.pushToken, data.content, data.meetupId); // ここで、laucher、もしくはattendeesにchatを送るようにする。
   }
+  // else {
+  //   // if(data.replyTo){
+  //   // } // ここはいいや。送り主がlauncherで、かつreplytoがない場合は、members全員にsendnotificationを送りたい。launcherによる全員への通知っていう感じ。
+  // }
   if (data.replyTo) {
     const user = await User.findById(data.replyTo.user._id);
     sendPushNotification(user.pushToken, data.content, data.meetupId);

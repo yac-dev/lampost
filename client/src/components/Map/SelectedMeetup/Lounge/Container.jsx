@@ -61,7 +61,6 @@ const LoungeContainer = (props) => {
       auth.socket.off('I_GOT_A_CHAT_IN_THE_ROOM');
     };
   }, []);
-  console.log('replying this', replyingTo);
   // experiment
   // useEffect(() => {
   //   auth.socket.on('YOUR_TEST_MESSAGE_OK', (data) => {
@@ -103,7 +102,7 @@ const LoungeContainer = (props) => {
     return () => {
       // これも、authがある時のみに動かさなきゃ毛ない。だから、dependencyも入れなきゃかも。最初の状態でregisterしているかもしれんから。
       const dateTime = new Date();
-      console.log('cleaing up');
+      // console.log('cleaing up');
       // ここでapi requestをする。viewd chats last timeの。ok.
       updateviewedChatsLastTime(dateTime); // これは必要。
       setMyUpcomingMeetupAndChatsTable((previous) => {
