@@ -2,7 +2,7 @@
   "expo": {
     "name": "Lampost",
     "slug": "Lampost",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "orientation": "portrait",
     "icon": "./assets/lampost-logo-ver-1.0.0.png",
     "userInterfaceStyle": "automatic",
@@ -14,11 +14,13 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.lampost.lampost",
-      "buildNumber": "5"
+      "buildNumber": "19"
     },
     "android": {
       "adaptiveIcon": {

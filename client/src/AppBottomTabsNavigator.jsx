@@ -226,8 +226,8 @@ const AppStack = (props) => {
     // 'https://lampost-server-production.onrender.com/api'
     // 'http://192.168.11.5:3500'
     // console.log(Constants.manifest.extra.socketEndpoint);
-    const { socketEndpoint } = Constants.manifest.extra;
-    const socket = io(socketEndpoint, {
+    // const { socketEndpoint } = Constants.manifest.extra.socketEndpoint;
+    const socket = io('https://lampost-server-production.onrender.com', {
       path: '/mysocket',
     });
     setAuth((previous) => {
@@ -264,32 +264,32 @@ const AppStack = (props) => {
   }, [auth.socket]);
   // console.log(myUpcomingMeetupAndChatsTable);
 
-  useEffect(() => {
-    if (auth.socket && routeName !== 'Lounge') {
-      auth.socket.on('I_GOT_A_CHAT_OUT_OF_THE_ROOM.GO_CHECK_OUT_THE_LOUNGE', (data) => {
-        // lounge以外のscreenにいる時でこのsocket eventを受けたら、chatのstateを変える。
-        // if (routeName !== 'Lounge') {
-        // }
-        // console.log(routeName);
-        if (data.user._id !== auth.data._id) {
-          setMyUpcomingMeetupAndChatsTable((previous) => {
-            const updating = { ...previous };
-            if (routeName !== 'Lounge') {
-              updating[data.meetup].unreadChatsCount = updating[data.meetup].unreadChatsCount + 1;
-            }
-            return updating;
-          });
-          if (routeName !== 'Lounge') {
-            setTotalUnreadChatsCount((previous) => previous + 1);
-          }
-        }
-      });
+  // useEffect(() => {
+  //   if (auth.socket && routeName !== 'Lounge') {
+  //     auth.socket.on('I_GOT_A_CHAT_OUT_OF_THE_ROOM.GO_CHECK_OUT_THE_LOUNGE', (data) => {
+  //       // lounge以外のscreenにいる時でこのsocket eventを受けたら、chatのstateを変える。
+  //       // if (routeName !== 'Lounge') {
+  //       // }
+  //       // console.log(routeName);
+  //       if (data.user._id !== auth.data._id) {
+  //         setMyUpcomingMeetupAndChatsTable((previous) => {
+  //           const updating = { ...previous };
+  //           if (routeName !== 'Lounge') {
+  //             updating[data.meetup].unreadChatsCount = updating[data.meetup].unreadChatsCount + 1;
+  //           }
+  //           return updating;
+  //         });
+  //         if (routeName !== 'Lounge') {
+  //           setTotalUnreadChatsCount((previous) => previous + 1);
+  //         }
+  //       }
+  //     });
 
-      return () => {
-        auth.socket.off('I_GOT_A_CHAT_OUT_OF_THE_ROOM.GO_CHECK_OUT_THE_LOUNGE');
-      };
-    }
-  }, [auth.socket, routeName]);
+  //     return () => {
+  //       auth.socket.off('I_GOT_A_CHAT_OUT_OF_THE_ROOM.GO_CHECK_OUT_THE_LOUNGE');
+  //     };
+  //   }
+  // }, [auth.socket, routeName]);
 
   return (
     <GlobalContext.Provider
