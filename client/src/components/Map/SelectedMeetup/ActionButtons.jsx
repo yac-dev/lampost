@@ -8,6 +8,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { backgroundColorsTable, baseTextColor, iconColorsTable } from '../../../utils/colorsTable';
 import ActionButton from '../../Utils/ActionButton';
 
@@ -143,16 +144,32 @@ const ActionButtons = (props) => {
                 backgroundColor={iconColorsTable['blue1']}
                 onActionButtonPress={() => navigation.navigate('Lounge', { meetupId: selectedMeetup._id })}
               />
+              <ActionButton
+                label='Report this meetup'
+                icon={<MaterialIcons name='report-problem' size={25} color={'white'} />}
+                backgroundColor={iconColorsTable['blue1']}
+                onActionButtonPress={() =>
+                  navigation.navigate('Report', { title: selectedMeetup.title, id: selectedMeetup._id })
+                }
+              />
             </View>
           );
         } else {
           return (
-            <ActionButton
-              label='Join this meetup'
-              icon={<MaterialCommunityIcons name='human-greeting-variant' size={25} color={'white'} />}
-              backgroundColor={iconColorsTable['blue1']}
-              onActionButtonPress={() => joinMeetup(selectedMeetup._id)}
-            />
+            <View>
+              <ActionButton
+                label='Join this meetup'
+                icon={<MaterialCommunityIcons name='human-greeting-variant' size={25} color={'white'} />}
+                backgroundColor={iconColorsTable['blue1']}
+                onActionButtonPress={() => joinMeetup(selectedMeetup._id)}
+              />
+              <ActionButton
+                label='Join this meetup'
+                icon={<MaterialCommunityIcons name='human-greeting-variant' size={25} color={'white'} />}
+                backgroundColor={iconColorsTable['blue1']}
+                onActionButtonPress={() => joinMeetup(selectedMeetup._id)}
+              />
+            </View>
           );
         }
       }

@@ -18,6 +18,7 @@ import Lounge from '../Map/SelectedMeetup/Lounge/Container';
 import User from '../User/Container';
 import AddBadges from '../Utils/AddBadges/Container';
 import AboutLampost from '../Utils/AboutLampost';
+import MeetupReport from '../Map/SelectedMeetup/MeetupReport';
 
 import AuthNavigator from './Auth';
 import { appBottomSheetBackgroundColor, iconColorsTable } from '../../utils/colorsTable';
@@ -133,6 +134,24 @@ const MapNavigator = (props) => {
         <Stack.Screen
           name='About Lampost'
           component={AboutLampost}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            // title: '',
+            // headerTransparent: true,
+            // headerLeft: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
+            // headerRight: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
+          })}
+        />
+        <Stack.Screen
+          name='Report'
+          component={MeetupReport}
           options={({ navigation }) => ({
             headerShown: true,
             headerStyle: {

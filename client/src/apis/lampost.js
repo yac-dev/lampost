@@ -3,8 +3,8 @@ import axios from 'axios';
 
 const lampostAPI = axios.create({
   // baseURL: Constants.manifest.extra.baseURL,
-  // baseURL: 'http://localhost:3500/api',
-  baseURL: 'https://lampost-server-production.onrender.com/api',
+  baseURL: 'http://192.168.11.5:3500/api',
+  // baseURL: 'https://lampost-server-production.onrender.com/api',
   mode: 'cors',
 });
 

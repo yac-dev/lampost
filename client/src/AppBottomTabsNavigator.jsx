@@ -224,10 +224,12 @@ const AppStack = (props) => {
   // あー。このapiのendpointが。。。
   const getSocket = () => {
     // 'https://lampost-server-production.onrender.com/api'
-    // 'http://192.168.11.5:3500'
+    //
     // console.log(Constants.manifest.extra.socketEndpoint);
     // const { socketEndpoint } = Constants.manifest.extra.socketEndpoint;
-    const socket = io('https://lampost-server-production.onrender.com', {
+    // 'http://192.168.11.5:3500'
+    // const socket = io('https://lampost-server-production.onrender.com', {
+    const socket = io('http://192.168.11.5:3500', {
       path: '/mysocket',
     });
     setAuth((previous) => {
