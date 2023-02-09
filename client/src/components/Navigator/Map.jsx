@@ -18,7 +18,8 @@ import Lounge from '../Map/SelectedMeetup/Lounge/Container';
 import User from '../User/Container';
 import AddBadges from '../Utils/AddBadges/Container';
 import AboutLampost from '../Utils/AboutLampost';
-import MeetupReport from '../Map/SelectedMeetup/MeetupReport';
+import MeetupReport from '../Map/ReportMeetup';
+import FlagUser from '../User/FlagUser';
 
 import AuthNavigator from './Auth';
 import { appBottomSheetBackgroundColor, iconColorsTable } from '../../utils/colorsTable';
@@ -124,7 +125,6 @@ const MapNavigator = (props) => {
               fontWeight: 'bold',
               color: 'white',
             },
-            headerTintColor: 'white',
             // title: '',
             // headerTransparent: true,
             // headerLeft: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
@@ -150,8 +150,26 @@ const MapNavigator = (props) => {
           })}
         />
         <Stack.Screen
-          name='Report'
+          name='Report meetup'
           component={MeetupReport}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            // title: '',
+            // headerTransparent: true,
+            // headerLeft: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
+            // headerRight: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
+          })}
+        />
+        <Stack.Screen
+          name='Flag user'
+          component={FlagUser}
           options={({ navigation }) => ({
             headerShown: true,
             headerStyle: {

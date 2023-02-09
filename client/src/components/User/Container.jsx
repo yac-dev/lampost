@@ -17,6 +17,7 @@ import BadgeDetailBottomSheet from './BadgeDetailBottomSheet/Container';
 import AddBadgeTagsBottomSheet from './AddBadgeTagsBottomSheet/Container';
 import AddLinkBottomSheet from './AddLinkBottomSheet/Container';
 import ConfirmEditProfileModal from './ConfirmEditProfileModal';
+import ConfirmFlagUserModal from './ConfirmFlagUserModal';
 import ConfirmDeleteAccount from './ConfirmDeleteAccount';
 import ConfirmActionButtonModal from './ConfirmActionButtonModal';
 import ConfirmLogout from './ConfirmLogout';
@@ -30,6 +31,7 @@ const Container = (props) => {
   const [isMyPage, setIsMyPage] = useState();
   const [isConfirmEditProfileModalOpen, setIsConfirmEditProfileModalOpen] = useState(false);
   const [isConfirmDeleteAccountModalOpen, setIsConfirmDeleteAccountModalOpen] = useState(false);
+  const [isConfirmFlagUserModalOpen, setIsConfirmFlagUserModalOpen] = useState(false);
   const [isConfirmLogoutModalOpen, setIsConfirmLogoutModalOpen] = useState(false);
   const [confirmActionButtonModal, setConfirmActionButtonModal] = useState({ isOpen: false, type: '' });
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
@@ -160,6 +162,8 @@ const Container = (props) => {
           setIsOpenCreateBadgeTagTextInput,
           isConfirmDeleteAccountModalOpen,
           setIsConfirmDeleteAccountModalOpen,
+          isConfirmFlagUserModalOpen,
+          setIsConfirmFlagUserModalOpen,
         }}
       >
         <PaperProvider>
@@ -175,6 +179,7 @@ const Container = (props) => {
             <AddLinkBottomSheet />
             {/* <SelectedProfileImage /> */}
             <ConfirmEditProfileModal />
+            <ConfirmFlagUserModal />
             <ConfirmActionButtonModal />
             <ConfirmDeleteAccount />
             <ConfirmLogout />

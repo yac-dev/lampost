@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
-import GlobalContext from '../../../GlobalContext';
+import GlobalContext from '../../GlobalContext';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import {
   baseBackgroundColor,
   baseTextColor,
   iconColorsTable,
   screenSectionBackgroundColor,
-} from '../../../utils/colorsTable';
-import lampostAPI from '../../../apis/lampost';
-import ActionButton from '../../Utils/ActionButton';
+} from '../../utils/colorsTable';
+import lampostAPI from '../../apis/lampost';
+import ActionButton from '../Utils/ActionButton';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Report = (props) => {

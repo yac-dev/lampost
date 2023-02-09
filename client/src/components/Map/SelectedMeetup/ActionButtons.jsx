@@ -149,7 +149,7 @@ const ActionButtons = (props) => {
                 icon={<MaterialIcons name='report-problem' size={25} color={'white'} />}
                 backgroundColor={iconColorsTable['blue1']}
                 onActionButtonPress={() =>
-                  navigation.navigate('Report', { title: selectedMeetup.title, id: selectedMeetup._id })
+                  navigation.navigate('Report meetup', { title: selectedMeetup.title, id: selectedMeetup._id })
                 }
               />
             </View>
