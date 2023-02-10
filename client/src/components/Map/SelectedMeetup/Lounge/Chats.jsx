@@ -7,6 +7,8 @@ import { Entypo } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
 
 import {
   iconColorsTable,
@@ -26,7 +28,8 @@ const chatTypeTable = {
 const Chats = (props) => {
   const scrollViewRef = useRef();
   const { isIpad } = useContext(GlobalContext);
-  const { chats, meetup, sendChatBottomSheetRef, textInputRef, replyingTo, setReplyingTo } = useContext(LoungeContext);
+  const { chats, meetup, sendChatBottomSheetRef, textInputRef, replyingTo, setReplyingTo, navigation } =
+    useContext(LoungeContext);
 
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
@@ -170,7 +173,7 @@ const Chats = (props) => {
       const chatsList = chats.map((chat, index) => {
         // launcherのchatだけは、背景を少し変える。
         return (
-          <View key={index} style={{ padding: 10 }}>
+          <TouchableOpacity key={index} style={{ padding: 10 }} onLongPress={() => console.log('hello')}>
             <View style={{ flexDirection: 'row' }}>
               {renderUserAvatar(chat)}
               <View style={{ flexDirection: 'column', flexShrink: 1 }}>
@@ -215,6 +218,7 @@ const Chats = (props) => {
                         paddingLeft: 7,
                         paddingRight: 7,
                         borderRadius: 7,
+                        marginRight: 10,
                       }}
                       onPress={() => {
                         setReplyingTo(chat);
@@ -225,11 +229,33 @@ const Chats = (props) => {
                       <MaterialCommunityIcons name='reply' size={20} color={baseTextColor} style={{ marginRight: 5 }} />
                       <Text style={{ color: baseTextColor }}>Reply</Text>
                     </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        backgroundColor: screenSectionBackgroundColor,
+                        paddingTop: 5,
+                        paddingBottom: 5,
+                        paddingLeft: 7,
+                        paddingRight: 7,
+                        borderRadius: 7,
+                      }}
+                      onPress={() => {
+                        navigation.navigate('User report', {
+                          userId: chat.user._id,
+                          userName: chat.user.name,
+                          meetupId: meetup._id,
+                        });
+                      }}
+                    >
+                      <MaterialIcons name='report-problem' size={20} color={baseTextColor} style={{ marginRight: 5 }} />
+                      <Text style={{ color: baseTextColor }}>Report</Text>
+                    </TouchableOpacity>
                   </View>
                 ) : null}
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
         );
       });
 

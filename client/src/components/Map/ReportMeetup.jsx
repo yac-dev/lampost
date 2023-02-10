@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import GlobalContext from '../../GlobalContext';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import {
   baseBackgroundColor,
   baseTextColor,
   iconColorsTable,
   screenSectionBackgroundColor,
+  inputBackgroundColor,
 } from '../../utils/colorsTable';
 import lampostAPI from '../../apis/lampost';
 import ActionButton from '../Utils/ActionButton';
@@ -14,6 +15,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 const Report = (props) => {
   const { auth, setLoading, setSnackBar } = useContext(GlobalContext);
   const [reportIssueOptions, setReportIssueOptions] = useState({
+    mlm: {
+      label: 'mlm',
+      reason: "It's multi-level marketing",
+    },
     spam: {
       label: 'spam',
       reason: "It's spam",
@@ -120,6 +125,11 @@ const Report = (props) => {
         reviewed by a developer within 24 hours.
       </Text>
       {renderReportIssueOptions()}
+      {/* <TextInput
+        placeholder='Please write about the problem more specifically.'
+        placeholderTextColor={baseTextColor}
+        style={{ padding: 10, backgroundColor: inputBackgroundColor, borderRadius: 10, height: 150 }}
+      /> */}
       <View style={{ alignSelf: 'center' }}>
         <ActionButton
           label='Submit'

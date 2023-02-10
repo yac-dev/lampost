@@ -3,6 +3,7 @@ import LoungeContext from '../LoungeContext';
 import { View, Text, ScrollView } from 'react-native';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { iconColorsTable, backgroundColorsTable, sectionBackgroundColor } from '../../../../../utils/colorsTable';
 import AppButton from '../../../../Utils/AppMenuButton';
@@ -24,13 +25,22 @@ const AppButtons = () => {
         />
         <AppButton
           backgroundColor={backgroundColorsTable['violet1']}
-          icon={<FontAwesome5 name='user-astronaut' size={35} color={iconColorsTable['violet1']} />}
+          icon={<FontAwesome5 name='user-astronaut' size={30} color={iconColorsTable['violet1']} />}
           label='Members'
           onAppMenuButtonPress={() => {
             appMenuBottomSheetRef.current.snapToIndex(0);
             crewBottomSheetRef.current.snapToIndex(0);
           }}
         />
+        {/* <AppButton これ、後でいい。
+          backgroundColor={backgroundColorsTable['black1']}
+          icon={<Foundation name='skull' size={35} color={iconColorsTable['black1']} />}
+          label='Blacklist'
+          onAppMenuButtonPress={() => {
+            appMenuBottomSheetRef.current.snapToIndex(0);
+            crewBottomSheetRef.current.snapToIndex(0);
+          }}
+        /> */}
       </ScrollView>
     </View>
   );

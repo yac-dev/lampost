@@ -24,9 +24,11 @@ const LoungeContainer = (props) => {
   } = useContext(GlobalContext);
   const [meetup, setMeetup] = useState(null);
   const [chats, setChats] = useState([]);
+  const [selectedChat, setSelectedChat] = useState(null);
   const appMenuBottomSheetRef = useRef(null);
   const sendChatBottomSheetRef = useRef(null);
   const crewBottomSheetRef = useRef(null);
+  const selectedChatBottomSheetRef = useRef(null);
   const textInputRef = useRef(null);
   const [replyingTo, setReplyingTo] = useState(null);
   const [sendingText, setSendingText] = useState('');
@@ -150,6 +152,7 @@ const LoungeContainer = (props) => {
         appMenuBottomSheetRef,
         sendChatBottomSheetRef,
         crewBottomSheetRef,
+        selectedChatBottomSheetRef,
         sendingText,
         setSendingText,
         replyingTo,
@@ -157,6 +160,8 @@ const LoungeContainer = (props) => {
         textInputRef,
         chats,
         setChats,
+        selectedChat,
+        setSelectedChat,
         // isLoggedOutModalOpen,
         // setIsLoggedOutModalOpen,
       }}
