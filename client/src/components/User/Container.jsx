@@ -6,8 +6,15 @@ import BadgeContext from './BadgeContext';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import lampostAPI from '../../apis/lampost';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { baseBackgroundColor, baseTextColor, iconColorsTable } from '../../utils/colorsTable';
+import {
+  baseBackgroundColor,
+  baseTextColor,
+  iconColorsTable,
+  screenSectionBackgroundColor,
+  sectionBackgroundColor,
+} from '../../utils/colorsTable';
 import { Provider as PaperProvider } from 'react-native-paper';
+import ActionButton from '../Utils/ActionButton';
 
 // components
 import Header from './Header';
@@ -21,6 +28,8 @@ import ConfirmFlagUserModal from './ConfirmFlagUserModal';
 import ConfirmDeleteAccount from './ConfirmDeleteAccount';
 import ConfirmActionButtonModal from './ConfirmActionButtonModal';
 import ConfirmLogout from './ConfirmLogout';
+import ConfirmBlockUserModal from './ConfirmBlockUserModal';
+import FlagUserMenuBottomSheet from './FlagUserMenuBottomSheet';
 
 // badgeを取ってきて、skillも取ってくる。subscriberの数も返すし、connectionの数も返す。
 const Container = (props) => {
@@ -29,16 +38,19 @@ const Container = (props) => {
   const [badgeDatas, setBadgeDatas] = useState([]);
   const [pressedBadgeData, setPressedBadgeData] = useState(null);
   const [isMyPage, setIsMyPage] = useState();
+  const [isBlocked, setIsBlocked] = useState(false);
   const [isConfirmEditProfileModalOpen, setIsConfirmEditProfileModalOpen] = useState(false);
   const [isConfirmDeleteAccountModalOpen, setIsConfirmDeleteAccountModalOpen] = useState(false);
   const [isConfirmFlagUserModalOpen, setIsConfirmFlagUserModalOpen] = useState(false);
   const [isConfirmLogoutModalOpen, setIsConfirmLogoutModalOpen] = useState(false);
+  const [isConfirmBlockUserModalOpen, setIsConfirmBlockUserModalOpen] = useState(false);
   const [confirmActionButtonModal, setConfirmActionButtonModal] = useState({ isOpen: false, type: '' });
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
   const appMenuBottomSheetRef = useRef(null);
   const badgeDetailBottomSheetRef = useRef(null);
   const addBadgeTagsBottomSheetRef = useRef(null);
   const addLinkBottomSheetRef = useRef(null);
+  const flagUserMenuBottomSheetRef = useRef(null);
   const [addLinkOrBadgeTagsBottomSheetType, setAddLinkOrBadgeTagsBottomSheetType] = useState('');
   const [fetchedBadgeTags, setFetchedBadgeTags] = useState([]);
   const [isOpenCreateBadgeTagTextInput, setIsOpenCreateBadgeTagTextInput] = useState(false);
@@ -138,6 +150,8 @@ const Container = (props) => {
           user,
           setUser,
           isMyPage,
+          isBlocked,
+          setIsBlocked,
           navigation: props.navigation,
           appMenuBottomSheetRef,
           badgeDetailBottomSheetRef,
@@ -164,25 +178,46 @@ const Container = (props) => {
           setIsConfirmDeleteAccountModalOpen,
           isConfirmFlagUserModalOpen,
           setIsConfirmFlagUserModalOpen,
+          flagUserMenuBottomSheetRef,
+          isConfirmBlockUserModalOpen,
+          setIsConfirmBlockUserModalOpen,
         }}
       >
         <PaperProvider>
           <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-            {/* <View style={{ flexDirection: 'row' }}> */}
             <Header />
-            {/* </View> */}
-
-            <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
+            {isBlocked ? (
+              <View>
+                <Text style={{ color: baseTextColor, textAlign: 'center', marginBottom: 10 }}>
+                  You are blocking this user.
+                </Text>
+                <TouchableOpacity
+                  style={{
+                    padding: 15,
+                    alignSelf: 'center',
+                    backgroundColor: screenSectionBackgroundColor,
+                    borderRadius: 10,
+                  }}
+                  onPress={() => setIsBlocked(false)}
+                >
+                  <Text style={{ color: baseTextColor }}>Unblock this user</Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
+            )}
             <AppMenuBottomSheet />
             <BadgeDetailBottomSheet />
             <AddBadgeTagsBottomSheet />
             <AddLinkBottomSheet />
+            <FlagUserMenuBottomSheet />
             {/* <SelectedProfileImage /> */}
             <ConfirmEditProfileModal />
             <ConfirmFlagUserModal />
             <ConfirmActionButtonModal />
             <ConfirmDeleteAccount />
             <ConfirmLogout />
+            <ConfirmBlockUserModal />
           </View>
         </PaperProvider>
       </UserContext.Provider>

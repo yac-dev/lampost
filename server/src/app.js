@@ -7,6 +7,7 @@ import './databases/mongoose';
 import labRouter from './routers/labs';
 import authRouter from './routers/auth';
 import usersRouter from './routers/users';
+import userBlockingRelationshipsRouter from './routers/userBlockingRelationships';
 import meetupsRouter from './routers/meetups';
 import badgesRouter from './routers/badges';
 import commentsRouter from './routers/comments';
@@ -37,6 +38,7 @@ app.get('/', (request, response) => {
 
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/userblockingrelationships', userBlockingRelationshipsRouter);
 app.use('/api/meetups', meetupsRouter);
 app.use('/api/badges', badgesRouter);
 app.use('/api/comments', commentsRouter);

@@ -16,7 +16,7 @@ import Stats from './Stats';
 
 const Header = (props) => {
   const { auth } = useContext(GlobalContext);
-  const { user, isMyPage, setIsConfirmEditProfileModalOpen, setIsConfirmFlagUserModalOpen } = useContext(UserContext);
+  const { user, isMyPage, setIsConfirmEditProfileModalOpen, flagUserMenuBottomSheetRef } = useContext(UserContext);
   const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
   const avatarContainer = isIpad ? Dimensions.get('window').width / 4.5 : Dimensions.get('window').width / 3.2;
   const avatarWidth = avatarContainer * 0.7;
@@ -73,14 +73,14 @@ const Header = (props) => {
               style={{ position: 'absolute', bottom: -5, right: -5 }}
               onPress={() => setIsConfirmEditProfileModalOpen(true)}
             >
-              <MaterialCommunityIcons name='camera-plus' size={20} color='white' />
+              <MaterialCommunityIcons name='camera-plus' size={20} color={baseTextColor} />
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
               style={{ position: 'absolute', bottom: -5, right: -5 }}
-              onPress={() => setIsConfirmFlagUserModalOpen(true)}
+              onPress={() => flagUserMenuBottomSheetRef.current.snapToIndex(0)}
             >
-              <MaterialCommunityIcons name='flag' size={20} color='white' />
+              <MaterialCommunityIcons name='flag' size={20} color={baseTextColor} />
             </TouchableOpacity>
           )}
         </View>
