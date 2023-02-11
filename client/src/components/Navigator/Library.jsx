@@ -13,6 +13,7 @@ import Asset from '../Libraries/Library/Asset/Container';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
 import AddBadges from '../Utils/AddBadges/Container';
 import AddAssets from '../Utils/AddAssets/Container';
+import ReportAsset from '../Utils/ReportAsset';
 
 const LibraryNavigator = () => {
   const { auth } = useContext(GlobalContext);
@@ -72,6 +73,20 @@ const LibraryNavigator = () => {
           options={({ navigation }) => ({
             headerShown: true,
             title: 'Asset',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          })}
+        />
+        <Stack.Screen
+          name='Report asset'
+          component={ReportAsset}
+          options={({ navigation }) => ({
+            headerShown: true,
             headerStyle: {
               backgroundColor: appBottomSheetBackgroundColor,
             },

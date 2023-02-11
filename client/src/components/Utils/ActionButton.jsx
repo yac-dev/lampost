@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import GlobalContext from '../../GlobalContext';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { iconColorsTable, screenSectionBackgroundColor } from '../../utils/colorsTable';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const ActionButton = (props) => {
   const { isIpad } = useContext(GlobalContext);
@@ -30,7 +31,7 @@ const ActionButton = (props) => {
           justifyContent: 'center', // これで中のimageを上下左右真ん中にする
         }}
       >
-        {props.icon}
+        {props.isDisabled ? <MaterialCommunityIcons name='emoticon-poop' size={25} color={'white'} /> : props.icon}
       </View>
       <Text style={{ color: 'white', fontSize: 15 }}>{props.label}</Text>
     </TouchableOpacity>

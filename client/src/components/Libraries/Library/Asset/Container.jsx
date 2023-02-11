@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { View, Text, Dimensions, ScrollView, TouchableOpacity, Image } from 'react-native';
 import GlobalContext from '../../../../GlobalContext';
+import AssetContext from './AssetContext';
 import lampostAPI from '../../../../apis/lampost';
 import FastImage from 'react-native-fast-image';
 import {
@@ -8,18 +9,19 @@ import {
   backgroundColorsTable,
   iconColorsTable,
   baseTextColor,
+  screenSectionBackgroundColor,
+  rnDefaultBackgroundColor,
 } from '../../../../utils/colorsTable';
 import ActionButton from '../../../Utils/ActionButton';
-import { Ionicons } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
-import AddNewReactionBottomSheet from './AddNewReactionBottomSheet';
+import AssetMenuBottomSheet from './AssetMenuBottomSheet';
 
 const Asset = (props) => {
   const { auth, setSnackBar } = useContext(GlobalContext);
   const win = Dimensions.get('window');
+  const assetMenuBottomSheetRef = useRef(null);
   const [asset, setAsset] = useState(props.route.params.asset);
   const [badgeLikes, setBadgeLikes] = useState(null);
 
@@ -69,13 +71,36 @@ const Asset = (props) => {
         if (auth.isAuthenticated && badgeAndUsersRelationship.users.includes(auth.data._id)) {
           return (
             <View style={{ alignItems: 'center', flexDirection: 'row', marginRight: 10 }} key={index}>
-              <FastImage
-                source={{ uri: badgeAndUsersRelationship.data.icon }}
-                resizeMode={FastImage.resizeMode.contain}
-                style={{ marginRight: 5, width: 30, height: 30 }}
-                // tintColor={iconColorsTable[badgeObject.badge.color]}
-                tintColor={iconColorsTable[badgeAndUsersRelationship.data.color]}
-              />
+              <View
+                style={{
+                  width: 38,
+                  height: 38,
+                  backgroundColor: rnDefaultBackgroundColor,
+                  borderRadius: 19,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginRight: 10,
+                }}
+              >
+                <View
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: backgroundColorsTable[badgeAndUsersRelationship.data.color],
+                    borderRadius: 19,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <FastImage
+                    source={{ uri: badgeAndUsersRelationship.data.icon }}
+                    resizeMode={FastImage.resizeMode.contain}
+                    style={{ width: 25, height: 25 }}
+                    // tintColor={iconColorsTable[badgeObject.badge.color]}
+                    tintColor={iconColorsTable[badgeAndUsersRelationship.data.color]}
+                  />
+                </View>
+              </View>
               <Text style={{ color: baseTextColor }}>{badgeAndUsersRelationship.users.length}</Text>
             </View>
           );
@@ -89,21 +114,33 @@ const Asset = (props) => {
                 upvoteBadge(badgeAndUsersRelationship.data._id);
               }}
             >
-              <FastImage
-                source={{ uri: badgeAndUsersRelationship.data.icon }}
-                resizeMode={FastImage.resizeMode.contain}
-                style={{ width: 30, height: 30, marginRight: 5 }}
-                // tintColor={iconColorsTable[badgeObject.badge.color]}
-                tintColor={baseTextColor}
-              />
-              <Text style={{ color: baseTextColor }}>{badgeAndUsersRelationship.users.length}</Text>
+              <TouchableOpacity
+                style={{
+                  width: 38,
+                  height: 38,
+                  backgroundColor: screenSectionBackgroundColor,
+                  borderRadius: 19,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginRight: 10,
+                }}
+              >
+                <FastImage
+                  source={{ uri: badgeAndUsersRelationship.data.icon }}
+                  resizeMode={FastImage.resizeMode.contain}
+                  style={{ width: 25, height: 25 }}
+                  // tintColor={iconColorsTable[badgeObject.badge.color]}
+                  tintColor={baseTextColor}
+                />
+              </TouchableOpacity>
+              <Text style={{ color: baseTextColor, fontSize: 17 }}>{badgeAndUsersRelationship.users.length}</Text>
             </TouchableOpacity>
           );
         }
       });
 
       return (
-        <ScrollView showsHorizontalScrollIndicator={false} style={{ padding: 10 }}>
+        <ScrollView horizontal={true} style={{ width: 200 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>{list}</View>
         </ScrollView>
       );
@@ -141,12 +178,8 @@ const Asset = (props) => {
       <Text
         style={{
           fontSize: 17,
-          textAlign: 'center',
           color: 'orange',
           fontStyle: 'italic',
-          position: 'absolute',
-          bottom: 10,
-          right: 10,
         }}
       >
         {dateElements[2]}&nbsp;&nbsp;{dateElements[0]}&nbsp;&nbsp;{dateElements[1]}
@@ -155,14 +188,18 @@ const Asset = (props) => {
   };
 
   return (
-    // <AssetContext.Provider value={{ appMenuBottomSheetRef, isMyPage, asset }}>
-    <ScrollView
-      style={{ flex: 1, backgroundColor: baseBackgroundColor, paddingRight: 10, paddingLeft: 10, paddingTop: 10 }}
-    >
-      <View style={{ marginBottom: 10 }}>
-        <View style={{ marginBottom: 10 }}>
+    <AssetContext.Provider value={{ assetMenuBottomSheetRef, asset, navigation: props.navigation }}>
+      <View
+        style={{ flex: 1, backgroundColor: baseBackgroundColor, paddingRight: 10, paddingLeft: 10, paddingTop: 10 }}
+      >
+        <FastImage
+          style={{ width: '100%', aspectRatio: 1, borderRadius: 10 }}
+          source={{ uri: asset.data }}
+          resizeMode={FastImage.resizeMode.contain}
+        />
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 15 }}>
           {asset.createdBy.photo ? (
-            <View style={{ alignItems: 'center', flexDirection: 'row', marginBottom: 10 }}>
+            <View style={{ alignItems: 'center', flexDirection: 'row' }}>
               <Image
                 source={{ uri: asset.createdBy.photo }}
                 style={{ width: 35, height: 35, borderRadius: 7, marginRight: 10 }}
@@ -170,25 +207,32 @@ const Asset = (props) => {
               <Text style={{ color: 'white' }}>{asset.createdBy.name}</Text>
             </View>
           ) : (
-            <View style={{ alignItems: 'center', flexDirection: 'row', marginBottom: 10 }}>
+            <View style={{ alignItems: 'center', flexDirection: 'row' }}>
               <FontAwesome5 name='user-astronaut' size={25} style={{ width: 35, height: 35, borderRadius: 7 }} />
               <Text style={{ color: 'white' }}>{asset.createdBy.name}</Text>
             </View>
           )}
-          <FastImage
-            style={{ width: '100%', aspectRatio: 1, borderRadius: 10 }}
-            source={{ uri: asset.data }}
-            resizeMode={FastImage.resizeMode.contain}
-          />
           {renderDate(asset.createdAt)}
         </View>
-        {renderBadgeLikeButton()}
-
-        {/* {leftActionButtons()} */}
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          {renderBadgeLikeButton()}
+          <TouchableOpacity
+            onPress={() => assetMenuBottomSheetRef.current.snapToIndex(0)}
+            style={{
+              width: 30,
+              height: 30,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: screenSectionBackgroundColor,
+              borderRadius: 15,
+            }}
+          >
+            <MaterialCommunityIcons name='chevron-down' color={baseTextColor} size={25} />
+          </TouchableOpacity>
+        </View>
+        <AssetMenuBottomSheet />
       </View>
-      <Text style={{ color: 'white', fontSize: 20, marginBottom: 20 }}>Comments</Text>
-      <Text style={{ color: baseTextColor, textAlign: 'center' }}>You'll see all the comments of this asset.</Text>
-    </ScrollView>
+    </AssetContext.Provider>
   );
 };
 
