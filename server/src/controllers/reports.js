@@ -1,5 +1,6 @@
 import ReportRelationshipBetweenMeetupAndUser from '../models/reportRelationshipBetweenMeetupAndUser.js';
 import ReportMeetupMember from '../models/reportMeetupMember.js';
+import ReportUser from '../models/reportUser';
 
 export const reportMeetup = async (request, response) => {
   try {
@@ -28,6 +29,24 @@ export const reportMeetupMember = async (request, response) => {
       issue,
       description,
     });
+    response.status(201).json({
+      message: 'success',
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const reportUser = async (request, response) => {
+  try {
+    const { userId, reportedUserId, issue, description } = request.body;
+    const reportUser = await ReportUser.create({
+      user: userId,
+      reportedUser: reportedUserId,
+      issue,
+      description,
+    });
+
     response.status(201).json({
       message: 'success',
     });

@@ -18,9 +18,10 @@ import {
   inputBackgroundColor,
   sectionBackgroundColor,
 } from '../../utils/colorsTable';
-import ActionButton from '../Utils/ActionButton';
+import ActionButton from './ActionButton';
 import lampostAPI from '../../apis/lampost';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const ReportUser = (props) => {
   const inputAccessoryViewID = 'REPORT_USER';
@@ -28,11 +29,23 @@ const ReportUser = (props) => {
   const [reportIssueOptions, setReportIssueOptions] = useState({
     mlm: {
       label: 'mlm',
-      reason: "It's multi-level marketing",
+      reason: 'Multi-level marketing',
+    },
+    scam: {
+      label: 'scam',
+      reason: 'Scam or fraud',
+    },
+    bullying: {
+      label: 'bullying',
+      reason: 'Bullying or harassment',
+    },
+    racism: {
+      label: 'racism',
+      reason: 'Racism',
     },
     spam: {
       label: 'spam',
-      reason: "It's spam",
+      reason: 'Spam',
     },
     nudity: {
       label: 'nudity',
@@ -45,14 +58,6 @@ const ReportUser = (props) => {
     falseInformation: {
       label: 'falseInformation',
       reason: 'False information',
-    },
-    bullying: {
-      label: 'bullying',
-      reason: 'Bullying or harassment',
-    },
-    scam: {
-      label: 'scam',
-      reason: 'Scam or fraud',
     },
     violence: {
       label: 'violence',
@@ -104,7 +109,7 @@ const ReportUser = (props) => {
     setSnackBar({
       isVisible: true,
       barType: 'success',
-      message: 'Thanks for your submission.',
+      message: 'Thanks for your submission. Your report was sent to developer.',
       duration: 5000,
     });
   };
@@ -142,16 +147,21 @@ const ReportUser = (props) => {
       // contentContainerStyle={{ paddingBottom: 30 }}
     >
       <ScrollView>
-        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>
-          Why are you reporting "{props.route.params.userName}"?
-        </Text>
-        <Text style={{ color: baseTextColor, marginBottom: 10 }}>
-          Your report will be sent to meetup launcher and developer.
-        </Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+          <MaterialIcons name='report-problem' color='white' size={25} style={{ marginRight: 10 }} />
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>
+            Reporting "{props.route.params.userName}"
+          </Text>
+        </View>
         <Text style={{ color: 'white', marginBottom: 10, fontWeight: 'bold', fontSize: 17 }}>What kind of issue?</Text>
+        <Text style={{ color: baseTextColor, marginBottom: 10 }}>
+          Please choose a issue option down below. Your report will be sent only to developer.
+        </Text>
         {renderReportIssueOptions()}
         <Text style={{ color: 'white', marginBottom: 10, fontWeight: 'bold', fontSize: 20 }}>Description</Text>
-        <Text style={{ color: baseTextColor, marginBottom: 10 }}>Please write the detail of the problem.</Text>
+        <Text style={{ color: baseTextColor, marginBottom: 10 }}>
+          Please write about the problem more specifically in at least 100 characters.
+        </Text>
         <TextInput
           inputAccessoryViewID={inputAccessoryViewID}
           placeholderTextColor={baseTextColor}

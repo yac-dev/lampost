@@ -241,7 +241,7 @@ const Chats = (props) => {
                         borderRadius: 7,
                       }}
                       onPress={() => {
-                        navigation.navigate('User report', {
+                        navigation.navigate('Report meetup member', {
                           userId: chat.user._id,
                           userName: chat.user.name,
                           meetupId: meetup._id,

@@ -11,7 +11,7 @@ import lampostAPI from '../../apis/lampost';
 const FlagUserMenuBottomSheet = () => {
   const snapPoints = useMemo(() => ['30%'], []);
   const { auth, setLoading, setSnackBar } = useContext(GlobalContext);
-  const { flagUserMenuBottomSheetRef, setIsConfirmBlockUserModalOpen, isBlocked, user, setIsBlocked } =
+  const { flagUserMenuBottomSheetRef, setIsConfirmBlockUserModalOpen, isBlocked, user, setIsBlocked, navigation } =
     useContext(UserContext);
 
   return (
@@ -31,7 +31,10 @@ const FlagUserMenuBottomSheet = () => {
       <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}
-          onPress={() => flagUserMenuBottomSheetRef.current.close()}
+          onPress={() => {
+            flagUserMenuBottomSheetRef.current.close();
+            navigation.navigate('Report user', { userId: user._id, userName: user.name });
+          }}
         >
           <Text style={{ color: baseTextColor }}>Report this user</Text>
         </TouchableOpacity>

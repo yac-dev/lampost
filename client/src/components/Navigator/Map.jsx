@@ -20,7 +20,7 @@ import AddBadges from '../Utils/AddBadges/Container';
 import AboutLampost from '../Utils/AboutLampost';
 import ReportMeetup from '../Map/ReportMeetup';
 import ReportMeetupMember from '../Map/SelectedMeetup/Lounge/ReportMeetupMember';
-import FlagUser from '../User/FlagUser';
+import ReportUser from '../Utils/ReportUser';
 
 import AuthNavigator from './Auth';
 import { appBottomSheetBackgroundColor, iconColorsTable } from '../../utils/colorsTable';
@@ -169,7 +169,7 @@ const MapNavigator = (props) => {
           })}
         />
         <Stack.Screen
-          name='User report'
+          name='Report meetup member'
           component={ReportMeetupMember}
           options={({ navigation }) => ({
             headerShown: true,
@@ -187,8 +187,8 @@ const MapNavigator = (props) => {
           })}
         />
         <Stack.Screen
-          name='Flag user'
-          component={FlagUser}
+          name='Report user'
+          component={ReportUser}
           options={({ navigation }) => ({
             headerShown: true,
             headerStyle: {
