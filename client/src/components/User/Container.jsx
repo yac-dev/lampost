@@ -6,12 +6,14 @@ import BadgeContext from './BadgeContext';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import lampostAPI from '../../apis/lampost';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
 import {
   baseBackgroundColor,
   baseTextColor,
   iconColorsTable,
   screenSectionBackgroundColor,
   sectionBackgroundColor,
+  rnDefaultBackgroundColor,
 } from '../../utils/colorsTable';
 import { Provider as PaperProvider } from 'react-native-paper';
 import ActionButton from '../Utils/ActionButton';
@@ -222,6 +224,34 @@ const Container = (props) => {
             ) : (
               <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
             )}
+            <TouchableOpacity
+              style={{
+                position: 'absolute',
+                bottom: 10,
+                backgroundColor: rnDefaultBackgroundColor,
+                borderRadius: 10,
+                alignSelf: 'center',
+                // elevation: 5,
+                // shadowColor: '#000',
+                // shadowOffset: { width: 0, height: 0 },
+                // shadowOpacity: 0.1,
+                // shadowRadius: 5,
+              }}
+              onPress={() => appMenuBottomSheetRef.current.snapToIndex(1)}
+            >
+              <View
+                style={{
+                  backgroundColor: iconColorsTable['green1'],
+                  padding: 10,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderRadius: 10,
+                }}
+              >
+                <Foundation name='sheriff-badge' size={25} color={'white'} />
+                {/* <Text style={{ color: 'white' }}>Launch</Text> */}
+              </View>
+            </TouchableOpacity>
             <AppMenuBottomSheet />
             <BadgeDetailBottomSheet />
             <AddBadgeTagsBottomSheet />

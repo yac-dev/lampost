@@ -16,21 +16,21 @@ import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 const AppMenuBottomSheet = (props) => {
   const { auth, isIpad } = useContext(GlobalContext);
   const { appMenuBottomSheetRef, isMyPage } = useContext(UserContext);
-  const snapPoints = useMemo(() => ['8%', '45%', '80%'], []);
+  const snapPoints = useMemo(() => ['45%', '60%', '80%'], []);
   // ここに関しては、authじゃない限り、表示しないようにする。
   if (!auth.isAuthenticated || !isMyPage) {
     return null;
   } else {
     return (
       <GorhomBottomSheet
-        index={0}
+        index={-1}
         enableOverDrag={true}
         ref={appMenuBottomSheetRef}
         snapPoints={snapPoints}
         backdropComponent={(backdropProps) => (
-          <BottomSheetBackdrop {...backdropProps} appearsOnIndex={1} disappearsOnIndex={0} pressBehavior={0} />
+          <BottomSheetBackdrop {...backdropProps} appearsOnIndex={0} disappearsOnIndex={-1} />
         )}
-        enablePanDownToClose={false}
+        enablePanDownToClose={true}
         backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
         handleIndicatorStyle={{ backgroundColor: 'white' }}
         // keyboardBehavior={'interactive'}
@@ -44,9 +44,9 @@ const AppMenuBottomSheet = (props) => {
             flex: 1,
           }}
         >
-          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: isIpad ? 35 : 20 }}>
+          {/* <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: isIpad ? 35 : 20 }}>
             Add badges?
-          </Text>
+          </Text> */}
           <AppButtons />
           <MyConnections />
           {/* <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: 10, marginBottom: 15 }}>

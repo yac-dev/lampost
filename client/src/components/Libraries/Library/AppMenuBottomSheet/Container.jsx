@@ -15,18 +15,18 @@ import lampostAPI from '../../../../apis/lampost';
 
 const AppMenuBottomSheet = (props) => {
   const { appMenuBottomSheetRef, library, selectedRoll, setSelectedRoll } = useContext(LibraryContext);
-  const snapPoints = useMemo(() => ['8%', '30%', '80%'], []);
+  const snapPoints = useMemo(() => ['45%', '60%', '80%'], []);
 
   return (
     <GorhomBottomSheet
-      index={0}
+      index={-1}
       enableOverDrag={true}
       ref={appMenuBottomSheetRef}
       snapPoints={snapPoints}
       backdropComponent={(backdropProps) => (
-        <BottomSheetBackdrop {...backdropProps} appearsOnIndex={1} disappearsOnIndex={0} pressBehavior={0} />
+        <BottomSheetBackdrop {...backdropProps} appearsOnIndex={0} disappearsOnIndex={-1} />
       )}
-      enablePanDownToClose={false}
+      enablePanDownToClose={true}
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
       handleIndicatorStyle={{ backgroundColor: 'white' }}
       // keyboardBehavior={'interactive'}

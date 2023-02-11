@@ -15,6 +15,8 @@ import {
 
 import BadgeLabel from '../Utils/BadgeLabel';
 import FastImage from 'react-native-fast-image';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import Library from './Library';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
@@ -261,10 +263,40 @@ const Container = (props) => {
         <Text style={{ fontSize: 23, fontWeight: 'bold', padding: 10, color: 'white', marginBottom: 10 }}>
           Recently created
         </Text>
+
         {renderLibraries()}
+        <TouchableOpacity
+          style={{
+            position: 'absolute',
+            bottom: 10,
+            backgroundColor: rnDefaultBackgroundColor,
+            borderRadius: 10,
+            alignSelf: 'center',
+            // elevation: 5,
+            // shadowColor: '#000',
+            // shadowOffset: { width: 0, height: 0 },
+            // shadowOpacity: 0.1,
+            // shadowRadius: 5,
+          }}
+          onPress={() => appMenuBottomSheetRef.current.snapToIndex(1)}
+        >
+          <View
+            style={{
+              backgroundColor: iconColorsTable['blue1'],
+              padding: 10,
+              flexDirection: 'row',
+              alignItems: 'center',
+              borderRadius: 10,
+            }}
+          >
+            <MaterialIcons name='create-new-folder' size={25} color={'white'} />
+            {/* <Text style={{ color: 'white' }}>Launch</Text> */}
+          </View>
+        </TouchableOpacity>
         <AppMenuBottomSheet />
         <CreateLibraryBottomSheet />
         <LibraryOverviewBottomSheet />
+
         <InfoDetailBottomSheet />
         <ConfirmCancelCreatingLibraryModal />
       </View>

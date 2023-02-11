@@ -23,8 +23,8 @@ const AppButtons = (props) => {
       <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 15 }}>
         <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
           <AppButton
-            backgroundColor={backgroundColorsTable['red1']}
-            icon={<MaterialIcons name='create-new-folder' size={35} color={iconColorsTable['red1']} />}
+            backgroundColor={backgroundColorsTable['blue1']}
+            icon={<MaterialIcons name='create-new-folder' size={35} color={iconColorsTable['blue1']} />}
             label='Create a library'
             onAppMenuButtonPress={() => {
               appMenuBottomSheetRef.current.snapToIndex(0);

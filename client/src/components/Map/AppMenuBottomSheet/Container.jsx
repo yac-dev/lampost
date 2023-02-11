@@ -12,26 +12,26 @@ import { setIsConfirmHostMeetupModalOpen } from '../../../redux/actionCreators/m
 import lampostAPI from '../../../apis/lampost';
 
 const AppMenusBottomSheet = (props) => {
-  const snapPoints = useMemo(() => ['8%', '30%', '80%'], []);
+  const snapPoints = useMemo(() => ['45%', '60%', '80%'], []);
   const { auth, myUpcomingMeetupAndChatsTable, totalUnreadChatsCount, navigation, isIpad } = useContext(GlobalContext);
   const { appMenuBottomSheetRef } = useContext(MapContext);
 
   return (
     <GorhomBottomSheet
-      index={0}
+      index={-1}
       enableOverDrag={true}
       ref={appMenuBottomSheetRef}
       snapPoints={snapPoints}
       backdropComponent={(backdropProps) => (
-        <BottomSheetBackdrop {...backdropProps} appearsOnIndex={1} disappearsOnIndex={0} pressBehavior={0} />
+        <BottomSheetBackdrop {...backdropProps} appearsOnIndex={0} disappearsOnIndex={-1} />
       )}
-      enablePanDownToClose={false}
+      enablePanDownToClose={true}
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
       handleIndicatorStyle={{ backgroundColor: 'white' }}
     >
-      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, paddingTop: isIpad ? 10 : 0, flex: 1 }}>
+      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
         {/* <ScrollView contentContainerStyle={{ paddingBottom: 100 }}> */}
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Text
             style={{
               fontWeight: 'bold',
@@ -57,7 +57,7 @@ const AppMenusBottomSheet = (props) => {
               <Text style={{ color: 'white' }}>{totalUnreadChatsCount}</Text>
             </View>
           ) : null}
-        </View>
+        </View> */}
         {auth.data ? (
           <>
             <AppMenuButtons />
