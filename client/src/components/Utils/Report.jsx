@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
-import GlobalContext from '../../../../GlobalContext';
-import LoungeContext from './LoungeContext';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,23 +7,22 @@ import {
   TextInput,
   KeyboardAvoidingView,
   InputAccessoryView,
-  Keyboard,
 } from 'react-native';
 import {
   baseBackgroundColor,
   baseTextColor,
-  screenSectionBackgroundColor,
   iconColorsTable,
+  screenSectionBackgroundColor,
   inputBackgroundColor,
   sectionBackgroundColor,
-} from '../../../../utils/colorsTable';
-import ActionButton from '../../../Utils/ActionButton';
-import lampostAPI from '../../../../apis/lampost';
+} from '../../utils/colorsTable';
+import lampostAPI from '../../apis/lampost';
+import ActionButton from './ActionButton';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
-const ReportUser = (props) => {
-  const inputAccessoryViewID = 'REPORT_USER';
-  const { auth, setLoading, setSnackBar } = useContext(GlobalContext);
+const Report = (props) => {
+  const inputAccessoryViewID = 'REPORT';
   const [reportIssueOptions, setReportIssueOptions] = useState({
     mlm: {
       label: 'mlm',
@@ -72,10 +69,10 @@ const ReportUser = (props) => {
       reason: 'Suicide or self-injury',
     },
   });
-  const [description, setDescription] = useState('');
+
   const [selectedIssue, setSelectedIssue] = useState({});
   const [isDisabledSubmit, setIsDisabledSubmit] = useState(true);
-
+  const [description, setDescription] = useState('');
   useEffect(() => {
     if (Object.keys(selectedIssue).length !== 0) {
       if (!description.length) {
@@ -88,28 +85,28 @@ const ReportUser = (props) => {
     }
   }, [selectedIssue, description]);
 
-  const onSubmitPress = async () => {
-    // ここでapiを送ろう。
-    const payload = {
-      meetupId: props.route.params.meetupId,
-      userId: auth.data._id,
-      reportedUserId: props.route.params.userId,
-      issue: selectedIssue,
-      description,
-    };
-    setLoading(true);
-    const result = await lampostAPI.post('/reports/meetupmember', payload);
-    console.log(payload);
-    setLoading(false);
-    setSelectedIssue({});
-    setDescription('');
-    setSnackBar({
-      isVisible: true,
-      barType: 'success',
-      message: 'Thanks for your submission.',
-      duration: 5000,
-    });
-  };
+  // const onSubmitPress = async () => {
+  //   // ここでapiを送ろう。
+  //   const payload = {
+  //     meetupId: props.route.params.meetupId,
+  //     userId: auth.data._id,
+  //     reportedUserId: props.route.params.userId,
+  //     issue: selectedIssue,
+  //     description,
+  //   };
+  //   setLoading(true);
+  //   const result = await lampostAPI.post('/reports/meetupmember', payload);
+  //   console.log(payload);
+  //   setLoading(false);
+  //   setSelectedIssue({});
+  //   setDescription('');
+  //   setSnackBar({
+  //     isVisible: true,
+  //     barType: 'success',
+  //     message: 'Thanks for your submission.',
+  //     duration: 5000,
+  //   });
+  // };
 
   const renderReportIssueOptions = () => {
     const list = Object.values(reportIssueOptions).map((reportIssue, index) => {
@@ -141,18 +138,16 @@ const ReportUser = (props) => {
       behavior='position'
       keyboardVerticalOffset={70}
       style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 20 }}
-      // contentContainerStyle={{ paddingBottom: 30 }}
     >
       <ScrollView>
-        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>
-          Reporting {props.route.params.userName}
-        </Text>
-        <Text style={{ color: 'white', marginBottom: 10, fontWeight: 'bold', fontSize: 17 }}>
-          What kind of issue with {props.route.params.userName}?
-        </Text>
-        <Text style={{ color: baseTextColor, marginBottom: 10 }}>
-          Please choose a issue option down below. Your report will be sent to meetup launcher and developer.
-        </Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+          <MaterialIcons name='report-problem' color='white' size={25} style={{ marginRight: 10 }} />
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>
+            Reporting "{props.route.params.title}"
+          </Text>
+        </View>
+        <Text style={{ color: 'white', marginBottom: 10, fontWeight: 'bold', fontSize: 17 }}>{props.issueHeader}</Text>
+        <Text style={{ color: baseTextColor, marginBottom: 10 }}>{props.issueDescription}</Text>
         {renderReportIssueOptions()}
         <Text style={{ color: 'white', marginBottom: 10, fontWeight: 'bold', fontSize: 20 }}>Description</Text>
         <Text style={{ color: baseTextColor, marginBottom: 10 }}>
@@ -174,11 +169,7 @@ const ReportUser = (props) => {
           onChangeText={setDescription}
           autoCapitalize='none'
         />
-        <InputAccessoryView
-          nativeID={inputAccessoryViewID}
-          backgroundColor={sectionBackgroundColor}
-          // style={{ paddingTop: 10, paddingBottom: 10, paddingRight: 10 }}
-        >
+        <InputAccessoryView nativeID={inputAccessoryViewID} backgroundColor={sectionBackgroundColor}>
           <View style={{ alignItems: 'flex-end' }}>
             <TouchableOpacity
               onPress={() => {
@@ -195,7 +186,7 @@ const ReportUser = (props) => {
             icon={<MaterialCommunityIcons name='check' size={25} color={'white'} />}
             backgroundColor={iconColorsTable['blue1']}
             onActionButtonPress={() => {
-              onSubmitPress();
+              props.onSubmitPress();
             }}
             isDisabled={isDisabledSubmit}
           />
@@ -205,4 +196,4 @@ const ReportUser = (props) => {
   );
 };
 
-export default ReportUser;
+export default Report;

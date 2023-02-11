@@ -1,4 +1,5 @@
 import React, { useMemo, useContext } from 'react';
+import GlobalContext from '../../../../GlobalContext';
 import LoungeContext from './LoungeContext';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -13,7 +14,8 @@ import {
 import UserInfo from '../../../Utils/UserInfo';
 
 const CrewBottomSheet = (props) => {
-  const snapPoints = useMemo(() => ['30%', '80%'], []);
+  const snapPoints = useMemo(() => ['45%', '80%'], []);
+  const { auth } = useContext(GlobalContext);
   const { meetup, navigation, crewBottomSheetRef } = useContext(LoungeContext);
 
   const renderCrew = () => {
@@ -27,29 +29,12 @@ const CrewBottomSheet = (props) => {
               padding: 10,
             }}
             onPress={() => {
-              if (props.auth.data._id !== user._id) {
+              if (auth.data._id !== user._id) {
                 navigation.navigate('User', { userId: user._id });
               }
             }}
           >
             <UserInfo user={user} />
-            {/* <View
-              style={{
-                backgroundColor: iconColorsTable['blue1'],
-                marginRight: 20,
-                borderRadius: 10,
-                width: 50,
-                height: 50,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <FontAwesome5 name='user-astronaut' color='white' size={30} />
-            </View>
-            <View>
-              <Text style={{ color: baseTextColor }}>{user.name}</Text>
-              <Text style={{ color: baseTextColor }}>Badges in here</Text>
-            </View> */}
           </TouchableOpacity>
         );
       });
@@ -87,8 +72,4 @@ const CrewBottomSheet = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return { auth: state.auth };
-};
-
-export default connect(mapStateToProps)(CrewBottomSheet);
+export default CrewBottomSheet;

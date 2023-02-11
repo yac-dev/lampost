@@ -37,7 +37,7 @@ const Container = (props) => {
             key={index}
             style={{ padding: 10, flexDirection: 'row', alignItems: 'center' }}
             onPress={() => {
-              appMenuBottomSheetRef.current.snapToIndex(0);
+              appMenuBottomSheetRef.current.close();
               navigation.navigate('Library', { libraryId: library._id });
             }}
           >

@@ -27,7 +27,7 @@ const AppButtons = (props) => {
             icon={<MaterialIcons name='create-new-folder' size={35} color={iconColorsTable['blue1']} />}
             label='Create a library'
             onAppMenuButtonPress={() => {
-              appMenuBottomSheetRef.current.snapToIndex(0);
+              appMenuBottomSheetRef.current.close();
               createLibraryBottomSheetRef.current.snapToIndex(0);
             }}
           />

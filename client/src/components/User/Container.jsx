@@ -224,34 +224,38 @@ const Container = (props) => {
             ) : (
               <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
             )}
-            <TouchableOpacity
-              style={{
-                position: 'absolute',
-                bottom: 10,
-                backgroundColor: rnDefaultBackgroundColor,
-                borderRadius: 10,
-                alignSelf: 'center',
-                // elevation: 5,
-                // shadowColor: '#000',
-                // shadowOffset: { width: 0, height: 0 },
-                // shadowOpacity: 0.1,
-                // shadowRadius: 5,
-              }}
-              onPress={() => appMenuBottomSheetRef.current.snapToIndex(1)}
-            >
-              <View
+            {!auth.isAuthenticated || !isMyPage ? null : (
+              <TouchableOpacity
                 style={{
-                  backgroundColor: iconColorsTable['green1'],
-                  padding: 10,
-                  flexDirection: 'row',
-                  alignItems: 'center',
+                  position: 'absolute',
+                  bottom: 20,
+                  backgroundColor: rnDefaultBackgroundColor,
                   borderRadius: 10,
+                  alignSelf: 'center',
+                  // elevation: 5,
+                  // shadowColor: '#000',
+                  // shadowOffset: { width: 0, height: 0 },
+                  // shadowOpacity: 0.1,
+                  // shadowRadius: 5,
                 }}
+                onPress={() => appMenuBottomSheetRef.current.snapToIndex(1)}
               >
-                <Foundation name='sheriff-badge' size={25} color={'white'} />
-                {/* <Text style={{ color: 'white' }}>Launch</Text> */}
-              </View>
-            </TouchableOpacity>
+                <View
+                  style={{
+                    backgroundColor: iconColorsTable['green1'],
+                    padding: 10,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderRadius: 10,
+                  }}
+                >
+                  <Foundation name='sheriff-badge' size={25} color={'white'} style={{ marginRight: 10 }} />
+                  <Text style={{ color: 'white' }}>Menu</Text>
+                  <MaterialCommunityIcons name='chevron-down' size={25} color={'white'} />
+                </View>
+              </TouchableOpacity>
+            )}
+
             <AppMenuBottomSheet />
             <BadgeDetailBottomSheet />
             <AddBadgeTagsBottomSheet />

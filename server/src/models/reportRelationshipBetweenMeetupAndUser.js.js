@@ -13,6 +13,7 @@ const reportRelationshipBetweenMeetupAndUserSchema = new mongoose.Schema({
     label: String,
     reason: String,
   },
+  description: String,
 });
 
 const ReportRelationshipBetweenMeetupAndUser = mongoose.model(

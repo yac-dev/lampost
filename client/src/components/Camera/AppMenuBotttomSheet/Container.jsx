@@ -11,7 +11,7 @@ import { Ionicons } from '@expo/vector-icons';
 const AppMenuBottomSheet = (props) => {
   const { auth, isIpad } = useContext(GlobalContext);
   const { appMenuBottomSheetRef, cameraMode } = useContext(CameraContext);
-  const snapPoints = useMemo(() => ['8%', '45%', '80%'], []);
+  const snapPoints = useMemo(() => ['45%', '60%', '80%'], []);
 
   const renderCameraMode = () => {
     switch (cameraMode) {
@@ -28,21 +28,21 @@ const AppMenuBottomSheet = (props) => {
 
   return (
     <GorhomBottomSheet
-      index={0}
+      index={-1}
       enableOverDrag={true}
       ref={appMenuBottomSheetRef}
       snapPoints={snapPoints}
       backdropComponent={(backdropProps) => (
-        <BottomSheetBackdrop {...backdropProps} appearsOnIndex={1} disappearsOnIndex={0} pressBehavior={0} />
+        <BottomSheetBackdrop {...backdropProps} appearsOnIndex={0} disappearsOnIndex={-1} />
       )}
-      enablePanDownToClose={false}
+      enablePanDownToClose={true}
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
       handleIndicatorStyle={{ backgroundColor: 'white' }}
       // keyboardBehavior={'interactive'}
       // onClose={() => onSelectedItemBottomSheetClose()}
     >
-      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, paddingTop: isIpad ? 10 : 0, flex: 1 }}>
-        <View
+      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
+        {/* <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -52,7 +52,7 @@ const AppMenuBottomSheet = (props) => {
         >
           <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>Change the mode?</Text>
           {renderCameraMode()}
-        </View>
+        </View> */}
         <AppMenuButtons />
         <AddAssetEffect />
       </BottomSheetView>

@@ -47,7 +47,7 @@ const AppButtons = (props) => {
           icon={<Foundation name='sheriff-badge' size={35} color={iconColorsTable['lightGreen1']} />}
           label='Add badges'
           onAppMenuButtonPress={() => {
-            appMenuBottomSheetRef.current.snapToIndex(0);
+            appMenuBottomSheetRef.current.close();
             navigation.navigate('Add badges', { fromComponent: 'ADD_USER_BADGES' });
           }}
         />

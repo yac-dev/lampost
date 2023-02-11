@@ -7,7 +7,13 @@ import { Text, View, TouchableOpacity } from 'react-native';
 import lampostAPI from '../../apis/lampost';
 import { Camera, CameraType } from 'expo-camera';
 import AppMenuBottomSheet from './AppMenuBotttomSheet/Container';
-import { appBottomSheetBackgroundColor, baseBackgroundColor, baseTextColor } from '../../utils/colorsTable';
+import {
+  appBottomSheetBackgroundColor,
+  baseBackgroundColor,
+  baseTextColor,
+  rnDefaultBackgroundColor,
+  iconColorsTable,
+} from '../../utils/colorsTable';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -187,6 +193,33 @@ const Container = (props) => {
             </View>
           </Camera>
         </View>
+        {auth.isAuthenticated ? (
+          <TouchableOpacity
+            style={{
+              position: 'absolute',
+              bottom: 20,
+              backgroundColor: rnDefaultBackgroundColor,
+              borderRadius: 10,
+              alignSelf: 'center',
+            }}
+            onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
+          >
+            <View
+              style={{
+                backgroundColor: iconColorsTable['violet1'],
+                padding: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderRadius: 10,
+              }}
+            >
+              <MaterialCommunityIcons name='camera' size={25} color={'white'} style={{ marginRight: 10 }} />
+              <Text style={{ color: 'white' }}>Menu</Text>
+              <MaterialCommunityIcons name='chevron-down' size={25} color={'white'} />
+            </View>
+          </TouchableOpacity>
+        ) : null}
+
         <AppMenuBottomSheet />
         <WarningModal />
       </View>

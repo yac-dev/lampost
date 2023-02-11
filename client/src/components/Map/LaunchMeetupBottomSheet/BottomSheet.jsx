@@ -29,9 +29,9 @@ const BottomSheet = (props) => {
       keyboardBehavior={'extend'}
       enablePanDownToClose={false}
       // onClose={() => onFormBottomSheetClose()}
-      backdropComponent={(backdropProps) => (
-        <BottomSheetBackdrop {...backdropProps} appearsOnIndex={1} disappearsOnIndex={0} pressBehavior={'none'} />
-      )}
+      // backdropComponent={(backdropProps) => (
+      //   <BottomSheetBackdrop {...backdropProps} appearsOnIndex={1} disappearsOnIndex={0} pressBehavior={'none'} />
+      // )}
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
       handleIndicatorStyle={{ backgroundColor: 'white' }}
     >

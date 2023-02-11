@@ -146,7 +146,7 @@ const Container = (props) => {
           <TouchableOpacity
             style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}
             onPress={() => {
-              appMenuBottomSheetRef.current.snapToIndex(0);
+              appMenuBottomSheetRef.current.close();
               navigation.navigate('Lounge', { meetupId: meetupAndChatsTable._id });
             }}
           >
@@ -179,7 +179,7 @@ const Container = (props) => {
           <TouchableOpacity
             style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}
             onPress={() => {
-              appMenuBottomSheetRef.current.snapToIndex(0);
+              appMenuBottomSheetRef.current.close();
               navigation.navigate('Lounge', { meetupId: meetupAndChatsTable._id });
             }}
           >
@@ -236,7 +236,7 @@ const Container = (props) => {
   const getMeetup = async (meetupId) => {
     const result = await lampostAPI.get(`/meetups/${meetupId}/selected`);
     const { meetup } = result.data;
-    appMenuBottomSheetRef.current.snapToIndex(0);
+    appMenuBottomSheetRef.current.close();
     setSelectedMeetup(meetup);
     selectedMeetupBottomSheetRef.current.snapToIndex(0);
   };

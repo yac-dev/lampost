@@ -3,8 +3,7 @@ import LoungeContext from '../LoungeContext';
 import { View, Text, ScrollView } from 'react-native';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Foundation } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { iconColorsTable, backgroundColorsTable, sectionBackgroundColor } from '../../../../../utils/colorsTable';
 import AppButton from '../../../../Utils/AppMenuButton';
 
@@ -18,17 +17,17 @@ const AppButtons = () => {
           icon={<MaterialCommunityIcons name='send' size={35} color={iconColorsTable['blue1']} />}
           label='Send a chat'
           onAppMenuButtonPress={() => {
-            appMenuBottomSheetRef.current.snapToIndex(0);
+            appMenuBottomSheetRef.current.close();
             sendChatBottomSheetRef.current.snapToIndex(0);
             textInputRef.current.focus();
           }}
         />
         <AppButton
           backgroundColor={backgroundColorsTable['violet1']}
-          icon={<FontAwesome5 name='user-astronaut' size={30} color={iconColorsTable['violet1']} />}
+          icon={<MaterialIcons name='groups' size={30} color={iconColorsTable['violet1']} />}
           label='Members'
           onAppMenuButtonPress={() => {
-            appMenuBottomSheetRef.current.snapToIndex(0);
+            appMenuBottomSheetRef.current.close();
             crewBottomSheetRef.current.snapToIndex(0);
           }}
         />

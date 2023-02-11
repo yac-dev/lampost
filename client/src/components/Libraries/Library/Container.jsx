@@ -3,7 +3,8 @@ import LibraryContext from './LibraryContext';
 import GlobalContext from '../../../GlobalContext';
 import lampostAPI from '../../../apis/lampost';
 import { View, Text, TouchableOpacity, ScrollView, Dimensions, Platform } from 'react-native';
-import { baseBackgroundColor } from '../../../utils/colorsTable';
+import { baseBackgroundColor, iconColorsTable, rnDefaultBackgroundColor } from '../../../utils/colorsTable';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import FastImage from 'react-native-fast-image';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import MembersBottomSheet from './MembersBottomSheet';
@@ -139,6 +140,33 @@ const Container = (props) => {
           <Description />
           {renderAssets()}
         </ScrollView>
+        {auth.isAuthenticated ? (
+          <TouchableOpacity
+            style={{
+              position: 'absolute',
+              bottom: 20,
+              backgroundColor: rnDefaultBackgroundColor,
+              borderRadius: 10,
+              alignSelf: 'center',
+            }}
+            onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
+          >
+            <View
+              style={{
+                backgroundColor: iconColorsTable['grey1'],
+                padding: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderRadius: 10,
+              }}
+            >
+              <MaterialCommunityIcons name='plus' size={25} color={'white'} style={{ marginRight: 10 }} />
+              <Text style={{ color: 'white' }}>Menu</Text>
+              <MaterialCommunityIcons name='chevron-down' size={25} color={'white'} />
+            </View>
+          </TouchableOpacity>
+        ) : null}
+
         <AppMenuBottomSheet />
         <MembersBottomSheet />
         <ConfirmLeaveLibrary />

@@ -7,7 +7,7 @@ import MapContext from './MeetupContext';
 import { connect } from 'react-redux';
 import { StyleSheet, Platform, View, StatusBar, Dimensions, TouchableOpacity, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { rnDefaultBackgroundColor } from '../../utils/colorsTable';
+import { baseTextColor, rnDefaultBackgroundColor } from '../../utils/colorsTable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // components
@@ -44,7 +44,7 @@ import { iconColorsTable } from '../../utils/colorsTable';
 
 const Map = (props) => {
   // setAuthがありませんよ、てきなerrorを出して欲しいわ。これなんとかならんかな。
-  const { auth, setAuth, loading, setLoading, setSnackBar, setMyUpcomingMeetupAndChatsTable } =
+  const { auth, setAuth, loading, setLoading, setSnackBar, setMyUpcomingMeetupAndChatsTable, totalUnreadChatsCount } =
     useContext(GlobalContext);
   const [region, setRegion] = useState(null);
   const [currentSnap, setCurrentSnap] = useState();
@@ -248,40 +248,64 @@ const Map = (props) => {
             ) : null}
             <MapMarkers />
           </MapView>
-          <TouchableOpacity
-            style={{
-              position: 'absolute',
-              bottom: 10,
-              backgroundColor: rnDefaultBackgroundColor,
-              borderRadius: 10,
-              // elevation: 5,
-              // shadowColor: '#000',
-              // shadowOffset: { width: 0, height: 0 },
-              // shadowOpacity: 0.1,
-              // shadowRadius: 5,
-            }}
-            onPress={() => appMenuBottomSheetRef.current.snapToIndex(1)}
-          >
-            <View
+          {auth.isAuthenticated ? (
+            <TouchableOpacity
               style={{
-                backgroundColor: iconColorsTable['red1'],
-                padding: 10,
-                flexDirection: 'row',
-                alignItems: 'center',
+                position: 'absolute',
+                bottom: 20,
+                backgroundColor: rnDefaultBackgroundColor,
                 borderRadius: 10,
               }}
+              onPress={() => appMenuBottomSheetRef.current.snapToIndex(1)}
             >
-              <MaterialCommunityIcons name='rocket-launch' size={25} color={'white'} />
-              {/* <Text style={{ color: 'white' }}>Launch</Text> */}
-            </View>
-          </TouchableOpacity>
+              <View
+                style={{
+                  backgroundColor: iconColorsTable['red1'],
+                  padding: 10,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderRadius: 10,
+                }}
+              >
+                <MaterialCommunityIcons name='rocket-launch' size={25} color={'white'} style={{ marginRight: 10 }} />
+                <Text style={{ color: 'white' }}>Menu</Text>
+                <MaterialCommunityIcons name='chevron-down' size={25} color={'white'} />
+              </View>
+              {totalUnreadChatsCount ? (
+                <View
+                  style={{
+                    position: 'absolute',
+                    right: -7,
+                    top: -7,
+                    backgroundColor: rnDefaultBackgroundColor,
+                    width: 20,
+                    height: 20,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: 20 / 2,
+                  }}
+                >
+                  <View
+                    style={{
+                      backgroundColor: iconColorsTable['red1'],
+                      width: '100%',
+                      height: '100%',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: 20 / 2,
+                    }}
+                  >
+                    <Text style={{ color: 'white' }}>{totalUnreadChatsCount}</Text>
+                  </View>
+                </View>
+              ) : null}
+            </TouchableOpacity>
+          ) : null}
 
           <ConfirmLaunchMeetupModal />
           <CancelLaunchMeetupModal />
           <ConfirmStartMeetup />
           <ConfirmFinishMeetup />
-          {/* <SnackBar /> */}
-
           <AppMenusBottomSheet />
           <LaunchMeetupBottomSheet navigation={props.navigation} route={props.route} />
           <SelectedMeetup />

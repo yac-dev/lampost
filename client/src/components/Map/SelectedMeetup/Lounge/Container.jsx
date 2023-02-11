@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import { Touchable, View, TouchableOpacity, Text } from 'react-native';
 import { Avatar, IconButton } from 'react-native-paper';
 import lampostAPI from '../../../../apis/lampost';
-import { enableScreens } from 'react-native-screens';
-import { baseBackgroundColor } from '../../../../utils/colorsTable';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
+import { baseBackgroundColor, rnDefaultBackgroundColor, iconColorsTable } from '../../../../utils/colorsTable';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import SendChatBottomSheet from './SendChatBottomSheet';
 import CrewBottomSheet from './CrewBottomSheet';
@@ -176,6 +177,30 @@ const LoungeContainer = (props) => {
           <Text style={{ color: 'red', fontSize: 30 }}>Press to send message</Text>
         </TouchableOpacity> */}
         <Chats />
+        <TouchableOpacity
+          style={{
+            position: 'absolute',
+            bottom: 20,
+            backgroundColor: rnDefaultBackgroundColor,
+            borderRadius: 10,
+            alignSelf: 'center',
+          }}
+          onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
+        >
+          <View
+            style={{
+              backgroundColor: iconColorsTable['lightBlue1'],
+              padding: 10,
+              flexDirection: 'row',
+              alignItems: 'center',
+              borderRadius: 10,
+            }}
+          >
+            <MaterialCommunityIcons name='send' size={25} color={'white'} style={{ marginRight: 10 }} />
+            <Text style={{ color: 'white' }}>Menu</Text>
+            <MaterialCommunityIcons name='chevron-down' size={25} color={'white'} />
+          </View>
+        </TouchableOpacity>
         <AppMenuBottomSheet />
         <SendChatBottomSheet />
         <CrewBottomSheet />

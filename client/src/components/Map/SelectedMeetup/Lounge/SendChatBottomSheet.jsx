@@ -59,7 +59,7 @@ const SendChatBottomSheet = (props) => {
     setReplyingTo(null);
     Keyboard.dismiss();
     sendChatBottomSheetRef.current.close();
-    appMenuBottomSheetRef.current.snapToIndex(0);
+    // appMenuBottomSheetRef.current.snapToIndex(0);
   };
 
   return (
@@ -169,7 +169,7 @@ const SendChatBottomSheet = (props) => {
                   setSendingText('');
                   setReplyingTo(null);
                   sendChatBottomSheetRef.current.close();
-                  appMenuBottomSheetRef.current.snapToIndex(0);
+                  // appMenuBottomSheetRef.current.snapToIndex(0);
                 }}
               >
                 <Text style={{ color: iconColorsTable['blue1'], fontWeight: 'bold' }}>Cancel</Text>

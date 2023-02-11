@@ -5,11 +5,12 @@ import ReportAsset from '../models/reportAsset';
 
 export const reportMeetup = async (request, response) => {
   try {
-    const { meetupId, userId, issue } = request.body;
+    const { meetupId, userId, issue, description } = request.body;
     const reportRelationshipBetweenMeetupAndUser = await ReportRelationshipBetweenMeetupAndUser.create({
       meetup: meetupId,
       user: userId,
-      issue: issue,
+      issue,
+      description,
     });
 
     response.status(201).json({

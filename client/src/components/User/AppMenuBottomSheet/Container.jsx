@@ -40,7 +40,6 @@ const AppMenuBottomSheet = (props) => {
           style={{
             paddingLeft: 20,
             paddingRight: 20,
-            paddingTop: isIpad ? 10 : 0,
             flex: 1,
           }}
         >
