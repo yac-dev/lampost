@@ -18,6 +18,14 @@ export const blockUser = async (request, response) => {
 
 export const unblockUser = async (request, response) => {
   try {
+    const { userId, blockingUserId } = request.body;
+    const userBlockingRelationship = await UserBlockingRelationship.findOneAndRemove({
+      user: userId,
+      blocking: blockingUserId,
+    });
+    response.status(204).json({
+      message: 'success',
+    });
   } catch (error) {
     console.log(error);
   }

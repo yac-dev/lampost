@@ -33,7 +33,7 @@ import FlagUserMenuBottomSheet from './FlagUserMenuBottomSheet';
 
 // badgeを取ってきて、skillも取ってくる。subscriberの数も返すし、connectionの数も返す。
 const Container = (props) => {
-  const { auth } = useContext(GlobalContext);
+  const { auth, setLoading, setSnackBar } = useContext(GlobalContext);
   const [user, setUser] = useState(null);
   const [badgeDatas, setBadgeDatas] = useState([]);
   const [pressedBadgeData, setPressedBadgeData] = useState(null);
@@ -65,11 +65,12 @@ const Container = (props) => {
   }, []);
 
   const getUser = async () => {
-    const result = await lampostAPI.get(`/users/${props.route.params.userId}`);
-    const { user } = result.data;
+    const result = await lampostAPI.post(`/users/${props.route.params.userId}`, { userId: auth.data._id });
+    const { user, isBlocking } = result.data;
     // console.log(user);
     setUser(user);
-  };
+    setIsBlocked(isBlocking);
+  }; // ここ、4回queryしているのはなぜだ？？
   useEffect(() => {
     getUser();
   }, []);
@@ -198,7 +199,22 @@ const Container = (props) => {
                     backgroundColor: screenSectionBackgroundColor,
                     borderRadius: 10,
                   }}
-                  onPress={() => setIsBlocked(false)}
+                  onPress={async () => {
+                    const payload = {
+                      userId: auth.data._id,
+                      blockingUserId: user._id,
+                    };
+                    setLoading(true);
+                    const result = await lampostAPI.post('/userblockingrelationships/unblock', payload);
+                    setLoading(false);
+                    setSnackBar({
+                      isVisible: true,
+                      barType: 'success',
+                      message: 'Unblocked this user.',
+                      duration: 5000,
+                    });
+                    setIsBlocked(false);
+                  }}
                 >
                   <Text style={{ color: baseTextColor }}>Unblock this user</Text>
                 </TouchableOpacity>

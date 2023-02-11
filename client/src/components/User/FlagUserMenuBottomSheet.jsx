@@ -1,14 +1,18 @@
 import React, { useMemo, useContext } from 'react';
+import GlobalContext from '../../GlobalContext';
 import { View, Text, TouchableOpacity } from 'react-native';
 import UserContext from './UserContext';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { appBottomSheetBackgroundColor, baseTextColor } from '../../utils/colorsTable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import lampostAPI from '../../apis/lampost';
 
 const FlagUserMenuBottomSheet = () => {
   const snapPoints = useMemo(() => ['30%'], []);
-  const { flagUserMenuBottomSheetRef, setIsConfirmBlockUserModalOpen } = useContext(UserContext);
+  const { auth, setLoading, setSnackBar } = useContext(GlobalContext);
+  const { flagUserMenuBottomSheetRef, setIsConfirmBlockUserModalOpen, isBlocked, user, setIsBlocked } =
+    useContext(UserContext);
 
   return (
     <GorhomBottomSheet
@@ -29,19 +33,42 @@ const FlagUserMenuBottomSheet = () => {
           style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}
           onPress={() => flagUserMenuBottomSheetRef.current.close()}
         >
-          <MaterialIcons name='report-problem' color={baseTextColor} size={20} style={{ marginRight: 10 }} />
           <Text style={{ color: baseTextColor }}>Report this user</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}
-          onPress={() => {
-            flagUserMenuBottomSheetRef.current.close();
-            setIsConfirmBlockUserModalOpen(true);
-          }}
-        >
-          <MaterialCommunityIcons name='block-helper' color={baseTextColor} size={20} style={{ marginRight: 10 }} />
-          <Text style={{ color: baseTextColor }}>Block this user</Text>
-        </TouchableOpacity>
+        {isBlocked ? (
+          <TouchableOpacity
+            style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}
+            onPress={async () => {
+              const payload = {
+                userId: auth.data._id,
+                blockingUserId: user._id,
+              };
+              flagUserMenuBottomSheetRef.current.close();
+              setLoading(true);
+              const result = await lampostAPI.post('/userblockingrelationships/unblock', payload);
+              setLoading(false);
+              setSnackBar({
+                isVisible: true,
+                barType: 'success',
+                message: 'Unblocked this user.',
+                duration: 5000,
+              });
+              setIsBlocked(false);
+            }}
+          >
+            <Text style={{ color: baseTextColor }}>Unblock this user</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}
+            onPress={() => {
+              flagUserMenuBottomSheetRef.current.close();
+              setIsConfirmBlockUserModalOpen(true);
+            }}
+          >
+            <Text style={{ color: baseTextColor }}>Block this user</Text>
+          </TouchableOpacity>
+        )}
       </BottomSheetView>
     </GorhomBottomSheet>
   );
