@@ -9,6 +9,7 @@ const Stack = createNativeStackNavigator();
 import LogInOrSignUp from '../Auth/Container';
 import SignUp from '../Auth/SignUp';
 import LogIn from '../Auth/LogIn';
+import EULA from '../Auth/EULA';
 
 import UserHome from '../User/Container';
 import Launched from '../User/LaunchedMeetups/Container';
@@ -217,6 +218,21 @@ const Auth = (props) => {
           options={{
             headerShown: true,
             title: 'Signup',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          }}
+        />
+        <Stack.Screen
+          name='EULA'
+          component={EULA}
+          options={{
+            headerShown: true,
+            title: 'EULA',
             headerStyle: {
               backgroundColor: appBottomSheetBackgroundColor,
             },
