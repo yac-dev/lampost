@@ -57,19 +57,17 @@ const ActionButtons = (props) => {
             />
           )}
 
-          {/* <ActionButton
+          <ActionButton
             label='Report this library'
-            icon={
-              <MaterialIcons
-                name='report-problem'
-                size={25}
-                color={iconColorsTable['red1']}
-                style={{ marginRight: 10 }}
-              />
+            icon={<MaterialIcons name='report-problem' size={25} color='white' />}
+            backgroundColor={iconColorsTable['blue1']}
+            onActionButtonPress={() =>
+              navigation.navigate('Report library', {
+                libraryId: selectedLibrary._id,
+                libraryName: selectedLibrary.name,
+              })
             }
-            backgroundColor={backgroundColorsTable['red1']}
-            onActionButtonPress={() => console.log('press action button report')}
-          /> */}
+          />
         </View>
       </ScrollView>
     );
@@ -87,8 +85,4 @@ const ActionButtons = (props) => {
   }
 };
 
-const mapStateToProps = (state) => {
-  return { auth: state.auth };
-};
-
-export default connect(mapStateToProps)(ActionButtons);
+export default ActionButtons;

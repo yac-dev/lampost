@@ -13,6 +13,7 @@ import Asset from '../Libraries/Library/Asset/Container';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
 import AddBadges from '../Utils/AddBadges/Container';
 import AddAssets from '../Utils/AddAssets/Container';
+import ReportLibrary from '../Libraries/ReportLibrary';
 import ReportAsset from '../Utils/ReportAsset';
 
 const LibraryNavigator = () => {
@@ -85,6 +86,20 @@ const LibraryNavigator = () => {
         <Stack.Screen
           name='Report asset'
           component={ReportAsset}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          })}
+        />
+        <Stack.Screen
+          name='Report library'
+          component={ReportLibrary}
           options={({ navigation }) => ({
             headerShown: true,
             headerStyle: {
