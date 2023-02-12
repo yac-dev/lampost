@@ -64,23 +64,21 @@ const Container = (props) => {
       <View style={{ position: 'absolute', bottom: 20, alignSelf: 'center' }}>
         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
           <Text style={{ color: baseTextColor }}>By signing up, you accept Lampost's&nbsp;</Text>
-          <TouchableOpacity style={{ borderBottomWidth: 0.5, borderBottomColor: baseTextColor }}>
-            <Text style={{ color: baseTextColor }}>Terms of Service</Text>
+          <TouchableOpacity
+            style={{ borderBottomWidth: 0.5, borderBottomColor: baseTextColor }}
+            onPress={() => props.navigation.navigate('EULA')}
+          >
+            <Text style={{ color: baseTextColor }}>EULA.</Text>
           </TouchableOpacity>
         </View>
-        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+        {/* <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
           <Text style={{ color: baseTextColor, textAlign: 'center' }}>
             and you acknowledge that you have read our&nbsp;
           </Text>
           <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-            <TouchableOpacity
-              style={{ borderBottomWidth: 0.5, borderBottomColor: baseTextColor }}
-              onPress={() => props.navigation.navigate('EULA')}
-            >
-              <Text style={{ color: baseTextColor }}>EULA.</Text>
-            </TouchableOpacity>
+            
           </View>
-        </View>
+        </View> */}
       </View>
     </View>
   );
