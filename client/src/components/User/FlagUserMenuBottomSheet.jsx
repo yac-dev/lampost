@@ -5,6 +5,7 @@ import UserContext from './UserContext';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { appBottomSheetBackgroundColor, baseTextColor } from '../../utils/colorsTable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Fontisto } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import lampostAPI from '../../apis/lampost';
 
@@ -36,6 +37,7 @@ const FlagUserMenuBottomSheet = () => {
             navigation.navigate('Report user', { userId: user._id, userName: user.name });
           }}
         >
+          <MaterialIcons name='report-problem' size={20} color={baseTextColor} style={{ marginRight: 10 }} />
           <Text style={{ color: baseTextColor }}>Report this user</Text>
         </TouchableOpacity>
         {isBlocked ? (
@@ -59,6 +61,7 @@ const FlagUserMenuBottomSheet = () => {
               setIsBlocked(false);
             }}
           >
+            <Fontisto name='unlocked' color={baseTextColor} size={20} style={{ marginRight: 10 }} />
             <Text style={{ color: baseTextColor }}>Unblock this user</Text>
           </TouchableOpacity>
         ) : (
@@ -69,6 +72,7 @@ const FlagUserMenuBottomSheet = () => {
               setIsConfirmBlockUserModalOpen(true);
             }}
           >
+            <Fontisto name='locked' color={baseTextColor} size={20} style={{ marginRight: 10 }} />
             <Text style={{ color: baseTextColor }}>Block this user</Text>
           </TouchableOpacity>
         )}

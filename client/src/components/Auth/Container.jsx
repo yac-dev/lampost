@@ -63,7 +63,7 @@ const Container = (props) => {
       </TouchableOpacity> */}
       <View style={{ position: 'absolute', bottom: 20, alignSelf: 'center' }}>
         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-          <Text style={{ color: baseTextColor }}>By signing up, you accept Lampost's&nbsp;</Text>
+          <Text style={{ color: baseTextColor }}>By signing up, you accept and read Lampost's&nbsp;</Text>
           <TouchableOpacity
             style={{ borderBottomWidth: 0.5, borderBottomColor: baseTextColor }}
             onPress={() => props.navigation.navigate('EULA')}

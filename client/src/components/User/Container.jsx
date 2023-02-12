@@ -6,6 +6,7 @@ import BadgeContext from './BadgeContext';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import lampostAPI from '../../apis/lampost';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Fontisto } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 import {
   baseBackgroundColor,
@@ -82,6 +83,23 @@ const Container = (props) => {
       getUser();
     }, [])
   );
+
+  const onUnlockUserPress = async () => {
+    const payload = {
+      userId: auth.data._id,
+      blockingUserId: user._id,
+    };
+    setLoading(true);
+    const result = await lampostAPI.post('/userblockingrelationships/unblock', payload);
+    setLoading(false);
+    setSnackBar({
+      isVisible: true,
+      barType: 'success',
+      message: 'Unblocked this user.',
+      duration: 5000,
+    });
+    setIsBlocked(false);
+  };
 
   const getBadgeDatasByUserId = async () => {
     const result = await lampostAPI.get(`/badgeanduserrelationships/${props.route.params.userId}`);
@@ -192,9 +210,9 @@ const Container = (props) => {
             {isBlocked ? (
               <View>
                 <Text style={{ color: baseTextColor, textAlign: 'center', marginBottom: 10 }}>
-                  You are blocking this user.
+                  You are blocking this user now.
                 </Text>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={{
                     padding: 15,
                     alignSelf: 'center',
@@ -219,7 +237,15 @@ const Container = (props) => {
                   }}
                 >
                   <Text style={{ color: baseTextColor }}>Unblock this user</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
+                <View style={{ alignSelf: 'center' }}>
+                  <ActionButton
+                    label='Unblock this user'
+                    icon={<Fontisto name='unlocked' size={20} color='white' />}
+                    backgroundColor={iconColorsTable['blue1']}
+                    onActionButtonPress={() => onUnlockUserPress()}
+                  />
+                </View>
               </View>
             ) : (
               <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
