@@ -21,7 +21,7 @@ import { setIsTappedBadgeBottomSheetOpen } from '../../../../redux/actionCreator
 
 const Badge = (props) => {
   const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
-  const { badge } = useContext(BadgeContext);
+  const { badge, index } = useContext(BadgeContext);
   const {
     fromComponent,
     selectedUserBadges,
@@ -32,6 +32,10 @@ const Badge = (props) => {
     setTappedBadge,
     tappedBadgeHolders,
     setTappedBadgeHolders,
+    addedBadges,
+    setAddedBadges,
+    setBadges,
+    selectedFilterOption,
   } = useContext(AddBadgesContext);
 
   const oneGridWidth = isIpad ? Dimensions.get('window').width / 6 : Dimensions.get('window').width / 4;
@@ -191,90 +195,104 @@ const Badge = (props) => {
 
   const onBadgePress = async () => {
     // searchBadgeBottomSheetRef.current.close();
-    badgeDetailBottomSheetRef.current.snapToIndex(0);
-    setTappedBadge(badge);
-    const result = await lampostAPI.get(`/badgeanduserrelationships/holders/${badge._id}`);
-    const { badgeHolders } = result.data;
-    setTappedBadgeHolders(badgeHolders);
-    console.log('hey');
+    setAddedBadges((previous) => [...previous, badge]);
+    // badgeDetailBottomSheetRef.current.snapToIndex(0);
+    // setTappedBadge(badge);
+    // const result = await lampostAPI.get(`/badgeanduserrelationships/holders/${badge._id}`);
+    // const { badgeHolders } = result.data;
+    // setTappedBadgeHolders(badgeHolders);
+    // console.log('hey');
   };
 
-  return (
-    <View
-      key={props.key}
-      style={{
-        width: oneGridWidth,
-        height: oneGridHeight, // これなんだろね。。。
-        // aspectRatio: 1,
-        // padding: 10, // これは単純に、25%幅に対して
-        alignItems: 'center',
-      }}
-    >
-      <TouchableOpacity
-        // これがbadgeのcontainer, rndefault colorを割り当てるためのもの。
+  if (!addedBadges[badge._id]) {
+    return (
+      <View
+        key={props.key}
         style={{
-          width: badgeContainerWidth,
-          aspectRatio: 1,
-          alignItems: 'center', // これと
-          justifyContent: 'center', // これで中のimageを上下左右真ん中にする
-          borderRadius: 15,
-          backgroundColor: rnDefaultBackgroundColor,
-          borderWidth: 0.3,
-          marginBottom: 5,
-        }}
-        onPress={() => {
-          onBadgePress();
-          // props.onBadgePress(props.badgeStatus._id);
-          // navigation.navigate('BadgeInfo', { badgeId: props.badgeStatus._id });
+          width: oneGridWidth,
+          height: oneGridHeight, // これなんだろね。。。
+          // aspectRatio: 1,
+          // padding: 10, // これは単純に、25%幅に対して
+          alignItems: 'center',
         }}
       >
-        <View
+        <TouchableOpacity
+          // これがbadgeのcontainer, rndefault colorを割り当てるためのもの。
           style={{
-            width: '100%',
-            height: '100%',
-            alignItems: 'center',
-            justifyContent: 'center',
+            width: badgeContainerWidth,
+            aspectRatio: 1,
+            alignItems: 'center', // これと
+            justifyContent: 'center', // これで中のimageを上下左右真ん中にする
             borderRadius: 15,
-            backgroundColor: backgroundColorsTable[badge.color],
+            backgroundColor: rnDefaultBackgroundColor,
             borderWidth: 0.3,
-            borderColor: backgroundColorsTable[badge.color],
+            marginBottom: 5,
+          }}
+          onPress={() => {
+            // onBadgePress();
+            setAddedBadges((previous) => {
+              return {
+                ...previous,
+                [badge._id]: badge,
+              };
+            });
+            // setBadges((previous) => {
+            //   const updating = { ...previous };
+            //   // こいつをremoveしたいのよね。
+            //   updating[selectedFilterOption].splice(index, 1);
+            //   return updating;
+            // });
+
+            // props.onBadgePress(props.badgeStatus._id);
+            // navigation.navigate('BadgeInfo', { badgeId: props.badgeStatus._id });
           }}
         >
-          <FastImage
-            style={{ height: badgeIconWidth, width: badgeIconWidth }}
-            source={{
-              uri: badge.icon,
-              priority: FastImage.priority.normal,
+          <View
+            style={{
+              width: '100%',
+              height: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 15,
+              backgroundColor: backgroundColorsTable[badge.color],
+              borderWidth: 0.3,
+              borderColor: backgroundColorsTable[badge.color],
             }}
-            tintColor={iconColorsTable[badge.color]}
-            resizeMode={FastImage.resizeMode.contain}
-          />
-        </View>
-      </TouchableOpacity>
-      <Text
-        numberOfLines={1}
-        style={{
-          paddingLeft: 5,
-          paddingRight: 5,
-          color: baseTextColor,
-          fontWeight: 'bold',
-          alignSelf: 'center',
-          fontSize: 12,
-          textAlign: 'center',
-          // borderWidth: 1,
-          // borderRadius: 5,
-          // padding: 4,
-        }}
-      >
-        {badge.name}
-      </Text>
-      {renderIsBadgeSelected()}
-    </View>
-  );
+          >
+            <FastImage
+              style={{ height: badgeIconWidth, width: badgeIconWidth }}
+              source={{
+                uri: badge.icon,
+                priority: FastImage.priority.normal,
+              }}
+              tintColor={iconColorsTable[badge.color]}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+          </View>
+        </TouchableOpacity>
+        <Text
+          numberOfLines={1}
+          style={{
+            paddingLeft: 5,
+            paddingRight: 5,
+            color: baseTextColor,
+            fontWeight: 'bold',
+            alignSelf: 'center',
+            fontSize: 12,
+            textAlign: 'center',
+            // borderWidth: 1,
+            // borderRadius: 5,
+            // padding: 4,
+          }}
+        >
+          {badge.name}
+        </Text>
+        {/* {renderIsBadgeSelected()} */}
+      </View>
+    );
+  } else {
+    return null;
+  }
 };
 
-const mapStateToProps = (state) => {
-  return { selectedBadges: state.selectedItem.badges };
-};
-
-export default connect(mapStateToProps, { selectBadge, removeBadge, setIsTappedBadgeBottomSheetOpen })(Badge);
+export default Badge;
