@@ -36,6 +36,7 @@ const Badge = (props) => {
     setAddedBadges,
     setBadges,
     selectedFilterOption,
+    myBadges,
   } = useContext(AddBadgesContext);
 
   const oneGridWidth = isIpad ? Dimensions.get('window').width / 6 : Dimensions.get('window').width / 4;
@@ -204,7 +205,8 @@ const Badge = (props) => {
     // console.log('hey');
   };
 
-  if (!addedBadges[badge._id]) {
+  // meetupのbadgeでも使われるが、まあいいだろう。
+  if (!addedBadges[badge._id] && !myBadges[badge._id]) {
     return (
       <View
         key={props.key}

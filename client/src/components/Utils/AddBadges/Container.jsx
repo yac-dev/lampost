@@ -82,6 +82,7 @@ const Container = (props) => {
     techAndScience: [],
     travelsAndOutdoor: [],
   });
+  const [myBadges, setMyBadges] = useState({});
 
   const getBadges = async () => {
     const result = await lampostAPI.post(`/badges`, { filterOption: selectedFilterOption });
@@ -104,34 +105,35 @@ const Container = (props) => {
     // ここは、user pageからここに来て、doneをpressしたら, user pageへ戻る。addしたbadgesをparamsに入れていく感じ。
     if (props.route.params.fromComponent === 'ADD_USER_BADGES') {
       setFromComponent('ADD_USER_BADGES');
+      setMyBadges(props.route.params.myBadges);
       props.navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity
             onPress={() => onDoneAddUserBadgesPress()}
-            disabled={Object.keys(selectedUserBadges).length ? false : true}
+            disabled={Object.keys(addedBadges).length ? false : true}
           >
-            <Text style={{ color: Object.keys(selectedUserBadges).length ? 'white' : baseTextColor, fontSize: 20 }}>
-              Done
-            </Text>
+            <Text style={{ color: Object.keys(addedBadges).length ? 'white' : baseTextColor, fontSize: 20 }}>Done</Text>
           </TouchableOpacity>
         ),
       });
     }
-  }, [selectedUserBadges]);
+  }, [addedBadges]);
   const onDoneAddUserBadgesPress = async () => {
     // api requestではbadge idsとuserIdをpost dataとして送るのはよし。client側では、単純にbadge dataを送るだけでいい。
     setLoading(true);
-    const badgeIds = Object.keys(selectedUserBadges);
+    const badgeIds = Object.keys(addedBadges);
     console.log('Sending these badge ids', badgeIds);
     const result = await lampostAPI.post(`/badgeanduserrelationships/${auth.data._id}`, { badgeIds });
-    const newBadgeDatas = Object.values(selectedUserBadges).map((selectedUserBadge) => {
-      return {
-        badge: selectedUserBadge,
-        badgeTags: [],
-        link: '',
-      };
-    });
-    props.navigation.navigate('Profile', { userId: auth.data._id, addedUserBadges: newBadgeDatas });
+    // const newBadgeDatas = Object.values(addedBadges).map((addedBadge) => {
+    //   return {
+    //     badge: addedBadge,
+    //     badgeTags: [],
+    //     link: '',
+    //   };
+    // });
+    // ここのNon-serializable values were found in the navigation state(Circular reference)は、よく分からない。何が起こっているか。
+    // arrayでやってたときはこんなエラー別に出なかったのに。まあ、jsonにしたらエラーは消えたけど。
+    props.navigation.navigate('Profile', { userId: auth.data._id, addedUserBadges: JSON.stringify(addedBadges) });
     setLoading(false);
   };
 
@@ -338,9 +340,6 @@ const Container = (props) => {
                 alignSelf: 'center',
                 fontSize: 12,
                 textAlign: 'center',
-                // borderWidth: 1,
-                // borderRadius: 5,
-                // padding: 4,
               }}
             >
               {badge.name}
@@ -358,8 +357,10 @@ const Container = (props) => {
             borderRadius: 10,
           }}
         >
-          <Text style={{ color: baseTextColor }}>Already added</Text>
-          <ScrollView horizontal={true}>{list}</ScrollView>
+          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>Already added</Text>
+          <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
+            {list}
+          </ScrollView>
         </View>
       );
     } else {
@@ -394,12 +395,11 @@ const Container = (props) => {
         setBadges,
         addedBadges,
         setAddedBadges,
+        myBadges,
+        setMyBadges,
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        {/* <Badges />
-       
-        <LoadingSpinner /> */}
         <View style={{ height: 70, padding: 10 }}>
           <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
             <FilterOption
@@ -533,11 +533,8 @@ const Container = (props) => {
         </View>
         <View style={{ padding: 10, borderRadius: 15 }}>{renderAddedBadges()}</View>
         <Badges />
-        {/* {renderBs()} */}
-        {/* <View style={{ height: 200, width: '100%', backgroundColor: 'blue', position: 'absolute', bottom: 0 }}>
-          <Text style={{ color: 'red' }}>Currently selected</Text>
-        </View> */}
-        <BadgeDetailBottomSheet />
+        {/* <BadgeDetailBottomSheet /> */}
+        <LoadingSpinner />
       </View>
     </AddBadgesContext.Provider>
   );

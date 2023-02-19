@@ -16,8 +16,14 @@ import AppMenuButton from '../../Utils/AppMenuButton';
 const AppButtons = (props) => {
   const { auth, setAuth, setMyUpcomingMeetupAndChatsTable, setTotalUnreadChatsCount, setIsNotAvailableModalOpen } =
     useContext(GlobalContext);
-  const { user, navigation, appMenuBottomSheetRef, setIsConfirmLogoutModalOpen, setIsConfirmDeleteAccountModalOpen } =
-    useContext(UserContext);
+  const {
+    user,
+    navigation,
+    appMenuBottomSheetRef,
+    badgeDatas,
+    setIsConfirmLogoutModalOpen,
+    setIsConfirmDeleteAccountModalOpen,
+  } = useContext(UserContext);
 
   const logout = async () => {
     await SecureStore.deleteItemAsync('secure_token');
@@ -30,6 +36,8 @@ const AppButtons = (props) => {
     setTotalUnreadChatsCount(0);
     auth.socket.disconnect();
   };
+
+  //
 
   return (
     <View
@@ -48,7 +56,7 @@ const AppButtons = (props) => {
           label='Add badges'
           onAppMenuButtonPress={() => {
             appMenuBottomSheetRef.current.close();
-            navigation.navigate('Add badges', { fromComponent: 'ADD_USER_BADGES' });
+            navigation.navigate('Add badges', { fromComponent: 'ADD_USER_BADGES', myBadges: badgeDatas });
           }}
         />
         {user.leadership.total ? (

@@ -13,7 +13,7 @@ const Container = () => {
     if (renderingBadges.length) {
       const badgesList = badges[selectedFilterOption].map((badge, index) => {
         return (
-          <BadgeContext.Provider value={{ badge, index }} key={index}>
+          <BadgeContext.Provider value={{ badge }} key={index}>
             <Badge />
           </BadgeContext.Provider>
         );

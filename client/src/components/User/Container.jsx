@@ -38,7 +38,7 @@ import FlagUserMenuBottomSheet from './FlagUserMenuBottomSheet';
 const Container = (props) => {
   const { auth, setLoading, setSnackBar } = useContext(GlobalContext);
   const [user, setUser] = useState(null);
-  const [badgeDatas, setBadgeDatas] = useState([]);
+  const [badgeDatas, setBadgeDatas] = useState({});
   const [pressedBadgeData, setPressedBadgeData] = useState(null);
   const [isMyPage, setIsMyPage] = useState();
   const [isBlocked, setIsBlocked] = useState(false);
@@ -100,27 +100,53 @@ const Container = (props) => {
     });
     setIsBlocked(false);
   };
+  // console.log(badgeDatas[2]);
 
   const getBadgeDatasByUserId = async () => {
     const result = await lampostAPI.get(`/badgeanduserrelationships/${props.route.params.userId}`);
     const { userBadgeDatas } = result.data;
-    // console.log(userBadgeDatas);
-    setBadgeDatas(userBadgeDatas);
+    setBadgeDatas(() => {
+      const userBadgeDatasTable = {};
+      userBadgeDatas.forEach((badgeData) => {
+        userBadgeDatasTable[badgeData.badge._id] = badgeData;
+      });
+      return userBadgeDatasTable;
+    });
   };
+
   useEffect(() => {
     getBadgeDatasByUserId();
   }, []);
 
   useEffect(() => {
     if (props.route.params?.addedUserBadges) {
-      setBadgeDatas((previous) => [...previous, ...props.route.params.addedUserBadges]);
+      const addedBadges = JSON.parse(props.route.params.addedUserBadges);
+      const addedBadgeDatasTable = { ...addedBadges };
+      for (const key in addedBadgeDatasTable) {
+        addedBadgeDatasTable[key]['badge'] = addedBadgeDatasTable[key];
+        addedBadgeDatasTable[key]['link'] = '';
+        addedBadgeDatasTable[key]['badgeTags'] = [];
+      }
+      setBadgeDatas((previous) => {
+        return {
+          ...previous,
+          ...addedBadgeDatasTable,
+        };
+      });
       console.log('I added these badg', props.route.params.addedUserBadges);
+      setSnackBar({
+        isVisible: true,
+        barType: 'success',
+        message: 'Badge added.',
+        duration: 5000,
+      });
     }
   }, [props.route.params?.addedUserBadges]);
 
   const renderBadges = () => {
-    if (badgeDatas.length) {
-      const badgesList = badgeDatas.map((badgeData, index) => {
+    const badgeDatasList = Object.values(badgeDatas);
+    if (badgeDatasList.length) {
+      const badgesList = badgeDatasList.map((badgeData, index) => {
         return (
           <BadgeContext.Provider value={{ badgeData }} key={index}>
             <Badge />
@@ -182,6 +208,7 @@ const Container = (props) => {
           setAddLinkOrBadgeTagsBottomSheetType,
           pressedBadgeData,
           setPressedBadgeData,
+          badgeDatas,
           setBadgeDatas,
           isConfirmEditProfileModalOpen,
           setIsConfirmEditProfileModalOpen,
