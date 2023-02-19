@@ -70,7 +70,7 @@ const Container = (props) => {
     education: [],
     emotion: [],
     fashionAndBeauty: [],
-    foodsAndDrink: [],
+    foodsAndBeverages: [],
     gadjetsAndCars: [],
     gamesAndToys: [],
     literature: [],
@@ -99,6 +99,7 @@ const Container = (props) => {
       getBadges();
     }
   }, [selectedFilterOption]);
+  console.log(selectedFilterOption);
 
   // ADD_USER_BADGESの時のcomponent
   useEffect(() => {
@@ -217,7 +218,7 @@ const Container = (props) => {
     }
   }, []);
   const onAddLibraryBadgesDone = () => {
-    props.navigation.navigate('Libraries', { addedBadges });
+    props.navigation.navigate('Libraries', { addedLibraryBadges: addedBadges });
   };
 
   // query
@@ -446,21 +447,25 @@ const Container = (props) => {
             />
             <FilterOption
               label='Business & Finance'
+              value='businessAndFinance'
               icon={<MaterialCommunityIcons name='finance' size={25} color={'white'} style={{ marginRight: 10 }} />}
-              onFilterOptionPress={() => setSelectedFilterOption('animalsAndPets')}
+              onFilterOptionPress={() => setSelectedFilterOption('businessAndFinance')}
             />
             <FilterOption
               label='Culture & Language'
+              value='cultureAndLanguage'
               icon={<Ionicons name='earth' size={25} color={'white'} style={{ marginRight: 10 }} />}
-              onFilterOptionPress={() => setSelectedFilterOption('animalsAndPets')}
+              onFilterOptionPress={() => setSelectedFilterOption('cultureAndLanguage')}
             />
             <FilterOption
               label='Education'
+              value='education'
               icon={<Entypo name='graduation-cap' size={25} color={'white'} style={{ marginRight: 10 }} />}
-              onFilterOptionPress={() => setSelectedFilterOption('animalsAndPets')}
+              onFilterOptionPress={() => setSelectedFilterOption('education')}
             />
             <FilterOption
               label='Emotion'
+              value='emotion'
               icon={
                 <MaterialCommunityIcons
                   name='emoticon-lol-outline'
@@ -469,10 +474,11 @@ const Container = (props) => {
                   style={{ marginRight: 10 }}
                 />
               }
-              onFilterOptionPress={() => setSelectedFilterOption('animalsAndPets')}
+              onFilterOptionPress={() => setSelectedFilterOption('emotion')}
             />
             <FilterOption
               label='Fashion & Beauty'
+              value='fashionAndBeauty'
               icon={
                 <MaterialCommunityIcons
                   name='emoticon-lol-outline'
@@ -481,25 +487,29 @@ const Container = (props) => {
                   style={{ marginRight: 10 }}
                 />
               }
-              onFilterOptionPress={() => setSelectedFilterOption('animalsAndPets')}
+              onFilterOptionPress={() => setSelectedFilterOption('fashionAndBeauty')}
             />
             <FilterOption
               label='Foods & Drinks'
+              value='foodsAndBeverages'
               icon={<MaterialCommunityIcons name='food' size={25} color={'white'} style={{ marginRight: 10 }} />}
-              onFilterOptionPress={() => setSelectedFilterOption('animalsAndPets')}
+              onFilterOptionPress={() => setSelectedFilterOption('foodsAndBeverages')}
             />
             <FilterOption
               label='Gadgets & Cars'
+              value='gadjetsAndCars'
               icon={<Ionicons name='car-sport' size={25} color={'white'} style={{ marginRight: 10 }} />}
-              onFilterOptionPress={() => setSelectedFilterOption('animalsAndPets')}
+              onFilterOptionPress={() => setSelectedFilterOption('gadjetsAndCars')}
             />
             <FilterOption
               label='Games & Toy'
+              value='gamesAndToys'
               icon={<MaterialCommunityIcons name='chess-pawn' size={25} color={'white'} style={{ marginRight: 10 }} />}
-              onFilterOptionPress={() => setSelectedFilterOption('animalsAndPets')}
+              onFilterOptionPress={() => setSelectedFilterOption('gamesAndToys')}
             />
             <FilterOption
               label='Literature'
+              value='literature'
               icon={
                 <MaterialCommunityIcons
                   name='book-open-blank-variant'
@@ -508,44 +518,51 @@ const Container = (props) => {
                   style={{ marginRight: 10 }}
                 />
               }
-              onFilterOptionPress={() => setSelectedFilterOption('animalsAndPets')}
+              onFilterOptionPress={() => setSelectedFilterOption('literature')}
             />
             <FilterOption
               label='Music'
+              value='music'
               icon={<Ionicons name='musical-notes' size={25} color={'white'} style={{ marginRight: 10 }} />}
-              onFilterOptionPress={() => setSelectedFilterOption('animalsAndPets')}
+              onFilterOptionPress={() => setSelectedFilterOption('music')}
             />
             <FilterOption
               label='Nature & Vegitables'
+              value='natureAndVegetables'
               icon={
                 <MaterialCommunityIcons name='fruit-cherries' size={25} color={'white'} style={{ marginRight: 10 }} />
               }
-              onFilterOptionPress={() => setSelectedFilterOption('animalsAndPets')}
+              onFilterOptionPress={() => setSelectedFilterOption('natureAndVegetables')}
             />
             <FilterOption
               label='Personality'
+              value='personality'
               icon={<Ionicons name='heart' size={25} color={'white'} style={{ marginRight: 10 }} />}
-              onFilterOptionPress={() => setSelectedFilterOption('animalsAndPets')}
+              onFilterOptionPress={() => setSelectedFilterOption('personality')}
             />
             <FilterOption
               label='Professions'
+              value='profession'
               icon={<MaterialCommunityIcons name='doctor' size={25} color={'white'} style={{ marginRight: 10 }} />}
-              onFilterOptionPress={() => setSelectedFilterOption('animalsAndPets')}
+              onFilterOptionPress={() => setSelectedFilterOption('profession')}
             />
             <FilterOption
               label='Sports'
+              value='sports'
               icon={<Ionicons name='basketball' size={25} color={'white'} style={{ marginRight: 10 }} />}
-              onFilterOptionPress={() => setSelectedFilterOption('animalsAndPets')}
+              onFilterOptionPress={() => setSelectedFilterOption('sports')}
             />
             <FilterOption
               label='Tech & Science'
+              value='techAndScience'
               icon={<Entypo name='code' size={25} color={'white'} style={{ marginRight: 10 }} />}
-              onFilterOptionPress={() => setSelectedFilterOption('animalsAndPets')}
+              onFilterOptionPress={() => setSelectedFilterOption('techAndScience')}
             />
             <FilterOption
               label='Travel & Outdoor'
+              value='travelsAndOutdoor'
               icon={<MaterialCommunityIcons name='hiking' size={25} color={'white'} style={{ marginRight: 10 }} />}
-              onFilterOptionPress={() => setSelectedFilterOption('animalsAndPets')}
+              onFilterOptionPress={() => setSelectedFilterOption('travelsAndOutdoor')}
             />
           </ScrollView>
         </View>
