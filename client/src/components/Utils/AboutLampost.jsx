@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Linking, Alert, TouchableOpacity } from 'react-native';
 import { baseBackgroundColor, screenSectionBackgroundColor, baseTextColor } from '../../utils/colorsTable';
 import { Ionicons } from '@expo/vector-icons';
 import { Octicons } from '@expo/vector-icons';
@@ -9,6 +9,17 @@ import { AntDesign } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 
 const Info = () => {
+  const openURL = async (url) => {
+    const supported = await Linking.canOpenURL(url);
+    if (supported) {
+      await Linking.openURL(url);
+    } else {
+      Alert.alert('Error', "You can't open this link.", [{ text: 'OK', onPress: () => console.log('OK Pressed') }], {
+        cancelable: false,
+      });
+    }
+  };
+
   return (
     <ScrollView style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 20 }}>
       <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 10, marginBottom: 20, borderRadius: 10 }}>
@@ -32,9 +43,9 @@ const Info = () => {
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
             <Text style={{ color: 'white', marginRight: 10, fontSize: 17 }}>Icons8</Text>
             <View style={{ borderBottomColor: baseTextColor, borderBottomWidth: 0.3 }}>
-              <Text style={{ color: baseTextColor, borderBottomWidth: 0.3, borderBottomColor: 'red' }}>
-                https://icons8.com
-              </Text>
+              <TouchableOpacity onPress={() => openURL('https://icons8.com')}>
+                <Text style={{ color: baseTextColor }}>https://icons8.com</Text>
+              </TouchableOpacity>
             </View>
           </View>
           <Text style={{ color: baseTextColor }}>
@@ -52,7 +63,7 @@ const Info = () => {
         </View>
       </View>
 
-      <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 10, borderRadius: 10 }}>
+      <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 10, borderRadius: 10, marginBottom: 20 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
           <MaterialIcons name='engineering' size={25} color={'orange'} style={{ marginRight: 10 }} />
           <Text style={{ color: 'white', fontSize: 23 }}>Developer</Text>
@@ -97,6 +108,14 @@ const Info = () => {
           </View>
         </View>
       </View>
+
+      {/* <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 10, borderRadius: 10 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+          <MaterialIcons name='engineering' size={25} color={'orange'} style={{ marginRight: 10 }} />
+          <Text style={{ color: 'white', fontSize: 23 }}>Blog</Text>
+          <Text>I'm writing blog about Lampost. </Text>
+        </View>
+      </View> */}
     </ScrollView>
   );
 };

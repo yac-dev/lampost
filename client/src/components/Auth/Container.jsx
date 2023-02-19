@@ -58,9 +58,6 @@ const Container = (props) => {
           />
         </View>
       </View>
-      {/* <TouchableOpacity onPress={() => openURL('https://www.youtube.com/channel/UCC-jIpCs-vzuG6vtIHB9l3')}>
-        <Text style={{ color: 'red' }}>press url</Text>
-      </TouchableOpacity> */}
       <View style={{ position: 'absolute', bottom: 20, alignSelf: 'center' }}>
         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
           <Text style={{ color: baseTextColor }}>By signing up, you accept and read Lampost's&nbsp;</Text>

@@ -112,7 +112,11 @@ const Container = (props) => {
             onPress={() => onDoneAddUserBadgesPress()}
             disabled={Object.keys(addedBadges).length ? false : true}
           >
-            <Text style={{ color: Object.keys(addedBadges).length ? 'white' : baseTextColor, fontSize: 20 }}>Done</Text>
+            <Text
+              style={{ color: Object.keys(addedBadges).length ? 'white' : screenSectionBackgroundColor, fontSize: 20 }}
+            >
+              Done
+            </Text>
           </TouchableOpacity>
         ),
       });
@@ -149,20 +153,27 @@ const Container = (props) => {
       // });
       props.navigation.setOptions({
         headerRight: () => (
-          <TouchableOpacity onPress={() => onAddMeetupBadgesDone()}>
-            <Text style={{ color: 'white', fontSize: 20 }}>Done</Text>
+          <TouchableOpacity
+            onPress={() => onAddMeetupBadgesDone()}
+            disabled={Object.keys(addedBadges).length ? false : true}
+          >
+            <Text
+              style={{ color: Object.keys(addedBadges).length ? 'white' : screenSectionBackgroundColor, fontSize: 20 }}
+            >
+              Done
+            </Text>
           </TouchableOpacity>
         ),
       });
     }
-  }, [addedMeetupBadges]);
+  }, [addedBadges]);
   // うん。上でやると、useEffectでstackoverflow的なことが起こっている。だから下で分けてやる必要がありそう。
 
   // launch meetupから来た既に選択済みのmeetup badgesがここのcomponentに送られ、それをそのままcomponentのstateにセットする。
   // 上のuseEffectでこれをやるとstackoverflowを起こす。だから、これで分けている。
   useEffect(() => {
     if (props.route.params?.addedMeetupBadges) {
-      setAddedMeetupBadges((previous) => {
+      setAddedBadges((previous) => {
         return {
           ...previous,
           ...props.route.params.addedMeetupBadges,
@@ -171,7 +182,7 @@ const Container = (props) => {
     }
   }, []);
   const onAddMeetupBadgesDone = () => {
-    props.navigation.navigate('Map', { addedMeetupBadges });
+    props.navigation.navigate('Map', { addedMeetupBadges: addedBadges });
   };
 
   // ADD_LIBRARY_BADGESの時。
@@ -180,8 +191,15 @@ const Container = (props) => {
       setFromComponent('ADD_LIBRARY_BADGES');
       props.navigation.setOptions({
         headerRight: () => (
-          <TouchableOpacity onPress={() => onAddLibraryBadgesDone()}>
-            <Text style={{ color: 'white', fontSize: 20 }}>Done</Text>
+          <TouchableOpacity
+            onPress={() => onAddLibraryBadgesDone()}
+            disabled={Object.keys(addedBadges).length ? false : true}
+          >
+            <Text
+              style={{ color: Object.keys(addedBadges).length ? 'white' : screenSectionBackgroundColor, fontSize: 20 }}
+            >
+              Done
+            </Text>
           </TouchableOpacity>
         ),
       });
@@ -190,7 +208,7 @@ const Container = (props) => {
 
   useEffect(() => {
     if (props.route.params?.addedLibraryBadges) {
-      setAddedLibraryBadges((previous) => {
+      setAddedBadges((previous) => {
         return {
           ...previous,
           ...props.route.params.addedLibraryBadges,
@@ -199,7 +217,7 @@ const Container = (props) => {
     }
   }, []);
   const onAddLibraryBadgesDone = () => {
-    props.navigation.navigate('Libraries', { addedLibraryBadges });
+    props.navigation.navigate('Libraries', { addedBadges });
   };
 
   // query
