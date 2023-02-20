@@ -35,7 +35,7 @@ const ActionButttons = () => {
           <Feather name='activity' size={25} color={iconColorsTable['green1']} />
         </View>
         <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>Activities</Text>
-        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
+        {/* <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} /> */}
       </TouchableOpacity>
       <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}
@@ -45,17 +45,16 @@ const ActionButttons = () => {
           style={{
             width: 40,
             height: 40,
-            backgroundColor: backgroundColorsTable['violet1'],
+            backgroundColor: backgroundColorsTable['pink1'],
             borderRadius: 10,
             marginRight: 10,
             justifyContent: 'center',
             alignItems: 'center',
           }}
         >
-          <MaterialCommunityIcons name='film' size={25} color={iconColorsTable['violet1']} />
+          <MaterialCommunityIcons name='film' size={25} color={iconColorsTable['pink1']} />
         </View>
         <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>Assets</Text>
-        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
       </TouchableOpacity>
       <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
         <View
@@ -72,7 +71,6 @@ const ActionButttons = () => {
           <MaterialCommunityIcons name='hand-clap' size={25} color={iconColorsTable['yellow1']} />
         </View>
         <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>Claps</Text>
-        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
       </TouchableOpacity>
     </View>
   );

@@ -11,9 +11,9 @@ const HeaderContainer = () => {
   const { user, isMyPage, setIsConfirmEditProfileModalOpen, flagUserMenuBottomSheetRef } = useContext(UserContext);
 
   return (
-    <View style={{ flexDirection: 'row', paddingTop: 20, alignItems: 'center', marginBottom: 15 }}>
-      <Stats />
+    <View style={{ flexDirection: 'row', paddingTop: 20, marginBottom: 15 }}>
       <AvatarImage />
+      <Stats />
       <ActionButttons />
     </View>
   );

@@ -9,8 +9,8 @@ import FastImage from 'react-native-fast-image';
 const AvatarImage = () => {
   const { user, isMyPage, isIpad, setIsConfirmEditProfileModalOpen, flagUserMenuBottomSheetRef } =
     useContext(UserContext);
-  const oneContainerWidth = Dimensions.get('window').width / 3;
-  const avatarWidth = oneContainerWidth * 0.6;
+  const oneContainerWidth = (Dimensions.get('window').width * 2) / 5;
+  const avatarWidth = oneContainerWidth * 0.5;
 
   return (
     <View
@@ -19,8 +19,9 @@ const AvatarImage = () => {
         // aspectRatio: 1,
         flexDirection: 'column',
         // backgroundColor: 'green', //確認用で使える
-        alignItems: 'center',
-        // marginRight: 5,
+
+        alignItems: 'flex-end',
+        marginRight: 50,
       }}
     >
       <View
@@ -63,7 +64,7 @@ const AvatarImage = () => {
           </TouchableOpacity>
         )}
       </View>
-      <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold', fontSize: 15 }}>{user.name}</Text>
+      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}>{user.name}</Text>
     </View>
   );
 };
