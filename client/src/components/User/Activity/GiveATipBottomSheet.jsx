@@ -3,14 +3,14 @@ import { View, Text } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 
-const PraiseBottomSheet = (props) => {
+const GiveATipBottomSheet = (props) => {
   const snapPoints = useMemo(() => ['70%', '100%'], []);
 
   return (
     <GorhomBottomSheet
       index={-1}
       enableOverDrag={true}
-      ref={props.praiseBottomSheetRef}
+      ref={props.clapPeopleBottomSheetRef}
       snapPoints={snapPoints}
       backdropComponent={(backdropProps) => (
         <BottomSheetBackdrop {...backdropProps} appearsOnIndex={0} disappearsOnIndex={-1} />
@@ -28,10 +28,10 @@ const PraiseBottomSheet = (props) => {
           flex: 1,
         }}
       >
-        <Text>Praising here</Text>
+        <Text>Give a tip</Text>
       </BottomSheetView>
     </GorhomBottomSheet>
   );
 };
 
-export default PraiseBottomSheet;
+export default GiveATipBottomSheet;

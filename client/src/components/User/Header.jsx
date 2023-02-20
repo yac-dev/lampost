@@ -13,6 +13,7 @@ import {
   screenSectionBackgroundColor,
 } from '../../utils/colorsTable';
 import Stats from './Stats';
+import ActionButttons from './ActionButttons';
 
 const Header = (props) => {
   const { auth } = useContext(GlobalContext);
@@ -28,91 +29,90 @@ const Header = (props) => {
   };
 
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        // paddingLeft: 10,
-        // paddingRight: 10,
-        alignSelf: 'center',
-        paddingTop: 20,
-        // marginBottom: 20,
-        // backgroundColor: 'red', // 確認用で使える。
-      }}
-    >
-      <TouchableOpacity>
+    <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          // paddingLeft: 10,
+          // paddingRight: 10,
+          // alignSelf: 'center',
+          paddingTop: 20,
+          marginRight: 30,
+          // marginBottom: 20,
+          // backgroundColor: 'red', // 確認用で使える。
+        }}
+      >
+        <TouchableOpacity>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={{
+                backgroundColor: backgroundColorsTable['red1'],
+                marginRight: 10,
+                borderRadius: 10,
+                width: 40,
+                height: 40,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <MaterialCommunityIcons name='fire' color={iconColorsTable['red1']} size={25} />
+            </View>
+            <Text style={{ color: baseTextColor, textAlign: 'center', fontSize: 20, fontWeight: 'bold' }}>
+              Leadership
+            </Text>
+          </View>
+          <Text style={{ fontWeight: 'bold', fontSize: 22, color: 'white', textAlign: 'center' }}>1245</Text>
+        </TouchableOpacity>
         <View
           style={{
-            flexDirection: 'row',
+            width: avatarContainer,
+            aspectRatio: 1,
+            flexDirection: 'column',
+            // backgroundColor: 'green', //確認用で使える
             alignItems: 'center',
-            marginBottom: 5,
+            marginRight: 5,
           }}
         >
           <View
             style={{
-              justifyContent: 'center',
+              backgroundColor: user.photo ? null : iconColorsTable['blue1'],
+              // padding: 5,
+              borderRadius: isIpad ? 20 : 10,
+              width: avatarWidth,
+              aspectRatio: 1,
               alignItems: 'center',
-              width: 40,
-              height: 40,
-              backgroundColor: backgroundColorsTable['red1'],
-              marginRight: 10,
-              borderRadius: 10,
+              justifyContent: 'center',
+              marginBottom: 5,
             }}
           >
-            <MaterialCommunityIcons name='fire' color={iconColorsTable['red1']} size={25} />
+            {user.photo ? (
+              <Image
+                source={{ uri: user.photo }}
+                style={{ width: '100%', height: '100%', borderRadius: isIpad ? 20 : 10 }}
+              />
+            ) : (
+              <FontAwesome5 name='user-astronaut' size={30} color='white' />
+            )}
+            {isMyPage ? (
+              <TouchableOpacity
+                style={{ position: 'absolute', bottom: -5, right: -5 }}
+                onPress={() => setIsConfirmEditProfileModalOpen(true)}
+              >
+                <MaterialCommunityIcons name='camera-plus' size={20} color={baseTextColor} />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={{ position: 'absolute', bottom: -5, right: -5 }}
+                onPress={() => flagUserMenuBottomSheetRef.current.snapToIndex(0)}
+              >
+                <MaterialCommunityIcons name='flag' size={20} color={baseTextColor} />
+              </TouchableOpacity>
+            )}
           </View>
-          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>1245</Text>
+          <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold', fontSize: 15 }}>{user.name}</Text>
         </View>
-        <Text style={{ color: baseTextColor, textAlign: 'center', fontSize: 20 }}>Leadership</Text>
-      </TouchableOpacity>
-      <View
-        style={{
-          width: avatarContainer,
-          aspectRatio: 1,
-          flexDirection: 'column',
-          // backgroundColor: 'green', //確認用で使える
-          alignItems: 'center',
-          marginRight: 5,
-        }}
-      >
-        <View
-          style={{
-            backgroundColor: user.photo ? null : iconColorsTable['blue1'],
-            // padding: 5,
-            borderRadius: isIpad ? 20 : 10,
-            width: avatarWidth,
-            aspectRatio: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginBottom: 5,
-          }}
-        >
-          {user.photo ? (
-            <Image
-              source={{ uri: user.photo }}
-              style={{ width: '100%', height: '100%', borderRadius: isIpad ? 20 : 10 }}
-            />
-          ) : (
-            <FontAwesome5 name='user-astronaut' size={30} color='white' />
-          )}
-          {isMyPage ? (
-            <TouchableOpacity
-              style={{ position: 'absolute', bottom: -5, right: -5 }}
-              onPress={() => setIsConfirmEditProfileModalOpen(true)}
-            >
-              <MaterialCommunityIcons name='camera-plus' size={20} color={baseTextColor} />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              style={{ position: 'absolute', bottom: -5, right: -5 }}
-              onPress={() => flagUserMenuBottomSheetRef.current.snapToIndex(0)}
-            >
-              <MaterialCommunityIcons name='flag' size={20} color={baseTextColor} />
-            </TouchableOpacity>
-          )}
-        </View>
-        <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold', fontSize: 15 }}>{user.name}</Text>
       </View>
-      {/* <Stats /> */}
+      <ActionButttons />
     </View>
   );
 };

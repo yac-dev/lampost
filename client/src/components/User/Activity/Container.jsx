@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
+import ActivityContext from './ActivityContext';
 import lampostAPI from '../../../apis/lampost';
 import { iconColorsTable, baseBackgroundColor } from '../../../utils/colorsTable';
 import UserInfo from '../../Utils/UserInfo';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import PraiseBottomSheet from './PraiseBottomSheet';
+import ClapPeopleBottomSheet from './ClapPeopleBottomSheet';
 
 const ActivityContainer = (props) => {
   const [isFetchedUserAttendees, setIsFetchedUserAttendees] = useState(false);
   const [isFetchedMeetup, setIsFetchedMeetup] = useState(false);
   const [meetup, setMeetup] = useState(null);
   const [meetupAttendees, setMeetupAttendees] = useState([]);
-  const praiseBottomSheetRef = useRef(null);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const clapPeopleBottomSheetRef = useRef(null);
+  const giveATipBottomSheetRef = useRef(null);
 
   const getMeetupAttendees = async () => {
     setIsFetchedUserAttendees(false);
@@ -24,7 +27,6 @@ const ActivityContainer = (props) => {
   useEffect(() => {
     getMeetupAttendees();
   }, []);
-  console.log(meetupAttendees);
 
   const renderMeetupAttendees = () => {
     if (!meetupAttendees.length) {
@@ -36,8 +38,10 @@ const ActivityContainer = (props) => {
     } else {
       const list = meetupAttendees.map((user, index) => {
         return (
-          <View key={index}>
-            <UserInfo user={user} />
+          <View key={index} style={{ padding: 10 }}>
+            <View style={{ padding: 10 }}>
+              <UserInfo user={user} />
+            </View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <TouchableOpacity
                 style={{
@@ -46,11 +50,15 @@ const ActivityContainer = (props) => {
                   flexDirection: 'row',
                   alignItems: 'center',
                   borderRadius: 10,
+                  marginRight: 10,
                 }}
-                onPress={() => praiseBottomSheetRef.current.snapToIndex(0)}
+                onPress={() => {
+                  setSelectedUser(user);
+                  clapPeopleBottomSheetRef.current.snapToIndex(0);
+                }}
               >
-                <MaterialCommunityIcons name='hand-heart' color={'white'} size={25} style={{ marginRight: 10 }} />
-                <Text style={{ color: 'white' }}>Praise</Text>
+                <MaterialCommunityIcons name='hand-clap' color={'white'} size={25} style={{ marginRight: 10 }} />
+                <Text style={{ color: 'white' }}>Clap</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
@@ -61,9 +69,10 @@ const ActivityContainer = (props) => {
                   borderRadius: 10,
                 }}
                 disabled={true}
+                onPress={() => clapPeopleBottomSheetRef.current.snapToIndex(0)}
               >
-                <MaterialCommunityIcons name='hand-heart' color={'white'} size={25} style={{ marginRight: 10 }} />
-                <Text style={{ color: 'white' }}>Friend request</Text>
+                <MaterialCommunityIcons name='gift-open' color={'white'} size={25} style={{ marginRight: 10 }} />
+                <Text style={{ color: 'white' }}>Give a tip</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -75,12 +84,14 @@ const ActivityContainer = (props) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-      <Text>Activity</Text>
-      <Text>{props.route.params.meetupId}</Text>
-      {isFetchedUserAttendees ? renderMeetupAttendees() : <ActivityIndicator />}
-      <PraiseBottomSheet praiseBottomSheetRef={praiseBottomSheetRef} />
-    </View>
+    <ActivityContext.Provider value={{ clapPeopleBottomSheetRef, selectedUser, setSelectedUser }}>
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+        <Text>Activity</Text>
+        <Text>{props.route.params.meetupId}</Text>
+        {isFetchedUserAttendees ? renderMeetupAttendees() : <ActivityIndicator />}
+        <ClapPeopleBottomSheet clapPeopleBottomSheetRef={clapPeopleBottomSheetRef} />
+      </View>
+    </ActivityContext.Provider>
   );
 };
 

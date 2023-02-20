@@ -276,10 +276,7 @@ const Container = (props) => {
                 </View>
               </View>
             ) : (
-              <View>
-                <ActionButttons />
-                <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
-              </View>
+              <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
             )}
             {!auth.isAuthenticated || !isMyPage ? null : (
               <TouchableOpacity
