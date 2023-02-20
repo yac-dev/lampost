@@ -31,13 +31,39 @@ const Header = (props) => {
     <View
       style={{
         flexDirection: 'row',
-        paddingLeft: 10,
-        paddingRight: 10,
+        // paddingLeft: 10,
+        // paddingRight: 10,
+        alignSelf: 'center',
         paddingTop: 20,
         // marginBottom: 20,
         // backgroundColor: 'red', // 確認用で使える。
       }}
     >
+      <TouchableOpacity>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginBottom: 5,
+          }}
+        >
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: 40,
+              height: 40,
+              backgroundColor: backgroundColorsTable['red1'],
+              marginRight: 10,
+              borderRadius: 10,
+            }}
+          >
+            <MaterialCommunityIcons name='fire' color={iconColorsTable['red1']} size={25} />
+          </View>
+          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>1245</Text>
+        </View>
+        <Text style={{ color: baseTextColor, textAlign: 'center', fontSize: 20 }}>Leadership</Text>
+      </TouchableOpacity>
       <View
         style={{
           width: avatarContainer,
@@ -86,63 +112,7 @@ const Header = (props) => {
         </View>
         <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold', fontSize: 15 }}>{user.name}</Text>
       </View>
-      {/* <View style={{ width: 80, height: 80, backgroundColor: 'red' }}></View> */}
-      {/* <View style={{ flexDirection: 'column' }}> */}
-      <Stats />
-      {/* <Text>Bea friend</Text> */}
-      {/* </View> */}
-      {/* {isMyPage ? (
-        <TouchableOpacity
-          style={{
-            backgroundColor: iconColorsTable['blue1'],
-            // padding: 5,
-            borderRadius: 10,
-            width: AvatarWidth,
-            aspectRatio: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginRight: 30,
-          }}
-          onPress={() => setIsConfirmEditProfileModalOpen(true)}
-        >
-          <FontAwesome5 name='user-astronaut' size={30} color='white' />
-        </TouchableOpacity>
-      ) : (
-        <View
-          style={{
-            backgroundColor: iconColorsTable['blue1'],
-            // padding: 5,
-            borderRadius: 10,
-            width: AvatarWidth,
-            aspectRatio: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginRight: 30,
-          }}
-        >
-          <FontAwesome5 name='user-astronaut' size={40} color='white' />
-        </View>
-      )} */}
-      {/* <View style={{ flexDirection: 'column', backgroundColor: screenSectionBackgroundColor }}>
-        {user.leadership.total ? (
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <MaterialCommunityIcons name='fire' color={baseTextColor} size={30} style={{ marginRight: 5 }} />
-              <View style={{ flexDirection: 'column', marginRight: 20, alignItems: 'center' }}>
-                <Text style={{ color: baseTextColor }}>Leadership</Text>
-                <Text style={{ color: baseTextColor }}>256</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <MaterialIcons name='groups' size={30} color={baseTextColor} style={{ marginRight: 5 }} />
-              <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-                <Text style={{ color: baseTextColor }}>Patrons</Text>
-                <Text style={{ color: baseTextColor }}>453</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        ) : null}
-      </View> */}
+      {/* <Stats /> */}
     </View>
   );
 };

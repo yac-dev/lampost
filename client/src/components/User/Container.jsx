@@ -21,6 +21,7 @@ import ActionButton from '../Utils/ActionButton';
 
 // components
 import Header from './Header';
+import ActionButttons from './ActionButttons';
 import Badge from './Badge';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import BadgeDetailBottomSheet from './BadgeDetailBottomSheet/Container';
@@ -275,7 +276,10 @@ const Container = (props) => {
                 </View>
               </View>
             ) : (
-              <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
+              <View>
+                <ActionButttons />
+                <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
+              </View>
             )}
             {!auth.isAuthenticated || !isMyPage ? null : (
               <TouchableOpacity

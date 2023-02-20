@@ -58,20 +58,26 @@ const userSchema = new mongoose.Schema({
   leadership: {
     total: Number,
     teamManagement: Number,
+    responsibility: Number,
     communication: Number,
     creativity: Number,
     courage: Number,
     integrity: Number,
+    empathy: Number,
+    respect: Number,
+    gratitude: Number,
+    influence: Number,
+    flexibility: Number,
   },
   patrons: {
     type: Number,
   },
-  assets: {
-    type: Number,
-  },
-  logs: {
-    type: Number,
-  },
+  // assets: {
+  //   type: Number,
+  // },
+  // logs: {
+  //   type: Number,
+  // },
   createdAt: {
     type: Date,
   },

@@ -228,8 +228,8 @@ const AppStack = (props) => {
     // console.log(Constants.manifest.extra.socketEndpoint);
     // const { socketEndpoint } = Constants.manifest.extra.socketEndpoint;
     // 'http://192.168.11.5:3500'
-    const socket = io('https://lampost-server-production.onrender.com', {
-      // const socket = io('http://192.168.11.5:3500', {
+    // const socket = io('https://lampost-server-production.onrender.com', {
+    const socket = io('http://192.168.11.5:3500', {
       path: '/mysocket',
     });
     setAuth((previous) => {
