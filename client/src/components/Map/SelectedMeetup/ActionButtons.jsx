@@ -26,7 +26,10 @@ const ActionButtons = (props) => {
 
   const joinMeetup = async () => {
     setLoading(true);
-    const result = await lampostAPI.patch(`/meetups/${selectedMeetup._id}/join`, { userId: auth.data._id });
+    const result = await lampostAPI.post('/meetupanduserrelationships/join', {
+      meetupId: selectedMeetup._id,
+      userId: auth.data._id,
+    });
     const { meetupObject, totalAttendees } = result.data;
     setAuth((previous) => {
       return {
@@ -66,7 +69,10 @@ const ActionButtons = (props) => {
 
   const leaveMeetup = async () => {
     setLoading(true);
-    const result = await lampostAPI.patch(`/meetups/${selectedMeetup._id}/leave`, { userId: auth.data._id });
+    const result = await lampostAPI.post('/meetupanduserrelationships/leave', {
+      meetupId: selectedMeetup._id,
+      userId: auth.data._id,
+    });
     const { meetupId, totalAttendees } = result.data; // filteringするだけよ。
     setAuth((previous) => {
       return {
@@ -156,7 +162,7 @@ const ActionButtons = (props) => {
           );
         } else {
           return (
-            <View>
+            <View style={{ flexDirection: 'row' }}>
               <ActionButton
                 label='Join this meetup'
                 icon={<MaterialCommunityIcons name='human-greeting-variant' size={25} color={'white'} />}
@@ -164,10 +170,12 @@ const ActionButtons = (props) => {
                 onActionButtonPress={() => joinMeetup(selectedMeetup._id)}
               />
               <ActionButton
-                label='Join this meetup'
-                icon={<MaterialCommunityIcons name='human-greeting-variant' size={25} color={'white'} />}
+                label='Report this meetup'
+                icon={<MaterialIcons name='report-problem' size={25} color={'white'} />}
                 backgroundColor={iconColorsTable['blue1']}
-                onActionButtonPress={() => joinMeetup(selectedMeetup._id)}
+                onActionButtonPress={() =>
+                  navigation.navigate('Report meetup', { title: selectedMeetup.title, id: selectedMeetup._id })
+                }
               />
             </View>
           );

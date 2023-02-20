@@ -35,7 +35,6 @@ export const joinMeetup = async (request, response) => {
       },
       totalAttendees: meetup.totalAttendees,
     });
-    response.status(201).json({});
   } catch (error) {
     console.log(error);
   }
@@ -53,14 +52,14 @@ export const leaveMeetup = async (request, response) => {
     // if (indexOfUser > -1) {
     //   meetup.attendees.splice(indexOfUser, 1);
     // }
-    const meetupAndUserRelationship = await Meetup.deleteOne({ meetup: meetupId, user: userId });
-    console.log(meetup.attendees, 'removing this index', indexOfUser);
+    const meetupAndUserRelationship = await MeetupAndUserRelationship.deleteOne({ meetup: meetupId, user: userId });
+    // console.log(meetup.attendees, 'removing this index', indexOfUser);
     meetup.totalAttendees--;
     meetup.save();
     const user = await User.findById(userId);
     let indexOfMeetup = 0;
     for (let i = 0; i < user.upcomingMeetups.length; i++) {
-      if (user.upcomingMeetups[i].meetup === meetup._id) {
+      if (user.upcomingMeetups[i].meetup === meetupId) {
         indexOfMeetup = i;
       }
     }
@@ -69,8 +68,9 @@ export const leaveMeetup = async (request, response) => {
       user.upcomingMeetups.splice(indexOfMeetup, 1);
     }
     user.save();
+    console.log('left meetup');
     response.status(200).json({
-      meetupId: meetup._id,
+      meetupId: meetupId,
       totalAttendees: meetup.totalAttendees,
     });
   } catch (error) {
