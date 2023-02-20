@@ -80,21 +80,24 @@ export const leaveMeetup = async (request, response) => {
 
 export const getUserMeetups = async (request, response) => {
   try {
-    const { meetupId, userId } = request.body;
     // meetupをqueryして、かつtitleとstartDateAndTimeとassetsを取ってくる感じかな。まあ、最初はtitleとstartDateAndTimeだけでいい。
     const meetupAndUserRelationships = await MeetupAndUserRelationship.find({
-      meetup: meetupId,
-      user: userId,
+      user: request.params.userId,
     }).populate({
       path: 'meetup',
       select: 'title startDateAndTime state totalAttendees',
+      populate: {
+        path: 'badges',
+        select: 'name icon color',
+      },
     });
-    const meetups = meetupAndUserRelationships.map((relationship) => {
+    const userMeetups = meetupAndUserRelationships.map((relationship) => {
       return relationship.meetup;
     });
+    console.log(userMeetups);
 
     response.status(200).json({
-      meetups,
+      userMeetups,
     });
   } catch (error) {
     console.log(error);
@@ -104,6 +107,31 @@ export const getUserMeetups = async (request, response) => {
 export const getMeetup = async (request, response) => {
   try {
     //
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getMeetupAttendees = async (request, response) => {
+  try {
+    const meetupAndUserRelationships = await MeetupAndUserRelationship.find({
+      meetup: request.params.meetupId,
+    }).populate({
+      path: 'user',
+      select: 'name topBadges photo',
+      populate: {
+        path: 'topBadges',
+        select: 'name color icon',
+      },
+    });
+
+    const meetupAttendees = meetupAndUserRelationships.map((relationship) => {
+      return relationship.user;
+    });
+
+    response.status(200).json({
+      meetupAttendees,
+    });
   } catch (error) {
     console.log(error);
   }
