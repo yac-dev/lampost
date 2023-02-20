@@ -11,7 +11,10 @@ const ActionButttons = () => {
 
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center', marginBottom: 20 }}>
-      <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginRight: 30 }}>
+      <TouchableOpacity
+        style={{ flexDirection: 'row', alignItems: 'center', marginRight: 30 }}
+        onPress={() => navigation.navigate('Activities')}
+      >
         <View
           style={{
             width: 40,

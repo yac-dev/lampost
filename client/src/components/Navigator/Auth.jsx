@@ -15,6 +15,7 @@ import UserHome from '../User/Container';
 import Launched from '../User/LaunchedMeetups/Container';
 import LaunchedMeetup from '../User/LaunchedMeetups/LaunchedMeetup/Container';
 import Patrons from '../User/Patrons/Container';
+import Activities from '../User/Activities';
 import Friends from '../User/Friends/Container';
 import Logs from '../User/Logs/Container';
 import Assets from '../User/Assets/Container';
@@ -139,6 +140,20 @@ const Auth = (props) => {
           <Stack.Screen
             name='Delete my account'
             component={DeleteAccount}
+            options={{
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+              // headerTintColor: 'white',
+            }}
+          />
+          <Stack.Screen
+            name='Activities'
+            component={Activities}
             options={{
               headerStyle: {
                 backgroundColor: appBottomSheetBackgroundColor,
