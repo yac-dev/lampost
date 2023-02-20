@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import UserContext from './UserContext';
+import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
+import UserContext from '../UserContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
@@ -9,13 +9,14 @@ import {
   iconColorsTable,
   baseTextColor,
   screenSectionBackgroundColor,
-} from '../../utils/colorsTable';
+} from '../../../utils/colorsTable';
 
 const ActionButttons = () => {
   const { navigation, user, isBlocked } = useContext(UserContext);
+  const oneContainerWidth = Dimensions.get('window').width / 3;
 
   return (
-    <View style={{}}>
+    <View style={{ width: oneContainerWidth }}>
       <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}
         onPress={() => navigation.navigate('Activities', { userId: user._id })}
@@ -34,6 +35,7 @@ const ActionButttons = () => {
           <Feather name='activity' size={25} color={iconColorsTable['green1']} />
         </View>
         <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>Activities</Text>
+        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
       </TouchableOpacity>
       <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}
@@ -53,6 +55,7 @@ const ActionButttons = () => {
           <MaterialCommunityIcons name='film' size={25} color={iconColorsTable['violet1']} />
         </View>
         <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>Assets</Text>
+        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
       </TouchableOpacity>
       <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
         <View
@@ -69,6 +72,7 @@ const ActionButttons = () => {
           <MaterialCommunityIcons name='hand-clap' size={25} color={iconColorsTable['yellow1']} />
         </View>
         <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>Claps</Text>
+        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
       </TouchableOpacity>
     </View>
   );

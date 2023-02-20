@@ -20,8 +20,9 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import ActionButton from '../Utils/ActionButton';
 
 // components
-import Header from './Header';
-import ActionButttons from './ActionButttons';
+// import Header from './Header';
+import Header from './Header/Container';
+import ActionButttons from './Header/ActionButttons';
 import Badge from './Badge';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import BadgeDetailBottomSheet from './BadgeDetailBottomSheet/Container';
@@ -240,32 +241,6 @@ const Container = (props) => {
                 <Text style={{ color: baseTextColor, textAlign: 'center', marginBottom: 10 }}>
                   You are blocking this user now.
                 </Text>
-                {/* <TouchableOpacity
-                  style={{
-                    padding: 15,
-                    alignSelf: 'center',
-                    backgroundColor: screenSectionBackgroundColor,
-                    borderRadius: 10,
-                  }}
-                  onPress={async () => {
-                    const payload = {
-                      userId: auth.data._id,
-                      blockingUserId: user._id,
-                    };
-                    setLoading(true);
-                    const result = await lampostAPI.post('/userblockingrelationships/unblock', payload);
-                    setLoading(false);
-                    setSnackBar({
-                      isVisible: true,
-                      barType: 'success',
-                      message: 'Unblocked this user.',
-                      duration: 5000,
-                    });
-                    setIsBlocked(false);
-                  }}
-                >
-                  <Text style={{ color: baseTextColor }}>Unblock this user</Text>
-                </TouchableOpacity> */}
                 <View style={{ alignSelf: 'center' }}>
                   <ActionButton
                     label='Unblock this user'

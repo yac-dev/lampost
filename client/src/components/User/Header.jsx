@@ -13,7 +13,7 @@ import {
   screenSectionBackgroundColor,
 } from '../../utils/colorsTable';
 import Stats from './Stats';
-import ActionButttons from './ActionButttons';
+import ActionButttons from './Header/ActionButttons';
 
 const Header = (props) => {
   const { auth } = useContext(GlobalContext);
