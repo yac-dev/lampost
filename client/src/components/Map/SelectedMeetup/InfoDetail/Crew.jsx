@@ -26,21 +26,41 @@ const Crew = (props) => {
     }
   }, [selectedMeetupDetailComponent]);
 
+  const onUserNamePress = (user) => {
+    // if (!auth.data || auth.data._id !== user._id) {
+    //   navigation.navigate('User', { userId: user._id });
+    // }
+    if (!auth.data) {
+      setSnackBar({
+        isVisible: true,
+        barType: 'error',
+        message: 'You are required to login or signup',
+        duration: 2000,
+      });
+    } else {
+      if (auth.data._id !== user._id) {
+        navigation.navigate('User', { userId: user._id });
+      } else {
+        console.log('Not gonna navigate to my page');
+      }
+    }
+  };
+
   const renderCrew = () => {
     if (crew.length) {
       const crewList = crew.map((user, index) => {
         return (
-          <TouchableOpacity
-            key={index}
-            style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}
-            onPress={() => {
-              if (!auth.data || auth.data._id !== user._id) {
-                navigation.navigate('User', { userId: user._id });
-              }
-            }}
-          >
-            <UserInfo user={user} />
-          </TouchableOpacity>
+          // <TouchableOpacity
+          //   key={index}
+          //   style={{ flexDirection: 'row', alignItems: 'center' }}
+          //   onPress={() => {
+          //     if (!auth.data || auth.data._id !== user._id) {
+          //       navigation.navigate('User', { userId: user._id });
+          //     }
+          //   }}
+          // >
+          <UserInfo key={index} user={user} onUserNamePress={onUserNamePress} />
+          // </TouchableOpacity>
         );
       });
 
@@ -49,7 +69,7 @@ const Crew = (props) => {
           <Text style={{ color: baseTextColor, marginBottom: 10 }}>
             These people are attending this meetup. Feel free to join!.
           </Text>
-          <View style={{ backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>{crewList}</View>
+          <View>{crewList}</View>
         </View>
       );
     } else if (!crew.length) {

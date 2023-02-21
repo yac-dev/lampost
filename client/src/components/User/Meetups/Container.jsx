@@ -64,7 +64,7 @@ const ActivitiesContainer = (props) => {
           <TouchableOpacity
             style={{ padding: 20 }}
             key={index}
-            onPress={() => props.navigation.navigate('Activity', { meetupId: meetup._id })}
+            onPress={() => props.navigation.navigate('Meetup', { meetupId: meetup._id })}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
               {renderDate(meetup.startDateAndTime)}

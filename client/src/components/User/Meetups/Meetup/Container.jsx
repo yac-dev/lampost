@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
-import ActivityContext from './ActivityContext';
+import MeetupContext from './MeetupContext';
 import lampostAPI from '../../../../apis/lampost';
 import { iconColorsTable, baseBackgroundColor } from '../../../../utils/colorsTable';
 
@@ -29,8 +29,10 @@ const ActivityContainer = (props) => {
   }, []);
 
   return (
-    <ActivityContext.Provider value={{ clapPeopleBottomSheetRef, selectedUser, setSelectedUser, meetupAttendees }}>
-      <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 20 }}>
+    <MeetupContext.Provider
+      value={{ navigation: props.navigation, clapPeopleBottomSheetRef, selectedUser, setSelectedUser, meetupAttendees }}
+    >
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
         <Text>Activity</Text>
         <Text>{props.route.params.meetupId}</Text>
         <View style={{ flexDirection: 'row' }}>
@@ -44,7 +46,7 @@ const ActivityContainer = (props) => {
         {isFetchedUserAttendees ? <Attendees /> : <ActivityIndicator />}
         <ClapPeopleBottomSheet clapPeopleBottomSheetRef={clapPeopleBottomSheetRef} />
       </View>
-    </ActivityContext.Provider>
+    </MeetupContext.Provider>
   );
 };
 

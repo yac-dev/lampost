@@ -38,6 +38,7 @@ const FlagUserMenuBottomSheet = () => {
           style={{ flexDirection: 'row', alignItems: 'center', padding: 5, justifyContent: 'space-between' }}
           onPress={() => {
             activitiesMenuBottomSheetRef.current.close();
+            navigation.navigate('Meetups', { userId: user._id });
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -62,6 +63,7 @@ const FlagUserMenuBottomSheet = () => {
           style={{ flexDirection: 'row', alignItems: 'center', padding: 5, justifyContent: 'space-between' }}
           onPress={() => {
             activitiesMenuBottomSheetRef.current.close();
+            navigation.navigate('Assets', { userId: user._id });
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>

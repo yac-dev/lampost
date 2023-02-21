@@ -12,13 +12,13 @@ import LogIn from '../Auth/LogIn';
 import EULA from '../Auth/EULA';
 
 import UserHome from '../User/Container';
-import Launched from '../User/LaunchedMeetups/Container';
-import LaunchedMeetup from '../User/LaunchedMeetups/LaunchedMeetup/Container';
+// import Launched from '../User/LaunchedMeetups/Container';
+// import LaunchedMeetup from '../User/LaunchedMeetups/LaunchedMeetup/Container';
 import Patrons from '../User/Patrons/Container';
-import Activities from '../User/Activities/Container';
-import Activity from '../User/Activities/Activity/Container';
-import Friends from '../User/Friends/Container';
-import Logs from '../User/Logs/Container';
+// import Activities from '../User/Activities/Container';
+// import Activity from '../User/Meetups/Activity/Container';
+import Meetups from '../User/Meetups/Container';
+import Meetup from '../User/Meetups/Meetup/Container';
 import Assets from '../User/Assets/Container';
 import Asset from '../User/Assets/Asset/Container';
 import AddBadges from '../Utils/AddBadges/Container';
@@ -55,34 +55,6 @@ const Auth = (props) => {
             {/*  これまた、別でuserhomeのcomponentがひちようだわな。connectionなりで、違うuser pageに飛んでいくから。*/}
           </Stack.Screen>
           <Stack.Screen
-            name='Launched'
-            component={Launched}
-            options={{
-              headerStyle: {
-                backgroundColor: appBottomSheetBackgroundColor,
-              },
-              headerTitleStyle: {
-                fontWeight: 'bold',
-                color: 'white',
-              },
-              // headerTintColor: 'white',
-            }}
-          />
-          <Stack.Screen
-            name='Launched meetup'
-            component={LaunchedMeetup}
-            options={{
-              headerStyle: {
-                backgroundColor: appBottomSheetBackgroundColor,
-              },
-              headerTitleStyle: {
-                fontWeight: 'bold',
-                color: 'white',
-              },
-              // headerTintColor: 'white',
-            }}
-          />
-          <Stack.Screen
             name='Patrons'
             component={Patrons}
             options={{
@@ -96,20 +68,6 @@ const Auth = (props) => {
               // headerTintColor: 'white',
             }}
           />
-          <Stack.Screen
-            name='Logs'
-            component={Logs}
-            options={{
-              headerStyle: {
-                backgroundColor: appBottomSheetBackgroundColor,
-              },
-              headerTitleStyle: {
-                fontWeight: 'bold',
-                color: 'white',
-              },
-              // headerTintColor: 'white',
-            }}
-          ></Stack.Screen>
           <Stack.Screen
             name='Assets'
             component={Assets}
@@ -153,8 +111,8 @@ const Auth = (props) => {
             }}
           />
           <Stack.Screen
-            name='Activities'
-            component={Activities}
+            name='Meetups'
+            component={Meetups}
             options={{
               headerStyle: {
                 backgroundColor: appBottomSheetBackgroundColor,
@@ -167,8 +125,8 @@ const Auth = (props) => {
             }}
           />
           <Stack.Screen
-            name='Activity'
-            component={Activity}
+            name='Meetup'
+            component={Meetup}
             options={{
               headerStyle: {
                 backgroundColor: appBottomSheetBackgroundColor,
