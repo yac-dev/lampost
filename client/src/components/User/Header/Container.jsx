@@ -8,13 +8,11 @@ import ActionButttons from './ActionButttons';
 
 const HeaderContainer = () => {
   const { auth, isIpad } = useContext(GlobalContext);
-  const { user, isMyPage, setIsConfirmEditProfileModalOpen, flagUserMenuBottomSheetRef } = useContext(UserContext);
 
   return (
-    <View style={{ flexDirection: 'row', paddingTop: 20, marginBottom: 15 }}>
+    <View style={{ flexDirection: 'row', paddingTop: 15, marginBottom: 15, alignSelf: 'center' }}>
       <AvatarImage />
       <Stats />
-      <ActionButttons />
     </View>
   );
 };

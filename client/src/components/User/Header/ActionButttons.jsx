@@ -16,9 +16,9 @@ const ActionButttons = () => {
   const oneContainerWidth = Dimensions.get('window').width / 3;
 
   return (
-    <View style={{ width: oneContainerWidth }}>
+    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <TouchableOpacity
-        style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}
+        style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}
         onPress={() => navigation.navigate('Activities', { userId: user._id })}
       >
         <View
@@ -38,7 +38,7 @@ const ActionButttons = () => {
         {/* <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} /> */}
       </TouchableOpacity>
       <TouchableOpacity
-        style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}
+        style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}
         onPress={() => navigation.navigate('Assets', { userId: user._id })}
       >
         <View

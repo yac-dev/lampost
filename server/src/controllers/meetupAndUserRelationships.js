@@ -94,7 +94,6 @@ export const getUserMeetups = async (request, response) => {
     const userMeetups = meetupAndUserRelationships.map((relationship) => {
       return relationship.meetup;
     });
-    console.log(userMeetups);
 
     response.status(200).json({
       userMeetups,

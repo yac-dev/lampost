@@ -15,13 +15,13 @@ const AvatarImage = () => {
   return (
     <View
       style={{
-        width: oneContainerWidth,
-        // aspectRatio: 1,
+        width: 100,
+        aspectRatio: 1,
         flexDirection: 'column',
-        // backgroundColor: 'green', //確認用で使える
+        backgroundColor: 'green', //確認用で使える
 
-        alignItems: 'flex-end',
-        marginRight: 50,
+        // alignItems: 'flex-end',
+        marginRight: 30,
       }}
     >
       <View
@@ -29,7 +29,7 @@ const AvatarImage = () => {
           backgroundColor: user.photo ? null : iconColorsTable['blue1'],
           // padding: 5,
           borderRadius: isIpad ? 20 : 10,
-          width: avatarWidth,
+          width: '100%',
           aspectRatio: 1,
           alignItems: 'center',
           justifyContent: 'center',

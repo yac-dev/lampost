@@ -2,7 +2,11 @@ import React, { useMemo, useContext } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import ActivityContext from './ActivityContext';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
-import { appBottomSheetBackgroundColor, baseTextColor, screenSectionBackgroundColor } from '../../../utils/colorsTable';
+import {
+  appBottomSheetBackgroundColor,
+  baseTextColor,
+  screenSectionBackgroundColor,
+} from '../../../../utils/colorsTable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const ClapPeopleBottomSheet = (props) => {

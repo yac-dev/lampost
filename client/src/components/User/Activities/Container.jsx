@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
-import lampostAPI from '../../apis/lampost';
-import { iconColorsTable, baseBackgroundColor, baseTextColor, backgroundColorsTable } from '../../utils/colorsTable';
-import BadgeLabel from '../Utils/BadgeLabel';
+import lampostAPI from '../../../apis/lampost';
+import { iconColorsTable, baseBackgroundColor, baseTextColor, backgroundColorsTable } from '../../../utils/colorsTable';
+import BadgeLabel from '../../Utils/BadgeLabel';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const Activities = (props) => {
+const ActivitiesContainer = (props) => {
   const [userMeetups, setUserMeetups] = useState([]);
   const [fetchedUserMeetups, setFetchedUserMeetups] = useState(true);
 
@@ -104,4 +104,4 @@ const Activities = (props) => {
   );
 };
 
-export default Activities;
+export default ActivitiesContainer;
