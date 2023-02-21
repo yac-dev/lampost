@@ -37,24 +37,26 @@ const Attendees = () => {
           user={user}
           onUserNamePress={onUserNamePress}
           actionButtons={
-            <View>
-              <TouchableOpacity
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  backgroundColor: iconColorsTable['blue1'],
-                  borderRadius: 10,
-                  padding: 7,
-                }}
-                onPress={() => {
-                  setSelectedUser(user);
-                  clapPeopleBottomSheetRef.current.snapToIndex(0);
-                }}
-              >
-                <MaterialCommunityIcons name='hand-clap' size={17} color='white' style={{ marginRight: 5 }} />
-                <Text style={{ color: 'white' }}>Clap</Text>
-              </TouchableOpacity>
-            </View>
+            user._id === auth.data._id ? (
+              <View>
+                <TouchableOpacity
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    backgroundColor: iconColorsTable['blue1'],
+                    borderRadius: 10,
+                    padding: 7,
+                  }}
+                  onPress={() => {
+                    setSelectedUser(user);
+                    clapPeopleBottomSheetRef.current.snapToIndex(0);
+                  }}
+                >
+                  <MaterialCommunityIcons name='hand-clap' size={17} color='white' style={{ marginRight: 5 }} />
+                  <Text style={{ color: 'white' }}>Clap</Text>
+                </TouchableOpacity>
+              </View>
+            ) : null
           }
         />
       );

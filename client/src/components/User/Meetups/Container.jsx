@@ -57,7 +57,7 @@ const ActivitiesContainer = (props) => {
 
   const renderMeetups = () => {
     if (!userMeetups.length) {
-      return <Text>There are no meetup logs yet.</Text>;
+      return <Text>This user haven't joined any meetups yet.</Text>;
     } else {
       const list = userMeetups.map((meetup, index) => {
         return (

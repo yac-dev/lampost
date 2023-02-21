@@ -4,6 +4,7 @@ import GlobalContext from '../../GlobalContext';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { iconColorsTable, baseTextColor, screenSectionBackgroundColor } from '../../utils/colorsTable';
 import BadgeLabel from './BadgeLabel';
+import FastImage from 'react-native-fast-image';
 
 const UserInfo = (props) => {
   const { auth } = useContext(GlobalContext);
@@ -49,9 +50,13 @@ const UserInfo = (props) => {
           }}
         >
           {props.user.photo ? (
-            <Image
-              source={{ uri: props.user.photo }}
+            <FastImage
               style={{ width: 40, height: 40, borderRadius: 10, marginRight: 15 }}
+              source={{
+                uri: props.user.photo,
+                priority: FastImage.priority.normal,
+              }}
+              resizeMode={FastImage.resizeMode.contain}
             />
           ) : (
             <View

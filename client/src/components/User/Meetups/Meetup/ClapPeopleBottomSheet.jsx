@@ -1,6 +1,6 @@
 import React, { useMemo, useContext, useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import ActivityContext from './MeetupContext';
+import MeetupContext from './MeetupContext';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import {
   appBottomSheetBackgroundColor,
@@ -14,27 +14,40 @@ import ActionButton from '../../../Utils/ActionButton';
 // leadershipの方は、、、leader的資質だけに絞ろう。
 // team management, time management, goal setting, planning, courage, integrity, dependability, creative, influence, active listening, flexibility
 
+const INITIAL_PRAISED_SKILL = {
+  teamManagement: { label: 'Launcher has great team management skill.', value: 'teamManagement', clapped: 0 },
+  timeManagement: { label: 'Launcher has great time management skill.', value: 'timeManagement', clapped: 0 },
+  planning: { label: 'Launcher has great planning skill.', value: 'planning', clapped: 0 },
+  courage: { label: 'Launcher is courage.', value: 'courage', clapped: 0 },
+  integrity: { label: 'Launcher has great integrity.', value: 'integrity', clapped: 0 },
+  dependability: { label: 'Launcher is a dependable person.', value: 'dependability', clapped: 0 },
+  creative: { label: 'Launcher is a creative person.', value: 'creative', clapped: 0 },
+  activeListenning: { label: 'Launcher ' },
+  influence: {},
+  flexibility: { label: 'Launcher is a flexible person.', value: 'flexible', clapped: 0 },
+};
+
 const INITIAL_CLAPPED_SKILLS = {
-  considerate: { label: 'He/She is a considerate person.', value: 'considerate', clapped: 0 },
-  communication: { label: 'He/She has effective communication skills.', value: 'communication', clapped: 0 },
-  openminded: { label: 'He/She is an open-minded person', value: 'openminded', clapped: 0 },
-  spontaneous: { label: 'He/She is a spontaneous person.', value: 'spontaneous', clapped: 0 },
-  diversity: { label: 'He/She is a diverse person.', value: 'diversity', clapped: 0 },
-  enthusiastic: { label: 'He/She is an enthusiastic person.', value: 'enthusiastic', clapped: 0 },
-  hardWorking: { label: 'He/She is a hard-working person.', value: 'hardWorking', clapped: 0 },
-  concentration: { label: 'He/She has great concentration.', value: 'concentration', clapped: 0 },
-  calmAndRelaxed: { label: 'He/She is calm and relaxed person.', value: 'calmAndRelaxed', clapped: 0 },
-  respectful: { label: 'He/She is a respectful person.', value: 'respectful', clapped: 0 },
-  teamWorking: { label: 'He/She has great team working skills.', value: 'cooperative', clapped: 0 },
-  adaptivity: { label: 'He/She has adaptivity.', value: 'adaptivity', clapped: 0 },
-  empathy: { label: 'He/She has empathy', value: 'empathy', clapped: 0 },
-  criticalThinking: { label: 'He/She has good critical thinking skills.', value: 'criticalThinking', clapped: 0 },
+  considerate: { label: 'He/She is a considerate person🥰', value: 'considerate', clapped: 0 },
+  communication: { label: 'He/She has effective communication skills👍', value: 'communication', clapped: 0 },
+  openMinded: { label: 'He/She is an open-minded person🤗', value: 'openMinded', clapped: 0 },
+  spontaneous: { label: 'He/She is a spontaneous person📢', value: 'spontaneous', clapped: 0 },
+  diversity: { label: 'He/She is a diverse person🌎', value: 'diversity', clapped: 0 },
+  passionate: { label: 'He/She is passionate about what he/she does🔥', value: 'passionate', clapped: 0 },
+  hardWorking: { label: 'He/She is a hard-working person🔥', value: 'hardWorking', clapped: 0 },
+  concentration: { label: 'He/She has great concentration✍️', value: 'concentration', clapped: 0 },
+  calmAndRelaxed: { label: 'He/She is calm and relaxed person😌', value: 'calmAndRelaxed', clapped: 0 },
+  respectful: { label: 'He/She is a respectful person🙏', value: 'respectful', clapped: 0 },
+  teamWorking: { label: 'He/She has great team working skills🤝', value: 'teamWorking', clapped: 0 },
+  adaptivity: { label: 'He/She is adaptable🙌', value: 'adaptivity', clapped: 0 },
+  empathy: { label: 'He/She makes efforts to empathize with anybody❤️', value: 'empathy', clapped: 0 },
+  criticalThinking: { label: 'He/She has good critical thinking skills🤔', value: 'criticalThinking', clapped: 0 },
 };
 
 const ClapPeopleBottomSheet = (props) => {
-  const [clappedSkills, setClappedSkills] = useState(INITIAL_CLAPPED_SKILLS);
+  const { selectedUser, clapPeopleBottomSheetRef, fetchedMeetup } = useContext(MeetupContext);
+  const [clappedSkills, setClappedSkills] = useState(null);
   const snapPoints = useMemo(() => ['80%'], []);
-  const { selectedUser, clapPeopleBottomSheetRef } = useContext(ActivityContext);
   const [totalClapped, setTotalClapped] = useState(0);
   const [isDisabledSubmit, setIsDisabledSubmit] = useState(true);
 
@@ -45,6 +58,16 @@ const ClapPeopleBottomSheet = (props) => {
       setIsDisabledSubmit(false);
     }
   }, [totalClapped]);
+
+  useEffect(() => {
+    if (selectedUser) {
+      if (selectedUser._id === fetchedMeetup.launcher) {
+        setClappedSkills(INITIAL_CLAPPED_SKILLS);
+      } else {
+        setClappedSkills(INITIAL_PRAISED_SKILL);
+      }
+    }
+  }, [selectedUser]);
 
   const renderClapSkill = () => {
     const skillsList = Object.values(clappedSkills);
@@ -117,7 +140,12 @@ const ClapPeopleBottomSheet = (props) => {
                 padding: 5,
                 marginRight: 10,
               }}
-              onPress={() => clapPeopleBottomSheetRef.current.close()}
+              onPress={() => {
+                setClappedSkills(INITIAL_CLAPPED_SKILLS);
+                setTotalClapped(0);
+                setIsDisabledSubmit(true);
+                clapPeopleBottomSheetRef.current.close();
+              }}
             >
               <MaterialCommunityIcons name='close' color='white' style={{ marginRight: 10 }} />
               <Text style={{ color: 'white' }}>Cancel</Text>

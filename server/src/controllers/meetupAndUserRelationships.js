@@ -105,7 +105,26 @@ export const getUserMeetups = async (request, response) => {
 
 export const getMeetup = async (request, response) => {
   try {
-    //
+    const meetupAndUserRelationship = await MeetupAndUserRelationship.findOne({
+      meetup: request.params.meetupId,
+    }).populate({
+      path: 'meetup',
+      select: 'title startDateAndTime launcher badges',
+      populate: [
+        {
+          path: 'launcher',
+          select: 'name photo',
+        },
+        {
+          path: 'badges',
+          select: 'name icon color',
+        },
+      ],
+    });
+
+    response.status(200).json({
+      meetup: meetupAndUserRelationship.meetup,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -123,6 +142,7 @@ export const getMeetupAttendees = async (request, response) => {
         select: 'name color icon',
       },
     });
+    console.log('meetup users route');
 
     const meetupAttendees = meetupAndUserRelationships.map((relationship) => {
       return relationship.user;
