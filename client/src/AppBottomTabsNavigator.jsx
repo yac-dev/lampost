@@ -24,6 +24,7 @@ import NotAvailableModal from './components/Utils/NotAvailableModal';
 import PleaseLoginModal from './components/Utils/PleaseLoginModal';
 import SnackBar from './components/Utils/SnackBar';
 import Camera from './components/Camera/Container';
+import DummyCamera from './components/DummyCamera';
 
 const ref = createNavigationContainerRef();
 const Tab = createBottomTabNavigator();
@@ -409,6 +410,17 @@ const AppStack = (props) => {
             options={{
               headerShown: false,
               tabBarLabel: 'Libraries',
+              tabBarIcon: ({ size, color, focused }) => (
+                <Ionicons name='ios-library-sharp' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name='DummyCamera'
+            component={DummyCamera}
+            options={{
+              headerShown: false,
+              tabBarLabel: 'Dummycam',
               tabBarIcon: ({ size, color, focused }) => (
                 <Ionicons name='ios-library-sharp' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
               ),
