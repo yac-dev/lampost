@@ -32,14 +32,14 @@ const UserInfo = (props) => {
   return (
     <View
       style={{
-        flexDirection: 'column',
+        // flexDirection: 'column',
         backgroundColor: screenSectionBackgroundColor,
         borderRadius: 10,
         padding: 10,
         marginBottom: 15,
       }}
     >
-      <View style={{ flexDirection: 'row', marginBottom: 10, alignItems: 'center', justifyContent: 'space-between' }}>
+      <View style={{ flexDirection: 'row', marginBottom: 10 }}>
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center' }}
           onPress={() => {
@@ -51,7 +51,7 @@ const UserInfo = (props) => {
         >
           {props.user.photo ? (
             <FastImage
-              style={{ width: 40, height: 40, borderRadius: 10, marginRight: 15 }}
+              style={{ width: 45, height: 45, borderRadius: 10, marginRight: 15 }}
               source={{
                 uri: props.user.photo,
                 priority: FastImage.priority.normal,
@@ -61,8 +61,8 @@ const UserInfo = (props) => {
           ) : (
             <View
               style={{
-                width: 40,
-                height: 40,
+                width: 45,
+                height: 45,
                 borderRadius: 10,
                 marginRight: 15,
                 backgroundColor: iconColorsTable['blue1'],
@@ -73,13 +73,13 @@ const UserInfo = (props) => {
               <FontAwesome5 name='user-astronaut' size={25} color='white' />
             </View>
           )}
-          <Text numberOfLines={1} style={{ color: 'white', fontSize: 15, width: 130 }}>
-            {props.user.name}
-          </Text>
+          <View style={{ flexDirection: 'column' }}>
+            <Text style={{ color: 'white', fontSize: 15, marginRight: 20, marginBottom: 5 }}>{props.user.name}</Text>
+            {renderTopBadges(props.user.topBadges)}
+          </View>
         </TouchableOpacity>
-        {props.actionButtons}
       </View>
-      {renderTopBadges(props.user.topBadges)}
+      {props.actionButtons}
     </View>
   );
 };

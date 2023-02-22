@@ -44,7 +44,7 @@ const Menu = (props) => {
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <View
           style={{
-            backgroundColor: '#EFEFEF',
+            // backgroundColor: '#EFEFEF',
             width: 35,
             height: 35,
             borderRadius: 7,

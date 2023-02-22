@@ -147,7 +147,7 @@ const Menus = (props) => {
   // };
 
   return (
-    <View style={{ borderRadius: 10, backgroundColor: sectionBackgroundColor }}>
+    <BottomSheetScrollView style={{ borderRadius: 10, backgroundColor: sectionBackgroundColor }}>
       <Menu
         label='Launcher'
         icon={<MaterialCommunityIcons name='rocket-launch' size={20} color={iconColorsTable['red1']} />}
@@ -258,7 +258,7 @@ const Menus = (props) => {
           selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
         }}
       /> */}
-    </View>
+    </BottomSheetScrollView>
   );
 };
 

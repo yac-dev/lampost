@@ -85,11 +85,17 @@ export const getUserMeetups = async (request, response) => {
       user: request.params.userId,
     }).populate({
       path: 'meetup',
-      select: 'title startDateAndTime state totalAttendees',
-      populate: {
-        path: 'badges',
-        select: 'name icon color',
-      },
+      select: 'title startDateAndTime state totalAttendees launcher',
+      populate: [
+        {
+          path: 'badges',
+          select: 'name icon color',
+        },
+        {
+          path: 'launcher',
+          select: 'name photo',
+        },
+      ],
     });
     const userMeetups = meetupAndUserRelationships.map((relationship) => {
       return relationship.meetup;
@@ -142,7 +148,6 @@ export const getMeetupAttendees = async (request, response) => {
         select: 'name color icon',
       },
     });
-    console.log('meetup users route');
 
     const meetupAttendees = meetupAndUserRelationships.map((relationship) => {
       return relationship.user;

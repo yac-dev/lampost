@@ -23,11 +23,11 @@ const Container = (props) => {
   const renderSelectedMeetup = () => {
     if (selectedMeetup) {
       return (
-        <View>
+        <>
           <Header />
           <ActionButtons />
           <Menus />
-        </View>
+        </>
       );
     } else {
       return (

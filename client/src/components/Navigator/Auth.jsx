@@ -18,7 +18,8 @@ import Patrons from '../User/Patrons/Container';
 // import Activities from '../User/Activities/Container';
 // import Activity from '../User/Meetups/Activity/Container';
 import Meetups from '../User/Meetups/Container';
-import Meetup from '../User/Meetups/Meetup/Container';
+import Attended from '../User/Meetups/Attended/Container';
+// import Meetup from '../User/Meetups/Meetup/Container';
 import Assets from '../User/Assets/Container';
 import Asset from '../User/Assets/Asset/Container';
 import AddBadges from '../Utils/AddBadges/Container';
@@ -125,6 +126,21 @@ const Auth = (props) => {
             }}
           />
           <Stack.Screen
+            name='Attended'
+            component={Attended}
+            options={{
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+              // headerTintColor: 'white',
+            }}
+          />
+          {/* <Stack.Screen
+          // attendedとmeetup assetsと、impressions
             name='Meetup'
             component={Meetup}
             options={{
@@ -137,7 +153,7 @@ const Auth = (props) => {
               },
               // headerTintColor: 'white',
             }}
-          />
+          /> */}
         </Stack.Group>
         <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
           <Stack.Screen

@@ -11,6 +11,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { backgroundColorsTable, baseTextColor, iconColorsTable } from '../../../utils/colorsTable';
 import ActionButton from '../../Utils/ActionButton';
+import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 const ActionButtons = (props) => {
   const {
@@ -239,9 +240,9 @@ const ActionButtons = (props) => {
   };
 
   return (
-    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginBottom: 25 }}>
+    <BottomSheetScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginBottom: 25 }}>
       {renderApp()}
-    </ScrollView>
+    </BottomSheetScrollView>
   );
 };
 
