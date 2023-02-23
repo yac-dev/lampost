@@ -36,6 +36,7 @@ import ConfirmLogout from './ConfirmLogout';
 import ConfirmBlockUserModal from './ConfirmBlockUserModal';
 import FlagUserMenuBottomSheet from './FlagUserMenuBottomSheet';
 import ActivitiesMenuBottomSheet from './ActivitiesMenuBottomSheet';
+import LeadershipBottomSheet from './LeadershipBottomSheet';
 
 // badgeを取ってきて、skillも取ってくる。subscriberの数も返すし、connectionの数も返す。
 const Container = (props) => {
@@ -58,6 +59,7 @@ const Container = (props) => {
   const addLinkBottomSheetRef = useRef(null);
   const flagUserMenuBottomSheetRef = useRef(null);
   const activitiesMenuBottomSheetRef = useRef(null);
+  const leadershipBottomSheetRef = useRef(null);
   const [addLinkOrBadgeTagsBottomSheetType, setAddLinkOrBadgeTagsBottomSheetType] = useState('');
   const [fetchedBadgeTags, setFetchedBadgeTags] = useState([]);
   const [isOpenCreateBadgeTagTextInput, setIsOpenCreateBadgeTagTextInput] = useState(false);
@@ -232,6 +234,7 @@ const Container = (props) => {
           setIsConfirmFlagUserModalOpen,
           flagUserMenuBottomSheetRef,
           activitiesMenuBottomSheetRef,
+          leadershipBottomSheetRef,
           isConfirmBlockUserModalOpen,
           setIsConfirmBlockUserModalOpen,
         }}
@@ -294,6 +297,7 @@ const Container = (props) => {
             <AddLinkBottomSheet />
             <FlagUserMenuBottomSheet />
             <ActivitiesMenuBottomSheet />
+            <LeadershipBottomSheet />
             {/* <SelectedProfileImage /> */}
             <ConfirmEditProfileModal />
             <ConfirmFlagUserModal />

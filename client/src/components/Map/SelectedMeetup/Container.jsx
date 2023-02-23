@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetTextInput, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { baseTextColor } from '../../../utils/colorsTable';
+import BadgeLabels from './BadgesLabels';
 
 // ac
 import { setIsSelectedItemBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
@@ -13,7 +14,7 @@ import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 
 import Header from './Header';
 import ActionButtons from './ActionButtons';
-import Badges from './Badges';
+import Badges from './BadgesLabels';
 import Menus from './Menus';
 
 const SelectedMeetupContainer = (props) => {
@@ -25,6 +26,7 @@ const SelectedMeetupContainer = (props) => {
       return (
         <>
           <Header />
+          <BadgeLabels />
           <ActionButtons />
           <Menus />
         </>

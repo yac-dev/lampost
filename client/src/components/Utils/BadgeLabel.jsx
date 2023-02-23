@@ -8,7 +8,14 @@ const BadgeLabel = (props) => {
   const { isIpad } = useContext(GlobalContext);
 
   return (
-    <View style={{ backgroundColor: rnDefaultBackgroundColor, marginRight: 10, borderRadius: 5, height: 25 }}>
+    <View
+      style={{
+        backgroundColor: rnDefaultBackgroundColor,
+        marginRight: 10,
+        borderRadius: 5,
+        height: 25,
+      }}
+    >
       <TouchableOpacity
         style={{
           flexDirection: 'row',

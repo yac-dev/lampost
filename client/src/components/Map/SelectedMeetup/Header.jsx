@@ -12,7 +12,7 @@ import {
   rnDefaultBackgroundColor,
 } from '../../../utils/colorsTable';
 import { Ionicons } from '@expo/vector-icons';
-import Badges from './Badges';
+// import Badges from './BadgesLabels';
 
 const Header = (props) => {
   const { isIpad } = useContext(GlobalContext);
@@ -93,7 +93,7 @@ const Header = (props) => {
 
   return (
     <View style={{ marginBottom: 10 }}>
-      <View style={{ flexDirection: 'row', marginBottom: 20 }}>
+      <View style={{ flexDirection: 'row' }}>
         {renderDate(selectedMeetup.startDateAndTime)}
         <View style={{ flexDirection: 'column', flexShrink: 1 }}>
           <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white', marginBottom: 10 }}>
@@ -102,9 +102,6 @@ const Header = (props) => {
           <View>{renderTime(selectedMeetup.startDateAndTime, selectedMeetup.duration)}</View>
         </View>
       </View>
-      {/* <View style={{ marginBottom: 10 }}> */}
-      <Badges />
-      {/* </View> */}
     </View>
   );
 };

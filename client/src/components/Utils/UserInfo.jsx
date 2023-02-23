@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ScrollView, FlatList } from 'react-native';
 import GlobalContext from '../../GlobalContext';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { iconColorsTable, baseTextColor, screenSectionBackgroundColor } from '../../utils/colorsTable';
@@ -9,20 +9,39 @@ import FastImage from 'react-native-fast-image';
 const UserInfo = (props) => {
   const { auth } = useContext(GlobalContext);
 
+  // const renderTopBadges = (badges) => {
+  //   if (badges.length) {
+  //     const list = badges.map((badge, index) => {
+  //       return <BadgeLabel key={index} badge={badge} />;
+  //     });
+
+  //     return (
+  //       <ScrollView
+  //         horizontal={true}
+  //         // contentContainerStyle={{ paddingRight: 50 }}
+  //         showsHorizontalScrollIndicator={false}
+  //       >
+  //         {list}
+  //       </ScrollView>
+  //     );
+  //   } else {
+  //     return null;
+  //   }
+  // };
+
+  const onUserNamePress = () => {};
+
   const renderTopBadges = (badges) => {
     if (badges.length) {
-      const list = badges.map((badge, index) => {
-        return <BadgeLabel key={index} badge={badge} />;
-      });
-
       return (
-        <ScrollView
+        <FlatList
+          contentContainerStyle={{ paddingRight: 100 }}
+          data={badges}
+          renderItem={({ item }) => <BadgeLabel badge={item} />}
+          keyExtractor={(item) => item._id}
           horizontal={true}
-          // contentContainerStyle={{ paddingRight: 50 }}
           showsHorizontalScrollIndicator={false}
-        >
-          {list}
-        </ScrollView>
+        />
       );
     } else {
       return null;

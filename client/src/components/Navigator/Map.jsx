@@ -21,7 +21,7 @@ import AboutLampost from '../Utils/AboutLampost';
 import ReportMeetup from '../Map/ReportMeetup';
 import ReportMeetupMember from '../Map/SelectedMeetup/Lounge/ReportMeetupMember';
 import ReportUser from '../Utils/ReportUser';
-import Attendees from '../Map/SelectedMeetup/Attendees/Container';
+import Attendees from '../Map/SelectedMeetup/Attendees';
 
 import AuthNavigator from './Auth';
 import { appBottomSheetBackgroundColor, iconColorsTable } from '../../utils/colorsTable';

@@ -18,7 +18,7 @@ const AvatarImage = () => {
         width: 100,
         aspectRatio: 1,
         flexDirection: 'column',
-        backgroundColor: 'green', //確認用で使える
+        // backgroundColor: 'green', //確認用で使える
 
         // alignItems: 'flex-end',
         marginRight: 30,

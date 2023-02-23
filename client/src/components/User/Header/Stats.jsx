@@ -7,7 +7,16 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 
 const Stats = () => {
-  const { user, activitiesMenuBottomSheetRef } = useContext(UserContext);
+  const { user, activitiesMenuBottomSheetRef, leadershipBottomSheetRef } = useContext(UserContext);
+
+  const calculateLeadership = (user) => {
+    let accumlator = 0;
+    for (const trait in user.leadership) {
+      accumlator = accumlator + user.leadership[trait];
+    }
+    const total = accumlator * (user.patrons < 2 ? 1 : user.patrons);
+    return total;
+  };
 
   return (
     <View
@@ -19,7 +28,7 @@ const Stats = () => {
         justifyContent: 'space-between',
       }}
     >
-      <TouchableOpacity style={{ marginBottom: 10 }}>
+      <TouchableOpacity style={{ marginBottom: 10 }} onPress={() => leadershipBottomSheetRef.current.snapToIndex(0)}>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
           <View
             style={{
@@ -36,7 +45,9 @@ const Stats = () => {
           </View>
           <Text style={{ color: baseTextColor, fontSize: 17, fontWeight: 'bold' }}>Leadership</Text>
         </View>
-        <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center', color: 'white' }}>🔥1245</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center', color: 'white' }}>
+          🔥{calculateLeadership(user)}
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}
@@ -57,7 +68,7 @@ const Stats = () => {
         >
           <Feather name='activity' size={25} color={iconColorsTable['green1']} />
         </View>
-        <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>Activities</Text>
+        <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>Activity</Text>
         {/* <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} /> */}
       </TouchableOpacity>
     </View>
