@@ -35,12 +35,9 @@ const meetupSchema = new mongoose.Schema({
   isMediaAllowed: Boolean,
   link: String,
   totalAttendees: Number,
-  comments: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Comment',
-    },
-  ],
+  totalComments: Number,
+  totalAssets: Number,
+  totalImpressions: Number,
   attendees: {
     type: [
       {
@@ -54,10 +51,6 @@ const meetupSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
-  // chatRoom: {
-  //   type: mongoose.Schema.ObjectId,
-  //   ref: 'ChatRoom',
-  // },
   state: {
     type: String,
     default: '', // 'upcoming', 'ongoing', 'finished'
@@ -65,47 +58,14 @@ const meetupSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
   },
-  assets: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Asset',
-    },
-  ],
   representation: String,
-  impressions: [
-    {
-      text: String,
-      user: { type: mongoose.Schema.ObjectId, ref: 'User' },
-      createdAt: Date,
-    },
-  ],
-  // isStartDateAndTimeUpdated: Boolean,
-  // isDuratonUpdated: Boolean,
-  // endDateAndTime: Date,
-  // isEndDateAndTimeUpdated: Boolean,
-  // totalComments: {
-  //   type: Number,
-  //   default: 0,
-  // },
-  // totalAttendees: {
-  //   type: Number,
-  //   default: 0,
-  // },
-
-  // これも、commentをただ集めてくればいいだよな,
-  // agenda: [
+  // assets: [
   //   {
   //     type: mongoose.Schema.ObjectId,
-  //     ref: 'MeetupAgenda', // agendaのdocumentがqueueで溜まっていく感じ。
+  //     ref: 'Asset',
   //   },
-  //   // {meetup: '20391390138', title: 'eat', from:'3/15/2022 16:00', to: '3/15/2022 17:00' }みたいな感じかね。ただ、これは最後でいいし、そもそも必要かも分からん。
   // ],
-  // impressions: [
-  //   {
-  //     type: mongoose.Schema.ObjectId,
-  //     ref: 'Impression',
-  //   },
-  // ], これも多分いらない。impression側でmeetupのidあれば十分。
+  // impression側だけで、meetupのreferenceを持っていれば、それでいい。
 });
 
 // function genresLimit(val) {

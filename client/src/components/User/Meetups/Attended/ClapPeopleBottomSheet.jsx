@@ -16,7 +16,7 @@ import lampostAPI from '../../../../apis/lampost';
 // leadershipの方は、、、leader的資質だけに絞ろう。
 // team management, time management, goal setting, planning, courage, integrity, dependability, creative, influence, active listening, flexibility
 
-const INITIAL_PRAISING_SKILLS = {
+const INITIAL_CLAPPING_LEADERSHIP = {
   teamManagement: { label: 'Team management', value: 'teamManagement', clapped: 0 },
   timeManagement: { label: 'Time management', value: 'timeManagement', clapped: 0 },
   planning: { label: 'Planning', value: 'planning', clapped: 0 },
@@ -24,12 +24,13 @@ const INITIAL_PRAISING_SKILLS = {
   integrity: { label: 'Integrity', value: 'integrity', clapped: 0 },
   reliability: { label: 'Reliability', value: 'reliability', clapped: 0 },
   creative: { label: 'Creative', value: 'creative', clapped: 0 },
-  activeListenning: { label: 'Active listenning ', value: 'activeListenning', clapped: 0 },
   flexibility: { label: 'Flexibility', value: 'flexibility', clapped: 0 },
   communication: { label: 'Communication', value: 'communication', clapped: 0 },
+  relationshipBuilding: { label: 'Relationship building', value: 'relationshipBuilding', clapped: 0 },
+  mentoring: { label: 'Mentoring', value: 'mentoring', clapped: 0 },
 };
 
-const INITIAL_CLAPPING_SKILLS = {
+const INITIAL_CLAPPING_PERSONALITY = {
   considerate: { label: '🥰 Considerate', value: 'considerate', clapped: 0 },
   communication: { label: '😁 Communication', value: 'communication', clapped: 0 },
   openMinded: { label: '🤗 Open-minded', value: 'openMinded', clapped: 0 },
@@ -42,14 +43,14 @@ const INITIAL_CLAPPING_SKILLS = {
   respectful: { label: '🙏 Respectful', value: 'respectful', clapped: 0 },
   teamWorking: { label: '🤝 Team-working', value: 'teamWorking', clapped: 0 },
   adaptivity: { label: '🙌 Adaptivity', value: 'adaptivity', clapped: 0 },
-  criticalThinking: { label: '🤔 Critical thinking', value: 'criticalThinking', clapped: 0 },
 };
+// なんで、これをdirectにmutateしちゃっているの？？？
 
 const ClapPeopleBottomSheet = (props) => {
   const { auth, setSnackBar, setLoading } = useContext(GlobalContext);
-  const { selectedUser, clapPeopleBottomSheetRef, launcher } = useContext(AttendedContext);
+  const { selectedUser, setSelectedUser, clapPeopleBottomSheetRef, launcher } = useContext(AttendedContext);
   const snapPoints = useMemo(() => ['85%'], []);
-  const [clappingSkills, setClappingSkills] = useState(null);
+  const [clappingTraits, setClappingTraits] = useState({});
   const [totalClapped, setTotalClapped] = useState(0);
   const [isDisabledSubmit, setIsDisabledSubmit] = useState(true);
   const [isClappingLauncher, setIsClappingLauncher] = useState(false);
@@ -65,26 +66,41 @@ const ClapPeopleBottomSheet = (props) => {
   useEffect(() => {
     if (selectedUser) {
       if (selectedUser._id === launcher) {
-        setClappingSkills(INITIAL_PRAISING_SKILLS);
+        const initialValue = { ...INITIAL_CLAPPING_LEADERSHIP };
+        console.log('changed leader');
+        setClappingTraits(initialValue);
         setIsClappingLauncher(true);
       } else {
-        setClappingSkills(INITIAL_CLAPPING_SKILLS);
+        const initailValue = { ...INITIAL_CLAPPING_PERSONALITY };
+        console.log('changed user');
+        console.log(`clapping traits, ${clappingTraits}`, `total ${totalClapped}`);
+        setClappingTraits(initailValue);
         setIsClappingLauncher(false);
       }
     }
   }, [selectedUser]);
 
   const onSubmitPress = async () => {
+    const shallowCopy = { ...clappingTraits };
+    for (const trait in shallowCopy) {
+      shallowCopy[trait] = shallowCopy[trait].clapped;
+    }
     const payload = {
-      user: auth.data._id,
-      clapped: selectedUser,
-      skill: clappingSkills,
+      userId: auth.data._id,
+      clappedUserId: selectedUser._id,
+      traits: shallowCopy,
     };
-    console.log(payload);
     setLoading(true);
-    // const result = await lampostAPI.post('/claprelationships', {K:''});
+    if (isClappingLauncher) {
+      const result = await lampostAPI.post('/claps/leadership', payload);
+      // console.log('clapping leadership.', payload);
+    } else {
+      const result = await lampostAPI.post('/claps/personality', payload);
+      // console.log('clapping personlity.', payload);
+    }
     setLoading(false);
-    setClappingSkills(null);
+    setClappingTraits({});
+    setSelectedUser(null);
     setTotalClapped(0);
     setIsDisabledSubmit(true);
     clapPeopleBottomSheetRef.current.close();
@@ -97,51 +113,50 @@ const ClapPeopleBottomSheet = (props) => {
   };
 
   const renderClappingSkill = () => {
-    if (clappingSkills) {
-      const skillSet = Object.values(clappingSkills);
-      const renderingList = skillSet.map((skill, index) => {
-        return (
-          <View key={index} style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
-            <Text style={{ color: baseTextColor, marginRight: 10 }}>{skill.label}</Text>
-            <TouchableOpacity
-              onPress={() => {
-                setClappingSkills((previous) => {
-                  const updating = { ...previous };
-                  if (updating[skill.value].clapped === 3) {
-                    // 3 points at most
-                    updating[skill.value].clapped = 0;
-                    setTotalClapped((previous) => previous - 3);
-                  } else {
-                    updating[skill.value].clapped++;
-                    setTotalClapped((previous) => previous + 1);
-                  }
-                  return updating;
-                });
-              }}
-            >
-              <MaterialCommunityIcons
-                name='hand-clap'
-                color={skill.clapped > 0 ? iconColorsTable['yellow1'] : baseTextColor}
-                size={27}
-              />
-            </TouchableOpacity>
-            {skill.clapped > 0 ? (
-              <Text style={{ color: iconColorsTable['yellow1'] }}>+{skill.clapped}</Text>
-            ) : (
-              <Text style={{ color: iconColorsTable['yellow1'] }}></Text>
-            )}
-          </View>
-        );
-      });
-
+    // if (clappingTraits) {
+    const skillSet = Object.values(clappingTraits);
+    const renderingList = skillSet.map((skill, index) => {
       return (
-        <View style={{ padding: 5, flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>
-          {renderingList}
+        <View key={index} style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
+          <Text style={{ color: baseTextColor, marginRight: 10 }}>{skill.label}</Text>
+          <TouchableOpacity
+            onPress={() =>
+              setClappingTraits((previous) => {
+                const updating = { ...previous };
+                if (updating[skill.value].clapped === 3) {
+                  // 3 points at most
+                  updating[skill.value].clapped = 0;
+                  setTotalClapped((previous) => previous - 3);
+                } else {
+                  updating[skill.value].clapped = updating[skill.value].clapped + 1;
+
+                  setTotalClapped((previous) => previous + 1);
+                }
+                return updating;
+              })
+            }
+          >
+            <MaterialCommunityIcons
+              name='hand-clap'
+              color={skill.clapped > 0 ? iconColorsTable['yellow1'] : baseTextColor}
+              size={27}
+            />
+          </TouchableOpacity>
+          {skill.clapped > 0 ? (
+            <Text style={{ color: iconColorsTable['yellow1'] }}>+{skill.clapped}</Text>
+          ) : (
+            <Text style={{ color: iconColorsTable['yellow1'] }}></Text>
+          )}
         </View>
       );
-    } else {
-      return null;
-    }
+    });
+
+    return (
+      <View style={{ padding: 5, flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>{renderingList}</View>
+    );
+    // } else {
+    //   return null;
+    // }
   };
 
   return (
@@ -180,7 +195,9 @@ const ClapPeopleBottomSheet = (props) => {
                 marginRight: 10,
               }}
               onPress={() => {
-                setClappingSkills(null);
+                // console.log('canceling', INITIAL_CLAPPING_PERSONALITY);
+                setSelectedUser(null);
+                setClappingTraits({});
                 setTotalClapped(0);
                 setIsDisabledSubmit(true);
                 clapPeopleBottomSheetRef.current.close();
@@ -204,7 +221,7 @@ const ClapPeopleBottomSheet = (props) => {
                   How was your time with {selectedUser.name}?
                 </Text>
                 <Text style={{ color: baseTextColor, marginBottom: 10 }}>
-                  You can praise his/her traits, personalities and skills.
+                  You can praise his/her personality traits.
                 </Text>
               </View>
             )}

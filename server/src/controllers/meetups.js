@@ -90,6 +90,9 @@ export const createMeetup = async (request, response) => {
       link,
       launcher,
       totalAttendees: 0,
+      totalAssets: 0,
+      totalComments: 0,
+      totalImpressions: 0,
       createdAt: new Date(),
       // endDateAndTime,
     });

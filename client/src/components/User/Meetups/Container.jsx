@@ -23,7 +23,6 @@ const ActivitiesContainer = (props) => {
     setUserMeetups(userMeetups);
     setFetchedUserMeetups(false);
   };
-  console.log(userMeetups);
 
   useEffect(() => {
     getUserMeetups();

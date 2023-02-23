@@ -415,7 +415,7 @@ const AppStack = (props) => {
               ),
             }}
           />
-          <Tab.Screen
+          {/* <Tab.Screen
             name='DummyCamera'
             component={DummyCamera}
             options={{
@@ -425,7 +425,7 @@ const AppStack = (props) => {
                 <Ionicons name='ios-library-sharp' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
               ),
             }}
-          />
+          /> */}
 
           {/* 全てのcomponent、navigatorを足さないといけないわ。Mapと全く同じように。この状態だと。mapの方のuser page routeに行く。*/}
           <Tab.Screen

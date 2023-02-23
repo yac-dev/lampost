@@ -63,7 +63,7 @@ const AttendedContainer = (props) => {
               console.log('oops...');
             }}
           >
-            <Foundation name='dollar-bill' size={22} color='white' style={{ marginRight: 5 }} />
+            <MaterialCommunityIcons name='hand-heart' size={22} color='white' style={{ marginRight: 5 }} />
             <Text style={{ color: 'white' }}>Give a tip</Text>
           </TouchableOpacity>
         </ScrollView>
