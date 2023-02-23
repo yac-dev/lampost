@@ -147,7 +147,7 @@ const Menus = (props) => {
   // };
 
   return (
-    <BottomSheetScrollView style={{ borderRadius: 10, backgroundColor: sectionBackgroundColor }}>
+    <ScrollView style={{ borderRadius: 10, backgroundColor: sectionBackgroundColor }}>
       <Menu
         label='Launcher'
         icon={<MaterialCommunityIcons name='rocket-launch' size={20} color={iconColorsTable['red1']} />}
@@ -204,8 +204,9 @@ const Menus = (props) => {
           </View>
         }
         onPressMenu={() => {
-          setSelectedMeetupDetailComponent('Crew');
-          selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
+          // setSelectedMeetupDetailComponent('Crew');
+          // selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
+          navigation.navigate('Attendees', { meetupId: selectedMeetup._id });
         }}
       />
       <Menu
@@ -258,7 +259,7 @@ const Menus = (props) => {
           selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
         }}
       /> */}
-    </BottomSheetScrollView>
+    </ScrollView>
   );
 };
 

@@ -3,7 +3,7 @@ import React, { useContext, useMemo } from 'react';
 import GlobalContext from '../../../GlobalContext';
 import MapContext from '../MeetupContext';
 import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetTextInput, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { baseTextColor } from '../../../utils/colorsTable';
 
@@ -16,8 +16,8 @@ import ActionButtons from './ActionButtons';
 import Badges from './Badges';
 import Menus from './Menus';
 
-const Container = (props) => {
-  const snapPoints = useMemo(() => ['60%', '85%'], []);
+const SelectedMeetupContainer = (props) => {
+  const snapPoints = useMemo(() => ['60%', '90%'], []);
   const { selectedMeetup, selectedMeetupBottomSheetRef } = useContext(MapContext);
 
   const renderSelectedMeetup = () => {
@@ -32,7 +32,7 @@ const Container = (props) => {
     } else {
       return (
         <View>
-          <Text style={{ color: baseTextColor }}>Now Loading...</Text>
+          <ActivityIndicator />
         </View>
       );
     }
@@ -50,13 +50,9 @@ const Container = (props) => {
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
       handleIndicatorStyle={{ backgroundColor: 'white' }}
     >
-      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>{renderSelectedMeetup()}</BottomSheetView>
+      <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>{renderSelectedMeetup()}</BottomSheetView>
     </GorhomBottomSheet>
   );
 };
 
-const mapStateToProps = (state) => {
-  return { selectedMeetup: state.selectedItem.meetup, bottomSheet: state.bottomSheet };
-};
-
-export default connect(mapStateToProps, { setIsSelectedItemBottomSheetOpen })(Container);
+export default SelectedMeetupContainer;

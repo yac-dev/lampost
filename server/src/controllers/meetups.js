@@ -5,6 +5,7 @@ import Badge from '../models/badge';
 import Comment from '../models/comment';
 import schedule from 'node-schedule';
 import PastMeetupAndUserRelationship from '../models/pastMeetupAndUserRelationship';
+import MeetupAndUserRelationship from '../models/meetupAndUserRelationship';
 
 // この二つも、さらに一つのfunctionにまとめるべき。後で。
 // const scheduleStartMeetup = async (startDateAndTime, meetupId) => {
@@ -89,7 +90,7 @@ export const createMeetup = async (request, response) => {
       description,
       link,
       launcher,
-      totalAttendees: 0,
+      totalAttendees: 1,
       totalAssets: 0,
       totalComments: 0,
       totalImpressions: 0,
@@ -133,34 +134,13 @@ export const createMeetup = async (request, response) => {
     };
     user.upcomingMeetups.push(pushing);
     user.save();
-
-    meetup.attendees.push(launcher);
-    meetup.totalAttendees++;
+    // meetup.attendees.push(launcher);
     meetup.state = 'upcoming';
-
-    // schedule.scheduleJob(new Date(startDateAndTime), () => {
-    //   console.log('Starting now', meetup._id);
-    //   // meetup.state = 'ongoing';
-    // });
-    // // end timeに関しては、自分で計算しないといけないな。
-    // schedule.scheduleJob(new Date(endDateAndTime), () => {});
-
     meetup.save();
-
-    // scheduleStartMeetup(meetup.startDateAndTime, meetup._id);
-    // scheduleEndMeetup(meetup.endDateAndTime, meetup._id);
-
-    // const populatingBadges = await Badge.find({ _id: { $in: badges } });
-
-    // meetup: {
-    //   _id: meetup._id,
-    //   place: meetup.place,
-    //   title: meetup.title,
-    //   startDateAndTime: meetup.startDateAndTime,
-    //   badge: badges[0],
-    // },
-    // viewedChatsLastTime: new Date(),
-    // launcher,
+    const meetupAndUserRelationship = await MeetupAndUserRelationship.create({
+      meetup: meetup._id,
+      user: user._id,
+    });
 
     response.status(201).json({
       meetup: {
@@ -324,15 +304,15 @@ export const getSelectedMeetup = async (request, response) => {
       .populate({
         path: 'badges',
         model: Badge,
-      })
-      .populate({
-        path: 'comments',
-      })
-      .populate({
-        path: 'attendees',
-        select: 'name photo topBadges',
-        populate: { path: 'topBadges' },
       });
+    // .populate({
+    //   path: 'comments',
+    // })
+    // .populate({
+    //   path: 'attendees',
+    //   select: 'name photo topBadges',
+    //   populate: { path: 'topBadges' },
+    // });
     // console.log('meetup selected!', meetup);
     response.status(200).json({
       meetup,

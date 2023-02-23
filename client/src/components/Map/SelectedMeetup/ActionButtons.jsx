@@ -240,9 +240,9 @@ const ActionButtons = (props) => {
   };
 
   return (
-    <BottomSheetScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginBottom: 25 }}>
+    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginBottom: 25 }}>
       {renderApp()}
-    </BottomSheetScrollView>
+    </ScrollView>
   );
 };
 

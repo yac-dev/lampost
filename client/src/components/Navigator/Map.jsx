@@ -21,6 +21,7 @@ import AboutLampost from '../Utils/AboutLampost';
 import ReportMeetup from '../Map/ReportMeetup';
 import ReportMeetupMember from '../Map/SelectedMeetup/Lounge/ReportMeetupMember';
 import ReportUser from '../Utils/ReportUser';
+import Attendees from '../Map/SelectedMeetup/Attendees/Container';
 
 import AuthNavigator from './Auth';
 import { appBottomSheetBackgroundColor, iconColorsTable } from '../../utils/colorsTable';
@@ -103,6 +104,20 @@ const MapNavigator = (props) => {
         <Stack.Screen
           name='Lounge'
           component={Lounge}
+          options={{
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            // headerTintColor: iconColorsTable['blue1'],
+          }}
+        />
+        <Stack.Screen
+          name='Attendees'
+          component={Attendees}
           options={{
             headerStyle: {
               backgroundColor: appBottomSheetBackgroundColor,

@@ -102,9 +102,9 @@ const Header = (props) => {
           <View>{renderTime(selectedMeetup.startDateAndTime, selectedMeetup.duration)}</View>
         </View>
       </View>
-      <View style={{ marginBottom: 10 }}>
-        <Badges />
-      </View>
+      {/* <View style={{ marginBottom: 10 }}> */}
+      <Badges />
+      {/* </View> */}
     </View>
   );
 };
