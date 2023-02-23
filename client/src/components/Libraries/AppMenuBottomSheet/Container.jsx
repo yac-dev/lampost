@@ -3,9 +3,10 @@ import LibrariesContext from '../LibrariesContext';
 // import UserContext from './Context';
 import { View, Text, TouchableOpacity } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
-import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
+import { appBottomSheetBackgroundColor, backgroundColorsTable, iconColorsTable } from '../../../utils/colorsTable';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { Entypo } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import AppMenuButtons from './AppMenuButtons';
@@ -30,12 +31,26 @@ const AppMenuBottomSheet = (props) => {
       // keyboardBehavior={'interactive'}
       // onClose={() => onSelectedItemBottomSheetClose()}
     >
-      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, paddingTop: isIpad ? 10 : 0, flex: 1 }}>
-        {/* <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: isIpad ? 35 : 20 }}>
-          Create a library?
-        </Text> */}
+      <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
         <AppMenuButtons />
-        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My joined libraries</Text>
+        {/* <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My joined libraries</Text>
+         */}
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+          <View
+            style={{
+              width: 35,
+              height: 35,
+              backgroundColor: backgroundColorsTable['yellow1'],
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 10,
+              marginRight: 10,
+            }}
+          >
+            <Ionicons name='ios-library' color={iconColorsTable['yellow1']} size={20} />
+          </View>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>My libraries</Text>
+        </View>
         <MyLibraries />
       </BottomSheetView>
     </GorhomBottomSheet>

@@ -36,28 +36,9 @@ const AppMenuBottomSheet = (props) => {
         // keyboardBehavior={'interactive'}
         // onClose={() => onSelectedItemBottomSheetClose()}
       >
-        <BottomSheetView
-          style={{
-            paddingLeft: 20,
-            paddingRight: 20,
-            flex: 1,
-          }}
-        >
-          {/* <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: isIpad ? 35 : 20 }}>
-            Add badges?
-          </Text> */}
+        <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
           <AppButtons />
-          <MyConnections />
-          {/* <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: 10, marginBottom: 15 }}>
-            <TouchableOpacity onPress={() => handleCreateLibraryBottomSheet()}>
-              <MaterialIcons name='create-new-folder' size={40} />
-              <Text>Create</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Entypo name='images' size={40} />
-              <Text>Search</Text>
-            </TouchableOpacity>
-          </View> */}
+          {/* <MyConnections /> */}
         </BottomSheetView>
       </GorhomBottomSheet>
     );

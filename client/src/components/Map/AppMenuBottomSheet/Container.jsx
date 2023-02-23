@@ -7,9 +7,15 @@ import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom
 
 import AppMenuButtons from './AppMenuButtons';
 import UpcomingMeetups from './UpcomingMeetups';
-import { appBottomSheetBackgroundColor, baseTextColor, iconColorsTable } from '../../../utils/colorsTable';
+import {
+  appBottomSheetBackgroundColor,
+  baseTextColor,
+  iconColorsTable,
+  backgroundColorsTable,
+} from '../../../utils/colorsTable';
 import { setIsConfirmHostMeetupModalOpen } from '../../../redux/actionCreators/modal';
 import lampostAPI from '../../../apis/lampost';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const AppMenusBottomSheet = (props) => {
   const snapPoints = useMemo(() => ['45%', '60%', '80%'], []);
@@ -61,9 +67,22 @@ const AppMenusBottomSheet = (props) => {
         {auth.data ? (
           <>
             <AppMenuButtons />
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 20 }}>
-              My upcoming meetups
-            </Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+              <View
+                style={{
+                  width: 35,
+                  height: 35,
+                  backgroundColor: backgroundColorsTable['green1'],
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 10,
+                  marginRight: 10,
+                }}
+              >
+                <MaterialCommunityIcons name='calendar-clock' color={iconColorsTable['green1']} size={20} />
+              </View>
+              <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>My upcoming meetups</Text>
+            </View>
             <UpcomingMeetups />
           </>
         ) : (

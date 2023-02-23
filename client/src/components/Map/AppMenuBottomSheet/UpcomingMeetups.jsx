@@ -227,7 +227,7 @@ const Container = (props) => {
         );
       });
 
-      return <View style={{ backgroundColor: sectionBackgroundColor, borderRadius: 10 }}>{myUpcomingMeetupslist}</View>;
+      return <View style={{}}>{myUpcomingMeetupslist}</View>;
     } else {
       return <Text style={{ color: baseTextColor }}>You'll see all the meetups that you've launched or joined.</Text>;
     }

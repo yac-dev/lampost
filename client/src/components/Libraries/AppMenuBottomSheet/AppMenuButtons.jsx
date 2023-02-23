@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import GlobalContext from '../../../GlobalContext';
 import LibrariesContext from '../LibrariesContext';
 import { connect } from 'react-redux';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
 import {
   iconColorsTable,
   backgroundColorsTable,
@@ -20,8 +20,8 @@ const AppButtons = (props) => {
 
   if (auth.data) {
     return (
-      <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 15 }}>
-        <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
+      <View style={{ marginBottom: 20 }}>
+        {/* <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
           <AppButton
             backgroundColor={backgroundColorsTable['blue1']}
             icon={<MaterialIcons name='create-new-folder' size={35} color={iconColorsTable['blue1']} />}
@@ -38,7 +38,57 @@ const AppButtons = (props) => {
             onAppMenuButtonPress={() => setIsNotAvailableModalOpen(true)}
             isDisabled={true}
           />
-        </ScrollView>
+        </ScrollView> */}
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+          onPress={() => {
+            appMenuBottomSheetRef.current.close();
+            createLibraryBottomSheetRef.current.snapToIndex(0);
+          }}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={{
+                width: 35,
+                height: 35,
+                backgroundColor: backgroundColorsTable['lightGreen1'],
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 10,
+                marginRight: 10,
+              }}
+            >
+              <MaterialCommunityIcons name='plus' color={iconColorsTable['lightGreen1']} size={20} />
+            </View>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Create library</Text>
+          </View>
+          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
+          onPress={() => {
+            return null;
+          }}
+          disabled={true}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={{
+                width: 35,
+                height: 35,
+                backgroundColor: backgroundColorsTable['lightBlue1'],
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 10,
+                marginRight: 10,
+              }}
+            >
+              <MaterialCommunityIcons name='map-search-outline' color={iconColorsTable['lightBlue1']} size={20} />
+            </View>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Search library</Text>
+          </View>
+          <Foundation name='prohibited' color={iconColorsTable['red1']} size={25} />
+        </TouchableOpacity>
       </View>
     );
   } else {
