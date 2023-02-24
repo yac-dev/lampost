@@ -8,16 +8,20 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 
-const Info = () => {
-  const openURL = async (url) => {
-    const supported = await Linking.canOpenURL(url);
-    if (supported) {
-      await Linking.openURL(url);
-    } else {
-      Alert.alert('Error', "You can't open this link.", [{ text: 'OK', onPress: () => console.log('OK Pressed') }], {
-        cancelable: false,
-      });
-    }
+const Info = (props) => {
+  // const openURL = async (url) => {
+  //   const supported = await Linking.canOpenURL(url);
+  //   if (supported) {
+  //     await Linking.openURL(url);
+  //   } else {
+  //     Alert.alert('Error', "You can't open this link.", [{ text: 'OK', onPress: () => console.log('OK Pressed') }], {
+  //       cancelable: false,
+  //     });
+  //   }
+  // };
+
+  const goToExternalWebPage = (link) => {
+    props.navigation.navigate('ExternalWebPage', { link });
   };
 
   return (
@@ -43,7 +47,7 @@ const Info = () => {
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
             <Text style={{ color: 'white', marginRight: 10, fontSize: 17 }}>Icons8</Text>
             <View style={{ borderBottomColor: baseTextColor, borderBottomWidth: 0.3 }}>
-              <TouchableOpacity onPress={() => openURL('https://icons8.com')}>
+              <TouchableOpacity onPress={() => goToExternalWebPage('https://icons8.com')}>
                 <Text style={{ color: baseTextColor }}>https://icons8.com</Text>
               </TouchableOpacity>
             </View>

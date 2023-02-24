@@ -22,6 +22,7 @@ import ReportMeetup from '../Map/ReportMeetup';
 import ReportMeetupMember from '../Map/SelectedMeetup/Lounge/ReportMeetupMember';
 import ReportUser from '../Utils/ReportUser';
 import Attendees from '../Map/SelectedMeetup/Attendees';
+import ExternalWebPage from '../Utils/ExternalWebPage';
 
 import AuthNavigator from './Auth';
 import { appBottomSheetBackgroundColor, iconColorsTable } from '../../utils/colorsTable';
@@ -166,6 +167,13 @@ const MapNavigator = (props) => {
           })}
         />
         <Stack.Screen
+          name='ExternalWebPage'
+          component={ExternalWebPage}
+          options={({ navigation }) => ({
+            headerShown: false,
+          })}
+        />
+        <Stack.Screen
           name='Report meetup'
           component={ReportMeetup}
           options={({ navigation }) => ({
@@ -220,6 +228,15 @@ const MapNavigator = (props) => {
           })}
         />
       </Stack.Group>
+      {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>
+        <Stack.Screen
+          name='ExternalWebPage'
+          component={ExternalWebPage}
+          options={({ navigation }) => ({
+            headerShown: false,
+          })}
+        />
+      </Stack.Group> */}
       <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
         <Stack.Screen
           name='Profile'

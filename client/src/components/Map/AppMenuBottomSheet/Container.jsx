@@ -35,35 +35,7 @@ const AppMenusBottomSheet = (props) => {
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
       handleIndicatorStyle={{ backgroundColor: 'white' }}
     >
-      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
-        {/* <ScrollView contentContainerStyle={{ paddingBottom: 100 }}> */}
-        {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 20,
-              color: 'white',
-              marginRight: 10,
-              marginBottom: isIpad ? 35 : 20,
-            }}
-          >
-            Launch your meetup?
-          </Text>
-          {totalUnreadChatsCount ? (
-            <View
-              style={{
-                backgroundColor: iconColorsTable['blue1'],
-                width: 20,
-                height: 20,
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: 20 / 2,
-              }}
-            >
-              <Text style={{ color: 'white' }}>{totalUnreadChatsCount}</Text>
-            </View>
-          ) : null}
-        </View> */}
+      <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
         {auth.data ? (
           <>
             <AppMenuButtons />
@@ -90,7 +62,6 @@ const AppMenusBottomSheet = (props) => {
             <Text style={{ color: baseTextColor }}>Please login or signup if you want to launch or join a meetup.</Text>
           </View>
         )}
-        {/* </ScrollView> */}
       </BottomSheetView>
     </GorhomBottomSheet>
   );

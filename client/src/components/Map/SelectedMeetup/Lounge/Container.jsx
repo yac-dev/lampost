@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { Touchable, View, TouchableOpacity, Text } from 'react-native';
 import { Avatar, IconButton } from 'react-native-paper';
 import lampostAPI from '../../../../apis/lampost';
+import { io } from 'socket.io-client';
+``;
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 import { baseBackgroundColor, rnDefaultBackgroundColor, iconColorsTable } from '../../../../utils/colorsTable';
@@ -52,18 +54,64 @@ const LoungeContainer = (props) => {
     getSelectedMeetup();
   }, []);
   // loungechatsも、apiで持ってくる必要がる。
+
+  const getSocket = () => {
+    // 'https://lampost-server-production.onrender.com/api'
+    //
+    // console.log(Constants.manifest.extra.socketEndpoint);
+    // const { socketEndpoint } = Constants.manifest.extra.socketEndpoint;
+    // 'http://192.168.11.5:3500'
+    // const socket = io('https://lampost-server-production.onrender.com', {
+    const socket = io('http://192.168.11.5:3500', {
+      path: '/mysocket',
+    });
+    setAuth((previous) => {
+      return { ...previous, socket: socket };
+    });
+  };
+  useEffect(() => {
+    getSocket();
+  }, []);
+
+  // roomに入る。
+  useEffect(() => {
+    if (auth.socket) {
+      auth.socket.emit('JOIN_A_LOUNGE', { meetupId: props.route.params.meetupId });
+      return () => {
+        auth.socket.emit('LEAVE_A_LOUNGE', { meetupId: props.route.params.meetupId, mySocketId: auth.socket.id });
+        auth.socket.off('JOIN_A_LOUNGE');
+      };
+    }
+  }, [auth.socket]);
+
+  // chat send, getに関するuseEffect
   useEffect(() => {
     // if (auth.socket && routeName === 'Lounge') {
     // 待機開始。
-    auth.socket.on('I_GOT_A_CHAT_IN_THE_ROOM', (data) => {
-      setChats((previous) => [...previous, data]);
-      console.log('now in lounge', routeName);
-    });
+    if (auth.socket) {
+      auth.socket.on('I_GOT_A_CHAT_IN_THE_ROOM', (data) => {
+        setChats((previous) => [...previous, data]);
+        console.log('now in lounge', routeName);
+      });
 
-    return () => {
-      auth.socket.off('I_GOT_A_CHAT_IN_THE_ROOM');
-    };
-  }, []);
+      return () => {
+        auth.socket.off('I_GOT_A_CHAT_IN_THE_ROOM');
+      };
+    }
+  }, [auth.socket]);
+
+  // useEffect(() => {
+  //   if (auth.socket) {
+  //     const meetupIds = auth.data.upcomingMeetups.map((meetupObject) => meetupObject.meetup);
+  //     auth.socket.emit('JOIN_LOUNGES', { meetupIds });
+
+  //     return () => {
+  //       auth.socket.off('JOIN_LOUNGES');
+  //       // console.log('hello');
+  //     };
+  //   }
+  // }, [auth.socket]);
+
   // experiment
   // useEffect(() => {
   //   auth.socket.on('YOUR_TEST_MESSAGE_OK', (data) => {
@@ -88,12 +136,14 @@ const LoungeContainer = (props) => {
   //   };
   // }, []);
   // console.log('Now in', routeName);
-  useEffect(() => {
-    setRouteName('Lounge');
-    return () => {
-      setRouteName('');
-    };
-  }, []);
+
+  // これなんだ？？
+  // useEffect(() => {
+  //   setRouteName('Lounge');
+  //   return () => {
+  //     setRouteName('');
+  //   };
+  // }, []);
 
   const updateviewedChatsLastTime = async (dateTime) => {
     const result = await lampostAPI.patch(`/users/${auth.data._id}/viewedchatslasttime`, {
@@ -203,7 +253,7 @@ const LoungeContainer = (props) => {
         </TouchableOpacity>
         <AppMenuBottomSheet />
         <SendChatBottomSheet />
-        <CrewBottomSheet />
+        {/* <CrewBottomSheet /> */}
       </View>
     </LoungeContext.Provider>
   );

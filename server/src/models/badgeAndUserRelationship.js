@@ -9,9 +9,13 @@ const badgeAndUserRelationshipSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
-  link: {
-    type: String,
-  },
+  // label必要だよな。。。
+  links: [
+    {
+      label: String,
+      urls: [String],
+    },
+  ],
   // badgeTags: [
   //   {
   //     type: mongoose.Schema.ObjectId,

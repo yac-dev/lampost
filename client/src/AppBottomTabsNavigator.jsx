@@ -3,7 +3,7 @@ import { View, Text, Platform, AppState } from 'react-native';
 import lampostAPI from './apis/lampost';
 import GlobalContext from './GlobalContext';
 import { connect } from 'react-redux';
-import { io } from 'socket.io-client';
+// import { io } from 'socket.io-client';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -161,7 +161,7 @@ const AppStack = (props) => {
     const result = await lampostAPI.post(`/loungechats`, { myUpcomingMeetups: auth.data.upcomingMeetups });
     const { myUpcomingMeetupAndChatsTable } = result.data;
     setMyUpcomingMeetupAndChatsTable(myUpcomingMeetupAndChatsTable);
-    console.log('is this?????');
+    console.log('getting messages status');
     const countTotalUnreads = Object.values(myUpcomingMeetupAndChatsTable).forEach((e) => {
       setTotalUnreadChatsCount((previous) => previous + e.unreadChatsCount);
     });
@@ -169,17 +169,17 @@ const AppStack = (props) => {
 
   useEffect(() => {
     // 最初のrenderで、このsubscription functionが登録される。
-    if (auth.isAuthenticated && auth.socket) {
+    if (auth.isAuthenticated) {
       const appStateListener = AppState.addEventListener('change', (nextAppState) => {
         if (appState.match(/inactive|background/) && nextAppState === 'active') {
           console.log('App has come to the foreground! Socket connected again.');
           //ここで再度connectして、server のconnectのlogする。
-          getSocket();
+          // getSocket();
           getMyUpcomingMeetupsAndLoungeChatsByMeetupIds();
         } else if (appState === 'active' && nextAppState === 'inactive') {
           // socket disconnect する。ここで。serverでdisconnectのlogを確認する。
-          auth.socket.disconnect();
-          console.log('disconnected');
+          // auth.socket.disconnect();
+          // console.log('disconnected');
         }
         console.log('Next AppState is: ', nextAppState);
         // auth.socket.disconnect();
@@ -191,7 +191,7 @@ const AppStack = (props) => {
         appStateListener.remove();
       };
     }
-  }, [auth.isAuthenticated, auth.socket, appState]);
+  }, [auth.isAuthenticated, appState]);
   // useEffect(() => {
   //   if (appState === 'background') {
   //     console.log('background');
@@ -223,26 +223,26 @@ const AppStack = (props) => {
   }, []);
 
   // あー。このapiのendpointが。。。
-  const getSocket = () => {
-    // 'https://lampost-server-production.onrender.com/api'
-    //
-    // console.log(Constants.manifest.extra.socketEndpoint);
-    // const { socketEndpoint } = Constants.manifest.extra.socketEndpoint;
-    // 'http://192.168.11.5:3500'
-    // const socket = io('https://lampost-server-production.onrender.com', {
-    const socket = io('http://192.168.11.5:3500', {
-      path: '/mysocket',
-    });
-    setAuth((previous) => {
-      return { ...previous, socket: socket };
-    });
-  };
-  // loginされたら、socketを取る。
-  useEffect(() => {
-    if (auth.isAuthenticated) {
-      getSocket();
-    }
-  }, [auth.isAuthenticated]);
+  // const getSocket = () => {
+  //   // 'https://lampost-server-production.onrender.com/api'
+  //   //
+  //   // console.log(Constants.manifest.extra.socketEndpoint);
+  //   // const { socketEndpoint } = Constants.manifest.extra.socketEndpoint;
+  //   // 'http://192.168.11.5:3500'
+  //   // const socket = io('https://lampost-server-production.onrender.com', {
+  //   const socket = io('http://192.168.11.5:3500', {
+  //     path: '/mysocket',
+  //   });
+  //   setAuth((previous) => {
+  //     return { ...previous, socket: socket };
+  //   });
+  // };
+  // // loginされたら、socketを取る。
+  // useEffect(() => {
+  //   if (auth.isAuthenticated) {
+  //     getSocket();
+  //   }
+  // }, [auth.isAuthenticated]);
 
   // これ、なんでこんなに動いている？そもそも.
   useEffect(() => {
@@ -254,17 +254,17 @@ const AppStack = (props) => {
   // [auth.isAuthenticated, auth.data?.ongoingMeetup] dependencyがこれだと、毎回動いていた。つまり、多分auth.dataのupdateにつれて動いていたんだろうね。。。これまた発見。
 
   // socketが接続されたら、loungeに入る。
-  useEffect(() => {
-    if (auth.socket) {
-      const meetupIds = auth.data.upcomingMeetups.map((meetupObject) => meetupObject.meetup);
-      auth.socket.emit('JOIN_LOUNGES', { meetupIds });
+  // useEffect(() => {
+  //   if (auth.socket) {
+  //     const meetupIds = auth.data.upcomingMeetups.map((meetupObject) => meetupObject.meetup);
+  //     auth.socket.emit('JOIN_LOUNGES', { meetupIds });
 
-      return () => {
-        auth.socket.off('JOIN_LOUNGES');
-        // console.log('hello');
-      };
-    }
-  }, [auth.socket]);
+  //     return () => {
+  //       auth.socket.off('JOIN_LOUNGES');
+  //       // console.log('hello');
+  //     };
+  //   }
+  // }, [auth.socket]);
   // console.log(myUpcomingMeetupAndChatsTable);
 
   // useEffect(() => {

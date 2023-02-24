@@ -39,19 +39,18 @@ const Container = (props) => {
     return (
       <View
         style={{
-          width: 80,
-          height: 50,
-          borderRadius: 10,
-          borderWidth: 0.3,
+          // padding: 10,
+          borderRadius: 7,
           marginRight: 15,
-          borderColor: screenSectionBackgroundColor,
-          alignItems: 'center',
-          justifyContent: 'center',
           backgroundColor: screenSectionBackgroundColor,
+          width: 60,
+          height: 60,
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
-        <Text style={{ fontSize: 13, textAlign: 'center', color: baseTextColor }}>{dateElements[0]}</Text>
-        <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center', color: baseTextColor }}>
+        <Text style={{ fontSize: 15, textAlign: 'center', color: 'white' }}>{dateElements[0]}</Text>
+        <Text style={{ fontSize: 17, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
           {dateElements[1]}&nbsp;{dateElements[2]}
         </Text>
       </View>

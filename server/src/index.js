@@ -41,6 +41,7 @@ io.on('connection', (socket) => {
 
   socket.on('LEAVE_A_LOUNGE', (data) => {
     socket.leave(data.meetupId);
+    socket.leave(data.mySocketId); // 自分のsockt id用のroomも抜ける。
     console.log(io.sockets.adapter.rooms);
   });
 
