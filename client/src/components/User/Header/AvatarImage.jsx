@@ -15,13 +15,13 @@ const AvatarImage = () => {
   return (
     <View
       style={{
-        width: 100,
+        width: 70,
         aspectRatio: 1,
         flexDirection: 'column',
         // backgroundColor: 'green', //確認用で使える
 
         // alignItems: 'flex-end',
-        marginRight: 30,
+        marginRight: 20,
       }}
     >
       <View
@@ -64,7 +64,6 @@ const AvatarImage = () => {
           </TouchableOpacity>
         )}
       </View>
-      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}>{user.name}</Text>
     </View>
   );
 };
