@@ -48,11 +48,8 @@ const userSchema = new mongoose.Schema({
   ],
   upcomingMeetups: [
     {
-      meetup: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Meetup',
-      },
-      viewedChatsLastTime: Date,
+      type: mongoose.Schema.ObjectId,
+      ref: 'Meetup',
     },
   ],
   leadership: {

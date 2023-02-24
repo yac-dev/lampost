@@ -22,7 +22,7 @@ import WarningModal from './WarningModal';
 const Container = (props) => {
   const { auth, setAuth, setSnackBar } = useContext(GlobalContext);
   const appMenuBottomSheetRef = useRef(null);
-  const cameraRef = useRef();
+  const cameraRef = useRef(null);
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
   const [cameraMode, setCameraMode] = useState('photo');
   const [photoEffect, setPhotoEffect] = useState('auto');
@@ -119,6 +119,7 @@ const Container = (props) => {
     }
   };
   // incandescent, cloudy, sunny, shadow, fluorescent, auto
+
   return (
     <CameraContext.Provider
       value={{

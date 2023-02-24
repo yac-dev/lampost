@@ -12,6 +12,7 @@ import {
   getMeetupCrew,
   startMeetup,
   finishMeetup,
+  getMyMeetupStates,
 } from '../controllers/meetups';
 
 router.route('/upcoming').post(getUpcomingMeetups);
@@ -24,5 +25,6 @@ router.route('/:id/join').patch(joinMeetup);
 router.route('/:id/leave').patch(leaveMeetup);
 router.route('/:id/start').patch(startMeetup);
 router.route('/:id/finish').patch(finishMeetup);
+router.route('/mymeetupstates').post(getMyMeetupStates);
 
 export default router;

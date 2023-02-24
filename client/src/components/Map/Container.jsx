@@ -306,7 +306,7 @@ const Map = (props) => {
           <CancelLaunchMeetupModal />
           <ConfirmStartMeetup />
           <ConfirmFinishMeetup />
-          <AppMenusBottomSheet />
+          {/* <AppMenusBottomSheet /> */}
           <LaunchMeetupBottomSheet navigation={props.navigation} route={props.route} />
           <SelectedMeetup />
           <SelectedMeetupInfoDetail />

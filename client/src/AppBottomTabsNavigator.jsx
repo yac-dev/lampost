@@ -102,6 +102,8 @@ const AppStack = (props) => {
   //    { _id: 222, title: 'Meetup2' , chats: [{content: '', createdAt: '2022/8/1'}], viewedChats: '2022/7/22' }
   //]
   // console.log(myUpcomingMeetupAndChatsTable);
+  const [myUpcomingMeetups, setMyUpcomingMeetups] = useState({});
+
   useEffect(() => {
     if (auth.data) {
       if (!auth.data.pushToken) {
@@ -165,6 +167,24 @@ const AppStack = (props) => {
     const countTotalUnreads = Object.values(myUpcomingMeetupAndChatsTable).forEach((e) => {
       setTotalUnreadChatsCount((previous) => previous + e.unreadChatsCount);
     });
+  };
+
+  const getMyUpcomingMeetupStates = async () => {
+    const result = await lampostAPI.post('/meetups/mymeetupstates', { upcomingMeetupIds: auth.data.upcomingMeetups });
+    const { myUpcomingMeetups } = result.data;
+    setMyUpcomingMeetups(myUpcomingMeetups);
+    console.log(myUpcomingMeetups);
+    //
+    // これで、
+    //{ meetup1: {_id: 'meetup1', title: '', date: '', haveUnreadMsg: false},
+    //  meetup2: {_id: 'meetup2'. title: '', date: '', haveUnreadMsg: true}  }// みたいな感じかね。
+    // push notificationが来ればhaveunreadmsgをtrueにすればいいい。
+    // app stateがfore groudに戻るたびに、 queryする。
+    // upcomingでidを持っている。foregroundに戻るたびに、meetupIdたちを使って、そのmeetupがfinishedではないかを。
+    // もしfinishなら、user docのupcoimgのfinishedなやつを除いて、userをupdateする。
+    // userをupdateしたら、ongoingの方だけをuserにresponseして、新しくmyUpcomingMeetupsを更新する。
+    // この時に、unreadのやつがあるかないかも同時にqueryしようかな。
+    // ちょうどあれだもんな。
   };
 
   useEffect(() => {
@@ -247,7 +267,8 @@ const AppStack = (props) => {
   // これ、なんでこんなに動いている？そもそも.
   useEffect(() => {
     if (auth.isAuthenticated) {
-      getMyUpcomingMeetupsAndLoungeChatsByMeetupIds();
+      getMyUpcomingMeetupStates();
+      // getMyUpcomingMeetupsAndLoungeChatsByMeetupIds();
       // ここも、appStateが変わるたびに動かさなきゃいけない。→  app stateごとに動かすのは上で。
     }
   }, [auth.isAuthenticated]);

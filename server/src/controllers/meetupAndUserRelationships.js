@@ -160,3 +160,38 @@ export const getMeetupAttendees = async (request, response) => {
     console.log(error);
   }
 };
+
+export const getMyMeetupStates = async (request, response) => {
+  try {
+    const { upcomingMeetupIds, userId } = request.body;
+    const myUpcomingMeetups = {};
+    const alreadyFinishedMeetups = {};
+    const meetups = await Meetup.find({ _id: { $in: upcomingMeetupIds } });
+    meetups.forEach((meetup) => {
+      if (meetup.state !== 'finished') {
+        myUpcomingMeetups[meetup._id] = {
+          _id: meetup._id,
+          title: meetup.title,
+          startDateAndTime: meetup.startDateAndTime,
+          state: meetup.state,
+        };
+      } else {
+        alreadyFinishedMeetups[meetup._id] = true;
+      }
+    });
+
+    // if (Object.values(alreadyFinishedMeetups).length) {
+    //   const user = await User.findById(userId);
+    //   user.upcomingMeetups.forEach((meetup) => {
+    //     // 配列から除く。めんどいから後で。
+    //   })
+    // }
+
+    response.status(200).json({
+      myUpcomingMeetups,
+    });
+    // const meetupAndUserRelationship = await MeetupAndUserRelationship.find(queryConditon);
+  } catch (error) {
+    console.log(error);
+  }
+};

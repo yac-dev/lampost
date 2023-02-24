@@ -57,7 +57,7 @@ const ActionButtons = (props) => {
         },
       };
     });
-    auth.socket.emit('JOIN_A_LOUNGE', { meetupId: selectedMeetup._id });
+    // auth.socket.emit('JOIN_A_LOUNGE', { meetupId: selectedMeetup._id });
     setSelectedMeetup((previous) => {
       return {
         ...previous,
@@ -65,7 +65,7 @@ const ActionButtons = (props) => {
       };
     });
     setLoading(false);
-    setSnackBar({ isVisible: true, message: 'Joined the meetup successfully.', barType: 'success', duration: 5000 });
+    setSnackBar({ isVisible: true, message: 'Joined a meetup.', barType: 'success', duration: 5000 });
   };
 
   const leaveMeetup = async () => {
@@ -92,7 +92,7 @@ const ActionButtons = (props) => {
       return updating;
     });
     // socketのgroupから抜ける。
-    auth.socket.emit('LEAVE_A_LOUNGE', { meetupId: selectedMeetup._id });
+    // auth.socket.emit('LEAVE_A_LOUNGE', { meetupId: selectedMeetup._id });
     setSelectedMeetup((previous) => {
       return {
         ...previous,
@@ -100,7 +100,7 @@ const ActionButtons = (props) => {
       };
     });
     setLoading(false);
-    setSnackBar({ isVisible: true, message: 'Left the meetup successfully.', barType: 'success', duration: 5000 });
+    setSnackBar({ isVisible: true, message: 'Left a meetup.', barType: 'success', duration: 5000 });
   };
 
   const startMeetup = async () => {

@@ -78,6 +78,7 @@ const LoungeContainer = (props) => {
     if (auth.socket) {
       auth.socket.emit('JOIN_A_LOUNGE', { meetupId: props.route.params.meetupId });
       return () => {
+        // auth.socket.disconnect();
         auth.socket.emit('LEAVE_A_LOUNGE', { meetupId: props.route.params.meetupId, mySocketId: auth.socket.id });
         auth.socket.off('JOIN_A_LOUNGE');
       };

@@ -1,5 +1,6 @@
 import LoungeChat from '../models/loungeChat';
 import Meetup from '../models/meetup';
+import MeetupAndUserRelationship from '../models/meetupAndUserRelationship';
 
 export const getMyLoungeStatus = async (request, response) => {
   try {
@@ -60,6 +61,45 @@ export const getMyLoungeStatus = async (request, response) => {
     }
     response.status(200).json({
       myUpcomingMeetupAndChatsTable,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// meetupが1でかつlasttimeがこんなの
+export const getUnreadLoungeChats = async (request, response) => {
+  try {
+    const { upcomingMeetupIds, userId } = request.body;
+    const meetupAndUserRelationships = await MeetupAndUserRelationship.find({
+      meetup: { $in: upcomingMeetupIds },
+      user: userId,
+    });
+
+    const loungeChats = await LoungeChat.find({
+      $or: meetupAndUserRelationships.map(({ meetup, viewedChatsLastTime }) => ({
+        meetup,
+        createdAt: { $gt: viewedChatsLastTime },
+      })),
+    });
+
+    // {m1: {question: 1, reply: 3}, m2: {question: 2}}　ここはただの集計。
+    const chatsTable = {};
+    loungeChats.forEach((chat) => {
+      if (!chatsTable[chat.meetup]) {
+        chatsTable[chat.meetup] = {};
+        chatsTable[chat.meetup][chat.type] = 1;
+      } else {
+        if (chatsTable[chat.meetup][chat.type]) {
+          chatsTable[chat.meetup][chat.type]++;
+        } else {
+          chatsTable[chat.meetup][chat.type] = 1;
+        }
+      }
+    });
+    // もうこれで良くね？？？？
+    response.status(200).json({
+      chatsTable,
     });
   } catch (error) {
     console.log(error);
