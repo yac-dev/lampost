@@ -7,8 +7,9 @@ import MapContext from './MeetupContext';
 import { connect } from 'react-redux';
 import { StyleSheet, Platform, View, StatusBar, Dimensions, TouchableOpacity, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { baseTextColor, rnDefaultBackgroundColor } from '../../utils/colorsTable';
+import { backgroundColorsTable, baseTextColor, rnDefaultBackgroundColor } from '../../utils/colorsTable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 // components
 import MapMarkers from './MapMarkers';
@@ -21,6 +22,7 @@ import ConfirmStartMeetup from './ConfirmStartMeetup';
 import ConfirmFinishMeetup from './ConfirmFinishMeetup';
 
 import LaunchMeetupBottomSheet from './LaunchMeetupBottomSheet/BottomSheet';
+import ChatStatus from './ChatStatus';
 import SnackBar from '../Utils/SnackBar';
 import LoadingSpinner from '../Utils/LoadingSpinner';
 
@@ -44,7 +46,7 @@ import { iconColorsTable } from '../../utils/colorsTable';
 
 const Map = (props) => {
   // setAuthがありませんよ、てきなerrorを出して欲しいわ。これなんとかならんかな。
-  const { auth, setAuth, loading, setLoading, setSnackBar, setMyUpcomingMeetupAndChatsTable, totalUnreadChatsCount } =
+  const { auth, setAuth, loading, setLoading, setSnackBar, setMyUpcomingMeetupAndChatsTable, chatsNotificationCount } =
     useContext(GlobalContext);
   const [region, setRegion] = useState(null);
   const [currentSnap, setCurrentSnap] = useState();
@@ -268,10 +270,10 @@ const Map = (props) => {
                 }}
               >
                 <MaterialCommunityIcons name='rocket-launch' size={25} color={'white'} style={{ marginRight: 10 }} />
-                <Text style={{ color: 'white' }}>Menu</Text>
+                <Text style={{ color: 'white', marginRight: 10 }}>Menu</Text>
                 <MaterialCommunityIcons name='chevron-down' size={25} color={'white'} />
               </View>
-              {totalUnreadChatsCount ? (
+              {chatsNotificationCount ? (
                 <View
                   style={{
                     position: 'absolute',
@@ -295,18 +297,17 @@ const Map = (props) => {
                       borderRadius: 20 / 2,
                     }}
                   >
-                    <Text style={{ color: 'white' }}>{totalUnreadChatsCount}</Text>
+                    <Text style={{ color: 'white' }}>{chatsNotificationCount}</Text>
                   </View>
                 </View>
               ) : null}
             </TouchableOpacity>
           ) : null}
-
           <ConfirmLaunchMeetupModal />
           <CancelLaunchMeetupModal />
           <ConfirmStartMeetup />
           <ConfirmFinishMeetup />
-          {/* <AppMenusBottomSheet /> */}
+          <AppMenusBottomSheet />
           <LaunchMeetupBottomSheet navigation={props.navigation} route={props.route} />
           <SelectedMeetup />
           <SelectedMeetupInfoDetail />
@@ -359,3 +360,38 @@ export default connect(mapStateToProps, {
   setIsSelectMeetupBadgesModalOpen,
   setIsSelectedMeetupInfoDetailBottomSheetOpen,
 })(Map);
+
+{
+  /* <View style={{ flexDirection: 'column' }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginBottom: 5,
+                    }}
+                  >
+                    <ChatStatus
+                      icon={<MaterialCommunityIcons name='comment-text' size={17} color={'white'} />}
+                      backgroundColor={iconColorsTable['blue1']}
+                      status={10}
+                    />
+                    <ChatStatus
+                      icon={<MaterialCommunityIcons name='reply' size={17} color={'white'} />}
+                      backgroundColor={iconColorsTable['green1']}
+                      status={2}
+                    />
+                  </View>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <ChatStatus
+                      icon={<AntDesign name='questioncircle' size={17} color={'white'} />}
+                      backgroundColor={iconColorsTable['yellow1']}
+                      status={1}
+                    />
+                    <ChatStatus
+                      icon={<AntDesign name='exclamationcircle' size={17} color={'white'} />}
+                      backgroundColor={iconColorsTable['red1']}
+                      status={3}
+                    />
+                  </View>
+                </View> */
+}

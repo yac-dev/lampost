@@ -6,6 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import {
   iconColorsTable,
   backgroundColorsTable,
@@ -59,9 +60,9 @@ const AppButtons = () => {
               marginRight: 10,
             }}
           >
-            <MaterialCommunityIcons name='send' size={20} color={iconColorsTable['blue1']} />
+            <MaterialCommunityIcons name='comment-text' size={20} color={iconColorsTable['blue1']} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Send a chat message</Text>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Send a chat</Text>
         </View>
         <MaterialCommunityIcons name='chevron-down' color={baseTextColor} size={25} />
       </TouchableOpacity>
@@ -88,6 +89,58 @@ const AppButtons = () => {
           <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Send a image</Text>
         </View>
         <Foundation name='prohibited' color={iconColorsTable['red1']} size={25} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+        onPress={() => {
+          appMenuBottomSheetRef.current.close();
+          sendChatBottomSheetRef.current.snapToIndex(0);
+          textInputRef.current.focus();
+        }}
+      >
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View
+            style={{
+              width: 35,
+              height: 35,
+              backgroundColor: backgroundColorsTable['yellow1'],
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 10,
+              marginRight: 10,
+            }}
+          >
+            <AntDesign name='questioncircle' size={20} color={iconColorsTable['yellow1']} />
+          </View>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Ask a question</Text>
+        </View>
+        <MaterialCommunityIcons name='chevron-down' color={baseTextColor} size={25} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+        onPress={() => {
+          appMenuBottomSheetRef.current.close();
+          sendChatBottomSheetRef.current.snapToIndex(0);
+          textInputRef.current.focus();
+        }}
+      >
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View
+            style={{
+              width: 35,
+              height: 35,
+              backgroundColor: backgroundColorsTable['red1'],
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 10,
+              marginRight: 10,
+            }}
+          >
+            <AntDesign name='exclamationcircle' size={20} color={iconColorsTable['red1']} />
+          </View>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Help!!!</Text>
+        </View>
+        <MaterialCommunityIcons name='chevron-down' color={baseTextColor} size={25} />
       </TouchableOpacity>
     </View>
   );

@@ -24,7 +24,7 @@ import NotAvailableModal from './components/Utils/NotAvailableModal';
 import PleaseLoginModal from './components/Utils/PleaseLoginModal';
 import SnackBar from './components/Utils/SnackBar';
 import Camera from './components/Camera/Container';
-import DummyCamera from './components/DummyCamera';
+// import DummyCamera from './components/DummyCamera';
 
 const ref = createNavigationContainerRef();
 const Tab = createBottomTabNavigator();
@@ -92,7 +92,9 @@ const AppStack = (props) => {
   const notificationListener = useRef();
   const responseListener = useRef();
   const [routeName, setRouteName] = useState('');
-  const [totalUnreadChatsCount, setTotalUnreadChatsCount] = useState(0);
+  const [chatsNotificationCount, setChatsNotificationCount] = useState(0);
+  // const [totalUnreadChatsTable, setTotalUnreadChatsTable] = useState({});
+  // { general: 10, reply: 12, question: 3, help: 1 }　//って感じかな。
   const [myUpcomingMeetupAndChatsTable, setMyUpcomingMeetupAndChatsTable] = useState({});
   const hide = routeName === 'Dummy2' || routeName === 'Q&A';
   // { 111: { _id: 111, title: 'Meetup1' , chats: [{content: '', createdAt: '2022/9/1'}], viewedChats: '2022/9/22' },
@@ -103,6 +105,7 @@ const AppStack = (props) => {
   //]
   // console.log(myUpcomingMeetupAndChatsTable);
   const [myUpcomingMeetups, setMyUpcomingMeetups] = useState({});
+  const [isFetchedMyUpcomingMeetups, setIsFetchedMyUpcomingMeetups] = useState(false);
 
   useEffect(() => {
     if (auth.data) {
@@ -172,8 +175,21 @@ const AppStack = (props) => {
   const getMyUpcomingMeetupStates = async () => {
     const result = await lampostAPI.post('/meetups/mymeetupstates', { upcomingMeetupIds: auth.data.upcomingMeetups });
     const { myUpcomingMeetups } = result.data;
-    setMyUpcomingMeetups(myUpcomingMeetups);
-    console.log(myUpcomingMeetups);
+    setMyUpcomingMeetups((previous) => {
+      const updating = { ...previous };
+      for (const meetupId in myUpcomingMeetups) {
+        updating[meetupId] = {
+          _id: myUpcomingMeetups[meetupId]._id,
+          title: myUpcomingMeetups[meetupId].title,
+          state: myUpcomingMeetups[meetupId].state,
+          startDateAndTime: myUpcomingMeetups[meetupId].startDateAndTime,
+          unreadChatsTable: {},
+        };
+      }
+
+      return updating;
+    });
+    setIsFetchedMyUpcomingMeetups(true);
     //
     // これで、
     //{ meetup1: {_id: 'meetup1', title: '', date: '', haveUnreadMsg: false},
@@ -186,6 +202,38 @@ const AppStack = (props) => {
     // この時に、unreadのやつがあるかないかも同時にqueryしようかな。
     // ちょうどあれだもんな。
   };
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      getMyUpcomingMeetupStates();
+      // getMyUpcomingMeetupsAndLoungeChatsByMeetupIds();
+      // ここも、appStateが変わるたびに動かさなきゃいけない。→  app stateごとに動かすのは上で。
+    }
+  }, [auth.isAuthenticated]);
+
+  const getUnreadChats = async () => {
+    const result = await lampostAPI.post('/loungechats/unreadchats', {
+      upcomingMeetupIds: Object.keys(myUpcomingMeetups),
+      userId: auth.data._id,
+    });
+    const { chatsTable } = result.data;
+    // これ、objectをloop throughしなきゃいけないな。
+    setMyUpcomingMeetups((previous) => {
+      const updating = { ...previous };
+      for (const meetupId in chatsTable) {
+        updating[meetupId].unreadChatsTable = chatsTable[meetupId];
+        for (const chatType in chatsTable[meetupId])
+          setChatsNotificationCount((previous) => previous + chatsTable[meetupId][chatType]);
+      }
+
+      return updating;
+    });
+  };
+  useEffect(() => {
+    // loadedではなくて、そもそもupcomingがある前提でこのunread chatsをgetするのを動かせばいい。
+    if (isFetchedMyUpcomingMeetups) {
+      getUnreadChats();
+    }
+  }, [isFetchedMyUpcomingMeetups]);
 
   useEffect(() => {
     // 最初のrenderで、このsubscription functionが登録される。
@@ -265,13 +313,7 @@ const AppStack = (props) => {
   // }, [auth.isAuthenticated]);
 
   // これ、なんでこんなに動いている？そもそも.
-  useEffect(() => {
-    if (auth.isAuthenticated) {
-      getMyUpcomingMeetupStates();
-      // getMyUpcomingMeetupsAndLoungeChatsByMeetupIds();
-      // ここも、appStateが変わるたびに動かさなきゃいけない。→  app stateごとに動かすのは上で。
-    }
-  }, [auth.isAuthenticated]);
+
   // [auth.isAuthenticated, auth.data?.ongoingMeetup] dependencyがこれだと、毎回動いていた。つまり、多分auth.dataのupdateにつれて動いていたんだろうね。。。これまた発見。
 
   // socketが接続されたら、loungeに入る。
@@ -331,10 +373,10 @@ const AppStack = (props) => {
         setIsPleaseLoginModalOpen,
         routeName,
         setRouteName,
-        myUpcomingMeetupAndChatsTable,
-        setMyUpcomingMeetupAndChatsTable,
-        totalUnreadChatsCount,
-        setTotalUnreadChatsCount,
+        // myUpcomingMeetupAndChatsTable,
+        // setMyUpcomingMeetupAndChatsTable,
+        chatsNotificationCount,
+        setChatsNotificationCount,
         schedulePushNotification,
         expoPushToken,
         setExpoPushToken,
@@ -342,6 +384,8 @@ const AppStack = (props) => {
         setNotification,
         isLoggedOutModalOpen,
         setIsLoggedOutModalOpen,
+        myUpcomingMeetups,
+        setMyUpcomingMeetups,
       }}
     >
       <NavigationContainer
@@ -397,7 +441,7 @@ const AppStack = (props) => {
               ),
               tabBarLabel: 'Meetups',
               // tabBarLabelStyle: { padding: 5 },
-              tabBarBadge: totalUnreadChatsCount ? totalUnreadChatsCount : null,
+              tabBarBadge: chatsNotificationCount ? chatsNotificationCount : null,
               tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
               // () => {
               //   return null;

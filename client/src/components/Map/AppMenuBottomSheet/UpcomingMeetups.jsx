@@ -12,10 +12,17 @@ import {
 } from '../../../utils/colorsTable';
 import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
+import ChatStatus from '../ChatStatus';
 
 const Container = (props) => {
-  const { auth, myUpcomingMeetupAndChatsTable, setMyUpcomingMeetupAndChatsTable, totalUnreadChatsCount } =
-    useContext(GlobalContext);
+  const {
+    auth,
+    myUpcomingMeetupAndChatsTable,
+    setMyUpcomingMeetupAndChatsTable,
+    totalUnreadChatsCount,
+    myUpcomingMeetups,
+    setMyUpcomingMeetups,
+  } = useContext(GlobalContext);
   const {
     appMenuBottomSheetRef,
     selectedMeetup,
@@ -138,64 +145,75 @@ const Container = (props) => {
     }
   };
 
-  const renderUnreadChatsCount = (meetupAndChatsTable) => {
-    if (meetupAndChatsTable.unreadChatsCount) {
-      return (
-        <View style={{ marginRight: 5 }}>
-          <TouchableOpacity
-            style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}
-            onPress={() => {
-              appMenuBottomSheetRef.current.close();
-              navigation.navigate('Lounge', { meetupId: meetupAndChatsTable._id });
-            }}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Ionicons size={25} name='ios-chatbubbles' color={'white'} style={{ marginRight: 5 }} />
-              <Text style={{ color: 'white' }}>Lounge</Text>
-            </View>
-            <View
-              style={{
-                position: 'absolute',
-                top: -10,
-                right: -7,
-                color: 'white',
-                backgroundColor: iconColorsTable['blue1'],
-                width: 20,
-                height: 20,
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: 20 / 2,
-              }}
-            >
-              <Text style={{ color: 'white' }}>{meetupAndChatsTable.unreadChatsCount}</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      );
-    } else {
-      return (
-        <View style={{ marginRight: 5 }}>
-          <TouchableOpacity
-            style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}
-            onPress={() => {
-              appMenuBottomSheetRef.current.close();
-              navigation.navigate('Lounge', { meetupId: meetupAndChatsTable._id });
-            }}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Ionicons size={25} name='ios-chatbubbles' color={'white'} style={{ marginRight: 5 }} />
-              <Text style={{ color: 'white' }}>Lounge</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      );
+  // const renderUnreadChatsCount = (meetup) => {
+  //   const meetupUnreadChatsArr = Object.keys(meetup.unreadChatsTable);
+  //   if (meetupUnreadChatsArr.length) {
+  //     return (
+  //       <View style={{ marginRight: 5 }}>
+  //         <TouchableOpacity
+  //           style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}
+  //           onPress={() => {
+  //             appMenuBottomSheetRef.current.close();
+  //             navigation.navigate('Lounge', { meetupId: meetupAndChatsTable._id });
+  //           }}
+  //         >
+  //           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+  //             <Ionicons size={25} name='ios-chatbubbles' color={'white'} style={{ marginRight: 5 }} />
+  //             <Text style={{ color: 'white' }}>Lounge</Text>
+  //           </View>
+  //           <View
+  //             style={{
+  //               position: 'absolute',
+  //               top: -10,
+  //               right: -7,
+  //               color: 'white',
+  //               backgroundColor: iconColorsTable['blue1'],
+  //               width: 20,
+  //               height: 20,
+  //               alignItems: 'center',
+  //               justifyContent: 'center',
+  //               borderRadius: 20 / 2,
+  //             }}
+  //           >
+  //             <Text style={{ color: 'white' }}>{meetupAndChatsTable.unreadChatsCount}</Text>
+  //           </View>
+  //         </TouchableOpacity>
+  //       </View>
+  //     );
+  //   } else {
+  //     return (
+  //       <View style={{ marginRight: 5 }}>
+  //         <TouchableOpacity
+  //           style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}
+  //           onPress={() => {
+  //             appMenuBottomSheetRef.current.close();
+  //             navigation.navigate('Lounge', { meetupId: meetupAndChatsTable._id });
+  //           }}
+  //         >
+  //           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+  //             <Ionicons size={25} name='ios-chatbubbles' color={'white'} style={{ marginRight: 5 }} />
+  //             <Text style={{ color: 'white' }}>Lounge</Text>
+  //           </View>
+  //         </TouchableOpacity>
+  //       </View>
+  //     );
+  //   }
+  // };
+
+  const renderUnreadChats = (meetupUnreadChatsTable) => {
+    const unreadChatsList = Object.keys(meetupUnreadChatsTable);
+    if (unreadChatsList.length) {
+      const list = unreadChatsList.map((key) => {
+        return <ChatStatus key={key} chatType={key} status={meetupUnreadChatsTable[key]} />;
+      });
+      return <View style={{ flexDirection: 'row', alignItems: 'center' }}>{list}</View>;
     }
   };
 
   const renderMyUpcomingMeetups = () => {
-    const myUpcomingMeetupsArr = Object.values(myUpcomingMeetupAndChatsTable);
+    const myUpcomingMeetupsArr = Object.values(myUpcomingMeetups);
     if (myUpcomingMeetupsArr.length) {
-      const myUpcomingMeetupslist = myUpcomingMeetupsArr.map((meetupAndChatsTable, index) => {
+      const myUpcomingMeetupslist = myUpcomingMeetupsArr.map((meetup, index) => {
         return (
           <View
             key={index}
@@ -206,21 +224,33 @@ const Container = (props) => {
           >
             <TouchableOpacity
               style={{ flexDirection: 'row', alignItems: 'center', flexShrink: 1, marginBottom: 10 }}
-              onPress={() => getMeetup(meetupAndChatsTable._id)}
+              onPress={() => getMeetup(meetup._id)}
             >
-              {renderDate(meetupAndChatsTable.startDateAndTime)}
+              {renderDate(meetup.startDateAndTime)}
               <View style={{ flexDirection: 'column', marginRight: 5, flexShrink: 1 }}>
                 <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white', marginBottom: 5 }}>
-                  {meetupAndChatsTable.title}
+                  {meetup.title}
                 </Text>
-                {renderTime(meetupAndChatsTable.startDateAndTime)}
+                {renderTime(meetup.startDateAndTime)}
               </View>
             </TouchableOpacity>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              {meetupAndChatsTable.launcher === auth.data._id ? (
-                <>{renderStartButton(meetupAndChatsTable)}</> // launcherじゃなければ、これをrenderしない。
-              ) : null}
-              {renderUnreadChatsCount(meetupAndChatsTable)}
+              {/* {meetup.launcher === auth.data._id ? (
+                <>{renderStartButton(meetup)}</> // launcherじゃなければ、これをrenderしない。
+              ) : null} */}
+              <TouchableOpacity
+                style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}
+                onPress={() => {
+                  appMenuBottomSheetRef.current.close();
+                  navigation.navigate('Lounge', { meetupId: meetup._id });
+                }}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Ionicons size={25} name='ios-chatbubbles' color={'white'} style={{ marginRight: 5 }} />
+                  <Text style={{ color: 'white', marginRight: 5 }}>Lounge</Text>
+                  {renderUnreadChats(meetup.unreadChatsTable)}
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
         );

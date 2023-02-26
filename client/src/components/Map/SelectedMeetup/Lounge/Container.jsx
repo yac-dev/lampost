@@ -19,9 +19,9 @@ const LoungeContainer = (props) => {
   const {
     auth,
     setAuth,
-    myUpcomingMeetupAndChatsTable,
-    setMyUpcomingMeetupAndChatsTable,
-    setTotalUnreadChatsCount,
+    myUpcomingMeetups,
+    setMyUpcomingMeetups,
+    setChatsNotificationCounts,
     routeName,
     setRouteName,
   } = useContext(GlobalContext);
@@ -185,16 +185,16 @@ const LoungeContainer = (props) => {
     };
   }, []);
 
-  useEffect(() => {
-    const minus = myUpcomingMeetupAndChatsTable[props.route.params.meetupId].unreadChatsCount;
-    setMyUpcomingMeetupAndChatsTable((previous) => {
-      const updating = { ...previous };
-      updating[props.route.params.meetupId].unreadChatsCount =
-        updating[props.route.params.meetupId].unreadChatsCount - minus;
-      return updating;
-    });
-    setTotalUnreadChatsCount((previous) => previous - minus);
-  }, []);
+  // useEffect(() => {
+  //   const minus = myUpcomingMeetups[props.route.params.meetupId].unreadChatsCount;
+  //   setMyUpcomingMeetupAndChatsTable((previous) => {
+  //     const updating = { ...previous };
+  //     updating[props.route.params.meetupId].unreadChatsCount =
+  //       updating[props.route.params.meetupId].unreadChatsCount - minus;
+  //     return updating;
+  //   });
+  //   setTotalUnreadChatsCount((previous) => previous - minus);
+  // }, []);
 
   return (
     <LoungeContext.Provider

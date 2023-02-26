@@ -4,6 +4,6 @@ import { getMyLoungeStatus, getSelectedMeetupLoungeChats, getUnreadLoungeChats }
 
 router.route('/').post(getMyLoungeStatus);
 router.route('/:meetupId').get(getSelectedMeetupLoungeChats);
-router.route('/kkkkk').post(getUnreadLoungeChats);
+router.route('/unreadchats').post(getUnreadLoungeChats);
 
 export default router;
