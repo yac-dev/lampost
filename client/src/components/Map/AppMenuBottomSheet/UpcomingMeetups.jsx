@@ -12,6 +12,7 @@ import {
 } from '../../../utils/colorsTable';
 import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ChatStatus from '../ChatStatus';
 
 const Container = (props) => {
@@ -76,6 +77,37 @@ const Container = (props) => {
         {dateTable[2]}
       </Text>
     );
+  };
+
+  const renderMeetupDateAndTime = (date) => {
+    const d = new Date(date).toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    const dateElements = d.split(',').join('').split(' ');
+
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        {dateElements.map((element, index) => {
+          return (
+            <Text key={index} style={{ color: 'white' }}>
+              {element}&nbsp;
+            </Text>
+          );
+        })}
+      </View>
+    );
+    // return (
+    //   <View style={{}}>
+    //     <Text style={{ color: 'white' }}>
+    //       {dateElements[0]}&nbsp;{dateElements[1]}&nbsp;{dateElements[2]}&nbsp;{dateElements[3]}&nbsp;{dateElements[4]}
+    //       &nbsp;{dateElements[5]}
+    //     </Text>
+    //   </View>
+    // );
   };
 
   const renderStartButton = (meetupAndChatsTable) => {
@@ -210,6 +242,49 @@ const Container = (props) => {
     }
   };
 
+  const renderChatStats = (meetup) => {
+    const list = Object.keys(meetup.unreadChatsTable).map((key) => {
+      return <ChatStatus key={key} chatType={key} status={meetup.unreadChatsTable[key]} />;
+    });
+
+    return (
+      <TouchableOpacity
+        style={{
+          width: 86,
+          height: 86,
+          padding: 8,
+          // justifyContent: 'center',
+          // alignItems: 'center',
+          backgroundColor: screenSectionBackgroundColor,
+          borderRadius: 10,
+          // flexDirection: 'row',
+          // flexWrap: 'wrap',
+          // justifyContent: 'space-between',
+        }}
+        onPress={() => {
+          appMenuBottomSheetRef.current.close();
+          navigation.navigate('Lounge', { meetupId: meetup._id });
+        }}
+      >
+        <View
+          style={{
+            // width: '100%',
+            // height: '100%',
+            // backgroundColor: 'violet',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            // alignItems: 'center',
+            // justifyContent: 'center',
+            // alignItems: 'center',
+            // alignSelf: 'flex-end',
+          }}
+        >
+          {list}
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   const renderMyUpcomingMeetups = () => {
     const myUpcomingMeetupsArr = Object.values(myUpcomingMeetups);
     if (myUpcomingMeetupsArr.length) {
@@ -219,26 +294,48 @@ const Container = (props) => {
             key={index}
             style={{
               flexDirection: 'column',
-              padding: 10,
+              paddingLeft: 15,
+              paddingTop: 10,
+              paddingBottom: 5,
+              marginBottom: 10,
             }}
           >
-            <TouchableOpacity
-              style={{ flexDirection: 'row', alignItems: 'center', flexShrink: 1, marginBottom: 10 }}
+            <View
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}
               onPress={() => getMeetup(meetup._id)}
             >
-              {renderDate(meetup.startDateAndTime)}
-              <View style={{ flexDirection: 'column', marginRight: 5, flexShrink: 1 }}>
+              {/* {renderDate(meetup.startDateAndTime)} */}
+              <TouchableOpacity onPress={() => getMeetup(meetup._id)}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    padding: 5,
+                    backgroundColor: screenSectionBackgroundColor,
+                    alignSelf: 'flex-start',
+                    borderRadius: 5,
+                    marginBottom: 5,
+                  }}
+                >
+                  <MaterialCommunityIcons name='calendar-clock' color='white' size={20} style={{ marginRight: 10 }} />
+                  {renderMeetupDateAndTime(meetup.startDateAndTime)}
+                </View>
                 <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white', marginBottom: 5 }}>
                   {meetup.title}
                 </Text>
-                {renderTime(meetup.startDateAndTime)}
-              </View>
-            </TouchableOpacity>
+              </TouchableOpacity>
+              {renderChatStats(meetup)}
+              {/* <View style={{ flexDirection: 'column', marginRight: 5, flexShrink: 1 }}>
+                <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white', marginBottom: 5 }}>
+                  {meetup.title}
+                </Text>
+              </View> */}
+            </View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              {/* {meetup.launcher === auth.data._id ? (
+              {meetup.launcher === auth.data._id ? (
                 <>{renderStartButton(meetup)}</> // launcherじゃなければ、これをrenderしない。
-              ) : null} */}
-              <TouchableOpacity
+              ) : null}
+              {/* <TouchableOpacity
                 style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}
                 onPress={() => {
                   appMenuBottomSheetRef.current.close();
@@ -248,9 +345,8 @@ const Container = (props) => {
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Ionicons size={25} name='ios-chatbubbles' color={'white'} style={{ marginRight: 5 }} />
                   <Text style={{ color: 'white', marginRight: 5 }}>Lounge</Text>
-                  {renderUnreadChats(meetup.unreadChatsTable)}
                 </View>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
         );

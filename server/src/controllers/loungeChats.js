@@ -87,14 +87,19 @@ export const getUnreadLoungeChats = async (request, response) => {
     const chatsTable = {};
     loungeChats.forEach((chat) => {
       if (!chatsTable[chat.meetup]) {
-        chatsTable[chat.meetup] = {};
-        chatsTable[chat.meetup][chat.type] = 1;
+        chatsTable[chat.meetup] = {
+          general: 0,
+          reply: 0,
+          question: 0,
+          help: 0,
+        };
+        chatsTable[chat.meetup][chat.type]++;
       } else {
-        if (chatsTable[chat.meetup][chat.type]) {
-          chatsTable[chat.meetup][chat.type]++;
-        } else {
-          chatsTable[chat.meetup][chat.type] = 1;
-        }
+        chatsTable[chat.meetup][chat.type]++;
+        // if (chatsTable[chat.meetup][chat.type]) {
+        // } else {
+        //   chatsTable[chat.meetup][chat.type] = 1;
+        // }
       }
     });
     // もうこれで良くね？？？？

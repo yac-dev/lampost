@@ -64,7 +64,7 @@ const AppMenuButtons = (props) => {
           >
             <MaterialCommunityIcons name='map-search-outline' color={iconColorsTable['lightBlue1']} size={20} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Search meetup</Text>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Search for meetup</Text>
         </View>
         <Foundation name='prohibited' color={iconColorsTable['red1']} size={25} />
       </TouchableOpacity>

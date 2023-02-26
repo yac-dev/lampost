@@ -174,6 +174,7 @@ export const getMyMeetupStates = async (request, response) => {
           title: meetup.title,
           startDateAndTime: meetup.startDateAndTime,
           state: meetup.state,
+          launcher: meetup.launcher,
         };
       } else {
         alreadyFinishedMeetups[meetup._id] = true;

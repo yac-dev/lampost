@@ -190,17 +190,6 @@ const AppStack = (props) => {
       return updating;
     });
     setIsFetchedMyUpcomingMeetups(true);
-    //
-    // これで、
-    //{ meetup1: {_id: 'meetup1', title: '', date: '', haveUnreadMsg: false},
-    //  meetup2: {_id: 'meetup2'. title: '', date: '', haveUnreadMsg: true}  }// みたいな感じかね。
-    // push notificationが来ればhaveunreadmsgをtrueにすればいいい。
-    // app stateがfore groudに戻るたびに、 queryする。
-    // upcomingでidを持っている。foregroundに戻るたびに、meetupIdたちを使って、そのmeetupがfinishedではないかを。
-    // もしfinishなら、user docのupcoimgのfinishedなやつを除いて、userをupdateする。
-    // userをupdateしたら、ongoingの方だけをuserにresponseして、新しくmyUpcomingMeetupsを更新する。
-    // この時に、unreadのやつがあるかないかも同時にqueryしようかな。
-    // ちょうどあれだもんな。
   };
   useEffect(() => {
     if (auth.isAuthenticated) {

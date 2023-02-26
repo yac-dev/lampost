@@ -51,7 +51,7 @@ const AppMenusBottomSheet = (props) => {
                   marginRight: 10,
                 }}
               >
-                <MaterialCommunityIcons name='calendar-clock' color={iconColorsTable['green1']} size={20} />
+                <MaterialCommunityIcons name='run' color={iconColorsTable['green1']} size={20} />
               </View>
               <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>My upcoming meetups</Text>
             </View>
