@@ -10,12 +10,14 @@ import MapView, { Marker } from 'react-native-maps';
 import { backgroundColorsTable, baseTextColor, rnDefaultBackgroundColor } from '../../utils/colorsTable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 // components
 import MapMarkers from './MapMarkers';
 import SelectedMeetup from './SelectedMeetup/Container';
 import SelectedMeetupInfoDetail from './SelectedMeetup/InfoDetail/Container';
 import AppMenusBottomSheet from './AppMenuBottomSheet/Container';
+import MyUpcomingMeetupsBottomSheet from './MyUpcomingMeetupsBottomSheet/Container';
 import ConfirmLaunchMeetupModal from './LaunchMeetupBottomSheet/ConfirmLaunchMeetupModal';
 import CancelLaunchMeetupModal from './LaunchMeetupBottomSheet/CancelLaunchMeetupModal';
 import ConfirmStartMeetup from './ConfirmStartMeetup';
@@ -60,6 +62,7 @@ const Map = (props) => {
 
   const mapRef = useRef(null);
   const appMenuBottomSheetRef = useRef(null);
+  const myUpcomingMeetupsBottomSheetRef = useRef(null);
   const launchMeetupBottomSheetRef = useRef(null);
   const selectedMeetupBottomSheetRef = useRef(null);
   const selectedMeetupDetailBottomSheetRef = useRef(null);
@@ -189,6 +192,7 @@ const Map = (props) => {
           navigation: props.navigation,
           launchMeetupBottomSheetRef,
           appMenuBottomSheetRef,
+          myUpcomingMeetupsBottomSheetRef,
           isLaunchMeetupConfirmationModalOpen,
           setIsLaunchMeetupConfirmationModalOpen,
           isCancelLaunchMeetupConfirmationModalOpen,
@@ -251,63 +255,82 @@ const Map = (props) => {
             <MapMarkers />
           </MapView>
           {auth.isAuthenticated ? (
-            <TouchableOpacity
+            <View
               style={{
+                backgroundColor: backgroundColorsTable['red1'],
                 position: 'absolute',
                 bottom: 20,
-                backgroundColor: rnDefaultBackgroundColor,
                 borderRadius: 10,
+                padding: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
               }}
-              onPress={() => appMenuBottomSheetRef.current.snapToIndex(1)}
             >
-              <View
-                style={{
-                  backgroundColor: iconColorsTable['red1'],
-                  padding: 10,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderRadius: 10,
-                }}
+              <TouchableOpacity
+                style={{ marginRight: 10 }}
+                onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
               >
-                <MaterialCommunityIcons name='rocket-launch' size={25} color={'white'} style={{ marginRight: 10 }} />
-                <Text style={{ color: 'white', marginRight: 10 }}>Menu</Text>
-                <MaterialCommunityIcons name='chevron-down' size={25} color={'white'} />
-              </View>
-              {chatsNotificationCount ? (
                 <View
                   style={{
-                    position: 'absolute',
-                    right: -7,
-                    top: -7,
-                    backgroundColor: rnDefaultBackgroundColor,
-                    width: 20,
-                    height: 20,
+                    backgroundColor: iconColorsTable['red1'],
+                    padding: 10,
+                    flexDirection: 'row',
                     alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: 20 / 2,
+                    borderRadius: 10,
                   }}
                 >
+                  <Ionicons name='ios-apps' size={25} color={'white'} />
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => myUpcomingMeetupsBottomSheetRef.current.snapToIndex(0)}>
+                <View
+                  style={{
+                    backgroundColor: iconColorsTable['red1'],
+                    padding: 10,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderRadius: 10,
+                  }}
+                >
+                  <MaterialCommunityIcons name='run' size={25} color={'white'} />
+                </View>
+                {chatsNotificationCount ? (
                   <View
                     style={{
-                      backgroundColor: iconColorsTable['red1'],
-                      width: '100%',
-                      height: '100%',
+                      position: 'absolute',
+                      right: -7,
+                      top: -7,
+                      backgroundColor: rnDefaultBackgroundColor,
+                      width: 20,
+                      height: 20,
                       alignItems: 'center',
                       justifyContent: 'center',
                       borderRadius: 20 / 2,
                     }}
                   >
-                    <Text style={{ color: 'white' }}>{chatsNotificationCount}</Text>
+                    <View
+                      style={{
+                        backgroundColor: iconColorsTable['red1'],
+                        width: '100%',
+                        height: '100%',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: 20 / 2,
+                      }}
+                    >
+                      <Text style={{ color: 'white' }}>{chatsNotificationCount}</Text>
+                    </View>
                   </View>
-                </View>
-              ) : null}
-            </TouchableOpacity>
+                ) : null}
+              </TouchableOpacity>
+            </View>
           ) : null}
           <ConfirmLaunchMeetupModal />
           <CancelLaunchMeetupModal />
           <ConfirmStartMeetup />
           <ConfirmFinishMeetup />
           <AppMenusBottomSheet />
+          <MyUpcomingMeetupsBottomSheet />
           <LaunchMeetupBottomSheet navigation={props.navigation} route={props.route} />
           <SelectedMeetup />
           <SelectedMeetupInfoDetail />

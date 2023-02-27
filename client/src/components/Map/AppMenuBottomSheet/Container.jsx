@@ -6,7 +6,7 @@ import { View, Text, TouchableOpacity, ScrollView, Platform } from 'react-native
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 
 import AppMenuButtons from './AppMenuButtons';
-import UpcomingMeetups from './UpcomingMeetups';
+// import UpcomingMeetups from '../MyUpcomingMeetupsBottomSheet/UpcomingMeetups';
 import {
   appBottomSheetBackgroundColor,
   baseTextColor,
@@ -18,7 +18,7 @@ import lampostAPI from '../../../apis/lampost';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const AppMenusBottomSheet = (props) => {
-  const snapPoints = useMemo(() => ['45%', '60%', '80%'], []);
+  const snapPoints = useMemo(() => ['30%'], []);
   const { auth, myUpcomingMeetupAndChatsTable, totalUnreadChatsCount, navigation, isIpad } = useContext(GlobalContext);
   const { appMenuBottomSheetRef } = useContext(MapContext);
 
@@ -36,9 +36,9 @@ const AppMenusBottomSheet = (props) => {
       handleIndicatorStyle={{ backgroundColor: 'white' }}
     >
       <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
-        {auth.data ? (
+        <AppMenuButtons />
+        {/* {auth.data ? (
           <>
-            <AppMenuButtons />
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
               <View
                 style={{
@@ -61,7 +61,7 @@ const AppMenusBottomSheet = (props) => {
           <View>
             <Text style={{ color: baseTextColor }}>Please login or signup if you want to launch or join a meetup.</Text>
           </View>
-        )}
+        )} */}
       </BottomSheetView>
     </GorhomBottomSheet>
   );

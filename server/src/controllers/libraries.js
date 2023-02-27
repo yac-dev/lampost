@@ -1,6 +1,7 @@
 import Library from '../models/library';
 import LibraryAndAssetRelationship from '../models/libraryAndAssetRelationship';
 import LibraryAndUserRelationship from '../models/libraryAndUserRelationship';
+import BadgeAndAssetRelationship from '../models/badgeAndAssetRelationship';
 // import Roll from '../models/roll';
 import Asset from '../models/asset';
 import User from '../models/user';
@@ -83,6 +84,13 @@ export const createLibrary = async (request, response) => {
     //   queriedAsset.save();
     // }
 
+    const badgeAndAssetObjects = badges.map((badge) => {
+      return {
+        badge: badge,
+        asset: asset._id,
+      };
+    });
+    const badgeAndAssetRelationships = await BadgeAndAssetRelationship.insertMany(badgeAndAssetObjects);
     const libraryAndAssetRelationships = await LibraryAndAssetRelationship.create({
       library: library._id,
       asset: asset._id,
