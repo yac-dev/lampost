@@ -45,42 +45,43 @@ export const getLibrary = async (request, response) => {
 
 export const createLibrary = async (request, response) => {
   try {
-    const { name, badges, description, asset, launcher } = request.body;
+    const { name, badges, description, asset, launcher, assetType } = request.body;
     const library = await Library.create({
       name,
       badges,
       description,
       launcher: launcher._id,
       thumbnail: asset._id,
+      assetType: assetType,
       totalAssets: 1,
       totalMembers: 1,
       color: colors[Math.floor(Math.random() * colors.length)],
       createdAt: new Date(),
     });
 
-    const queriedAsset = await Asset.findById(asset._id);
-    if (!queriedAsset.badges.length) {
-      const arr = badges.map((badge) => {
-        return {
-          badge: badge,
-          totalCounts: 0,
-        };
-      });
-      queriedAsset.badges.push(...arr);
-      queriedAsset.save();
-    } else {
-      for (let i = 0; i < badges.length; i++) {
-        if (queriedAsset.badges.some((badgeObject) => badgeObject.badge.toString() === badges[i])) {
-          null;
-        } else {
-          queriedAsset.badges.push({
-            badge: badges[i],
-            totalCounts: 0,
-          });
-        }
-      }
-      queriedAsset.save();
-    }
+    // const queriedAsset = await Asset.findById(asset._id);
+    // if (!queriedAsset.badges.length) {
+    //   const arr = badges.map((badge) => {
+    //     return {
+    //       badge: badge,
+    //       totalCounts: 0,
+    //     };
+    //   });
+    //   queriedAsset.badges.push(...arr);
+    //   queriedAsset.save();
+    // } else {
+    //   for (let i = 0; i < badges.length; i++) {
+    //     if (queriedAsset.badges.some((badgeObject) => badgeObject.badge.toString() === badges[i])) {
+    //       null;
+    //     } else {
+    //       queriedAsset.badges.push({
+    //         badge: badges[i],
+    //         totalCounts: 0,
+    //       });
+    //     }
+    //   }
+    //   queriedAsset.save();
+    // }
 
     const libraryAndAssetRelationships = await LibraryAndAssetRelationship.create({
       library: library._id,

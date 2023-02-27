@@ -44,7 +44,7 @@ const LibraryBadges = (props) => {
             label='Back'
             backgroundColor={iconColorsTable['blue1']}
             icon={<MaterialCommunityIcons name='hand-pointing-left' color={'white'} size={25} />}
-            onActionButtonPress={() => setComponent('LIBRARY_NAME')}
+            onActionButtonPress={() => setComponent('LIBRARY_ASSET_TYPE')}
           />
           <ActionButton
             label='Next'

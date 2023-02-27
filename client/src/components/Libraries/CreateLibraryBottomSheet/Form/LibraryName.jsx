@@ -46,7 +46,7 @@ const LibraryName = (props) => {
             label='Next'
             backgroundColor={iconColorsTable['blue1']}
             icon={<MaterialCommunityIcons name='hand-pointing-right' color={'white'} size={25} />}
-            onActionButtonPress={() => setComponent('LIBRARY_BADGES')}
+            onActionButtonPress={() => setComponent('LIBRARY_ASSET_TYPE')}
             isDisabled={isDisabledNext}
           />
         </View>

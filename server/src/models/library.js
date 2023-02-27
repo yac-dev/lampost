@@ -19,7 +19,7 @@ const librarySchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Asset',
   },
-  assetType: [String], //['video', 'photo', 'videoAndPhoto']
+  assetType: String, //['video', 'photo', 'videoAndPhoto']
   albums: [
     {
       type: mongoose.Schema.ObjectId,

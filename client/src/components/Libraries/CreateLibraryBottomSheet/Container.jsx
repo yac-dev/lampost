@@ -11,6 +11,7 @@ import GorhomBottomSheet, {
 } from '@gorhom/bottom-sheet';
 import { appBottomSheetBackgroundColor, baseTextColor } from '../../../utils/colorsTable';
 import LibraryName from './Form/LibraryName';
+import LibraryAssetType from './Form/LibraryAssetType';
 import LibraryBadges from './Form/LibraryBadges';
 import LibraryDescription from './Form/LibraryDescription';
 import LibraryAsset from './Form/LibraryAsset';
@@ -20,12 +21,14 @@ const Container = (props) => {
   const snapPoints = ['65%'];
   const [component, setComponent] = useState('LIBRARY_NAME');
   // const [formData, setFormData] = useState({ name: '', badges: {}, description: '', rolls: ['', ''] });
-  const [formData, setFormData] = useState({ name: '', badges: {}, description: '', asset: null });
+  const [formData, setFormData] = useState({ name: '', badges: {}, assetType: 'photo', description: '', asset: null });
 
   const switchComponent = () => {
     switch (component) {
       case 'LIBRARY_NAME':
         return <LibraryName />;
+      case 'LIBRARY_ASSET_TYPE':
+        return <LibraryAssetType />;
       case 'LIBRARY_BADGES':
         return <LibraryBadges />;
       case 'LIBRARY_DESCRIPTION':
