@@ -6,7 +6,6 @@ import { Touchable, View, TouchableOpacity, Text } from 'react-native';
 import { Avatar, IconButton } from 'react-native-paper';
 import lampostAPI from '../../../../apis/lampost';
 import { io } from 'socket.io-client';
-``;
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 import { baseBackgroundColor, rnDefaultBackgroundColor, iconColorsTable } from '../../../../utils/colorsTable';
@@ -16,15 +15,8 @@ import CrewBottomSheet from './CrewBottomSheet';
 import Chats from './Chats';
 
 const LoungeContainer = (props) => {
-  const {
-    auth,
-    setAuth,
-    myUpcomingMeetups,
-    setMyUpcomingMeetups,
-    setChatsNotificationCounts,
-    routeName,
-    setRouteName,
-  } = useContext(GlobalContext);
+  const { auth, setAuth, myUpcomingMeetups, setMyUpcomingMeetups, setChatsNotificationCount, routeName, setRouteName } =
+    useContext(GlobalContext);
   const [meetup, setMeetup] = useState(null);
   const [chats, setChats] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
@@ -87,8 +79,6 @@ const LoungeContainer = (props) => {
 
   // chat send, getに関するuseEffect
   useEffect(() => {
-    // if (auth.socket && routeName === 'Lounge') {
-    // 待機開始。
     if (auth.socket) {
       auth.socket.on('I_GOT_A_CHAT_IN_THE_ROOM', (data) => {
         setChats((previous) => [...previous, data]);
@@ -159,15 +149,15 @@ const LoungeContainer = (props) => {
       // console.log('cleaing up');
       // ここでapi requestをする。viewd chats last timeの。ok.
       updateviewedChatsLastTime(dateTime); // これは必要。
-      setMyUpcomingMeetupAndChatsTable((previous) => {
-        return {
-          ...previous,
-          [props.route.params.meetupId]: {
-            ...previous[props.route.params.meetupId],
-            viewedChatsLastTime: dateTime,
-          },
-        };
-      });
+      // setMyUpcomingMeetupAndChatsTable((previous) => {
+      //   return {
+      //     ...previous,
+      //     [props.route.params.meetupId]: {
+      //       ...previous[props.route.params.meetupId],
+      //       viewedChatsLastTime: dateTime,
+      //     },
+      //   };
+      // });
       // setAuth((previous) => {
       //   return {
       //     ...previous,

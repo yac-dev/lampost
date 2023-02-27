@@ -93,17 +93,7 @@ const AppStack = (props) => {
   const responseListener = useRef();
   const [routeName, setRouteName] = useState('');
   const [chatsNotificationCount, setChatsNotificationCount] = useState(0);
-  // const [totalUnreadChatsTable, setTotalUnreadChatsTable] = useState({});
-  // { general: 10, reply: 12, question: 3, help: 1 }　//って感じかな。
-  const [myUpcomingMeetupAndChatsTable, setMyUpcomingMeetupAndChatsTable] = useState({});
   const hide = routeName === 'Dummy2' || routeName === 'Q&A';
-  // { 111: { _id: 111, title: 'Meetup1' , chats: [{content: '', createdAt: '2022/9/1'}], viewedChats: '2022/9/22' },
-  //   222: { _id: 222, title: 'Meetup2' , chats: [{content: '', createdAt: '2022/8/1'}], viewedChats: '2022/7/22' },
-  //}
-  // [{ _id: 111, title: 'Meetup1' , chats: [{content: '', createdAt: '2022/9/1'}], viewedChats: '2022/9/22' },
-  //    { _id: 222, title: 'Meetup2' , chats: [{content: '', createdAt: '2022/8/1'}], viewedChats: '2022/7/22' }
-  //]
-  // console.log(myUpcomingMeetupAndChatsTable);
   const [myUpcomingMeetups, setMyUpcomingMeetups] = useState({});
   const [isFetchedMyUpcomingMeetups, setIsFetchedMyUpcomingMeetups] = useState(false);
 
@@ -162,16 +152,17 @@ const AppStack = (props) => {
   //   setAppState(nextAppState);
   // };
 
-  const getMyUpcomingMeetupsAndLoungeChatsByMeetupIds = async () => {
-    const result = await lampostAPI.post(`/loungechats`, { myUpcomingMeetups: auth.data.upcomingMeetups });
-    const { myUpcomingMeetupAndChatsTable } = result.data;
-    setMyUpcomingMeetupAndChatsTable(myUpcomingMeetupAndChatsTable);
-    console.log('getting messages status');
-    const countTotalUnreads = Object.values(myUpcomingMeetupAndChatsTable).forEach((e) => {
-      setTotalUnreadChatsCount((previous) => previous + e.unreadChatsCount);
-    });
-  };
+  // const getMyUpcomingMeetupsAndLoungeChatsByMeetupIds = async () => {
+  //   const result = await lampostAPI.post(`/loungechats`, { myUpcomingMeetups: auth.data.upcomingMeetups });
+  //   const { myUpcomingMeetupAndChatsTable } = result.data;
+  //   setMyUpcomingMeetupAndChatsTable(myUpcomingMeetupAndChatsTable);
+  //   console.log('getting messages status');
+  //   const countTotalUnreads = Object.values(myUpcomingMeetupAndChatsTable).forEach((e) => {
+  //     setTotalUnreadChatsCount((previous) => previous + e.unreadChatsCount);
+  //   });
+  // };
 
+  // upcomingのmeetupをgetしてくる
   const getMyUpcomingMeetupStates = async () => {
     const result = await lampostAPI.post('/meetups/mymeetupstates', { upcomingMeetupIds: auth.data.upcomingMeetups });
     const { myUpcomingMeetups } = result.data;
@@ -194,18 +185,17 @@ const AppStack = (props) => {
   useEffect(() => {
     if (auth.isAuthenticated) {
       getMyUpcomingMeetupStates();
-      // getMyUpcomingMeetupsAndLoungeChatsByMeetupIds();
       // ここも、appStateが変わるたびに動かさなきゃいけない。→  app stateごとに動かすのは上で。
     }
   }, [auth.isAuthenticated]);
 
+  // unreadchatsをgetする。
   const getUnreadChats = async () => {
     const result = await lampostAPI.post('/loungechats/unreadchats', {
       upcomingMeetupIds: Object.keys(myUpcomingMeetups),
       userId: auth.data._id,
     });
     const { chatsTable } = result.data;
-    // これ、objectをloop throughしなきゃいけないな。
     setMyUpcomingMeetups((previous) => {
       const updating = { ...previous };
       for (const meetupId in chatsTable) {
@@ -218,7 +208,6 @@ const AppStack = (props) => {
     });
   };
   useEffect(() => {
-    // loadedではなくて、そもそもupcomingがある前提でこのunread chatsをgetするのを動かせばいい。
     if (isFetchedMyUpcomingMeetups) {
       getUnreadChats();
     }
@@ -232,7 +221,8 @@ const AppStack = (props) => {
           console.log('App has come to the foreground! Socket connected again.');
           //ここで再度connectして、server のconnectのlogする。
           // getSocket();
-          getMyUpcomingMeetupsAndLoungeChatsByMeetupIds();
+          // getMyUpcomingMeetupsAndLoungeChatsByMeetupIds();
+          getMyUpcomingMeetupStates();
         } else if (appState === 'active' && nextAppState === 'inactive') {
           // socket disconnect する。ここで。serverでdisconnectのlogを確認する。
           // auth.socket.disconnect();
@@ -242,28 +232,11 @@ const AppStack = (props) => {
         // auth.socket.disconnect();
         setAppState(nextAppState); // backgroundになる。
       });
-
-      // subscriptionを発生させる。
       return () => {
         appStateListener.remove();
       };
     }
   }, [auth.isAuthenticated, appState]);
-  // useEffect(() => {
-  //   if (appState === 'background') {
-  //     console.log('background');
-  //   }
-  // }, [appState]); // こういう使い方はできないいんだ。上の、applistennerでしか多分使えない。
-
-  // const getJWTToken = async () => {
-  //   const jwtToken = await SecureStore.getItemAsync('secure_token');
-  //   if (jwtToken) {
-  //     props.loadMe(jwtToken);
-  //   }
-  // };
-  // useEffect(() => {
-  //   getJWTToken();
-  // }, []);
 
   const loadMe = async () => {
     const jwtToken = await SecureStore.getItemAsync('secure_token');
@@ -362,10 +335,6 @@ const AppStack = (props) => {
         setIsPleaseLoginModalOpen,
         routeName,
         setRouteName,
-        // myUpcomingMeetupAndChatsTable,
-        // setMyUpcomingMeetupAndChatsTable,
-        chatsNotificationCount,
-        setChatsNotificationCount,
         schedulePushNotification,
         expoPushToken,
         setExpoPushToken,
@@ -373,6 +342,8 @@ const AppStack = (props) => {
         setNotification,
         isLoggedOutModalOpen,
         setIsLoggedOutModalOpen,
+        chatsNotificationCount,
+        setChatsNotificationCount,
         myUpcomingMeetups,
         setMyUpcomingMeetups,
       }}
@@ -537,4 +508,4 @@ const AppStack = (props) => {
   );
 };
 
-export default connect(null, { loadMe, getSocket })(AppStack);
+export default AppStack;
