@@ -196,3 +196,18 @@ export const getMyMeetupStates = async (request, response) => {
     console.log(error);
   }
 };
+
+export const updateViewedChatsLastTime = async (request, response) => {
+  try {
+    const { meetupId, userId } = request.params;
+    const meetupAndUserRelationship = await MeetupAndUserRelationship.findOne({ meetup: meetupId, user: userId });
+    meetupAndUserRelationship.viewedChatsLastTime = new Date();
+    meetupAndUserRelationship.save();
+
+    response.status(200).json({
+      message: 'success',
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

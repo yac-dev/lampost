@@ -136,19 +136,17 @@ const LoungeContainer = (props) => {
   //   };
   // }, []);
 
+  // 部屋を出る時
   const updateviewedChatsLastTime = async (dateTime) => {
-    const result = await lampostAPI.patch(`/users/${auth.data._id}/viewedchatslasttime`, {
-      meetupId: props.route.params.meetupId,
-      dateTime,
-    });
+    const result = await lampostAPI.patch(`/meetup/${meetup._id}/user/${auth.data_id}/viewedchatslasttime`);
   };
   useEffect(() => {
     return () => {
       // これも、authがある時のみに動かさなきゃ毛ない。だから、dependencyも入れなきゃかも。最初の状態でregisterしているかもしれんから。
-      const dateTime = new Date();
+      // const dateTime = new Date();
       // console.log('cleaing up');
       // ここでapi requestをする。viewd chats last timeの。ok.
-      updateviewedChatsLastTime(dateTime); // これは必要。
+      // updateviewedChatsLastTime();
       // setMyUpcomingMeetupAndChatsTable((previous) => {
       //   return {
       //     ...previous,
@@ -175,16 +173,31 @@ const LoungeContainer = (props) => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const minus = myUpcomingMeetups[props.route.params.meetupId].unreadChatsCount;
-  //   setMyUpcomingMeetupAndChatsTable((previous) => {
-  //     const updating = { ...previous };
-  //     updating[props.route.params.meetupId].unreadChatsCount =
-  //       updating[props.route.params.meetupId].unreadChatsCount - minus;
-  //     return updating;
-  //   });
-  //   setTotalUnreadChatsCount((previous) => previous - minus);
-  // }, []);
+  // 部屋に入った時
+  // setMyUpcomingMeetups, setChatsNotificationCount
+  useEffect(() => {
+    let minus = 0;
+    for (const chatType in myUpcomingMeetups[props.route.params.meetupId].unreadChatsTable) {
+      minus = minus + myUpcomingMeetups[props.route.params.meetupId].unreadChatsTable[chatType];
+      // console.log(myUpcomingMeetups[props.route.params.meetupId].unreadChatsTable[chatType])
+    }
+    console.log(minus);
+    setChatsNotificationCount((previous) => previous - minus);
+    setMyUpcomingMeetups((previous) => {
+      return {
+        ...previous,
+        [props.route.params.meetupId]: {
+          ...previous[props.route.params.meetupId],
+          unreadChatsTable: {
+            general: 0,
+            reply: 0,
+            question: 0,
+            help: 0,
+          },
+        },
+      };
+    });
+  }, []);
 
   return (
     <LoungeContext.Provider

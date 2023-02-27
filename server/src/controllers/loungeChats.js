@@ -102,6 +102,7 @@ export const getUnreadLoungeChats = async (request, response) => {
         // }
       }
     });
+    console.log('querying', chatsTable);
     // もうこれで良くね？？？？
     response.status(200).json({
       chatsTable,

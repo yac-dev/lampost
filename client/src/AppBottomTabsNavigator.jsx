@@ -25,6 +25,7 @@ import PleaseLoginModal from './components/Utils/PleaseLoginModal';
 import SnackBar from './components/Utils/SnackBar';
 import Camera from './components/Camera/Container';
 // import DummyCamera from './components/DummyCamera';
+import Video from './components/Video';
 
 const ref = createNavigationContainerRef();
 const Tab = createBottomTabNavigator();
@@ -162,6 +163,8 @@ const AppStack = (props) => {
   //   });
   // };
 
+  console.log(myUpcomingMeetups);
+
   // upcomingのmeetupをgetしてくる
   const getMyUpcomingMeetupStates = async () => {
     const result = await lampostAPI.post('/meetups/mymeetupstates', { upcomingMeetupIds: auth.data.upcomingMeetups });
@@ -196,15 +199,26 @@ const AppStack = (props) => {
       userId: auth.data._id,
     });
     const { chatsTable } = result.data;
+    let totalUnread = 0;
     setMyUpcomingMeetups((previous) => {
       const updating = { ...previous };
       for (const meetupId in chatsTable) {
         updating[meetupId].unreadChatsTable = chatsTable[meetupId];
-        for (const chatType in chatsTable[meetupId])
-          setChatsNotificationCount((previous) => previous + chatsTable[meetupId][chatType]);
+        // for (const chatType in chatsTable[meetupId]) {
+        // こんな感じで、setStateのなかで別のsetStateをやろうとすると、なんかbugる。よくわからんことになる。
+        //   setChatsNotificationCount((previous) => previous + chatsTable[meetupId][chatType]);
+        // }
       }
-
       return updating;
+    });
+
+    setChatsNotificationCount((previous) => {
+      for (const meetupId in chatsTable) {
+        const chatsTableValueArr = Object.values(chatsTable[meetupId]);
+        totalUnread =
+          totalUnread + chatsTableValueArr.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+      }
+      return previous + totalUnread;
     });
   };
   useEffect(() => {
@@ -429,6 +443,17 @@ const AppStack = (props) => {
               ),
             }}
           />
+          {/* <Tab.Screen
+            name='Video'
+            component={Video}
+            options={{
+              headerShown: false,
+              tabBarLabel: 'Video',
+              tabBarIcon: ({ size, color, focused }) => (
+                <MaterialCommunityIcons name='camera' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+              ),
+            }}
+          /> */}
           <Tab.Screen
             name='LibraryNavigator'
             component={LibraryNavigator}
