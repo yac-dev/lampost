@@ -163,7 +163,7 @@ const AppStack = (props) => {
   //   });
   // };
 
-  console.log(myUpcomingMeetups);
+  // console.log(myUpcomingMeetups);
 
   // upcomingのmeetupをgetしてくる
   const getMyUpcomingMeetupStates = async () => {
@@ -177,7 +177,12 @@ const AppStack = (props) => {
           title: myUpcomingMeetups[meetupId].title,
           state: myUpcomingMeetups[meetupId].state,
           startDateAndTime: myUpcomingMeetups[meetupId].startDateAndTime,
-          unreadChatsTable: {},
+          unreadChatsTable: {
+            general: 0,
+            reply: 0,
+            question: 0,
+            help: 0,
+          },
         };
       }
 

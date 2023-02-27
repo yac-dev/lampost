@@ -19,7 +19,13 @@ const librarySchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Asset',
   },
-  emotions: [String],
+  assetType: [String], //['video', 'photo', 'videoAndPhoto']
+  albums: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Album',
+    },
+  ],
   color: String,
   totalAssets: Number,
   totalMembers: Number,

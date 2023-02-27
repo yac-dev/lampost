@@ -35,7 +35,7 @@ const Container = (props) => {
         return (
           <TouchableOpacity
             key={index}
-            style={{ padding: 10, flexDirection: 'row', alignItems: 'center' }}
+            style={{ paddingTop: 10, paddingBottom: 10, flexDirection: 'row', alignItems: 'center' }}
             onPress={() => {
               appMenuBottomSheetRef.current.close();
               navigation.navigate('Library', { libraryId: library._id });

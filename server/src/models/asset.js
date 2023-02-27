@@ -32,15 +32,6 @@ const assetSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
-  badges: [
-    {
-      badge: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Badge',
-      },
-      totalCounts: Number,
-    },
-  ],
   taggedPeople: [
     {
       type: mongoose.Schema.ObjectId,

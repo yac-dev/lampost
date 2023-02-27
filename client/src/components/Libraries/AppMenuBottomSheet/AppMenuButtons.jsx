@@ -60,7 +60,7 @@ const AppButtons = (props) => {
             >
               <MaterialCommunityIcons name='plus' color={iconColorsTable['lightGreen1']} size={20} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Create library</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Launch library</Text>
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
         </TouchableOpacity>
@@ -85,7 +85,9 @@ const AppButtons = (props) => {
             >
               <MaterialCommunityIcons name='map-search-outline' color={iconColorsTable['lightBlue1']} size={20} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Search library</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>
+              Search for library
+            </Text>
           </View>
           <Foundation name='prohibited' color={iconColorsTable['red1']} size={25} />
         </TouchableOpacity>

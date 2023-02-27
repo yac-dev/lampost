@@ -205,7 +205,7 @@ const Container = (props) => {
         ),
       });
     }
-  }, [addedLibraryBadges]);
+  }, [addedBadges]);
 
   useEffect(() => {
     if (props.route.params?.addedLibraryBadges) {

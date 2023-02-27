@@ -17,9 +17,11 @@ import BadgeLabel from '../Utils/BadgeLabel';
 import FastImage from 'react-native-fast-image';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 import Library from './Library';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
+import MyLibrariesBottomSheet from './MyLibrariesBottomSheet/Container';
 import CreateLibraryBottomSheet from './CreateLibraryBottomSheet/Container';
 import LibraryOverviewBottomSheet from './LibraryOverviewBottomSheet/Container';
 import InfoDetailBottomSheet from './InfoDetailBottomSheet/Container';
@@ -45,6 +47,7 @@ const Container = (props) => {
   const [isConfirmCancelCreatingLibraryModalOpen, setIsConfirmCancelCreatingLibraryModalOpen] = useState(false);
 
   const appMenuBottomSheetRef = useRef(null);
+  const myLibrariesBottomSheetRef = useRef(null);
   const createLibraryBottomSheetRef = useRef(null);
   const libraryOverviewBottomSheetRef = useRef(null);
   const selectedLibraryDetailComponentBottomSheetRef = useRef(null);
@@ -239,6 +242,7 @@ const Container = (props) => {
     <LibrariesContext.Provider
       value={{
         appMenuBottomSheetRef,
+        myLibrariesBottomSheetRef,
         createLibraryBottomSheetRef,
         libraryOverviewBottomSheetRef,
         selectedLibraryDetailComponentBottomSheetRef,
@@ -266,22 +270,37 @@ const Container = (props) => {
 
         {renderLibraries()}
         {auth.isAuthenticated ? (
-          <TouchableOpacity
+          <View
             style={{
               position: 'absolute',
               bottom: 20,
-              backgroundColor: rnDefaultBackgroundColor,
+              backgroundColor: backgroundColorsTable['blue1'],
               borderRadius: 10,
               alignSelf: 'center',
+              padding: 10,
               // elevation: 5,
               // shadowColor: '#000',
               // shadowOffset: { width: 0, height: 0 },
               // shadowOpacity: 0.1,
               // shadowRadius: 5,
+              flexDirection: 'row',
+              alignItems: 'center',
             }}
-            onPress={() => appMenuBottomSheetRef.current.snapToIndex(1)}
           >
-            <View
+            <TouchableOpacity
+              style={{
+                backgroundColor: iconColorsTable['blue1'],
+                padding: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderRadius: 10,
+                marginRight: 10,
+              }}
+              onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
+            >
+              <Ionicons name='ios-apps' size={25} color={'white'} />
+            </TouchableOpacity>
+            <TouchableOpacity
               style={{
                 backgroundColor: iconColorsTable['blue1'],
                 padding: 10,
@@ -289,15 +308,15 @@ const Container = (props) => {
                 alignItems: 'center',
                 borderRadius: 10,
               }}
+              onPress={() => myLibrariesBottomSheetRef.current.snapToIndex(0)}
             >
-              <MaterialIcons name='create-new-folder' size={25} color={'white'} style={{ marginRight: 10 }} />
-              <Text style={{ color: 'white' }}>Menu</Text>
-              <MaterialCommunityIcons name='chevron-down' size={25} color={'white'} />
-            </View>
-          </TouchableOpacity>
+              <Ionicons name='ios-library' size={25} color={'white'} />
+            </TouchableOpacity>
+          </View>
         ) : null}
 
         <AppMenuBottomSheet />
+        <MyLibrariesBottomSheet />
         <CreateLibraryBottomSheet />
         <LibraryOverviewBottomSheet />
 
