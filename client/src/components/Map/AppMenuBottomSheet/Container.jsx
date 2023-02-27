@@ -37,31 +37,6 @@ const AppMenusBottomSheet = (props) => {
     >
       <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
         <AppMenuButtons />
-        {/* {auth.data ? (
-          <>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-              <View
-                style={{
-                  width: 35,
-                  height: 35,
-                  backgroundColor: backgroundColorsTable['green1'],
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: 10,
-                  marginRight: 10,
-                }}
-              >
-                <MaterialCommunityIcons name='run' color={iconColorsTable['green1']} size={20} />
-              </View>
-              <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>My upcoming meetups</Text>
-            </View>
-            <UpcomingMeetups />
-          </>
-        ) : (
-          <View>
-            <Text style={{ color: baseTextColor }}>Please login or signup if you want to launch or join a meetup.</Text>
-          </View>
-        )} */}
       </BottomSheetView>
     </GorhomBottomSheet>
   );

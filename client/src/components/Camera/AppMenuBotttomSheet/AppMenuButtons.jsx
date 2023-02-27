@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import GlobalContext from '../../../GlobalContext';
 import CameraContext from '../CameraContext';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import {
   iconColorsTable,
@@ -20,64 +21,105 @@ const AppMenuButtons = (props) => {
 
   if (auth.data) {
     return (
-      <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 25 }}>
-        <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
-          <View>
-            <AppMenuButton
-              backgroundColor={backgroundColorsTable['red1']}
-              icon={<Ionicons name='camera' size={35} color={iconColorsTable['red1']} />}
-              label='Camera mode'
-              onAppMenuButtonPress={() => {
-                setCameraMode('photo');
-                appMenuBottomSheetRef.current.snapToIndex(0);
+      <View style={{ marginBottom: 10 }}>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+          onPress={() => {
+            setCameraMode('photo');
+            appMenuBottomSheetRef.current.snapToIndex(0);
+          }}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={{
+                width: 35,
+                height: 35,
+                backgroundColor: backgroundColorsTable['red1'],
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 10,
+                marginRight: 10,
               }}
-            />
-            {cameraMode === 'photo' ? (
-              <View
-                style={{
-                  top: 5,
-                  right: 5,
-                  position: 'absolute',
-                }}
-              >
-                <Ionicons name='checkmark-circle' size={20} color='#49CF13' />
-              </View>
-            ) : null}
+            >
+              <Ionicons name='camera' size={20} color={iconColorsTable['red1']} />
+            </View>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Photo mode</Text>
           </View>
-          <View>
-            <AppMenuButton
-              backgroundColor={backgroundColorsTable['blue1']}
-              icon={<Ionicons name='videocam' size={35} color={iconColorsTable['blue1']} />}
-              label='Video mode'
-              onAppMenuButtonPress={() => {
-                setCameraMode('video');
-                appMenuBottomSheetRef.current.snapToIndex(0);
+          {cameraMode === 'photo' ? (
+            <Ionicons name='checkmark-circle' color={iconColorsTable['green1']} size={25} />
+          ) : null}
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+          onPress={() => {
+            setCameraMode('video');
+            appMenuBottomSheetRef.current.snapToIndex(0);
+          }}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={{
+                width: 35,
+                height: 35,
+                backgroundColor: backgroundColorsTable['blue1'],
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 10,
+                marginRight: 10,
               }}
-              isDisabled={true}
-            />
-            {cameraMode === 'video' ? (
-              <View
-                style={{
-                  top: 5,
-                  right: 5,
-                  position: 'absolute',
-                }}
-              >
-                <Ionicons name='checkmark-circle' size={20} color='#49CF13' />
-              </View>
-            ) : null}
+            >
+              <Ionicons name='videocam' size={20} color={iconColorsTable['blue1']} />
+            </View>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Video mode</Text>
           </View>
-          <AppMenuButton
-            backgroundColor={backgroundColorsTable['pink1']}
-            icon={<Ionicons name='radio' size={35} color={iconColorsTable['pink1']} />}
-            label='Start live'
-            onAppMenuButtonPress={() => {
-              setCameraMode('live');
-              appMenuBottomSheetRef.current.snapToIndex(0);
-            }}
-            isDisabled={true}
-          />
-        </ScrollView>
+          {cameraMode === 'video' ? (
+            <Ionicons name='checkmark-circle' color={iconColorsTable['green1']} size={25} />
+          ) : null}
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+          disabled={true}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={{
+                width: 35,
+                height: 35,
+                backgroundColor: backgroundColorsTable['pink1'],
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 10,
+                marginRight: 10,
+              }}
+            >
+              <Ionicons name='radio' size={20} color={iconColorsTable['pink1']} />
+            </View>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Start live</Text>
+          </View>
+          <Foundation name='prohibited' color={iconColorsTable['red1']} size={25} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+          disabled={true}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={{
+                width: 35,
+                height: 35,
+                backgroundColor: backgroundColorsTable['green1'],
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 10,
+                marginRight: 10,
+              }}
+            >
+              <Ionicons name='ios-pricetags' size={20} color={iconColorsTable['green1']} />
+            </View>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Tag people</Text>
+          </View>
+          <MaterialCommunityIcons name='chevron-down' color={baseTextColor} size={25} />
+        </TouchableOpacity>
       </View>
     );
   } else {

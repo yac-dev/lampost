@@ -7,12 +7,14 @@ import { Text, View, TouchableOpacity } from 'react-native';
 import lampostAPI from '../../apis/lampost';
 import { Camera, CameraType } from 'expo-camera';
 import AppMenuBottomSheet from './AppMenuBotttomSheet/Container';
+import TimeMachineBottomSheet from './TimeMachineBottomSheet/Container';
 import {
   appBottomSheetBackgroundColor,
   baseBackgroundColor,
   baseTextColor,
   rnDefaultBackgroundColor,
   iconColorsTable,
+  backgroundColorsTable,
 } from '../../utils/colorsTable';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -22,6 +24,7 @@ import WarningModal from './WarningModal';
 const Container = (props) => {
   const { auth, setAuth, setSnackBar } = useContext(GlobalContext);
   const appMenuBottomSheetRef = useRef(null);
+  const timeMachineBottomSheetRef = useRef(null);
   const cameraRef = useRef(null);
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
   const [cameraMode, setCameraMode] = useState('photo');
@@ -29,6 +32,7 @@ const Container = (props) => {
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [warningMessage, setWarningMessage] = useState('');
   const [hasCameraPermission, setHasCameraPermission] = useState();
+  const [hasMicrophonePermission, setHasMicrophonePermission] = useState();
 
   const loadMe = async () => {
     const jwtToken = await SecureStore.getItemAsync('secure_token');
@@ -124,6 +128,7 @@ const Container = (props) => {
     <CameraContext.Provider
       value={{
         appMenuBottomSheetRef,
+        timeMachineBottomSheetRef,
         cameraMode,
         setCameraMode,
         photoEffect,
@@ -195,33 +200,73 @@ const Container = (props) => {
           </Camera>
         </View>
         {auth.isAuthenticated ? (
-          <TouchableOpacity
+          <View
             style={{
+              backgroundColor: backgroundColorsTable['violet1'],
               position: 'absolute',
               bottom: 20,
-              backgroundColor: rnDefaultBackgroundColor,
               borderRadius: 10,
+              padding: 10,
+              flexDirection: 'row',
+              alignItems: 'center',
               alignSelf: 'center',
             }}
-            onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
           >
-            <View
-              style={{
-                backgroundColor: iconColorsTable['violet1'],
-                padding: 10,
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderRadius: 10,
-              }}
-            >
-              <MaterialCommunityIcons name='camera' size={25} color={'white'} style={{ marginRight: 10 }} />
-              <Text style={{ color: 'white' }}>Menu</Text>
-              <MaterialCommunityIcons name='chevron-down' size={25} color={'white'} />
-            </View>
-          </TouchableOpacity>
-        ) : null}
+            <TouchableOpacity style={{ marginRight: 10 }} onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}>
+              <View
+                style={{
+                  backgroundColor: iconColorsTable['violet1'],
+                  padding: 10,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderRadius: 10,
+                }}
+              >
+                <Ionicons name='ios-apps' size={25} color={'white'} />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={{}} onPress={() => timeMachineBottomSheetRef.current.snapToIndex(0)}>
+              <View
+                style={{
+                  backgroundColor: iconColorsTable['violet1'],
+                  padding: 10,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderRadius: 10,
+                }}
+              >
+                <MaterialCommunityIcons name='history' size={25} color={'white'} />
+              </View>
+            </TouchableOpacity>
+          </View>
+        ) : // <TouchableOpacity
+        //   style={{
+        //     position: 'absolute',
+        //     bottom: 20,
+        //     backgroundColor: rnDefaultBackgroundColor,
+        //     borderRadius: 10,
+        //     alignSelf: 'center',
+        //   }}
+        //   onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
+        // >
+        //   <View
+        //     style={{
+        //       backgroundColor: iconColorsTable['violet1'],
+        //       padding: 10,
+        //       flexDirection: 'row',
+        //       alignItems: 'center',
+        //       borderRadius: 10,
+        //     }}
+        //   >
+        //     <MaterialCommunityIcons name='camera' size={25} color={'white'} style={{ marginRight: 10 }} />
+        //     <Text style={{ color: 'white' }}>Menu</Text>
+        //     <MaterialCommunityIcons name='chevron-down' size={25} color={'white'} />
+        //   </View>
+        // </TouchableOpacity>
+        null}
 
         <AppMenuBottomSheet />
+        <TimeMachineBottomSheet />
         <WarningModal />
       </View>
     </CameraContext.Provider>

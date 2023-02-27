@@ -4,33 +4,19 @@ import CameraContext from '../CameraContext';
 import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { appBottomSheetBackgroundColor, baseTextColor } from '../../../utils/colorsTable';
-import AppMenuButtons from './AppMenuButtons';
-import AddAssetEffect from './AddAssetEffectMenu/Container';
+// import AddAssetEffect from './AddAssetEffectMenu/Container';
 import { Ionicons } from '@expo/vector-icons';
 
 const AppMenuBottomSheet = (props) => {
   const { auth, isIpad } = useContext(GlobalContext);
-  const { appMenuBottomSheetRef, cameraMode } = useContext(CameraContext);
-  const snapPoints = useMemo(() => ['45%', '60%', '80%'], []);
-
-  const renderCameraMode = () => {
-    switch (cameraMode) {
-      case 'photo':
-        return <Ionicons name='camera' size={25} color='white' />;
-      case 'video':
-        return <Ionicons name='videocam' size={25} color='white' />;
-      case 'live':
-        return <Ionicons name='radio' size={35} color='white' />;
-      default:
-        return null;
-    }
-  };
+  const { appMenuBottomSheetRef, cameraMode, timeMachineBottomSheetRef } = useContext(CameraContext);
+  const snapPoints = useMemo(() => ['60%', '80%'], []);
 
   return (
     <GorhomBottomSheet
       index={-1}
       enableOverDrag={true}
-      ref={appMenuBottomSheetRef}
+      ref={timeMachineBottomSheetRef}
       snapPoints={snapPoints}
       backdropComponent={(backdropProps) => (
         <BottomSheetBackdrop {...backdropProps} appearsOnIndex={0} disappearsOnIndex={-1} />
@@ -41,8 +27,11 @@ const AppMenuBottomSheet = (props) => {
       // keyboardBehavior={'interactive'}
       // onClose={() => onSelectedItemBottomSheetClose()}
     >
-      <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
-        <AppMenuButtons />
+      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
+        {/* <AddAssetEffect /> */}
+        <View>
+          <Text style={{ color: 'red' }}>Time machine</Text>
+        </View>
       </BottomSheetView>
     </GorhomBottomSheet>
   );
