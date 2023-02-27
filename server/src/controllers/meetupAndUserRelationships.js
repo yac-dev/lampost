@@ -203,6 +203,7 @@ export const updateViewedChatsLastTime = async (request, response) => {
     const meetupAndUserRelationship = await MeetupAndUserRelationship.findOne({ meetup: meetupId, user: userId });
     meetupAndUserRelationship.viewedChatsLastTime = new Date();
     meetupAndUserRelationship.save();
+    console.log('updated', meetupAndUserRelationship);
 
     response.status(200).json({
       message: 'success',

@@ -138,7 +138,9 @@ const LoungeContainer = (props) => {
 
   // 部屋を出る時
   const updateviewedChatsLastTime = async (dateTime) => {
-    const result = await lampostAPI.patch(`/meetup/${meetup._id}/user/${auth.data_id}/viewedchatslasttime`);
+    const result = await lampostAPI.patch(
+      `/meetupanduserrelationships/meetup/${props.route.params.meetupId}/user/${auth.data._id}/viewedchatslasttime`
+    );
   };
   useEffect(() => {
     return () => {
@@ -146,7 +148,7 @@ const LoungeContainer = (props) => {
       // const dateTime = new Date();
       // console.log('cleaing up');
       // ここでapi requestをする。viewd chats last timeの。ok.
-      // updateviewedChatsLastTime();
+      updateviewedChatsLastTime();
       // setMyUpcomingMeetupAndChatsTable((previous) => {
       //   return {
       //     ...previous,
