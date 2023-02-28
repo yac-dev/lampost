@@ -20,6 +20,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import WarningModal from './WarningModal';
+import { Video } from 'expo-av';
 
 const Container = (props) => {
   const { auth, setAuth, setSnackBar } = useContext(GlobalContext);
@@ -33,6 +34,8 @@ const Container = (props) => {
   const [warningMessage, setWarningMessage] = useState('');
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [hasMicrophonePermission, setHasMicrophonePermission] = useState();
+  const [isRecording, setIsRecording] = useState(false);
+  const [video, setVideo] = useState();
 
   const loadMe = async () => {
     const jwtToken = await SecureStore.getItemAsync('secure_token');
@@ -52,13 +55,15 @@ const Container = (props) => {
 
   const askCameraPermission = async () => {
     const cameraPermission = await Camera.requestCameraPermissionsAsync();
+    const microphonePermission = await Camera.requestMicrophonePermissionsAsync();
     setHasCameraPermission(cameraPermission.status === 'granted');
+    setHasMicrophonePermission(microphonePermission.status === 'granted');
   };
   useEffect(() => {
     askCameraPermission();
   }, []);
 
-  if (hasCameraPermission === undefined) {
+  if (hasCameraPermission === undefined || hasMicrophonePermission === undefined) {
     return (
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
         <Text style={{ color: baseTextColor }}>Accessing your camera...</Text>
@@ -73,6 +78,24 @@ const Container = (props) => {
       </View>
     );
   }
+
+  const recordVideo = () => {
+    setIsRecording(true);
+    const options = {
+      quality: '1080p',
+      maxDuration: 60,
+      mute: false,
+    };
+    cameraRef.current.recordAsync(options).then((recordedVideo) => {
+      setVideo(recordedVideo);
+    });
+    setIsRecording(false);
+  };
+
+  const stopRecording = () => {
+    setIsRecording(false);
+    cameraRef.current.stopRecording();
+  };
 
   // 基本的に、10秒以内の動画は保存しないようにする.
   let takePhoto = async () => {
@@ -123,6 +146,9 @@ const Container = (props) => {
     }
   };
   // incandescent, cloudy, sunny, shadow, fluorescent, auto
+
+  if (video) {
+  }
 
   return (
     <CameraContext.Provider

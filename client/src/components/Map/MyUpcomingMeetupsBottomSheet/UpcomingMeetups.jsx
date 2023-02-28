@@ -294,10 +294,9 @@ const Container = (props) => {
             key={index}
             style={{
               flexDirection: 'column',
-              paddingLeft: 15,
+              // paddingLeft: 15,
               paddingTop: 10,
               paddingBottom: 5,
-              marginBottom: 10,
             }}
           >
             <View

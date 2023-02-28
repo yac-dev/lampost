@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import GlobalContext from '../../GlobalContext';
 import MapContext from './MeetupContext';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Button, Dialog, Portal, Provider, withTheme } from 'react-native-paper';
 import { baseTextColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
 import lampostAPI from '../../apis/lampost';
 
 const ConfirmStartMeetup = (props) => {
-  const { auth, setAuth, setMyUpcomingMeetupAndChatsTable } = useContext(GlobalContext);
+  const { auth, setAuth, setMyUpcomingMeetups } = useContext(GlobalContext);
   const {
     isStartMeetupConfirmationModalOpen,
     setIsStartMeetupConfirmationModalOpen,
@@ -28,24 +28,27 @@ const ConfirmStartMeetup = (props) => {
           <Button textColor='rgb(58, 126, 224)' onPress={() => setIsStartMeetupConfirmationModalOpen(false)}>
             Cancel
           </Button>
+          {/* <TouchableOpacity>
+            <Text style={{ color: 'red' }}>Cancel</Text>
+          </TouchableOpacity> */}
           <Button
             textColor='rgb(58, 126, 224)'
             onPress={async () => {
               const result = await lampostAPI.patch(`/meetups/${startingMeetup}/start`);
               // const {} = result.data;
-              setAuth((previous) => {
-                return {
-                  ...previous,
-                  data: {
-                    ...previous.data,
-                    ongoingMeetup: {
-                      meetup: startingMeetup,
-                      state: true,
-                    },
-                  },
-                };
-              });
-              setMyUpcomingMeetupAndChatsTable((previous) => {
+              // setAuth((previous) => {
+              //   return {
+              //     ...previous,
+              //     data: {
+              //       ...previous.data,
+              //       ongoingMeetup: {
+              //         meetup: startingMeetup,
+              //         state: true,
+              //       },
+              //     },
+              //   };
+              // });
+              setMyUpcomingMeetups((previous) => {
                 return {
                   ...previous,
                   [startingMeetup]: {

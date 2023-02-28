@@ -21,6 +21,8 @@ const ActionButtons = (props) => {
     setSnackBar,
     myUpcomingMeetupAndChatsTable,
     setMyUpcomingMeetupAndChatsTable,
+    myUpcomingMeetups,
+    setMyUpcomingMeetups,
     isIpad,
   } = useContext(GlobalContext);
   const { selectedMeetup, setSelectedMeetup, navigation } = useContext(MapContext);
@@ -42,18 +44,21 @@ const ActionButtons = (props) => {
       };
     });
     // launcherが必要か。
-    setMyUpcomingMeetupAndChatsTable((previous) => {
+    setMyUpcomingMeetups((previous) => {
       return {
         ...previous,
         [selectedMeetup._id]: {
           _id: selectedMeetup._id,
           startDateAndTime: selectedMeetup.startDateAndTime,
           title: selectedMeetup.title,
-          chats: meetupObject.loungeChats,
-          unreadChatsCount: 0,
-          viewedChatsLastTime: new Date(),
           launcher: meetupObject.launcher,
           state: meetupObject.state,
+          unreadChatsTable: {
+            general: 0,
+            reply: 0,
+            question: 0,
+            help: 0,
+          },
         },
       };
     });
@@ -86,7 +91,7 @@ const ActionButtons = (props) => {
         },
       };
     });
-    setMyUpcomingMeetupAndChatsTable((previous) => {
+    setMyUpcomingMeetups((previous) => {
       const updating = { ...previous };
       delete updating[selectedMeetup._id];
       return updating;
@@ -117,7 +122,7 @@ const ActionButtons = (props) => {
     // まず、authの確認。login状態なら、action buttonsをrenderする。
     if (auth.data) {
       // selectedMmeetupをlaunchした人が自分だった場合のmenu
-      if (myUpcomingMeetupAndChatsTable[selectedMeetup._id]?.launcher === auth.data._id) {
+      if (myUpcomingMeetups[selectedMeetup._id]?.launcher === auth.data._id) {
         return (
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             {/* <ActionButton
@@ -136,7 +141,7 @@ const ActionButtons = (props) => {
         );
       } else {
         // それ以外。
-        if (myUpcomingMeetupAndChatsTable[selectedMeetup._id]) {
+        if (myUpcomingMeetups[selectedMeetup._id]) {
           return (
             <View style={{ flexDirection: 'row' }}>
               <ActionButton

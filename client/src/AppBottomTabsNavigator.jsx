@@ -177,6 +177,7 @@ const AppStack = (props) => {
           title: myUpcomingMeetups[meetupId].title,
           state: myUpcomingMeetups[meetupId].state,
           startDateAndTime: myUpcomingMeetups[meetupId].startDateAndTime,
+          launcher: myUpcomingMeetups[meetupId].launcher,
           unreadChatsTable: {
             general: 0,
             reply: 0,
