@@ -67,7 +67,11 @@ const ActivitiesContainer = (props) => {
 
   const renderMeetups = () => {
     if (!userMeetups.length) {
-      return <Text>This user haven't joined any meetups yet.</Text>;
+      return (
+        <Text style={{ color: baseTextColor, textAlign: 'center', paddingTop: 20 }}>
+          You'll see all the meetup this user joined.
+        </Text>
+      );
     } else {
       const list = userMeetups.map((meetup, index) => {
         return (

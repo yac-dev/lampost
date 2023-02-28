@@ -164,32 +164,34 @@ const AppStack = (props) => {
   // };
 
   // console.log(myUpcomingMeetups);
-
+  console.log(myUpcomingMeetups);
   // upcomingのmeetupをgetしてくる
   const getMyUpcomingMeetupStates = async () => {
-    const result = await lampostAPI.post('/meetups/mymeetupstates', { upcomingMeetupIds: auth.data.upcomingMeetups });
-    const { myUpcomingMeetups } = result.data;
-    setMyUpcomingMeetups((previous) => {
-      const updating = { ...previous };
-      for (const meetupId in myUpcomingMeetups) {
-        updating[meetupId] = {
-          _id: myUpcomingMeetups[meetupId]._id,
-          title: myUpcomingMeetups[meetupId].title,
-          state: myUpcomingMeetups[meetupId].state,
-          startDateAndTime: myUpcomingMeetups[meetupId].startDateAndTime,
-          launcher: myUpcomingMeetups[meetupId].launcher,
-          unreadChatsTable: {
-            general: 0,
-            reply: 0,
-            question: 0,
-            help: 0,
-          },
-        };
-      }
+    if (auth.data.upcomingMeetups.length) {
+      const result = await lampostAPI.post('/meetups/mymeetupstates', { upcomingMeetupIds: auth.data.upcomingMeetups });
+      const { myUpcomingMeetups } = result.data;
+      setMyUpcomingMeetups((previous) => {
+        const updating = { ...previous };
+        for (const meetupId in myUpcomingMeetups) {
+          updating[meetupId] = {
+            _id: myUpcomingMeetups[meetupId]._id,
+            title: myUpcomingMeetups[meetupId].title,
+            state: myUpcomingMeetups[meetupId].state,
+            startDateAndTime: myUpcomingMeetups[meetupId].startDateAndTime,
+            launcher: myUpcomingMeetups[meetupId].launcher,
+            unreadChatsTable: {
+              general: 0,
+              reply: 0,
+              question: 0,
+              help: 0,
+            },
+          };
+        }
 
-      return updating;
-    });
-    setIsFetchedMyUpcomingMeetups(true);
+        return updating;
+      });
+      setIsFetchedMyUpcomingMeetups(true);
+    }
   };
   useEffect(() => {
     if (auth.isAuthenticated) {

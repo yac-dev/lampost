@@ -127,11 +127,7 @@ export const createMeetup = async (request, response) => {
     }
 
     const user = await User.findById(launcher);
-    const pushing = {
-      meetup: meetup._id,
-      viewedChatsLastTime: new Date(),
-    };
-    user.upcomingMeetups.push(pushing);
+    user.upcomingMeetups.push(meetup._id);
     user.save();
     // meetup.attendees.push(launcher);
     meetup.state = 'upcoming';
@@ -139,6 +135,8 @@ export const createMeetup = async (request, response) => {
     const meetupAndUserRelationship = await MeetupAndUserRelationship.create({
       meetup: meetup._id,
       user: user._id,
+      launcher: true,
+      viewedChatsLastTime: new Date(),
     });
 
     response.status(201).json({
@@ -153,7 +151,7 @@ export const createMeetup = async (request, response) => {
         // startDateAndTime: meetup.startDateAndTime,
         // badges: populatingBadges,
       },
-      viewedChatsLastTime: new Date(),
+      // viewedChatsLastTime: new Date(),
       launcher,
       // badge: {
       //   icon: badge.icon,
@@ -230,7 +228,7 @@ export const finishMeetup = async (request, response) => {
 
 export const getMeetups = async (request, response) => {
   try {
-    const meetups = await Meetup.find({ state: 'upcoming' })
+    const meetups = await Meetup.find({ $or: [{ state: 'upcoming' }, { state: 'ongoing' }] })
       .select({ _id: 1, place: 1, startDateAndTime: 1, badges: 1 })
       .populate({
         path: 'badges',
@@ -538,7 +536,6 @@ export const getMyMeetupStates = async (request, response) => {
     //   const user = await User.findById(userId);
     //   user.upcomingMeetups.forEach((meetup) => {
     //     // 配列から除く。めんどいから後で。
-    //   })
     // }
 
     response.status(200).json({

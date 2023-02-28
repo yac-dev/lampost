@@ -59,7 +59,6 @@ const ConfirmLaunchMeetupModal = (props) => {
             textColor='rgb(58, 126, 224)'
             onPress={() => {
               setIsLaunchMeetupConfirmationModalOpen(false);
-              appMenuBottomSheetRef.current.snapToIndex(0);
             }}
           >
             Cancel

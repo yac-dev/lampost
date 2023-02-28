@@ -10,6 +10,7 @@ const meetupAndUserRelationshipSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
+  launcher: Boolean,
   viewedChatsLastTime: Date,
   // ここで、、、viewdchatslasttimeを持っておけばいいのかね。。。.
   // launcher: {

@@ -21,8 +21,8 @@ const AppMenuButtons = (props) => {
       <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
         onPress={() => {
-          setIsLaunchMeetupConfirmationModalOpen(true);
           appMenuBottomSheetRef.current.close();
+          setIsLaunchMeetupConfirmationModalOpen(true);
         }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>

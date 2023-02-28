@@ -125,8 +125,16 @@ const reducer = (state, action) => {
 
 const Container = (props) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-  const { auth, setAuth, setLoading, myUpcomingMeetupAndChatsTable, setMyUpcomingMeetupAndChatsTable, setSnackBar } =
-    useContext(GlobalContext);
+  const {
+    auth,
+    setAuth,
+    setLoading,
+    myUpcomingMeetups,
+    setMyUpcomingMeetups,
+    myUpcomingMeetupAndChatsTable,
+    setMyUpcomingMeetupAndChatsTable,
+    setSnackBar,
+  } = useContext(GlobalContext);
   const {
     setIsCancelLaunchMeetupConfirmationModalOpen,
     launchLocation,
@@ -171,26 +179,26 @@ const Container = (props) => {
         ...previous,
         data: {
           ...previous.data,
-          upcomingMeetups: [
-            ...previous.data.upcomingMeetups,
-            { meetup: meetup._id, viewedChatsLastTime: viewedChatsLastTime },
-          ],
+          upcomingMeetups: [meetup._id],
         },
       };
     });
     // ここでも、chat roomにjoinしなきゃいけない。
-    setMyUpcomingMeetupAndChatsTable((previous) => {
+    setMyUpcomingMeetups((previous) => {
       return {
         ...previous,
         [meetup._id]: {
           _id: meetup._id,
           title: meetup.title,
-          chats: [],
-          unreadChatsCount: 0,
           startDateAndTime: meetup.startDateAndTime,
-          viewedChatsLastTime: viewedChatsLastTime,
           launcher: launcher,
           state: meetup.state,
+          unreadChatsTable: {
+            general: 0,
+            reply: 0,
+            question: 0,
+            help: 0,
+          },
         },
       };
     });

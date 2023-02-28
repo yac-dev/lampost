@@ -59,18 +59,33 @@ const Container = (props) => {
   };
   useFocusEffect(
     React.useCallback(() => {
-      loadMe();
+      // loadMe();
+      const meetupList = Object.values(myUpcomingMeetups);
+      if (meetupList.length) {
+        meetupList.forEach((meetup) => {
+          if (meetup.state === 'ongoing') {
+            setCurrentMeetup(meetup._id);
+          }
+        });
+      }
+      // for (const meetup in myUpcomingMeetups) {
+      //   if (myUpcomingMeetups[meetup].state === 'ongoing') {
+      //     return setCurrentMeetup(meetup);
+      //   }
+      //   // console.log(myUpcomingMeetups[meetup]);
+      // }
     }, [])
   );
-
-  useEffect(() => {
-    for (const meetup in myUpcomingMeetups) {
-      if (myUpcomingMeetups[meetup].state === 'ongoing') {
-        return setCurrentMeetup(meetup);
-      }
-      // console.log(myUpcomingMeetups[meetup]);
-    }
-  }, []);
+  console.log(myUpcomingMeetups);
+  console.log(currentMeetup);
+  // useEffect(() => {
+  //   for (const meetup in myUpcomingMeetups) {
+  //     if (myUpcomingMeetups[meetup].state === 'ongoing') {
+  //       return setCurrentMeetup(meetup);
+  //     }
+  //     // console.log(myUpcomingMeetups[meetup]);
+  //   }
+  // }, []);
 
   const askCameraPermission = async () => {
     const cameraPermission = await Camera.requestCameraPermissionsAsync();
@@ -213,6 +228,7 @@ const Container = (props) => {
         setTaggedPeople,
         meetupAttendees,
         setMeetupAttendees,
+        currentMeetup,
       }}
     >
       <View style={{ flex: 1 }}>

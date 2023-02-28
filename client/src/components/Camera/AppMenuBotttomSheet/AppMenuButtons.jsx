@@ -16,7 +16,7 @@ import {
 import AppMenuButton from '../../Utils/AppMenuButton';
 
 const AppMenuButtons = (props) => {
-  const { auth, setSnackBar } = useContext(GlobalContext);
+  const { auth, setSnackBar, setLoading } = useContext(GlobalContext);
   const {
     appMenuBottomSheetRef,
     tagPeopleBottomSheetRef,
@@ -51,11 +51,13 @@ const AppMenuButtons = (props) => {
 
   const getAttendees = async () => {
     if (currentMeetup) {
-      const result = await lampostAPI.get(`meetup/${currentMeetup._id}/users`);
+      setLoading(true);
+      const result = await lampostAPI.get(`meetupanduserrelationships/meetup/${currentMeetup}/users`);
       const { meetupAttendees } = result.data;
       setMeetupAttendees(meetupAttendees);
-      appMenuBottomSheetRef.current.close();
       tagPeopleBottomSheetRef.current.snapToIndex(0);
+      appMenuBottomSheetRef.current.close();
+      setLoading(false);
     } else {
       setSnackBar({
         isVisible: true,
