@@ -8,6 +8,8 @@ import lampostAPI from '../../apis/lampost';
 import { Camera, CameraType } from 'expo-camera';
 import AppMenuBottomSheet from './AppMenuBotttomSheet/Container';
 import TimeMachineBottomSheet from './TimeMachineBottomSheet/Container';
+import CameraModeBottomSheet from './ChangeModeBottomSheet/Container';
+import FlipCameraBottomSheet from './FlipBottomSheet';
 import {
   appBottomSheetBackgroundColor,
   baseBackgroundColor,
@@ -23,9 +25,11 @@ import WarningModal from './WarningModal';
 import { Video } from 'expo-av';
 
 const Container = (props) => {
-  const { auth, setAuth, setSnackBar } = useContext(GlobalContext);
+  const { auth, setAuth, setSnackBar, myUpcomingMeetups } = useContext(GlobalContext);
   const appMenuBottomSheetRef = useRef(null);
   const timeMachineBottomSheetRef = useRef(null);
+  const cameraModeBottomSheetRef = useRef(null);
+  const flipBottomSheetRef = useRef(null);
   const cameraRef = useRef(null);
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
   const [cameraMode, setCameraMode] = useState('photo');
@@ -36,6 +40,7 @@ const Container = (props) => {
   const [hasMicrophonePermission, setHasMicrophonePermission] = useState();
   const [isRecording, setIsRecording] = useState(false);
   const [video, setVideo] = useState();
+  const [havingMeetup, setHavingMeetup] = useState(false);
 
   const loadMe = async () => {
     const jwtToken = await SecureStore.getItemAsync('secure_token');
@@ -52,6 +57,15 @@ const Container = (props) => {
       loadMe();
     }, [])
   );
+
+  useEffect(() => {
+    for (const meetup in myUpcomingMeetups) {
+      if (myUpcomingMeetups[meetup].state === 'ongoing') {
+        return setHavingMeetup(true);
+      }
+      // console.log(myUpcomingMeetups[meetup]);
+    }
+  }, []);
 
   const askCameraPermission = async () => {
     const cameraPermission = await Camera.requestCameraPermissionsAsync();
@@ -98,6 +112,41 @@ const Container = (props) => {
   };
 
   // 基本的に、10秒以内の動画は保存しないようにする.
+
+  const renderOngoingMeetup = () => {
+    // const myMeetupsList = Object.values(myUpcomingMeetups);
+    if (!Object.values(myUpcomingMeetups).length) {
+      return (
+        <View style={{ position: 'absolute', top: 80 }}>
+          <Text style={{ color: 'red' }}>You are not attending.</Text>
+        </View>
+      );
+    } else {
+      for (const meetup in myUpcomingMeetups) {
+        if (myUpcomingMeetups[meetup].state === 'ongoing') {
+          return (
+            <View style={{ position: 'absolute', top: 80 }}>
+              <Text style={{ color: 'red' }}>Now having {meetup.title}</Text>
+            </View>
+          );
+        }
+        return (
+          <View style={{ position: 'absolute', top: 80 }}>
+            <Text style={{ color: 'red' }}>You are not in the meetup</Text>
+          </View>
+        );
+      }
+    }
+  };
+
+  const renderHaving = () => {
+    return (
+      <View style={{ position: 'absolute', top: 80 }}>
+        {havingMeetup ? <Text style={{ color: 'red' }}>Having</Text> : <Text style={{ color: 'red' }}>Not having</Text>}
+      </View>
+    );
+  };
+
   let takePhoto = async () => {
     if (!auth.data) {
       setIsWarningModalOpen(true);
@@ -155,8 +204,13 @@ const Container = (props) => {
       value={{
         appMenuBottomSheetRef,
         timeMachineBottomSheetRef,
+        cameraModeBottomSheetRef,
+        flipBottomSheetRef,
         cameraMode,
         setCameraMode,
+        cameraType,
+        setCameraType,
+        CameraType,
         photoEffect,
         setPhotoEffect,
         isWarningModalOpen,
@@ -174,14 +228,6 @@ const Container = (props) => {
             type={cameraType}
             whiteBalance={photoEffect}
           >
-            {/* <StatusBar hidden={true} style='auto' /> */}
-            {/* <IconButton
-          icon='close'
-          iconColor='white'
-          containerColor='rgb(74, 74, 74)'
-          style={{ position: 'absolute', top: 35, left: 10 }}
-          onPress={() => props.navigation.navigate('Map')}
-        /> */}
             {cameraMode === 'video' ? (
               <View
                 style={{
@@ -196,33 +242,6 @@ const Container = (props) => {
                 <Text style={{ color: baseTextColor, fontSize: 15, fontWeight: 'bold' }}>3:00</Text>
               </View>
             ) : null}
-            <View style={{ flexDirection: 'row', position: 'absolute', bottom: 120 }}>
-              <TouchableOpacity
-                style={{
-                  padding: 10,
-                  borderRadius: 10,
-                  marginRight: 10,
-                  backgroundColor: appBottomSheetBackgroundColor,
-                }}
-                onPress={() => takePhoto()}
-              >
-                <MaterialCommunityIcons name='camera-iris' size={35} color='white' />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  padding: 10,
-                  borderRadius: 10,
-                  backgroundColor: appBottomSheetBackgroundColor,
-                }}
-                onPress={() => {
-                  setCameraType((currentCameraType) =>
-                    currentCameraType === CameraType.back ? CameraType.front : CameraType.back
-                  );
-                }}
-              >
-                <Ionicons name='ios-camera-reverse' size={35} color='white' />
-              </TouchableOpacity>
-            </View>
           </Camera>
         </View>
         {auth.isAuthenticated ? (
@@ -251,7 +270,7 @@ const Container = (props) => {
                 <Ionicons name='ios-apps' size={25} color={'white'} />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={{}} onPress={() => timeMachineBottomSheetRef.current.snapToIndex(0)}>
+            <TouchableOpacity style={{}} onPress={() => console.log('taking')}>
               <View
                 style={{
                   backgroundColor: iconColorsTable['violet1'],
@@ -261,38 +280,16 @@ const Container = (props) => {
                   borderRadius: 10,
                 }}
               >
-                <MaterialCommunityIcons name='history' size={25} color={'white'} />
+                <MaterialCommunityIcons name='camera-iris' size={25} color='white' />
               </View>
             </TouchableOpacity>
           </View>
-        ) : // <TouchableOpacity
-        //   style={{
-        //     position: 'absolute',
-        //     bottom: 20,
-        //     backgroundColor: rnDefaultBackgroundColor,
-        //     borderRadius: 10,
-        //     alignSelf: 'center',
-        //   }}
-        //   onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
-        // >
-        //   <View
-        //     style={{
-        //       backgroundColor: iconColorsTable['violet1'],
-        //       padding: 10,
-        //       flexDirection: 'row',
-        //       alignItems: 'center',
-        //       borderRadius: 10,
-        //     }}
-        //   >
-        //     <MaterialCommunityIcons name='camera' size={25} color={'white'} style={{ marginRight: 10 }} />
-        //     <Text style={{ color: 'white' }}>Menu</Text>
-        //     <MaterialCommunityIcons name='chevron-down' size={25} color={'white'} />
-        //   </View>
-        // </TouchableOpacity>
-        null}
-
+        ) : null}
+        {renderHaving()}
         <AppMenuBottomSheet />
         <TimeMachineBottomSheet />
+        <CameraModeBottomSheet />
+        <FlipCameraBottomSheet />
         <WarningModal />
       </View>
     </CameraContext.Provider>

@@ -17,7 +17,52 @@ import AppMenuButton from '../../Utils/AppMenuButton';
 
 const AppMenuButtons = (props) => {
   const { auth } = useContext(GlobalContext);
-  const { appMenuBottomSheetRef, setCameraMode, cameraMode } = useContext(CameraContext);
+  const {
+    appMenuBottomSheetRef,
+    setCameraMode,
+    cameraMode,
+    cameraType,
+    CameraType,
+    cameraModeBottomSheetRef,
+    timeMachineBottomSheetRef,
+    flipBottomSheetRef,
+  } = useContext(CameraContext);
+
+  const renderCameraMode = () => {
+    if (cameraMode === 'photo') {
+      return (
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={{ color: baseTextColor }}>Photo</Text>
+          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+        </View>
+      );
+    } else if (cameraMode === 'video') {
+      return (
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={{ color: baseTextColor }}>Video</Text>
+          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+        </View>
+      );
+    }
+  };
+  // cameraType
+  const renderFlipType = () => {
+    if (CameraType.back) {
+      return (
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={{ color: baseTextColor }}>Normal</Text>
+          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+        </View>
+      );
+    } else if (CameraType.front) {
+      return (
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={{ color: baseTextColor }}>Selfie</Text>
+          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+        </View>
+      );
+    }
+  };
 
   if (auth.data) {
     return (
@@ -25,8 +70,8 @@ const AppMenuButtons = (props) => {
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
-            setCameraMode('photo');
-            appMenuBottomSheetRef.current.snapToIndex(0);
+            cameraModeBottomSheetRef.current.snapToIndex(0);
+            appMenuBottomSheetRef.current.close();
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -34,26 +79,24 @@ const AppMenuButtons = (props) => {
               style={{
                 width: 35,
                 height: 35,
-                backgroundColor: backgroundColorsTable['red1'],
+                backgroundColor: backgroundColorsTable['yellow1'],
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 10,
                 marginRight: 10,
               }}
             >
-              <Ionicons name='camera' size={20} color={iconColorsTable['red1']} />
+              <Ionicons name='videocam' size={20} color={iconColorsTable['yellow1']} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Photo mode</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Camera mode</Text>
           </View>
-          {cameraMode === 'photo' ? (
-            <Ionicons name='checkmark-circle' color={iconColorsTable['green1']} size={25} />
-          ) : null}
+          {renderCameraMode()}
         </TouchableOpacity>
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
-            setCameraMode('video');
-            appMenuBottomSheetRef.current.snapToIndex(0);
+            setCameraMode('photo');
+            flipBottomSheetRef.current.snapToIndex(0);
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -61,42 +104,18 @@ const AppMenuButtons = (props) => {
               style={{
                 width: 35,
                 height: 35,
-                backgroundColor: backgroundColorsTable['blue1'],
+                backgroundColor: backgroundColorsTable['grey1'],
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 10,
                 marginRight: 10,
               }}
             >
-              <Ionicons name='videocam' size={20} color={iconColorsTable['blue1']} />
+              <MaterialCommunityIcons name='camera-flip' size={20} color={iconColorsTable['grey1']} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Video mode</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Flip</Text>
           </View>
-          {cameraMode === 'video' ? (
-            <Ionicons name='checkmark-circle' color={iconColorsTable['green1']} size={25} />
-          ) : null}
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
-          disabled={true}
-        >
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View
-              style={{
-                width: 35,
-                height: 35,
-                backgroundColor: backgroundColorsTable['pink1'],
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 10,
-                marginRight: 10,
-              }}
-            >
-              <Ionicons name='radio' size={20} color={iconColorsTable['pink1']} />
-            </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Start live</Text>
-          </View>
-          <Foundation name='prohibited' color={iconColorsTable['red1']} size={25} />
+          {renderFlipType()}
         </TouchableOpacity>
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
@@ -118,7 +137,32 @@ const AppMenuButtons = (props) => {
             </View>
             <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Tag people</Text>
           </View>
-          <MaterialCommunityIcons name='chevron-down' color={baseTextColor} size={25} />
+          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+          onPress={() => {
+            timeMachineBottomSheetRef.current.snapToIndex(0);
+            appMenuBottomSheetRef.current.close();
+          }}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={{
+                width: 35,
+                height: 35,
+                backgroundColor: backgroundColorsTable['blue1'],
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 10,
+                marginRight: 10,
+              }}
+            >
+              <MaterialCommunityIcons name='history' size={20} color={iconColorsTable['blue1']} />
+            </View>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Time machine</Text>
+          </View>
+          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
         </TouchableOpacity>
       </View>
     );
