@@ -10,6 +10,7 @@ import AppMenuBottomSheet from './AppMenuBotttomSheet/Container';
 import TimeMachineBottomSheet from './TimeMachineBottomSheet/Container';
 import CameraModeBottomSheet from './ChangeModeBottomSheet/Container';
 import FlipCameraBottomSheet from './FlipBottomSheet';
+import TagPeopleBottomSheet from './TagPeopleBottomSheet/Container';
 import {
   appBottomSheetBackgroundColor,
   baseBackgroundColor,
@@ -30,6 +31,7 @@ const Container = (props) => {
   const timeMachineBottomSheetRef = useRef(null);
   const cameraModeBottomSheetRef = useRef(null);
   const flipBottomSheetRef = useRef(null);
+  const tagPeopleBottomSheetRef = useRef(null);
   const cameraRef = useRef(null);
   const [cameraType, setCameraType] = useState(CameraType.back);
   const [cameraMode, setCameraMode] = useState('photo');
@@ -41,6 +43,8 @@ const Container = (props) => {
   const [isRecording, setIsRecording] = useState(false);
   const [video, setVideo] = useState();
   const [havingMeetup, setHavingMeetup] = useState(false);
+  const [currentMeetup, setCurrentMeetup] = useState(null);
+  const [taggedPeople, setTaggedPeople] = useState([]);
 
   const loadMe = async () => {
     const jwtToken = await SecureStore.getItemAsync('secure_token');
@@ -61,7 +65,7 @@ const Container = (props) => {
   useEffect(() => {
     for (const meetup in myUpcomingMeetups) {
       if (myUpcomingMeetups[meetup].state === 'ongoing') {
-        return setHavingMeetup(true);
+        return setCurrentMeetup(meetup);
       }
       // console.log(myUpcomingMeetups[meetup]);
     }
@@ -93,6 +97,22 @@ const Container = (props) => {
     );
   }
 
+  const isCameraButtonReady = () => {
+    if (currentMeetup) {
+      return (
+        <View style={{ position: 'absolute', right: -7, top: -7 }}>
+          <Text>👍</Text>
+        </View>
+      );
+    } else {
+      return (
+        <View style={{ position: 'absolute', right: -5, top: -5 }}>
+          <Text>🚫</Text>
+        </View>
+      );
+    }
+  };
+
   const recordVideo = () => {
     setIsRecording(true);
     const options = {
@@ -111,42 +131,7 @@ const Container = (props) => {
     cameraRef.current.stopRecording();
   };
 
-  // 基本的に、10秒以内の動画は保存しないようにする.
-
-  const renderOngoingMeetup = () => {
-    // const myMeetupsList = Object.values(myUpcomingMeetups);
-    if (!Object.values(myUpcomingMeetups).length) {
-      return (
-        <View style={{ position: 'absolute', top: 80 }}>
-          <Text style={{ color: 'red' }}>You are not attending.</Text>
-        </View>
-      );
-    } else {
-      for (const meetup in myUpcomingMeetups) {
-        if (myUpcomingMeetups[meetup].state === 'ongoing') {
-          return (
-            <View style={{ position: 'absolute', top: 80 }}>
-              <Text style={{ color: 'red' }}>Now having {meetup.title}</Text>
-            </View>
-          );
-        }
-        return (
-          <View style={{ position: 'absolute', top: 80 }}>
-            <Text style={{ color: 'red' }}>You are not in the meetup</Text>
-          </View>
-        );
-      }
-    }
-  };
-
-  const renderHaving = () => {
-    return (
-      <View style={{ position: 'absolute', top: 80 }}>
-        {havingMeetup ? <Text style={{ color: 'red' }}>Having</Text> : <Text style={{ color: 'red' }}>Not having</Text>}
-      </View>
-    );
-  };
-
+  // 基本的に、10秒以内の動画は保存しないようにする
   let takePhoto = async () => {
     if (!auth.data) {
       setIsWarningModalOpen(true);
@@ -206,6 +191,7 @@ const Container = (props) => {
         timeMachineBottomSheetRef,
         cameraModeBottomSheetRef,
         flipBottomSheetRef,
+        tagPeopleBottomSheetRef,
         cameraMode,
         setCameraMode,
         cameraType,
@@ -217,6 +203,8 @@ const Container = (props) => {
         setIsWarningModalOpen,
         warningMessage,
         setWarningMessage,
+        taggedPeople,
+        setTaggedPeople,
       }}
     >
       <View style={{ flex: 1 }}>
@@ -270,7 +258,7 @@ const Container = (props) => {
                 <Ionicons name='ios-apps' size={25} color={'white'} />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={{}} onPress={() => console.log('taking')}>
+            <TouchableOpacity style={{}} onPress={() => console.log('taking')} disabled={currentMeetup ? false : true}>
               <View
                 style={{
                   backgroundColor: iconColorsTable['violet1'],
@@ -282,14 +270,15 @@ const Container = (props) => {
               >
                 <MaterialCommunityIcons name='camera-iris' size={25} color='white' />
               </View>
+              {isCameraButtonReady()}
             </TouchableOpacity>
           </View>
         ) : null}
-        {renderHaving()}
         <AppMenuBottomSheet />
         <TimeMachineBottomSheet />
         <CameraModeBottomSheet />
         <FlipCameraBottomSheet />
+        <TagPeopleBottomSheet />
         <WarningModal />
       </View>
     </CameraContext.Provider>

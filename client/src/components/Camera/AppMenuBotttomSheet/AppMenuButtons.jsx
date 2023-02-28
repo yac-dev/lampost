@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import GlobalContext from '../../../GlobalContext';
 import CameraContext from '../CameraContext';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-
+import lampostAPI from '../../../apis/lampost';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
@@ -19,6 +19,7 @@ const AppMenuButtons = (props) => {
   const { auth } = useContext(GlobalContext);
   const {
     appMenuBottomSheetRef,
+    tagPeopleBottomSheetRef,
     setCameraMode,
     cameraMode,
     cameraType,
@@ -45,22 +46,19 @@ const AppMenuButtons = (props) => {
       );
     }
   };
-  // cameraType
-  const renderFlipType = () => {
-    if (CameraType.back) {
-      return (
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{ color: baseTextColor }}>Normal</Text>
-          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
-        </View>
-      );
-    } else if (CameraType.front) {
-      return (
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{ color: baseTextColor }}>Selfie</Text>
-          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
-        </View>
-      );
+
+  const getAttendees = async () => {
+    if (currentMeetup) {
+      const result = await lampostAPI.get(`/m`);
+      const { meetupAttendees } = result.data;
+      setTaggedPeople(meetupAttendees);
+    } else {
+      setSnackBar({
+        isVisible: true,
+        barType: 'error',
+        message: 'This is only available when you are having a meetup.',
+        duration: 5000,
+      });
     }
   };
 
@@ -119,7 +117,10 @@ const AppMenuButtons = (props) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
-          disabled={true}
+          onPress={() => {
+            appMenuBottomSheetRef.current.close();
+            tagPeopleBottomSheetRef.current.snapToIndex(0);
+          }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View
