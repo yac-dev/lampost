@@ -31,7 +31,7 @@ const Container = (props) => {
   const cameraModeBottomSheetRef = useRef(null);
   const flipBottomSheetRef = useRef(null);
   const cameraRef = useRef(null);
-  const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
+  const [cameraType, setCameraType] = useState(CameraType.back);
   const [cameraMode, setCameraMode] = useState('photo');
   const [photoEffect, setPhotoEffect] = useState('auto');
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);

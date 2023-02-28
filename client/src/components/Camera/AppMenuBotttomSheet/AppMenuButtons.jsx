@@ -95,8 +95,8 @@ const AppMenuButtons = (props) => {
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
-            setCameraMode('photo');
             flipBottomSheetRef.current.snapToIndex(0);
+            appMenuBottomSheetRef.current.close();
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -115,7 +115,7 @@ const AppMenuButtons = (props) => {
             </View>
             <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Flip</Text>
           </View>
-          {renderFlipType()}
+          <MaterialCommunityIcons name='chevron-right' size={25} color={iconColorsTable['grey1']} />
         </TouchableOpacity>
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
@@ -142,9 +142,10 @@ const AppMenuButtons = (props) => {
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
-            timeMachineBottomSheetRef.current.snapToIndex(0);
-            appMenuBottomSheetRef.current.close();
+            // timeMachineBottomSheetRef.current.snapToIndex(0);
+            // appMenuBottomSheetRef.current.close();
           }}
+          disabled={true}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View

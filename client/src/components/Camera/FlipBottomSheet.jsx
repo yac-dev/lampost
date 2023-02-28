@@ -47,9 +47,8 @@ const FlipBottomSheet = (props) => {
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
-            setCameraType(CameraType.front);
+            setCameraType(CameraType.back);
             flipBottomSheetRef.current.close();
-            appMenuBottomSheetRef.current.snapToIndex(0);
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -57,27 +56,26 @@ const FlipBottomSheet = (props) => {
               style={{
                 width: 35,
                 height: 35,
-                backgroundColor: backgroundColorsTable['grey1'],
+                backgroundColor: backgroundColorsTable['red1'],
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 10,
                 marginRight: 10,
               }}
             >
-              <MaterialIcons name='camera' size={20} color={iconColorsTable['grey1']} />
+              <MaterialIcons name='flip-to-front' size={20} color={iconColorsTable['red1']} />
             </View>
             <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Normal</Text>
           </View>
-          {cameraType === CameraType.front ? (
-            <MaterialIcons name='flip-to-front' color={iconColorsTable['green1']} size={25} />
+          {cameraType === CameraType.back ? (
+            <Ionicons name='checkmark-circle' color={iconColorsTable['green1']} size={25} />
           ) : null}
         </TouchableOpacity>
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
-            setCameraType(CameraType.back);
+            setCameraType(CameraType.front);
             flipBottomSheetRef.current.close();
-            appMenuBottomSheetRef.current.snapToIndex(0);
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -96,8 +94,8 @@ const FlipBottomSheet = (props) => {
             </View>
             <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Selfie</Text>
           </View>
-          {cameraType === CameraType.back ? (
-            <MaterialIcons name='flip-to-back' color={iconColorsTable['green1']} size={25} />
+          {cameraType === CameraType.front ? (
+            <Ionicons name='checkmark-circle' color={iconColorsTable['green1']} size={25} />
           ) : null}
         </TouchableOpacity>
       </BottomSheetView>
