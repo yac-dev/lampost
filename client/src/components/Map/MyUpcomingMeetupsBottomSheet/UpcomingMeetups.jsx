@@ -177,61 +177,6 @@ const Container = (props) => {
     }
   };
 
-  // const renderUnreadChatsCount = (meetup) => {
-  //   const meetupUnreadChatsArr = Object.keys(meetup.unreadChatsTable);
-  //   if (meetupUnreadChatsArr.length) {
-  //     return (
-  //       <View style={{ marginRight: 5 }}>
-  //         <TouchableOpacity
-  //           style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}
-  //           onPress={() => {
-  //             appMenuBottomSheetRef.current.close();
-  //             navigation.navigate('Lounge', { meetupId: meetupAndChatsTable._id });
-  //           }}
-  //         >
-  //           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-  //             <Ionicons size={25} name='ios-chatbubbles' color={'white'} style={{ marginRight: 5 }} />
-  //             <Text style={{ color: 'white' }}>Lounge</Text>
-  //           </View>
-  //           <View
-  //             style={{
-  //               position: 'absolute',
-  //               top: -10,
-  //               right: -7,
-  //               color: 'white',
-  //               backgroundColor: iconColorsTable['blue1'],
-  //               width: 20,
-  //               height: 20,
-  //               alignItems: 'center',
-  //               justifyContent: 'center',
-  //               borderRadius: 20 / 2,
-  //             }}
-  //           >
-  //             <Text style={{ color: 'white' }}>{meetupAndChatsTable.unreadChatsCount}</Text>
-  //           </View>
-  //         </TouchableOpacity>
-  //       </View>
-  //     );
-  //   } else {
-  //     return (
-  //       <View style={{ marginRight: 5 }}>
-  //         <TouchableOpacity
-  //           style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 10 }}
-  //           onPress={() => {
-  //             appMenuBottomSheetRef.current.close();
-  //             navigation.navigate('Lounge', { meetupId: meetupAndChatsTable._id });
-  //           }}
-  //         >
-  //           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-  //             <Ionicons size={25} name='ios-chatbubbles' color={'white'} style={{ marginRight: 5 }} />
-  //             <Text style={{ color: 'white' }}>Lounge</Text>
-  //           </View>
-  //         </TouchableOpacity>
-  //       </View>
-  //     );
-  //   }
-  // };
-
   const renderUnreadChats = (meetupUnreadChatsTable) => {
     const unreadChatsList = Object.keys(meetupUnreadChatsTable);
     if (unreadChatsList.length) {

@@ -45,6 +45,7 @@ const Container = (props) => {
   const [havingMeetup, setHavingMeetup] = useState(false);
   const [currentMeetup, setCurrentMeetup] = useState(null);
   const [taggedPeople, setTaggedPeople] = useState([]);
+  const [meetupAttendees, setMeetupAttendees] = useState([]);
 
   const loadMe = async () => {
     const jwtToken = await SecureStore.getItemAsync('secure_token');
@@ -133,51 +134,56 @@ const Container = (props) => {
 
   // 基本的に、10秒以内の動画は保存しないようにする
   let takePhoto = async () => {
-    if (!auth.data) {
-      setIsWarningModalOpen(true);
-      setWarningMessage('Please signup or login at first.');
-    } else {
-      // ここでいちなりapi requestをするんだよ。
-      if (auth.data.ongoingMeetup.state) {
-        setSnackBar({
-          isVisible: true,
-          message: 'Nice shot!',
-          barType: 'success',
-          duration: 1500,
-        });
-        let options = {
-          quality: 1,
-          base64: true,
-          exif: false,
-        };
+    // if (!auth.data) {
+    //   setIsWarningModalOpen(true);
+    //   setWarningMessage('Please signup or login at first.');
+    // } else {
+    //   if (auth.data.ongoingMeetup.state) {
+    // setSnackBar({
+    //   isVisible: true,
+    //   message: 'Nice shot!',
+    //   barType: 'success',
+    //   duration: 1500,
+    // });
+    let options = {
+      quality: 1,
+      base64: true,
+      exif: false,
+    };
 
-        let newPhoto = await cameraRef.current.takePictureAsync(options);
-        const formData = new FormData();
-        // photo fieldよりも後にmeetupIdをappendするとダメなんだよな。。。何でだろ。。。
-        formData.append('meetupId', auth.data.ongoingMeetup.meetup);
-        formData.append('userId', auth.data._id);
-        formData.append('asset', {
-          name: newPhoto.uri.split('/').pop(),
-          uri: newPhoto.uri,
-          type: 'image/jpg',
-        });
-        // userIdを使ってまず、userのmeetup中かを調べる。
-        try {
-          const result = await lampostAPI.post(`/assets/photos`, formData, {
-            headers: { 'Content-type': 'multipart/form-data' },
-          });
-          console.log('Youu are now in the meetup');
-        } catch (error) {
-          console.log(error);
-          console.log(error.response.data);
-          // まあとりあえず、ここでerror catchできている。
-          // modalかなんかでerrorの内容を表示してあげればいい。
-        }
-      } else {
-        setIsWarningModalOpen(true);
-        setWarningMessage('Camera is only available during the meetup.');
-      }
+    let newPhoto = await cameraRef.current.takePictureAsync(options);
+    const formData = new FormData();
+    // photo fieldよりも後にmeetupIdをappendするとダメなんだよな。。。何でだろ。。。
+    formData.append('meetupId', currentMeetup);
+    formData.append('userId', auth.data._id);
+    formData.append('type', cameraMode); // photo
+    formData.append('asset', {
+      name: newPhoto.uri.split('/').pop(),
+      uri: newPhoto.uri,
+      type: 'image/jpg',
+    });
+    // userIdを使ってまず、userのmeetup中かを調べる。
+    try {
+      const result = await lampostAPI.post(`/assets/photos`, formData, {
+        headers: { 'Content-type': 'multipart/form-data' },
+      });
+      setSnackBar({
+        isVisible: true,
+        message: 'Nice shot!',
+        barType: 'success',
+        duration: 1500,
+      });
+    } catch (error) {
+      console.log(error);
+      console.log(error.response.data);
+      // まあとりあえず、ここでerror catchできている。
+      // modalかなんかでerrorの内容を表示してあげればいい。
     }
+    // } else {
+    //   setIsWarningModalOpen(true);
+    //   setWarningMessage('Camera is only available during the meetup.');
+    // }
+    // }
   };
   // incandescent, cloudy, sunny, shadow, fluorescent, auto
 
@@ -205,6 +211,8 @@ const Container = (props) => {
         setWarningMessage,
         taggedPeople,
         setTaggedPeople,
+        meetupAttendees,
+        setMeetupAttendees,
       }}
     >
       <View style={{ flex: 1 }}>
@@ -258,7 +266,7 @@ const Container = (props) => {
                 <Ionicons name='ios-apps' size={25} color={'white'} />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={{}} onPress={() => console.log('taking')} disabled={currentMeetup ? false : true}>
+            <TouchableOpacity style={{}} onPress={() => takePhoto()} disabled={currentMeetup ? false : true}>
               <View
                 style={{
                   backgroundColor: iconColorsTable['violet1'],

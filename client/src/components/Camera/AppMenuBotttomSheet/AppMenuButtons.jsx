@@ -16,7 +16,7 @@ import {
 import AppMenuButton from '../../Utils/AppMenuButton';
 
 const AppMenuButtons = (props) => {
-  const { auth } = useContext(GlobalContext);
+  const { auth, setSnackBar } = useContext(GlobalContext);
   const {
     appMenuBottomSheetRef,
     tagPeopleBottomSheetRef,
@@ -27,6 +27,8 @@ const AppMenuButtons = (props) => {
     cameraModeBottomSheetRef,
     timeMachineBottomSheetRef,
     flipBottomSheetRef,
+    setMeetupAttendees,
+    currentMeetup,
   } = useContext(CameraContext);
 
   const renderCameraMode = () => {
@@ -49,9 +51,11 @@ const AppMenuButtons = (props) => {
 
   const getAttendees = async () => {
     if (currentMeetup) {
-      const result = await lampostAPI.get(`/m`);
+      const result = await lampostAPI.get(`meetup/${currentMeetup._id}/users`);
       const { meetupAttendees } = result.data;
-      setTaggedPeople(meetupAttendees);
+      setMeetupAttendees(meetupAttendees);
+      appMenuBottomSheetRef.current.close();
+      tagPeopleBottomSheetRef.current.snapToIndex(0);
     } else {
       setSnackBar({
         isVisible: true,
@@ -118,8 +122,7 @@ const AppMenuButtons = (props) => {
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
-            appMenuBottomSheetRef.current.close();
-            tagPeopleBottomSheetRef.current.snapToIndex(0);
+            getAttendees();
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -146,7 +149,7 @@ const AppMenuButtons = (props) => {
             // timeMachineBottomSheetRef.current.snapToIndex(0);
             // appMenuBottomSheetRef.current.close();
           }}
-          disabled={true}
+          // disabled={true}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View

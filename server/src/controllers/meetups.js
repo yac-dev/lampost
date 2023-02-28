@@ -4,7 +4,6 @@ import LoungeChat from '../models/loungeChat';
 import Badge from '../models/badge';
 import Comment from '../models/comment';
 import schedule from 'node-schedule';
-import PastMeetupAndUserRelationship from '../models/pastMeetupAndUserRelationship';
 import MeetupAndUserRelationship from '../models/meetupAndUserRelationship';
 
 // この二つも、さらに一つのfunctionにまとめるべき。後で。

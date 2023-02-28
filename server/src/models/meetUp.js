@@ -38,15 +38,15 @@ const meetupSchema = new mongoose.Schema({
   totalComments: Number,
   totalAssets: Number,
   totalImpressions: Number,
-  attendees: {
-    type: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: 'User',
-      },
-    ],
-    // validate: [attendeesLimit, 'OOPS! This meetup is full now.'],
-  },
+  // attendees: {
+  //   type: [
+  //     {
+  //       type: mongoose.Schema.ObjectId,
+  //       ref: 'User',
+  //     },
+  //   ],
+  //   // validate: [attendeesLimit, 'OOPS! This meetup is full now.'],
+  // },
   launcher: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
@@ -59,13 +59,6 @@ const meetupSchema = new mongoose.Schema({
     type: Date,
   },
   representation: String,
-  // assets: [
-  //   {
-  //     type: mongoose.Schema.ObjectId,
-  //     ref: 'Asset',
-  //   },
-  // ],
-  // impression側だけで、meetupのreferenceを持っていれば、それでいい。
 });
 
 // function genresLimit(val) {
