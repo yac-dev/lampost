@@ -44,8 +44,8 @@ const Container = (props) => {
   const [video, setVideo] = useState();
   const [havingMeetup, setHavingMeetup] = useState(false);
   const [currentMeetup, setCurrentMeetup] = useState(null);
-  const [taggedPeople, setTaggedPeople] = useState([]);
-  const [meetupAttendees, setMeetupAttendees] = useState([]);
+  const [taggedPeople, setTaggedPeople] = useState({});
+  const [meetupAttendees, setMeetupAttendees] = useState({});
 
   const loadMe = async () => {
     const jwtToken = await SecureStore.getItemAsync('secure_token');
@@ -76,8 +76,6 @@ const Container = (props) => {
       // }
     }, [])
   );
-  console.log(myUpcomingMeetups);
-  console.log(currentMeetup);
   // useEffect(() => {
   //   for (const meetup in myUpcomingMeetups) {
   //     if (myUpcomingMeetups[meetup].state === 'ongoing') {

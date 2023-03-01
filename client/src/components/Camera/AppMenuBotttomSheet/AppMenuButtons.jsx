@@ -27,6 +27,7 @@ const AppMenuButtons = (props) => {
     cameraModeBottomSheetRef,
     timeMachineBottomSheetRef,
     flipBottomSheetRef,
+    meetupAttendees,
     setMeetupAttendees,
     currentMeetup,
   } = useContext(CameraContext);
@@ -51,13 +52,24 @@ const AppMenuButtons = (props) => {
 
   const getAttendees = async () => {
     if (currentMeetup) {
-      setLoading(true);
-      const result = await lampostAPI.get(`meetupanduserrelationships/meetup/${currentMeetup}/users`);
-      const { meetupAttendees } = result.data;
-      setMeetupAttendees(meetupAttendees);
-      tagPeopleBottomSheetRef.current.snapToIndex(0);
-      appMenuBottomSheetRef.current.close();
-      setLoading(false);
+      if (!Object.values(meetupAttendees).length) {
+        setLoading(true);
+        const result = await lampostAPI.get(`meetupanduserrelationships/meetup/${currentMeetup}/users`);
+        const { meetupAttendees } = result.data;
+        setMeetupAttendees(() => {
+          const attendeesTable = {};
+          meetupAttendees.forEach((user, index) => {
+            attendeesTable[user._id] = user;
+          });
+          return attendeesTable;
+        });
+        tagPeopleBottomSheetRef.current.snapToIndex(0);
+        appMenuBottomSheetRef.current.close();
+        setLoading(false);
+      } else {
+        tagPeopleBottomSheetRef.current.snapToIndex(0);
+        appMenuBottomSheetRef.current.close();
+      }
     } else {
       setSnackBar({
         isVisible: true,
