@@ -10,6 +10,7 @@ import {
   sectionBackgroundColor,
   baseTextColor,
   iconColorsTable,
+  screenSectionBackgroundColor,
 } from '../../../../utils/colorsTable';
 
 import { addSnackBar } from '../../../../redux/actionCreators/snackBar';
@@ -28,9 +29,9 @@ const SendChatBottomSheet = (props) => {
     setSendingText,
     replyingTo,
     setReplyingTo,
+    chatType,
   } = useContext(LoungeContext);
   const [text, setText] = useState('');
-  const [chatType, setChatType] = useState('general');
 
   const onSendPress = async () => {
     console.log('sending comment');
@@ -62,6 +63,19 @@ const SendChatBottomSheet = (props) => {
     // appMenuBottomSheetRef.current.snapToIndex(0);
   };
 
+  const renderTextInputPlaceHolder = () => {
+    switch (chatType) {
+      case 'general':
+        return 'Add a message...';
+      case 'question':
+        return 'What is your question?';
+      case 'help':
+        return 'What is your problem?';
+      default:
+        return 'No';
+    }
+  };
+
   return (
     <GorhomBottomSheet
       index={-1}
@@ -86,7 +100,7 @@ const SendChatBottomSheet = (props) => {
         <View style={{ height: '100%', flexDirection: 'row' }}>
           <BottomSheetTextInput
             multiline={true}
-            placeholder='Add a chat message...'
+            placeholder={renderTextInputPlaceHolder()}
             placeholderTextColor={baseTextColor}
             inputAccessoryViewID={inputAccessoryViewID}
             style={{
@@ -138,7 +152,7 @@ const SendChatBottomSheet = (props) => {
         </View>
         <InputAccessoryView
           nativeID={inputAccessoryViewID}
-          backgroundColor={sectionBackgroundColor}
+          backgroundColor={screenSectionBackgroundColor}
           // style={{ paddingTop: 10, paddingBottom: 10 }}
         >
           <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
@@ -172,10 +186,14 @@ const SendChatBottomSheet = (props) => {
                   // appMenuBottomSheetRef.current.snapToIndex(0);
                 }}
               >
-                <Text style={{ color: iconColorsTable['blue1'], fontWeight: 'bold' }}>Cancel</Text>
+                <Text style={{ color: 'white', fontWeight: 'bold' }}>Cancel</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={{ padding: 10 }} onPress={() => onSendPress()}>
-                <Text style={{ color: iconColorsTable['blue1'], fontWeight: 'bold' }}>Send</Text>
+              <TouchableOpacity
+                style={{ padding: 10 }}
+                onPress={() => onSendPress()}
+                disabled={sendingText ? false : true}
+              >
+                <Text style={{ color: sendingText ? 'white' : baseTextColor, fontWeight: 'bold' }}>Send</Text>
               </TouchableOpacity>
             </View>
           </View>

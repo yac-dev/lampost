@@ -16,7 +16,8 @@ import {
 import AppButton from '../../../../Utils/AppMenuButton';
 
 const AppButtons = () => {
-  const { appMenuBottomSheetRef, sendChatBottomSheetRef, crewBottomSheetRef, textInputRef } = useContext(LoungeContext);
+  const { appMenuBottomSheetRef, sendChatBottomSheetRef, crewBottomSheetRef, textInputRef, setChatType } =
+    useContext(LoungeContext);
   return (
     <View style={{}}>
       {/* <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
@@ -44,6 +45,7 @@ const AppButtons = () => {
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
         onPress={() => {
           appMenuBottomSheetRef.current.close();
+          setChatType('general');
           sendChatBottomSheetRef.current.snapToIndex(0);
           textInputRef.current.focus();
         }}
@@ -64,7 +66,7 @@ const AppButtons = () => {
           </View>
           <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Send a chat</Text>
         </View>
-        <MaterialCommunityIcons name='chevron-down' color={baseTextColor} size={25} />
+        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
       </TouchableOpacity>
       <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
@@ -94,6 +96,7 @@ const AppButtons = () => {
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
         onPress={() => {
           appMenuBottomSheetRef.current.close();
+          setChatType('question');
           sendChatBottomSheetRef.current.snapToIndex(0);
           textInputRef.current.focus();
         }}
@@ -114,12 +117,13 @@ const AppButtons = () => {
           </View>
           <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Ask a question</Text>
         </View>
-        <MaterialCommunityIcons name='chevron-down' color={baseTextColor} size={25} />
+        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
       </TouchableOpacity>
       <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
         onPress={() => {
           appMenuBottomSheetRef.current.close();
+          setChatType('help');
           sendChatBottomSheetRef.current.snapToIndex(0);
           textInputRef.current.focus();
         }}
@@ -140,7 +144,7 @@ const AppButtons = () => {
           </View>
           <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Help!!!</Text>
         </View>
-        <MaterialCommunityIcons name='chevron-down' color={baseTextColor} size={25} />
+        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
       </TouchableOpacity>
     </View>
   );

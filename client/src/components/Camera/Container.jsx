@@ -127,6 +127,14 @@ const Container = (props) => {
     }
   };
 
+  const videoButton = () => {
+    if (isRecording) {
+      stopRecording();
+    } else {
+      recordVideo();
+    }
+  };
+
   const recordVideo = () => {
     setIsRecording(true);
     const options = {
@@ -140,9 +148,28 @@ const Container = (props) => {
     setIsRecording(false);
   };
 
-  const stopRecording = () => {
+  const stopRecording = async () => {
     setIsRecording(false);
     cameraRef.current.stopRecording();
+    console.log(video);
+    // const formData = new FormData();
+    // formData.append('meetupId', currentMeetup);
+    // formData.append('userId', auth.data._id);
+    // formData.append('type', cameraMode); // photo
+    // formData.append('asset', {
+    //   name: video.uri.split('/').pop(),
+    //   uri: video.uri,
+    //   type: 'video/mp4', // video type
+    // });
+    // // const result = await lampostAPI.post(`/assets/videos`, formData, {
+    // //   headers: { 'Content-type': 'multipart/form-data' },
+    // // });
+    // setSnackBar({
+    //   isVisible: true,
+    //   message: 'Video recorded.',
+    //   barType: 'success',
+    //   duration: 2000,
+    // });
   };
 
   // 基本的に、10秒以内の動画は保存しないようにする
@@ -206,6 +233,48 @@ const Container = (props) => {
 
   if (video) {
   }
+
+  const renderCameraButton = () => {
+    if (cameraMode === 'photo') {
+      return (
+        <TouchableOpacity style={{}} onPress={() => takePhoto()} disabled={currentMeetup ? false : true}>
+          <View
+            style={{
+              backgroundColor: iconColorsTable['violet1'],
+              padding: 10,
+              flexDirection: 'row',
+              alignItems: 'center',
+              borderRadius: 10,
+            }}
+          >
+            <MaterialCommunityIcons name='camera-iris' size={25} color='white' />
+          </View>
+          {isCameraButtonReady()}
+        </TouchableOpacity>
+      );
+    } else if (cameraMode === 'video') {
+      return (
+        <TouchableOpacity style={{}} onPress={() => videoButton()} disabled={currentMeetup ? false : true}>
+          <View
+            style={{
+              backgroundColor: iconColorsTable['violet1'],
+              padding: 10,
+              flexDirection: 'row',
+              alignItems: 'center',
+              borderRadius: 10,
+            }}
+          >
+            {isRecording ? (
+              <Text style={{ color: 'white' }}>Record</Text>
+            ) : (
+              <MaterialCommunityIcons name='record-rec' size={25} color='white' />
+            )}
+          </View>
+          {isCameraButtonReady()}
+        </TouchableOpacity>
+      );
+    }
+  };
 
   return (
     <CameraContext.Provider
@@ -284,7 +353,7 @@ const Container = (props) => {
                 <Ionicons name='ios-apps' size={25} color={'white'} />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={{}} onPress={() => takePhoto()} disabled={currentMeetup ? false : true}>
+            {/* <TouchableOpacity style={{}} onPress={() => takePhoto()} disabled={currentMeetup ? false : true}>
               <View
                 style={{
                   backgroundColor: iconColorsTable['violet1'],
@@ -297,7 +366,8 @@ const Container = (props) => {
                 <MaterialCommunityIcons name='camera-iris' size={25} color='white' />
               </View>
               {isCameraButtonReady()}
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            {renderCameraButton()}
           </View>
         ) : null}
         <AppMenuBottomSheet />

@@ -8,7 +8,13 @@ import lampostAPI from '../../../../apis/lampost';
 import { io } from 'socket.io-client';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
-import { baseBackgroundColor, rnDefaultBackgroundColor, iconColorsTable } from '../../../../utils/colorsTable';
+import { Ionicons } from '@expo/vector-icons';
+import {
+  baseBackgroundColor,
+  rnDefaultBackgroundColor,
+  iconColorsTable,
+  backgroundColorsTable,
+} from '../../../../utils/colorsTable';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import SendChatBottomSheet from './SendChatBottomSheet';
 import CrewBottomSheet from './CrewBottomSheet';
@@ -27,6 +33,7 @@ const LoungeContainer = (props) => {
   const textInputRef = useRef(null);
   const [replyingTo, setReplyingTo] = useState(null);
   const [sendingText, setSendingText] = useState('');
+  const [chatType, setChatType] = useState('general'); // general, reply, question, help
   const [isLoggedOutModalOpen, setIsLoggedOutModalOpen] = useState(false);
   const [dummyCount, setDummyCount] = useState(0);
 
@@ -219,6 +226,8 @@ const LoungeContainer = (props) => {
         setChats,
         selectedChat,
         setSelectedChat,
+        chatType,
+        setChatType,
         // isLoggedOutModalOpen,
         // setIsLoggedOutModalOpen,
       }}
@@ -233,17 +242,17 @@ const LoungeContainer = (props) => {
           <Text style={{ color: 'red', fontSize: 30 }}>Press to send message</Text>
         </TouchableOpacity> */}
         <Chats />
-        <TouchableOpacity
+        <View
           style={{
             position: 'absolute',
             bottom: 20,
-            backgroundColor: rnDefaultBackgroundColor,
+            backgroundColor: backgroundColorsTable['lightBlue1'],
             borderRadius: 10,
             alignSelf: 'center',
+            padding: 10,
           }}
-          onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
         >
-          <View
+          <TouchableOpacity
             style={{
               backgroundColor: iconColorsTable['lightBlue1'],
               padding: 10,
@@ -251,12 +260,11 @@ const LoungeContainer = (props) => {
               alignItems: 'center',
               borderRadius: 10,
             }}
+            onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
           >
-            <MaterialCommunityIcons name='send' size={25} color={'white'} style={{ marginRight: 10 }} />
-            <Text style={{ color: 'white' }}>Menu</Text>
-            <MaterialCommunityIcons name='chevron-down' size={25} color={'white'} />
-          </View>
-        </TouchableOpacity>
+            <Ionicons name='ios-apps' size={25} color={'white'} />
+          </TouchableOpacity>
+        </View>
         <AppMenuBottomSheet />
         <SendChatBottomSheet />
         {/* <CrewBottomSheet /> */}

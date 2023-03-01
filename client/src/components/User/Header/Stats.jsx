@@ -23,11 +23,11 @@ const Stats = () => {
       <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 18, marginBottom: 10 }}>{user.name}</Text>
       <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}
-        onPress={() => leadershipBottomSheetRef.current.snapToIndex(0)}
+        onPress={() => console.log('patrons page')}
       >
         <View
           style={{
-            backgroundColor: backgroundColorsTable['red1'],
+            backgroundColor: backgroundColorsTable['pink1'],
             marginRight: 10,
             borderRadius: 10,
             width: 35,
@@ -36,14 +36,9 @@ const Stats = () => {
             alignItems: 'center',
           }}
         >
-          <MaterialCommunityIcons name='fire' color={iconColorsTable['red1']} size={25} />
+          <MaterialCommunityIcons name='fire' color={iconColorsTable['pink1']} size={25} />
         </View>
-        {/* <View style={{ flexDirection: 'column', alignItems: 'center' }}> */}
-        <Text style={{ color: baseTextColor, fontWeight: 'bold', marginRight: 10 }}>Leadership</Text>
-        <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center', color: 'white' }}>
-          {calculateLeadership(user)}
-        </Text>
-        {/* </View> */}
+        <Text style={{ color: baseTextColor, fontWeight: 'bold', marginRight: 10 }}>Patrons</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={{

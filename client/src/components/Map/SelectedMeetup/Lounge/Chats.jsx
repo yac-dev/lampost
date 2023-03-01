@@ -8,6 +8,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 
 import {
@@ -19,10 +20,10 @@ import {
 
 const chatTypeTable = {
   general: iconColorsTable['blue1'],
-  idea: iconColorsTable['yellow1'],
-  questionOrHelp: iconColorsTable['blue1'],
-  announcement: iconColorsTable['red1'],
+  help: iconColorsTable['red1'],
+  question: iconColorsTable['yellow1'],
   reply: iconColorsTable['green1'],
+  announcement: iconColorsTable['red1'],
 };
 
 const Chats = (props) => {
@@ -47,14 +48,12 @@ const Chats = (props) => {
         return <MaterialCommunityIcons name='comment-text' size={15} color={'white'} />;
       case 'reply':
         return <MaterialCommunityIcons name='reply' size={15} color={'white'} />;
-      case 'idea':
-        return <Ionicons name='bulb-outline' size={15} color={'white'} />;
-      case 'questionOrHelp':
-        return <FontAwesome5 name='question' size={15} color={'white'} />;
+      case 'help':
+        return <AntDesign name='exclamationcircle' size={15} color={'white'} />;
+      case 'question':
+        return <AntDesign name='questioncircle' size={15} color={'white'} />;
       case 'announcement':
         return <Entypo name='megaphone' size={15} color={'white'} />;
-      case 'launched':
-        return <Text>Launched</Text>;
       default:
         return null;
     }
@@ -77,7 +76,7 @@ const Chats = (props) => {
               style={{
                 backgroundColor: chatTypeTable[chat.type],
                 padding: 2,
-                borderRadius: 7,
+                borderRadius: 5,
                 width: 20,
                 height: 20,
                 alignItems: 'center',
@@ -108,10 +107,10 @@ const Chats = (props) => {
             <View
               style={{
                 backgroundColor: chatTypeTable[chat.type],
-                padding: 2,
-                borderRadius: 7,
-                width: 20,
-                height: 20,
+                // padding: 2,
+                borderRadius: 5,
+                width: 30,
+                height: 30,
                 alignItems: 'center',
                 justifyContent: 'center',
                 position: 'absolute',

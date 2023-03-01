@@ -19,7 +19,7 @@ const loungeChatSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['general', 'reply', 'idea', 'questionOrHelp', 'image', 'announcement'], // launchedは、portでのchat用ね。
+    enum: ['general', 'reply', 'question', 'help', 'image', 'announcement'], // launchedは、portでのchat用ね。
   },
   createdAt: {
     type: Date,

@@ -41,7 +41,7 @@ const AppMenuBottomSheet = (props) => {
           onPress={() => {
             setCameraMode('photo');
             cameraModeBottomSheetRef.current.close();
-            appMenuBottomSheetRef.current.snapToIndex(0);
+            // appMenuBottomSheetRef.current.snapToIndex(0);
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -69,7 +69,7 @@ const AppMenuBottomSheet = (props) => {
           onPress={() => {
             setCameraMode('video');
             cameraModeBottomSheetRef.current.close();
-            appMenuBottomSheetRef.current.snapToIndex(0);
+            // appMenuBottomSheetRef.current.snapToIndex(0);
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
