@@ -32,12 +32,15 @@ const assetSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
-  taggedPeople: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'User',
-    },
-  ],
+  taggedPeople: {
+    type: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+      },
+    ],
+    default: [],
+  },
   createdAt: Date,
 });
 

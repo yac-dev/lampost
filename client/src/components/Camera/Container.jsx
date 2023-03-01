@@ -163,10 +163,15 @@ const Container = (props) => {
       base64: true,
       exif: false,
     };
-
     let newPhoto = await cameraRef.current.takePictureAsync(options);
     const formData = new FormData();
     // photo fieldよりも後にmeetupIdをappendするとダメなんだよな。。。何でだろ。。。
+    const taggedUserIds = Object.keys(taggedPeople);
+    if (taggedUserIds.length) {
+      for (var i = 0; i < taggedUserIds.length; i++) {
+        formData.append(`taggedUser${i}`, taggedUserIds[i]);
+      }
+    }
     formData.append('meetupId', currentMeetup);
     formData.append('userId', auth.data._id);
     formData.append('type', cameraMode); // photo
@@ -176,6 +181,7 @@ const Container = (props) => {
       type: 'image/jpg',
     });
     // userIdを使ってまず、userのmeetup中かを調べる。
+    // console.log(formData);
     try {
       const result = await lampostAPI.post(`/assets/photos`, formData, {
         headers: { 'Content-type': 'multipart/form-data' },
@@ -189,8 +195,6 @@ const Container = (props) => {
     } catch (error) {
       console.log(error);
       console.log(error.response.data);
-      // まあとりあえず、ここでerror catchできている。
-      // modalかなんかでerrorの内容を表示してあげればいい。
     }
     // } else {
     //   setIsWarningModalOpen(true);

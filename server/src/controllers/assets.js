@@ -5,18 +5,24 @@ import { uploadPhoto } from '../services/s3';
 
 export const createPhoto = async (request, response) => {
   try {
-    const { meetupId, userId } = request.body;
+    const { meetupId, userId, type, ...rest } = request.body;
+    const taggedUserIds = Object.values(rest);
     const asset = await Asset.create({
       data: `https://lampost-${process.env.NODE_ENV}.s3.us-east-2.amazonaws.com/assets/photos/${request.file.filename}`,
       type: 'photo',
       meetup: meetupId,
+      taggedPeople: taggedUserIds,
       createdBy: userId,
       createdAt: new Date(),
     });
-    uploadPhoto(request.file.filename);
+    // uploadPhoto(request.file.filename);
     response.status(200).json({
       message: 'success',
     });
+    // console.log(`tagged ${taggedUserIds}`);
+    // response.status(200).json({
+    //   message: 'success',
+    // });
 
     //   const user = await User.findById(userId);
     // if (!user.ongoingMeetup.state) {
