@@ -13,7 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Map from '../Map/Container';
 import Camera from '../Camera/Container';
 import Schedule from '../Schedule/Container';
-import QandA from '../Map/SelectedMeetup/QandA/Container';
+import QandAs from '../Map/SelectedMeetup/QandAs/Container';
 import Lounge from '../Map/SelectedMeetup/Lounge/Container';
 import User from '../User/Container';
 import AddBadges from '../Utils/AddBadges/Container';
@@ -101,7 +101,20 @@ const MapNavigator = (props) => {
         />
         <Stack.Screen name='Camera' component={Camera} options={{ headerShown: false }} />
         <Stack.Screen name='Schedule' component={Schedule} />
-        <Stack.Screen name='QandA' component={QandA} />
+        <Stack.Screen
+          name='QandAs'
+          component={QandAs}
+          options={{
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            // headerTintColor: iconColorsTable['blue1'],
+          }}
+        />
         <Stack.Screen
           name='Lounge'
           component={Lounge}

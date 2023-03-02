@@ -26,6 +26,7 @@ const Container = (props) => {
   } = useContext(GlobalContext);
   const {
     appMenuBottomSheetRef,
+    myUpcomingMeetupsBottomSheetRef,
     selectedMeetup,
     setSelectedMeetup,
     selectedMeetupBottomSheetRef,
@@ -303,9 +304,9 @@ const Container = (props) => {
   };
 
   const getMeetup = async (meetupId) => {
+    myUpcomingMeetupsBottomSheetRef.current.close();
     const result = await lampostAPI.get(`/meetups/${meetupId}/selected`);
     const { meetup } = result.data;
-    appMenuBottomSheetRef.current.close();
     setSelectedMeetup(meetup);
     selectedMeetupBottomSheetRef.current.snapToIndex(0);
   };

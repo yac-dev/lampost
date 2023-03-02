@@ -227,14 +227,17 @@ const Menus = (props) => {
         }}
       />
       <Menu
-        isDisabled={true}
         label='Q&As'
         icon={<MaterialCommunityIcons name='chat-question' size={20} color={iconColorsTable['blue1']} />}
         backgroundColor={backgroundColorsTable['blue1']}
-        rightInfo={<Foundation name='prohibited' color={iconColorsTable['red1']} size={20} />}
+        rightInfo={<MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />}
         onPressMenu={() => {
-          setSelectedMeetupDetailComponent('QandAs');
-          selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
+          navigation.navigate('QandAs', {
+            meetup: {
+              _id: selectedMeetup._id,
+              launcher: selectedMeetup.launcher._id,
+            },
+          });
         }}
       />
       {/* <Menu

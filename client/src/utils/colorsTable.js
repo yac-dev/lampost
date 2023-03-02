@@ -41,3 +41,4 @@ export const sectionBackgroundColor = 'rgb(42, 44, 49)';
 export const inputBackgroundColor = 'rgb(73, 75, 80)';
 export const screenSectionBackgroundColor = 'rgb(64, 64, 64)';
 export const screenBorderBottomColor = 'rgb(124, 124, 124)';
+export const buttonBackgroundColor = 'rgb(86, 86, 86)';

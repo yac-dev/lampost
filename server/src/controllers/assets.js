@@ -50,7 +50,7 @@ export const createVideo = async (request, response) => {
       createdBy: userId,
       createdAt: new Date(),
     });
-    // uploadVideo(request.file.filename);
+    uploadVideo(request.file.filename);
     response.status(200).json({
       message: 'success',
     });

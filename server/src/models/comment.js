@@ -9,9 +9,8 @@ const commentSchema = mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
-  content: String, // これはstringか、画像やら動画見たいなbinary dataか。まあ、なんでもあり。
+  content: String,
   replyTo: {
-    // commentのidが入ることになる。
     type: mongoose.Schema.ObjectId,
     ref: 'Comment',
   },

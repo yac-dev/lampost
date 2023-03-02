@@ -27,9 +27,9 @@ export const uploadPhoto = async (fileName) => {
 };
 
 export const uploadVideo = async (fileName) => {
-  const filePath = path.join(__dirname, '..', '..', 'assets', 'videos', fileName);
+  const __dirname = path.resolve();
+  const filePath = path.join(__dirname, 'assets', 'videos', fileName);
   const fileStream = fs.createReadStream(filePath);
-  console.log(fileStream);
 
   const uploadParams = {
     Bucket: process.env.AWS_S3BUCKET_NAME,
@@ -38,6 +38,7 @@ export const uploadVideo = async (fileName) => {
   };
   await s3.upload(uploadParams).promise();
   console.log('video Uploaded');
+  await unlinkFile(filePath);
 };
 
 export const uploadAvatar = async (fileName) => {
