@@ -1,7 +1,7 @@
 import Asset from '../models/asset';
 import Meetup from '../models/meetup';
 import User from '../models/user';
-import { uploadPhoto } from '../services/s3';
+import { uploadPhoto, uploadVideo } from '../services/s3';
 
 export const createPhoto = async (request, response) => {
   try {
@@ -15,7 +15,7 @@ export const createPhoto = async (request, response) => {
       createdBy: userId,
       createdAt: new Date(),
     });
-    // uploadPhoto(request.file.filename);
+    uploadPhoto(request.file.filename);
     response.status(200).json({
       message: 'success',
     });
@@ -38,8 +38,22 @@ export const createPhoto = async (request, response) => {
   }
 };
 
-export const createVideo = () => {
+export const createVideo = async (request, response) => {
   try {
+    const { meetupId, userId, type, ...rest } = request.body;
+    const taggedUserIds = Object.values(rest);
+    const asset = await Asset.create({
+      data: `https://lampost-${process.env.NODE_ENV}.s3.us-east-2.amazonaws.com/assets/videos/${request.file.filename}`,
+      type: type,
+      meetup: meetupId,
+      taggedPeople: taggedUserIds,
+      createdBy: userId,
+      createdAt: new Date(),
+    });
+    // uploadVideo(request.file.filename);
+    response.status(200).json({
+      message: 'success',
+    });
   } catch (error) {
     console.log(error);
   }

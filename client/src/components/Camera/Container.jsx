@@ -142,16 +142,36 @@ const Container = (props) => {
       maxDuration: 60,
       mute: false,
     };
-    cameraRef.current.recordAsync(options).then((recordedVideo) => {
+    cameraRef.current.recordAsync(options).then(async (recordedVideo) => {
       setVideo(recordedVideo);
+      console.log(recordedVideo);
+      setIsRecording(false);
+      const formData = new FormData();
+      formData.append('meetupId', currentMeetup);
+      formData.append('userId', auth.data._id);
+      formData.append('type', cameraMode); // photo
+      formData.append('asset', {
+        name: recordedVideo.uri.split('/').pop(),
+        uri: recordedVideo.uri,
+        type: 'video/mov',
+      });
+      console.log(formData);
+      // ここでapi requestを送る感じか。
+      const result = await lampostAPI.post(`/assets/videos`, formData, {
+        headers: { 'Content-type': 'multipart/form-data' },
+      });
+      setSnackBar({
+        isVisible: true,
+        message: 'Video was recorded.',
+        barType: 'success',
+        duration: 1500,
+      });
     });
-    setIsRecording(false);
   };
 
   const stopRecording = async () => {
     setIsRecording(false);
     cameraRef.current.stopRecording();
-    console.log(video);
     // const formData = new FormData();
     // formData.append('meetupId', currentMeetup);
     // formData.append('userId', auth.data._id);
@@ -174,17 +194,6 @@ const Container = (props) => {
 
   // 基本的に、10秒以内の動画は保存しないようにする
   let takePhoto = async () => {
-    // if (!auth.data) {
-    //   setIsWarningModalOpen(true);
-    //   setWarningMessage('Please signup or login at first.');
-    // } else {
-    //   if (auth.data.ongoingMeetup.state) {
-    // setSnackBar({
-    //   isVisible: true,
-    //   message: 'Nice shot!',
-    //   barType: 'success',
-    //   duration: 1500,
-    // });
     let options = {
       quality: 1,
       base64: true,
@@ -215,7 +224,7 @@ const Container = (props) => {
       });
       setSnackBar({
         isVisible: true,
-        message: 'Nice shot!',
+        message: 'Took photo.',
         barType: 'success',
         duration: 1500,
       });
@@ -265,7 +274,8 @@ const Container = (props) => {
             }}
           >
             {isRecording ? (
-              <Text style={{ color: 'white' }}>Record</Text>
+              // <Text style={{ color: 'white' }}>Recording</Text>
+              <Ionicons name='stop-circle' color={'white'} size={25} />
             ) : (
               <MaterialCommunityIcons name='record-rec' size={25} color='white' />
             )}

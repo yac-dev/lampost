@@ -28,6 +28,7 @@ const assetSchema = new mongoose.Schema({
     coordinates: [Number],
     name: String,
   },
+  effect: String,
   createdBy: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',

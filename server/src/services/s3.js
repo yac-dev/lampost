@@ -21,22 +21,7 @@ export const uploadPhoto = async (fileName) => {
     Key: `assets/photos/${fileName}`,
   };
   await s3.upload(uploadParams).promise();
-  console.log('Uploaded');
-
-  await unlinkFile(filePath);
-};
-
-export const uploadAvatar = async (fileName) => {
-  const __dirname = path.resolve();
-  const filePath = path.join(__dirname, 'avatars', fileName);
-  const fileStream = fs.createReadStream(filePath);
-
-  const uploadParams = {
-    Bucket: process.env.AWS_S3BUCKET_NAME,
-    Body: fileStream,
-    Key: `avatars/${fileName}`,
-  };
-  await s3.upload(uploadParams).promise();
+  console.log('photo Uploaded');
 
   await unlinkFile(filePath);
 };
@@ -52,4 +37,20 @@ export const uploadVideo = async (fileName) => {
     Key: `assets/videos/${fileName}`,
   };
   await s3.upload(uploadParams).promise();
+  console.log('video Uploaded');
+};
+
+export const uploadAvatar = async (fileName) => {
+  const __dirname = path.resolve();
+  const filePath = path.join(__dirname, 'avatars', fileName);
+  const fileStream = fs.createReadStream(filePath);
+
+  const uploadParams = {
+    Bucket: process.env.AWS_S3BUCKET_NAME,
+    Body: fileStream,
+    Key: `avatars/${fileName}`,
+  };
+  await s3.upload(uploadParams).promise();
+
+  await unlinkFile(filePath);
 };
