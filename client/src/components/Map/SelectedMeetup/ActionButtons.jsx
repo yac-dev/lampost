@@ -9,7 +9,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-import { backgroundColorsTable, baseTextColor, iconColorsTable } from '../../../utils/colorsTable';
+import {
+  backgroundColorsTable,
+  baseTextColor,
+  iconColorsTable,
+  buttonBackgroundColor,
+  sectionBackgroundColor,
+} from '../../../utils/colorsTable';
 import ActionButton from '../../Utils/ActionButton';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
@@ -108,15 +114,6 @@ const ActionButtons = (props) => {
     setSnackBar({ isVisible: true, message: 'Left a meetup.', barType: 'success', duration: 5000 });
   };
 
-  const startMeetup = async () => {
-    // const result = await lampostAPI.patch(`/meetups/${selectedMeetup._id}`);
-    setSelectedMeetup((previous) => {
-      return {
-        ...previous,
-        state: 'ongoing',
-      };
-    });
-  };
   // joinしたらmeetupのid使ってroomに入るようにするんだが、、、reloadしたらsocket切れるよな。切れたら、upcomingのmeetupid使って再度roomに入るようにする感じか。
   const renderApp = () => {
     // まず、authの確認。login状態なら、action buttonsをrenderする。
@@ -136,6 +133,7 @@ const ActionButtons = (props) => {
               icon={<Ionicons name='ios-chatbubbles' size={25} color={'white'} />}
               backgroundColor={iconColorsTable['blue1']}
               onActionButtonPress={() => navigation.navigate('Lounge', { meetupId: selectedMeetup._id })}
+              // 'rgb(55, 55, 55)'
             />
           </View>
         );
@@ -191,63 +189,14 @@ const ActionButtons = (props) => {
       // loginしていない場合はlogin or signupをさせるようにする。
       return <Text style={{ color: baseTextColor }}>It is required to login or signup to join the meetup.</Text>;
     }
-    // for (let i = 0; i < auth.data.upcomingMeetups.length; i++) {
-    //   // everyか？someかな。
-    //   if (auth.data.upcomingMeetups[i].meetup === selectedMeetup._id) {
-    //     return (
-    //       <View style={{ flexDirection: 'row', paddingTop: 10, paddingBottom: 10 }}>
-    //         {selectedMeetup.launcher._id === auth.data._id ? (
-    //           <>
-    //             {selectedMeetup.state === 'upcoming' ? (
-    //               <ActionButton // ここ、meetupのstateによってbuttonを切り替える。
-    //                 label='Start meetup now'
-    //                 icon={<Feather name='power' size={20} color={'white'} />}
-    //                 backgroundColor={iconColorsTable['blue1']}
-    //                 onActionButtonPress={() => console.log('start meetup now', selectedMeetup._id)}
-    //               />
-    //             ) : (
-    //               <ActionButton
-    //                 label='Finish meetup'
-    //                 icon={<Feather name='power' size={20} color={'white'} />}
-    //                 backgroundColor={iconColorsTable['red1']}
-    //                 onActionButtonPress={() => console.log('finish meetup now')}
-    //               />
-    //             )}
-    //           </>
-    //         ) : (
-    //           <ActionButton
-    //             label='Leave this meetup'
-    //             icon={<MaterialCommunityIcons name='exit-run' size={25} color={'white'} />}
-    //             backgroundColor={iconColorsTable['red1']}
-    //             onActionButtonPress={() => leaveMeetup()}
-    //           />
-    //         )}
-    //         <ActionButton
-    //           label='Go to lounge'
-    //           icon={<Ionicons name='ios-chatbubbles' size={25} color={'white'} />}
-    //           backgroundColor={iconColorsTable['blue1']}
-    //           onActionButtonPress={() => navigation.navigate('Lounge', { meetupId: selectedMeetup._id })}
-    //         />
-    //       </View>
-    //     );
-    //   }
-    // }
-    // return (
-    //   <View style={{}}>
-    //     <ActionButton
-    //       label='Join this meetup'
-    //       icon={<MaterialCommunityIcons name='human-greeting-variant' size={25} color={'white'} />}
-    //       backgroundColor={iconColorsTable['blue1']}
-    //       onActionButtonPress={() => joinMeetup(selectedMeetup._id)}
-    //     />
-    //   </View>
-    // );
   };
 
   return (
-    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginBottom: 25 }}>
-      {renderApp()}
-    </ScrollView>
+    <View style={{ marginBottom: 20 }}>
+      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+        {renderApp()}
+      </ScrollView>
+    </View>
   );
 };
 

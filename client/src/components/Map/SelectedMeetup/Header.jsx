@@ -10,11 +10,14 @@ import {
   backgroundColorsTable,
   baseTextColor,
   rnDefaultBackgroundColor,
+  screenSectionBackgroundColor,
 } from '../../../utils/colorsTable';
 import { Ionicons } from '@expo/vector-icons';
 // import Badges from './BadgesLabels';
+import { iconsTable } from '../../../utils/icons';
 
 const Header = (props) => {
+  const { MaterialCommunityIcons } = iconsTable;
   const { isIpad } = useContext(GlobalContext);
   const { selectedMeetup } = useContext(MapContext);
   // const renderDate = (date) => {
@@ -37,32 +40,19 @@ const Header = (props) => {
     });
     const dateElements = d.split(',').join('').split(' ');
     return (
-      <View
-        style={{
-          width: 80,
-          height: 50,
-          borderRadius: 10,
-          borderWidth: 0.3,
-          marginRight: 15,
-          borderColor: baseTextColor,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Text style={{ fontSize: 13, textAlign: 'center', color: baseTextColor }}>{dateElements[0]}</Text>
-        <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center', color: baseTextColor }}>
-          {dateElements[1]}&nbsp;{dateElements[2]}
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <MaterialCommunityIcons
+          name='calendar-month-outline'
+          color={baseTextColor}
+          size={15}
+          style={{ marginRight: 5 }}
+        />
+        <Text style={{ fontSize: 15, color: baseTextColor, marginRight: 10 }}>
+          {dateElements[0]}&nbsp;{dateElements[1]}&nbsp;{dateElements[2]}
         </Text>
       </View>
     );
   };
-
-  function toHoursAndMinutes(duration) {
-    const minutes = duration % 60;
-    const hours = Math.floor(duration / 60);
-
-    return `${hours} hours ${minutes} minutes`;
-  }
 
   const renderTime = (date, duration) => {
     const baseTime = new Date(date);
@@ -93,14 +83,19 @@ const Header = (props) => {
 
   return (
     <View style={{ marginBottom: 10 }}>
-      <View style={{ flexDirection: 'row' }}>
+      <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 5 }}>{selectedMeetup.title}</Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          backgroundColor: screenSectionBackgroundColor,
+          padding: 5,
+          borderRadius: 5,
+          alignSelf: 'flex-start',
+        }}
+      >
         {renderDate(selectedMeetup.startDateAndTime)}
-        <View style={{ flexDirection: 'column', flexShrink: 1 }}>
-          <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white', marginBottom: 10 }}>
-            {selectedMeetup.title}
-          </Text>
-          <View>{renderTime(selectedMeetup.startDateAndTime, selectedMeetup.duration)}</View>
-        </View>
+        {renderTime(selectedMeetup.startDateAndTime, selectedMeetup.duration)}
       </View>
     </View>
   );

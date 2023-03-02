@@ -15,7 +15,11 @@ const BadgeLabels = () => {
     return <View style={{ flexDirection: 'row' }}>{badgesList}</View>;
   };
 
-  return <ScrollView horizontal={true}>{renderBadges()}</ScrollView>;
+  return (
+    <View style={{ marginBottom: 10 }}>
+      <ScrollView horizontal={true}>{renderBadges()}</ScrollView>
+    </View>
+  );
 };
 
 export default BadgeLabels;

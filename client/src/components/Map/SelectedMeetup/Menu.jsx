@@ -33,7 +33,7 @@ const Menu = (props) => {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 20,
+        padding: 10,
         // backgroundColor: 'red',
         // borderBottomColor: baseBorderColor,
         // borderBottomWidth: 0.3,

@@ -37,39 +37,41 @@ const ActionButtons = (props) => {
 
   if (auth.isAuthenticated) {
     return (
-      <ScrollView horizontal={'true'} style={{ paddingLeft: 20, paddingRight: 20 }}>
-        <View style={{ marginBottom: 25, flexDirection: 'row' }}>
-          {myJoinedLibraries.some((library) => library._id === selectedLibrary._id) ? (
-            <ActionButton
-              label='Already joined'
-              icon={<MaterialCommunityIcons name='check' size={20} color={'white'} />}
-              backgroundColor={iconColorsTable['blue1']}
-              onActionButtonPress={() => {
-                return null;
-              }}
-            />
-          ) : (
-            <ActionButton
-              label='Join this library'
-              icon={<MaterialIcons name='library-add' size={25} color={'white'} />}
-              backgroundColor={iconColorsTable['blue1']}
-              onActionButtonPress={joinLibrary}
-            />
-          )}
+      <View style={{ marginBottom: 15 }}>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <View style={{ flexDirection: 'row' }}>
+            {myJoinedLibraries.some((library) => library._id === selectedLibrary._id) ? (
+              <ActionButton
+                label='Already joined'
+                icon={<MaterialCommunityIcons name='check' size={20} color={'white'} />}
+                backgroundColor={iconColorsTable['blue1']}
+                onActionButtonPress={() => {
+                  return null;
+                }}
+              />
+            ) : (
+              <ActionButton
+                label='Join this library'
+                icon={<MaterialIcons name='library-add' size={25} color={'white'} />}
+                backgroundColor={iconColorsTable['blue1']}
+                onActionButtonPress={joinLibrary}
+              />
+            )}
 
-          <ActionButton
-            label='Report this library'
-            icon={<MaterialIcons name='report-problem' size={25} color='white' />}
-            backgroundColor={iconColorsTable['blue1']}
-            onActionButtonPress={() =>
-              navigation.navigate('Report library', {
-                libraryId: selectedLibrary._id,
-                libraryName: selectedLibrary.name,
-              })
-            }
-          />
-        </View>
-      </ScrollView>
+            <ActionButton
+              label='Report this library'
+              icon={<MaterialIcons name='report-problem' size={25} color='white' />}
+              backgroundColor={iconColorsTable['blue1']}
+              onActionButtonPress={() =>
+                navigation.navigate('Report library', {
+                  libraryId: selectedLibrary._id,
+                  libraryName: selectedLibrary.name,
+                })
+              }
+            />
+          </View>
+        </ScrollView>
+      </View>
     );
   } else {
     return (

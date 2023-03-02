@@ -17,6 +17,7 @@ import {
   backgroundColorsTable,
   baseTextColor,
   sectionBackgroundColor,
+  screenSectionBackgroundColor,
 } from '../../../utils/colorsTable';
 
 import Menu from './Menu';
@@ -147,7 +148,10 @@ const Menus = (props) => {
   // };
 
   return (
-    <ScrollView style={{ borderRadius: 10, backgroundColor: sectionBackgroundColor }}>
+    <ScrollView
+      // contentContainerStyle={{ paddingBottom: 50 }}
+      style={{ borderRadius: 10, backgroundColor: sectionBackgroundColor }}
+    >
       <Menu
         label='Launcher'
         icon={<MaterialCommunityIcons name='rocket-launch' size={20} color={iconColorsTable['red1']} />}
@@ -240,28 +244,6 @@ const Menus = (props) => {
           });
         }}
       />
-      {/* <Menu
-        label='Privacy'
-        icon={<FontAwesome5 name='photo-video' size={25} color={iconColorsTable['lightBlue1']} />}
-        backgroundColor={backgroundColorsTable['lightBlue1']}
-        rightInfo={
-          <Text style={{ color: baseTextColor }}>{selectedMeetup.isMediaAllowed ? 'Allowed' : 'Not allowed'}</Text>
-        }
-        onPressMenu={() => {
-          setSelectedMeetupDetailComponent('MediaPermission');
-          selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
-        }}
-      /> */}
-      {/* <Menu
-        label='Link'
-        icon={<Entypo name='link' size={20} color={iconColorsTable['grey1']} />}
-        backgroundColor={backgroundColorsTable['grey1']}
-        rightInfo={<MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />}
-        onPressMenu={() => {
-          setSelectedMeetupDetailComponent('Links');
-          selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
-        }}
-      /> */}
     </ScrollView>
   );
 };

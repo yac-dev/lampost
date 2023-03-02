@@ -14,31 +14,28 @@ import { BottomSheetScrollView, BottomSheetFlatList } from '@gorhom/bottom-sheet
 const BadgeLabels = (props) => {
   const { selectedMeetup } = useContext(MapContext);
 
-  // const renderBadges = () => {
-  //   const badgesList = selectedMeetup.badges.map((badge, index) => {
-  //     return <BadgeLabel key={index} badge={badge} />;
-  //   });
+  const renderBadges = () => {
+    const badgesList = selectedMeetup.badges.map((badge, index) => {
+      return <BadgeLabel key={index} badge={badge} />;
+    });
 
-  //   return (
-  //     <View
-  //       // contentContainerStyle={{ flexGrow: 1, flexDirection: 'row', paddingBottom: 10, backgroundColor: 'red' }}
-  //       // horizontal={true}
-  //       style={{ flexDirection: 'row' }}
-  //     >
-  //       {badgesList}
-  //     </View>
-  //   );
-  // };
+    return <View style={{ flexDirection: 'row' }}>{badgesList}</View>;
+  };
 
   return (
-    <BottomSheetFlatList
-      data={selectedMeetup.badges}
-      renderItem={({ item }) => <BadgeLabel badge={item} />}
-      keyExtractor={(item) => item._id}
-      horizontal={true}
-      // contentContainerStyle={{ paddingBottom: 30 }}
-      // showsHorizontalScrollIndicator={false}
-    />
+    // <BottomSheetFlatList
+    //   data={selectedMeetup.badges}
+    //   renderItem={({ item }) => <BadgeLabel badge={item} />}
+    //   keyExtractor={(item) => item._id}
+    //   horizontal={true}
+    //   // contentContainerStyle={{ paddingBottom: 30 }}
+    //   // showsHorizontalScrollIndicator={false}
+    // />
+    <View style={{ marginBottom: 10 }}>
+      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+        {renderBadges()}
+      </ScrollView>
+    </View>
   );
 };
 

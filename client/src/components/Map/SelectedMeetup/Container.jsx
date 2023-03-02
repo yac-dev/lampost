@@ -18,7 +18,7 @@ import Badges from './BadgesLabels';
 import Menus from './Menus';
 
 const SelectedMeetupContainer = (props) => {
-  const snapPoints = useMemo(() => ['60%', '90%'], []);
+  const snapPoints = useMemo(() => ['60%'], []);
   const { selectedMeetup, selectedMeetupBottomSheetRef } = useContext(MapContext);
 
   const renderSelectedMeetup = () => {

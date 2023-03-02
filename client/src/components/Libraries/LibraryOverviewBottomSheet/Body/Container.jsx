@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
 import LibrariesContext from '../../LibrariesContext';
 import { baseTextColor } from '../../../../utils/colorsTable';
 
 import Header from './Header';
 import ActionButtons from './ActionButtons';
+import BadgeLabels from './BadgeLabels';
 import Menus from './Menus';
 import Assets from './Assets';
 
@@ -13,17 +14,20 @@ const Container = () => {
 
   if (selectedLibrary) {
     return (
-      <ScrollView contentContainerStyle={{ paddingBottom: 50 }}>
+      // <ScrollView contentContainerStyle={{ paddingBottom: 50 }}>
+      <>
         <Header />
+        <BadgeLabels />
         <ActionButtons />
         <Menus />
-        <Assets />
-      </ScrollView>
+        {/* <Assets /> */}
+      </>
+      // </ScrollView>
     );
   } else {
     return (
       <View>
-        <Text style={{ color: baseTextColor }}>Now loading...</Text>
+        <ActivityIndicator />
       </View>
     );
   }

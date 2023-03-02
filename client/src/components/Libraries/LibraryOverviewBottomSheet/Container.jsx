@@ -14,7 +14,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 const Container = (props) => {
   // oncloseでselecteされたlibraryを消すようにすればいい。
   const { libraryOverviewBottomSheetRef, setSelectedLibrary } = useContext(LibrariesContext);
-  const snapPoints = useMemo(() => ['80%', '100%'], []);
+  const snapPoints = useMemo(() => ['80%'], []);
 
   return (
     <GorhomBottomSheet
@@ -36,7 +36,7 @@ const Container = (props) => {
       // keyboardBehavior={'interactive'}
       onClose={() => setSelectedLibrary(null)}
     >
-      <BottomSheetView style={{ flex: 1 }}>
+      <BottomSheetView style={{ flex: 1, paddingLeft: 10, paddingRight: 10 }}>
         <Body />
       </BottomSheetView>
     </GorhomBottomSheet>

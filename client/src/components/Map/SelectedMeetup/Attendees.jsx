@@ -39,7 +39,7 @@ const AttendeesContainer = (props) => {
   }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: baseBackgroundColor, paddingLeft: 10, paddingRight: 10 }}>
+    <View style={{ flex: 1, backgroundColor: baseBackgroundColor, paddingLeft: 10, paddingRight: 10, paddingTop: 10 }}>
       {!isFetchedAttendees ? (
         <ActivityIndicator />
       ) : (
