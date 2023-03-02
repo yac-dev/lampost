@@ -13,7 +13,7 @@ const BadgeLabels = () => {
         return <BadgeLabel key={index} badge={badge} />;
       });
 
-      return <View style={{ flexDirection: 'row', paddingLeft: 20, paddingRight: 20 }}>{badgesList}</View>;
+      return <View style={{ flexDirection: 'row' }}>{badgesList}</View>;
     } else {
       return (
         <View>

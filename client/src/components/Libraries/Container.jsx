@@ -24,7 +24,7 @@ import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import MyLibrariesBottomSheet from './MyLibrariesBottomSheet/Container';
 import CreateLibraryBottomSheet from './CreateLibraryBottomSheet/Container';
 import LibraryOverviewBottomSheet from './LibraryOverviewBottomSheet/Container';
-import InfoDetailBottomSheet from './InfoDetailBottomSheet/Container';
+// import InfoDetailBottomSheet from './InfoDetailBottomSheet/Container';
 import ConfirmCancelCreatingLibraryModal from './ConfirmCancelCreatingLibraryModal';
 
 // authenticatedの場合が必要か。
@@ -320,7 +320,7 @@ const Container = (props) => {
         <CreateLibraryBottomSheet />
         <LibraryOverviewBottomSheet />
 
-        <InfoDetailBottomSheet />
+        {/* <InfoDetailBottomSheet /> */}
         <ConfirmCancelCreatingLibraryModal />
       </View>
     </LibrariesContext.Provider>

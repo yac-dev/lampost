@@ -47,7 +47,7 @@ const Container = (props) => {
           }
         }}
         backgroundColor={backgroundColorsTable['red1']}
-        icon={<MaterialCommunityIcons name='rocket-launch' size={25} color={iconColorsTable['red1']} />}
+        icon={<MaterialCommunityIcons name='rocket-launch' size={20} color={iconColorsTable['red1']} />}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ width: 80 }}>
@@ -62,11 +62,10 @@ const Container = (props) => {
       <Menu
         label='Description'
         onPressMenu={() => {
-          setSelectedLibraryDetailComponent('Description');
-          selectedLibraryDetailComponentBottomSheetRef.current.snapToIndex(0);
+          navigation.navigate('Description', { description: selectedLibrary.description });
         }}
         backgroundColor={backgroundColorsTable['green1']}
-        icon={<MaterialCommunityIcons name='card-text-outline' size={25} color={iconColorsTable['green1']} />}
+        icon={<MaterialCommunityIcons name='card-text-outline' size={20} color={iconColorsTable['green1']} />}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ width: 80 }}>
@@ -81,28 +80,13 @@ const Container = (props) => {
       <Menu
         label='Members'
         onPressMenu={() => {
-          setSelectedLibraryDetailComponent('Members');
-          selectedLibraryDetailComponentBottomSheetRef.current.snapToIndex(0);
+          navigation.navigate('Members', { libraryId: selectedLibrary._id });
         }}
         backgroundColor={backgroundColorsTable['blue1']}
-        icon={<MaterialIcons name='groups' size={25} color={iconColorsTable['blue1']} />}
+        icon={<MaterialIcons name='groups' size={20} color={iconColorsTable['blue1']} />}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={{ color: baseTextColor, fontSize: 15 }}>{selectedLibrary.totalMembers}</Text>
-            <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
-          </View>
-        }
-      />
-      <Menu
-        label='Assets'
-        onPressMenu={() => {
-          null;
-        }}
-        backgroundColor={backgroundColorsTable['orange1']}
-        icon={<MaterialIcons name='camera-roll' size={20} color={iconColorsTable['orange1']} />}
-        rightInfo={
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ color: baseTextColor }}>{selectedLibrary.totalAssets}</Text>
             <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
           </View>
         }
@@ -122,12 +106,26 @@ const Container = (props) => {
         }
       />
       <Menu
+        label='Assets'
+        onPressMenu={() => {
+          navigation.navigate('Assets', { libraryId: selectedLibrary._id });
+        }}
+        backgroundColor={backgroundColorsTable['orange1']}
+        icon={<MaterialIcons name='camera-roll' size={20} color={iconColorsTable['orange1']} />}
+        rightInfo={
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ color: baseTextColor }}>{selectedLibrary.totalAssets}</Text>
+            <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
+          </View>
+        }
+      />
+      <Menu
         label='Albums'
         onPressMenu={() => {
           return null;
         }}
         backgroundColor={backgroundColorsTable['yellow1']}
-        icon={<MaterialCommunityIcons name='image-album' size={25} color={iconColorsTable['yellow1']} />}
+        icon={<MaterialCommunityIcons name='image-album' size={20} color={iconColorsTable['yellow1']} />}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={{ color: baseTextColor }}>{selectedLibrary.albums.length}</Text>

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import GlobalContext from '../../../../GlobalContext';
 import LibraryContext from '../LibraryContext';
 import {
@@ -7,14 +7,17 @@ import {
   backgroundColorsTable,
   iconColorsTable,
   sectionBackgroundColor,
+  baseTextColor,
 } from '../../../../utils/colorsTable';
 import AppMenuButton from '../../../Utils/AppMenuButton';
 import lampostAPI from '../../../../apis/lampost';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import { iconsTable } from '../../../../utils/icons';
 
 const AppMenuButtons = () => {
+  const { Ionicons, MaterialCommunityIcons } = iconsTable;
   const { auth } = useContext(GlobalContext);
   const {
     appMenuBottomSheetRef,
@@ -28,67 +31,133 @@ const AppMenuButtons = () => {
     setIsConfirmPostAssetsModalOpen,
   } = useContext(LibraryContext);
 
-  const getUsersByLibraryId = async () => {
-    const result = await lampostAPI.get(`/libraryanduserrelationships/users/${library._id}`);
-    const { users } = result.data;
-    setLibraryMembers(users);
-  };
-
-  const getLibraryPostsByLibraryId = async () => {
-    const result = await lampostAPI.get(`/assetposts/${library._id}`);
-    const { assetPosts } = result.data;
-    setLibraryPosts(assetPosts);
-  };
+  // const getUsersByLibraryId = async () => {
+  //   const result = await lampostAPI.get(`/libraryanduserrelationships/users/${library._id}`);
+  //   const { users } = result.data;
+  //   setLibraryMembers(users);
+  // };
 
   return (
-    <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 25 }}>
-      <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
-        <AppMenuButton
-          backgroundColor={backgroundColorsTable['red1']}
-          icon={<MaterialCommunityIcons name='plus' size={35} color={iconColorsTable['red1']} />}
-          label='Post my asset'
-          onAppMenuButtonPress={() => {
-            setIsConfirmPostAssetsModalOpen(true);
-            appMenuBottomSheetRef.current.snapToIndex(0);
-            // navigation.navigate('Add assets', { libraryId: library._id, fromComponent: 'ADD_ASSETS_FOR_POSTING' });
-          }}
-        />
-        {/* <AppMenuButton
-          backgroundColor={backgroundColorsTable['pink1']}
-          icon={<Ionicons name='ios-search' size={35} color={iconColorsTable['pink1']} />}
-          label='Discover posts'
-          onAppMenuButtonPress={() => {
-            // getLibraryPostsByLibraryId();
-            // postsBottomSheetRef.current.snapToIndex(0);
-            // appMenuBottomSheetRef.current.snapToIndex(0);
-            navigation.navigate('Posts', { libraryId: library._id });
-            appMenuBottomSheetRef.current.snapToIndex(0);
-          }}
-        /> */}
-        <AppMenuButton
-          backgroundColor={backgroundColorsTable['blue1']}
-          icon={<MaterialCommunityIcons name='account-group' size={35} color={iconColorsTable['blue1']} />}
-          label='Members'
-          onAppMenuButtonPress={() => {
-            getUsersByLibraryId();
-            membersBottomSheetRef.current.snapToIndex(0);
-            appMenuBottomSheetRef.current.snapToIndex(0);
-          }}
-        />
-        {library?.launcher._id === auth.data?._id ? null : (
-          <AppMenuButton
-            backgroundColor={backgroundColorsTable['green1']}
-            icon={<MaterialCommunityIcons name='exit-run' size={35} color={iconColorsTable['green1']} />}
-            label='Leave this library'
-            onAppMenuButtonPress={() => {
-              setIsLeaveLibraryConfirmationModalOpen(true);
-              appMenuBottomSheetRef.current.snapToIndex(0);
+    <View style={{}}>
+      {/* <ScrollView style={{ flexDirection: 'row' }} horizontal={true}> */}
+      <TouchableOpacity
+        style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+        onPress={() => {
+          setIsConfirmPostAssetsModalOpen(true);
+          appMenuBottomSheetRef.current.snapToIndex(0);
+        }}
+      >
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View
+            style={{
+              width: 35,
+              height: 35,
+              backgroundColor: backgroundColorsTable['red1'],
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 7,
+              marginRight: 10,
             }}
-          />
-        )}
-      </ScrollView>
+          >
+            <MaterialCommunityIcons name='plus' color={iconColorsTable['red1']} size={20} />
+          </View>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Post my asset</Text>
+        </View>
+        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+        onPress={() => {
+          setIsConfirmPostAssetsModalOpen(true);
+          appMenuBottomSheetRef.current.snapToIndex(0);
+        }}
+      >
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View
+            style={{
+              width: 35,
+              height: 35,
+              backgroundColor: backgroundColorsTable['lightBlue1'],
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 7,
+              marginRight: 10,
+            }}
+          >
+            <MaterialCommunityIcons name='account-group' color={iconColorsTable['lightBlue1']} size={20} />
+          </View>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Members</Text>
+        </View>
+        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+        onPress={() => {
+          null;
+        }}
+      >
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View
+            style={{
+              width: 35,
+              height: 35,
+              backgroundColor: backgroundColorsTable['violet1'],
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 7,
+              marginRight: 10,
+            }}
+          >
+            <Ionicons name='library-sharp' color={iconColorsTable['violet1']} size={20} />
+          </View>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Library detail</Text>
+        </View>
+        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+      </TouchableOpacity>
+      {library?.launcher._id === auth.data?._id ? null : (
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+          onPress={() => {
+            setIsLeaveLibraryConfirmationModalOpen(true);
+            appMenuBottomSheetRef.current.snapToIndex(0);
+          }}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={{
+                width: 35,
+                height: 35,
+                backgroundColor: backgroundColorsTable['green1'],
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 7,
+                marginRight: 10,
+              }}
+            >
+              <MaterialCommunityIcons name='exit-run' color={iconColorsTable['green1']} size={20} />
+            </View>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>
+              Leave this library
+            </Text>
+          </View>
+          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+        </TouchableOpacity>
+      )}
+      {/* </ScrollView> */}
     </View>
   );
 };
 
 export default AppMenuButtons;
+
+{
+  /* <AppMenuButton
+backgroundColor={backgroundColorsTable['green1']}
+icon={<MaterialCommunityIcons name='exit-run' size={35} color={iconColorsTable['green1']} />}
+label='Leave this library'
+onAppMenuButtonPress={() => {
+  setIsLeaveLibraryConfirmationModalOpen(true);
+  appMenuBottomSheetRef.current.snapToIndex(0);
+}}
+/> */
+}

@@ -8,6 +8,9 @@ import Container from '../Libraries/Container';
 import LibraryContainer from '../Libraries/Library/Container';
 import AuthNavigator from './Auth';
 import User from '../User/Container';
+import Description from '../Libraries/LibraryOverviewBottomSheet/Description';
+import Members from '../Libraries/LibraryOverviewBottomSheet/Members';
+import Assets from '../Libraries/LibraryOverviewBottomSheet/Assets';
 import Logs from '../User/Logs/Container';
 import Asset from '../Libraries/Library/Asset/Container';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
@@ -35,22 +38,60 @@ const LibraryNavigator = () => {
               fontWeight: 'bold',
               color: 'white',
             },
-            // headerRight: () => {
-            //   if (auth?.data) {
-            //     return (
-            //       <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-            //         <Image source={{ uri: auth.data.photo }} style={{ width: 35, height: 35, borderRadius: 10 }} />
-            //       </TouchableOpacity>
-            //     );
-            //   } else {
-            //     return null; // login用のあれを出す感じ。
-            //   }
-            // },
-            // headerTransparent: true,
-            // headerTransparent: true,
-            // reduxのdata._idを使えばいいだけか。
-            // headerLeft: () => <Button onPress={() => navigation.navigate('My page/Memoirs')}>User page</Button>,
-            // headerLeft: () => <Button onPress={() => console.log('hi')}>User page</Button>,
+            headerTintColor: {
+              color: 'white',
+            },
+          })}
+        />
+        <Stack.Screen
+          name='Description'
+          component={Description}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: {
+              color: 'white',
+            },
+          })}
+        />
+        <Stack.Screen
+          name='Members'
+          component={Members}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: {
+              color: 'white',
+            },
+          })}
+        />
+        <Stack.Screen
+          name='Assets'
+          component={Assets}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: {
+              color: 'white',
+            },
           })}
         />
         <Stack.Screen
