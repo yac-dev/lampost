@@ -13,6 +13,7 @@ import Members from '../Libraries/LibraryOverviewBottomSheet/Members';
 import Assets from '../Libraries/LibraryOverviewBottomSheet/Assets';
 import Logs from '../User/Logs/Container';
 import Asset from '../Libraries/Library/Asset/Container';
+import LibraryMembers from '../Libraries/Library/Members';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
 import AddBadges from '../Utils/AddBadges/Container';
 import AddAssets from '../Utils/AddAssets/Container';
@@ -114,6 +115,7 @@ const LibraryNavigator = () => {
           component={Asset}
           options={({ navigation }) => ({
             headerShown: true,
+            headerTransparent: true,
             title: 'Asset',
             headerStyle: {
               backgroundColor: appBottomSheetBackgroundColor,
@@ -124,6 +126,21 @@ const LibraryNavigator = () => {
             },
           })}
         />
+        <Stack.Screen
+          name='LibraryMembers'
+          component={LibraryMembers}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          })}
+        />
+
         <Stack.Screen
           name='Report asset'
           component={ReportAsset}

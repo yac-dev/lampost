@@ -23,7 +23,7 @@ const AppMenuButtons = () => {
     appMenuBottomSheetRef,
     postsBottomSheetRef,
     navigation,
-    library,
+    libraryId,
     setIsLeaveLibraryConfirmationModalOpen,
     setLibraryMembers,
     setLibraryPosts,
@@ -68,8 +68,7 @@ const AppMenuButtons = () => {
       <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
         onPress={() => {
-          setIsConfirmPostAssetsModalOpen(true);
-          appMenuBottomSheetRef.current.snapToIndex(0);
+          navigation.navigate('LibraryMembers', { libraryId });
         }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -114,7 +113,7 @@ const AppMenuButtons = () => {
         </View>
         <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
       </TouchableOpacity>
-      {library?.launcher._id === auth.data?._id ? null : (
+      {/* {library?.launcher._id === auth.data?._id ? null : (
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
@@ -142,7 +141,7 @@ const AppMenuButtons = () => {
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
         </TouchableOpacity>
-      )}
+      )} */}
       {/* </ScrollView> */}
     </View>
   );
