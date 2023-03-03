@@ -14,7 +14,6 @@ export const getUser = async (request, response) => {
       user: userId,
       blocking: request.params.id,
     });
-    console.log(userBlockingRelationship);
     if (userBlockingRelationship) {
       isBlocking = true;
     }

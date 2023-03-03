@@ -2,7 +2,9 @@ import BadgeTag from '../models/badgeTag';
 
 export const getBadgeTagsByBadgeId = async (request, response) => {
   try {
-    const badgeTags = await BadgeTag.find({ badge: request.params.badgeId });
+    const { alreadyBadgeTagIds } = request.body;
+    // const badgeTags = await BadgeTag.find({ badge: request.params.badgeId, _id: { $nin: alreadyBadgeTagIds } });
+    const badgeTags = await BadgeTag.find({ badge: request.params.badgeId }); // やっぱ、userがもっているtagも持ってくるようにする。
     response.status(200).json({
       badgeTags,
     });

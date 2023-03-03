@@ -16,7 +16,7 @@ import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 const AppMenuBottomSheet = (props) => {
   const { auth, isIpad } = useContext(GlobalContext);
   const { appMenuBottomSheetRef, isMyPage } = useContext(UserContext);
-  const snapPoints = useMemo(() => ['45%', '60%', '80%'], []);
+  const snapPoints = useMemo(() => ['60%'], []);
   // ここに関しては、authじゃない限り、表示しないようにする。
   if (!auth.isAuthenticated || !isMyPage) {
     return null;

@@ -14,6 +14,8 @@ const Container = (props) => {
   const [isOpenTextInput, setIsOpenTextInput] = useState(false);
   const [creatingBadgeTagNames, setCreatingBadgeTagNames] = useState([]);
   const [creatingBadgeTagText, setCreatingBadgeTagText] = useState('');
+  const [badgeTagOptions, setBadgeTagOptions] = useState({});
+  const [isFetchedBadgeTagOptions, setIsFetchedBadgeTagOptions] = useState(false);
 
   // const renderBody = () => {
   //   if (addLinkOrBadgeTagsBottomSheetType === 'Add my link') {
@@ -41,7 +43,7 @@ const Container = (props) => {
       enablePanDownToClose={false}
       // onClose={() => onClose()}
     >
-      <BottomSheetView style={{ flex: 1, paddingLeft: 20, paddingRight: 20 }}>
+      <BottomSheetView style={{ flex: 1, paddingLeft: 10, paddingRight: 10 }}>
         <TouchableOpacity
           style={{ alignSelf: 'flex-end' }}
           onPress={() => {
@@ -68,10 +70,13 @@ const Container = (props) => {
             setCreatingBadgeTagNames,
             creatingBadgeTagText,
             setCreatingBadgeTagText,
+            badgeTagOptions,
+            setBadgeTagOptions,
+            isFetchedBadgeTagOptions,
+            setIsFetchedBadgeTagOptions,
           }}
         >
           <AddBadgeTags />
-          {/* {renderBody()} */}
         </AddBadgeTagsContext.Provider>
       </BottomSheetView>
     </GorhomBottomSheet>

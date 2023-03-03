@@ -2,10 +2,17 @@ import React, { useContext } from 'react';
 import UserContext from '../../UserContext';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { iconColorsTable, baseTextColor, screenSectionBackgroundColor } from '../../../../utils/colorsTable';
+import {
+  iconColorsTable,
+  baseTextColor,
+  screenSectionBackgroundColor,
+  backgroundColorsTable,
+} from '../../../../utils/colorsTable';
+import { iconsTable } from '../../../../utils/icons';
 
 const BadgeTags = () => {
   const { pressedBadgeData, isMyPage } = useContext(UserContext);
+  const { MaterialCommunityIcons, Ionicons } = iconsTable;
 
   const renderTags = () => {
     if (pressedBadgeData.badgeTags.length) {
@@ -18,12 +25,9 @@ const BadgeTags = () => {
               marginRight: 10,
               marginBottom: 10,
               borderRadius: 5,
-              flexDirection: 'row',
-              alignItems: 'center',
             }}
             key={index}
           >
-            <MaterialCommunityIcons name='tag' size={20} color='white' style={{ marginRight: 10 }} />
             <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>{badgeTag.name}</Text>
           </TouchableOpacity>
         );
@@ -37,7 +41,25 @@ const BadgeTags = () => {
 
   return (
     <View style={{ marginBottom: 25 }}>
-      <Text style={{ color: 'white', marginBottom: 10, fontWeight: 'bold', fontSize: 20 }}>Badge tags</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View
+            style={{
+              width: 35,
+              height: 35,
+              backgroundColor: backgroundColorsTable['lightGreen1'],
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 5,
+              marginRight: 10,
+            }}
+          >
+            <Ionicons name='pricetags' color={iconColorsTable['lightGreen1']} size={20} />
+          </View>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Badge tags</Text>
+        </View>
+      </View>
+
       {renderTags()}
     </View>
   );

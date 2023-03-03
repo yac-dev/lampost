@@ -10,6 +10,7 @@ import LogInOrSignUp from '../Auth/Container';
 import SignUp from '../Auth/SignUp';
 import LogIn from '../Auth/LogIn';
 import EULA from '../Auth/EULA';
+import AddBadgeTags from '../User/AddBadgeTags/Container';
 
 import UserHome from '../User/Container';
 // import Launched from '../User/LaunchedMeetups/Container';
@@ -159,6 +160,27 @@ const Auth = (props) => {
           <Stack.Screen
             name='Add badges'
             component={AddBadges}
+            options={({ navigation }) => ({
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
+                </TouchableOpacity>
+              ),
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+              headerTintColor: 'white',
+            })}
+          />
+        </Stack.Group>
+        <Stack.Group screenOptions={{ presentation: 'modal', gestureEnabled: false }}>
+          <Stack.Screen
+            name='Add badge tags'
+            component={AddBadgeTags}
             options={({ navigation }) => ({
               headerLeft: () => (
                 <TouchableOpacity onPress={() => navigation.goBack()}>

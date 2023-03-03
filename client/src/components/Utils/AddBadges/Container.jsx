@@ -26,11 +26,6 @@ import FilterOption from './FilterOption';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 const Tab = createMaterialTopTabNavigator();
-import Home from './Home';
-import Sports from './Sports';
-
-// ac
-import { setIsTappedBadgeBottomSheetOpen } from '../../../redux/actionCreators/bottomSheet';
 
 const Container = (props) => {
   const { auth, setLoading, isIpad } = useContext(GlobalContext);
@@ -376,7 +371,7 @@ const Container = (props) => {
             borderRadius: 10,
           }}
         >
-          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>Already added</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>Adding badges</Text>
           <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
             {list}
           </ScrollView>

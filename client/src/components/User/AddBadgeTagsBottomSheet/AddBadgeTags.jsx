@@ -9,14 +9,18 @@ import {
   iconColorsTable,
   inputBackgroundColor,
   sectionBackgroundColor,
+  screenSectionBackgroundColor,
+  disabledTextColor,
 } from '../../../utils/colorsTable';
 import lampostAPI from '../../../apis/lampost';
 import BadgeTag from './BadgeTag';
 import ActionButton from '../../Utils/ActionButton';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import { iconsTable } from '../../../utils/icons';
 
 const AddBadgeTags = () => {
+  const { Ionicons } = iconsTable;
   const { auth } = useContext(GlobalContext);
   const {
     pressedBadgeData,
@@ -144,20 +148,28 @@ const AddBadgeTags = () => {
       return (
         <View
           style={{
-            borderWidth: 0.3,
-            borderColor: baseTextColor,
-            padding: 5,
-            marginRight: 10,
-            borderRadius: 10,
+            backgroundColor: screenSectionBackgroundColor,
+            padding: 10,
+            marginRight: 15,
+            borderRadius: 5,
             flexDirection: 'row',
             alignItems: 'center',
           }}
           key={index}
         >
-          <MaterialCommunityIcons name='tag' size={25} color='white' style={{ marginRight: 10 }} />
-          <Text style={{ color: 'white', fontWeight: 'bold', marginRight: 5 }}>{badgeTagName}</Text>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 18 }}>{badgeTagName}</Text>
           <TouchableOpacity
-            style={{ position: 'absolute', top: 0, right: -5 }}
+            style={{
+              position: 'absolute',
+              top: -5,
+              right: -10,
+              width: 20,
+              height: 20,
+              borderRadius: 10,
+              backgroundColor: iconColorsTable['red1'],
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
             onPress={() =>
               setCreatingBadgeTagNames((previous) => {
                 const updating = [...previous];
@@ -166,13 +178,32 @@ const AddBadgeTags = () => {
               })
             }
           >
-            <AntDesign name='closecircleo' size={15} color={baseTextColor} />
+            <Ionicons name='remove' size={15} color={'white'} />
           </TouchableOpacity>
         </View>
       );
     });
 
-    return <ScrollView horizontal={true}>{createdBadgeTagsList}</ScrollView>;
+    return (
+      <View>
+        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>Adding tags</Text>
+        <ScrollView horizontal={true} style={{ paddingTop: 10, paddingBottom: 5 }}>
+          {createdBadgeTagsList}
+        </ScrollView>
+      </View>
+    );
+  };
+
+  const renderAddingBadgeTags = () => {
+    const selectedBadgeTagsList = Object.values(addedBadgeTags);
+    if (selectedBadgeTagsList.length || creatingBadgeTagNames.length) {
+      return (
+        <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 20 }}>
+          {renderSelectedBadgeTags(selectedBadgeTagsList)}
+          {renderCreatingBadgeTags()}
+        </View>
+      );
+    }
   };
 
   const renderNote = () => {
@@ -224,8 +255,17 @@ const AddBadgeTags = () => {
                   setCreatingBadgeTagNames((previous) => [...previous, creatingBadgeTagText]);
                   Keyboard.dismiss();
                 }}
+                disabled={creatingBadgeTagText ? false : true}
               >
-                <Text style={{ color: 'white', padding: 10, fontWeight: 'bold' }}>Add</Text>
+                <Text
+                  style={{
+                    color: creatingBadgeTagText ? 'white' : disabledTextColor,
+                    padding: 10,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Add
+                </Text>
               </TouchableOpacity>
             </View>
           </InputAccessoryView>
@@ -236,21 +276,8 @@ const AddBadgeTags = () => {
     }
   };
 
-  const renderAddingBadgeTags = () => {
-    const selectedBadgeTagsList = Object.values(addedBadgeTags);
-    if (selectedBadgeTagsList.length || creatingBadgeTagNames.length) {
-      return (
-        <View style={{ padding: 10, borderRadius: 10, backgroundColor: sectionBackgroundColor, marginBottom: 20 }}>
-          {renderSelectedBadgeTags(selectedBadgeTagsList)}
-          {renderCreatingBadgeTags()}
-        </View>
-      );
-    }
-  };
-
   return (
     <View>
-      <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Add badge tags</Text>
       {renderAddingBadgeTags()}
       {renderBadgeTags()}
       {renderNote()}

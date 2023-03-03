@@ -32,10 +32,8 @@ const ConfirmActionButtonModal = (props) => {
     } else if (confirmActionButtonModal.type === 'Add badge tags') {
       return (
         <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>
-          Add any tags such as your position, role,level, how much you experienced etc and explain more about your{' '}
-          {pressedBadgeData.badge.name} badge.
-          {'\n'}
-          {'\n'} e.g. senior, addicted, enthusiast, inspired etc.
+          You can add whatever tags about your {pressedBadgeData.badge.name} badge.
+          {'\n'} e.g.) senior, addicted, enthusiast, inspired etc.
         </Text>
       );
     } else {
@@ -79,7 +77,7 @@ const ConfirmActionButtonModal = (props) => {
             Cancel
           </Button>
           <Button textColor='rgb(58, 126, 224)' onPress={() => onNextPress()}>
-            Next
+            Gotcha 👍
           </Button>
         </Dialog.Actions>
       </Dialog>

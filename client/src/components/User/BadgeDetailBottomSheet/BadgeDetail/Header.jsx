@@ -13,7 +13,7 @@ import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Header = () => {
-  const { pressedBadgeData, isMyPage, setConfirmActionButtonModal, badgeDetailBottomSheetRef } =
+  const { pressedBadgeData, isMyPage, setConfirmActionButtonModal, badgeDetailBottomSheetRef, navigation } =
     useContext(UserContext);
 
   const renderActionButtons = () => {
@@ -37,7 +37,12 @@ const Header = () => {
               icon={<MaterialCommunityIcons name='tag-multiple' size={20} color={'white'} />}
               backgroundColor={iconColorsTable['blue1']}
               onActionButtonPress={() => {
-                setConfirmActionButtonModal({ isOpen: true, type: 'Add badge tags' });
+                // setConfirmActionButtonModal({ isOpen: true, type: 'Add badge tags' });
+                navigation.navigate('Add badge tags', {
+                  badgeId: pressedBadgeData.badge._id,
+                  badgeTags: pressedBadgeData.badgeTags,
+                });
+                badgeDetailBottomSheetRef.current.close();
               }}
               label='Add badge tag'
             />

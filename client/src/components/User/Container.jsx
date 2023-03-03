@@ -3,7 +3,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import GlobalContext from '../../GlobalContext';
 import UserContext from './UserContext';
 import BadgeContext from './BadgeContext';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import lampostAPI from '../../apis/lampost';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
@@ -15,7 +15,9 @@ import {
   screenSectionBackgroundColor,
   sectionBackgroundColor,
   rnDefaultBackgroundColor,
+  backgroundColorsTable,
 } from '../../utils/colorsTable';
+import { iconsTable } from '../../utils/icons';
 import { Provider as PaperProvider } from 'react-native-paper';
 import ActionButton from '../Utils/ActionButton';
 
@@ -40,8 +42,10 @@ import LeadershipBottomSheet from './LeadershipBottomSheet';
 
 // badgeを取ってきて、skillも取ってくる。subscriberの数も返すし、connectionの数も返す。
 const Container = (props) => {
+  const { Ionicons, MaterialCommunityIcons } = iconsTable;
   const { auth, setLoading, setSnackBar } = useContext(GlobalContext);
   const [user, setUser] = useState(null);
+  const [isFetchedUserData, setIsFetchedUserData] = useState(false);
   const [badgeDatas, setBadgeDatas] = useState({});
   const [pressedBadgeData, setPressedBadgeData] = useState(null);
   const [isMyPage, setIsMyPage] = useState();
@@ -79,6 +83,7 @@ const Container = (props) => {
     // console.log(user);
     setUser(user);
     setIsBlocked(isBlocking);
+    setIsFetchedUserData(true);
   }; // ここ、4回queryしているのはなぜだ？？
   useEffect(() => {
     getUser();
@@ -166,10 +171,9 @@ const Container = (props) => {
           {auth.data && user._id === auth.data._id ? (
             <View>
               <Text style={{ color: baseTextColor, textAlign: 'center', marginBottom: 10 }}>
-                Let's add some badges and express yourself more.{'\n'} e.g.) Your profession, foods you like,{'\n'} your
-                favorite musicians, what you are learning etc
+                Let's add some badges down below{'\n'} and express yourself more.
               </Text>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={{
                   alignSelf: 'center',
                   padding: 10,
@@ -184,9 +188,9 @@ const Container = (props) => {
                     color: 'white',
                   }}
                 >
-                  Add here
+                  Add from here
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           ) : (
             <Text style={{ color: baseTextColor, textAlign: 'center' }}>You'll see all the badges of this user.</Text>
@@ -196,126 +200,133 @@ const Container = (props) => {
     }
   };
 
-  if (user) {
+  const renderUserData = () => {
     return (
-      <UserContext.Provider
-        value={{
-          user,
-          setUser,
-          isMyPage,
-          isBlocked,
-          setIsBlocked,
-          navigation: props.navigation,
-          appMenuBottomSheetRef,
-          badgeDetailBottomSheetRef,
-          addBadgeTagsBottomSheetRef,
-          addLinkBottomSheetRef,
-          addLinkOrBadgeTagsBottomSheetType,
-          setAddLinkOrBadgeTagsBottomSheetType,
-          pressedBadgeData,
-          setPressedBadgeData,
-          badgeDatas,
-          setBadgeDatas,
-          isConfirmEditProfileModalOpen,
-          setIsConfirmEditProfileModalOpen,
-          isConfirmLogoutModalOpen,
-          setIsConfirmLogoutModalOpen,
-          confirmActionButtonModal,
-          setConfirmActionButtonModal,
-          selectedProfileImage,
-          setSelectedProfileImage,
-          fetchedBadgeTags,
-          setFetchedBadgeTags,
-          isOpenCreateBadgeTagTextInput,
-          setIsOpenCreateBadgeTagTextInput,
-          isConfirmDeleteAccountModalOpen,
-          setIsConfirmDeleteAccountModalOpen,
-          isConfirmFlagUserModalOpen,
-          setIsConfirmFlagUserModalOpen,
-          flagUserMenuBottomSheetRef,
-          activitiesMenuBottomSheetRef,
-          leadershipBottomSheetRef,
-          isConfirmBlockUserModalOpen,
-          setIsConfirmBlockUserModalOpen,
-        }}
-      >
-        <PaperProvider>
-          <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-            <Header />
-            {isBlocked ? (
-              <View>
-                <Text style={{ color: baseTextColor, textAlign: 'center', marginBottom: 10 }}>
-                  You are blocking this user now.
-                </Text>
-                <View style={{ alignSelf: 'center' }}>
-                  <ActionButton
-                    label='Unblock this user'
-                    icon={<Fontisto name='unlocked' size={20} color='white' />}
-                    backgroundColor={iconColorsTable['blue1']}
-                    onActionButtonPress={() => onUnlockUserPress()}
-                  />
-                </View>
-              </View>
-            ) : (
-              <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
-            )}
-            {!auth.isAuthenticated || !isMyPage ? null : (
-              <TouchableOpacity
-                style={{
-                  position: 'absolute',
-                  bottom: 20,
-                  backgroundColor: rnDefaultBackgroundColor,
-                  borderRadius: 10,
-                  alignSelf: 'center',
-                  // elevation: 5,
-                  // shadowColor: '#000',
-                  // shadowOffset: { width: 0, height: 0 },
-                  // shadowOpacity: 0.1,
-                  // shadowRadius: 5,
-                }}
-                onPress={() => appMenuBottomSheetRef.current.snapToIndex(1)}
-              >
-                <View
-                  style={{
-                    backgroundColor: iconColorsTable['green1'],
-                    padding: 10,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderRadius: 10,
-                  }}
-                >
-                  <Foundation name='sheriff-badge' size={25} color={'white'} style={{ marginRight: 10 }} />
-                  <Text style={{ color: 'white' }}>Menu</Text>
-                  <MaterialCommunityIcons name='chevron-down' size={25} color={'white'} />
-                </View>
-              </TouchableOpacity>
-            )}
-
-            <AppMenuBottomSheet />
-            <BadgeDetailBottomSheet />
-            <AddBadgeTagsBottomSheet />
-            <AddLinkBottomSheet />
-            <FlagUserMenuBottomSheet />
-            <ActivitiesMenuBottomSheet />
-            <LeadershipBottomSheet />
-            {/* <SelectedProfileImage /> */}
-            <ConfirmEditProfileModal />
-            <ConfirmFlagUserModal />
-            <ConfirmActionButtonModal />
-            <ConfirmDeleteAccount />
-            <ConfirmLogout />
-            <ConfirmBlockUserModal />
+      <>
+        <Header />
+        {isBlocked ? (
+          <View>
+            <Text style={{ color: baseTextColor, textAlign: 'center', marginBottom: 10 }}>
+              You are blocking this user now.
+            </Text>
+            <View style={{ alignSelf: 'center' }}>
+              <ActionButton
+                label='Unblock this user'
+                icon={<Fontisto name='unlocked' size={20} color='white' />}
+                backgroundColor={iconColorsTable['blue1']}
+                onActionButtonPress={() => onUnlockUserPress()}
+              />
+            </View>
           </View>
-        </PaperProvider>
-      </UserContext.Provider>
+        ) : (
+          <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
+        )}
+        {!auth.isAuthenticated || !isMyPage ? null : (
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 20,
+              backgroundColor: backgroundColorsTable['green1'],
+              borderRadius: 10,
+              alignSelf: 'center',
+              padding: 10,
+              flexDirection: 'row',
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                backgroundColor: iconColorsTable['green1'],
+                padding: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderRadius: 10,
+                marginRight: 10,
+              }}
+              onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
+            >
+              <Ionicons name='ios-apps' size={25} color={'white'} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                backgroundColor: iconColorsTable['green1'],
+                padding: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderRadius: 10,
+              }}
+              onPress={() => null}
+            >
+              <MaterialCommunityIcons name='human-greeting-variant' size={25} color={'white'} />
+            </TouchableOpacity>
+          </View>
+        )}
+
+        <AppMenuBottomSheet />
+        <BadgeDetailBottomSheet />
+        <AddBadgeTagsBottomSheet />
+        <AddLinkBottomSheet />
+        <FlagUserMenuBottomSheet />
+        <ActivitiesMenuBottomSheet />
+        {/* <LeadershipBottomSheet /> */}
+        {/* <SelectedProfileImage /> */}
+        <ConfirmEditProfileModal />
+        <ConfirmFlagUserModal />
+        <ConfirmActionButtonModal />
+        <ConfirmDeleteAccount />
+        <ConfirmLogout />
+        <ConfirmBlockUserModal />
+      </>
     );
-  } else {
-    return (
+  };
+
+  // if (user) {
+  return (
+    <UserContext.Provider
+      value={{
+        user,
+        setUser,
+        isMyPage,
+        isBlocked,
+        setIsBlocked,
+        navigation: props.navigation,
+        appMenuBottomSheetRef,
+        badgeDetailBottomSheetRef,
+        addBadgeTagsBottomSheetRef,
+        addLinkBottomSheetRef,
+        addLinkOrBadgeTagsBottomSheetType,
+        setAddLinkOrBadgeTagsBottomSheetType,
+        pressedBadgeData,
+        setPressedBadgeData,
+        badgeDatas,
+        setBadgeDatas,
+        isConfirmEditProfileModalOpen,
+        setIsConfirmEditProfileModalOpen,
+        isConfirmLogoutModalOpen,
+        setIsConfirmLogoutModalOpen,
+        confirmActionButtonModal,
+        setConfirmActionButtonModal,
+        selectedProfileImage,
+        setSelectedProfileImage,
+        fetchedBadgeTags,
+        setFetchedBadgeTags,
+        isOpenCreateBadgeTagTextInput,
+        setIsOpenCreateBadgeTagTextInput,
+        isConfirmDeleteAccountModalOpen,
+        setIsConfirmDeleteAccountModalOpen,
+        isConfirmFlagUserModalOpen,
+        setIsConfirmFlagUserModalOpen,
+        flagUserMenuBottomSheetRef,
+        activitiesMenuBottomSheetRef,
+        leadershipBottomSheetRef,
+        isConfirmBlockUserModalOpen,
+        setIsConfirmBlockUserModalOpen,
+      }}
+    >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        <Text style={{ color: baseTextColor, textAlign: 'center' }}>Fetching the data now...</Text>
+        {!isFetchedUserData ? <ActivityIndicator /> : renderUserData()}
       </View>
-    );
-  }
+    </UserContext.Provider>
+  );
 };
 
 export default Container;
