@@ -6,7 +6,7 @@ import { appBottomSheetBackgroundColor, baseTextColor } from '../../../utils/col
 //
 
 const ConfirmPostAssetModal = () => {
-  const { isConfirmPostAssetsModalOpen, setIsConfirmPostAssetsModalOpen, navigation, library } =
+  const { isConfirmPostAssetsModalOpen, setIsConfirmPostAssetsModalOpen, navigation, libraryId } =
     useContext(LibraryContext);
 
   return (
@@ -31,7 +31,7 @@ const ConfirmPostAssetModal = () => {
           <Button
             textColor='rgb(58, 126, 224)'
             onPress={() => {
-              navigation.navigate('Add assets', { libraryId: library._id, fromComponent: 'ADD_ASSET_FOR_POSTING' });
+              navigation.navigate('Add assets', { libraryId, fromComponent: 'ADD_ASSET_FOR_POSTING' });
               setIsConfirmPostAssetsModalOpen(false);
             }}
           >

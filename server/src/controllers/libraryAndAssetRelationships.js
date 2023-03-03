@@ -8,7 +8,7 @@ export const getAssetsByLibraryId = async (request, response) => {
       library: request.params.libraryId,
     }).populate({
       path: 'asset',
-      populate: { path: 'badges', populate: { path: 'badge', select: '_id icon color' } },
+      populate: { path: 'badges', select: 'icon color name' },
     });
 
     const assets = libraryAndAssetRelationships.map((relationship) => {
@@ -34,22 +34,14 @@ export const postAssetsByLibraryId = async (request, response) => {
 
     // loopが動かない。lengthがないと。
     if (!asset.badges.length) {
-      const arr = libraryBadges.map((badge) => {
-        return {
-          badge: badge,
-          totalCounts: 0,
-        };
-      });
-      asset.badges.push(...arr);
+      asset.badges.push(...libraryBadges);
+      asset.save();
     } else {
       for (let i = 0; i < libraryBadges.length; i++) {
-        if (asset.badges.some((badgeObject) => badgeObject.badge.toString() === libraryBadges[i])) {
+        if (asset.badges.some((badgeId) => badgeId.toString() === libraryBadges[i])) {
           null;
         } else {
-          asset.badges.push({
-            badge: libraryBadges[i],
-            totalCounts: 0,
-          });
+          asset.badges.push(libraryBadges[i]);
         }
       }
       asset.save();

@@ -41,7 +41,12 @@ const Assets = (props) => {
       {!isFetchedAssets ? (
         <ActivityIndicator />
       ) : (
-        <FlatList data={assets} renderItem={({ item }) => renderItem(item)} keyExtractor={(item) => item._id} />
+        <FlatList
+          numColumns={2}
+          data={assets}
+          renderItem={({ item }) => renderItem(item)}
+          keyExtractor={(item) => item._id}
+        />
       )}
     </View>
   );

@@ -8,9 +8,11 @@ import {
   baseBackgroundColor,
   iconColorsTable,
   rnDefaultBackgroundColor,
+  screenSectionBackgroundColor,
 } from '../../../utils/colorsTable';
 import { iconsTable } from '../../../utils/icons';
 import FastImage from 'react-native-fast-image';
+import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import AlbumsBottomSheet from './AlbumsBottomSheet/Container';
 import MembersBottomSheet from './MembersBottomSheet';
@@ -73,7 +75,7 @@ const Container = (props) => {
         onPress={() => {
           props.navigation.navigate('Asset', {
             asset: asset,
-            libraryId: library._id,
+            libraryId: props.route.params.libraryId,
           });
         }}
       >
@@ -112,17 +114,17 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        {/* <ScrollView contentContainerStyle={{ paddingBottom: 100 }}> */}
-        {/* <Header />
-        <BadgeLabels />
-        <Description /> */}
         {!isFetchedAssets ? (
           <ActivityIndicator />
         ) : (
-          <FlatList data={assets} renderItem={({ item }) => renderItem(item)} keyExtractor={(item) => item._id} />
+          <FlatList
+            numColumns={2}
+            data={assets}
+            renderItem={({ item }) => renderItem(item)}
+            keyExtractor={(item, index) => `${item._id}-${index}`}
+          />
         )}
         {/* {renderAssets()} */}
-        {/* </ScrollView> */}
         {auth.isAuthenticated ? (
           <View
             style={{

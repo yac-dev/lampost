@@ -125,9 +125,9 @@ const Container = (props) => {
     const result = await lampostAPI.get(`/libraries/${libraryId}`);
     const { library } = result.data;
     setSelectedLibrary(library);
-    const res = await lampostAPI.get(`/libraryandassetrelationships/${libraryId}`);
-    const { assets } = res.data;
-    setLibraryAssets(assets);
+    // const res = await lampostAPI.get(`/libraryandassetrelationships/${libraryId}`);
+    // const { assets } = res.data;
+    // setLibraryAssets(assets);
   };
 
   const renderBadgeLabels = (badges) => {

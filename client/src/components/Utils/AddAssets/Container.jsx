@@ -3,13 +3,14 @@ import { View, Text, ScrollView, TouchableOpacity, Dimensions } from 'react-nati
 import GlobalContext from '../../../GlobalContext';
 import lampostAPI from '../../../apis/lampost';
 import FastImage from 'react-native-fast-image';
-import { baseBackgroundColor, baseTextColor } from '../../../utils/colorsTable';
+import { baseBackgroundColor, baseTextColor, screenSectionBackgroundColor } from '../../../utils/colorsTable';
 import Asset from './Asset';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import LoadingSpinner from '../../Utils/LoadingSpinner';
 
 const Container = (props) => {
-  const { auth } = useContext(GlobalContext);
+  const { auth, setLoading } = useContext(GlobalContext);
   const [assets, setAssets] = useState([]);
   const [addedAsset, setAddedAsset] = useState(null);
   const oneAssetWidth = Dimensions.get('window').width / 2;
@@ -17,9 +18,11 @@ const Container = (props) => {
   console.log(addedAsset);
 
   const onPostPress = async () => {
+    setLoading(true);
     const result = await lampostAPI.post(`/libraryandassetrelationships/${props.route.params.libraryId}`, {
       assetId: addedAsset._id,
     });
+    setLoading(false);
     props.navigation.navigate('Library', { addedAsset });
   };
 
@@ -27,8 +30,8 @@ const Container = (props) => {
     if (props.route.params.fromComponent === 'ADD_ASSET_FOR_POSTING') {
       props.navigation.setOptions({
         headerRight: () => (
-          <TouchableOpacity onPress={() => onPostPress()}>
-            <Text style={{ color: 'white', fontSize: 20 }}>Post</Text>
+          <TouchableOpacity onPress={() => onPostPress()} disabled={addedAsset ? false : true}>
+            <Text style={{ color: addedAsset ? 'white' : screenSectionBackgroundColor, fontSize: 20 }}>Post</Text>
           </TouchableOpacity>
         ),
       });
@@ -39,8 +42,8 @@ const Container = (props) => {
     if (props.route.params.fromComponent === 'ADD_ASSETS_FOR_LAUNCHING_LIBRARY') {
       props.navigation.setOptions({
         headerRight: () => (
-          <TouchableOpacity onPress={() => onDoneAddAssetsPress()}>
-            <Text style={{ color: 'white', fontSize: 20 }}>Done</Text>
+          <TouchableOpacity onPress={() => onDoneAddAssetsPress()} disabled={addedAsset ? false : true}>
+            <Text style={{ color: addedAsset ? 'white' : screenSectionBackgroundColor, fontSize: 20 }}>Done</Text>
           </TouchableOpacity>
         ),
       });
@@ -111,7 +114,12 @@ const Container = (props) => {
     }
   };
 
-  return <ScrollView style={{ flex: 1, backgroundColor: baseBackgroundColor }}>{renderUserAssets()}</ScrollView>;
+  return (
+    <ScrollView style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+      {renderUserAssets()}
+      <LoadingSpinner />
+    </ScrollView>
+  );
 };
 
 export default Container;
