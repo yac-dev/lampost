@@ -28,7 +28,7 @@ const BadgeTags = () => {
             }}
             key={index}
           >
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>{badgeTag.name}</Text>
+            <Text style={{ color: 'white', fontSize: 17 }}>{badgeTag.name}</Text>
           </TouchableOpacity>
         );
       });

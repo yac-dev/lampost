@@ -12,6 +12,7 @@ const badgeAndUserRelationshipSchema = new mongoose.Schema({
   // label必要だよな。。。
   links: [
     {
+      type: String, // youtube, reddit, discord, facebook, instagram ,other,....って感じ
       label: String,
       urls: [String],
     },

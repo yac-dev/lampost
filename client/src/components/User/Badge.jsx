@@ -11,10 +11,12 @@ import {
   rnDefaultBackgroundColor,
   baseTextColor,
 } from '../../utils/colorsTable';
+import { iconsTable } from '../../utils/icons';
 
 import FastImage from 'react-native-fast-image';
 
 const Badge = () => {
+  const { Ionicons } = iconsTable;
   const { badgeData } = useContext(BadgeContext);
   const { setPressedBadgeData, badgeDetailBottomSheetRef } = useContext(UserContext);
   const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
@@ -95,8 +97,8 @@ const Badge = () => {
                 backgroundColor: rnDefaultBackgroundColor,
                 width: isIpad ? 25 : 20,
                 height: isIpad ? 25 : 20,
-                top: isIpad ? -7 : -5,
-                right: isIpad ? -7 : -5,
+                top: isIpad ? -7 : -8,
+                right: isIpad ? -7 : -8,
                 position: 'absolute',
                 borderRadius: isIpad ? 12.5 : 10,
               }}
@@ -111,20 +113,34 @@ const Badge = () => {
                   borderRadius: isIpad ? 12.5 : 10,
                 }}
               >
-                <Text style={{ color: 'white', fontSize: 15 }}>{badgeData.badgeTags.length}</Text>
+                <Ionicons name='pricetags' size={13} color={'white'} />
               </View>
             </View>
           ) : null}
-          {badgeData.link ? (
+          {badgeData.links.length ? (
             <View
               style={{
-                top: isIpad ? -9 : -7,
-                left: isIpad ? -9 : -7,
+                backgroundColor: rnDefaultBackgroundColor,
+                width: isIpad ? 25 : 20,
+                height: isIpad ? 25 : 20,
+                top: isIpad ? -7 : 0,
+                right: isIpad ? -7 : -8,
                 position: 'absolute',
-                transform: [{ rotateY: '180deg' }],
+                borderRadius: isIpad ? 12.5 : 10,
               }}
             >
-              <Entypo name='link' size={20} color={'rgb(174, 180, 193)'} />
+              <View
+                style={{
+                  backgroundColor: iconColorsTable[badgeData.badge.color],
+                  width: '100%',
+                  height: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: isIpad ? 12.5 : 10,
+                }}
+              >
+                <Ionicons name='pricetags' size={13} color={'white'} />
+              </View>
             </View>
           ) : null}
         </View>

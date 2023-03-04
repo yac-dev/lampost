@@ -5,6 +5,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
 
 export const iconsTable = {
   MaterialCommunityIcons,
@@ -14,4 +15,5 @@ export const iconsTable = {
   Fontisto,
   Entypo,
   AntDesign,
+  Foundation,
 };

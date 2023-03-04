@@ -50,7 +50,10 @@ const Header = () => {
               icon={<Entypo name='link' size={20} color={'white'} />}
               backgroundColor={iconColorsTable['blue1']}
               onActionButtonPress={() => {
-                setConfirmActionButtonModal({ isOpen: true, type: 'Add my link' });
+                navigation.navigate('Add link', {
+                  badgeId: pressedBadgeData.badge._id,
+                });
+                badgeDetailBottomSheetRef.current.close();
               }}
               label='Add my link'
             />
