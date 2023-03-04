@@ -11,6 +11,7 @@ import {
   disabledTextColor,
 } from '../../../utils/colorsTable';
 import { iconsTable } from '../../../utils/icons';
+import CreatedBadgeTags from './CreatedBadgeTags';
 
 const BadgeTagTextInput = () => {
   const inputAccessoryViewID = 'BADGE_TAG_INPUT';
@@ -22,6 +23,7 @@ const BadgeTagTextInput = () => {
     badgeTagOptions,
     alreadyHaveBadgeTags,
     addedBadgeTags,
+    createdBadgeTags,
   } = useContext(AddBadgeTagsContext);
   const { MaterialCommunityIcons, Ionicons, AntDesign } = iconsTable;
 
@@ -29,13 +31,14 @@ const BadgeTagTextInput = () => {
     if (
       addedBadgeTags[badgeTagTextInput] ||
       alreadyHaveBadgeTags[badgeTagTextInput] ||
-      badgeTagOptions[badgeTagTextInput]
+      badgeTagOptions[badgeTagTextInput] ||
+      createdBadgeTags[badgeTagTextInput]
     ) {
       setSnackBar({
         isVisible: true,
-        barType: 'error',
-        message: 'error',
-        deration: 5000,
+        barType: 'warning',
+        message: 'The badge tag name should be unique🤔',
+        duration: 5000,
       });
     } else {
       Keyboard.dismiss();
@@ -43,7 +46,7 @@ const BadgeTagTextInput = () => {
       setCreatedBadgeTags((previous) => {
         return {
           ...previous,
-          badgeTagTextInput,
+          [badgeTagTextInput]: badgeTagTextInput,
         };
       });
     }
@@ -51,7 +54,7 @@ const BadgeTagTextInput = () => {
 
   return (
     <View style={{ marginBottom: 25 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View
             style={{
@@ -69,8 +72,9 @@ const BadgeTagTextInput = () => {
           <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Create my own</Text>
         </View>
       </View>
+      <Text style={{ color: 'white', marginBottom: 15 }}>Couldn't find from above? Add new one from here.</Text>
       <TextInput
-        placeholder="Couldn't find from above? Add new one from here."
+        placeholder='Type Tag name'
         placeholderTextColor={baseTextColor}
         inputAccessoryViewID={inputAccessoryViewID}
         value={badgeTagTextInput}

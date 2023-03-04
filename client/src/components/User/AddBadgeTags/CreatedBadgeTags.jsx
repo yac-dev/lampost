@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import AddBadgeTagsContext from './AddBadgeTagsContext';
-import { sectionBackgroundColor, iconColorsTable } from '../../../utils/colorsTable';
+import { sectionBackgroundColor, iconColorsTable, screenSectionBackgroundColor } from '../../../utils/colorsTable';
 import { iconsTable } from '../../../utils/icons';
 
 const CreatedBadgeTags = () => {
@@ -16,9 +16,9 @@ const CreatedBadgeTags = () => {
           data={createdBadgeTagsList}
           renderItem={({ item }) => {
             return (
-              <View style={{ paddingTop: 10 }}>
-                <View style={{ padding: 10, backgroundColor: sectionBackgroundColor }}>
-                  <Text>{item}</Text>
+              <View style={{ paddingTop: 10, marginRight: 15 }}>
+                <View style={{ padding: 10, backgroundColor: screenSectionBackgroundColor, borderRadius: 5 }}>
+                  <Text style={{ color: 'white' }}>{item}</Text>
                   <TouchableOpacity
                     style={{
                       position: 'absolute',

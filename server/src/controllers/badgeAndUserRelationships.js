@@ -163,10 +163,13 @@ export const getBadgeHolders = async (request, response) => {
 // とりえずこうしておいて、userに早く結果を返す。その後にbadgeTagとuserの関係を作る。
 export const addBadgeTagsToUser = async (request, response) => {
   try {
-    const { addedBadgeTags, creatingBadgeTagNames } = request.body;
-    //最終的に、badge user relationshipのbadgeTags fieldにぶち込むarray
-    const pushingBadgeTagIds = Object.keys(addedBadgeTags);
-    let createdBadgeTags = [];
+    const { addedBadgeTags, createdBadgeTags } = request.body;
+    console.log(addedBadgeTags, createdBadgeTags);
+    // あくまで、このpushingっていうのはfieldにpushするためのもの
+    const pushingBadgeTagIds = Object.values(addedBadgeTags).map((badgeTagObject) => {
+      return badgeTagObject._id;
+    });
+    let badgeTags;
 
     // まず、badge user relationshipを見つける。これがなきゃ始まらない。
     const badgeAndUserRelationship = await BadgeAndUserRelationship.findOne({
@@ -175,16 +178,16 @@ export const addBadgeTagsToUser = async (request, response) => {
     });
 
     // もしbadge tagをcreateしようとしているなら、これを動かす。
-    if (creatingBadgeTagNames.length) {
-      const badgeTagObjects = creatingBadgeTagNames.map((badgeTagName) => {
+    if (createdBadgeTags.length) {
+      const badgeTagObjects = createdBadgeTags.map((badgeTag) => {
         return {
-          name: badgeTagName,
+          name: badgeTag,
           badge: request.params.badgeId,
           totalHolders: 0,
         };
       });
-      createdBadgeTags = await BadgeTag.insertMany(badgeTagObjects);
-      const createdBadgeTagIds = createdBadgeTags.map((badgeTag) => {
+      badgeTags = await BadgeTag.insertMany(badgeTagObjects);
+      const createdBadgeTagIds = badgeTags.map((badgeTag) => {
         return badgeTag._id;
       });
       pushingBadgeTagIds.push(...createdBadgeTagIds);
@@ -195,16 +198,16 @@ export const addBadgeTagsToUser = async (request, response) => {
     badgeAndUserRelationship.save();
 
     // badgeTagの数を更新する。
-    const badgeTags = await BadgeTag.find({ _id: { $in: pushingBadgeTagIds } });
-    for (let i = 0; i < badgeTags.length; i++) {
-      badgeTags[i].totalHolders++;
-      badgeTags[i].save();
-    }
+    // const badgeTags = await BadgeTag.find({ _id: { $in: pushingBadgeTagIds } });
+    // for (let i = 0; i < badgeTags.length; i++) {
+    //   badgeTags[i].totalHolders++;
+    //   badgeTags[i].save();
+    // }
 
     //最終的なresponseでは、badge tagsのdataそのものを返す。idではなくて。
     response.status(200).json({
       badgeId: request.params.badgeId,
-      badgeTags: [...Object.values(addedBadgeTags), ...createdBadgeTags],
+      badgeTags: [...addedBadgeTags, ...createdBadgeTags],
     });
   } catch (error) {
     console.log(error);

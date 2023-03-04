@@ -34,12 +34,12 @@ const AddedBadgeTags = () => {
                     onPress={() => {
                       setAddedBadgeTags((previous) => {
                         const updating = { ...previous };
-                        delete updating[item._id];
+                        delete updating[item.name];
                         return updating;
                       });
                       setBadgeTagOptions((previous) => {
                         const updating = { ...previous };
-                        updating[item._id] = item;
+                        updating[item.name] = item;
                         return updating;
                       });
                     }}

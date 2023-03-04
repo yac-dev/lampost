@@ -24,7 +24,14 @@ const SnackBar = (props) => {
     return (
       <Snackbar
         wrapperStyle={{ top: 0 }}
-        style={{ backgroundColor: snackBar.barType === 'success' ? iconColorsTable['blue1'] : iconColorsTable['red1'] }}
+        style={{
+          backgroundColor:
+            snackBar.barType === 'success'
+              ? iconColorsTable['blue1']
+              : 'warning'
+              ? iconColorsTable['yellow1']
+              : iconColorsTable['red1'],
+        }}
         visible={snackBar.isVisible}
         onDismiss={() => setSnackBar({ isVisible: false, message: '', barType: '', duration: null })}
         action={{
