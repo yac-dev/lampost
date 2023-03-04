@@ -216,17 +216,17 @@ export const addBadgeTagsToUser = async (request, response) => {
 
 export const addLinkToUser = async (request, response) => {
   try {
-    const { linkText } = request.body;
+    const { linkObject } = request.body;
     const badgeAndUserRelationship = await BadgeAndUserRelationship.findOne({
       badge: request.params.badgeId,
       user: request.params.userId,
     });
-    badgeAndUserRelationship.link = linkText;
+    badgeAndUserRelationship.links.push(linkObject);
     badgeAndUserRelationship.save();
 
     response.status(200).json({
       badgeId: request.params.badgeId,
-      link: linkText,
+      linkObject,
     });
   } catch (error) {
     console.log(error);

@@ -18,30 +18,36 @@ const { MaterialCommunityIcons, Ionicons, AntDesign, Fontisto, Entypo, Foundatio
 
 const socialMediasList = [
   {
-    type: 'Youtube',
+    platform: 'youtube',
+    label: 'Youtube',
     icon: <AntDesign name='youtube' size={25} color={iconColorsTable['red1']} style={{ marginRight: 10 }} />,
   },
   {
-    type: 'Discord',
+    platform: 'discord',
+    label: 'Discord',
     icon: (
       <MaterialCommunityIcons size={25} name='discord' color={iconColorsTable['violet1']} style={{ marginRight: 10 }} />
     ),
   },
 
   {
-    type: 'Pinterest',
+    platform: 'pinterest',
+    label: 'pinterest',
     icon: <Entypo name='pinterest-with-circle' size={25} color={iconColorsTable['red1']} style={{ marginRight: 10 }} />,
   },
   {
-    type: 'Snapchat',
+    platform: 'snapchat',
+    label: 'Snapchat',
     icon: <Fontisto name='snapchat' size={25} color={iconColorsTable['yellow1']} style={{ marginRight: 10 }} />,
   },
   {
-    type: 'Flickr',
+    platform: 'flickr',
+    label: 'Flickr',
     icon: <Entypo name='flickr' size={25} color={iconColorsTable['blue1']} style={{ marginRight: 10 }} />,
   },
   {
-    type: 'Stackoverflow',
+    platform: 'stackoverflow',
+    label: 'Stackoverflow',
     icon: (
       <Foundation
         name='social-stack-overflow'
@@ -52,27 +58,32 @@ const socialMediasList = [
     ),
   },
   {
-    type: 'Patreon',
+    platform: 'patreon',
+    label: 'Patreon',
     icon: (
       <MaterialCommunityIcons name='patreon' size={25} color={iconColorsTable['grey1']} style={{ marginRight: 10 }} />
     ),
   },
 
   {
-    type: 'Twitch',
+    platform: 'twitch',
+    label: 'Twitch',
     icon: <Fontisto name='twitch' size={25} color={iconColorsTable['violet1']} style={{ marginRight: 10 }} />,
   },
   {
-    type: 'Spotify',
+    platform: 'spotify',
+    label: 'Spotify',
     icon: <Entypo name='spotify' size={25} color={iconColorsTable['green1']} style={{ marginRight: 10 }} />,
   },
 
   {
-    type: 'Playstation Network',
+    platform: 'playstationNetwork',
+    label: 'Playstation Network',
     icon: <Fontisto name='playstation' size={25} color={iconColorsTable['red1']} style={{ marginRight: 10 }} />,
   },
   {
-    type: 'Nintendo',
+    platform: 'nintendo',
+    label: 'Nintendo',
     icon: (
       <MaterialCommunityIcons
         name='nintendo-switch'
@@ -83,57 +94,70 @@ const socialMediasList = [
     ),
   },
   {
-    type: 'Github',
+    platform: 'github',
+    label: 'Github',
     icon: <AntDesign name='github' size={25} color={iconColorsTable['grey1']} style={{ marginRight: 10 }} />,
   },
 
   {
-    type: 'Product Hunt',
+    platform: 'productHunt',
+    label: 'Product Hunt',
     icon: <Fontisto name='product-hunt' size={25} color={iconColorsTable['orange1']} style={{ marginRight: 10 }} />,
   },
   {
-    type: 'Xbox',
+    platform: 'xbox',
+    label: 'Xbox',
     icon: <Fontisto name='xbox' size={25} color={iconColorsTable['lightGreen1']} style={{ marginRight: 10 }} />,
   },
 
   {
-    type: 'Meetup',
+    platform: 'meetup',
+    label: 'Meetup',
     icon: <Fontisto name='meetup' size={25} color={iconColorsTable['red1']} style={{ marginRight: 10 }} />,
   },
   {
-    type: 'Uber',
+    platform: 'uber',
+    label: 'Uber',
     icon: <Fontisto name='uber' size={25} color={iconColorsTable['lightGreen1']} style={{ marginRight: 10 }} />,
   },
   {
-    type: 'Dribbble',
+    platform: 'dribbble',
+    label: 'Dribbble',
     icon: <AntDesign name='dribbble' size={25} color={iconColorsTable['pink1']} style={{ marginRight: 10 }} />,
   },
   {
-    type: 'Instagram',
+    platform: 'instagram',
+    label: 'Instagram',
     icon: <AntDesign name='instagram' size={25} color={iconColorsTable['violet1']} style={{ marginRight: 10 }} />,
   },
   {
-    type: 'Twitter',
+    platform: 'twitter',
+    label: 'Twitter',
     icon: <AntDesign name='twitter' size={25} color={iconColorsTable['lightBlue1']} style={{ marginRight: 10 }} />,
   },
   {
-    type: 'Reddit',
+    platform: 'reddit',
+    label: 'Reddit',
     icon: <Fontisto name='reddit' size={25} color={iconColorsTable['orange1']} style={{ marginRight: 10 }} />,
   },
   {
-    type: 'Quora',
+    platform: 'quora',
+    label: 'Quora',
     icon: <MaterialCommunityIcons name='quora' size={25} color={iconColorsTable['red1']} style={{ marginRight: 10 }} />,
   },
   {
-    type: 'Facebook',
+    platform: 'facebook',
+    label: 'Facebook',
     icon: <Entypo name='facebook' size={25} color={iconColorsTable['blue1']} style={{ marginRight: 10 }} />,
   },
   {
-    type: 'Medium',
+    platform: 'medium',
+    label: 'Medium',
     icon: <Fontisto name='medium' size={25} color={iconColorsTable['grey1']} style={{ marginRight: 10 }} />,
   },
   {
-    type: 'Other',
+    platform: 'other',
+    label: 'other',
     icon: (
       <MaterialCommunityIcons
         name='link-variant'
@@ -147,27 +171,28 @@ const socialMediasList = [
 
 const AddLink = (props) => {
   const { auth, setLoading } = useContext(GlobalContext);
-  const [linkObject, setLinkObject] = useState({ type: '', name: '', url: '' });
+  const [linkObject, setLinkObject] = useState({ platform: '', name: '', url: '' });
 
   const onDonePress = async () => {
     setLoading(true);
-    const result = await lampostAPI.post(`/badgeanduserrelationships/${props.route.params.badgeId}/${auth.data._id}`);
-    const { linkObject } = result.data;
+    const result = await lampostAPI.patch(
+      `/badgeanduserrelationships/link/${props.route.params.badgeId}/${auth.data._id}`,
+      { linkObject }
+    );
+    // const { linkObject } = result.data;
     setLoading(false);
-    props.navigation.navigate('Profile');
+    props.navigation.navigate('Profile', { badgeId: props.route.params.badgeId, linkObject });
   };
-
   useEffect(() => {
-    // setMyBadges(props.route.params.myBadges);
     props.navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
           onPress={() => onDonePress()}
-          disabled={!linkObject.type || !linkObject.name || !linkObject.url ? true : false}
+          disabled={!linkObject.platform || !linkObject.name || !linkObject.url ? true : false}
         >
           <Text
             style={{
-              color: !linkObject.type || !linkObject.name || !linkObject.url ? disabledTextColor : 'white',
+              color: !linkObject.platform || !linkObject.name || !linkObject.url ? disabledTextColor : 'white',
               fontSize: 20,
             }}
           >
@@ -199,10 +224,10 @@ const AddLink = (props) => {
         </View>
       </View>
       <Text style={{ color: baseTextColor, marginBottom: 15 }}>
-        Select a link type, give it a link name and the URL.
+        Select a link platform, give it a link name and the URL.
       </Text>
       <View style={{ marginBottom: 20 }}>
-        <Text style={{ color: 'white', fontWeight: 'bold' }}>Link type</Text>
+        <Text style={{ color: 'white', fontWeight: 'bold' }}>Platform</Text>
         <FlatList
           // 気をつけような。viewで囲わなきゃいけないの。scrollviewもそうだったが。
           // contentContainerStyle={{ flexDirection: 'row', flexWrap: 'wrap' }}
@@ -215,7 +240,7 @@ const AddLink = (props) => {
                 onPress={() => {
                   setLinkObject((previous) => {
                     const updating = { ...previous };
-                    updating['type'] = item.type;
+                    updating['platform'] = item.platform;
                     return updating;
                   });
                 }}
@@ -230,9 +255,9 @@ const AddLink = (props) => {
                   }}
                 >
                   {item.icon}
-                  <Text style={{ color: 'white' }}>{item.type}</Text>
+                  <Text style={{ color: 'white' }}>{item.label}</Text>
                 </View>
-                {item.type === linkObject.type ? (
+                {item.platform === linkObject.platform ? (
                   <View style={{ position: 'absolute', top: 5, right: -5 }}>
                     <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
                   </View>
@@ -241,7 +266,7 @@ const AddLink = (props) => {
             );
           }}
           horizontal={true}
-          keyExtractor={(item, index) => `${item.type}-${index}`}
+          keyExtractor={(item, index) => `${item.platform}-${index}`}
         />
       </View>
       <View style={{ marginBottom: 20 }}>

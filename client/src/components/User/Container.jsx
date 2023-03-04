@@ -68,6 +68,7 @@ const Container = (props) => {
   const [fetchedBadgeTags, setFetchedBadgeTags] = useState([]);
   const [isOpenCreateBadgeTagTextInput, setIsOpenCreateBadgeTagTextInput] = useState(false);
 
+  console.log(badgeDatas);
   // これで、自分のpageを見ているか、他人のpageを見ているかのstateを管理する。
   useEffect(() => {
     if (auth.isAuthenticated && props.route.params.userId === auth.data._id) {
@@ -135,7 +136,7 @@ const Container = (props) => {
       const addedBadgeDatasTable = { ...addedBadges };
       for (const key in addedBadgeDatasTable) {
         addedBadgeDatasTable[key]['badge'] = addedBadgeDatasTable[key];
-        addedBadgeDatasTable[key]['link'] = '';
+        addedBadgeDatasTable[key]['links'] = [];
         addedBadgeDatasTable[key]['badgeTags'] = [];
       }
       setBadgeDatas((previous) => {
@@ -149,6 +150,26 @@ const Container = (props) => {
         isVisible: true,
         barType: 'success',
         message: 'Badge added.',
+        duration: 5000,
+      });
+    }
+  }, [props.route.params?.addedUserBadges]);
+
+  useEffect(() => {
+    if (props.route.params?.linkObject) {
+      setBadgeDatas((previous) => {
+        return {
+          ...previous,
+          [props.route.params.badgeId]: {
+            ...previous[props.route.params.badgeId],
+            links: [...previous[props.route.params.badgeId].links, props.route.params.linkObject],
+          },
+        };
+      });
+      setSnackBar({
+        isVisible: true,
+        barType: 'success',
+        message: 'Link added.',
         duration: 5000,
       });
     }
