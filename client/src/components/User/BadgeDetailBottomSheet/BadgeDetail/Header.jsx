@@ -66,7 +66,7 @@ const Header = () => {
   };
 
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
+    <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center', marginBottom: 20 }}>
       <View
         style={{
           backgroundColor: rnDefaultBackgroundColor,
@@ -100,7 +100,16 @@ const Header = () => {
           />
         </TouchableOpacity>
       </View>
-      {renderActionButtons()}
+      <Text
+        style={{
+          fontWeight: 'bold',
+          fontSize: 20,
+          color: 'white',
+        }}
+      >
+        {pressedBadgeData.badge.name}
+      </Text>
+      {/* {renderActionButtons()} */}
     </View>
   );
 };

@@ -5,10 +5,11 @@ import { baseTextColor, iconColorsTable, backgroundColorsTable } from '../../../
 import { Feather } from '@expo/vector-icons';
 import { iconsTable } from '../../../../utils/icons';
 import socialMediasTable from '../../../../utils/socialMediasTable';
+import ActionButton from '../../../Utils/ActionButton';
 
 const Links = () => {
-  const { MaterialCommunityIcons, Feather } = iconsTable;
-  const { pressedBadgeData, isMyPage } = useContext(UserContext);
+  const { MaterialCommunityIcons, Feather, Entypo } = iconsTable;
+  const { pressedBadgeData, isMyPage, badgeDetailBottomSheetRef, navigation } = useContext(UserContext);
 
   const openURL = async (url) => {
     const supported = await Linking.canOpenURL(url);
@@ -23,7 +24,7 @@ const Links = () => {
 
   return (
     <View style={{ marginBottom: 25 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15, justifyContent: 'space-between' }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View
             style={{
@@ -40,6 +41,19 @@ const Links = () => {
           </View>
           <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Links</Text>
         </View>
+        {isMyPage ? (
+          <ActionButton
+            icon={<MaterialCommunityIcons name='link-variant' size={20} color={'white'} />}
+            backgroundColor={iconColorsTable['blue1']}
+            onActionButtonPress={() => {
+              navigation.navigate('Add link', {
+                badgeId: pressedBadgeData.badge._id,
+              });
+              badgeDetailBottomSheetRef.current.close();
+            }}
+            label='Add'
+          />
+        ) : null}
       </View>
       {pressedBadgeData.links.length ? (
         // <View style={{ flexDirection: 'row', alignItems: 'center' }}>

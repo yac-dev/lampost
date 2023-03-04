@@ -95,12 +95,12 @@ const Badge = () => {
             <View
               style={{
                 backgroundColor: rnDefaultBackgroundColor,
-                width: isIpad ? 25 : 20,
-                height: isIpad ? 25 : 20,
-                top: isIpad ? -7 : -10,
-                right: isIpad ? -7 : -10,
+                width: isIpad ? 25 : 16,
+                height: isIpad ? 25 : 16,
+                top: isIpad ? -7 : -7,
+                right: isIpad ? -7 : -7,
                 position: 'absolute',
-                borderRadius: isIpad ? 12.5 : 10,
+                borderRadius: isIpad ? 12.5 : 8,
               }}
             >
               <View
@@ -121,12 +121,12 @@ const Badge = () => {
             <View
               style={{
                 backgroundColor: rnDefaultBackgroundColor,
-                width: isIpad ? 25 : 20,
-                height: isIpad ? 25 : 20,
-                top: isIpad ? -7 : 5,
-                right: isIpad ? -7 : -10,
+                width: isIpad ? 25 : 16,
+                height: isIpad ? 25 : 16,
+                top: isIpad ? -7 : 8,
+                right: isIpad ? -7 : -7,
                 position: 'absolute',
-                borderRadius: isIpad ? 12.5 : 10,
+                borderRadius: isIpad ? 12.5 : 8,
               }}
             >
               <View

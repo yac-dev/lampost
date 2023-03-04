@@ -9,9 +9,10 @@ import {
   backgroundColorsTable,
 } from '../../../../utils/colorsTable';
 import { iconsTable } from '../../../../utils/icons';
+import ActionButton from '../../../Utils/ActionButton';
 
 const BadgeTags = () => {
-  const { pressedBadgeData, isMyPage } = useContext(UserContext);
+  const { pressedBadgeData, isMyPage, badgeDetailBottomSheetRef, navigation } = useContext(UserContext);
   const { MaterialCommunityIcons, Ionicons } = iconsTable;
 
   const renderTags = () => {
@@ -41,7 +42,7 @@ const BadgeTags = () => {
 
   return (
     <View style={{ marginBottom: 25 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15, justifyContent: 'space-between' }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View
             style={{
@@ -58,6 +59,21 @@ const BadgeTags = () => {
           </View>
           <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Badge tags</Text>
         </View>
+        {isMyPage ? (
+          <ActionButton
+            icon={<MaterialCommunityIcons name='tag-multiple' size={20} color={'white'} />}
+            backgroundColor={iconColorsTable['blue1']}
+            onActionButtonPress={() => {
+              // setConfirmActionButtonModal({ isOpen: true, type: 'Add badge tags' });
+              navigation.navigate('Add badge tags', {
+                badgeId: pressedBadgeData.badge._id,
+                badgeTags: pressedBadgeData.badgeTags,
+              });
+              badgeDetailBottomSheetRef.current.close();
+            }}
+            label='Add'
+          />
+        ) : null}
       </View>
 
       {renderTags()}
