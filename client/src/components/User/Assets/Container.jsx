@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import GlobalContext from '../../../GlobalContext';
 import AssetsContext from './AssetsContext';
@@ -12,6 +12,7 @@ const Container = (props) => {
   const [isMyPage, setIsMyPage] = useState(null);
   const [assets, setAssets] = useState([]);
   const oneAssetWidth = isIpad ? Dimensions.get('window').width / 4 : Dimensions.get('window').width / 2;
+  const vidRef = useRef(null);
 
   useEffect(() => {
     if (auth.data && props.route.params.userId === auth.data._id) {
@@ -20,6 +21,25 @@ const Container = (props) => {
       setIsMyPage(false);
     }
   }, []);
+
+  // useEffect(() => {
+  //   vidRef.current.loadAsync(
+  //     {
+  //       uri: 'https://lampost-dev.s3.us-east-2.amazonaws.com/assets/videos/63fe0ee103f912bde8600c1e-63ce76994541f4fbe7a5f9ae-1678022598876.mp4',
+  //     },
+  //     { isLooping: true }
+  //   );
+  //   // videoRef.current
+  //   //     .loadAsync({ uri: cachedVideo.localUri }, { isLooping: true })
+  //   //     .then((e) => {
+  //   //       Alert.alert('Not always printed');
+  //   //     })
+  //   //     .catch((e) => {
+  //   //       Alert.alert('Also not always printed', JSON.stringify(e));
+  //   //     });
+  // }, []);
+
+  console.log(assets);
 
   const getAssetsByUserId = async () => {
     const result = await lampostAPI.get(`/assets/createdby/${props.route.params.userId}`);
@@ -39,18 +59,7 @@ const Container = (props) => {
       const assetsList = assets.map((asset, index) => {
         if (asset.type === 'photo') {
           return (
-            // このheight undefinedが効く。なぜか分からんが。
-            // <TouchableOpacity
-            //   key={index}
-            //   style={{ width: '50%', height: undefined, aspectRatio: 1, paddingRight: 5, paddingBottom: 5 }}
-            //   onPress={() => onAssetPress(asset._id)}
-            // >
-            <TouchableOpacity
-              key={index}
-              style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
-              // onPress={() => onAssetPress(asset._id)}
-              // ここ、直さないとな。。。
-            >
+            <TouchableOpacity key={index} style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}>
               <FastImage
                 style={{ width: '100%', height: '100%', borderRadius: 7 }}
                 source={{
@@ -63,12 +72,7 @@ const Container = (props) => {
           );
         } else if (asset.type === 'video') {
           return (
-            <TouchableOpacity
-              key={index}
-              style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
-              // onPress={() => onAssetPress(asset._id)}
-              // ここ、直さないとな。。。
-            >
+            <TouchableOpacity key={index} style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}>
               <Video
                 style={{ width: '100%', height: '100%', borderRadius: 7 }}
                 source={{
@@ -94,7 +98,20 @@ const Container = (props) => {
 
   return (
     <AssetsContext.Provider value={{ assets }}>
-      <ScrollView style={{ flex: 1, backgroundColor: baseBackgroundColor }}>{renderUserAssets()}</ScrollView>
+      <ScrollView style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+        <Text style={{ color: 'red' }}>Hello</Text>
+        <Video
+          ref={vidRef}
+          style={{ width: 100, height: 200, borderRadius: 7, backgroundColor: 'red' }}
+          source={{
+            uri: 'https://lampost-dev.s3.us-east-2.amazonaws.com/assets/videos/grain1678028621912.mp4',
+          }}
+          useNativeControls
+          resizeMode='stretch'
+          isLooping
+        />
+        {/* {renderUserAssets()} */}
+      </ScrollView>
     </AssetsContext.Provider>
   );
 };

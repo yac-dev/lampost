@@ -26,7 +26,21 @@ export const uploadPhoto = async (fileName) => {
   await unlinkFile(filePath);
 };
 
-export const uploadVideo = async (fileName, assetId) => {
+export const uploadNormalVideo = async (fileName) => {
+  const __dirname = path.resolve();
+  const filePath = path.join(__dirname, 'assets', 'videos', fileName);
+  const fileStream = fs.createReadStream(filePath);
+  const uploadParams = {
+    Bucket: process.env.AWS_S3BUCKET_NAME,
+    Body: fileStream,
+    Key: `assets/videos/${fileName}`,
+  };
+  await s3.upload(uploadParams).promise();
+  console.log('normal video Uploaded');
+  await unlinkFile(originalFilePath);
+};
+
+export const uploadEffectedVideo = async (fileName, assetId) => {
   // uploadするのはgrain足されたやつな。
   const __dirname = path.resolve();
   const originalFilePath = path.join(__dirname, 'assets', 'videos', fileName);

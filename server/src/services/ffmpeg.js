@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-import { uploadVideo } from './s3';
+import { uploadEffectedVideo } from './s3';
 // const { v4: uuidv4 } = require('uuid');
 
 // protocol
@@ -110,7 +110,7 @@ export const AddEffect = (inputFileName, effectType, assetId, duration) => {
     execVintage(outputFilePath, assetId, effectType).then((outputFilePath) => {
       execBlur(outputFilePath, assetId).then((outputFilePath) => {
         execGrain(outputFilePath, assetId, duration, inputFileName).then(() => {
-          uploadVideo(inputFileName, assetId);
+          uploadEffectedVideo(inputFileName, assetId);
           // ここでs3にuploadする。
           // upload終わったら、消すっていう感じかな。
           // aws uploadの中で消せばいいか。

@@ -69,33 +69,33 @@ const AppMenuBottomSheet = (props) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
-              onPress={() => {
-                null;
-              }}
+              onPress={() => setVideoEffect('ocean')}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View
                   style={{
                     width: 35,
                     height: 35,
-                    backgroundColor: backgroundColorsTable['grey1'],
+                    backgroundColor: backgroundColorsTable['lightBlue1'],
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderRadius: 10,
                     marginRight: 10,
                   }}
                 >
-                  <MaterialCommunityIcons name='video-vintage' size={20} color={iconColorsTable['grey1']} />
+                  <MaterialCommunityIcons name='video-vintage' size={20} color={iconColorsTable['lightBlue1']} />
                 </View>
                 <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>
-                  Super 8 mm film
+                  8mm Ocean film
                 </Text>
               </View>
-              {/* <MaterialCommunityIcons name='chevron-right' /> */}
+              {videoEffect === 'ocean' ? (
+                <Ionicons name='checkmark-circle' size={25} color={iconColorsTable['green1']} />
+              ) : null}
             </TouchableOpacity>
             <TouchableOpacity
               style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
-              onPress={() => setVideoEffect('olive8mm')}
+              onPress={() => setVideoEffect('olive')}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View
@@ -115,13 +115,13 @@ const AppMenuBottomSheet = (props) => {
                   8mm Olive film
                 </Text>
               </View>
-              {videoEffect === 'olive8mm' ? (
+              {videoEffect === 'olive' ? (
                 <Ionicons name='checkmark-circle' size={25} color={iconColorsTable['green1']} />
               ) : null}
             </TouchableOpacity>
             <TouchableOpacity
               style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
-              disabled={true}
+              onPress={() => setVideoEffect('camel')}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View
@@ -137,13 +137,17 @@ const AppMenuBottomSheet = (props) => {
                 >
                   <MaterialCommunityIcons name='video-vintage' size={20} color={iconColorsTable['pink1']} />
                 </View>
-                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>8mm Rose film</Text>
+                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>
+                  8mm Camel film
+                </Text>
               </View>
-              {/* <Foundation name='prohibited' color={iconColorsTable['red1']} size={25} /> */}
+              {videoEffect === 'camel' ? (
+                <Ionicons name='checkmark-circle' size={25} color={iconColorsTable['green1']} />
+              ) : null}
             </TouchableOpacity>
             <TouchableOpacity
               style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
-              disabled={true}
+              onPress={() => setVideoEffect('sepia')}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View
@@ -163,7 +167,9 @@ const AppMenuBottomSheet = (props) => {
                   8mm Sepia film
                 </Text>
               </View>
-              {/* <Foundation name='prohibited' color={iconColorsTable['red1']} size={25} /> */}
+              {videoEffect === 'sepia' ? (
+                <Ionicons name='checkmark-circle' size={25} color={iconColorsTable['green1']} />
+              ) : null}
             </TouchableOpacity>
           </ScrollView>
         </View>
