@@ -23,9 +23,10 @@ const AppMenuButtons = (props) => {
     setCameraMode,
     cameraMode,
     cameraType,
-    CameraType,
+    videoEffect,
     cameraModeBottomSheetRef,
     timeMachineBottomSheetRef,
+    videoEffectBottomSheetRef,
     flipBottomSheetRef,
     meetupAttendees,
     setMeetupAttendees,
@@ -162,6 +163,12 @@ const AppMenuButtons = (props) => {
           onPress={() => {
             // timeMachineBottomSheetRef.current.snapToIndex(0);
             // appMenuBottomSheetRef.current.close();
+            if (cameraMode === 'photo') {
+              null;
+            } else if (cameraMode === 'video') {
+              appMenuBottomSheetRef.current.close();
+              videoEffectBottomSheetRef.current.snapToIndex(0);
+            }
           }}
           // disabled={true}
         >
@@ -181,7 +188,10 @@ const AppMenuButtons = (props) => {
             </View>
             <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Time machine</Text>
           </View>
-          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ color: baseTextColor }}>{videoEffect}</Text>
+            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+          </View>
         </TouchableOpacity>
       </View>
     );

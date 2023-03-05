@@ -7,10 +7,11 @@ import { Text, View, TouchableOpacity } from 'react-native';
 import lampostAPI from '../../apis/lampost';
 import { Camera, CameraType } from 'expo-camera';
 import AppMenuBottomSheet from './AppMenuBotttomSheet/Container';
-import TimeMachineBottomSheet from './TimeMachineBottomSheet/Container';
+// import TimeMachineBottomSheet from './TimeMachineBottomSheet/Container';
 import CameraModeBottomSheet from './ChangeModeBottomSheet/Container';
 import FlipCameraBottomSheet from './FlipBottomSheet';
 import TagPeopleBottomSheet from './TagPeopleBottomSheet/Container';
+import VideoEffectBottomSheet from './VideoEffectBottomSheet/Container';
 import {
   appBottomSheetBackgroundColor,
   baseBackgroundColor,
@@ -32,10 +33,12 @@ const Container = (props) => {
   const cameraModeBottomSheetRef = useRef(null);
   const flipBottomSheetRef = useRef(null);
   const tagPeopleBottomSheetRef = useRef(null);
+  const videoEffectBottomSheetRef = useRef(null);
   const cameraRef = useRef(null);
   const [cameraType, setCameraType] = useState(CameraType.back);
   const [cameraMode, setCameraMode] = useState('photo');
   const [photoEffect, setPhotoEffect] = useState('auto');
+  const [videoEffect, setVideoEffect] = useState('normal'); // normal, black and white very old,
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [warningMessage, setWarningMessage] = useState('');
   const [hasCameraPermission, setHasCameraPermission] = useState();
@@ -46,6 +49,8 @@ const Container = (props) => {
   const [currentMeetup, setCurrentMeetup] = useState(null);
   const [taggedPeople, setTaggedPeople] = useState({});
   const [meetupAttendees, setMeetupAttendees] = useState({});
+  const [duration, setDuration] = useState(0);
+  const durationRef = useRef(null);
 
   const loadMe = async () => {
     const jwtToken = await SecureStore.getItemAsync('secure_token');
@@ -76,6 +81,57 @@ const Container = (props) => {
       // }
     }, [])
   );
+  // 60秒経ったら終わり。
+
+  const renderTimer = () => {
+    if (cameraMode === 'video') {
+      // const rest = 60 - time;
+      return (
+        <View
+          style={{
+            backgroundColor: appBottomSheetBackgroundColor,
+            position: 'absolute',
+            top: 50,
+            padding: 10,
+            flexDirection: 'row',
+            alignItems: 'center',
+            borderRadius: 10,
+          }}
+        >
+          <MaterialIcons name='hourglass-top' size={25} color='white' />
+          {/* <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
+            {('0' + Math.floor((time / 60000) % 60)).slice(-2)}:
+          </Text>
+          <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
+            {('0' + Math.floor((time / 1000) % 60)).slice(-2)}:
+          </Text>
+          <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
+            {('0' + ((time / 10) % 100)).slice(-2)}
+          </Text>
+          <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{time}</Text> */}
+          <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{duration}</Text>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    let interval;
+    if (isRecording) {
+      interval = setInterval(() => {
+        setDuration((previous) => previous + 1);
+      }, 1000);
+    } else if (!isRecording) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isRecording]);
+
+  useEffect(() => {
+    durationRef.current = duration;
+  }, [duration]);
   // useEffect(() => {
   //   for (const meetup in myUpcomingMeetups) {
   //     if (myUpcomingMeetups[meetup].state === 'ongoing') {
@@ -150,6 +206,8 @@ const Container = (props) => {
       formData.append('meetupId', currentMeetup);
       formData.append('userId', auth.data._id);
       formData.append('type', cameraMode); // photo
+      formData.append('effect', videoEffect);
+      formData.append('duration', durationRef.current);
       formData.append('asset', {
         name: recordedVideo.uri.split('/').pop(),
         uri: recordedVideo.uri,
@@ -160,6 +218,7 @@ const Container = (props) => {
       const result = await lampostAPI.post(`/assets/videos`, formData, {
         headers: { 'Content-type': 'multipart/form-data' },
       });
+      setDuration(0);
       setSnackBar({
         isVisible: true,
         message: 'Video was recorded.',
@@ -294,6 +353,7 @@ const Container = (props) => {
         cameraModeBottomSheetRef,
         flipBottomSheetRef,
         tagPeopleBottomSheetRef,
+        videoEffectBottomSheetRef,
         cameraMode,
         setCameraMode,
         cameraType,
@@ -301,6 +361,8 @@ const Container = (props) => {
         CameraType,
         photoEffect,
         setPhotoEffect,
+        videoEffect,
+        setVideoEffect,
         isWarningModalOpen,
         setIsWarningModalOpen,
         warningMessage,
@@ -321,20 +383,7 @@ const Container = (props) => {
             type={cameraType}
             whiteBalance={photoEffect}
           >
-            {cameraMode === 'video' ? (
-              <View
-                style={{
-                  backgroundColor: appBottomSheetBackgroundColor,
-                  position: 'absolute',
-                  top: 80,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-              >
-                <MaterialIcons name='hourglass-top' size={25} color='white' />
-                <Text style={{ color: baseTextColor, fontSize: 15, fontWeight: 'bold' }}>3:00</Text>
-              </View>
-            ) : null}
+            {renderTimer()}
           </Camera>
         </View>
         {auth.isAuthenticated ? (
@@ -381,10 +430,11 @@ const Container = (props) => {
           </View>
         ) : null}
         <AppMenuBottomSheet />
-        <TimeMachineBottomSheet />
+        {/* <TimeMachineBottomSheet /> */}
         <CameraModeBottomSheet />
         <FlipCameraBottomSheet />
         <TagPeopleBottomSheet />
+        <VideoEffectBottomSheet />
         <WarningModal />
       </View>
     </CameraContext.Provider>

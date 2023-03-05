@@ -40,12 +40,14 @@ export const createPhoto = async (request, response) => {
 
 export const createVideo = async (request, response) => {
   try {
-    const { meetupId, userId, type, ...rest } = request.body;
+    const { meetupId, userId, type, effect, duration, ...rest } = request.body;
     const taggedUserIds = Object.values(rest);
     const asset = await Asset.create({
       data: `https://lampost-${process.env.NODE_ENV}.s3.us-east-2.amazonaws.com/assets/videos/${request.file.filename}`,
       type: type,
       meetup: meetupId,
+      effect: effect,
+      duration: duration,
       taggedPeople: taggedUserIds,
       createdBy: userId,
       createdAt: new Date(),

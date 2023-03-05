@@ -67,8 +67,6 @@ const Container = (props) => {
   const [addLinkOrBadgeTagsBottomSheetType, setAddLinkOrBadgeTagsBottomSheetType] = useState('');
   const [fetchedBadgeTags, setFetchedBadgeTags] = useState([]);
   const [isOpenCreateBadgeTagTextInput, setIsOpenCreateBadgeTagTextInput] = useState(false);
-
-  console.log(badgeDatas);
   // これで、自分のpageを見ているか、他人のpageを見ているかのstateを管理する。
   useEffect(() => {
     if (auth.isAuthenticated && props.route.params.userId === auth.data._id) {

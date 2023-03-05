@@ -29,6 +29,7 @@ const assetSchema = new mongoose.Schema({
     name: String,
   },
   effect: String,
+  duration: Number,
   createdBy: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
