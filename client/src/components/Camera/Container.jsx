@@ -85,7 +85,7 @@ const Container = (props) => {
 
   const renderTimer = () => {
     if (cameraMode === 'video') {
-      // const rest = 60 - time;
+      const rest = 60 - duration;
       return (
         <View
           style={{
@@ -109,7 +109,7 @@ const Container = (props) => {
             {('0' + ((time / 10) % 100)).slice(-2)}
           </Text>
           <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{time}</Text> */}
-          <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{duration}</Text>
+          <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{rest}</Text>
         </View>
       );
     } else {
@@ -132,14 +132,6 @@ const Container = (props) => {
   useEffect(() => {
     durationRef.current = duration;
   }, [duration]);
-  // useEffect(() => {
-  //   for (const meetup in myUpcomingMeetups) {
-  //     if (myUpcomingMeetups[meetup].state === 'ongoing') {
-  //       return setCurrentMeetup(meetup);
-  //     }
-  //     // console.log(myUpcomingMeetups[meetup]);
-  //   }
-  // }, []);
 
   const askCameraPermission = async () => {
     const cameraPermission = await Camera.requestCameraPermissionsAsync();
@@ -231,24 +223,6 @@ const Container = (props) => {
   const stopRecording = async () => {
     setIsRecording(false);
     cameraRef.current.stopRecording();
-    // const formData = new FormData();
-    // formData.append('meetupId', currentMeetup);
-    // formData.append('userId', auth.data._id);
-    // formData.append('type', cameraMode); // photo
-    // formData.append('asset', {
-    //   name: video.uri.split('/').pop(),
-    //   uri: video.uri,
-    //   type: 'video/mp4', // video type
-    // });
-    // // const result = await lampostAPI.post(`/assets/videos`, formData, {
-    // //   headers: { 'Content-type': 'multipart/form-data' },
-    // // });
-    // setSnackBar({
-    //   isVisible: true,
-    //   message: 'Video recorded.',
-    //   barType: 'success',
-    //   duration: 2000,
-    // });
   };
 
   // 基本的に、10秒以内の動画は保存しないようにする

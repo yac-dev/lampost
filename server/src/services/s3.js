@@ -26,10 +26,12 @@ export const uploadPhoto = async (fileName) => {
   await unlinkFile(filePath);
 };
 
-export const uploadVideo = async (fileName) => {
+export const uploadVideo = async (fileName, assetId) => {
+  // uploadするのはgrain足されたやつな。
   const __dirname = path.resolve();
-  const filePath = path.join(__dirname, 'assets', 'videos', fileName);
-  const fileStream = fs.createReadStream(filePath);
+  const originalFilePath = path.join(__dirname, 'assets', 'videos', fileName);
+  const uploadingGrainFilePath = path.join(__dirname, 'tmp', assetId, fileName);
+  const fileStream = fs.createReadStream(uploadingGrainFilePath);
 
   const uploadParams = {
     Bucket: process.env.AWS_S3BUCKET_NAME,
@@ -38,7 +40,8 @@ export const uploadVideo = async (fileName) => {
   };
   await s3.upload(uploadParams).promise();
   console.log('video Uploaded');
-  await unlinkFile(filePath);
+  await unlinkFile(originalFilePath);
+  fs.rmSync(path.join(__dirname, 'tmp', assetId), { recursive: true, force: true });
 };
 
 export const uploadAvatar = async (fileName) => {

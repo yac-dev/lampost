@@ -2,6 +2,7 @@ import Asset from '../models/asset';
 import Meetup from '../models/meetup';
 import User from '../models/user';
 import { uploadPhoto, uploadVideo } from '../services/s3';
+import { AddEffect } from '../services/ffmpeg';
 
 export const createPhoto = async (request, response) => {
   try {
@@ -52,7 +53,10 @@ export const createVideo = async (request, response) => {
       createdBy: userId,
       createdAt: new Date(),
     });
-    uploadVideo(request.file.filename);
+    AddEffect(request.file.filename, effect, asset._id.toString(), asset.duration);
+    // asset idを使ってfolderを作りましょう。
+    //  ここで、ffmpegを動かす。
+    // uploadVideo(request.file.filename);
     response.status(200).json({
       message: 'success',
     });

@@ -4,6 +4,7 @@ import GlobalContext from '../../../GlobalContext';
 import AssetsContext from './AssetsContext';
 import lampostAPI from '../../../apis/lampost';
 import FastImage from 'react-native-fast-image';
+import { Video, AVPlaybackStatus } from 'expo-av';
 import { baseBackgroundColor, baseTextColor } from '../../../utils/colorsTable';
 
 const Container = (props) => {
@@ -36,29 +37,50 @@ const Container = (props) => {
   const renderUserAssets = () => {
     if (assets.length) {
       const assetsList = assets.map((asset, index) => {
-        return (
-          // このheight undefinedが効く。なぜか分からんが。
-          // <TouchableOpacity
-          //   key={index}
-          //   style={{ width: '50%', height: undefined, aspectRatio: 1, paddingRight: 5, paddingBottom: 5 }}
-          //   onPress={() => onAssetPress(asset._id)}
-          // >
-          <TouchableOpacity
-            key={index}
-            style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
-            // onPress={() => onAssetPress(asset._id)}
-            // ここ、直さないとな。。。
-          >
-            <FastImage
-              style={{ width: '100%', height: '100%', borderRadius: 7 }}
-              source={{
-                uri: asset.data,
-                priority: FastImage.priority.normal,
-              }}
-              resizeMode={FastImage.resizeMode.stretch}
-            />
-          </TouchableOpacity>
-        );
+        if (asset.type === 'photo') {
+          return (
+            // このheight undefinedが効く。なぜか分からんが。
+            // <TouchableOpacity
+            //   key={index}
+            //   style={{ width: '50%', height: undefined, aspectRatio: 1, paddingRight: 5, paddingBottom: 5 }}
+            //   onPress={() => onAssetPress(asset._id)}
+            // >
+            <TouchableOpacity
+              key={index}
+              style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
+              // onPress={() => onAssetPress(asset._id)}
+              // ここ、直さないとな。。。
+            >
+              <FastImage
+                style={{ width: '100%', height: '100%', borderRadius: 7 }}
+                source={{
+                  uri: asset.data,
+                  priority: FastImage.priority.normal,
+                }}
+                resizeMode={FastImage.resizeMode.stretch}
+              />
+            </TouchableOpacity>
+          );
+        } else if (asset.type === 'video') {
+          return (
+            <TouchableOpacity
+              key={index}
+              style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
+              // onPress={() => onAssetPress(asset._id)}
+              // ここ、直さないとな。。。
+            >
+              <Video
+                style={{ width: '100%', height: '100%', borderRadius: 7 }}
+                source={{
+                  uri: asset.data,
+                }}
+                useNativeControls
+                resizeMode='stretch'
+                isLooping
+              />
+            </TouchableOpacity>
+          );
+        }
       });
       return <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{assetsList}</View>;
     } else {
