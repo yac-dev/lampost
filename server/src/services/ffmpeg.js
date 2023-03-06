@@ -80,11 +80,13 @@ export const execBlur = (inputFilePath, assetId) => {
   });
 };
 
+// ffmpeg -i /Users/yosuke/Desktop/ffmpeg_playground/effects/grainAndFlash.mp4 -i ${inputFilePath} -filter_complex "[0]format=rgba,colorchannelmixer=aa=0.25[fg];[1][fg]overlay[out];[out]trim=0:14,setpts=PTS-STARTPTS[video]" -map "[video]" -c:v libx264 ${outputFilePath}
+
 export const execGrain = (inputFilePath, assetId, duration, lastFileName) => {
   console.log('started adding grain');
   const outputFilePath = path.join(__dirname, '..', '..', 'tmp', assetId, lastFileName);
   const grainFilePath = path.join(__dirname, '..', '..', 'overlays', 'grainAndFlash.mp4');
-  const grainCommand = `ffmpeg -i ${grainFilePath} -i ${inputFilePath} -filter_complex "[0:a][1:a]amerge[mixedAudio];[0]format=rgba,colorchannelmixer=aa=0.25[fg];[1][fg]overlay[out];[out]trim=0:${duration},setpts=PTS-STARTPTS[video]" -map "[video]" -map "[mixedAudio]" -pix_fmt yuv420p -c:v libx264 -crf 18 -shortest ${outputFilePath}`;
+  const grainCommand = `ffmpeg -i ${grainFilePath} -i ${inputFilePath} -filter_complex "[0]format=rgba,colorchannelmixer=aa=0.25[fg];[1][fg]overlay[out];[out]trim=0:${duration},setpts=PTS-STARTPTS[video]" -map "[video]" -c:v libx264 ${outputFilePath}`;
 
   return new Promise((resolve, reject) => {
     exec(grainCommand, (err, stdout, stderr) => {

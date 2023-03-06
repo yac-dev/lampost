@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Dimensions, Alert } from 'react-native';
 import GlobalContext from '../../../GlobalContext';
 import AssetsContext from './AssetsContext';
 import lampostAPI from '../../../apis/lampost';
@@ -13,6 +13,7 @@ const Container = (props) => {
   const [assets, setAssets] = useState([]);
   const oneAssetWidth = isIpad ? Dimensions.get('window').width / 4 : Dimensions.get('window').width / 2;
   const vidRef = useRef(null);
+  const [status, setStatus] = React.useState({});
 
   useEffect(() => {
     if (auth.data && props.route.params.userId === auth.data._id) {
@@ -79,7 +80,7 @@ const Container = (props) => {
                   uri: asset.data,
                 }}
                 useNativeControls
-                resizeMode='stretch'
+                resizeMode='contain'
                 isLooping
               />
             </TouchableOpacity>
@@ -98,20 +99,7 @@ const Container = (props) => {
 
   return (
     <AssetsContext.Provider value={{ assets }}>
-      <ScrollView style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        <Text style={{ color: 'red' }}>Hello</Text>
-        <Video
-          ref={vidRef}
-          style={{ width: 100, height: 200, borderRadius: 7, backgroundColor: 'red' }}
-          source={{
-            uri: 'https://lampost-dev.s3.us-east-2.amazonaws.com/assets/videos/grain1678028621912.mp4',
-          }}
-          useNativeControls
-          resizeMode='stretch'
-          isLooping
-        />
-        {/* {renderUserAssets()} */}
-      </ScrollView>
+      <ScrollView style={{ flex: 1, backgroundColor: baseBackgroundColor }}>{renderUserAssets()}</ScrollView>
     </AssetsContext.Provider>
   );
 };
