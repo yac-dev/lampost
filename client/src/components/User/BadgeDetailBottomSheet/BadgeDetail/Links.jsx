@@ -66,8 +66,7 @@ const Links = () => {
           return (
             <View
               key={index}
-              style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
-              onPress={() => console.log('link.url')}
+              style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 5 }}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 {socialMediasTable[link.platform].icon}

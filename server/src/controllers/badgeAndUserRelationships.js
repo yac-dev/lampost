@@ -207,7 +207,7 @@ export const addBadgeTagsToUser = async (request, response) => {
     //最終的なresponseでは、badge tagsのdataそのものを返す。idではなくて。
     response.status(200).json({
       badgeId: request.params.badgeId,
-      badgeTags: [...addedBadgeTags, ...createdBadgeTags],
+      badgeTags: [...addedBadgeTags, ...badgeTags], // createしたbadgeTagsが"badgeTags"ね。
     });
   } catch (error) {
     console.log(error);

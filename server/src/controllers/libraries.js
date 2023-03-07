@@ -11,6 +11,7 @@ const colors = ['red1', 'blue1', 'yellow1', 'violet1', 'green1', 'lightBlue1'];
 export const getLibraries = async (request, response) => {
   try {
     const libraries = await Library.find({})
+      .select({ name: 1, thumbnail: 1, assetType: 1 })
       .populate({
         path: 'launcher',
         select: 'name photo',

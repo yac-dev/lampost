@@ -56,9 +56,10 @@ const AddBadgeTagsContainer = (props) => {
       `/badgeanduserrelationships/add/${props.route.params.badgeId}/${auth.data._id}`,
       { addedBadgeTags: Object.values(addedBadgeTags), createdBadgeTags: Object.values(createdBadgeTags) }
     );
+    const { badgeId, badgeTags } = result.data;
     setLoading(false);
     console.log(result.data);
-    props.navigation.navigate('Profile');
+    props.navigation.navigate('Profile', { badgeId: badgeId, badgeTags });
   };
 
   useEffect(() => {

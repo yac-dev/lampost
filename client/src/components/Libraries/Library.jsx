@@ -6,8 +6,10 @@ import lampostAPI from '../../apis/lampost';
 import FastImage from 'react-native-fast-image';
 import SVG from 'react-native-svg';
 import { baseTextColor } from '../../utils/colorsTable';
+import { iconsTable } from '../../utils/icons';
 
 const Library = (props) => {
+  const { Ionicons } = iconsTable;
   const { auth, isIpad } = useContext(GlobalContext);
   const { libraryOverviewBottomSheetRef, setSelectedLibrary, setLibraryAssets } = useContext(LibrariesContext);
   const [loaded, setLoaded] = useState(false);
@@ -23,6 +25,29 @@ const Library = (props) => {
     const res = await lampostAPI.get(`/libraryandassetrelationships/${libraryId}`);
     const { assets } = res.data;
     setLibraryAssets(assets);
+  };
+
+  const renderAssetType = () => {
+    if (props.library.assetType === 'photo') {
+      return (
+        <View style={{ position: 'absolute', top: 10, right: 10 }}>
+          <Ionicons name='camer' size={25} color={'white'} />
+        </View>
+      );
+    } else if (props.library.assetType === 'video') {
+      return (
+        <View style={{ position: 'absolute', top: 10, right: 10 }}>
+          <Ionicons name='videocam' size={25} color={'white'} />
+        </View>
+      );
+    } else if (props.library.assetType === 'photoAndVideo') {
+      return (
+        <View style={{ position: 'absolute', top: 5, right: 20, flexDirection: 'row', alignContent: 'center' }}>
+          <Ionicons name='camera' size={20} color={'white'} style={{ marginRight: 5 }} />
+          <Ionicons name='videocam' size={20} color={'white'} />
+        </View>
+      );
+    }
   };
 
   return (
@@ -85,6 +110,7 @@ const Library = (props) => {
       >
         {props.library.name}
       </Text>
+      {renderAssetType()}
     </View>
   );
 };
