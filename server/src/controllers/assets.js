@@ -1,6 +1,13 @@
 import Asset from '../models/asset';
 import Meetup from '../models/meetup';
 import User from '../models/user';
+import fs from 'fs';
+import path from 'path';
+import { exec } from 'child_process';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 import { uploadPhoto, uploadNormalVideo } from '../services/s3';
 import { AddEffect } from '../services/ffmpeg';
 
@@ -43,7 +50,7 @@ export const createVideo = async (request, response) => {
   try {
     const { meetupId, userId, type, effect, duration, ...rest } = request.body;
     const taggedUserIds = Object.values(rest);
-    const asset = await Asset.create({
+    const asset = new Asset({
       data: `https://lampost-${process.env.NODE_ENV}.s3.us-east-2.amazonaws.com/assets/videos/${request.file.filename}`,
       type: type,
       meetup: meetupId,

@@ -38,6 +38,11 @@ const effectTypesTable = {
 };
 // sepia 第一候補
 // 0/0.45 0.2/0.2 1/1' red?
+export const generateThumbnail = (inputFilePath, assetId) => {
+  const outputFilePath = path.join(__dirname, '..', '..', 'tmp', assetId, `thumbnail-${assetId}.mp4`);
+  const thumbnailCommand = `ffmpeg -i ${inputFilePath} -ss 00:00:03.000 -frames:v 1 ${outputFilePath}`;
+};
+
 export const execFps = (inputFilePath, assetId) => {
   console.log('started fps conversion');
   const outputFilePath = path.join(__dirname, '..', '..', 'tmp', assetId, 'fps.mp4');
@@ -86,7 +91,7 @@ export const execGrain = (inputFilePath, assetId, duration, lastFileName) => {
   console.log('started adding grain');
   const outputFilePath = path.join(__dirname, '..', '..', 'tmp', assetId, lastFileName);
   const grainFilePath = path.join(__dirname, '..', '..', 'overlays', 'grainAndFlash.mp4');
-  const grainCommand = `ffmpeg -i ${grainFilePath} -i ${inputFilePath} -filter_complex "[0]format=rgba,colorchannelmixer=aa=0.25[fg];[1][fg]overlay[out];[out]trim=0:${duration},setpts=PTS-STARTPTS[video]" -map "[video]" -c:v libx264 ${outputFilePath}`;
+  const grainCommand = `ffmpeg -i ${grainFilePath} -i ${inputFilePath} -filter_complex "[0]format=rgba,colorchannelmixer=aa=0.25[fg];[1][fg]overlay[out];[out]trim=1:${duration},setpts=PTS-STARTPTS[video]" -map "[video]" -map 1:a -c:v libx264 ${outputFilePath}`;
 
   return new Promise((resolve, reject) => {
     exec(grainCommand, (err, stdout, stderr) => {

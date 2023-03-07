@@ -24,7 +24,8 @@ import Meetups from '../User/Meetups/Container';
 import Attended from '../User/Meetups/Attended/Container';
 // import Meetup from '../User/Meetups/Meetup/Container';
 import Assets from '../User/Assets/Container';
-import Asset from '../User/Assets/Asset/Container';
+import Asset from '../Utils/Asset';
+// import Asset from '../User/Assets/Asset/Container';
 import AddBadges from '../Utils/AddBadges/Container';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
 import DeleteAccount from '../User/DeleteAccount';
@@ -90,14 +91,15 @@ const Auth = (props) => {
             name='Asset'
             component={Asset}
             options={{
-              headerStyle: {
-                backgroundColor: appBottomSheetBackgroundColor,
-              },
+              headerTransparent: true,
+              // headerStyle: {
+              //   backgroundColor: appBottomSheetBackgroundColor,
+              // },
               headerTitleStyle: {
                 fontWeight: 'bold',
                 color: 'white',
               },
-              // headerTintColor: 'white',
+              headerTintColor: 'white',
             }}
           />
           <Stack.Screen

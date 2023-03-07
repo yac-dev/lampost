@@ -116,6 +116,8 @@ PODS:
     - ExpoModulesCore
     - React-Core
   - EXUpdatesInterface (0.6.0)
+  - EXVideoThumbnails (6.3.0):
+    - ExpoModulesCore
   - FBLazyVector (0.68.2)
   - FBReactNativeSpec (0.68.2):
     - RCT-Folly (= 2021.06.28.00-v2)
@@ -557,6 +559,7 @@ DEPENDENCIES:
   - EXSecureStore (from `../node_modules/expo-secure-store/ios`)
   - EXSplashScreen (from `../node_modules/expo-splash-screen/ios`)
   - EXUpdatesInterface (from `../node_modules/expo-updates-interface/ios`)
+  - EXVideoThumbnails (from `../node_modules/expo-video-thumbnails/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
@@ -666,6 +669,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-splash-screen/ios"
   EXUpdatesInterface:
     :path: "../node_modules/expo-updates-interface/ios"
+  EXVideoThumbnails:
+    :path: "../node_modules/expo-video-thumbnails/ios"
   FBLazyVector:
     :path: "../node_modules/react-native/Libraries/FBLazyVector"
   FBReactNativeSpec:
@@ -778,6 +783,7 @@ SPEC CHECKSUMS:
   EXSecureStore: aaae919d83aec2faf031e99398807edac0313285
   EXSplashScreen: 34f460788db8d682883871708dddbfac72095bb7
   EXUpdatesInterface: 0b101ace1dbfa0f64260a5df31c71d03c66cca54
+  EXVideoThumbnails: 19e055dc3245b53c536da9e0ef9c618fd2118297
   FBLazyVector: a7a655862f6b09625d11c772296b01cd5164b648
   FBReactNativeSpec: 81ce99032d5b586fddd6a38d450f8595f7e04be4
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9

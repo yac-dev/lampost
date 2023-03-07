@@ -72,3 +72,18 @@ export const uploadAvatar = async (fileName) => {
 
   await unlinkFile(filePath);
 };
+
+export const uploadThumbnail = async (fileName) => {
+  const __dirname = path.resolve();
+  const filePath = path.join(__dirname, 'avatars', fileName);
+  const fileStream = fs.createReadStream(filePath);
+
+  const uploadParams = {
+    Bucket: process.env.AWS_S3BUCKET_NAME,
+    Body: fileStream,
+    Key: `assets/thumbnails/${fileName}`,
+  };
+  await s3.upload(uploadParams).promise();
+
+  await unlinkFile(filePath);
+};
