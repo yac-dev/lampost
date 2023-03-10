@@ -75,6 +75,7 @@ const Assets = () => {
         _id: formData.asset._id,
         badges: formData.asset.badges,
         data: formData.asset.data,
+        type: formData.asset.type,
       },
       launcher,
     };

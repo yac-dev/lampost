@@ -16,7 +16,7 @@ import { Video } from 'expo-av';
 import { iconsTable } from '../../../utils/icons';
 
 const Container = (props) => {
-  const { Ionicons, MaterialCommunityIcons } = iconsTable;
+  const { Ionicons, MaterialCommunityIcons, MaterialIcons } = iconsTable;
   const { auth } = useContext(GlobalContext);
   const { myJoinedLibraries, setMyJoinedLibraries, navigation, appMenuBottomSheetRef } = useContext(LibrariesContext);
 
@@ -39,7 +39,7 @@ const Container = (props) => {
     } else if (library.assetType === 'photoAndVideo') {
       return (
         <View style={{ flexDirection: 'row', alignContent: 'center', marginRight: 10 }}>
-          <Ionicons name='camera' size={20} color={'white'} style={{ marginRight: 5 }} />
+          <Ionicons name='image' size={20} color={'white'} style={{ marginRight: 5 }} />
           <Ionicons name='videocam' size={20} color={'white'} />
         </View>
       );

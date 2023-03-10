@@ -44,7 +44,7 @@ const Library = (props) => {
     } else if (props.library.assetType === 'photoAndVideo') {
       return (
         <View style={{ position: 'absolute', top: 5, right: 20, flexDirection: 'row', alignContent: 'center' }}>
-          <Ionicons name='camera' size={20} color={'white'} style={{ marginRight: 5 }} />
+          <Ionicons name='image' size={20} color={'white'} style={{ marginRight: 5 }} />
           <Ionicons name='videocam' size={20} color={'white'} />
         </View>
       );
