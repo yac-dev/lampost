@@ -1,4 +1,5 @@
 export const iconColorsTable = {
+  none: 'rgba(245, 245, 245, 1)',
   red1: 'rgba(255, 51, 51, 0.85)', //rd
   yellow1: 'rgba(216, 179, 8, 0.85)', //yl
   orange1: 'rgba(254, 115, 0, 0.85)', // or
@@ -15,6 +16,7 @@ export const iconColorsTable = {
 };
 
 export const backgroundColorsTable = {
+  none: 'rgba(245, 245, 245, 0.3)',
   red1: 'rgba(255, 51, 51, 0.3)',
   yellow1: 'rgba(229, 188, 0, 0.3)',
   orange1: 'rgba(254, 115, 0, 0.3)',

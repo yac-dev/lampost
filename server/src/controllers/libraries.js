@@ -12,12 +12,10 @@ export const getLibraries = async (request, response) => {
   try {
     const libraries = await Library.find({})
       .select({ name: 1, thumbnail: 1, assetType: 1 })
-      .populate({
-        path: 'launcher',
-        select: 'name photo',
-      })
+
       .populate({
         path: 'thumbnail',
+        select: 'data type',
       });
     response.status(200).json({
       libraries,
@@ -101,7 +99,12 @@ export const createLibrary = async (request, response) => {
       user: launcher._id,
     });
     response.status(200).json({
-      library: { _id: library._id, name: library.name, thumbnail: { data: asset.data } },
+      library: {
+        _id: library._id,
+        name: library.name,
+        thumbnail: { data: asset.data, type: asset.type },
+        assetType: assetType,
+      },
     });
   } catch (error) {
     console.log(error);

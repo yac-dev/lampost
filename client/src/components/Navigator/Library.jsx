@@ -114,16 +114,16 @@ const LibraryNavigator = () => {
           name='Asset'
           component={Asset}
           options={({ navigation }) => ({
-            headerShown: true,
             headerTransparent: true,
-            title: 'Asset',
-            headerStyle: {
-              backgroundColor: appBottomSheetBackgroundColor,
-            },
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              color: 'white',
-            },
+            // headerStyle: {
+            //   backgroundColor: appBottomSheetBackgroundColor,
+            // },
+            // headerTitleStyle: {
+            //   fontWeight: 'bold',
+            //   color: 'white',
+            // },
+            // headerShown: false,
+            headerTintColor: 'white',
           })}
         />
         <Stack.Screen

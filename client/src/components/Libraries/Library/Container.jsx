@@ -11,6 +11,7 @@ import {
   screenSectionBackgroundColor,
 } from '../../../utils/colorsTable';
 import { iconsTable } from '../../../utils/icons';
+import { Video } from 'expo-av';
 import FastImage from 'react-native-fast-image';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
@@ -21,6 +22,18 @@ import BadgeLabels from './BadgeLabels';
 import Description from './Description';
 import ConfirmLeaveLibrary from './ConfirmLeaveLibrary';
 import ConfirmPostAssetModal from './ConfirmPostAssetModal';
+
+const videoTypesTable = {
+  normal: 'none',
+  olive: 'green1',
+  ocean: 'blue1',
+  camel: 'red1',
+  sepia: 'yellow1',
+};
+
+const cameraTypesTable = {
+  normal: '',
+};
 
 const Container = (props) => {
   const { MaterialCommunityIcons, Ionicons } = iconsTable;
@@ -69,27 +82,63 @@ const Container = (props) => {
   }, []);
 
   const renderItem = useCallback((asset) => {
-    return (
-      <TouchableOpacity
-        style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
-        onPress={() => {
-          props.navigation.navigate('Asset', {
-            asset: asset,
-            libraryId: props.route.params.libraryId,
-          });
-        }}
-      >
-        <FastImage
-          style={{ width: '100%', height: '100%', borderRadius: 7 }}
-          source={{
-            uri: asset.data,
-            priority: FastImage.priority.normal,
+    if (asset.type === 'photo') {
+      return (
+        <TouchableOpacity
+          style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
+          onPress={() => {
+            props.navigation.navigate('Asset', {
+              asset: asset,
+              libraryId: props.route.params.libraryId,
+              assetType: asset.type,
+            });
           }}
-          resizeMode={FastImage.resizeMode.stretch}
-        />
-      </TouchableOpacity>
-    );
+        >
+          <FastImage
+            style={{ width: '100%', height: '100%', borderRadius: 7 }}
+            source={{
+              uri: asset.data,
+              priority: FastImage.priority.normal,
+            }}
+            resizeMode={FastImage.resizeMode.stretch}
+          />
+          <View style={{ position: 'absolute', top: 10, right: 10 }}>
+            <Ionicons name='camera' size={25} color={'white'} />
+          </View>
+        </TouchableOpacity>
+      );
+    } else if (asset.type === 'video') {
+      return (
+        <TouchableOpacity
+          style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
+          onPress={() => {
+            props.navigation.navigate('Asset', {
+              asset: asset,
+              libraryId: props.route.params.libraryId,
+              assetType: asset.type,
+            });
+          }}
+        >
+          <Video
+            style={{ width: '100%', height: '100%', borderRadius: 7 }}
+            source={{
+              uri: asset.data,
+            }}
+            useNativeControls={false}
+            resizeMode='stretch'
+            isLooping={false}
+          />
+          <View style={{ position: 'absolute', top: 10, right: 10 }}>
+            <Ionicons name='videocam' size={25} color={iconColorsTable[videoTypesTable[asset.effect]]} />
+          </View>
+        </TouchableOpacity>
+      );
+    }
   }, []);
+
+  //   <View style={{ position: 'absolute', top: 10, right: 10 }}>
+  //   <Ionicons name='videocam' size={25} color={iconColorsTable[videoTypesTable[formData.asset.effect]]} />
+  // </View>
 
   return (
     <LibraryContext.Provider
@@ -98,6 +147,7 @@ const Container = (props) => {
         albumsBottomSheetRef,
         selectedAssetBottomSheetRef,
         libraryId: props.route.params.libraryId, // membersの実装
+        libraryAssetType: props.route.params.libraryAssetType,
         library,
         assets,
         setAssets,

@@ -10,7 +10,20 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { iconColorsTable, baseTextColor } from '../../../../utils/colorsTable';
 import FastImage from 'react-native-fast-image';
+import { Video } from 'expo-av';
 import ActionButton from '../../../Utils/ActionButton';
+
+const videoTypesTable = {
+  normal: 'none',
+  olive: 'green1',
+  ocean: 'blue1',
+  camel: 'red1',
+  sepia: 'yellow1',
+};
+
+const cameraTypesTable = {
+  normal: '',
+};
 
 const Assets = () => {
   const { auth, setSnackBar, setLoading } = useContext(GlobalContext);
@@ -57,6 +70,7 @@ const Assets = () => {
       name: formData.name,
       badges: Object.values(formData.badges),
       description: formData.description,
+      assetType: formData.assetType,
       asset: {
         _id: formData.asset._id,
         badges: formData.asset.badges,
@@ -79,6 +93,47 @@ const Assets = () => {
       barType: 'success',
       duration: 5000,
     });
+  };
+
+  const renderAddedAsset = () => {
+    if (formData.asset) {
+      if (formData.asset.type === 'photo') {
+        return (
+          <TouchableOpacity style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}>
+            <FastImage
+              style={{ width: '100%', height: '100%', borderRadius: 7 }}
+              source={{
+                uri: formData.asset.data,
+                priority: FastImage.priority.normal,
+              }}
+              resizeMode={FastImage.resizeMode.stretch}
+            />
+            <View style={{ position: 'absolute', top: 10, right: 10 }}>
+              <Ionicons name='camera' size={25} color={'white'} />
+            </View>
+          </TouchableOpacity>
+        );
+      } else if (formData.asset.type === 'video') {
+        return (
+          <TouchableOpacity style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}>
+            <Video
+              style={{ width: '100%', height: '100%', borderRadius: 7 }}
+              source={{
+                uri: formData.asset.data,
+              }}
+              useNativeControls={false}
+              resizeMode='stretch'
+              isLooping={false}
+            />
+            <View style={{ position: 'absolute', top: 10, right: 10 }}>
+              <Ionicons name='videocam' size={25} color={iconColorsTable[videoTypesTable[formData.asset.effect]]} />
+            </View>
+          </TouchableOpacity>
+        );
+      }
+    } else {
+      return null;
+    }
   };
 
   return (
@@ -140,6 +195,7 @@ const Assets = () => {
           navigation.navigate('Add assets', {
             fromComponent: 'ADD_ASSETS_FOR_LAUNCHING_LIBRARY',
             addedAsset: formData.asset,
+            assetType: formData.assetType,
           });
           console.log('open my assets page!');
         }}
@@ -147,19 +203,7 @@ const Assets = () => {
         <SimpleLineIcons name='magnifier-add' size={20} color={baseTextColor} style={{ marginRight: 5 }} />
         <Text style={{ color: baseTextColor }}>Add</Text>
       </TouchableOpacity>
-      {formData.asset ? (
-        <View style={{ width: oneAssetWidth, height: oneAssetWidth, marginRight: 10 }}>
-          <FastImage
-            style={{ width: '100%', height: '100%', borderRadius: 7 }}
-            source={{
-              uri: formData.asset.data,
-              priority: FastImage.priority.normal,
-            }}
-            resizeMode={FastImage.resizeMode.stretch}
-          />
-        </View>
-      ) : null}
-      {/* {renderAddedAssets()} */}
+      {renderAddedAsset()}
     </View>
   );
 };

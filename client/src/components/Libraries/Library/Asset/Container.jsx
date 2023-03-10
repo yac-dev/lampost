@@ -4,6 +4,7 @@ import GlobalContext from '../../../../GlobalContext';
 import AssetContext from './AssetContext';
 import lampostAPI from '../../../../apis/lampost';
 import FastImage from 'react-native-fast-image';
+import { Video } from 'expo-av';
 import {
   baseBackgroundColor,
   backgroundColorsTable,
@@ -23,32 +24,6 @@ const Asset = (props) => {
   const win = Dimensions.get('window');
   const assetMenuBottomSheetRef = useRef(null);
   const [asset, setAsset] = useState(props.route.params.asset);
-  const [badgeLikes, setBadgeLikes] = useState(null);
-
-  // data structure
-  //  {
-  //    { reaction1: {_id: reaction1, content: 'Nice e', totalCounts: 3,
-  //    users: {user1: {_id: user1, name: 'a'}, {user2: {_id: user2, name: 'b'}}} },
-  //    { reaction2: {_id: reaction2, content: 'Great e', totalCounts: 5,
-  //     users: {user3: {_id: user3, name: 'c'}}
-  //    ,}
-  //   }
-
-  // const getAssetAndBadgeAndUserRelationships = async () => {
-  //   const result = await lampostAPI.get(`/assetandbadgeanduserrelationships/${props.route.params.asset._id}`);
-  //   const { table, asset } = result.data;
-  //   setBadgeLikes(table);
-  //   setAsset(asset);
-  // };
-  // useEffect(() => {
-  //   getAssetAndBadgeAndUserRelationships();
-  // }, []);
-
-  // <FastImage
-  //       style={{ flex: 1, alignSelf: 'stretch', width: win.width, height: win.height, borderRadius: 10 }}
-  //       source={{ uri: selectedAsset.data }}
-  //       resizeMode={FastImage.resizeMode.contain}
-  //     />
 
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
@@ -71,48 +46,27 @@ const Asset = (props) => {
     );
   };
 
+  const renderAsset = () => {
+    if (props.route.params.assetType === 'photo') {
+      return <FastImage style={{ width: '100%', height: '100%', borderRadius: 10 }} source={{ uri: asset.data }} />;
+    } else if (props.route.params.assetType === 'video') {
+      return (
+        <Video
+          style={{ width: '100%', height: '100%' }}
+          source={{
+            uri: asset.data,
+          }}
+          useNativeControls={true}
+          resizeMode='stretch'
+          isLooping={true}
+        />
+      );
+    }
+  };
+
   return (
     <AssetContext.Provider value={{ assetMenuBottomSheetRef, asset, navigation: props.navigation }}>
-      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        <FastImage
-          style={{ width: '100%', height: '100%', borderRadius: 10 }}
-          source={{ uri: asset.data }}
-          // resizeMode={FastImage.resizeMode.contain}
-        />
-        {/* <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 15 }}>
-          {asset.createdBy.photo ? (
-            <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-              <Image
-                source={{ uri: asset.createdBy.photo }}
-                style={{ width: 35, height: 35, borderRadius: 7, marginRight: 10 }}
-              />
-              <Text style={{ color: 'white' }}>{asset.createdBy.name}</Text>
-            </View>
-          ) : (
-            <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-              <FontAwesome5 name='user-astronaut' size={25} style={{ width: 35, height: 35, borderRadius: 7 }} />
-              <Text style={{ color: 'white' }}>{asset.createdBy.name}</Text>
-            </View>
-          )}
-          {renderDate(asset.createdAt)}
-        </View> */}
-        {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <TouchableOpacity
-            onPress={() => assetMenuBottomSheetRef.current.snapToIndex(0)}
-            style={{
-              width: 30,
-              height: 30,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: screenSectionBackgroundColor,
-              borderRadius: 15,
-            }}
-          >
-            <MaterialCommunityIcons name='chevron-down' color={baseTextColor} size={25} />
-          </TouchableOpacity>
-        </View>
-        <AssetMenuBottomSheet /> */}
-      </View>
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>{renderAsset()}</View>
     </AssetContext.Provider>
   );
 };

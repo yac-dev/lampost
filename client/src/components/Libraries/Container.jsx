@@ -154,72 +154,7 @@ const Container = (props) => {
   const renderLibraries = () => {
     if (libraries.length) {
       const librariesList = libraries.map((library, index) => {
-        return (
-          <Library key={index} library={library} />
-          // <View
-          //   key={index}
-          //   style={{
-          //     width: oneGridWidth,
-          //     height: oneGridHeight, // これなんだろね。。。
-          //     // aspectRatio: 1,
-          //     // padding: 10, // これは単純に、25%幅に対して
-          //     // marginBottom: 23,
-          //     // backgroundColor: 'white',
-          //     // backgroundColor: 'red',
-          //     alignItems: 'center',
-          //     borderRadius: 5,
-          //   }}
-          // >
-          //   <TouchableOpacity
-          //     // これがbadgeのcontainer, rndefault colorを割り当てるためのもの。
-          //     style={{
-          //       width: libraryContainerWidth,
-          //       // height: 0,
-          //       aspectRatio: 1,
-          //       // height: '100%',
-          //       // alignItems: 'center', // これと
-          //       // justifyContent: 'center', // これで中のimageを上下左右真ん中にする
-
-          //       // backgroundColor: rnDefaultBackgroundColor,
-          //       // borderWidth: 0.3,
-          //       marginBottom: 10,
-          //     }}
-          //     onPress={() => selectLibrary(library._id)}
-          //     // onPress={() => {
-          //     //   badgeDetailBottomSheetRef.current.snapToIndex(0);
-          //     //   setPressedBadgeData(badgeData);
-          //     //   console.log('hey');
-          //     // }}
-          //   >
-          //     <FastImage
-          //       style={{ width: '100%', height: '100%', borderRadius: 5 }}
-          //       source={{
-          //         uri: library.thumbnail.data,
-          //         // priority: FastImage.priority.normal,
-          //       }}
-          //       resizeMode={FastImage.resizeMode.stretch}
-          //     />
-          //   </TouchableOpacity>
-          //   <Text
-          //     numberOfLines={1}
-          //     style={{
-          //       color: baseTextColor,
-          //       fontWeight: 'bold',
-          //       alignSelf: 'center',
-          //       fontSize: 15,
-          //       textAlign: 'center',
-          //       // marginBottom: 5,
-          //       paddingLeft: 10,
-          //       paddingRight: 10,
-          //       // borderWidth: 1,
-          //       // borderRadius: 5,
-          //       // padding: 4,
-          //     }}
-          //   >
-          //     {library.name}
-          //   </Text>
-          // </View>
-        );
+        return <Library key={index} library={library} />;
       });
 
       return (

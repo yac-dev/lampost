@@ -11,10 +11,12 @@ import {
   backgroundColorsTable,
   rnDefaultBackgroundColor,
 } from '../../../utils/colorsTable';
-import { Ionicons } from '@expo/vector-icons';
 import FastImage from 'react-native-fast-image';
+import { Video } from 'expo-av';
+import { iconsTable } from '../../../utils/icons';
 
 const Container = (props) => {
+  const { Ionicons, MaterialCommunityIcons } = iconsTable;
   const { auth } = useContext(GlobalContext);
   const { myJoinedLibraries, setMyJoinedLibraries, navigation, appMenuBottomSheetRef } = useContext(LibrariesContext);
 
@@ -29,56 +31,140 @@ const Container = (props) => {
     }
   }, [auth.isAuthenticated]);
 
+  const renderAssetType = (library) => {
+    if (library.assetType === 'photo') {
+      return <Ionicons name='camer' size={20} color={'white'} style={{ marginRight: 10 }} />;
+    } else if (library.assetType === 'video') {
+      return <Ionicons name='videocam' size={20} color={'white'} style={{ marginRight: 10 }} />;
+    } else if (library.assetType === 'photoAndVideo') {
+      return (
+        <View style={{ flexDirection: 'row', alignContent: 'center', marginRight: 10 }}>
+          <Ionicons name='camera' size={20} color={'white'} style={{ marginRight: 5 }} />
+          <Ionicons name='videocam' size={20} color={'white'} />
+        </View>
+      );
+    }
+  };
+
   const renderMyJoinedLibraries = () => {
     if (myJoinedLibraries.length) {
       const myJoinedLibrariesList = myJoinedLibraries.map((library, index) => {
-        return (
-          <TouchableOpacity
-            key={index}
-            style={{ paddingTop: 10, paddingBottom: 10, flexDirection: 'row', alignItems: 'center' }}
-            onPress={() => {
-              appMenuBottomSheetRef.current.close();
-              navigation.navigate('Library', { libraryId: library._id });
-            }}
-          >
-            <View
+        // return (
+        //   <TouchableOpacity
+        //     key={index}
+        //     style={{ paddingTop: 10, paddingBottom: 10, flexDirection: 'row', alignItems: 'center' }}
+        //     onPress={() => {
+        //       appMenuBottomSheetRef.current.close();
+        //       navigation.navigate('Library', { libraryId: library._id });
+        //     }}
+        //   >
+        //     <View
+        //       style={{
+        //         width: 40,
+        //         height: 40,
+        //         marginRight: 15,
+        //         borderRadius: 10,
+        //       }}
+        //     >
+        //       <FastImage
+        //         style={{ width: '100%', height: '100%', borderRadius: 5 }}
+        //         source={{
+        //           uri: library.thumbnail.data,
+        //           // priority: FastImage.priority.normal,
+        //         }}
+        //         resizeMode={FastImage.resizeMode.stretch}
+        //       />
+        //     </View>
+
+        //     <Text style={{ color: baseTextColor }}>{library.name}</Text>
+        //   </TouchableOpacity>
+        // );
+        if (library.thumbnail.type === 'photo') {
+          return (
+            <TouchableOpacity
+              key={index}
               style={{
-                width: 40,
-                height: 40,
-                // backgroundColor: rnDefaultBackgroundColor,
-                marginRight: 15,
-                borderRadius: 10,
+                paddingTop: 10,
+                paddingBottom: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+              onPress={() => {
+                appMenuBottomSheetRef.current.close();
+                navigation.navigate('Library', { libraryId: library._id, libraryAssetType: library.assetType });
               }}
             >
-              {/* <Image
-                source={{ uri: library.thumbnail.data }}
-                style={{ width: '100%', height: '100%', borderRadius: 5 }}
-              /> */}
-              <FastImage
-                style={{ width: '100%', height: '100%', borderRadius: 5 }}
-                source={{
-                  uri: library.thumbnail.data,
-                  // priority: FastImage.priority.normal,
-                }}
-                resizeMode={FastImage.resizeMode.stretch}
-              />
-              {/* <View
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 10,
-                  backgroundColor: backgroundColorsTable[library.color],
-                }}
-              >
-                <Ionicons name='ios-library' size={30} color={iconColorsTable[library.color]} />
-              </View> */}
-            </View>
-
-            <Text style={{ color: baseTextColor }}>{library.name}</Text>
-          </TouchableOpacity>
-        );
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View
+                  style={{
+                    width: 40,
+                    height: 40,
+                    marginRight: 15,
+                    borderRadius: 7,
+                  }}
+                >
+                  <FastImage
+                    style={{ width: '100%', height: '100%', borderRadius: 7 }}
+                    source={{
+                      uri: library.thumbnail.data,
+                      priority: FastImage.priority.normal,
+                    }}
+                    resizeMode={FastImage.resizeMode.stretch}
+                  />
+                </View>
+                <Text style={{ color: baseTextColor, fontSize: 17 }}>{library.name}</Text>
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {renderAssetType(library)}
+                <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
+              </View>
+            </TouchableOpacity>
+          );
+        } else if (library.thumbnail.type === 'video') {
+          return (
+            <TouchableOpacity
+              key={index}
+              style={{
+                paddingTop: 10,
+                paddingBottom: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+              onPress={() => {
+                appMenuBottomSheetRef.current.close();
+                navigation.navigate('Library', { libraryId: library._id, libraryAssetType: library.assetType });
+              }}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View
+                  style={{
+                    width: 40,
+                    height: 40,
+                    marginRight: 15,
+                    borderRadius: 7,
+                  }}
+                >
+                  <Video
+                    style={{ width: '100%', height: '100%', borderRadius: 7 }}
+                    source={{
+                      uri: library.thumbnail.data,
+                    }}
+                    useNativeControls={false}
+                    resizeMode='stretch'
+                    isLooping={false}
+                  />
+                </View>
+                <Text style={{ color: baseTextColor }}>{library.name}</Text>
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {renderAssetType(library)}
+                <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
+              </View>
+            </TouchableOpacity>
+          );
+        }
       });
 
       return <View>{myJoinedLibrariesList}</View>;
@@ -105,8 +191,4 @@ const Container = (props) => {
   }
 };
 
-const mapStatToProps = (state) => {
-  return { auth: state.auth };
-};
-
-export default connect(mapStatToProps)(Container);
+export default Container;

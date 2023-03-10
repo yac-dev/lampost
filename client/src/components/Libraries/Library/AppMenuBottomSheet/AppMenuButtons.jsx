@@ -24,6 +24,7 @@ const AppMenuButtons = () => {
     postsBottomSheetRef,
     navigation,
     libraryId,
+    libraryAssetType,
     setIsLeaveLibraryConfirmationModalOpen,
     setLibraryMembers,
     setLibraryPosts,
@@ -43,8 +44,13 @@ const AppMenuButtons = () => {
       <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
         onPress={() => {
-          setIsConfirmPostAssetsModalOpen(true);
+          // setIsConfirmPostAssetsModalOpen(true);
           appMenuBottomSheetRef.current.snapToIndex(0);
+          navigation.navigate('Add assets', {
+            libraryId,
+            fromComponent: 'ADD_ASSET_FOR_POSTING',
+            assetType: libraryAssetType,
+          });
         }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>

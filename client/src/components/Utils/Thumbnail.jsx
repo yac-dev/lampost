@@ -6,6 +6,18 @@ import FastImage from 'react-native-fast-image';
 import { Video, AVPlaybackStatus } from 'expo-av';
 import { backgroundColorsTable, iconColorsTable } from '../../utils/colorsTable';
 
+const videoTypesTable = {
+  normal: 'none',
+  olive: 'green1',
+  ocean: 'blue1',
+  camel: 'red1',
+  sepia: 'yellow1',
+};
+
+const cameraTypesTable = {
+  normal: '',
+};
+
 const Thumbnail = (props) => {
   const { Ionicons } = iconsTable;
   const { auth, isIpad } = useContext(GlobalContext);
@@ -52,7 +64,7 @@ const Thumbnail = (props) => {
           onLoadEnd={() => setIsLoadingAsset(false)}
         />
         <View style={{ position: 'absolute', top: 10, right: 10 }}>
-          <Ionicons name='videocam' size={25} color={iconColorsTable['green1']} />
+          <Ionicons name='videocam' size={25} color={iconColorsTable[videoTypesTable[props.asset.effect]]} />
         </View>
       </TouchableOpacity>
     );

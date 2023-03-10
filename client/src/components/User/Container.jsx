@@ -266,7 +266,7 @@ const Container = (props) => {
             style={{
               position: 'absolute',
               bottom: 20,
-              backgroundColor: backgroundColorsTable['green1'],
+              backgroundColor: backgroundColorsTable['pink1'],
               borderRadius: 10,
               alignSelf: 'center',
               padding: 10,
@@ -275,7 +275,7 @@ const Container = (props) => {
           >
             <TouchableOpacity
               style={{
-                backgroundColor: iconColorsTable['green1'],
+                backgroundColor: iconColorsTable['pink1'],
                 padding: 10,
                 flexDirection: 'row',
                 alignItems: 'center',
@@ -288,7 +288,7 @@ const Container = (props) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={{
-                backgroundColor: iconColorsTable['green1'],
+                backgroundColor: iconColorsTable['pink1'],
                 padding: 10,
                 flexDirection: 'row',
                 alignItems: 'center',
@@ -296,7 +296,7 @@ const Container = (props) => {
               }}
               onPress={() => null}
             >
-              <MaterialCommunityIcons name='human-greeting-variant' size={25} color={'white'} />
+              <MaterialCommunityIcons name='email-multiple' size={25} color={'white'} />
             </TouchableOpacity>
           </View>
         )}

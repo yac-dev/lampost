@@ -3,13 +3,33 @@ import { View, Text, ScrollView, TouchableOpacity, Dimensions } from 'react-nati
 import GlobalContext from '../../../GlobalContext';
 import lampostAPI from '../../../apis/lampost';
 import FastImage from 'react-native-fast-image';
-import { baseBackgroundColor, baseTextColor, screenSectionBackgroundColor } from '../../../utils/colorsTable';
+import { Video } from 'expo-av';
+import {
+  baseBackgroundColor,
+  baseTextColor,
+  screenSectionBackgroundColor,
+  iconColorsTable,
+} from '../../../utils/colorsTable';
 import Asset from './Asset';
 import { AntDesign } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
 import LoadingSpinner from '../../Utils/LoadingSpinner';
+import Thumbnail from '../Thumbnail';
+import { iconsTable } from '../../../utils/icons';
+
+const videoTypesTable = {
+  normal: 'none',
+  olive: 'green1',
+  ocean: 'blue1',
+  camel: 'red1',
+  sepia: 'yellow1',
+};
+
+const cameraTypesTable = {
+  normal: '',
+};
 
 const Container = (props) => {
+  const { Ionicons, MaterialCommunityIcons, Foundation } = iconsTable;
   const { auth, setLoading } = useContext(GlobalContext);
   const [assets, setAssets] = useState([]);
   const [addedAsset, setAddedAsset] = useState(null);
@@ -87,26 +107,99 @@ const Container = (props) => {
     }
   };
 
+  const disableVideo = () => {
+    if (props.route.params.assetType === 'photo' || props.route.params.assetType === 'photoAndVideo') {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const disablePhoto = () => {
+    if (props.route.params.assetType === 'video' || props.route.params.assetType === 'photoAndVideo') {
+      return false;
+    } else return true;
+  };
+
+  const renderDisablePhoto = () => {
+    if (props.route.params.assetType === 'video') {
+      return (
+        <View style={{ position: 'absolute', top: 10, right: 10 }}>
+          <Foundation name='prohibited' size={25} color={'red'} />
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  const renderDisableVideo = () => {
+    if (props.route.params.assetType === 'photo') {
+      return (
+        <View style={{ position: 'absolute', top: 10, right: 10 }}>
+          <Foundation name='prohibited' size={25} color={'red'} />
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+
   const renderUserAssets = () => {
     if (assets.length) {
       const assetsList = assets.map((asset, index) => {
-        return (
-          <TouchableOpacity
-            key={index}
-            style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
-            onPress={() => setAddedAsset(asset)}
-          >
-            <FastImage
-              style={{ width: '100%', height: '100%' }}
-              source={{
-                uri: asset.data,
-                priority: FastImage.priority.normal,
+        if (asset.type === 'photo') {
+          return (
+            <TouchableOpacity
+              style={{
+                width: oneAssetWidth,
+                height: oneAssetWidth,
+                padding: 2,
               }}
-              resizeMode={FastImage.resizeMode.stretch}
-            />
-            {renderCheck(asset)}
-          </TouchableOpacity>
-        );
+              onPress={() => setAddedAsset(asset)}
+              key={index}
+              disabled={disableVideo()}
+            >
+              <FastImage
+                style={{ width: '100%', height: '100%', borderRadius: 7 }}
+                source={{
+                  uri: asset.data,
+                  priority: FastImage.priority.normal,
+                }}
+                resizeMode={FastImage.resizeMode.stretch}
+              />
+              <View style={{ position: 'absolute', top: 10, right: 10 }}>
+                <Ionicons name='camera' size={25} color={'white'} />
+              </View>
+              {renderCheck(asset)}
+              {renderDisablePhoto()}
+            </TouchableOpacity>
+          );
+        } else if (asset.type === 'video') {
+          return (
+            <TouchableOpacity
+              style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
+              onPress={() => setAddedAsset(asset)}
+              key={index}
+              disabled={disablePhoto()}
+            >
+              <Video
+                style={{ width: '100%', height: '100%', borderRadius: 7 }}
+                source={{
+                  uri: asset.data,
+                }}
+                useNativeControls={false}
+                resizeMode='stretch'
+                isLooping={false}
+              />
+              <View style={{ position: 'absolute', top: 10, right: 10 }}>
+                <Ionicons name='videocam' size={25} color={iconColorsTable[videoTypesTable[asset.effect]]} />
+              </View>
+              {renderCheck(asset)}
+              {renderDisableVideo()}
+            </TouchableOpacity>
+          );
+        }
       });
       return <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: 5 }}>{assetsList}</View>;
     } else {
