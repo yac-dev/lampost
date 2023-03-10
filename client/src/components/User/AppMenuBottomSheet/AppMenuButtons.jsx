@@ -228,7 +228,7 @@ const AppButtons = (props) => {
         </View>
         <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
       </TouchableOpacity>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
         onPress={() => {
           return null;
@@ -253,7 +253,7 @@ const AppButtons = (props) => {
         </View>
         <Foundation name='prohibited' color={iconColorsTable['red1']} size={25} />
       </TouchableOpacity>
-      {renderMembershipSetting()}
+      {renderMembershipSetting()} */}
     </View>
   );
 };

@@ -15,7 +15,7 @@ const AvatarImage = () => {
   return (
     <View
       style={{
-        width: 70,
+        width: 95,
         aspectRatio: 1,
         flexDirection: 'column',
         // backgroundColor: 'green', //確認用で使える

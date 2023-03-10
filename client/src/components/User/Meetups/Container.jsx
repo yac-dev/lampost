@@ -28,31 +28,45 @@ const ActivitiesContainer = (props) => {
     getUserMeetups();
   }, []);
 
+  // const renderMeetupDateAndTime = (date) => {
+  //   const d = new Date(date).toLocaleDateString('en-US', {
+  //     weekday: 'short',
+  //     month: 'short',
+  //     day: 'numeric',
+  //     hour: '2-digit',
+  //     minute: '2-digit',
+  //   });
+  //   const dateElements = d.split(',').join('').split(' ');
+
+  //   return (
+  //     <View style={{ flexDirection: 'row' }}>
+  //       {dateElements.map((element, index) => {
+  //         return (
+  //           <Text key={index} style={{ color: 'white' }}>
+  //             {element}&nbsp;
+  //           </Text>
+  //         );
+  //       })}
+  //     </View>
+  //   );
+  // };
+
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
       year: 'numeric',
-      weekday: 'short',
       month: 'short',
       day: 'numeric',
     });
     const dateElements = d.split(',').join('').split(' ');
     return (
-      <View
-        style={{
-          // padding: 10,
-          borderRadius: 7,
-          marginRight: 15,
-          backgroundColor: screenSectionBackgroundColor,
-          width: 60,
-          height: 60,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Text style={{ fontSize: 15, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
-          {dateElements[1]}&nbsp;{dateElements[2]}
-        </Text>
-        <Text style={{ fontSize: 15, textAlign: 'center', color: 'white' }}>{dateElements[3]}</Text>
+      <View style={{ flexDirection: 'row' }}>
+        {dateElements.map((element, index) => {
+          return (
+            <Text key={index} style={{ color: 'white' }}>
+              {element}&nbsp;
+            </Text>
+          );
+        })}
       </View>
     );
   };
@@ -76,20 +90,55 @@ const ActivitiesContainer = (props) => {
       const list = userMeetups.map((meetup, index) => {
         return (
           <View style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10 }} key={index}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                padding: 5,
+                backgroundColor: screenSectionBackgroundColor,
+                alignSelf: 'flex-start',
+                borderRadius: 5,
+                marginBottom: 15,
+              }}
+            >
+              <MaterialCommunityIcons name='history' color='white' size={20} style={{ marginRight: 10 }} />
               {renderDate(meetup.startDateAndTime)}
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-              >
-                <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 10, color: 'white' }}>
-                  {meetup.title}
-                </Text>
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 10, color: 'white' }}>{meetup.title}</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity
+                  style={{
+                    width: 30,
+                    height: 30,
+                    backgroundColor: backgroundColorsTable['grey1'],
+                    borderRadius: 5,
+                    marginRight: 10,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                  onPress={() =>
+                    props.navigation.navigate('Attended', { meetupId: meetup._id, launcher: meetup.launcher._id })
+                  }
+                >
+                  <MaterialCommunityIcons name='account-group' size={20} color={'white'} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    width: 30,
+                    height: 30,
+                    backgroundColor: backgroundColorsTable['grey1'],
+                    borderRadius: 5,
+                    marginRight: 10,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Ionicons name='camera' size={20} color={'white'} />
+                </TouchableOpacity>
               </View>
             </View>
-            <ScrollView
+            {/* <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}
               style={{ flexDirection: 'row', padding: 10 }}
@@ -152,7 +201,7 @@ const ActivitiesContainer = (props) => {
                 </View>
                 <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>Impressions</Text>
               </TouchableOpacity>
-            </ScrollView>
+            </ScrollView> */}
           </View>
         );
       });

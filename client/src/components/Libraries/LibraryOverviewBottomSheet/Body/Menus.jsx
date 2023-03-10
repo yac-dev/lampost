@@ -86,7 +86,7 @@ const Container = (props) => {
         icon={<MaterialIcons name='groups' size={20} color={iconColorsTable['blue1']} />}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ color: baseTextColor, fontSize: 15 }}>{selectedLibrary.totalMembers}</Text>
+            {/* <Text style={{ color: baseTextColor, fontSize: 15 }}>{selectedLibrary.totalMembers}</Text> */}
             <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
           </View>
         }
@@ -114,12 +114,12 @@ const Container = (props) => {
         icon={<MaterialIcons name='camera-roll' size={20} color={iconColorsTable['orange1']} />}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ color: baseTextColor }}>{selectedLibrary.totalAssets}</Text>
+            {/* <Text style={{ color: baseTextColor }}>{selectedLibrary.totalAssets}</Text> */}
             <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
           </View>
         }
       />
-      <Menu
+      {/* <Menu
         label='Albums'
         onPressMenu={() => {
           return null;
@@ -132,7 +132,7 @@ const Container = (props) => {
             <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
           </View>
         }
-      />
+      /> */}
     </ScrollView>
   );
 };
