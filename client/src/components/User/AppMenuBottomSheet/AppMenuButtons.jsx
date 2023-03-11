@@ -157,7 +157,8 @@ const AppButtons = (props) => {
       <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
         onPress={() => {
-          null;
+          appMenuBottomSheetRef.current.close();
+          navigation.navigate('My friends');
         }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -168,7 +169,7 @@ const AppButtons = (props) => {
               backgroundColor: backgroundColorsTable['orange1'],
               justifyContent: 'center',
               alignItems: 'center',
-              borderRadius: 10,
+              borderRadius: 7,
               marginRight: 10,
             }}
           >

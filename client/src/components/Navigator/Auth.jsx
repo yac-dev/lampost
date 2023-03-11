@@ -29,6 +29,7 @@ import Asset from '../Utils/Asset';
 import AddBadges from '../Utils/AddBadges/Container';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
 import DeleteAccount from '../User/DeleteAccount';
+import MyFriends from '../User/MyFriends/Container';
 
 const Auth = (props) => {
   // ここらへん、一つにできるね。まあ、後で。
@@ -128,6 +129,20 @@ const Auth = (props) => {
                 color: 'white',
               },
               // headerTintColor: 'white',
+            }}
+          />
+          <Stack.Screen
+            name='My friends'
+            component={MyFriends}
+            options={{
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+              headerTintColor: 'white',
             }}
           />
           <Stack.Screen

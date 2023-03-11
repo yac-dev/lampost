@@ -31,11 +31,11 @@ const AttendedContainer = (props) => {
 
   const getMyFriends = async () => {
     const result = await lampostAPI.get(`/friendrelationships/${auth.data._id}`);
-    const { friendIds } = result.data;
+    const { friends } = result.data;
     setMyFriends((previous) => {
       const table = {};
-      friendIds.forEach((friendId) => {
-        table[friendId] = friendId;
+      friends.forEach((user) => {
+        table[user._id] = user;
       });
       return table;
     });
@@ -111,26 +111,20 @@ const AttendedContainer = (props) => {
       } else {
         if (myFriends[user._id]) {
           return (
-            <TouchableOpacity
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                backgroundColor: iconColorsTable['blue1'],
-                borderRadius: 7,
-                padding: 10,
-              }}
-              onPress={() => {
-                addFriend(user);
-              }}
-            >
-              <MaterialCommunityIcons
-                name='human-greeting-variant'
-                size={22}
-                color='white'
-                style={{ marginRight: 5 }}
-              />
-              <Text style={{ color: 'white' }}>Already friend</Text>
-            </TouchableOpacity>
+            <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  backgroundColor: iconColorsTable['green1'],
+                  borderRadius: 7,
+                  padding: 10,
+                }}
+              >
+                <MaterialCommunityIcons name='check' size={22} color='white' style={{ marginRight: 5 }} />
+                <Text style={{ color: 'white' }}>Already friend</Text>
+              </View>
+            </ScrollView>
           );
         } else {
           return (

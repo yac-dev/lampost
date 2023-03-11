@@ -26,14 +26,16 @@ export const createFriendRelationship = async (request, response) => {
 export const getMyFriends = async (request, response) => {
   try {
     const { userId } = request.params;
-    const friendRelationships = await FriendRelationship.find({ userId });
-    const friendIds = friendRelationships.map((relationship) => {
+    const friendRelationships = await FriendRelationship.find({ user: userId }).populate({
+      path: 'friend',
+      select: '_id name photo topBadges',
+    });
+    const friends = friendRelationships.map((relationship) => {
       return relationship.friend;
     });
-    console.log(friendIds);
 
     response.status(200).json({
-      friendIds,
+      friends,
     });
   } catch (error) {
     console.log(error);

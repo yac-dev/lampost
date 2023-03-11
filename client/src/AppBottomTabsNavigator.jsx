@@ -163,8 +163,6 @@ const AppStack = (props) => {
   //   });
   // };
 
-  // console.log(myUpcomingMeetups);
-  console.log(myUpcomingMeetups);
   // upcomingのmeetupをgetしてくる
   const getMyUpcomingMeetupStates = async () => {
     if (auth.data.upcomingMeetups.length) {

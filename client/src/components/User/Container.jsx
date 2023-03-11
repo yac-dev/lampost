@@ -27,6 +27,7 @@ import Header from './Header/Container';
 import ActionButttons from './Header/ActionButttons';
 import Badge from './Badge';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
+import InboxBottomSheet from './InboxBottomSheet/Container';
 import BadgeDetailBottomSheet from './BadgeDetailBottomSheet/Container';
 import AddBadgeTagsBottomSheet from './AddBadgeTagsBottomSheet/Container';
 import AddLinkBottomSheet from './AddLinkBottomSheet/Container';
@@ -58,6 +59,7 @@ const Container = (props) => {
   const [confirmActionButtonModal, setConfirmActionButtonModal] = useState({ isOpen: false, type: '' });
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
   const appMenuBottomSheetRef = useRef(null);
+  const inboxBottomSheetRef = useRef(null);
   const badgeDetailBottomSheetRef = useRef(null);
   const addBadgeTagsBottomSheetRef = useRef(null);
   const addLinkBottomSheetRef = useRef(null);
@@ -68,7 +70,6 @@ const Container = (props) => {
   const [fetchedBadgeTags, setFetchedBadgeTags] = useState([]);
   const [isOpenCreateBadgeTagTextInput, setIsOpenCreateBadgeTagTextInput] = useState(false);
   // これで、自分のpageを見ているか、他人のpageを見ているかのstateを管理する。
-  console.log(badgeDatas);
   useEffect(() => {
     if (auth.isAuthenticated && props.route.params.userId === auth.data._id) {
       setIsMyPage(true);
@@ -294,14 +295,17 @@ const Container = (props) => {
                 alignItems: 'center',
                 borderRadius: 10,
               }}
-              onPress={() => null}
+              onPress={() => {
+                inboxBottomSheetRef.current.snapToIndex(0);
+              }}
             >
-              <MaterialCommunityIcons name='email-multiple' size={25} color={'white'} />
+              <MaterialCommunityIcons name='mailbox' size={25} color={'white'} />
             </TouchableOpacity>
           </View>
         )}
 
         <AppMenuBottomSheet />
+        <InboxBottomSheet />
         <BadgeDetailBottomSheet />
         <AddBadgeTagsBottomSheet />
         <AddLinkBottomSheet />
@@ -330,6 +334,7 @@ const Container = (props) => {
         setIsBlocked,
         navigation: props.navigation,
         appMenuBottomSheetRef,
+        inboxBottomSheetRef,
         badgeDetailBottomSheetRef,
         addBadgeTagsBottomSheetRef,
         addLinkBottomSheetRef,
