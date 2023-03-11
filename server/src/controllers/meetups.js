@@ -515,6 +515,7 @@ export const getMyMeetupStates = async (request, response) => {
     const { upcomingMeetupIds, userId } = request.body;
     const myUpcomingMeetups = {};
     const alreadyFinishedMeetups = {};
+    // client side側で持っているmeetupidをこっちに送って、そのmeetupのstateをcheckする。
     const meetups = await Meetup.find({ _id: { $in: upcomingMeetupIds } });
     meetups.forEach((meetup) => {
       if (meetup.state !== 'finished') {
@@ -542,6 +543,23 @@ export const getMyMeetupStates = async (request, response) => {
       myUpcomingMeetups,
     });
     // const meetupAndUserRelationship = await MeetupAndUserRelationship.find(queryConditon);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const checkIsMeetupOngoing = async (request, response) => {
+  try {
+    const meetup = await Meetup.findById(request.params.id);
+    let bool;
+    if (meetup.state === 'ongoing') {
+      bool = true;
+    } else {
+      bool = false;
+    }
+    response.status(200).json({
+      isMeetupOngoing: bool,
+    });
   } catch (error) {
     console.log(error);
   }

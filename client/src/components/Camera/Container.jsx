@@ -6,6 +6,7 @@ import CameraContext from './CameraContext';
 import { Text, View, TouchableOpacity } from 'react-native';
 import lampostAPI from '../../apis/lampost';
 import { Camera, CameraType } from 'expo-camera';
+import LoadingSpinner from '../Utils/LoadingSpinner';
 import AppMenuBottomSheet from './AppMenuBotttomSheet/Container';
 // import TimeMachineBottomSheet from './TimeMachineBottomSheet/Container';
 import CameraModeBottomSheet from './ChangeModeBottomSheet/Container';
@@ -49,8 +50,17 @@ const Container = (props) => {
   const [currentMeetup, setCurrentMeetup] = useState(null);
   const [taggedPeople, setTaggedPeople] = useState({});
   const [meetupAttendees, setMeetupAttendees] = useState({});
+  const [isMeetupOngoing, setIsMeetupOngoing] = useState(false);
   const [duration, setDuration] = useState(0);
   const durationRef = useRef(null);
+
+  // const getMyUpcomingMeetupStates = async () => {
+  //   if (auth.data.upcomingMeetups.length) {
+  //     const result = await lampostAPI.post('/meetups/mymeetupstates', { upcomingMeetupIds: auth.data.upcomingMeetups });
+  //     const { myUpcomingMeetups } = result.data;
+  //     setIsFetchedMyUpcomingMeetups(true);
+  //   }
+  // };
 
   const loadMe = async () => {
     const jwtToken = await SecureStore.getItemAsync('secure_token');
@@ -62,26 +72,37 @@ const Container = (props) => {
       });
     }
   };
-  useFocusEffect(
-    React.useCallback(() => {
-      // loadMe();
-      const meetupList = Object.values(myUpcomingMeetups);
-      if (meetupList.length) {
-        meetupList.forEach((meetup) => {
-          if (meetup.state === 'ongoing') {
-            setCurrentMeetup(meetup._id);
-          }
-        });
-      }
-      // for (const meetup in myUpcomingMeetups) {
-      //   if (myUpcomingMeetups[meetup].state === 'ongoing') {
-      //     return setCurrentMeetup(meetup);
-      //   }
-      //   // console.log(myUpcomingMeetups[meetup]);
-      // }
-    }, [])
-  );
+
+  // やっていることは、単純にこのmeetupがongoingかを調べるだけ。
+  const checkIsMeetupOngoing = async () => {
+    const result = await lampostAPI.get(`/meetups/${props.route.params.meetupId}/isongoing`);
+    const { isMeetupOngoing } = result.data;
+    setIsMeetupOngoing(isMeetupOngoing);
+  };
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     // loadMe();
+  //     const meetupList = Object.values(myUpcomingMeetups);
+  //     if (meetupList.length) {
+  //       meetupList.forEach((meetup) => {
+  //         if (meetup.state === 'ongoing') {
+  //           return setCurrentMeetup(meetup._id);
+  //         }
+  //       });
+  //     }
+  //     // for (const meetup in myUpcomingMeetups) {
+  //     //   if (myUpcomingMeetups[meetup].state === 'ongoing') {
+  //     //     return setCurrentMeetup(meetup);
+  //     //   }
+  //     //   // console.log(myUpcomingMeetups[meetup]);
+  //     // }
+  //   }, [])
+  // );
   // 60秒経ったら終わり。
+  useEffect(() => {
+    setCurrentMeetup(props.route.params.meetupId);
+    checkIsMeetupOngoing();
+  }, []);
 
   const renderTimer = () => {
     if (cameraMode === 'video') {
@@ -160,7 +181,7 @@ const Container = (props) => {
   }
 
   const isCameraButtonReady = () => {
-    if (currentMeetup) {
+    if (isMeetupOngoing) {
       return (
         <View style={{ position: 'absolute', right: -7, top: -7 }}>
           <Text>👍</Text>
@@ -279,7 +300,7 @@ const Container = (props) => {
   const renderCameraButton = () => {
     if (cameraMode === 'photo') {
       return (
-        <TouchableOpacity style={{}} onPress={() => takePhoto()} disabled={currentMeetup ? false : true}>
+        <TouchableOpacity style={{}} onPress={() => takePhoto()} disabled={isMeetupOngoing ? false : true}>
           <View
             style={{
               backgroundColor: iconColorsTable['violet1'],
@@ -296,7 +317,7 @@ const Container = (props) => {
       );
     } else if (cameraMode === 'video') {
       return (
-        <TouchableOpacity style={{}} onPress={() => videoButton()} disabled={currentMeetup ? false : true}>
+        <TouchableOpacity style={{}} onPress={() => videoButton()} disabled={isMeetupOngoing ? false : true}>
           <View
             style={{
               backgroundColor: iconColorsTable['violet1'],
@@ -410,6 +431,7 @@ const Container = (props) => {
         <TagPeopleBottomSheet />
         <VideoEffectBottomSheet />
         <WarningModal />
+        <LoadingSpinner />
       </View>
     </CameraContext.Provider>
   );

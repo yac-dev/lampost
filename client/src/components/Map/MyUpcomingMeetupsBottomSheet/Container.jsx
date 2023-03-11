@@ -44,9 +44,9 @@ const MyUpcomingMeetupsBottomSheet = (props) => {
               marginRight: 10,
             }}
           >
-            <MaterialCommunityIcons name='run' color={iconColorsTable['green1']} size={20} />
+            <MaterialCommunityIcons name='run' color={iconColorsTable['green1']} size={25} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>My upcoming meetups</Text>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>My meetups</Text>
         </View>
         <UpcomingMeetups />
       </BottomSheetView>

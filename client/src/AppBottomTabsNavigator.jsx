@@ -163,6 +163,8 @@ const AppStack = (props) => {
   //   });
   // };
 
+  console.log(myUpcomingMeetups);
+
   // upcomingのmeetupをgetしてくる
   const getMyUpcomingMeetupStates = async () => {
     if (auth.data.upcomingMeetups.length) {
@@ -238,7 +240,7 @@ const AppStack = (props) => {
     if (auth.isAuthenticated) {
       const appStateListener = AppState.addEventListener('change', (nextAppState) => {
         if (appState.match(/inactive|background/) && nextAppState === 'active') {
-          console.log('App has come to the foreground! Socket connected again.');
+          console.log('App has come to the foreground!');
           //ここで再度connectして、server のconnectのlogする。
           // getSocket();
           // getMyUpcomingMeetupsAndLoungeChatsByMeetupIds();
@@ -438,7 +440,7 @@ const AppStack = (props) => {
               // })(route),
             })}
           />
-          <Tab.Screen
+          {/* <Tab.Screen
             name='Camera'
             component={Camera}
             options={{
@@ -448,7 +450,7 @@ const AppStack = (props) => {
                 <MaterialCommunityIcons name='camera' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
               ),
             }}
-          />
+          /> */}
           {/* <Tab.Screen
             name='Video'
             component={Video}

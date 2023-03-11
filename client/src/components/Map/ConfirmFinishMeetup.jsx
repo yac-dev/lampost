@@ -17,7 +17,9 @@ const ConfirmFinishMeetup = (props) => {
         visible={isFinishMeetupConfirmationModalOpen}
         style={{ backgroundColor: appBottomSheetBackgroundColor, padding: 30 }}
       >
-        <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>Are you sure you want to finish?</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>
+          Are you sure you want to finish this meetup?
+        </Text>
         <Dialog.Actions>
           <Button textColor='rgb(58, 126, 224)' onPress={() => setIsFinishMeetupConfirmationModalOpen(false)}>
             No

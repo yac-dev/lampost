@@ -98,7 +98,7 @@ const TagPeopleBottomSheet = (props) => {
       return (
         <BottomSheetScrollView>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{
                 width: oneGridWidth,
                 height: oneGridHeight,
@@ -124,7 +124,7 @@ const TagPeopleBottomSheet = (props) => {
               <Text numberOfLines={1} style={{ color: 'white' }}>
                 Add all
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             {list}
           </View>
         </BottomSheetScrollView>

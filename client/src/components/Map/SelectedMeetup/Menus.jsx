@@ -32,22 +32,6 @@ const Menus = (props) => {
     selectedMeetupDetailBottomSheetRef,
   } = useContext(MapContext);
 
-  const renderDate = (date) => {
-    if (date) {
-      return (
-        <Text>{`${new Date(date).toLocaleString('en-US', {
-          weekday: 'long',
-          month: 'long',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-        })}`}</Text>
-      );
-    } else {
-      return null;
-    }
-  };
-
   // const menuOptions = [
   //   {
   //     name: 'Launcher',
@@ -147,6 +131,48 @@ const Menus = (props) => {
   //   return <View>{menusList}</View>;
   // };
 
+  const renderDate = (date) => {
+    const d = new Date(date).toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+    });
+    const dateElements = d.split(',').join('').split(' ');
+    return (
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Text style={{ fontSize: 15, color: baseTextColor, marginRight: 10 }}>
+          {dateElements[0]}&nbsp;{dateElements[1]}&nbsp;{dateElements[2]}
+        </Text>
+      </View>
+    );
+  };
+
+  const renderTime = (date, duration) => {
+    const baseTime = new Date(date);
+    const startTime = baseTime.toLocaleDateString('en-US', {
+      hourCycle: 'h23',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    const startDateElements = startTime.split(', ');
+    var endTime = new Date(baseTime);
+    endTime.setMinutes(baseTime.getMinutes() + duration);
+    endTime = endTime.toLocaleDateString('en-US', {
+      hourCycle: 'h23',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    const endDateElements = endTime.split(', ');
+
+    return (
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Text style={{ color: baseTextColor, fontSize: 15 }}>
+          {startDateElements[1]}&nbsp;~&nbsp;{endDateElements[1]}
+        </Text>
+      </View>
+    );
+  };
+
   return (
     <ScrollView
       // contentContainerStyle={{ paddingBottom: 50 }}
@@ -178,6 +204,33 @@ const Menus = (props) => {
         }}
       />
       <Menu
+        label='Date'
+        backgroundColor={backgroundColorsTable['blue1']}
+        icon={<MaterialCommunityIcons name='calendar-clock' size={20} color={iconColorsTable['blue1']} />}
+        rightInfo={
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                padding: 5,
+                borderRadius: 5,
+                alignSelf: 'flex-start',
+              }}
+            >
+              {renderDate(selectedMeetup.startDateAndTime)}
+              {renderTime(selectedMeetup.startDateAndTime, selectedMeetup.duration)}
+            </View>
+            {/* <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} /> */}
+          </View>
+        }
+        onPressMenu={() => {
+          // navigation.navigate('Description', { description: selectedMeetup.description });
+          setSelectedMeetupDetailComponent('Description');
+          selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
+        }}
+      />
+      <Menu
         label='Description'
         backgroundColor={backgroundColorsTable['green1']}
         icon={<MaterialCommunityIcons name='card-text-outline' size={20} color={iconColorsTable['green1']} />}
@@ -203,7 +256,6 @@ const Menus = (props) => {
         backgroundColor={backgroundColorsTable['violet1']}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ color: baseTextColor, fontSize: 15 }}>{selectedMeetup.totalAttendees}</Text>
             <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
           </View>
         }
@@ -222,7 +274,7 @@ const Menus = (props) => {
             <Text style={{ color: baseTextColor, fontSize: 15 }}>
               {selectedMeetup.isFeeFree ? "It's free" : "It's not free"}
             </Text>
-            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
+            {/* <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} /> */}
           </View>
         }
         onPressMenu={() => {

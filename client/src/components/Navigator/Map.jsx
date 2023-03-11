@@ -99,7 +99,7 @@ const MapNavigator = (props) => {
             // },
           })}
         />
-        <Stack.Screen name='Camera' component={Camera} options={{ headerShown: false }} />
+        {/* <Stack.Screen name='Camera' component={Camera} options={{ headerShown: false }} /> */}
         <Stack.Screen name='Schedule' component={Schedule} />
         <Stack.Screen
           name='QandAs'
@@ -274,6 +274,20 @@ const MapNavigator = (props) => {
               fontWeight: 'bold',
               color: 'white',
             },
+          })}
+        />
+        <Stack.Screen
+          name='Camera'
+          component={Camera}
+          options={({ navigation }) => ({
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+              </TouchableOpacity>
+            ),
+            headerShown: true,
+            title: '',
+            headerTransparent: true,
           })}
         />
       </Stack.Group>

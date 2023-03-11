@@ -175,7 +175,7 @@ const Map = (props) => {
 
   useEffect(() => {
     if (selectedMeetup) {
-      const newLat = selectedMeetup.place.coordinates[1] - 0.017;
+      const newLat = selectedMeetup.place.coordinates[1] - 0.024;
       mapRef.current.animateToRegion({
         latitude: newLat,
         longitude: selectedMeetup.place.coordinates[0],
