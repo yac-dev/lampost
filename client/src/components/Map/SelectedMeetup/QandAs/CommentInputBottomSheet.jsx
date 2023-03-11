@@ -10,12 +10,13 @@ import {
   inputBackgroundColor,
   baseTextColor,
   screenSectionBackgroundColor,
+  iconColorsTable,
 } from '../../../../utils/colorsTable';
 
 const CommentInputBottomSheet = (props) => {
   const inputAccessoryViewID = 'COMMENT_INPUT';
   const snapPoints = useMemo(() => ['65%'], []);
-  const { auth } = useContext(GlobalContext);
+  const { auth, setLoading } = useContext(GlobalContext);
   const {
     setComments,
     meetup,
@@ -24,6 +25,7 @@ const CommentInputBottomSheet = (props) => {
     commentInputBottomSheetRef,
     commentInputRef,
     replyingTo,
+    setReplyingTo,
   } = useContext(QandAsContext);
 
   const sendComment = async () => {
@@ -37,7 +39,7 @@ const CommentInputBottomSheet = (props) => {
       },
       content: commentInput,
       // 基本、defaultでreplyはなしね。
-      replyTo: replyingTo
+      replyingTo: replyingTo
         ? {
             _id: replyingTo._id,
             content: replyingTo.content,
@@ -69,15 +71,15 @@ const CommentInputBottomSheet = (props) => {
       keyboardBehavior={'extend'}
     >
       <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
-        {/* {replyingTo ? (
+        {replyingTo ? (
           <View style={{ paddingLeft: 10 }}>
             <Text style={{ color: iconColorsTable['blue1'] }}>@{replyingTo.user.name}</Text>
           </View>
-        ) : null} */}
+        ) : null}
         <View style={{ height: '100%', flexDirection: 'row' }}>
           <BottomSheetTextInput
             multiline={true}
-            placeholder={'What is your question?'}
+            placeholder={replyingTo ? 'Write your reply to this question.' : 'What is your question?'}
             placeholderTextColor={baseTextColor}
             inputAccessoryViewID={inputAccessoryViewID}
             style={{
@@ -103,6 +105,10 @@ const CommentInputBottomSheet = (props) => {
                 onPress={() => {
                   Keyboard.dismiss();
                   commentInputBottomSheetRef.current.close();
+                  setCommentInput('');
+                  if (replyingTo) {
+                    setReplyingTo(null);
+                  }
                 }}
               >
                 <Text style={{ color: 'white', fontWeight: 'bold' }}>Cancel</Text>

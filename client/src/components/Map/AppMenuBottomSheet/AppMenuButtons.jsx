@@ -28,18 +28,18 @@ const AppMenuButtons = (props) => {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View
             style={{
-              width: 35,
-              height: 35,
+              width: 40,
+              height: 40,
               backgroundColor: backgroundColorsTable['red1'],
               justifyContent: 'center',
               alignItems: 'center',
-              borderRadius: 10,
+              borderRadius: 8,
               marginRight: 10,
             }}
           >
             <MaterialCommunityIcons name='rocket-launch' color={iconColorsTable['red1']} size={20} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Launch meetup</Text>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Launch meetup</Text>
         </View>
         <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
       </TouchableOpacity>
@@ -53,18 +53,18 @@ const AppMenuButtons = (props) => {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View
             style={{
-              width: 35,
-              height: 35,
+              width: 40,
+              height: 40,
               backgroundColor: backgroundColorsTable['lightBlue1'],
               justifyContent: 'center',
               alignItems: 'center',
-              borderRadius: 10,
+              borderRadius: 8,
               marginRight: 10,
             }}
           >
             <MaterialCommunityIcons name='map-search-outline' color={iconColorsTable['lightBlue1']} size={20} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Search for meetup</Text>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Search for meetup</Text>
         </View>
         <Foundation name='prohibited' color={iconColorsTable['red1']} size={25} />
       </TouchableOpacity>

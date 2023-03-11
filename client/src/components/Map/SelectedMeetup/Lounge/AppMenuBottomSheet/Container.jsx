@@ -7,7 +7,7 @@ import { appBottomSheetBackgroundColor } from '../../../../../utils/colorsTable'
 import AppMenuButtons from './AppMenuButtons';
 
 const AppMenusBottomSheet = (props) => {
-  const snapPoints = useMemo(() => ['45%', '60%'], []);
+  const snapPoints = useMemo(() => ['50%'], []);
   const { appMenuBottomSheetRef } = useContext(LoungeContext);
 
   return (
@@ -25,7 +25,7 @@ const AppMenusBottomSheet = (props) => {
       // keyboardBehavior={'interactive'}
       // onClose={() => onSelectedItemBottomSheetClose()}
     >
-      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
+      <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
         {/* <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 35 }}>Send a chat?</Text> */}
         <AppMenuButtons />
       </BottomSheetView>

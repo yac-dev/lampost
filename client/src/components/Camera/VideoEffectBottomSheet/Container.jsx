@@ -50,18 +50,18 @@ const AppMenuBottomSheet = (props) => {
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View
                   style={{
-                    width: 35,
-                    height: 35,
+                    width: 40,
+                    height: 40,
                     backgroundColor: backgroundColorsTable['blue1'],
                     justifyContent: 'center',
                     alignItems: 'center',
-                    borderRadius: 10,
+                    borderRadius: 8,
                     marginRight: 10,
                   }}
                 >
                   <Ionicons name='videocam' size={20} color={iconColorsTable['blue1']} />
                 </View>
-                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>2023 normal</Text>
+                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>2023 normal</Text>
               </View>
               {videoEffect === 'normal' ? (
                 <Ionicons name='checkmark-circle' size={25} color={iconColorsTable['green1']} />
@@ -74,18 +74,18 @@ const AppMenuBottomSheet = (props) => {
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View
                   style={{
-                    width: 35,
-                    height: 35,
+                    width: 40,
+                    height: 40,
                     backgroundColor: backgroundColorsTable['lightBlue1'],
                     justifyContent: 'center',
                     alignItems: 'center',
-                    borderRadius: 10,
+                    borderRadius: 8,
                     marginRight: 10,
                   }}
                 >
                   <MaterialCommunityIcons name='video-vintage' size={20} color={iconColorsTable['lightBlue1']} />
                 </View>
-                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>
+                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>
                   8mm Ocean film
                 </Text>
               </View>
@@ -100,18 +100,18 @@ const AppMenuBottomSheet = (props) => {
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View
                   style={{
-                    width: 35,
-                    height: 35,
+                    width: 40,
+                    height: 40,
                     backgroundColor: backgroundColorsTable['lightGreen1'],
                     justifyContent: 'center',
                     alignItems: 'center',
-                    borderRadius: 10,
+                    borderRadius: 8,
                     marginRight: 10,
                   }}
                 >
                   <MaterialCommunityIcons name='video-vintage' size={20} color={iconColorsTable['lightGreen1']} />
                 </View>
-                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>
+                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>
                   8mm Olive film
                 </Text>
               </View>
@@ -126,18 +126,18 @@ const AppMenuBottomSheet = (props) => {
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View
                   style={{
-                    width: 35,
-                    height: 35,
+                    width: 40,
+                    height: 40,
                     backgroundColor: backgroundColorsTable['pink1'],
                     justifyContent: 'center',
                     alignItems: 'center',
-                    borderRadius: 10,
+                    borderRadius: 8,
                     marginRight: 10,
                   }}
                 >
                   <MaterialCommunityIcons name='video-vintage' size={20} color={iconColorsTable['pink1']} />
                 </View>
-                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>
+                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>
                   8mm Camel film
                 </Text>
               </View>
@@ -152,18 +152,18 @@ const AppMenuBottomSheet = (props) => {
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View
                   style={{
-                    width: 35,
-                    height: 35,
+                    width: 40,
+                    height: 40,
                     backgroundColor: backgroundColorsTable['yellow1'],
                     justifyContent: 'center',
                     alignItems: 'center',
-                    borderRadius: 10,
+                    borderRadius: 8,
                     marginRight: 10,
                   }}
                 >
                   <MaterialCommunityIcons name='video-vintage' size={20} color={iconColorsTable['yellow1']} />
                 </View>
-                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>
+                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>
                   8mm Sepia film
                 </Text>
               </View>

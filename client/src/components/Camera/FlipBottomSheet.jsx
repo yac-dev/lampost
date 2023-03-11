@@ -54,18 +54,18 @@ const FlipBottomSheet = (props) => {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View
               style={{
-                width: 35,
-                height: 35,
+                width: 40,
+                height: 40,
                 backgroundColor: backgroundColorsTable['red1'],
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderRadius: 10,
+                borderRadius: 8,
                 marginRight: 10,
               }}
             >
               <MaterialIcons name='flip-to-front' size={20} color={iconColorsTable['red1']} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Normal</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Normal</Text>
           </View>
           {cameraType === CameraType.back ? (
             <Ionicons name='checkmark-circle' color={iconColorsTable['green1']} size={25} />
@@ -81,18 +81,18 @@ const FlipBottomSheet = (props) => {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View
               style={{
-                width: 35,
-                height: 35,
+                width: 40,
+                height: 40,
                 backgroundColor: backgroundColorsTable['blue1'],
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderRadius: 10,
+                borderRadius: 8,
                 marginRight: 10,
               }}
             >
               <MaterialIcons name='flip-to-back' size={20} color={iconColorsTable['blue1']} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Selfie</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Selfie</Text>
           </View>
           {cameraType === CameraType.front ? (
             <Ionicons name='checkmark-circle' color={iconColorsTable['green1']} size={25} />

@@ -267,7 +267,7 @@ const Container = (props) => {
             style={{
               position: 'absolute',
               bottom: 20,
-              backgroundColor: backgroundColorsTable['pink1'],
+              backgroundColor: backgroundColorsTable['green1'],
               borderRadius: 10,
               alignSelf: 'center',
               padding: 10,
@@ -276,7 +276,7 @@ const Container = (props) => {
           >
             <TouchableOpacity
               style={{
-                backgroundColor: iconColorsTable['pink1'],
+                backgroundColor: iconColorsTable['green1'],
                 padding: 10,
                 flexDirection: 'row',
                 alignItems: 'center',
@@ -289,7 +289,7 @@ const Container = (props) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={{
-                backgroundColor: iconColorsTable['pink1'],
+                backgroundColor: iconColorsTable['green1'],
                 padding: 10,
                 flexDirection: 'row',
                 alignItems: 'center',

@@ -12,7 +12,7 @@ import MyLibraries from './MyLibraries';
 
 const AppMenuBottomSheet = (props) => {
   const { myLibrariesBottomSheetRef } = useContext(LibrariesContext);
-  const snapPoints = useMemo(() => ['70%'], []);
+  const snapPoints = useMemo(() => ['50%'], []);
 
   return (
     <GorhomBottomSheet
@@ -33,18 +33,18 @@ const AppMenuBottomSheet = (props) => {
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
           <View
             style={{
-              width: 35,
-              height: 35,
+              width: 40,
+              height: 40,
               backgroundColor: backgroundColorsTable['yellow1'],
               justifyContent: 'center',
               alignItems: 'center',
-              borderRadius: 10,
+              borderRadius: 8,
               marginRight: 10,
             }}
           >
             <Ionicons name='ios-library' color={iconColorsTable['yellow1']} size={20} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>My libraries</Text>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>My libraries</Text>
         </View>
         <MyLibraries />
       </BottomSheetView>

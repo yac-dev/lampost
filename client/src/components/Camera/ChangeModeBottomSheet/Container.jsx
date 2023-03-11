@@ -47,18 +47,18 @@ const AppMenuBottomSheet = (props) => {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View
               style={{
-                width: 35,
-                height: 35,
+                width: 40,
+                height: 40,
                 backgroundColor: backgroundColorsTable['red1'],
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderRadius: 10,
+                borderRadius: 8,
                 marginRight: 10,
               }}
             >
-              <MaterialCommunityIcons name='camera' size={20} color={iconColorsTable['red1']} />
+              <Ionicons name='image' size={20} color={iconColorsTable['red1']} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Photo</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Photo</Text>
           </View>
           {cameraMode === 'photo' ? (
             <Ionicons name='checkmark-circle' color={iconColorsTable['green1']} size={25} />
@@ -75,45 +75,45 @@ const AppMenuBottomSheet = (props) => {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View
               style={{
-                width: 35,
-                height: 35,
+                width: 40,
+                height: 40,
                 backgroundColor: backgroundColorsTable['blue1'],
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderRadius: 10,
+                borderRadius: 8,
                 marginRight: 10,
               }}
             >
               <Ionicons name='videocam' size={20} color={iconColorsTable['blue1']} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Video</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Video</Text>
           </View>
           {cameraMode === 'video' ? (
             <Ionicons name='checkmark-circle' color={iconColorsTable['green1']} size={25} />
           ) : null}
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           disabled={true}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View
               style={{
-                width: 35,
-                height: 35,
+                width: 40,
+                height: 40,
                 backgroundColor: backgroundColorsTable['pink1'],
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderRadius: 10,
+                borderRadius: 8,
                 marginRight: 10,
               }}
             >
               <Ionicons name='radio' size={20} color={iconColorsTable['pink1']} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Start live</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Start live</Text>
           </View>
           <Foundation name='prohibited' color={iconColorsTable['red1']} size={25} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </BottomSheetView>
     </GorhomBottomSheet>
   );

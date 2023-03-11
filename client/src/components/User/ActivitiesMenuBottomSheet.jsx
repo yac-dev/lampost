@@ -15,7 +15,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import lampostAPI from '../../apis/lampost';
 
 const FlagUserMenuBottomSheet = () => {
-  const snapPoints = useMemo(() => ['35%'], []);
+  const snapPoints = useMemo(() => ['30%'], []);
   const { auth, setLoading, setSnackBar } = useContext(GlobalContext);
   const { activitiesMenuBottomSheetRef, navigation, user } = useContext(UserContext);
 
@@ -33,7 +33,7 @@ const FlagUserMenuBottomSheet = () => {
       handleIndicatorStyle={{ backgroundColor: 'white' }}
       // onClose={() => onSelectedItemBottomSheetClose()}
     >
-      <BottomSheetView style={{ flex: 1, paddingLeft: 20, paddingRight: 20 }}>
+      <BottomSheetView style={{ flex: 1, paddingLeft: 10, paddingRight: 10 }}>
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', padding: 5, justifyContent: 'space-between' }}
           onPress={() => {
@@ -47,7 +47,7 @@ const FlagUserMenuBottomSheet = () => {
                 width: 40,
                 height: 40,
                 backgroundColor: backgroundColorsTable['red1'],
-                borderRadius: 10,
+                borderRadius: 8,
                 marginRight: 10,
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -55,7 +55,7 @@ const FlagUserMenuBottomSheet = () => {
             >
               <MaterialCommunityIcons name='rocket-launch' size={20} color={iconColorsTable['red1']} />
             </View>
-            <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>{user.name}'s meetups</Text>
+            <Text style={{ color: 'white' }}>{user.name}'s meetups</Text>
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
         </TouchableOpacity>
@@ -72,7 +72,7 @@ const FlagUserMenuBottomSheet = () => {
                 width: 40,
                 height: 40,
                 backgroundColor: backgroundColorsTable['violet1'],
-                borderRadius: 10,
+                borderRadius: 8,
                 marginRight: 10,
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -80,11 +80,11 @@ const FlagUserMenuBottomSheet = () => {
             >
               <MaterialCommunityIcons name='film' size={20} color={iconColorsTable['violet1']} />
             </View>
-            <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>{user.name}'s assets</Text>
+            <Text style={{ color: 'white' }}>{user.name}'s assets</Text>
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', padding: 5, justifyContent: 'space-between' }}
           onPress={() => {
             activitiesMenuBottomSheetRef.current.close();
@@ -96,7 +96,7 @@ const FlagUserMenuBottomSheet = () => {
                 width: 40,
                 height: 40,
                 backgroundColor: backgroundColorsTable['yellow1'],
-                borderRadius: 10,
+                borderRadius: 8,
                 marginRight: 10,
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -107,7 +107,7 @@ const FlagUserMenuBottomSheet = () => {
             <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>{user.name}'s claps</Text>
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </BottomSheetView>
     </GorhomBottomSheet>
   );

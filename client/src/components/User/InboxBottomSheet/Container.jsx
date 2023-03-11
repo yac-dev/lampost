@@ -34,16 +34,16 @@ const InboxBottomSheet = (props) => {
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
           <View
             style={{
-              width: 35,
-              height: 35,
+              width: 40,
+              height: 40,
               backgroundColor: backgroundColorsTable['pink1'],
               justifyContent: 'center',
               alignItems: 'center',
-              borderRadius: 5,
+              borderRadius: 8,
               marginRight: 10,
             }}
           >
-            <MaterialCommunityIcons name='email-multiple' color={iconColorsTable['pink1']} size={20} />
+            <MaterialCommunityIcons name='mailbox' color={iconColorsTable['pink1']} size={20} />
           </View>
           <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>Inbox</Text>
         </View>

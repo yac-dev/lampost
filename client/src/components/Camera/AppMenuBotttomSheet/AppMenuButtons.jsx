@@ -94,18 +94,18 @@ const AppMenuButtons = (props) => {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View
               style={{
-                width: 35,
-                height: 35,
+                width: 40,
+                height: 40,
                 backgroundColor: backgroundColorsTable['yellow1'],
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderRadius: 10,
+                borderRadius: 8,
                 marginRight: 10,
               }}
             >
-              <Ionicons name='videocam' size={20} color={iconColorsTable['yellow1']} />
+              <Ionicons name='camera' size={20} color={iconColorsTable['yellow1']} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Camera mode</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Camera mode</Text>
           </View>
           {renderCameraMode()}
         </TouchableOpacity>
@@ -119,18 +119,18 @@ const AppMenuButtons = (props) => {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View
               style={{
-                width: 35,
-                height: 35,
+                width: 40,
+                height: 40,
                 backgroundColor: backgroundColorsTable['grey1'],
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderRadius: 10,
+                borderRadius: 8,
                 marginRight: 10,
               }}
             >
               <MaterialCommunityIcons name='camera-flip' size={20} color={iconColorsTable['grey1']} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Flip</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Flip</Text>
           </View>
           <MaterialCommunityIcons name='chevron-right' size={25} color={iconColorsTable['grey1']} />
         </TouchableOpacity>
@@ -143,18 +143,18 @@ const AppMenuButtons = (props) => {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View
               style={{
-                width: 35,
-                height: 35,
+                width: 40,
+                height: 40,
                 backgroundColor: backgroundColorsTable['green1'],
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderRadius: 10,
+                borderRadius: 8,
                 marginRight: 10,
               }}
             >
               <Ionicons name='ios-pricetags' size={20} color={iconColorsTable['green1']} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Tag people</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Tag people</Text>
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
         </TouchableOpacity>
@@ -175,18 +175,18 @@ const AppMenuButtons = (props) => {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View
               style={{
-                width: 35,
-                height: 35,
+                width: 40,
+                height: 40,
                 backgroundColor: backgroundColorsTable['blue1'],
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderRadius: 10,
+                borderRadius: 8,
                 marginRight: 10,
               }}
             >
               <MaterialCommunityIcons name='history' size={20} color={iconColorsTable['blue1']} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Time machine</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Time machine</Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={{ color: baseTextColor }}>{videoEffect}</Text>
@@ -197,7 +197,7 @@ const AppMenuButtons = (props) => {
     );
   } else {
     return (
-      <Text style={{ color: baseTextColor, fontWeight: 'bold', fontSize: 20 }}>
+      <Text style={{ color: baseTextColor, fontWeight: 'bold', fontSize: 17 }}>
         Please login or signup to take some actions
       </Text>
     );

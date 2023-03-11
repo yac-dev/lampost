@@ -14,7 +14,7 @@ import AppMenuButtons from './AppMenuButtons';
 
 const AppMenuBottomSheet = (props) => {
   const { appMenuBottomSheetRef, handleCreateLibraryBottomSheet, isIpad } = useContext(LibrariesContext);
-  const snapPoints = useMemo(() => ['45%', '60%', '80%'], []);
+  const snapPoints = useMemo(() => ['30%', '50%'], []);
 
   return (
     <GorhomBottomSheet

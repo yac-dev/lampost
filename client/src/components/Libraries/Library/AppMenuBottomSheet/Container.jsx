@@ -15,7 +15,7 @@ import lampostAPI from '../../../../apis/lampost';
 
 const AppMenuBottomSheet = (props) => {
   const { appMenuBottomSheetRef, library, selectedRoll, setSelectedRoll } = useContext(LibraryContext);
-  const snapPoints = useMemo(() => ['45%', '60%', '80%'], []);
+  const snapPoints = useMemo(() => ['30%'], []);
 
   return (
     <GorhomBottomSheet

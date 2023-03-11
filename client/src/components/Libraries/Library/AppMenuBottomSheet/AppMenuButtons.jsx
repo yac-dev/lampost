@@ -56,18 +56,18 @@ const AppMenuButtons = () => {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View
             style={{
-              width: 35,
-              height: 35,
+              width: 40,
+              height: 40,
               backgroundColor: backgroundColorsTable['red1'],
               justifyContent: 'center',
               alignItems: 'center',
-              borderRadius: 7,
+              borderRadius: 8,
               marginRight: 10,
             }}
           >
             <MaterialCommunityIcons name='plus' color={iconColorsTable['red1']} size={20} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Post my asset</Text>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Post my asset</Text>
         </View>
         <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
       </TouchableOpacity>
@@ -80,22 +80,22 @@ const AppMenuButtons = () => {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View
             style={{
-              width: 35,
-              height: 35,
+              width: 40,
+              height: 40,
               backgroundColor: backgroundColorsTable['lightBlue1'],
               justifyContent: 'center',
               alignItems: 'center',
-              borderRadius: 7,
+              borderRadius: 8,
               marginRight: 10,
             }}
           >
             <MaterialCommunityIcons name='account-group' color={iconColorsTable['lightBlue1']} size={20} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Members</Text>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Members</Text>
         </View>
         <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
       </TouchableOpacity>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
         onPress={() => {
           null;
@@ -115,10 +115,10 @@ const AppMenuButtons = () => {
           >
             <Ionicons name='library-sharp' color={iconColorsTable['violet1']} size={20} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Library detail</Text>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Library detail</Text>
         </View>
         <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       {/* {library?.launcher._id === auth.data?._id ? null : (
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
@@ -141,7 +141,7 @@ const AppMenuButtons = () => {
             >
               <MaterialCommunityIcons name='exit-run' color={iconColorsTable['green1']} size={20} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>
               Leave this library
             </Text>
           </View>

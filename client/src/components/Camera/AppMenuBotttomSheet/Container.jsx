@@ -5,13 +5,12 @@ import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { appBottomSheetBackgroundColor, baseTextColor } from '../../../utils/colorsTable';
 import AppMenuButtons from './AppMenuButtons';
-import AddAssetEffect from './AddAssetEffectMenu/Container';
 import { Ionicons } from '@expo/vector-icons';
 
 const AppMenuBottomSheet = (props) => {
   const { auth, isIpad } = useContext(GlobalContext);
   const { appMenuBottomSheetRef, cameraMode } = useContext(CameraContext);
-  const snapPoints = useMemo(() => ['45%', '60%', '80%'], []);
+  const snapPoints = useMemo(() => ['45%', '60%'], []);
 
   const renderCameraMode = () => {
     switch (cameraMode) {

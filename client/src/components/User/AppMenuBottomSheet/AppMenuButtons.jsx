@@ -70,11 +70,9 @@ const AppButtons = (props) => {
             >
               <Fontisto name='dollar' color={iconColorsTable['yellow1']} size={20} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>
-              Patron membership settings
-            </Text>
+            <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>Patron membership settings</Text>
           </View>
-          <Foundation name='prohibited' color={iconColorsTable['red1']} size={25} />
+          <Foundation name='prohibited' color={iconColorsTable['red1']} size={20} />
         </TouchableOpacity>
       );
     } else {
@@ -86,49 +84,6 @@ const AppButtons = (props) => {
 
   return (
     <View>
-      {/* <ScrollView style={{ flexDirection: 'row' }} horizontal={true}>
-        <AppMenuButton
-          backgroundColor={backgroundColorsTable['lightGreen1']}
-          icon={<Foundation name='sheriff-badge' size={35} color={iconColorsTable['lightGreen1']} />}
-          label='Add badges'
-          onAppMenuButtonPress={() => {
-            appMenuBottomSheetRef.current.close();
-            navigation.navigate('Add badges', { fromComponent: 'ADD_USER_BADGES', myBadges: badgeDatas });
-          }}
-        />
-        {user.leadership.total ? (
-          <AppMenuButton
-            backgroundColor={backgroundColorsTable['yellow1']}
-            icon={<Foundation name='dollar' size={35} color={iconColorsTable['yellow1']} />}
-            label='Membership tier'
-            onAppMenuButtonPress={() => setIsNotAvailableModalOpen(true)}
-            isDisabled={true}
-          />
-        ) : null}
-        <AppMenuButton
-          backgroundColor={backgroundColorsTable['grey1']}
-          icon={<Fontisto name='player-settings' size={35} color={iconColorsTable['grey1']} />}
-          label='Personal setting'
-          onAppMenuButtonPress={() => setIsNotAvailableModalOpen(true)}
-          isDisabled={true}
-        />
-        <AppMenuButton
-          backgroundColor={backgroundColorsTable['blue1']}
-          icon={<MaterialCommunityIcons name='exit-run' size={35} color={iconColorsTable['blue1']} />}
-          label='Logout'
-          onAppMenuButtonPress={() => {
-            setIsConfirmLogoutModalOpen(true);
-          }}
-        />
-        <AppMenuButton
-          backgroundColor={backgroundColorsTable['yellow1']}
-          icon={<Foundation name='alert' size={35} color={iconColorsTable['yellow1']} />}
-          label='Delete my account'
-          onAppMenuButtonPress={() => {
-            setIsConfirmDeleteAccountModalOpen(true);
-          }}
-        />
-      </ScrollView> */}
       <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
         onPress={() => {
@@ -139,20 +94,20 @@ const AppButtons = (props) => {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View
             style={{
-              width: 35,
-              height: 35,
+              width: 40,
+              height: 40,
               backgroundColor: backgroundColorsTable['green1'],
               justifyContent: 'center',
               alignItems: 'center',
-              borderRadius: 10,
+              borderRadius: 8,
               marginRight: 10,
             }}
           >
             <Foundation name='sheriff-badge' color={iconColorsTable['green1']} size={20} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Add badges</Text>
+          <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>Add badges</Text>
         </View>
-        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
       </TouchableOpacity>
       <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
@@ -164,20 +119,20 @@ const AppButtons = (props) => {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View
             style={{
-              width: 35,
-              height: 35,
+              width: 40,
+              height: 40,
               backgroundColor: backgroundColorsTable['orange1'],
               justifyContent: 'center',
               alignItems: 'center',
-              borderRadius: 7,
+              borderRadius: 8,
               marginRight: 10,
             }}
           >
             <MaterialCommunityIcons name='human-greeting-variant' color={iconColorsTable['orange1']} size={20} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>My friends</Text>
+          <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>My friends</Text>
         </View>
-        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -189,20 +144,20 @@ const AppButtons = (props) => {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View
             style={{
-              width: 35,
-              height: 35,
+              width: 40,
+              height: 40,
               backgroundColor: backgroundColorsTable['blue1'],
               justifyContent: 'center',
               alignItems: 'center',
-              borderRadius: 10,
+              borderRadius: 8,
               marginRight: 10,
             }}
           >
             <MaterialCommunityIcons name='exit-run' color={iconColorsTable['blue1']} size={20} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Logout</Text>
+          <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>Logout</Text>
         </View>
-        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
       </TouchableOpacity>
       <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
@@ -214,20 +169,20 @@ const AppButtons = (props) => {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View
             style={{
-              width: 35,
-              height: 35,
+              width: 40,
+              height: 40,
               backgroundColor: backgroundColorsTable['red1'],
               justifyContent: 'center',
               alignItems: 'center',
-              borderRadius: 10,
+              borderRadius: 8,
               marginRight: 10,
             }}
           >
             <Foundation name='alert' color={iconColorsTable['red1']} size={20} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Delete my account</Text>
+          <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>Delete my account</Text>
         </View>
-        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
       </TouchableOpacity>
       {/* <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
@@ -250,9 +205,9 @@ const AppButtons = (props) => {
           >
             <Fontisto name='player-settings' color={iconColorsTable['grey1']} size={20} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Settings</Text>
+          <Text style={{ color: 'white',  fontSize: 17, marginRight: 10 }}>Settings</Text>
         </View>
-        <Foundation name='prohibited' color={iconColorsTable['red1']} size={25} />
+        <Foundation name='prohibited' color={iconColorsTable['red1']} size={20} />
       </TouchableOpacity>
       {renderMembershipSetting()} */}
     </View>
@@ -261,5 +216,5 @@ const AppButtons = (props) => {
 
 export default AppButtons;
 {
-  /* <Foundation name='prohibited' color={iconColorsTable['red1']} size={25} /> */
+  /* <Foundation name='prohibited' color={iconColorsTable['red1']} size={20} /> */
 }

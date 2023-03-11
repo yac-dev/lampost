@@ -35,18 +35,18 @@ const MyUpcomingMeetupsBottomSheet = (props) => {
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
           <View
             style={{
-              width: 35,
-              height: 35,
+              width: 40,
+              height: 40,
               backgroundColor: backgroundColorsTable['green1'],
               justifyContent: 'center',
               alignItems: 'center',
-              borderRadius: 10,
+              borderRadius: 8,
               marginRight: 10,
             }}
           >
             <MaterialCommunityIcons name='run' color={iconColorsTable['green1']} size={20} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>My upcoming meetups</Text>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>My upcoming meetups</Text>
         </View>
         <UpcomingMeetups />
       </BottomSheetView>

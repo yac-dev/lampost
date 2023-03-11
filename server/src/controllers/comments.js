@@ -10,12 +10,9 @@ export const createQuestion = async (request, response) => {
       meetup: meetupId,
       user: user._id,
       content,
-      replyingTo: replyingTo,
+      replyTo: replyingTo._id,
       createdAt: new Date(),
     });
-    // const meetup = await Meetup.findById(meetupId);
-    // meetup.totalComments++;
-    // meetup.save();
 
     // notificationを送る。
     // if (launcherId) {
@@ -38,7 +35,7 @@ export const createQuestion = async (request, response) => {
           photo: user.photo,
         },
         createdAt: comment.createdAt,
-        replyingTo: comment.replyingTo,
+        replyingTo: replyingTo,
       },
     });
   } catch (error) {
@@ -48,10 +45,19 @@ export const createQuestion = async (request, response) => {
 
 export const getMeetupComments = async (request, response) => {
   try {
-    const comments = await Comment.find({ meetup: request.params.meetupId }).populate({
-      path: 'user',
-      select: 'name photo',
-    });
+    const comments = await Comment.find({ meetup: request.params.meetupId }).populate([
+      {
+        path: 'user',
+        select: 'name photo',
+      },
+      {
+        path: 'replyTo',
+        populate: {
+          path: 'user',
+          select: 'name photo',
+        },
+      },
+    ]);
     response.status(200).json({
       comments,
     });

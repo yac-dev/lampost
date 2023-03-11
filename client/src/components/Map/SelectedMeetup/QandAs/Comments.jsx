@@ -8,7 +8,8 @@ import { iconsTable } from '../../../../utils/icons';
 
 const Comments = (props) => {
   const { MaterialCommunityIcons, FontAwesome5, MaterialIcons } = iconsTable;
-  const { comments, setComments, isFetchedComments } = useContext(QandAsContext);
+  const { comments, setComments, isFetchedComments, commentInputBottomSheetRef, setReplyingTo, commentInputRef } =
+    useContext(QandAsContext);
 
   const renderChatSenderName = (chat) => {
     if (chat.user) {
@@ -102,15 +103,25 @@ const Comments = (props) => {
             </View>
             <Text style={{ fontSize: 15, marginBottom: 10, color: baseTextColor }}>{comment.content}</Text>
             {comment.replyTo ? (
-              <View style={{ paddingLeft: 15, marginBottom: 10 }}>
-                <View>
-                  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-                    <Text style={{ color: iconColorsTable['blue1'], marginRight: 5 }}>
-                      @{comment.replyTo.user.name}
-                    </Text>
-                    {renderDate(comment.replyTo.createdAt)}
+              <View
+                style={{
+                  marginBottom: 10,
+                  borderTopWidth: 0.3,
+                  paddingTop: 10,
+                  borderTopColor: 'white',
+                }}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <MaterialCommunityIcons name='reply' size={20} color={baseTextColor} style={{ marginRight: 5 }} />
+                  <View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+                      <Text style={{ color: iconColorsTable['blue1'], marginRight: 5 }}>
+                        @{comment.replyTo.user.name}
+                      </Text>
+                      {renderDate(comment.replyTo.createdAt)}
+                    </View>
+                    <Text style={{ color: baseTextColor, fontStyle: 'italic' }}>{comment.replyTo.content}</Text>
                   </View>
-                  <Text style={{ color: 'rgb(118, 120, 124)' }}>{comment.replyTo.content}</Text>
                 </View>
               </View>
             ) : null}
@@ -130,9 +141,9 @@ const Comments = (props) => {
                     marginRight: 10,
                   }}
                   onPress={() => {
-                    // setReplyingTo(chat);
-                    // sendChatBottomSheetRef.current.snapToIndex(0);
-                    // textInputRef.current.focus();
+                    setReplyingTo(comment);
+                    commentInputBottomSheetRef.current.snapToIndex(0);
+                    commentInputRef.current.focus();
                   }}
                 >
                   <MaterialCommunityIcons name='reply' size={20} color={baseTextColor} style={{ marginRight: 5 }} />
@@ -172,7 +183,13 @@ const Comments = (props) => {
     if (!comments.length) {
       return <Text style={{ color: 'white', textAlign: 'center' }}>You'll see all the Q&As here.</Text>;
     } else {
-      return <FlatList data={comments} renderItem={({ item }) => renderItem(item)} keyExtractor={(item) => item._id} />;
+      return (
+        <FlatList
+          data={comments}
+          renderItem={({ item }) => renderItem(item)}
+          keyExtractor={(item, index) => `${item._id}-${index}`}
+        />
+      );
     }
   };
 
