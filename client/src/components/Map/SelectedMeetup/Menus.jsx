@@ -282,7 +282,7 @@ const Menus = (props) => {
           selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
         }}
       />
-      <Menu
+      {/* <Menu
         label='Q&As'
         icon={<MaterialCommunityIcons name='chat-question' size={20} color={iconColorsTable['blue1']} />}
         backgroundColor={backgroundColorsTable['blue1']}
@@ -295,7 +295,7 @@ const Menus = (props) => {
             },
           });
         }}
-      />
+      /> */}
     </ScrollView>
   );
 };

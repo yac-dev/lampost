@@ -18,6 +18,7 @@ import SelectedMeetup from './SelectedMeetup/Container';
 import SelectedMeetupInfoDetail from './SelectedMeetup/InfoDetail/Container';
 import AppMenusBottomSheet from './AppMenuBottomSheet/Container';
 import MyUpcomingMeetupsBottomSheet from './MyUpcomingMeetupsBottomSheet/Container';
+import MoreMenuBottomSheet from './MyUpcomingMeetupsBottomSheet/MoreMenuBottomSheet';
 import ConfirmLaunchMeetupModal from './LaunchMeetupBottomSheet/ConfirmLaunchMeetupModal';
 import CancelLaunchMeetupModal from './LaunchMeetupBottomSheet/CancelLaunchMeetupModal';
 import ConfirmStartMeetup from './ConfirmStartMeetup';
@@ -59,10 +60,11 @@ const Map = (props) => {
   const [meetups, setMeetups] = useState({});
   const [selectedMeetup, setSelectedMeetup] = useState(null);
   const [selectedMeetupDetailComponent, setSelectedMeetupDetailComponent] = useState('');
-
+  const [moreMenuOf, setMoreMenuOf] = useState(null);
   const mapRef = useRef(null);
   const appMenuBottomSheetRef = useRef(null);
   const myUpcomingMeetupsBottomSheetRef = useRef(null);
+  const moreMenuBottomSheetRef = useRef(null);
   const launchMeetupBottomSheetRef = useRef(null);
   const selectedMeetupBottomSheetRef = useRef(null);
   const selectedMeetupDetailBottomSheetRef = useRef(null);
@@ -193,6 +195,9 @@ const Map = (props) => {
           launchMeetupBottomSheetRef,
           appMenuBottomSheetRef,
           myUpcomingMeetupsBottomSheetRef,
+          moreMenuBottomSheetRef,
+          moreMenuOf,
+          setMoreMenuOf,
           isLaunchMeetupConfirmationModalOpen,
           setIsLaunchMeetupConfirmationModalOpen,
           isCancelLaunchMeetupConfirmationModalOpen,
@@ -331,6 +336,7 @@ const Map = (props) => {
           <ConfirmFinishMeetup />
           <AppMenusBottomSheet />
           <MyUpcomingMeetupsBottomSheet />
+          <MoreMenuBottomSheet />
           <LaunchMeetupBottomSheet navigation={props.navigation} route={props.route} />
           <SelectedMeetup />
           <SelectedMeetupInfoDetail />

@@ -35,7 +35,7 @@ const FlagUserMenuBottomSheet = () => {
     >
       <BottomSheetView style={{ flex: 1, paddingLeft: 10, paddingRight: 10 }}>
         <TouchableOpacity
-          style={{ flexDirection: 'row', alignItems: 'center', padding: 5, justifyContent: 'space-between' }}
+          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
             activitiesMenuBottomSheetRef.current.close();
             navigation.navigate('Meetups', { userId: user._id });
@@ -55,12 +55,12 @@ const FlagUserMenuBottomSheet = () => {
             >
               <MaterialCommunityIcons name='rocket-launch' size={20} color={iconColorsTable['red1']} />
             </View>
-            <Text style={{ color: 'white' }}>{user.name}'s meetups</Text>
+            <Text style={{ color: 'white', fontSize: 17 }}>{user.name}'s meetups</Text>
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
         </TouchableOpacity>
         <TouchableOpacity
-          style={{ flexDirection: 'row', alignItems: 'center', padding: 5, justifyContent: 'space-between' }}
+          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
             activitiesMenuBottomSheetRef.current.close();
             navigation.navigate('Assets', { userId: user._id });
@@ -80,7 +80,7 @@ const FlagUserMenuBottomSheet = () => {
             >
               <MaterialCommunityIcons name='film' size={20} color={iconColorsTable['violet1']} />
             </View>
-            <Text style={{ color: 'white' }}>{user.name}'s assets</Text>
+            <Text style={{ color: 'white', fontSize: 17 }}>{user.name}'s assets</Text>
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
         </TouchableOpacity>

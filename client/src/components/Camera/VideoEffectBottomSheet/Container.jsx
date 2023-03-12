@@ -37,7 +37,7 @@ const AppMenuBottomSheet = (props) => {
     >
       <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
         <Text style={{ color: baseTextColor, marginBottom: 15 }}>
-          Note: These video effects will be added after your recording finishes.
+          Note: Video effect will be added after your recording finishes.
         </Text>
         <View>
           <ScrollView contentContainerStyle={{ paddingBottom: 50 }} showsVerticalScrollIndicator={false}>

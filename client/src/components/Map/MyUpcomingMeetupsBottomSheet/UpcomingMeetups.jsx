@@ -27,6 +27,9 @@ const Container = (props) => {
   const {
     appMenuBottomSheetRef,
     myUpcomingMeetupsBottomSheetRef,
+    moreMenuBottomSheetRef,
+    moreMenuof,
+    setMoreMenuOf,
     selectedMeetup,
     setSelectedMeetup,
     selectedMeetupBottomSheetRef,
@@ -91,7 +94,7 @@ const Container = (props) => {
     const dateElements = d.split(',').join('').split(' ');
 
     return (
-      <View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: 'row', marginRight: 20 }}>
         {dateElements.map((element, index) => {
           return (
             <Text key={index} style={{ color: 'white' }}>
@@ -106,49 +109,42 @@ const Container = (props) => {
   const renderStartButton = (meetupAndChatsTable) => {
     if (meetupAndChatsTable.state === 'upcoming') {
       return (
-        <View style={{ width: 50, height: 60, alignItems: 'center', marginRight: 5 }}>
-          <TouchableOpacity
-            style={{
-              backgroundColor: iconColorsTable['blue1'],
-              borderRadius: 7,
-              width: 40,
-              height: 40,
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginBottom: 3,
-            }}
-            onPress={() => {
-              setStartingMeetup(meetupAndChatsTable._id);
-              setIsStartMeetupConfirmationModalOpen(true);
-            }}
-          >
-            <Ionicons size={25} name='power' color={'white'} />
-          </TouchableOpacity>
-          <Text style={{ color: 'white', fontSize: 13, textAlign: 'center' }}>Start</Text>
-        </View>
+        <TouchableOpacity
+          style={{
+            backgroundColor: iconColorsTable['blue1'],
+            borderRadius: 7,
+            padding: 5,
+            marginBottom: 10,
+          }}
+          onPress={() => {
+            setStartingMeetup(meetupAndChatsTable._id);
+            setIsStartMeetupConfirmationModalOpen(true);
+          }}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+            <Ionicons size={25} name='power' color={'white'} style={{ marginRight: 5 }} />
+            <Text style={{ color: 'white' }}>Start meetup</Text>
+          </View>
+        </TouchableOpacity>
       );
     } else if (meetupAndChatsTable.state === 'ongoing') {
       return (
-        <View style={{ width: 50, height: 60, alignItems: 'center', marginRight: 5 }}>
-          <TouchableOpacity
-            style={{
-              backgroundColor: iconColorsTable['red1'],
-              borderRadius: 7,
-              width: 40,
-              height: 40,
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginBottom: 3,
-            }}
-            onPress={() => {
-              setFinishingMeetup(meetupAndChatsTable._id);
-              setIsFinishMeetupConfirmationModalOpen(true);
-            }}
-          >
+        <TouchableOpacity
+          style={{
+            backgroundColor: iconColorsTable['red1'],
+            borderRadius: 7,
+            padding: 5,
+          }}
+          onPress={() => {
+            setFinishingMeetup(meetupAndChatsTable._id);
+            setIsFinishMeetupConfirmationModalOpen(true);
+          }}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
             <Ionicons size={25} name='power' color={'white'} />
-          </TouchableOpacity>
-          <Text style={{ color: 'white', fontSize: 13, textAlign: 'center' }}>Finish</Text>
-        </View>
+            <Text style={{ color: 'white' }}>Finish meetup</Text>
+          </View>
+        </TouchableOpacity>
       );
     }
   };
@@ -162,7 +158,8 @@ const Container = (props) => {
       <TouchableOpacity
         style={{
           flexDirection: 'row',
-          flexWrap: 'wrap',
+          alignItems: 'center',
+          // flexWrap: 'wrap',
         }}
         onPress={() => {
           appMenuBottomSheetRef.current.close();
@@ -174,6 +171,49 @@ const Container = (props) => {
     );
   };
 
+  const renderActionButtons = (meetup) => {
+    if (meetup.launcher === auth.data._id) {
+      return (
+        <View style={{ flexDirection: 'column' }}>
+          {renderStartButton(meetup)}
+          <TouchableOpacity
+            style={{
+              backgroundColor: iconColorsTable['blue1'],
+              borderRadius: 7,
+              padding: 5,
+            }}
+            onPress={() => {
+              navigation.navigate('Camera', { meetupId: meetup._id });
+            }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+              <Ionicons size={25} name='camera' color={'white'} style={{ marginRight: 5 }} />
+              <Text style={{ color: 'white' }}>Capture moment</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      );
+    } else {
+      return (
+        <TouchableOpacity
+          style={{
+            backgroundColor: iconColorsTable['blue1'],
+            borderRadius: 7,
+            padding: 5,
+          }}
+          onPress={() => {
+            navigation.navigate('Camera', { meetupId: meetup._id });
+          }}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+            <Ionicons size={25} name='camera' color={'white'} style={{ marginRight: 5 }} />
+            <Text style={{ color: 'white' }}>Capture moment</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    }
+  };
+
   const renderMyUpcomingMeetups = () => {
     const myUpcomingMeetupsArr = Object.values(myUpcomingMeetups);
     if (myUpcomingMeetupsArr.length) {
@@ -183,77 +223,44 @@ const Container = (props) => {
             key={index}
             style={{
               flexDirection: 'column',
-              // paddingLeft: 15,
-              paddingTop: 10,
-              paddingBottom: 5,
+              padding: 10,
+              backgroundColor: screenSectionBackgroundColor,
+              marginBottom: 15,
+              borderRadius: 7,
             }}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingTop: 5,
-                paddingBottom: 5,
-                // backgroundColor: screenSectionBackgroundColor,
-                alignSelf: 'flex-start',
-                borderRadius: 5,
-                marginBottom: 5,
-              }}
-            >
-              <MaterialCommunityIcons name='calendar-clock' color='white' size={20} style={{ marginRight: 10 }} />
-              {renderMeetupDateAndTime(meetup.startDateAndTime)}
-            </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-              <TouchableOpacity onPress={() => getMeetup(meetup._id)}>
-                <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white', marginBottom: 10 }}>
-                  {meetup.title}
-                </Text>
-              </TouchableOpacity>
-              <View style={{ flexDirection: 'row' }}>
-                {meetup.launcher === auth.data._id ? (
-                  <>{renderStartButton(meetup)}</> // launcherじゃなければ、これをrenderしない。
-                ) : null}
-                <View style={{ width: 50, height: 60, alignItems: 'center', marginRight: 5 }}>
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: iconColorsTable['blue1'],
-                      borderRadius: 7,
-                      width: 40,
-                      height: 40,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginBottom: 3,
-                    }}
-                    onPress={() => {
-                      navigation.navigate('Camera', { meetupId: meetup._id });
-                    }}
-                  >
-                    <Ionicons size={25} name='camera' color={'white'} />
-                  </TouchableOpacity>
-                  <Text style={{ color: 'white', fontSize: 13, textAlign: 'center' }}>Camera</Text>
-                </View>
-                <View style={{ width: 50, height: 60, alignItems: 'center' }}>
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: iconColorsTable['blue1'],
-                      borderRadius: 7,
-                      width: 40,
-                      height: 40,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginBottom: 3,
-                    }}
-                    onPress={() => {
-                      navigation.navigate('Lounge', { meetupId: meetup._id });
-                    }}
-                  >
-                    <Ionicons size={25} name='chatbubble-sharp' color={'white'} />
-                  </TouchableOpacity>
-                  <Text style={{ color: 'white', fontSize: 13, textAlign: 'center' }}>Lounge</Text>
-                </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginBottom: 10,
+                }}
+              >
+                <MaterialCommunityIcons name='calendar-clock' color='white' size={20} style={{ marginRight: 10 }} />
+                {renderMeetupDateAndTime(meetup.startDateAndTime)}
               </View>
+              {renderChatStats(meetup)}
             </View>
-            {renderChatStats(meetup)}
+            <View
+              style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}
+            >
+              <TouchableOpacity onPress={() => getMeetup(meetup._id)}>
+                <Text style={{ fontWeight: 'bold', fontSize: 18, color: 'white' }}>{meetup.title}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  marginRight: 5,
+                }}
+                onPress={() => {
+                  setMoreMenuOf(meetup._id);
+                  moreMenuBottomSheetRef.current.snapToIndex(0);
+                }}
+              >
+                <MaterialCommunityIcons name='dots-vertical-circle-outline' size={25} color={baseTextColor} />
+              </TouchableOpacity>
+            </View>
+            {renderActionButtons(meetup)}
           </View>
         );
       });
