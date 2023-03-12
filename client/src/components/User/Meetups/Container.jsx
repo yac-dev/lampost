@@ -71,13 +71,17 @@ const ActivitiesContainer = (props) => {
     );
   };
 
-  // const renderBadges = (meetup) => {
-  //   const badgesList = meetup.badges.map((badge, index) => {
-  //     return <BadgeLabel key={index} badge={badge} />;
-  //   });
+  const renderBadges = (meetup) => {
+    const badgesList = meetup.badges.map((badge, index) => {
+      return <BadgeLabel key={index} badge={badge} />;
+    });
 
-  //   return <View style={{ flexDirection: 'row', marginBottom: 10 }}>{badgesList}</View>;
-  // };
+    return (
+      <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+        <ScrollView horizontal={true}>{badgesList}</ScrollView>
+      </View>
+    );
+  };
 
   const renderMeetups = () => {
     if (!userMeetups.length) {
@@ -89,54 +93,61 @@ const ActivitiesContainer = (props) => {
     } else {
       const list = userMeetups.map((meetup, index) => {
         return (
-          <View style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10 }} key={index}>
+          <View
+            style={{
+              padding: 10,
+              backgroundColor: screenSectionBackgroundColor,
+              borderRadius: 5,
+            }}
+            key={index}
+          >
             <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                padding: 5,
-                backgroundColor: screenSectionBackgroundColor,
                 alignSelf: 'flex-start',
                 borderRadius: 5,
-                marginBottom: 15,
+                marginBottom: 5,
               }}
             >
-              <MaterialCommunityIcons name='history' color='white' size={20} style={{ marginRight: 10 }} />
+              <MaterialCommunityIcons name='history' color='white' size={20} style={{ marginRight: 5 }} />
               {renderDate(meetup.startDateAndTime)}
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 10, color: 'white' }}>{meetup.title}</Text>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <TouchableOpacity
-                  style={{
-                    width: 30,
-                    height: 30,
-                    backgroundColor: backgroundColorsTable['grey1'],
-                    borderRadius: 5,
-                    marginRight: 10,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                  onPress={() =>
-                    props.navigation.navigate('Attended', { meetupId: meetup._id, launcher: meetup.launcher._id })
-                  }
-                >
-                  <MaterialCommunityIcons name='account-group' size={20} color={'white'} />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{
-                    width: 30,
-                    height: 30,
-                    backgroundColor: backgroundColorsTable['grey1'],
-                    borderRadius: 5,
-                    marginRight: 10,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Ionicons name='camera' size={20} color={'white'} />
-                </TouchableOpacity>
-              </View>
+            {renderBadges(meetup)}
+            <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white', marginBottom: 10 }}>{meetup.title}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: iconColorsTable['blue1'],
+                  borderRadius: 5,
+                  marginRight: 7,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  padding: 5,
+                }}
+                onPress={() =>
+                  props.navigation.navigate('Attended', { meetupId: meetup._id, launcher: meetup.launcher._id })
+                }
+              >
+                <MaterialCommunityIcons name='account-group' size={20} color={'white'} style={{ marginRight: 10 }} />
+                <Text style={{ color: 'white' }}>Members</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: iconColorsTable['blue1'],
+                  borderRadius: 5,
+                  marginRight: 7,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  padding: 5,
+                }}
+                // onPress={() =>
+                //   props.navigation.navigate('Attended', { meetupId: meetup._id, launcher: meetup.launcher._id })
+                // }
+              >
+                <Ionicons name='camera' size={20} color={'white'} style={{ marginRight: 10 }} />
+                <Text style={{ color: 'white' }}>Assets</Text>
+              </TouchableOpacity>
             </View>
             {/* <ScrollView
               horizontal={true}
@@ -211,7 +222,7 @@ const ActivitiesContainer = (props) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+    <View style={{ flex: 1, backgroundColor: baseBackgroundColor, paddingLeft: 10, paddingRight: 10, paddingTop: 10 }}>
       {fetchedUserMeetups ? <ActivityIndicator /> : renderMeetups()}
     </View>
   );

@@ -36,7 +36,10 @@ const MyUpcomingMeetupsBottomSheet = (props) => {
       <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
-          onPress={() => navigation.navigate('Lounge', { meetupId: moreMenuOf })}
+          onPress={() => {
+            navigation.navigate('Lounge', { meetupId: moreMenuOf });
+            moreMenuBottomSheetRef.current.close();
+          }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View

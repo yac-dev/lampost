@@ -134,6 +134,7 @@ const Container = (props) => {
             backgroundColor: iconColorsTable['red1'],
             borderRadius: 7,
             padding: 5,
+            marginBottom: 10,
           }}
           onPress={() => {
             setFinishingMeetup(meetupAndChatsTable._id);

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import GlobalContext from '../../GlobalContext';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { getFocusedRouteNameFromRoute, NavigationContainer } from '@react-navigation/native';
 const Stack = createNativeStackNavigator();
 
 import Container from '../Libraries/Container';
@@ -115,6 +116,7 @@ const LibraryNavigator = () => {
           component={Asset}
           options={({ navigation }) => ({
             headerTransparent: true,
+            title: '',
             // headerStyle: {
             //   backgroundColor: appBottomSheetBackgroundColor,
             // },

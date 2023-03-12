@@ -81,7 +81,7 @@ export const getUserMeetups = async (request, response) => {
       user: request.params.userId,
     }).populate({
       path: 'meetup',
-      select: 'title startDateAndTime state totalAttendees launcher',
+      select: 'title startDateAndTime state launcher badges',
       populate: [
         {
           path: 'badges',
