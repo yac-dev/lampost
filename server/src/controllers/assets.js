@@ -101,3 +101,14 @@ export const getAssetById = async (request, response) => {
     console.log(error);
   }
 };
+
+export const getMeetupAssets = async (request, response) => {
+  try {
+    const assets = await Asset.find({ meetup: request.params.meetupId }).select({ type: 1, effect: 1, data: 1 });
+    response.status(200).json({
+      assets,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -141,9 +141,7 @@ const ActivitiesContainer = (props) => {
                   alignItems: 'center',
                   padding: 5,
                 }}
-                // onPress={() =>
-                //   props.navigation.navigate('Attended', { meetupId: meetup._id, launcher: meetup.launcher._id })
-                // }
+                onPress={() => props.navigation.navigate('Meetup assets', { meetupId: meetup._id })}
               >
                 <Ionicons name='camera' size={20} color={'white'} style={{ marginRight: 10 }} />
                 <Text style={{ color: 'white' }}>Assets</Text>

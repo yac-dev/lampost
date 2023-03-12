@@ -25,6 +25,7 @@ import Attended from '../User/Meetups/Attended/Container';
 // import Meetup from '../User/Meetups/Meetup/Container';
 import Assets from '../User/Assets/Container';
 import Asset from '../Utils/Asset';
+import MeetupAssets from '../User/Meetups/Assets/Container';
 // import Asset from '../User/Assets/Asset/Container';
 import AddBadges from '../Utils/AddBadges/Container';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
@@ -148,6 +149,20 @@ const Auth = (props) => {
           <Stack.Screen
             name='Attended'
             component={Attended}
+            options={{
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+              // headerTintColor: 'white',
+            }}
+          />
+          <Stack.Screen
+            name='Meetup assets'
+            component={MeetupAssets}
             options={{
               headerStyle: {
                 backgroundColor: appBottomSheetBackgroundColor,
