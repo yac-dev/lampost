@@ -97,52 +97,64 @@ const AppStack = (props) => {
   const hide = routeName === 'Dummy2' || routeName === 'Q&A';
   const [myUpcomingMeetups, setMyUpcomingMeetups] = useState({});
   const [isFetchedMyUpcomingMeetups, setIsFetchedMyUpcomingMeetups] = useState(false);
+  const [hasNotification, setHasNotification] = useState(false);
 
   useEffect(() => {
     if (auth.data) {
-      if (!auth.data.pushToken) {
-        registerForPushNotificationsAsync().then(async (token) => {
-          setExpoPushToken(token);
-          const result = await lampostAPI.patch(`/users/${auth.data._id}/pushToken`, { pushToken: token });
-          const { pushToken } = result.data;
-          setAuth((previous) => {
-            return {
-              ...previous,
-              pushToken,
-            };
-          });
+      // if (!auth.data.pushToken) {
+      registerForPushNotificationsAsync().then(async (token) => {
+        setExpoPushToken(token);
+        const result = await lampostAPI.patch(`/users/${auth.data._id}/pushToken`, { pushToken: token });
+        const { pushToken } = result.data;
+        setAuth((previous) => {
+          return {
+            ...previous,
+            pushToken,
+          };
         });
-      }
+      });
+      // }
     }
     // 多分、ここでdeviceのtokenを取得して、stateに保存してくれるんだろう。
   }, [auth.data]);
 
   useEffect(() => {
     if (auth.data) {
-      if (auth.data.pushToken) {
-        notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-          if (notification.request.content.data.notificationType === 'loungeChat') {
-            setMyUpcomingMeetupAndChatsTable((previous) => {
-              const updating = { ...previous };
-              updating[notification.request.content.data.meetupId].unreadChatsCount =
-                updating[notification.request.content.data.meetupId].unreadChatsCount + 1;
-              return updating;
-            });
-            setTotalUnreadChatsCount((previous) => previous + 1);
-          }
-          setNotification(notification);
-          // console.log(notification);
+      // if (auth.data.pushToken) {
+      notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+        setChatsNotificationCount((previous) => previous + 1);
+        setMyUpcomingMeetups((previous) => {
+          const updating = { ...previous };
+          updating[notification.request.content.data.meetupId].unreadChatsTable[
+            notification.request.content.data.type
+          ] =
+            updating[notification.request.content.data.meetupId].unreadChatsTable[
+              notification.request.content.data.type
+            ] + 1;
+          return updating;
         });
+        // if (notification.request.content.data.notificationType === 'loungeChat') {
+        //   setMyUpcomingMeetupAndChatsTable((previous) => {
+        //     const updating = { ...previous };
+        //     updating[notification.request.content.data.meetupId].unreadChatsCount =
+        //       updating[notification.request.content.data.meetupId].unreadChatsCount + 1;
+        //     return updating;
+        //   });
+        //   setTotalUnreadChatsCount((previous) => previous + 1);
+        // }
+        setNotification(notification);
+        // console.log(notification);
+      });
 
-        responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
-          console.log(response);
-        });
+      responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
 
-        return () => {
-          Notifications.removeNotificationSubscription(notificationListener.current);
-          Notifications.removeNotificationSubscription(responseListener.current);
-        };
-      }
+      return () => {
+        Notifications.removeNotificationSubscription(notificationListener.current);
+        Notifications.removeNotificationSubscription(responseListener.current);
+      };
+      // }
     }
   }, [auth.data]);
 
@@ -162,8 +174,6 @@ const AppStack = (props) => {
   //     setTotalUnreadChatsCount((previous) => previous + e.unreadChatsCount);
   //   });
   // };
-
-  console.log(myUpcomingMeetups);
 
   // upcomingのmeetupをgetしてくる
   const getMyUpcomingMeetupStates = async () => {
@@ -191,6 +201,7 @@ const AppStack = (props) => {
         return updating;
       });
       setIsFetchedMyUpcomingMeetups(true);
+      setChatsNotificationCount(0);
     }
   };
   useEffect(() => {
@@ -229,11 +240,18 @@ const AppStack = (props) => {
       return previous + totalUnread;
     });
   };
+
   useEffect(() => {
     if (isFetchedMyUpcomingMeetups) {
       getUnreadChats();
+      setIsFetchedMyUpcomingMeetups(false);
     }
   }, [isFetchedMyUpcomingMeetups]);
+
+  // useEffect(() => {
+  //   if(){}
+
+  // },[myUpcomingMeetups])
 
   useEffect(() => {
     // 最初のrenderで、このsubscription functionが登録される。

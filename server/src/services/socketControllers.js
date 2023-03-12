@@ -7,15 +7,21 @@ import { Expo } from 'expo-server-sdk';
 const expo = new Expo();
 
 // どうしようか。group chatって、連絡がおおくなると面倒だよね。launcherにだけpush tokenを送る感じかな。。。あとは、返信ありにすると、その人にも
-const sendPushNotification = async (expoPushToken, content, meetupId) => {
+const sendPushNotification = async (expoPushToken, content, meetupId, type) => {
   // Check that all your push tokens appear to be valid Expo push tokens
   if (!Expo.isExpoPushToken(expoPushToken)) {
     console.error(`expo-push-token is not a valid Expo push token`);
   }
+
+  // const notificationTitle = {
+  //   general: 'Someone sent a chat.',
+  //   question: 'Someone asked a question.',
+  //   reply: 'Some'
+  // }
   const messages = [];
   const message = {
     to: expoPushToken,
-    data: { notificationType: 'loungeChat', meetupId },
+    data: { notificationType: 'loungeChat', meetupId, type },
     title: 'You got chat message',
     body: content,
   };
@@ -74,7 +80,7 @@ export const createLoungeChat = async (io, socket, data) => {
   io.in(data.meetupId).emit('I_GOT_A_CHAT_IN_THE_ROOM', loungeChatObject);
   if (data.launcher) {
     const launcher = await User.findById(data.launcher);
-    sendPushNotification(launcher.pushToken, data.content, data.meetupId); // ここで、laucher、もしくはattendeesにchatを送るようにする。
+    sendPushNotification(launcher.pushToken, data.content, data.meetupId, data.type); // ここで、laucher、もしくはattendeesにchatを送るようにする。
   }
   // else {
   //   // if(data.replyTo){

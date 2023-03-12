@@ -39,17 +39,17 @@ const ActionButtons = (props) => {
       meetupId: selectedMeetup._id,
       userId: auth.data._id,
     });
-    const { meetupObject, totalAttendees } = result.data;
-    setAuth((previous) => {
-      return {
-        ...previous,
-        data: {
-          ...previous.data,
-          upcomingMeetups: [...previous.data.upcomingMeetups, meetupObject],
-        },
-      };
-    });
-    // launcherが必要か。
+    const { meetup } = result.data;
+    // setAuth((previous) => {
+    //   return {
+    //     ...previous,
+    //     data: {
+    //       ...previous.data,
+    //       upcomingMeetups: [...previous.data.upcomingMeetups, meetupObject],
+    //     },
+    //   };
+    // });
+    // // launcherが必要か。
     setMyUpcomingMeetups((previous) => {
       return {
         ...previous,
@@ -57,8 +57,8 @@ const ActionButtons = (props) => {
           _id: selectedMeetup._id,
           startDateAndTime: selectedMeetup.startDateAndTime,
           title: selectedMeetup.title,
-          launcher: meetupObject.launcher,
-          state: meetupObject.state,
+          launcher: meetup.launcher,
+          state: meetup.state,
           unreadChatsTable: {
             general: 0,
             reply: 0,
@@ -69,12 +69,12 @@ const ActionButtons = (props) => {
       };
     });
     // auth.socket.emit('JOIN_A_LOUNGE', { meetupId: selectedMeetup._id });
-    setSelectedMeetup((previous) => {
-      return {
-        ...previous,
-        totalAttendees,
-      };
-    });
+    // setSelectedMeetup((previous) => {
+    //   return {
+    //     ...previous,
+    //     totalAttendees,
+    //   };
+    // });
     setLoading(false);
     setSnackBar({ isVisible: true, message: 'Joined a meetup.', barType: 'success', duration: 5000 });
   };
@@ -85,18 +85,18 @@ const ActionButtons = (props) => {
       meetupId: selectedMeetup._id,
       userId: auth.data._id,
     });
-    const { meetupId, totalAttendees } = result.data; // filteringするだけよ。
-    setAuth((previous) => {
-      return {
-        ...previous,
-        data: {
-          ...previous.data,
-          upcomingMeetups: [...previous.data.upcomingMeetups].filter(
-            (upcomingMeetupObject) => upcomingMeetupObject.meetup._id !== meetupId
-          ),
-        },
-      };
-    });
+    const { meetupId } = result.data; // filteringするだけよ。
+    // setAuth((previous) => {
+    //   return {
+    //     ...previous,
+    //     data: {
+    //       ...previous.data,
+    //       upcomingMeetups: [...previous.data.upcomingMeetups].filter(
+    //         (upcomingMeetupObject) => upcomingMeetupObject.meetup._id !== meetupId
+    //       ),
+    //     },
+    //   };
+    // });
     setMyUpcomingMeetups((previous) => {
       const updating = { ...previous };
       delete updating[selectedMeetup._id];
@@ -104,12 +104,12 @@ const ActionButtons = (props) => {
     });
     // socketのgroupから抜ける。
     // auth.socket.emit('LEAVE_A_LOUNGE', { meetupId: selectedMeetup._id });
-    setSelectedMeetup((previous) => {
-      return {
-        ...previous,
-        totalAttendees,
-      };
-    });
+    // setSelectedMeetup((previous) => {
+    //   return {
+    //     ...previous,
+    //     totalAttendees,
+    //   };
+    // });
     setLoading(false);
     setSnackBar({ isVisible: true, message: 'Left a meetup.', barType: 'success', duration: 5000 });
   };

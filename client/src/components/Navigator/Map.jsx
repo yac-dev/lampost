@@ -26,12 +26,13 @@ import ExternalWebPage from '../Utils/ExternalWebPage';
 
 import AuthNavigator from './Auth';
 import { appBottomSheetBackgroundColor, iconColorsTable } from '../../utils/colorsTable';
-
+import { iconsTable } from '../../utils/icons';
 // ac
 import { loadMe } from '../../redux/actionCreators/auth';
 import { getSocket } from '../../redux/actionCreators/auth';
 
 const MapNavigator = (props) => {
+  const { Ionicons } = iconsTable;
   const { auth } = useContext(GlobalContext);
   // mapの画面から、どんなcomponentへの遷移があるか、それが重要なのかもな。mainのmapはもちろん、そっからカメラのcomponent, 各userのpage, chat component、、、ここは色々多くなるはず。
   // 基本、map画面における全てのroutingをここに登録しておく。
@@ -282,7 +283,8 @@ const MapNavigator = (props) => {
           options={({ navigation }) => ({
             headerLeft: () => (
               <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+                <Ionicons name='close-circle-outline' size={30} color={'white'} />
+                {/* <Text style={{ color: 'white', fontSize: 20 }}>Close</Text> */}
               </TouchableOpacity>
             ),
             headerShown: true,

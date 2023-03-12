@@ -18,40 +18,44 @@ const MyUpcomingMeetupsBottomSheet = (props) => {
   const { auth, myUpcomingMeetupAndChatsTable, totalUnreadChatsCount, navigation, isIpad } = useContext(GlobalContext);
   const { myUpcomingMeetupsBottomSheetRef } = useContext(MapContext);
 
-  return (
-    <GorhomBottomSheet
-      index={-1}
-      enableOverDrag={true}
-      ref={myUpcomingMeetupsBottomSheetRef}
-      snapPoints={snapPoints}
-      backdropComponent={(backdropProps) => (
-        <BottomSheetBackdrop {...backdropProps} appearsOnIndex={0} disappearsOnIndex={-1} />
-      )}
-      enablePanDownToClose={true}
-      backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
-      handleIndicatorStyle={{ backgroundColor: 'white' }}
-    >
-      <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-          <View
-            style={{
-              width: 40,
-              height: 40,
-              backgroundColor: backgroundColorsTable['green1'],
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 8,
-              marginRight: 10,
-            }}
-          >
-            <MaterialCommunityIcons name='run' color={iconColorsTable['green1']} size={25} />
+  if (auth.isAuthenticated) {
+    return (
+      <GorhomBottomSheet
+        index={-1}
+        enableOverDrag={true}
+        ref={myUpcomingMeetupsBottomSheetRef}
+        snapPoints={snapPoints}
+        backdropComponent={(backdropProps) => (
+          <BottomSheetBackdrop {...backdropProps} appearsOnIndex={0} disappearsOnIndex={-1} />
+        )}
+        enablePanDownToClose={true}
+        backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
+        handleIndicatorStyle={{ backgroundColor: 'white' }}
+      >
+        <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+            <View
+              style={{
+                width: 40,
+                height: 40,
+                backgroundColor: backgroundColorsTable['green1'],
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 8,
+                marginRight: 10,
+              }}
+            >
+              <MaterialCommunityIcons name='run' color={iconColorsTable['green1']} size={25} />
+            </View>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>My meetups</Text>
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>My meetups</Text>
-        </View>
-        <UpcomingMeetups />
-      </BottomSheetView>
-    </GorhomBottomSheet>
-  );
+          <UpcomingMeetups />
+        </BottomSheetView>
+      </GorhomBottomSheet>
+    );
+  } else {
+    return null;
+  }
 };
 
 export default MyUpcomingMeetupsBottomSheet;

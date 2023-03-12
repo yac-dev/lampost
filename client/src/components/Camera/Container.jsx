@@ -380,6 +380,11 @@ const Container = (props) => {
           >
             {renderTimer()}
           </Camera>
+          <View style={{ position: 'absolute', top: 70, left: 10 }}>
+            <Text numberOfLines={1} style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>
+              {props.route.params.meetupTitle}
+            </Text>
+          </View>
         </View>
         {auth.isAuthenticated ? (
           <View

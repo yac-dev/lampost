@@ -8,32 +8,29 @@ export const joinMeetup = async (request, response) => {
     const meetupAndUserRelationship = await MeetupAndUserRelationship.create({
       meetup: meetupId,
       user: userId,
+      launcher: false,
+      viewedChatsLastTime: new Date(),
     });
     // ここ、いちいちqueryするの、めんどいよね。totalAttendeesだけを変えるだけだから、別にいらないかも。
     const meetup = await Meetup.findById(meetupId);
     meetup.totalAttendees++;
-    // meetup.attendees.push(request.body.userId);
     meetup.save();
     const user = await User.findById(request.body.userId);
-    const meetupObj = {
-      meetup: meetup._id,
-      viewedChatsLastTime: new Date(),
-    };
-    user.upcomingMeetups.push(meetupObj);
+    // const meetupObj = {
+    //   meetup: meetup._id,
+    //   viewedChatsLastTime: new Date(),
+    // };
+    user.upcomingMeetups.push(meetupId);
     user.save();
 
     response.status(200).json({
-      meetupObject: {
-        meetup: {
-          _id: meetup._id,
-          title: meetup.title,
-          state: meetup.state,
-          launcher: meetup.launcher,
-          startDataAndTime: meetup.startDateAndTime,
-        },
-        viewedChatsLastTime: new Date(),
+      meetup: {
+        _id: meetup._id,
+        title: meetup.title,
+        state: meetup.state,
+        launcher: meetup.launcher,
+        startDataAndTime: meetup.startDateAndTime,
       },
-      totalAttendees: meetup.totalAttendees,
     });
   } catch (error) {
     console.log(error);
@@ -59,7 +56,7 @@ export const leaveMeetup = async (request, response) => {
     const user = await User.findById(userId);
     let indexOfMeetup = 0;
     for (let i = 0; i < user.upcomingMeetups.length; i++) {
-      if (user.upcomingMeetups[i].meetup === meetupId) {
+      if (user.upcomingMeetups[i] === meetupId) {
         indexOfMeetup = i;
       }
     }
@@ -71,7 +68,6 @@ export const leaveMeetup = async (request, response) => {
     console.log('left meetup');
     response.status(200).json({
       meetupId: meetupId,
-      totalAttendees: meetup.totalAttendees,
     });
   } catch (error) {
     console.log(error);

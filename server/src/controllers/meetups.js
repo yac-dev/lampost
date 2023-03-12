@@ -516,17 +516,17 @@ export const getMyMeetupStates = async (request, response) => {
     const myUpcomingMeetups = {};
     const alreadyFinishedMeetups = {};
     // client side側で持っているmeetupidをこっちに送って、そのmeetupのstateをcheckする。
-    const meetups = await Meetup.find({ _id: { $in: upcomingMeetupIds } });
+    const meetups = await Meetup.find({ _id: { $in: upcomingMeetupIds }, state: { $ne: 'finished' } });
     meetups.forEach((meetup) => {
-      if (meetup.state !== 'finished') {
-        myUpcomingMeetups[meetup._id] = {
-          _id: meetup._id,
-          title: meetup.title,
-          startDateAndTime: meetup.startDateAndTime,
-          state: meetup.state,
-          launcher: meetup.launcher,
-        };
-      }
+      // if (meetup.state !== 'finished') {
+      myUpcomingMeetups[meetup._id] = {
+        _id: meetup._id,
+        title: meetup.title,
+        startDateAndTime: meetup.startDateAndTime,
+        state: meetup.state,
+        launcher: meetup.launcher,
+      };
+      // }
       // else {
       //   alreadyFinishedMeetups[meetup._id] = true;
       // }

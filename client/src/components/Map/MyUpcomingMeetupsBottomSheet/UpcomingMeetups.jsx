@@ -183,7 +183,7 @@ const Container = (props) => {
               padding: 5,
             }}
             onPress={() => {
-              navigation.navigate('Camera', { meetupId: meetup._id });
+              navigation.navigate('Camera', { meetupId: meetup._id, meetupTitle: meetup.title });
             }}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
@@ -202,7 +202,7 @@ const Container = (props) => {
             padding: 5,
           }}
           onPress={() => {
-            navigation.navigate('Camera', { meetupId: meetup._id });
+            navigation.navigate('Camera', { meetupId: meetup._id, meetupTitle: meetup.title });
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
@@ -229,12 +229,13 @@ const Container = (props) => {
               borderRadius: 7,
             }}
           >
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            <View
+              style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}
+            >
               <View
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
-                  marginBottom: 10,
                 }}
               >
                 <MaterialCommunityIcons name='calendar-clock' color='white' size={20} style={{ marginRight: 10 }} />
@@ -243,7 +244,7 @@ const Container = (props) => {
               {renderChatStats(meetup)}
             </View>
             <View
-              style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}
+              style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 15 }}
             >
               <TouchableOpacity onPress={() => getMeetup(meetup._id)}>
                 <Text style={{ fontWeight: 'bold', fontSize: 18, color: 'white' }}>{meetup.title}</Text>
