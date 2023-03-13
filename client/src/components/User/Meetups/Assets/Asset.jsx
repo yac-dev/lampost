@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { View, Text, Dimensions, ScrollView, TouchableOpacity, Image } from 'react-native';
 import GlobalContext from '../../../../GlobalContext';
-import AssetContext from './AssetContext';
 import lampostAPI from '../../../../apis/lampost';
 import FastImage from 'react-native-fast-image';
 import { Video } from 'expo-av';
@@ -17,20 +16,16 @@ import ActionButton from '../../../Utils/ActionButton';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
-import AssetMenuBottomSheet from './AssetMenuBottomSheet';
 import { iconsTable } from '../../../../utils/icons';
 
 const Asset = (props) => {
   const { MaterialCommunityIcons, Ionicons } = iconsTable;
   const { auth, setSnackBar } = useContext(GlobalContext);
   const win = Dimensions.get('window');
-  const assetMenuBottomSheetRef = useRef(null);
   const [asset, setAsset] = useState(null);
 
   const getAsset = async () => {
-    const result = await lampostAPI.get(
-      `/libraryandassetrelationships/${props.route.params.libraryId}/${props.route.params.asset._id}`
-    );
+    const result = await lampostAPI.get(`/assets/${props.route.params.assetId}`);
     const { asset } = result.data;
     setAsset(asset);
   };
@@ -59,6 +54,7 @@ const Asset = (props) => {
       return null;
     }
   };
+  console.log(asset);
 
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
@@ -88,7 +84,7 @@ const Asset = (props) => {
         <View>
           <FastImage
             style={{ width: '100%', height: '100%', borderRadius: 10 }}
-            source={{ uri: props.route.params.asset.data }}
+            source={{ uri: props.route.params.assetData }}
           />
           {asset ? (
             <View style={{ position: 'absolute', bottom: 90, alignSelf: 'center' }}>
@@ -148,7 +144,7 @@ const Asset = (props) => {
           <Video
             style={{ width: '100%', height: '100%' }}
             source={{
-              uri: props.route.params.asset.data,
+              uri: props.route.params.assetData,
             }}
             useNativeControls={true}
             resizeMode='stretch'
@@ -209,11 +205,7 @@ const Asset = (props) => {
     }
   };
 
-  return (
-    <AssetContext.Provider value={{ assetMenuBottomSheetRef, asset, navigation: props.navigation }}>
-      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>{renderAsset()}</View>
-    </AssetContext.Provider>
-  );
+  return <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>{renderAsset()}</View>;
 };
 
 export default Asset;
