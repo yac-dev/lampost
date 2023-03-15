@@ -1,7 +1,12 @@
 import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import UserContext from '../UserContext';
-import { backgroundColorsTable, iconColorsTable, baseTextColor } from '../../../utils/colorsTable';
+import {
+  backgroundColorsTable,
+  iconColorsTable,
+  baseTextColor,
+  screenSectionBackgroundColor,
+} from '../../../utils/colorsTable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import FastImage from 'react-native-fast-image';
@@ -15,54 +20,86 @@ const AvatarImage = () => {
   return (
     <View
       style={{
-        width: 85,
-        aspectRatio: 1,
-        flexDirection: 'column',
-        // backgroundColor: 'green', //確認用で使える
-
-        // alignItems: 'flex-end',
+        flexDirection: 'row',
+        backgroundColor: screenSectionBackgroundColor,
         marginRight: 20,
+        borderRadius: isIpad ? 20 : 10,
       }}
     >
+      <View style={{ paddingLeft: 15, paddingRight: 15, alignItems: 'center', justifyContent: 'center' }}>
+        {/* <TouchableOpacity
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            borderRadius: 10,
+          }}
+        >
+          <View
+            style={{
+              width: 40,
+              height: 40,
+              backgroundColor: backgroundColorsTable['red1'],
+              borderRadius: 8,
+              marginRight: 10,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          > */}
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <MaterialCommunityIcons name='fire' size={25} color={iconColorsTable['red1']} />
+          {/* </View> */}
+          <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>Fame</Text>
+        </View>
+        {/* </TouchableOpacity> */}
+        <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>1234</Text>
+      </View>
       <View
         style={{
-          backgroundColor: user.photo ? null : iconColorsTable['blue1'],
-          // padding: 5,
-          borderRadius: isIpad ? 20 : 10,
-          width: '100%',
+          width: 75,
           aspectRatio: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginBottom: 5,
+          // flexDirection: 'column',
+          // backgroundColor: 'green', //確認用で使える
+
+          // alignItems: 'flex-end',
+          // marginRight: 20,
         }}
       >
-        {user.photo ? (
+        <View
+          style={{
+            backgroundColor: user.photo ? null : iconColorsTable['blue1'],
+            // padding: 5,
+            borderRadius: isIpad ? 20 : 10,
+            width: '100%',
+            aspectRatio: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginBottom: 5,
+          }}
+        >
           <FastImage
             style={{ width: '100%', height: '100%', borderRadius: isIpad ? 20 : 10 }}
             source={{
-              uri: user.photo,
+              uri: user.photo ? user.photo : require('../../../../assets/app/happy.png'),
               priority: FastImage.priority.normal,
             }}
             resizeMode={FastImage.resizeMode.contain}
           />
-        ) : (
-          <FontAwesome5 name='user-astronaut' size={30} color='white' />
-        )}
-        {isMyPage ? (
-          <TouchableOpacity
-            style={{ position: 'absolute', bottom: -5, right: -5 }}
-            onPress={() => setIsConfirmEditProfileModalOpen(true)}
-          >
-            <MaterialCommunityIcons name='camera-plus' size={20} color={baseTextColor} />
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            style={{ position: 'absolute', bottom: -5, right: -5 }}
-            onPress={() => flagUserMenuBottomSheetRef.current.snapToIndex(0)}
-          >
-            <MaterialCommunityIcons name='flag' size={20} color={baseTextColor} />
-          </TouchableOpacity>
-        )}
+          {isMyPage ? (
+            <TouchableOpacity
+              style={{ position: 'absolute', bottom: -5, right: -5 }}
+              onPress={() => setIsConfirmEditProfileModalOpen(true)}
+            >
+              <MaterialCommunityIcons name='camera-plus' size={20} color={baseTextColor} />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={{ position: 'absolute', bottom: -5, right: -5 }}
+              onPress={() => flagUserMenuBottomSheetRef.current.snapToIndex(0)}
+            >
+              <MaterialCommunityIcons name='flag' size={20} color={baseTextColor} />
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
     </View>
   );

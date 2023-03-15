@@ -17,7 +17,7 @@ import FormContainer from './Form/Container';
 
 const BottomSheet = (props) => {
   const { launchMeetupBottomSheetRef } = useContext(MapContext);
-  const snapPoints = ['55%'];
+  const snapPoints = ['75%'];
 
   // if (props.hostMeetup.isOpen && props.hostMeetup.setLocation) {
   return (

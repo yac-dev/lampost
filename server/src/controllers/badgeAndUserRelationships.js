@@ -12,6 +12,7 @@ export const addBadgesToUser = async (request, response) => {
         user: request.params.userId,
         badgeTags: [],
         links: [],
+        totalClaps: 0,
         createdAt: new Date(),
       };
     });
@@ -46,8 +47,10 @@ export const getBadgeDatasByUserId = async (request, response) => {
         badge: relationship.badge,
         links: relationship.links,
         badgeTags: relationship.badgeTags,
+        totalClaps: relationship.totalClaps,
       };
     });
+    // console.log(userBadgeDatas);
     response.status(200).json({
       userBadgeDatas,
     });

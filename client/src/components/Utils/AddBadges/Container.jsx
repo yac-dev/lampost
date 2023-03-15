@@ -27,6 +27,117 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 const Tab = createMaterialTopTabNavigator();
 
+const filterTypeIdsTable = {
+  artsAndCrafts: {
+    _id: '640eac88bb51b34346aa01d3',
+    name: 'artsAndCrafts',
+  },
+  animes: {
+    _id: '640eac88bb51b34346aa01d0',
+    name: 'animes',
+  },
+  apps: {
+    _id: '640eac88bb51b34346aa01d2',
+    name: 'apps',
+  },
+  petsAndAnimals: {
+    _id: '640ea1b4ce9f3adbb2038625',
+    name: 'petsAndAnimals',
+  },
+  business: {
+    _id: '640eac88bb51b34346aa01d4',
+    name: 'business',
+  },
+  finance: {
+    _id: '640eac88bb51b34346aa01d5',
+    name: 'finance',
+  },
+  family: {
+    _id: '64112c47cec88f566dc8b8c3',
+    name: 'family',
+  },
+  dancing: {
+    _id: '64112c19cec88f566dc8b8c2',
+    name: 'dancing',
+  },
+  education: {
+    _id: '640eac88bb51b34346aa01d7',
+    name: 'education',
+  },
+  fashionAndBeauty: {
+    _id: '640eac88bb51b34346aa01d8',
+    name: 'fashionAndBeauty',
+  },
+  fitnessAndHealth: {
+    _id: '64112e58cec88f566dc8b8c8',
+    name: 'fitnessAndHealth',
+  },
+  films: {
+    _id: '640eac88bb51b34346aa01d1',
+    name: 'films',
+  },
+  foodsAndDrinks: {
+    _id: '640eac88bb51b34346aa01d9',
+    name: 'foodsAndDrinks',
+  },
+  gamings: {
+    _id: '640eac88bb51b34346aa01dd',
+    name: 'gamings',
+  },
+  videoGames: {
+    _id: '640ee9b67fdd8afc4c5e6965',
+    name: 'videoGames',
+  },
+  books: {
+    _id: '640eacb434dd172e5abbbbd9',
+    name: 'books',
+  },
+  music: {
+    _id: '640eac88bb51b34346aa01df',
+  },
+  outdoors: {
+    _id: '64112c86cec88f566dc8b8c4',
+    name: 'outdoors',
+  },
+  photography: {
+    _id: '64112cafcec88f566dc8b8c5',
+    name: 'photography',
+  },
+  spirituality: {
+    _id: '64112cdccec88f566dc8b8c6',
+    name: 'spirituality',
+  },
+  vehicles: {
+    _id: '640eac88bb51b34346aa01dc',
+    name: 'vehicles',
+  },
+  sports: {
+    _id: '640eac88bb51b34346aa01e3',
+    name: 'sports',
+  },
+  tech: {
+    _id: '640eac88bb51b34346aa01e4',
+    name: 'tech',
+  },
+  writings: {
+    _id: '64112cfecec88f566dc8b8c7',
+    name: 'writings',
+  },
+  languagesAndEthnic: {
+    _id: '6411371dcec88f566dc8b8ce',
+    name: 'languagesAndEthnic',
+  },
+  // nature: '640eac88bb51b34346aa01e0',
+  // vegetables: '640eac88bb51b34346aa01e1',
+  // politics: '640ead24a862be0c12829d4e',
+  // professions: '640eacee615e693f22937822',
+
+  // science: '640eac88bb51b34346aa01e5',
+  // travel: {
+  //   _id: '640eac88bb51b34346aa01e6',
+  // },
+};
+
 const Container = (props) => {
   const { auth, setLoading, isIpad } = useContext(GlobalContext);
   const [meetupBadges, setMeetupBadges] = useState({});
@@ -42,7 +153,7 @@ const Container = (props) => {
   const [selectedMeetupBadges, setSelectedMeetupBadges] = useState({});
   const [tappedBadge, setTappedBadge] = useState(null);
   const [tappedBadgeHolders, setTappedBadgeHolders] = useState([]);
-  const [selectedFilterOption, setSelectedFilterOption] = useState('animals');
+  const [selectedFilterOption, setSelectedFilterOption] = useState('artsAndCrafts');
 
   const searchBadgeBottomSheetRef = useRef(null);
   const badgeDetailBottomSheetRef = useRef(null);
@@ -56,7 +167,7 @@ const Container = (props) => {
   // 基本、hash tableにdataをためて、render時にarrayに変えて表示する。
   // genreのbadgeが既にある場合は、queryしない。
   const [badges, setBadges] = useState({
-    animals: [],
+    artsAndCrafts: [],
     animeAndFilms: [],
     apps: [],
     art: [],
@@ -80,7 +191,9 @@ const Container = (props) => {
   const [myBadges, setMyBadges] = useState({});
 
   const getBadges = async () => {
-    const result = await lampostAPI.post(`/badges`, { filterOption: selectedFilterOption });
+    const result = await lampostAPI.get(
+      `/badgetypeandbadgerelationships/${filterTypeIdsTable[selectedFilterOption]['_id']}`
+    );
     const { badges } = result.data;
     setBadges((previous) => {
       const updating = { ...previous };
@@ -417,10 +530,10 @@ const Container = (props) => {
         <View style={{ height: 70, padding: 10 }}>
           <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
             <FilterOption
-              label='Animals & Pets'
-              value={'animals'}
+              label='Arts & Crafts'
+              value={'artsAndCrafts'}
               icon={<MaterialCommunityIcons name='dog' size={25} color={'white'} style={{ marginRight: 10 }} />}
-              onFilterOptionPress={() => setSelectedFilterOption('animals')}
+              onFilterOptionPress={() => setSelectedFilterOption('artsAndCrafts')}
             />
             <FilterOption
               label='Anime & Films'

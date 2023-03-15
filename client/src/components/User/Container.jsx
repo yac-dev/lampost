@@ -117,13 +117,15 @@ const Container = (props) => {
   const getBadgeDatasByUserId = async () => {
     const result = await lampostAPI.get(`/badgeanduserrelationships/${props.route.params.userId}`);
     const { userBadgeDatas } = result.data;
-    setBadgeDatas(() => {
-      const userBadgeDatasTable = {};
-      userBadgeDatas.forEach((badgeData) => {
-        userBadgeDatasTable[badgeData.badge._id] = badgeData;
+    if (userBadgeDatas.length) {
+      setBadgeDatas(() => {
+        const userBadgeDatasTable = {};
+        userBadgeDatas.forEach((badgeData) => {
+          userBadgeDatasTable[badgeData.badge._id] = badgeData;
+        });
+        return userBadgeDatasTable;
       });
-      return userBadgeDatasTable;
-    });
+    }
   };
 
   useEffect(() => {
@@ -135,6 +137,7 @@ const Container = (props) => {
       const addedBadges = JSON.parse(props.route.params.addedUserBadges);
       const addedBadgeDatasTable = { ...addedBadges };
       for (const key in addedBadgeDatasTable) {
+        addedBadgeDatasTable[key]['totalClaps'] = 0;
         addedBadgeDatasTable[key]['badge'] = addedBadgeDatasTable[key];
         addedBadgeDatasTable[key]['links'] = [];
         addedBadgeDatasTable[key]['badgeTags'] = [];
@@ -211,8 +214,8 @@ const Container = (props) => {
         <View>
           {auth.data && user._id === auth.data._id ? (
             <View>
-              <Text style={{ color: baseTextColor, textAlign: 'center', marginBottom: 10 }}>
-                Let's add some badges down below{'\n'} and express yourself more.
+              <Text style={{ color: baseTextColor, textAlign: 'center', marginBottom: 10, paddingTop: 70 }}>
+                Who are you?🤔{'\n'}Let's add some badgesfrom down below {'\n'} and express yourself more.
               </Text>
               {/* <TouchableOpacity
                 style={{

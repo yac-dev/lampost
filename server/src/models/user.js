@@ -68,6 +68,10 @@ const userSchema = new mongoose.Schema({
   patrons: {
     type: Number,
   },
+  fame: {
+    type: Number,
+    default: 0,
+  },
   personality: {
     considerate: Number,
     communication: Number,

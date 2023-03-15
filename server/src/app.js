@@ -19,6 +19,7 @@ import meetupAndUserRelationshipsRouter from './routers/meetupAndUserRelationshi
 import friendRelationshipsRouter from './routers/friendRelationships';
 import libraryAndUserRelationshipsRouter from './routers/libraryAndUserRelationships';
 import badgeAndUserRelationshipsRouter from './routers/badgeAndUserRelationships';
+import badgeTypeAndBadgeRelationshipsRouter from './routers/badgeTypeAndBadgeRelationships';
 import badgeTagsRouter from './routers/badgeTags';
 import badgeTagAndUserRelationshipsRouter from './routers/badgeTagAndUserRelationships';
 import libraryAndAssetRelationshipsRouter from './routers/libraryAndAssetRelationships';
@@ -50,6 +51,7 @@ app.use('/api/libraryanduserrelationships', libraryAndUserRelationshipsRouter);
 app.use('/api/meetupanduserrelationships', meetupAndUserRelationshipsRouter);
 app.use('/api/friendrelationships', friendRelationshipsRouter);
 app.use('/api/badgeanduserrelationships', badgeAndUserRelationshipsRouter);
+app.use('/api/badgetypeandbadgerelationships', badgeTypeAndBadgeRelationshipsRouter);
 app.use('/api/badgetags', badgeTagsRouter);
 app.use('/api/badgetaganduserrelationships', badgeTagAndUserRelationshipsRouter);
 app.use('/api/libraryandassetrelationships', libraryAndAssetRelationshipsRouter);

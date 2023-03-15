@@ -146,6 +146,20 @@ const ActivitiesContainer = (props) => {
                 <Ionicons name='camera' size={20} color={'white'} style={{ marginRight: 10 }} />
                 <Text style={{ color: 'white' }}>Assets</Text>
               </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: iconColorsTable['blue1'],
+                  borderRadius: 5,
+                  marginRight: 7,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  padding: 5,
+                }}
+                // onPress={() => props.navigation.navigate('Meetup assets', { meetupId: meetup._id })}
+              >
+                <Ionicons name='chatbubbles' size={20} color={'white'} style={{ marginRight: 10 }} />
+                <Text style={{ color: 'white' }}>Impressions</Text>
+              </TouchableOpacity>
             </View>
             {/* <ScrollView
               horizontal={true}

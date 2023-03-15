@@ -10,7 +10,7 @@ const Container = (props) => {
   return (
     <View>
       <Header />
-      <BadgeTags />
+      {/* <BadgeTags /> */}
       <Links />
       <Communities />
     </View>

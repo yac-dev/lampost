@@ -24,6 +24,7 @@ const badgeAndUserRelationshipSchema = new mongoose.Schema({
   //   },
   // ], // 別にidで持つ必要もない。ここに、20000document入ることもないからね。
   badgeTags: [{ type: mongoose.Schema.ObjectId, ref: 'BadgeTag' }],
+  totalClaps: Number,
   createdAt: Date,
 });
 

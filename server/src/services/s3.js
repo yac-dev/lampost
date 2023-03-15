@@ -87,3 +87,17 @@ export const uploadThumbnail = async (fileName) => {
 
   await unlinkFile(filePath);
 };
+
+export const uploadIcon = async (fileName) => {
+  const __dirname = path.resolve();
+  const filePath = path.join(__dirname, 'assets', icons, fileName);
+  const fileStream = fs.createReadStream(filePath);
+
+  const uploadParams = {
+    Bucket: process.env.AWS_S3BUCKET_NAME,
+    Body: fileStream,
+    Key: `assets/icons/${fileName}`,
+  };
+  await s3.upload(uploadParams).promise();
+  console.log('icon uploaded');
+};

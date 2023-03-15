@@ -165,7 +165,7 @@ const Map = (props) => {
   // これで、mapを自動で移動させる。launchMeetupの場所へ。
   useEffect(() => {
     if (isLaunchMeetupConfirmed && launchLocation) {
-      const newLat = launchLocation.latitude - 0.018;
+      const newLat = launchLocation.latitude - 0.029;
       mapRef.current.animateToRegion({
         latitude: newLat,
         longitude: launchLocation.longitude,

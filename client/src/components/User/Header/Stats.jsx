@@ -21,25 +21,6 @@ const Stats = () => {
   return (
     <View style={{}}>
       <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 18, marginBottom: 10 }}>{user.name}</Text>
-      {/* <TouchableOpacity
-        style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}
-        onPress={() => console.log('patrons page')}
-      >
-        <View
-          style={{
-            backgroundColor: backgroundColorsTable['pink1'],
-            marginRight: 10,
-            borderRadius: 10,
-            width: 35,
-            height: 35,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <MaterialCommunityIcons name='fire' color={iconColorsTable['pink1']} size={25} />
-        </View>
-        <Text style={{ color: baseTextColor, fontWeight: 'bold', marginRight: 10 }}>Patrons</Text>
-      </TouchableOpacity> */}
       <TouchableOpacity
         style={{
           flexDirection: 'row',
@@ -63,7 +44,7 @@ const Stats = () => {
         >
           <Feather name='activity' size={25} color={iconColorsTable['green1']} />
         </View>
-        <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>Activities</Text>
+        <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>Activity</Text>
       </TouchableOpacity>
     </View>
   );

@@ -100,15 +100,22 @@ const Header = () => {
           />
         </TouchableOpacity>
       </View>
-      <Text
-        style={{
-          fontWeight: 'bold',
-          fontSize: 20,
-          color: 'white',
-        }}
-      >
-        {pressedBadgeData.badge.name}
-      </Text>
+      <View style={{ flexDirection: 'column' }}>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 20,
+            color: 'white',
+            marginBottom: 10,
+          }}
+        >
+          {pressedBadgeData.badge.name}
+        </Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <MaterialCommunityIcons name='hand-clap' size={25} color={'white'} style={{ marginRight: 10 }} />
+          <Text style={{ color: 'white', fontSize: 20 }}>{pressedBadgeData.totalClaps}</Text>
+        </View>
+      </View>
       {/* {renderActionButtons()} */}
     </View>
   );
