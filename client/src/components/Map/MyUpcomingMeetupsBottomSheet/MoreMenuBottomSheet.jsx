@@ -63,7 +63,10 @@ const MyUpcomingMeetupsBottomSheet = (props) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
-          onPress={() => navigation.navigate('Attendees', { meetupId: moreMenuOf })}
+          onPress={() => {
+            moreMenuBottomSheetRef.current.close();
+            navigation.navigate('Attendees', { meetupId: moreMenuOf });
+          }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View

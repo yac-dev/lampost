@@ -58,7 +58,7 @@ const UserInfo = (props) => {
         marginBottom: 15,
       }}
     >
-      <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+      <View style={{ flexDirection: 'row', marginBottom: 10, justifyContent: 'space-between' }}>
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center' }}
           onPress={() => {
@@ -93,10 +93,11 @@ const UserInfo = (props) => {
             </View>
           )}
           <View style={{ flexDirection: 'column' }}>
-            <Text style={{ color: 'white', fontSize: 15, marginRight: 20, marginBottom: 5 }}>{props.user.name}</Text>
+            <Text style={{ color: 'white', fontSize: 17, marginRight: 20, marginBottom: 5 }}>{props.user.name}</Text>
             {renderTopBadges(props.user.topBadges)}
           </View>
         </TouchableOpacity>
+        {props.rightInfo}
       </View>
       {props.actionButtons}
     </View>

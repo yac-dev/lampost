@@ -2,10 +2,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, ActivityIndicator, FlatList } from 'react-native';
 import GlobalContext from '../../../GlobalContext';
 import lampostAPI from '../../../apis/lampost';
-import { baseBackgroundColor } from '../../../utils/colorsTable';
+import { baseBackgroundColor, iconColorsTable } from '../../../utils/colorsTable';
 import UserInfo from '../../Utils/UserInfo';
+import { iconsTable } from '../../../utils/icons';
 
 const AttendeesContainer = (props) => {
+  const { MaterialCommunityIcons } = iconsTable;
   const { auth, setSnackBar } = useContext(GlobalContext);
   const [isFetchedAttendees, setIsFetchedAttendees] = useState(false);
   const [fetchedAttendees, setFetchedAttendees] = useState([]);
@@ -45,8 +47,29 @@ const AttendeesContainer = (props) => {
       ) : (
         <FlatList
           data={fetchedAttendees}
-          renderItem={({ item }) => <UserInfo user={item} onUserNamePress={onUserNamePress} />}
-          keyExtractor={(item) => item._id}
+          renderItem={({ item }) => (
+            <UserInfo
+              user={item.user}
+              onUserNamePress={() => onUserNamePress(item.user)}
+              rightInfo={
+                item.rsvp ? (
+                  <View
+                    style={{
+                      backgroundColor: iconColorsTable['green1'],
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderRadius: 5,
+                      padding: 5,
+                    }}
+                  >
+                    <MaterialCommunityIcons name='check' size={25} color={'white'} style={{ marginRight: 5 }} />
+                    <Text style={{ color: 'white' }}>RVSP</Text>
+                  </View>
+                ) : null
+              }
+            />
+          )}
+          keyExtractor={(item, index) => `${item.user._id}-${index}`}
         />
       )}
     </View>

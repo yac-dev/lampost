@@ -13,6 +13,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import ChatStatus from '../ChatStatus';
 
 const Container = (props) => {
@@ -253,13 +254,21 @@ const Container = (props) => {
               <TouchableOpacity
                 style={{
                   marginRight: 5,
+                  flexDirection: 'row',
+                  alignItems: 'center',
                 }}
                 onPress={() => {
                   setMoreMenuOf(meetup._id);
                   moreMenuBottomSheetRef.current.snapToIndex(0);
                 }}
               >
-                <MaterialCommunityIcons name='dots-vertical-circle-outline' size={25} color={baseTextColor} />
+                <MaterialCommunityIcons
+                  name='chevron-down'
+                  size={20}
+                  color={baseTextColor}
+                  style={{ marginRight: 5 }}
+                />
+                <Text style={{ color: baseTextColor }}>More</Text>
               </TouchableOpacity>
             </View>
             {renderActionButtons(meetup)}

@@ -146,7 +146,10 @@ export const getMeetupAttendees = async (request, response) => {
     });
 
     const meetupAttendees = meetupAndUserRelationships.map((relationship) => {
-      return relationship.user;
+      return {
+        user: relationship.user,
+        rsvp: relationship.rsvp,
+      };
     });
 
     response.status(200).json({
@@ -201,6 +204,28 @@ export const updateViewedChatsLastTime = async (request, response) => {
     meetupAndUserRelationship.save();
     console.log('updated', meetupAndUserRelationship);
 
+    response.status(200).json({
+      message: 'success',
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const checkRSVPState = async (request, response) => {
+  const { meetupId, userId } = request.params;
+  const meetupAndUserRelationship = await MeetupAndUserRelationship.findOne({ meetup: meetupId, user: userId });
+  response.status(200).json({
+    rsvp: meetupAndUserRelationship.rsvp,
+  });
+};
+
+export const rsvp = async (request, response) => {
+  try {
+    const { meetupId, userId } = request.params;
+    const meetupAndUserRelationship = await MeetupAndUserRelationship.findOne({ meetup: meetupId, user: userId });
+    meetupAndUserRelationship.rsvp = true;
+    meetupAndUserRelationship.save();
     response.status(200).json({
       message: 'success',
     });

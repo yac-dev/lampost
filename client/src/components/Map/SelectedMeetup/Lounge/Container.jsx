@@ -19,6 +19,9 @@ import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import SendChatBottomSheet from './SendChatBottomSheet';
 import CrewBottomSheet from './CrewBottomSheet';
 import Chats from './Chats';
+import ConfirmRSVPModal from './ConfirmRSVPModal';
+import LoadingSpinner from '../../../Utils/LoadingSpinner';
+import SnackBar from '../../../Utils/SnackBar';
 
 const LoungeContainer = (props) => {
   const { auth, setAuth, myUpcomingMeetups, setMyUpcomingMeetups, setChatsNotificationCount, routeName, setRouteName } =
@@ -36,11 +39,21 @@ const LoungeContainer = (props) => {
   const [chatType, setChatType] = useState('general'); // general, reply, question, help
   const [isLoggedOutModalOpen, setIsLoggedOutModalOpen] = useState(false);
   const [dummyCount, setDummyCount] = useState(0);
+  const [isRSVPed, setIsRSVPed] = useState(false);
+  const [isConfirmRSVPModalOpen, setIsConfirmRSVPModalOpen] = useState(false);
 
   const getLoungeChatsByMeetupId = async () => {
     const result = await lampostAPI.get(`/loungechats/${props.route.params.meetupId}`);
     const { loungeChats } = result.data;
     setChats(loungeChats);
+  };
+
+  const getRSVPState = async () => {
+    const result = await lampostAPI.get(
+      `/meetupanduserrelationships/meetup/${props.route.params.meetupId}/user/${auth.data._id}/rsvp`
+    );
+    const { rsvp } = result.data;
+    setIsRSVPed(rsvp);
   };
 
   const getSelectedMeetup = async () => {
@@ -51,6 +64,7 @@ const LoungeContainer = (props) => {
   useEffect(() => {
     getLoungeChatsByMeetupId();
     getSelectedMeetup();
+    getRSVPState();
   }, []);
   // loungechatsも、apiで持ってくる必要がる。
 
@@ -212,6 +226,7 @@ const LoungeContainer = (props) => {
     <LoungeContext.Provider
       value={{
         meetup,
+        meetupId: props.route.params.meetupId,
         navigation: props.navigation,
         appMenuBottomSheetRef,
         sendChatBottomSheetRef,
@@ -228,8 +243,10 @@ const LoungeContainer = (props) => {
         setSelectedChat,
         chatType,
         setChatType,
-        // isLoggedOutModalOpen,
-        // setIsLoggedOutModalOpen,
+        isRSVPed,
+        setIsRSVPed,
+        isConfirmRSVPModalOpen,
+        setIsConfirmRSVPModalOpen,
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
@@ -268,6 +285,9 @@ const LoungeContainer = (props) => {
         <AppMenuBottomSheet />
         <SendChatBottomSheet />
         {/* <CrewBottomSheet /> */}
+        <ConfirmRSVPModal />
+        <LoadingSpinner />
+        <SnackBar />
       </View>
     </LoungeContext.Provider>
   );
