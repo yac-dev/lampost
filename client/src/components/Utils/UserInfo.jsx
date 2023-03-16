@@ -58,7 +58,9 @@ const UserInfo = (props) => {
         marginBottom: 15,
       }}
     >
-      <View style={{ flexDirection: 'row', marginBottom: 10, justifyContent: 'space-between' }}>
+      <View
+        style={{ flexDirection: 'row', marginBottom: props.actionButtons ? 10 : null, justifyContent: 'space-between' }}
+      >
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center' }}
           onPress={() => {
@@ -68,30 +70,23 @@ const UserInfo = (props) => {
             props.onUserNamePress(props.user);
           }}
         >
-          {props.user.photo ? (
-            <FastImage
-              style={{ width: 45, height: 45, borderRadius: 10, marginRight: 15 }}
-              source={{
-                uri: props.user.photo,
-                priority: FastImage.priority.normal,
-              }}
-              resizeMode={FastImage.resizeMode.contain}
-            />
-          ) : (
-            <View
-              style={{
-                width: 45,
-                height: 45,
-                borderRadius: 10,
-                marginRight: 15,
-                backgroundColor: iconColorsTable['blue1'],
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <FontAwesome5 name='user-astronaut' size={25} color='white' />
-            </View>
-          )}
+          <FastImage
+            style={{
+              width: 45,
+              height: 45,
+              borderRadius: 10,
+              marginRight: 15,
+              backgroundColor: iconColorsTable['blue1'],
+            }}
+            source={{
+              uri: props.user.photo
+                ? props.user.photo
+                : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
+              priority: FastImage.priority.normal,
+            }}
+            tintColor={props.user.photo ? null : 'white'}
+            resizeMode={FastImage.resizeMode.contain}
+          />
           <View style={{ flexDirection: 'column' }}>
             <Text style={{ color: 'white', fontSize: 17, marginRight: 20, marginBottom: 5 }}>{props.user.name}</Text>
             {renderTopBadges(props.user.topBadges)}

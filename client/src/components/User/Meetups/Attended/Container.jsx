@@ -104,7 +104,27 @@ const AttendedContainer = (props) => {
                 color='white'
                 style={{ marginRight: 5 }}
               />
-              <Text style={{ color: 'white' }}>Add friend</Text>
+              <Text style={{ color: 'white' }}>Be my friends</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                backgroundColor: iconColorsTable['blue1'],
+                borderRadius: 7,
+                padding: 10,
+              }}
+              onPress={() => {
+                props.navigation.navigate('Clap friend', { userId: user._id, launcherId: props.route.params.launcher });
+              }}
+            >
+              <MaterialCommunityIcons
+                name='human-greeting-variant'
+                size={22}
+                color='white'
+                style={{ marginRight: 5 }}
+              />
+              <Text style={{ color: 'white' }}>Clap</Text>
             </TouchableOpacity>
           </ScrollView>
         );
@@ -122,7 +142,7 @@ const AttendedContainer = (props) => {
                 }}
               >
                 <MaterialCommunityIcons name='check' size={22} color='white' style={{ marginRight: 5 }} />
-                <Text style={{ color: 'white' }}>Already friend</Text>
+                <Text style={{ color: 'white' }}>Already my friend</Text>
               </View>
               <TouchableOpacity
                 style={{
@@ -133,7 +153,10 @@ const AttendedContainer = (props) => {
                   padding: 10,
                 }}
                 onPress={() => {
-                  console.log('move to clap page');
+                  props.navigation.navigate('Clap friend', {
+                    userId: user._id,
+                    launcherId: props.route.params.launcher,
+                  });
                 }}
               >
                 <MaterialCommunityIcons
@@ -142,7 +165,7 @@ const AttendedContainer = (props) => {
                   color='white'
                   style={{ marginRight: 5 }}
                 />
-                <Text style={{ color: 'white' }}>clap</Text>
+                <Text style={{ color: 'white' }}>Clap</Text>
               </TouchableOpacity>
             </ScrollView>
           );
@@ -156,6 +179,7 @@ const AttendedContainer = (props) => {
                   backgroundColor: iconColorsTable['blue1'],
                   borderRadius: 7,
                   padding: 10,
+                  marginRight: 10,
                 }}
                 onPress={() => {
                   addFriend(user);
@@ -167,7 +191,7 @@ const AttendedContainer = (props) => {
                   color='white'
                   style={{ marginRight: 5 }}
                 />
-                <Text style={{ color: 'white' }}>Add friend</Text>
+                <Text style={{ color: 'white' }}>Be my friend</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
@@ -178,16 +202,14 @@ const AttendedContainer = (props) => {
                   padding: 10,
                 }}
                 onPress={() => {
-                  console.log('move to clap page');
+                  props.navigation.navigate('Clap friend', {
+                    userId: user._id,
+                    launcherId: props.route.params.launcher,
+                  });
                 }}
               >
-                <MaterialCommunityIcons
-                  name='human-greeting-variant'
-                  size={22}
-                  color='white'
-                  style={{ marginRight: 5 }}
-                />
-                <Text style={{ color: 'white' }}>clap</Text>
+                <MaterialCommunityIcons name='hand-clap' size={22} color='white' style={{ marginRight: 5 }} />
+                <Text style={{ color: 'white' }}>Clap</Text>
               </TouchableOpacity>
             </ScrollView>
           );

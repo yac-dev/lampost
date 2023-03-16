@@ -51,14 +51,14 @@ const AvatarImage = () => {
         />
         {isMyPage ? (
           <TouchableOpacity
-            style={{ position: 'absolute', bottom: -5, right: -5 }}
+            style={{ position: 'absolute', bottom: 0, right: 0 }}
             onPress={() => setIsConfirmEditProfileModalOpen(true)}
           >
             <MaterialCommunityIcons name='camera-plus' size={20} color={baseTextColor} />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
-            style={{ position: 'absolute', bottom: -5, right: -5 }}
+            style={{ position: 'absolute', bottom: 0, right: 0 }}
             onPress={() => flagUserMenuBottomSheetRef.current.snapToIndex(0)}
           >
             <MaterialCommunityIcons name='flag' size={20} color={baseTextColor} />

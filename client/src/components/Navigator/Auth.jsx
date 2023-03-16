@@ -22,6 +22,7 @@ import Patrons from '../User/Patrons/Container';
 // import Activity from '../User/Meetups/Activity/Container';
 import Meetups from '../User/Meetups/Container';
 import Attended from '../User/Meetups/Attended/Container';
+import ClapFriend from '../User/Meetups/Attended/ClapFriend/Container';
 // import Meetup from '../User/Meetups/Meetup/Container';
 import Assets from '../User/Assets/Container';
 // import Asset from '../Utils/Asset';
@@ -54,6 +55,7 @@ const Auth = (props) => {
                 fontWeight: 'bold',
                 color: 'white',
               },
+              headerTintColor: 'white',
               // headerLeft: () => (
               //   <TouchableOpacity onPress={() => props.navigation.goBack()}>
               //     <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
@@ -74,6 +76,7 @@ const Auth = (props) => {
                 fontWeight: 'bold',
                 color: 'white',
               },
+              headerTintColor: 'white',
               // headerTintColor: 'white',
             }}
           />
@@ -88,6 +91,7 @@ const Auth = (props) => {
                 fontWeight: 'bold',
                 color: 'white',
               },
+              headerTintColor: 'white',
               // headerTintColor: 'white',
             }}
           />
@@ -117,6 +121,7 @@ const Auth = (props) => {
                 fontWeight: 'bold',
                 color: 'white',
               },
+              headerTintColor: 'white',
               // headerTintColor: 'white',
             }}
           />
@@ -131,6 +136,7 @@ const Auth = (props) => {
                 fontWeight: 'bold',
                 color: 'white',
               },
+              headerTintColor: 'white',
               // headerTintColor: 'white',
             }}
           />
@@ -159,9 +165,11 @@ const Auth = (props) => {
                 fontWeight: 'bold',
                 color: 'white',
               },
+              headerTintColor: 'white',
               // headerTintColor: 'white',
             }}
           />
+
           <Stack.Screen
             name='Meetup assets'
             component={MeetupAssets}
@@ -173,6 +181,7 @@ const Auth = (props) => {
                 fontWeight: 'bold',
                 color: 'white',
               },
+              headerTintColor: 'white',
               // headerTintColor: 'white',
             }}
           />
@@ -250,6 +259,25 @@ const Auth = (props) => {
           <Stack.Screen
             name='Add link'
             component={AddLink}
+            options={({ navigation }) => ({
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
+                </TouchableOpacity>
+              ),
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+              headerTintColor: 'white',
+            })}
+          />
+          <Stack.Screen
+            name='Clap friend'
+            component={ClapFriend}
             options={({ navigation }) => ({
               headerLeft: () => (
                 <TouchableOpacity onPress={() => navigation.goBack()}>

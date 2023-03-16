@@ -59,6 +59,47 @@ export const getBadgeDatasByUserId = async (request, response) => {
   }
 };
 
+export const getClapFriendBadgeDatasByUserId = async (request, response) => {
+  try {
+    const badgeAndUserRelationships = await BadgeAndUserRelationship.find({ user: request.params.userId }).populate({
+      path: 'badge',
+      select: 'name icon color',
+    });
+    const userBadgeDatas = badgeAndUserRelationships.map((relationship) => {
+      return {
+        relationshipId: relationship._id,
+        badge: relationship.badge,
+        totalClaps: relationship.totalClaps,
+      };
+    });
+    response.status(200).json({
+      userBadgeDatas,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const clapBadge = async (request, response) => {
+  try {
+    const { clappingTable, launcherId } = request.body;
+    const badgeAndUserRelationshipIds = Object.keys(clappingTable);
+    const relationships = await BadgeAndUserRelationship.find({ _id: { $in: badgeAndUserRelationshipIds } });
+    relationships.forEach((relationship) => {
+      relationship.totalClaps = relationship.totalClaps + clappingTable[relationship._id]['totalClaps'];
+      relationship.save();
+    });
+    const launcher = await User.findById(launcherId);
+    launcher.fame = launcher.fame + 5;
+    launcher.save();
+    response.status(201).json({
+      message: 'success',
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // export const getBadgeDetailByUserId = async (request, response) => {
 //   try {
 //     const badgeAndUserRelationship = await BadgeAndUserRelationship.findOne({
