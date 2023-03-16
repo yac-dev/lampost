@@ -19,7 +19,7 @@ const HeaderContainer = () => {
   const { activitiesMenuBottomSheetRef, user } = useContext(UserContext);
 
   return (
-    <View style={{ marginBottom: 10, paddingLeft: 10, paddingRight: 10 }}>
+    <View style={{ marginBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
       <View
         style={{
           alignSelf: 'center',

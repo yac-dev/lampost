@@ -61,37 +61,35 @@ const UserInfo = (props) => {
       <View
         style={{ flexDirection: 'row', marginBottom: props.actionButtons ? 10 : null, justifyContent: 'space-between' }}
       >
-        <TouchableOpacity
-          style={{ flexDirection: 'row', alignItems: 'center' }}
-          onPress={() => {
-            // if (!auth.data || auth.data._id !== props.user._id) {
-            //   navigation.navigate('User', { userId: props.user._id });
-            // }
-            props.onUserNamePress(props.user);
-          }}
-        >
-          <FastImage
-            style={{
-              width: 45,
-              height: 45,
-              borderRadius: 10,
-              marginRight: 15,
-              backgroundColor: iconColorsTable['blue1'],
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <TouchableOpacity
+            onPress={() => {
+              props.onUserNamePress(props.user);
             }}
-            source={{
-              uri: props.user.photo
-                ? props.user.photo
-                : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
-              priority: FastImage.priority.normal,
-            }}
-            tintColor={props.user.photo ? null : 'white'}
-            resizeMode={FastImage.resizeMode.contain}
-          />
+          >
+            <FastImage
+              style={{
+                width: 45,
+                height: 45,
+                borderRadius: 10,
+                marginRight: 15,
+                backgroundColor: iconColorsTable['blue1'],
+              }}
+              source={{
+                uri: props.user.photo
+                  ? props.user.photo
+                  : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
+                priority: FastImage.priority.normal,
+              }}
+              tintColor={props.user.photo ? null : 'white'}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+          </TouchableOpacity>
           <View style={{ flexDirection: 'column' }}>
             <Text style={{ color: 'white', fontSize: 17, marginRight: 20, marginBottom: 5 }}>{props.user.name}</Text>
             {renderTopBadges(props.user.topBadges)}
           </View>
-        </TouchableOpacity>
+        </View>
         {props.rightInfo}
       </View>
       {props.actionButtons}

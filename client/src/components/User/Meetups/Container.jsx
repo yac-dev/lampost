@@ -231,7 +231,11 @@ const ActivitiesContainer = (props) => {
         );
       });
 
-      return <View>{list}</View>;
+      return (
+        <ScrollView>
+          <View>{list}</View>
+        </ScrollView>
+      );
     }
   };
 

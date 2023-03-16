@@ -47,6 +47,7 @@ const AttendedContainer = (props) => {
   const addFriend = async (user) => {
     const payload = {
       friendId: user._id,
+      launcherId: props.route.params.launcher,
     };
     setLoading(true);
     const result = await lampostAPI.post(`/friendrelationships/${auth.data._id}`, payload);
@@ -251,7 +252,7 @@ const AttendedContainer = (props) => {
                 actionButtons={renderActionButtons(item.user)}
               />
             )}
-            keyExtractor={(item) => item._id}
+            keyExtractor={(item, index) => `${item._id}-${index}`}
           />
         </View>
       );

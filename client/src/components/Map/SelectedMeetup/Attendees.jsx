@@ -29,9 +29,9 @@ const AttendeesContainer = (props) => {
       });
     } else {
       if (auth.data._id !== user._id) {
-        console.log('page opening');
+        props.navigation.navigate('User', { userId: user._id });
       } else {
-        console.log('Not gonna navigate to my page');
+        return null;
       }
     }
   };

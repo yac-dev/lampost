@@ -60,7 +60,9 @@ const Info = (props) => {
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
             <Text style={{ color: 'white', marginRight: 10, fontSize: 17 }}>Google maps</Text>
             <View style={{ borderBottomColor: baseTextColor, borderBottomWidth: 0.3 }}>
-              <Text style={{ color: baseTextColor }}>https://developers.google.com/maps</Text>
+              <TouchableOpacity onPress={() => openURL('https://developers.google.com/maps')}>
+                <Text style={{ color: baseTextColor }}>https://developers.google.com/maps</Text>
+              </TouchableOpacity>
             </View>
           </View>
           <Text style={{ color: baseTextColor }}>Lampost is also using the Google maps api on the home screen.</Text>
@@ -94,19 +96,25 @@ const Info = (props) => {
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
               <Fontisto name='product-hunt' size={20} color='orange' style={{ marginRight: 10 }} />
               <View style={{ borderBottomColor: baseTextColor, borderBottomWidth: 0.3 }}>
-                <Text style={{ color: baseTextColor }}>https://www.producthunt.com/@ykykyk</Text>
+                <TouchableOpacity onPress={() => openURL('https://www.producthunt.com/@ykykyk')}>
+                  <Text style={{ color: baseTextColor }}>https://www.producthunt.com/@ykykyk</Text>
+                </TouchableOpacity>
               </View>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
               <AntDesign name='linkedin-square' size={20} color='#256FC8' style={{ marginRight: 10 }} />
               <View style={{ borderBottomColor: baseTextColor, borderBottomWidth: 0.3 }}>
-                <Text style={{ color: baseTextColor }}>https://www.linkedin.com/in/yosuke-kojima-268044213</Text>
+                <TouchableOpacity onPress={() => openURL('https://www.linkedin.com/in/yosuke-kojima-268044213')}>
+                  <Text style={{ color: baseTextColor }}>https://www.linkedin.com/in/yosuke-kojima-268044213</Text>
+                </TouchableOpacity>
               </View>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
               <AntDesign name='twitter' size={20} color='#1596CA' style={{ marginRight: 10 }} />
               <View style={{ borderBottomColor: baseTextColor, borderBottomWidth: 0.3 }}>
-                <Text style={{ color: baseTextColor }}>https://twitter.com/LampostTech</Text>
+                <TouchableOpacity onPress={() => openURL('https://twitter.com/LampostTech')}>
+                  <Text style={{ color: baseTextColor }}>https://twitter.com/LampostTech</Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>

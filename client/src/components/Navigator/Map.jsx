@@ -12,10 +12,11 @@ import { Ionicons } from '@expo/vector-icons';
 
 import Map from '../Map/Container';
 import Camera from '../Camera/Container';
-import Schedule from '../Schedule/Container';
-import QandAs from '../Map/SelectedMeetup/QandAs/Container';
 import Lounge from '../Map/SelectedMeetup/Lounge/Container';
 import User from '../User/Container';
+import Meetups from '../User/Meetups/Container';
+import MeetupAssets from '../User/Meetups/Assets/Container';
+import Attended from '../User/Meetups/Attended/Container';
 import AddBadges from '../Utils/AddBadges/Container';
 import AboutLampost from '../Utils/AboutLampost';
 import ReportMeetup from '../Map/ReportMeetup';
@@ -45,7 +46,7 @@ const MapNavigator = (props) => {
           component={Map}
           options={({ navigation }) => ({
             headerShown: true,
-            title: 'Meetups',
+            title: 'Map',
             headerTransparent: true,
             headerTitleStyle: {
               fontWeight: 'bold',
@@ -58,63 +59,7 @@ const MapNavigator = (props) => {
                 </TouchableOpacity>
               );
             },
-            // headerRight: () => {
-            //   if (auth?.data) {
-            //     if (auth?.data.photo) {
-            //       return (
-            //         // あとは、photoがあるかないかのチェックね。
-            //         <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-            //           <Image source={{ uri: auth.data.photo }} style={{ width: 35, height: 35, borderRadius: 10 }} />
-            //         </TouchableOpacity>
-            //       );
-            //     } else {
-            //       return (
-            //         // user icon
-            //         <TouchableOpacity
-            //           style={{
-            //             width: 35,
-            //             height: 35,
-            //             borderRadius: 10,
-            //             marginRight: 10,
-            //             backgroundColor: iconColorsTable['blue1'],
-            //             alignItems: 'center',
-            //             justifyContent: 'center',
-            //           }}
-            //           onPress={() => navigation.navigate('Profile')}
-            //         >
-            //           <FontAwesome5 name='user-astronaut' size={25} color='white' />
-            //         </TouchableOpacity>
-            //       );
-            //     }
-            //   } else {
-            //     return (
-            //       <TouchableOpacity
-            //         onPress={() => navigation.navigate('Profile')}
-            //         style={{ flexDirection: 'row', alignItems: 'center' }}
-            //       >
-            //         <MaterialCommunityIcons name='login' size={15} color={'white'} style={{ marginRight: 5 }} />
-            //         <Text style={{ color: 'white', fontSize: 17 }}>Login</Text>
-            //       </TouchableOpacity>
-            //     );
-            //   }
-            // },
           })}
-        />
-        {/* <Stack.Screen name='Camera' component={Camera} options={{ headerShown: false }} /> */}
-        <Stack.Screen name='Schedule' component={Schedule} />
-        <Stack.Screen
-          name='QandAs'
-          component={QandAs}
-          options={{
-            headerStyle: {
-              backgroundColor: appBottomSheetBackgroundColor,
-            },
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              color: 'white',
-            },
-            // headerTintColor: iconColorsTable['blue1'],
-          }}
         />
         <Stack.Screen
           name='Lounge'
@@ -127,6 +72,7 @@ const MapNavigator = (props) => {
               fontWeight: 'bold',
               color: 'white',
             },
+            headerTintColor: 'white',
             // headerTintColor: iconColorsTable['blue1'],
           }}
         />
@@ -141,6 +87,7 @@ const MapNavigator = (props) => {
               fontWeight: 'bold',
               color: 'white',
             },
+            headerTintColor: 'white',
             // headerTintColor: iconColorsTable['blue1'],
           }}
         />
@@ -156,10 +103,52 @@ const MapNavigator = (props) => {
               fontWeight: 'bold',
               color: 'white',
             },
-            // title: '',
-            // headerTransparent: true,
-            // headerLeft: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
-            // headerRight: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
+            headerTintColor: 'white',
+          })}
+        />
+        <Stack.Screen
+          name='Meetupss'
+          component={Meetups}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: 'white',
+          })}
+        />
+        <Stack.Screen
+          name='Meetup assets'
+          component={MeetupAssets}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: 'white',
+          })}
+        />
+        <Stack.Screen
+          name='Attended'
+          component={Attended}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: 'white',
           })}
         />
         <Stack.Screen
@@ -174,10 +163,7 @@ const MapNavigator = (props) => {
               fontWeight: 'bold',
               color: 'white',
             },
-            // title: '',
-            // headerTransparent: true,
-            // headerLeft: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
-            // headerRight: () => <Button onPress={() => navigation.navigate('My page')}>User page</Button>,
+            headerTintColor: 'white',
           })}
         />
         <Stack.Screen

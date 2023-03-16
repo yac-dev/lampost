@@ -1,8 +1,9 @@
 import FriendRelationship from '../models/friendRelationship';
+import User from '../models/user';
 
 export const createFriendRelationship = async (request, response) => {
   try {
-    const { friendId } = request.body;
+    const { friendId, launcherId } = request.body;
     const friendRelationship = await FriendRelationship.create({
       user: request.params.userId,
       friend: friendId,
@@ -14,6 +15,10 @@ export const createFriendRelationship = async (request, response) => {
       friend: request.params.userId,
       createdAt: Date.now(),
     });
+
+    const launcher = await User.findById(launcherId);
+    launcher.fame = launcher.fame + 10;
+    launcher.save();
 
     response.status(201).json({
       friendId,
