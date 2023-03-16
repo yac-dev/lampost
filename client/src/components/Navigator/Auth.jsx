@@ -27,6 +27,7 @@ import Assets from '../User/Assets/Container';
 // import Asset from '../Utils/Asset';
 import Asset from '../User/Meetups/Assets/Asset';
 import MeetupAssets from '../User/Meetups/Assets/Container';
+import Impressions from '../User/Meetups/Impressions/Container';
 // import Asset from '../User/Assets/Asset/Container';
 import AddBadges from '../Utils/AddBadges/Container';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
@@ -173,6 +174,20 @@ const Auth = (props) => {
                 color: 'white',
               },
               // headerTintColor: 'white',
+            }}
+          />
+          <Stack.Screen
+            name='Impressions'
+            component={Impressions}
+            options={{
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+              headerTintColor: 'white',
             }}
           />
           {/* <Stack.Screen

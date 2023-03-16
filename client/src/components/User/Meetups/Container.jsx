@@ -155,7 +155,9 @@ const ActivitiesContainer = (props) => {
                   alignItems: 'center',
                   padding: 5,
                 }}
-                // onPress={() => props.navigation.navigate('Meetup assets', { meetupId: meetup._id })}
+                onPress={() =>
+                  props.navigation.navigate('Impressions', { meetupId: meetup._id, launcher: meetup.launcher._id })
+                }
               >
                 <Ionicons name='chatbubbles' size={20} color={'white'} style={{ marginRight: 10 }} />
                 <Text style={{ color: 'white' }}>Impressions</Text>

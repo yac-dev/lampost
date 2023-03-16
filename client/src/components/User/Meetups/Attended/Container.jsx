@@ -124,6 +124,26 @@ const AttendedContainer = (props) => {
                 <MaterialCommunityIcons name='check' size={22} color='white' style={{ marginRight: 5 }} />
                 <Text style={{ color: 'white' }}>Already friend</Text>
               </View>
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  backgroundColor: iconColorsTable['blue1'],
+                  borderRadius: 7,
+                  padding: 10,
+                }}
+                onPress={() => {
+                  console.log('move to clap page');
+                }}
+              >
+                <MaterialCommunityIcons
+                  name='human-greeting-variant'
+                  size={22}
+                  color='white'
+                  style={{ marginRight: 5 }}
+                />
+                <Text style={{ color: 'white' }}>clap</Text>
+              </TouchableOpacity>
             </ScrollView>
           );
         } else {
@@ -148,6 +168,26 @@ const AttendedContainer = (props) => {
                   style={{ marginRight: 5 }}
                 />
                 <Text style={{ color: 'white' }}>Add friend</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  backgroundColor: iconColorsTable['blue1'],
+                  borderRadius: 7,
+                  padding: 10,
+                }}
+                onPress={() => {
+                  console.log('move to clap page');
+                }}
+              >
+                <MaterialCommunityIcons
+                  name='human-greeting-variant'
+                  size={22}
+                  color='white'
+                  style={{ marginRight: 5 }}
+                />
+                <Text style={{ color: 'white' }}>clap</Text>
               </TouchableOpacity>
             </ScrollView>
           );
@@ -183,7 +223,11 @@ const AttendedContainer = (props) => {
           <FlatList
             data={fetchedAttended}
             renderItem={({ item }) => (
-              <UserInfo user={item} onUserNamePress={onUserNamePress} actionButtons={renderActionButtons(item)} />
+              <UserInfo
+                user={item.user}
+                onUserNamePress={onUserNamePress}
+                actionButtons={renderActionButtons(item.user)}
+              />
             )}
             keyExtractor={(item) => item._id}
           />
