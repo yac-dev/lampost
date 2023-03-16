@@ -22,7 +22,7 @@ const DeleteAccount = (props) => {
     const result = await lampostAPI.delete(`/auth/${auth.data._id}`);
     await SecureStore.deleteItemAsync('secure_token');
     // ここで、front側のdataを全て消す。
-    auth.socket.disconnect();
+    // auth.socket.disconnect();
     setMyUpcomingMeetupAndChatsTable({});
     setTotalUnreadChatsCount(0);
     setAuth({

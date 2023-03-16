@@ -46,7 +46,7 @@ const ConfirmFinishMeetup = (props) => {
                 delete updating[finishingMeetup];
                 return updating;
               });
-              auth.socket.emit('LEAVE_A_LOUNGE', { meetupId: finishingMeetup });
+              // auth.socket.emit('LEAVE_A_LOUNGE', { meetupId: finishingMeetup });
               setIsFinishMeetupConfirmationModalOpen(false);
               setMeetups((previous) => {
                 const updating = { ...previous };

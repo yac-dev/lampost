@@ -145,3 +145,43 @@ export const getSelectedMeetupLoungeChats = async (request, response) => {
     console.log(error);
   }
 };
+
+export const createLoungeChat = async (request, response) => {
+  try {
+    const { meetupId, user, content, type, createdAt, replyTo } = request.body;
+    const loungeChat = await LoungeChat.create({
+      meetup: meetupId,
+      user: user._id,
+      content: content,
+      type: type,
+      createdAt: new Date(),
+      replyTo: replyTo ? replyTo._id : null,
+    });
+
+    response.status(201).json({
+      loungeChatObject: {
+        meetup: loungeChat.meetup,
+        user: {
+          _id: user._id,
+          name: user.name,
+          photo: user.photo,
+        },
+        content: loungeChat.content,
+        type: loungeChat.type,
+        createdAt: loungeChat.createdAt,
+        replyTo: replyTo
+          ? {
+              user: {
+                _id: replyTo.user._id,
+                name: replyTo.user.name,
+              },
+              createdAt: replyTo.createdAt,
+              content: replyTo.content,
+            }
+          : null,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

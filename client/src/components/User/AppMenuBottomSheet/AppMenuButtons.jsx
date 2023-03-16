@@ -39,7 +39,7 @@ const AppButtons = (props) => {
     });
     setMyUpcomingMeetupAndChatsTable({});
     setTotalUnreadChatsCount(0);
-    auth.socket.disconnect();
+    // auth.socket.disconnect();
   };
 
   const renderMembershipSetting = () => {

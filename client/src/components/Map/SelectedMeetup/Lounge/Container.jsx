@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Touchable, View, TouchableOpacity, Text } from 'react-native';
 import { Avatar, IconButton } from 'react-native-paper';
 import lampostAPI from '../../../../apis/lampost';
-import { io } from 'socket.io-client';
+// import { io } from 'socket.io-client';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -68,49 +68,49 @@ const LoungeContainer = (props) => {
   }, []);
   // loungechatsも、apiで持ってくる必要がる。
 
-  const getSocket = () => {
-    // 'https://lampost-server-production.onrender.com/api'
-    //
-    // console.log(Constants.manifest.extra.socketEndpoint);
-    // const { socketEndpoint } = Constants.manifest.extra.socketEndpoint;
-    // 'http://192.168.11.5:3500'
-    // const socket = io('https://lampost-server-production.onrender.com', {
-    const socket = io('http://192.168.11.5:3500', {
-      path: '/mysocket',
-    });
-    setAuth((previous) => {
-      return { ...previous, socket: socket };
-    });
-  };
-  useEffect(() => {
-    getSocket();
-  }, []);
+  // const getSocket = () => {
+  //   // 'https://lampost-server-production.onrender.com/api'
+  //   //
+  //   // console.log(Constants.manifest.extra.socketEndpoint);
+  //   // const { socketEndpoint } = Constants.manifest.extra.socketEndpoint;
+  //   // 'http://192.168.11.5:3500'
+  //   // const socket = io('https://lampost-server-production.onrender.com', {
+  //   const socket = io('http://192.168.11.5:3500', {
+  //     path: '/mysocket',
+  //   });
+  //   setAuth((previous) => {
+  //     return { ...previous, socket: socket };
+  //   });
+  // };
+  // useEffect(() => {
+  //   getSocket();
+  // }, []);
 
-  // roomに入る。
-  useEffect(() => {
-    if (auth.socket) {
-      auth.socket.emit('JOIN_A_LOUNGE', { meetupId: props.route.params.meetupId });
-      return () => {
-        // auth.socket.disconnect();
-        auth.socket.emit('LEAVE_A_LOUNGE', { meetupId: props.route.params.meetupId, mySocketId: auth.socket.id });
-        auth.socket.off('JOIN_A_LOUNGE');
-      };
-    }
-  }, [auth.socket]);
+  // // roomに入る。
+  // useEffect(() => {
+  //   if (auth.socket) {
+  //     auth.socket.emit('JOIN_A_LOUNGE', { meetupId: props.route.params.meetupId });
+  //     return () => {
+  //       // auth.socket.disconnect();
+  //       auth.socket.emit('LEAVE_A_LOUNGE', { meetupId: props.route.params.meetupId, mySocketId: auth.socket.id });
+  //       auth.socket.off('JOIN_A_LOUNGE');
+  //     };
+  //   }
+  // }, [auth.socket]);
 
-  // chat send, getに関するuseEffect
-  useEffect(() => {
-    if (auth.socket) {
-      auth.socket.on('I_GOT_A_CHAT_IN_THE_ROOM', (data) => {
-        setChats((previous) => [...previous, data]);
-        console.log('now in lounge', routeName);
-      });
+  // // chat send, getに関するuseEffect
+  // useEffect(() => {
+  //   if (auth.socket) {
+  //     auth.socket.on('I_GOT_A_CHAT_IN_THE_ROOM', (data) => {
+  //       setChats((previous) => [...previous, data]);
+  //       console.log('now in lounge', routeName);
+  //     });
 
-      return () => {
-        auth.socket.off('I_GOT_A_CHAT_IN_THE_ROOM');
-      };
-    }
-  }, [auth.socket]);
+  //     return () => {
+  //       auth.socket.off('I_GOT_A_CHAT_IN_THE_ROOM');
+  //     };
+  //   }
+  // }, [auth.socket]);
 
   // useEffect(() => {
   //   if (auth.socket) {
@@ -166,33 +166,7 @@ const LoungeContainer = (props) => {
   useEffect(() => {
     return () => {
       // これも、authがある時のみに動かさなきゃ毛ない。だから、dependencyも入れなきゃかも。最初の状態でregisterしているかもしれんから。
-      // const dateTime = new Date();
-      // console.log('cleaing up');
-      // ここでapi requestをする。viewd chats last timeの。ok.
       updateviewedChatsLastTime();
-      // setMyUpcomingMeetupAndChatsTable((previous) => {
-      //   return {
-      //     ...previous,
-      //     [props.route.params.meetupId]: {
-      //       ...previous[props.route.params.meetupId],
-      //       viewedChatsLastTime: dateTime,
-      //     },
-      //   };
-      // });
-      // setAuth((previous) => {
-      //   return {
-      //     ...previous,
-      //     data: {
-      //       ...previous.data,
-      //       upcomingMeetups: [...previous.data.upcomingMeetups].forEach((element) => {
-      //         if (element.meetup === props.route.params.meetupId) {
-      //           element.viewedChatsLastTime = dateTime;
-      //           return element;
-      //         }
-      //       }),
-      //     },
-      //   };
-      // });
     };
   }, []);
 

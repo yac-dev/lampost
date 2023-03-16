@@ -55,7 +55,7 @@ const SendChatBottomSheet = (props) => {
         : null,
     };
     // console.log(payload);
-    auth.socket.emit('I_SEND_A_CHAT', payload);
+    // auth.socket.emit('I_SEND_A_CHAT', payload);
     setSendingText('');
     setReplyingTo(null);
     Keyboard.dismiss();
@@ -156,24 +156,6 @@ const SendChatBottomSheet = (props) => {
           // style={{ paddingTop: 10, paddingBottom: 10 }}
         >
           <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-            {/* <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity
-                onPress={() =>
-                  Keyboard.dismiss()
-                }
-              >
-                <Text>General</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => Keyboard.dismiss()}>
-                <Text>Idea</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => Keyboard.dismiss()}>
-                <Text>Question and Help</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => Keyboard.dismiss()}>
-                <Text>Announcement</Text>
-              </TouchableOpacity>
-            </View> */}
             <View></View>
             <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity

@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Button } from 'react-native-paper';
 const Stack = createNativeStackNavigator();
 import * as SecureStore from 'expo-secure-store';
-import { io } from 'socket.io-client';
+// import { io } from 'socket.io-client';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -30,7 +30,7 @@ import { appBottomSheetBackgroundColor, iconColorsTable } from '../../utils/colo
 import { iconsTable } from '../../utils/icons';
 // ac
 import { loadMe } from '../../redux/actionCreators/auth';
-import { getSocket } from '../../redux/actionCreators/auth';
+// import { getSocket } from '../../redux/actionCreators/auth';
 
 const MapNavigator = (props) => {
   const { Ionicons } = iconsTable;
