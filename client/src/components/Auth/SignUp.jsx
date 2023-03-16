@@ -73,8 +73,8 @@ const SignUp = () => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: baseBackgroundColor, paddingLeft: 20, paddingRight: 20, paddingTop: 20 }}>
-      <View style={{ marginBottom: 15 }}>
+    <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
+      <View style={{ marginBottom: 10 }}>
         <Text style={{ color: baseTextColor }}>Please fill in your fullname, email and password.</Text>
       </View>
       <View style={{ marginBottom: 15 }}>
@@ -107,7 +107,7 @@ const SignUp = () => {
       </View>
       <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
         <ActionButton
-          label='Done'
+          label='Submit'
           backgroundColor={iconColorsTable['blue1']}
           icon={<MaterialIcons name='check' color='white' size={25} />}
           onActionButtonPress={() => onPressSubmit()}

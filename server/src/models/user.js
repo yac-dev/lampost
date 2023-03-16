@@ -31,13 +31,25 @@ const userSchema = new mongoose.Schema({
   pushToken: {
     type: String,
   },
-  ongoingMeetup: {
-    meetup: {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Meetup',
-    },
-    state: false,
+  patrons: {
+    type: Number,
+    default: 0,
   },
+  fame: {
+    type: Number,
+    default: 0,
+  },
+  launcher: {
+    type: Boolean,
+    default: false,
+  },
+  // ongoingMeetup: {
+  //   meetup: {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'Meetup',
+  //   },
+  //   state: false,
+  // },
   // 4つまでで。
   topBadges: [
     {
@@ -52,40 +64,33 @@ const userSchema = new mongoose.Schema({
       ref: 'Meetup',
     },
   ],
-  leadership: {
-    teamManagement: Number,
-    timeManagement: Number,
-    planning: Number,
-    courage: Number,
-    integrity: Number,
-    reliability: Number,
-    creative: Number,
-    flexibility: Number,
-    communication: Number,
-    relationshipBuilding: Number,
-    mentoring: Number,
-  },
-  patrons: {
-    type: Number,
-  },
-  fame: {
-    type: Number,
-    default: 0,
-  },
-  personality: {
-    considerate: Number,
-    communication: Number,
-    openMinded: Number,
-    spontaneous: Number,
-    diversity: Number,
-    passionate: Number,
-    hardWorking: Number,
-    concentration: Number,
-    calmAndRelaxed: Number,
-    respectful: Number,
-    teamWorking: Number,
-    adaptivity: Number,
-  },
+  // leadership: {
+  //   teamManagement: Number,
+  //   timeManagement: Number,
+  //   planning: Number,
+  //   courage: Number,
+  //   integrity: Number,
+  //   reliability: Number,
+  //   creative: Number,
+  //   flexibility: Number,
+  //   communication: Number,
+  //   relationshipBuilding: Number,
+  //   mentoring: Number,
+  // },
+  // personality: {
+  //   considerate: Number,
+  //   communication: Number,
+  //   openMinded: Number,
+  //   spontaneous: Number,
+  //   diversity: Number,
+  //   passionate: Number,
+  //   hardWorking: Number,
+  //   concentration: Number,
+  //   calmAndRelaxed: Number,
+  //   respectful: Number,
+  //   teamWorking: Number,
+  //   adaptivity: Number,
+  // },
   createdAt: {
     type: Date,
   },

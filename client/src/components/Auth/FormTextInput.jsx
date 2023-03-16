@@ -24,7 +24,7 @@ const FormTextInput = (props) => {
         placeholderTextColor={baseTextColor}
         inputAccessoryViewID={props.inputAccessoryViewID}
         style={{
-          borderRadius: 10,
+          borderRadius: 5,
           padding: 10,
           backgroundColor: inputBackgroundColor,
           width: '100%',
@@ -47,7 +47,7 @@ const FormTextInput = (props) => {
               Keyboard.dismiss();
             }}
           >
-            <Text style={{ color: iconColorsTable['blue1'], fontWeight: 'bold' }}>Done</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold' }}>Done</Text>
           </TouchableOpacity>
         </View>
       </InputAccessoryView>

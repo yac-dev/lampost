@@ -20,7 +20,7 @@ const ConfirmLogout = (props) => {
     });
     setMyUpcomingMeetups({});
     setChatsNotificationCount(0);
-    auth.socket.disconnect();
+    // auth.socket.disconnect();
     navigation.navigate('LogInOrSignUp', { userHasGone: true });
     // navigation.goBack();
   };

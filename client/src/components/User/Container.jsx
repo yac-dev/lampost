@@ -215,7 +215,7 @@ const Container = (props) => {
           {auth.data && user._id === auth.data._id ? (
             <View>
               <Text style={{ color: baseTextColor, textAlign: 'center', marginBottom: 10, paddingTop: 70 }}>
-                Who are you?🤔{'\n'}Let's add some badgesfrom down below {'\n'} and express yourself more.
+                Who are you?🤔{'\n'}Let's add some badges that related your interests{'\n'}from down below.
               </Text>
               {/* <TouchableOpacity
                 style={{

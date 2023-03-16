@@ -57,9 +57,7 @@ const Login = () => {
   };
 
   return (
-    <ScrollView
-      style={{ flex: 1, backgroundColor: baseBackgroundColor, paddingLeft: 20, paddingRight: 20, paddingTop: 20 }}
-    >
+    <ScrollView style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
       <View style={{ marginBottom: 15 }}>
         {/* <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5, color: 'white' }}>Login</Text> */}
         <Text style={{ color: baseTextColor }}>Please type your email and password.</Text>
