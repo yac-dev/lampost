@@ -1,9 +1,9 @@
 import express from 'express';
 const router = express.Router();
-import { getImpressions, createImpression } from '../controllers/impressions';
+import { getImpressions, createImpressionByMember, createImpressionByLauncher } from '../controllers/impressions';
 
-router.route('/').post(createImpression);
+router.route('/bymember').post(createImpressionByMember);
+router.route('/bylauncher').post(createImpressionByLauncher);
 router.route('/:meetupId').get(getImpressions);
-// router.route('/:meetupId').get()
 
 export default router;

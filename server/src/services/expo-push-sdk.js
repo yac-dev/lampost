@@ -26,3 +26,5 @@ export const sendPushNotification = async (expoPushToken, message) => {
     console.error(error);
   }
 };
+
+export const sendPushNotificationToAllMember = async () => {};

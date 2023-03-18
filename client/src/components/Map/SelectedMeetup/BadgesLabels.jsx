@@ -31,7 +31,7 @@ const BadgeLabels = (props) => {
     //   // contentContainerStyle={{ paddingBottom: 30 }}
     //   // showsHorizontalScrollIndicator={false}
     // />
-    <View style={{ marginBottom: 10 }}>
+    <View style={{ marginBottom: 20 }}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         {renderBadges()}
       </ScrollView>

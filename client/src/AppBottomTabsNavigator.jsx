@@ -122,17 +122,21 @@ const AppStack = (props) => {
     if (auth.data) {
       // if (auth.data.pushToken) {
       notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-        setChatsNotificationCount((previous) => previous + 1);
-        setMyUpcomingMeetups((previous) => {
-          const updating = { ...previous };
-          updating[notification.request.content.data.meetupId].unreadChatsTable[
-            notification.request.content.data.type
-          ] =
+        if (notification.request.content.data.notificationType === 'loungeChat') {
+          setChatsNotificationCount((previous) => previous + 1);
+          setMyUpcomingMeetups((previous) => {
+            const updating = { ...previous };
             updating[notification.request.content.data.meetupId].unreadChatsTable[
               notification.request.content.data.type
-            ] + 1;
-          return updating;
-        });
+            ] =
+              updating[notification.request.content.data.meetupId].unreadChatsTable[
+                notification.request.content.data.type
+              ] + 1;
+            return updating;
+          });
+        } else if (notification.request.content.data.notificationType === 'sentImpression') {
+          console.log(notification.request.content.data.notificationType);
+        }
         // if (notification.request.content.data.notificationType === 'loungeChat') {
         //   setMyUpcomingMeetupAndChatsTable((previous) => {
         //     const updating = { ...previous };

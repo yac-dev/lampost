@@ -94,6 +94,7 @@ const AttendedContainer = (props) => {
                 backgroundColor: iconColorsTable['blue1'],
                 borderRadius: 7,
                 padding: 10,
+                marginRight: 10,
               }}
               onPress={() => {
                 addFriend(user);
@@ -105,7 +106,7 @@ const AttendedContainer = (props) => {
                 color='white'
                 style={{ marginRight: 5 }}
               />
-              <Text style={{ color: 'white' }}>Be my friends</Text>
+              <Text style={{ color: 'white' }}>Be my friend</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={{
@@ -119,12 +120,7 @@ const AttendedContainer = (props) => {
                 props.navigation.navigate('Clap friend', { userId: user._id, launcherId: props.route.params.launcher });
               }}
             >
-              <MaterialCommunityIcons
-                name='human-greeting-variant'
-                size={22}
-                color='white'
-                style={{ marginRight: 5 }}
-              />
+              <MaterialCommunityIcons name='hand-clap' size={22} color='white' style={{ marginRight: 5 }} />
               <Text style={{ color: 'white' }}>Clap</Text>
             </TouchableOpacity>
           </ScrollView>

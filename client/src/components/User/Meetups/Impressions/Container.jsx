@@ -17,6 +17,8 @@ import {
   inputBackgroundColor,
   baseTextColor,
   screenSectionBackgroundColor,
+  disabledTextColor,
+  iconColorsTable,
 } from '../../../../utils/colorsTable';
 import { emojis } from '../../../../utils/emojisList';
 import FastImage from 'react-native-fast-image';
@@ -46,6 +48,7 @@ const ImpressionsContainer = (props) => {
         onPress={() => {
           setAddedEmojis((previous) => [...previous, emoji]);
         }}
+        disabled={addedEmojis.length === 5 ? true : false}
       >
         <Text>{emoji}</Text>
       </TouchableOpacity>
@@ -63,25 +66,35 @@ const ImpressionsContainer = (props) => {
     return <Text style={{ fontWeight: 'bold', fontSize: 12, color: 'rgb(118, 120, 124)' }}>{d}</Text>;
   };
 
+  // require(
   const renderImpression = (impression) => {
     return (
-      <View style={{ padding: 10, marginBottom: 15, backgroundColor: screenSectionBackgroundColor, borderRadius: 5 }}>
+      <View style={{ padding: 10, marginBottom: 10, backgroundColor: screenSectionBackgroundColor, borderRadius: 5 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
           <FastImage
-            style={{ width: 40, height: 40, borderRadius: 10, marginRight: 20 }}
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 10,
+              marginRight: 20,
+              backgroundColor: iconColorsTable['blue1'],
+            }}
             source={{
-              uri: impression.user.photo ? impression.user.photo : require('../../../../../assets/app/happy.png'),
+              uri: impression.user.photo
+                ? impression.user.photo
+                : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
             }}
             resizeMode={FastImage.resizeMode.stretch}
+            tintColor={impression.user.photo ? null : 'white'}
           />
           <View style={{ flexDirection: 'column' }}>
             <Text style={{ marginBottom: 5, color: 'white', fontSize: 17 }}>{impression.user.name}</Text>
             <Text style={{ color: baseTextColor }}>{renderDate(impression.createdAt)}</Text>
           </View>
         </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{ flexDirection: 'column' }}>
           {impression.emojis.length ? (
-            <View style={{ marginRight: 10 }}>
+            <View style={{ marginBottom: 5 }}>
               <FlatList
                 data={impression.emojis}
                 renderItem={({ item }) => {
@@ -127,7 +140,12 @@ const ImpressionsContainer = (props) => {
       launcherId: props.route.params.launcher,
     };
     setLoading(true);
-    const result = await lampostAPI.post('/impressions', payload);
+    let result;
+    if (auth.data._id === props.route.params.launcher) {
+      result = await lampostAPI.post('/impressions/bylauncher', payload);
+    } else {
+      result = await lampostAPI.post('/impressions/bymember', payload);
+    }
     const { impression } = result.data;
     setImpressions((previous) => [...previous, impression]);
     setImpressionTextInput('');
@@ -159,7 +177,7 @@ const ImpressionsContainer = (props) => {
         ) : null}
 
         <TextInput
-          placeholder='What are your thoughts on this event?'
+          placeholder="How was this meetup? Let's share your thoughts!"
           placeholderTextColor={baseTextColor}
           inputAccessoryViewID={inputAccessoryViewID}
           autoCapitalize='none'
@@ -208,7 +226,7 @@ const ImpressionsContainer = (props) => {
                     Keyboard.dismiss();
                   }}
                 >
-                  <Text style={{ color: 'white', fontWeight: 'bold' }}>Cancel</Text>
+                  <Text style={{ color: 'white', fontWeight: 'bold' }}>Close</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => sendImpression()}
