@@ -66,57 +66,66 @@ const Header = () => {
   };
 
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center', marginBottom: 20 }}>
-      <View
+    <View>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, paddingTop: 10, paddingLeft: 10 }}>
+        <View
+          style={{
+            backgroundColor: rnDefaultBackgroundColor,
+            width: 75,
+            height: 75,
+            borderRadius: 15,
+            // marginBottom: 5,
+            marginRight: 15,
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              width: '100%',
+              height: '100%',
+              alignItems: 'center', // これと
+              justifyContent: 'center', // これで中のimageを上下左右真ん中にする
+              borderRadius: 10,
+              backgroundColor: backgroundColorsTable[pressedBadgeData.badge.color],
+              borderColor: backgroundColorsTable[pressedBadgeData.badge.color],
+              borderWidth: 0.3,
+            }}
+          >
+            <FastImage
+              style={{ width: 55, height: 55 }}
+              source={{
+                uri: pressedBadgeData.badge.icon,
+                priority: FastImage.priority.normal,
+              }}
+              tintColor={iconColorsTable[pressedBadgeData.badge.color]}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={{ flexDirection: 'column' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <MaterialCommunityIcons name='fire' size={35} color={'red'} style={{ marginRight: 10 }} />
+            <View>
+              <Text style={{ color: baseTextColor, marginBottom: 5 }}>Passion</Text>
+              <Text style={{ color: 'white', fontSize: 23, fontWeight: 'bold' }}>
+                {pressedBadgeData.totalExperience}
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        {/* {renderActionButtons()} */}
+      </View>
+      <Text
         style={{
-          backgroundColor: rnDefaultBackgroundColor,
-          width: 85,
-          height: 85,
-          borderRadius: 15,
-          // marginBottom: 5,
-          marginRight: 15,
+          paddingLeft: 10,
+          fontWeight: 'bold',
+          fontSize: 20,
+          color: 'white',
+          marginBottom: 10,
         }}
       >
-        <TouchableOpacity
-          style={{
-            width: '100%',
-            height: '100%',
-            alignItems: 'center', // これと
-            justifyContent: 'center', // これで中のimageを上下左右真ん中にする
-            borderRadius: 10,
-            backgroundColor: backgroundColorsTable[pressedBadgeData.badge.color],
-            borderColor: backgroundColorsTable[pressedBadgeData.badge.color],
-            borderWidth: 0.3,
-          }}
-        >
-          <FastImage
-            style={{ width: 65, height: 65 }}
-            source={{
-              uri: pressedBadgeData.badge.icon,
-              priority: FastImage.priority.normal,
-            }}
-            tintColor={iconColorsTable[pressedBadgeData.badge.color]}
-            resizeMode={FastImage.resizeMode.contain}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={{ flexDirection: 'column' }}>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            fontSize: 20,
-            color: 'white',
-            marginBottom: 10,
-          }}
-        >
-          {pressedBadgeData.badge.name}
-        </Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <MaterialCommunityIcons name='fire' size={25} color={'red'} style={{ marginRight: 10 }} />
-          <Text style={{ color: 'white', fontSize: 20 }}>{pressedBadgeData.totalExperience}</Text>
-        </View>
-      </View>
-      {/* {renderActionButtons()} */}
+        {pressedBadgeData.badge.name}
+      </Text>
     </View>
   );
 };

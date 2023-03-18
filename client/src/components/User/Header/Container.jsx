@@ -17,10 +17,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const HeaderContainer = () => {
   const { auth, isIpad } = useContext(GlobalContext);
-  const { activitiesMenuBottomSheetRef, user } = useContext(UserContext);
+  const { activitiesMenuBottomSheetRef, user, navigation } = useContext(UserContext);
 
   return (
-    <View style={{ marginBottom: 10, paddingLeft: 10, paddingRight: 10 }}>
+    <View style={{ marginBottom: 10 }}>
       <View
         style={{
           alignSelf: 'center',
@@ -45,21 +45,59 @@ const HeaderContainer = () => {
         </View>
         <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 18, marginLeft: 20 }}>{user.name}</Text>
       </View>
-      <TouchableOpacity
-        style={{
-          borderRadius: 5,
-          padding: 5,
-          backgroundColor: iconColorsTable['blue1'],
-        }}
-        onPress={() => {
-          activitiesMenuBottomSheetRef.current.snapToIndex(0);
-        }}
-      >
-        <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
-          <Feather name='activity' size={25} color={'white'} style={{ marginRight: 10 }} />
-          <Text style={{ color: 'white', fontWeight: 'bold' }}>Acivity</Text>
-        </View>
-      </TouchableOpacity>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <TouchableOpacity
+          style={{
+            paddingLeft: 10,
+            paddingRight: 5,
+            paddingTop: 5,
+            paddingBottom: 5,
+            width: Dimensions.get('window').width / 2,
+          }}
+          onPress={() => {
+            navigation.navigate('Meetups', { userId: user._id });
+          }}
+        >
+          <View
+            style={{
+              padding: 5,
+              // alignSelf: 'center',
+              borderRadius: 5,
+              backgroundColor: iconColorsTable['blue1'],
+            }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+              <Feather name='activity' size={25} color={'white'} style={{ marginRight: 10 }} />
+              <Text style={{ color: 'white', fontWeight: 'bold' }}>Acivity</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            paddingLeft: 5,
+            paddingRight: 10,
+            paddingTop: 5,
+            paddingBottom: 5,
+            width: Dimensions.get('window').width / 2,
+          }}
+          onPress={() => {
+            navigation.navigate('Assets', { userId: user._id });
+          }}
+        >
+          <View
+            style={{
+              padding: 5,
+              borderRadius: 5,
+              backgroundColor: iconColorsTable['blue1'],
+            }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+              <MaterialCommunityIcons name='film' size={25} color={'white'} style={{ marginRight: 10 }} />
+              <Text style={{ color: 'white', fontWeight: 'bold' }}>Assets</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

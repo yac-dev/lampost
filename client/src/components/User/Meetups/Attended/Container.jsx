@@ -2,7 +2,12 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import { View, Text, FlatList, ActivityIndicator, ScrollView, TouchableOpacity } from 'react-native';
 import GlobalContext from '../../../../GlobalContext';
 import lampostAPI from '../../../../apis/lampost';
-import { baseTextColor, baseBackgroundColor, iconColorsTable } from '../../../../utils/colorsTable';
+import {
+  baseTextColor,
+  baseBackgroundColor,
+  iconColorsTable,
+  screenSectionBackgroundColor,
+} from '../../../../utils/colorsTable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 import AttendedContext from './AttendedContext';
@@ -75,14 +80,12 @@ const AttendedContainer = (props) => {
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                backgroundColor: iconColorsTable['blue1'],
-                borderRadius: 7,
-                padding: 10,
+                backgroundColor: 'rgb(84, 84, 84)',
+                borderRadius: 5,
+                padding: 5,
                 marginRight: 10,
               }}
-              onPress={() => {
-                console.log('oops...');
-              }}
+              disabled={true}
             >
               <MaterialCommunityIcons name='hand-heart' size={22} color='white' style={{ marginRight: 5 }} />
               <Text style={{ color: 'white' }}>Give a tip</Text>
@@ -92,8 +95,8 @@ const AttendedContainer = (props) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 backgroundColor: iconColorsTable['blue1'],
-                borderRadius: 7,
-                padding: 10,
+                borderRadius: 5,
+                padding: 5,
                 marginRight: 10,
               }}
               onPress={() => {
@@ -113,8 +116,8 @@ const AttendedContainer = (props) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 backgroundColor: iconColorsTable['blue1'],
-                borderRadius: 7,
-                padding: 10,
+                borderRadius: 5,
+                padding: 5,
               }}
               onPress={() => {
                 props.navigation.navigate('Clap friend', { userId: user._id, launcherId: props.route.params.launcher });
@@ -134,8 +137,8 @@ const AttendedContainer = (props) => {
                   flexDirection: 'row',
                   alignItems: 'center',
                   backgroundColor: iconColorsTable['green1'],
-                  borderRadius: 7,
-                  padding: 10,
+                  borderRadius: 5,
+                  padding: 5,
                 }}
               >
                 <MaterialCommunityIcons name='check' size={22} color='white' style={{ marginRight: 5 }} />
@@ -146,8 +149,8 @@ const AttendedContainer = (props) => {
                   flexDirection: 'row',
                   alignItems: 'center',
                   backgroundColor: iconColorsTable['blue1'],
-                  borderRadius: 7,
-                  padding: 10,
+                  borderRadius: 5,
+                  padding: 5,
                 }}
                 onPress={() => {
                   props.navigation.navigate('Clap friend', {
@@ -174,8 +177,8 @@ const AttendedContainer = (props) => {
                   flexDirection: 'row',
                   alignItems: 'center',
                   backgroundColor: iconColorsTable['blue1'],
-                  borderRadius: 7,
-                  padding: 10,
+                  borderRadius: 5,
+                  padding: 5,
                   marginRight: 10,
                 }}
                 onPress={() => {
@@ -195,8 +198,8 @@ const AttendedContainer = (props) => {
                   flexDirection: 'row',
                   alignItems: 'center',
                   backgroundColor: iconColorsTable['blue1'],
-                  borderRadius: 7,
-                  padding: 10,
+                  borderRadius: 5,
+                  padding: 5,
                 }}
                 onPress={() => {
                   props.navigation.navigate('Clap friend', {

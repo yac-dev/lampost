@@ -31,12 +31,12 @@ const Container = (props) => {
       // onClose={() => onBadgeDetailBottomSheetClose()}
     >
       <BottomSheetView style={{ flex: 1, paddingLeft: 10, paddingRight: 10 }}>
-        <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => badgeDetailBottomSheetRef.current.close()}>
+        {/* <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => badgeDetailBottomSheetRef.current.close()}>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
             <AntDesign name='closecircleo' size={25} color={baseTextColor} style={{ marginRight: 10 }} />
             <Text style={{ color: baseTextColor }}>Close</Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         {pressedBadgeData ? <BadgeDetail /> : null}
       </BottomSheetView>
     </GorhomBottomSheet>

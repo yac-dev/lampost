@@ -20,16 +20,23 @@ const Stats = () => {
         style={{
           paddingLeft: 15,
           paddingRight: 15,
-          alignItems: 'center',
+          // alignItems: 'center',
           justifyContent: 'center',
           borderRadius: 5,
         }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <MaterialCommunityIcons name='torch' size={30} color={iconColorsTable['red1']} />
-          <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>Fame</Text>
+          <MaterialCommunityIcons
+            name='torch'
+            size={45}
+            color={iconColorsTable['red1']}
+            // style={{ backgroundColor: 'blue' }}
+          />
+          <View>
+            <Text style={{ color: baseTextColor }}>Fame</Text>
+            <Text style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}>{user.fame}</Text>
+          </View>
         </View>
-        <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{user.fame}</Text>
       </View>
     );
   } else {

@@ -193,6 +193,22 @@ const Container = (props) => {
               <Text style={{ color: 'white' }}>Capture moment</Text>
             </View>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              backgroundColor: iconColorsTable['blue1'],
+              borderRadius: 7,
+              padding: 5,
+              marginBottom: 10,
+            }}
+            onPress={() => {
+              navigation.navigate('Lounge', { meetupId: meetup._id });
+            }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+              <Ionicons size={25} name='ios-chatbubbles' color={'white'} style={{ marginRight: 5 }} />
+              <Text style={{ color: 'white' }}>Go to lounge</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       );
     } else {
