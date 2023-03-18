@@ -86,7 +86,7 @@ const UserInfo = (props) => {
             />
           </TouchableOpacity>
           <View style={{ flexDirection: 'column' }}>
-            <View style={{ marginBottom: 5, flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ marginBottom: 5, flexDirection: 'row' }}>
               <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>{props.user.name}</Text>
               {props.rightInfo}
             </View>

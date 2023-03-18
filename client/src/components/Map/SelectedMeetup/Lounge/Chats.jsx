@@ -2,7 +2,7 @@ import React, { useContext, useRef } from 'react';
 import GlobalContext from '../../../../GlobalContext';
 import LoungeContext from './LoungeContext';
 import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
-
+import FastImage from 'react-native-fast-image';
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -61,68 +61,43 @@ const Chats = (props) => {
 
   const renderUserAvatar = (chat) => {
     if (chat.user) {
-      if (chat.user.photo) {
-        return (
-          <View
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 10,
-              marginRight: 20,
+      return (
+        <View
+          style={{
+            width: 40,
+            height: 40,
+            borderRadius: 10,
+            marginRight: 20,
+            backgroundColor: iconColorsTable['blue1'],
+          }}
+        >
+          <FastImage
+            source={{
+              uri: chat.user.photo
+                ? chat.user.photo
+                : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
             }}
-          >
-            <Image source={{ uri: chat.user.photo }} style={{ width: '100%', height: '100%', borderRadius: 10 }} />
-            <View
-              style={{
-                backgroundColor: chatTypeTable[chat.type],
-                padding: 2,
-                borderRadius: 5,
-                width: 20,
-                height: 20,
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'absolute',
-                bottom: -7,
-                right: -7,
-              }}
-            >
-              {renderChatType(chat.type)}
-            </View>
-          </View>
-        );
-      } else {
-        return (
+            style={{ width: '100%', height: '100%', borderRadius: 10 }}
+            tintColor={chat.user.photo ? null : 'white'}
+          />
           <View
             style={{
-              width: 40,
-              height: 40,
-              borderRadius: 10,
-              marginRight: 20,
-              backgroundColor: iconColorsTable['blue1'],
+              backgroundColor: chatTypeTable[chat.type],
+              padding: 2,
+              borderRadius: 5,
+              width: 20,
+              height: 20,
               alignItems: 'center',
               justifyContent: 'center',
+              position: 'absolute',
+              bottom: -7,
+              right: -7,
             }}
           >
-            <FontAwesome5 name='user-astronaut' size={20} color='white' />
-            <View
-              style={{
-                backgroundColor: chatTypeTable[chat.type],
-                // padding: 2,
-                borderRadius: 5,
-                width: 30,
-                height: 30,
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'absolute',
-                bottom: -7,
-                right: -7,
-              }}
-            >
-              {renderChatType(chat.type)}
-            </View>
+            {renderChatType(chat.type)}
           </View>
-        );
-      }
+        </View>
+      );
     } else {
       return (
         <View

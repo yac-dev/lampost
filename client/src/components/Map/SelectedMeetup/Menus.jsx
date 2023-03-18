@@ -231,9 +231,7 @@ const Menus = (props) => {
           </View>
         }
         onPressMenu={() => {
-          // navigation.navigate('Description', { description: selectedMeetup.description });
-          setSelectedMeetupDetailComponent('Description');
-          selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
+          return null;
         }}
       />
       <Menu
@@ -249,8 +247,9 @@ const Menus = (props) => {
           </View>
         }
         onPressMenu={() => {
-          setSelectedMeetupDetailComponent('Fee');
-          selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
+          // setSelectedMeetupDetailComponent('Fee');
+          // selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
+          navigation.navigate('Meetup fee', { isFeeFree: selectedMeetup.isFeeFree });
         }}
       />
       <Menu
@@ -268,9 +267,9 @@ const Menus = (props) => {
           </View>
         }
         onPressMenu={() => {
-          // navigation.navigate('Description', { description: selectedMeetup.description });
-          setSelectedMeetupDetailComponent('Description');
-          selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
+          navigation.navigate('Meetup description', { description: selectedMeetup.description });
+          // setSelectedMeetupDetailComponent('Description');
+          // selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
         }}
       />
       <Menu

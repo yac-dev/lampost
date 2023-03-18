@@ -98,7 +98,7 @@ const Container = (props) => {
       <View style={{ flexDirection: 'row', marginRight: 20 }}>
         {dateElements.map((element, index) => {
           return (
-            <Text key={index} style={{ color: 'white' }}>
+            <Text key={index} style={{ color: 'white', fontSize: 23 }}>
               {element}&nbsp;
             </Text>
           );
@@ -197,21 +197,39 @@ const Container = (props) => {
       );
     } else {
       return (
-        <TouchableOpacity
-          style={{
-            backgroundColor: iconColorsTable['blue1'],
-            borderRadius: 7,
-            padding: 5,
-          }}
-          onPress={() => {
-            navigation.navigate('Camera', { meetupId: meetup._id, meetupTitle: meetup.title });
-          }}
-        >
-          <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
-            <Ionicons size={25} name='camera' color={'white'} style={{ marginRight: 5 }} />
-            <Text style={{ color: 'white' }}>Capture moment</Text>
-          </View>
-        </TouchableOpacity>
+        <View style={{ flexDirection: 'column' }}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: iconColorsTable['blue1'],
+              borderRadius: 7,
+              padding: 5,
+              marginBottom: 10,
+            }}
+            onPress={() => {
+              navigation.navigate('Camera', { meetupId: meetup._id, meetupTitle: meetup.title });
+            }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+              <Ionicons size={25} name='camera' color={'white'} style={{ marginRight: 5 }} />
+              <Text style={{ color: 'white' }}>Capture moment</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              backgroundColor: iconColorsTable['blue1'],
+              borderRadius: 7,
+              padding: 5,
+            }}
+            onPress={() => {
+              navigation.navigate('Lounge', { meetupId: meetup._id });
+            }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+              <Ionicons size={25} name='ios-chatbubbles' color={'white'} style={{ marginRight: 5 }} />
+              <Text style={{ color: 'white' }}>Go to lounge</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       );
     }
   };
@@ -234,15 +252,16 @@ const Container = (props) => {
             <View
               style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}
             >
-              <View
+              <TouchableOpacity
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
                 }}
+                onPress={() => getMeetup(meetup._id)}
               >
                 <MaterialCommunityIcons name='calendar-clock' color='white' size={20} style={{ marginRight: 10 }} />
                 {renderMeetupDateAndTime(meetup.startDateAndTime)}
-              </View>
+              </TouchableOpacity>
               {renderChatStats(meetup)}
             </View>
             <View

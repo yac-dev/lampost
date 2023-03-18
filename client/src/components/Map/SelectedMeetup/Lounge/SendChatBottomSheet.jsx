@@ -16,7 +16,7 @@ import {
 import { addSnackBar } from '../../../../redux/actionCreators/snackBar';
 
 const SendChatBottomSheet = (props) => {
-  const { auth } = useContext(GlobalContext);
+  const { auth, setLoading, setSnackBar } = useContext(GlobalContext);
   const inputAccessoryViewID = 'SEND_CHAT_INPUT';
   const snapPoints = useMemo(() => ['65%'], []);
   const {
@@ -35,6 +35,7 @@ const SendChatBottomSheet = (props) => {
 
   const onSendPress = async () => {
     console.log('sending comment');
+    setLoading(true);
     const payload = {
       launcher: meetup.launcher._id === auth.data._id ? '' : meetup.launcher._id,
       meetupId: meetup._id,
@@ -54,19 +55,23 @@ const SendChatBottomSheet = (props) => {
           }
         : null,
     };
+    const result = await lampostAPI.post('/loungechats', payload);
+    const { loungeChatObject } = result.data;
+    setChats((previous) => [...previous, loungeChatObject]);
     // console.log(payload);
     // auth.socket.emit('I_SEND_A_CHAT', payload);
     setSendingText('');
     setReplyingTo(null);
     Keyboard.dismiss();
     sendChatBottomSheetRef.current.close();
+    setLoading(false);
     // appMenuBottomSheetRef.current.snapToIndex(0);
   };
 
   const renderTextInputPlaceHolder = () => {
     switch (chatType) {
       case 'general':
-        return 'Add a message...';
+        return 'Please type your chat message.';
       case 'question':
         return 'What is your question?';
       case 'help':
@@ -91,9 +96,9 @@ const SendChatBottomSheet = (props) => {
       keyboardBehavior={'extend'}
       onClose={() => setText('')}
     >
-      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
+      <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
         {replyingTo ? (
-          <View style={{ paddingLeft: 10 }}>
+          <View style={{}}>
             <Text style={{ color: iconColorsTable['blue1'] }}>@ {replyingTo.user.name}</Text>
           </View>
         ) : null}
@@ -106,7 +111,7 @@ const SendChatBottomSheet = (props) => {
             style={{
               borderRadius: 10,
               height: '100%',
-              padding: 10,
+              // padding: 10,
               // backgroundColor: 'rgb(235, 235, 235)',
               width: '100%', // ここも、下の修正に沿って80 90%に変える。
             }}
@@ -185,8 +190,4 @@ const SendChatBottomSheet = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return { auth: state.auth };
-};
-
-export default connect(mapStateToProps, { addSnackBar })(SendChatBottomSheet);
+export default SendChatBottomSheet;
