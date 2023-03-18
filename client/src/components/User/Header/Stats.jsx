@@ -26,7 +26,7 @@ const Stats = () => {
         }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <MaterialCommunityIcons name='fire' size={25} color={iconColorsTable['red1']} />
+          <MaterialCommunityIcons name='torch' size={30} color={iconColorsTable['red1']} />
           <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>Fame</Text>
         </View>
         <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{user.fame}</Text>

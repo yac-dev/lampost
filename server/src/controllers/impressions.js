@@ -14,7 +14,7 @@ export const createImpression = async (request, response) => {
     // launcherのidが必要だ。launcherのfameを上げなきゃいけない。
     const emojisMultiple = emojis.length ? emojis.length : 1;
     const launcher = await User.findById(launcherId);
-    const upvote = 2 * emojisMultiple;
+    const upvote = 3 * emojisMultiple;
     launcher.fame = launcher.fame + upvote;
     launcher.save();
 

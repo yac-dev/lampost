@@ -184,6 +184,12 @@ const Menus = (props) => {
         backgroundColor={backgroundColorsTable['red1']}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            {selectedMeetup.launcher.fame ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}>
+                <MaterialCommunityIcons name='torch' size={20} color='red' />
+                <Text style={{ color: baseTextColor }}>{selectedMeetup.launcher.fame}</Text>
+              </View>
+            ) : null}
             <View style={{ width: 80 }}>
               <Text numberOfLines={1} style={{ color: baseTextColor, fontSize: 15 }}>
                 {selectedMeetup.launcher.name}
@@ -231,16 +237,33 @@ const Menus = (props) => {
         }}
       />
       <Menu
+        label='Fee'
+        icon={<Foundation name='dollar-bill' size={20} color={iconColorsTable['yellow1']} />}
+        backgroundColor={backgroundColorsTable['yellow1']}
+        rightInfo={
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ color: baseTextColor, fontSize: 15 }}>
+              {selectedMeetup.isFeeFree ? "It's free" : "It's not free"}
+            </Text>
+            {/* <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} /> */}
+          </View>
+        }
+        onPressMenu={() => {
+          setSelectedMeetupDetailComponent('Fee');
+          selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
+        }}
+      />
+      <Menu
         label='Description'
         backgroundColor={backgroundColorsTable['green1']}
         icon={<MaterialCommunityIcons name='card-text-outline' size={20} color={iconColorsTable['green1']} />}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View style={{ width: 80 }}>
+            {/* <View style={{ width: 80 }}>
               <Text numberOfLines={1} style={{ color: baseTextColor, fontSize: 15 }}>
                 {selectedMeetup.description}
               </Text>
-            </View>
+            </View> */}
             <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
           </View>
         }
@@ -263,23 +286,6 @@ const Menus = (props) => {
           // setSelectedMeetupDetailComponent('Crew');
           // selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
           navigation.navigate('Attendees', { meetupId: selectedMeetup._id });
-        }}
-      />
-      <Menu
-        label='Fee'
-        icon={<Foundation name='dollar-bill' size={20} color={iconColorsTable['yellow1']} />}
-        backgroundColor={backgroundColorsTable['yellow1']}
-        rightInfo={
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ color: baseTextColor, fontSize: 15 }}>
-              {selectedMeetup.isFeeFree ? "It's free" : "It's not free"}
-            </Text>
-            {/* <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} /> */}
-          </View>
-        }
-        onPressMenu={() => {
-          setSelectedMeetupDetailComponent('Fee');
-          selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
         }}
       />
       {/* <Menu

@@ -207,7 +207,7 @@ const Container = (props) => {
       getBadges();
     }
   }, [selectedFilterOption]);
-  console.log(selectedFilterOption);
+  // console.log(selectedFilterOption);
 
   // ADD_USER_BADGESの時のcomponent
   useEffect(() => {

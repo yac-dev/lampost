@@ -1,6 +1,8 @@
 import MeetupAndUserRelationship from '../models/meetupAndUserRelationship';
 import Meetup from '../models/meetup';
 import User from '../models/user';
+import UserBadgeExperience from '../models/userBadgeExperience';
+import BadgeAndUserRelationship from '../models/badgeAndUserRelationship';
 
 export const joinMeetup = async (request, response) => {
   try {
@@ -10,6 +12,7 @@ export const joinMeetup = async (request, response) => {
       user: userId,
       launcher: false,
       viewedChatsLastTime: new Date(),
+      rsvp: false,
     });
     // ここ、いちいちqueryするの、めんどいよね。totalAttendeesだけを変えるだけだから、別にいらないかも。
     const meetup = await Meetup.findById(meetupId);
@@ -226,6 +229,27 @@ export const rsvp = async (request, response) => {
     const meetupAndUserRelationship = await MeetupAndUserRelationship.findOne({ meetup: meetupId, user: userId });
     meetupAndUserRelationship.rsvp = true;
     meetupAndUserRelationship.save();
+    const meetup = await Meetup.findById(meetupId).select({ badges: 1 });
+    const badgeAndUserTable = meetup.badges.map((badgeId) => {
+      return {
+        badge: badgeId,
+        user: userId,
+      };
+    });
+    // [{badge: 2, user: 3, badge: 4, user:3, badge: 10, user: 3}] // これに一致するbadgeAndUserRelationshipを一つずつ見つけて、それを+10upvotteする感じか。その後に、userBadgePassionのmodelも作っていく感じか。
+    for (const table of badgeAndUserTable) {
+      const badgeAndUserRelationship = await BadgeAndUserRelationship.findOne({ badge: table.badge, user: table.user });
+      if (badgeAndUserRelationship) {
+        badgeAndUserRelationship.totalExperience = badgeAndUserRelationship.totalExperience + 10;
+        await badgeAndUserRelationship.save();
+        const userBadgeExperience = await UserBadgeExperience.create({
+          badgeAndUserRelationship: badgeAndUserRelationship._id,
+          type: 'meetupRSVP',
+          experience: 10,
+        });
+      }
+    }
+
     response.status(200).json({
       message: 'success',
     });

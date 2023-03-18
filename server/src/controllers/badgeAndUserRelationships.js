@@ -2,6 +2,7 @@ import BadgeAndUserRelationship from '../models/badgeAndUserRelationship';
 import BadgeTag from '../models/badgeTag';
 import BadgeTagAndUserRelationship from '../models/badgeTagAndUserRelationship';
 import User from '../models/user';
+import UserBadgeExperience from '../models/userBadgeExperience';
 
 export const addBadgesToUser = async (request, response) => {
   try {
@@ -12,7 +13,7 @@ export const addBadgesToUser = async (request, response) => {
         user: request.params.userId,
         badgeTags: [],
         links: [],
-        totalClaps: 0,
+        totalExperience: 1,
         createdAt: new Date(),
       };
     });
@@ -47,7 +48,7 @@ export const getBadgeDatasByUserId = async (request, response) => {
         badge: relationship.badge,
         links: relationship.links,
         badgeTags: relationship.badgeTags,
-        totalClaps: relationship.totalClaps,
+        totalExperience: relationship.totalExperience,
       };
     });
     // console.log(userBadgeDatas);
@@ -69,7 +70,7 @@ export const getClapFriendBadgeDatasByUserId = async (request, response) => {
       return {
         relationshipId: relationship._id,
         badge: relationship.badge,
-        totalClaps: relationship.totalClaps,
+        totalExperience: relationship.Experience,
       };
     });
     response.status(200).json({
@@ -86,12 +87,12 @@ export const clapBadge = async (request, response) => {
     const badgeAndUserRelationshipIds = Object.keys(clappingTable);
     const relationships = await BadgeAndUserRelationship.find({ _id: { $in: badgeAndUserRelationshipIds } });
     relationships.forEach((relationship) => {
-      relationship.totalClaps = relationship.totalClaps + clappingTable[relationship._id]['totalClaps'];
+      relationship.totalExperience = relationship.totalExperience + clappingTable[relationship._id]['totalClaps'];
       relationship.save();
     });
-    const launcher = await User.findById(launcherId);
-    launcher.fame = launcher.fame + 5;
-    launcher.save();
+    // const launcher = await User.findById(launcherId);
+    // launcher.fame = launcher.fame + 5;
+    // launcher.save();
     response.status(201).json({
       message: 'success',
     });

@@ -38,7 +38,7 @@ const UserInfo = (props) => {
           contentContainerStyle={{ paddingRight: 100 }}
           data={badges}
           renderItem={({ item }) => <BadgeLabel badge={item} />}
-          keyExtractor={(item) => item._id}
+          keyExtractor={(item, index) => `${item._id}-${index}`}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
         />
@@ -86,11 +86,13 @@ const UserInfo = (props) => {
             />
           </TouchableOpacity>
           <View style={{ flexDirection: 'column' }}>
-            <Text style={{ color: 'white', fontSize: 17, marginRight: 20, marginBottom: 5 }}>{props.user.name}</Text>
+            <View style={{ marginBottom: 5, flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>{props.user.name}</Text>
+              {props.rightInfo}
+            </View>
             {renderTopBadges(props.user.topBadges)}
           </View>
         </View>
-        {props.rightInfo}
       </View>
       {props.actionButtons}
     </View>

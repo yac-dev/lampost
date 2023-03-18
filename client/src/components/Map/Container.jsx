@@ -78,8 +78,7 @@ const Map = (props) => {
     if (isLaunchMeetupConfirmed) {
       // props.setMeetupLocation(event.nativeEvent.coordinate);
       setLaunchLocation(event.nativeEvent.coordinate);
-      appMenuBottomSheetRef.current.snapToIndex(0);
-      launchMeetupBottomSheetRef.current.snapToIndex(0);
+      launchMeetupBottomSheetRef.current.snapToIndex(1);
     } else {
       return null;
     }
@@ -254,7 +253,7 @@ const Map = (props) => {
                   longitude: launchLocation.longitude,
                 }}
               >
-                <MaterialCommunityIcons size={35} name='rocket-launch' color={iconColorsTable['red1']} />
+                <Ionicons size={35} name='pin' color={iconColorsTable['red1']} />
               </Marker>
             ) : null}
             <MapMarkers />

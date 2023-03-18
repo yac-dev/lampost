@@ -16,19 +16,6 @@ const meetupAndUserRelationshipSchema = new mongoose.Schema({
   },
   launcher: Boolean,
   viewedChatsLastTime: Date,
-  // ここで、、、viewdchatslasttimeを持っておけばいいのかね。。。.
-  // launcher: {
-  //   type: mongoose.Schema.ObjectId,
-  //   ref: 'User',
-  // },
-  // representation: String,
-  // impressions: [
-  //   {
-  //     text: String,
-  //     user: { type: mongoose.Schema.ObjectId, ref: 'User' },
-  //     createdAt: Date,
-  //   },
-  // ],
 });
 
 const MeetupAndUserRelationship = mongoose.model('MeetupAndUserRelationship', meetupAndUserRelationshipSchema);

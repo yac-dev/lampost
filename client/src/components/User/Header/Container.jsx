@@ -13,13 +13,14 @@ import {
   rnDefaultBackgroundColor,
 } from '../../../utils/colorsTable';
 import { Feather } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const HeaderContainer = () => {
   const { auth, isIpad } = useContext(GlobalContext);
   const { activitiesMenuBottomSheetRef, user } = useContext(UserContext);
 
   return (
-    <View style={{ marginBottom: 10, paddingLeft: 20, paddingRight: 20 }}>
+    <View style={{ marginBottom: 10, paddingLeft: 10, paddingRight: 10 }}>
       <View
         style={{
           alignSelf: 'center',
@@ -56,7 +57,7 @@ const HeaderContainer = () => {
       >
         <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
           <Feather name='activity' size={25} color={'white'} style={{ marginRight: 10 }} />
-          <Text style={{ color: 'white', fontWeight: 'bold' }}>Activity</Text>
+          <Text style={{ color: 'white', fontWeight: 'bold' }}>Acivity</Text>
         </View>
       </TouchableOpacity>
     </View>

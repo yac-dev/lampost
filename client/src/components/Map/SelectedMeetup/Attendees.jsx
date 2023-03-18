@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, ActivityIndicator, FlatList } from 'react-native';
 import GlobalContext from '../../../GlobalContext';
 import lampostAPI from '../../../apis/lampost';
-import { baseBackgroundColor, iconColorsTable } from '../../../utils/colorsTable';
+import { baseBackgroundColor, iconColorsTable, screenSectionBackgroundColor } from '../../../utils/colorsTable';
 import UserInfo from '../../Utils/UserInfo';
 import { iconsTable } from '../../../utils/icons';
 
@@ -51,22 +51,7 @@ const AttendeesContainer = (props) => {
             <UserInfo
               user={item.user}
               onUserNamePress={() => onUserNamePress(item.user)}
-              rightInfo={
-                item.rsvp ? (
-                  <View
-                    style={{
-                      backgroundColor: iconColorsTable['green1'],
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      borderRadius: 5,
-                      padding: 5,
-                    }}
-                  >
-                    <MaterialCommunityIcons name='check' size={25} color={'white'} style={{ marginRight: 5 }} />
-                    <Text style={{ color: 'white' }}>RVSP</Text>
-                  </View>
-                ) : null
-              }
+              rightInfo={item.rsvp ? <Text style={{ color: 'white' }}>👍 RVSP</Text> : null}
             />
           )}
           keyExtractor={(item, index) => `${item.user._id}-${index}`}

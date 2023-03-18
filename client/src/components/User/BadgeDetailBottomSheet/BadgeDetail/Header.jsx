@@ -112,8 +112,8 @@ const Header = () => {
           {pressedBadgeData.badge.name}
         </Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <MaterialCommunityIcons name='hand-clap' size={25} color={'white'} style={{ marginRight: 10 }} />
-          <Text style={{ color: 'white', fontSize: 20 }}>{pressedBadgeData.totalClaps}</Text>
+          <MaterialCommunityIcons name='fire' size={25} color={'red'} style={{ marginRight: 10 }} />
+          <Text style={{ color: 'white', fontSize: 20 }}>{pressedBadgeData.totalExperience}</Text>
         </View>
       </View>
       {/* {renderActionButtons()} */}

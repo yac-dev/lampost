@@ -5,6 +5,8 @@ import Badge from '../models/badge';
 import Comment from '../models/comment';
 import schedule from 'node-schedule';
 import MeetupAndUserRelationship from '../models/meetupAndUserRelationship';
+import BadgeAndUserRelationship from '../models/badgeAndUserRelationship';
+import UserBadgeExperience from '../models/userBadgeExperience';
 
 // この二つも、さらに一つのfunctionにまとめるべき。後で。
 // const scheduleStartMeetup = async (startDateAndTime, meetupId) => {
@@ -138,6 +140,27 @@ export const createMeetup = async (request, response) => {
       launcher: true,
       viewedChatsLastTime: new Date(),
     });
+
+    const badgeAndUserTables = badgeIds.map((badgeId) => {
+      return {
+        badge: badgeId,
+        user: launcher,
+      };
+    });
+
+    for (const table of badgeAndUserTables) {
+      const badgeAndUserRelationship = await BadgeAndUserRelationship.findOne({ badge: table.badge, user: table.user });
+      // meetupのlaunchでは、experienceを20あげる。
+      if (badgeAndUserRelationship) {
+        badgeAndUserRelationship.totalExperience = badgeAndUserRelationship.totalExperience + 20;
+        await badgeAndUserRelationship.save();
+        const userBadgeExperience = await UserBadgeExperience.create({
+          badgeAndUserRelationship: badgeAndUserRelationship._id,
+          type: 'meetupLaunch',
+          experience: 20,
+        });
+      }
+    }
 
     response.status(201).json({
       meetup: {
@@ -298,7 +321,7 @@ export const getSelectedMeetup = async (request, response) => {
       .populate({
         path: 'launcher',
         model: User,
-        select: 'name photo',
+        select: 'name photo fame',
       })
       .populate({
         path: 'badges',

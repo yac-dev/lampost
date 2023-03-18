@@ -112,7 +112,12 @@ const ClapFriendContainer = (props) => {
               if (!updating[badgeData.relationshipId]) {
                 updating[badgeData.relationshipId] = { relationshipId: badgeData.relationshipId, totalClaps: 1 };
               } else {
-                updating[badgeData.relationshipId]['totalClaps'] = updating[badgeData.relationshipId]['totalClaps'] + 1;
+                if (updating[badgeData.relationshipId]['totalClaps'] === 10) {
+                  delete updating[badgeData.relationshipId];
+                } else {
+                  updating[badgeData.relationshipId]['totalClaps'] =
+                    updating[badgeData.relationshipId]['totalClaps'] + 1;
+                }
               }
               return updating;
             });

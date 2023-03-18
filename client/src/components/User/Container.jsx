@@ -137,7 +137,7 @@ const Container = (props) => {
       const addedBadges = JSON.parse(props.route.params.addedUserBadges);
       const addedBadgeDatasTable = { ...addedBadges };
       for (const key in addedBadgeDatasTable) {
-        addedBadgeDatasTable[key]['totalClaps'] = 0;
+        addedBadgeDatasTable[key]['totalExperience'] = 0;
         addedBadgeDatasTable[key]['badge'] = addedBadgeDatasTable[key];
         addedBadgeDatasTable[key]['links'] = [];
         addedBadgeDatasTable[key]['badgeTags'] = [];
