@@ -1,6 +1,8 @@
 import React, { useMemo, useContext, useState } from 'react';
-import lampostAPI from '../../../../apis/lampost';
 import { View, Text, InputAccessoryView, Keyboard, TouchableOpacity, FlatList } from 'react-native';
+import GlobalContext from '../../../../GlobalContext';
+import FriendChatRoomContext from './FriendChatRoomContext';
+import lampostAPI from '../../../../apis/lampost';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import {
   appBottomSheetBackgroundColor,
@@ -15,20 +17,46 @@ import { emojis } from '../../../../utils/emojisList';
 const ChatTextInputBottomSheet = (props) => {
   const inputAccessoryViewID = 'CHAT_TEXT_INPUT';
   const snapPoints = useMemo(() => ['65%'], []);
+  const { auth, setLoading } = useContext(GlobalContext);
+  const { chatTextInputBottomSheetRef, chatTextInputRef, friendObject, setFriendChats } =
+    useContext(FriendChatRoomContext);
+  const [chatTextInput, setChatTextInput] = useState('');
 
   const renderEmoji = (emoji) => {
     return (
-      <TouchableOpacity style={{ padding: 10 }} onPress={() => props.setChatTextIput((previous) => previous + emoji)}>
+      <TouchableOpacity style={{ padding: 10 }} onPress={() => setChatTextInput((previous) => previous + emoji)}>
         <Text>{emoji}</Text>
       </TouchableOpacity>
     );
+  };
+  console.log(friendObject);
+  const sendChat = async () => {
+    const payload = {
+      sender: {
+        _id: auth.data._id,
+        name: auth.data.name,
+        photo: auth.data.photo,
+      },
+      recieverId: friendObject.user._id,
+      content: chatTextInput,
+      type: 'text',
+      friendChatRoomId: friendObject.friendChatRoom,
+    };
+    setLoading(true);
+    const result = await lampostAPI.post('/friendchats', payload);
+    const { chat } = result.data;
+    setFriendChats((previous) => [...previous, chat]);
+    setLoading(false);
+    chatTextInputBottomSheetRef.current.close();
+    Keyboard.dismiss();
+    setChatTextInput('');
   };
 
   return (
     <GorhomBottomSheet
       index={-1}
       enableOverDrag={true}
-      ref={props.chatTextInputBottomSheetRef}
+      ref={chatTextInputBottomSheetRef}
       snapPoints={snapPoints}
       backdropComponent={(backdropProps) => (
         <BottomSheetBackdrop {...backdropProps} appearsOnIndex={0} disappearsOnIndex={-1} pressBehavior='none' />
@@ -54,9 +82,9 @@ const ChatTextInputBottomSheet = (props) => {
               width: '100%', // ここも、下の修正に沿って80 90%に変える。
             }}
             color={baseTextColor}
-            ref={props.chatTextInputRef}
-            value={props.chatTextInput}
-            onChangeText={props.setChatTextIput}
+            ref={chatTextInputRef}
+            value={chatTextInput}
+            onChangeText={setChatTextInput}
             autoCapitalize='none'
           />
         </View>
@@ -82,9 +110,9 @@ const ChatTextInputBottomSheet = (props) => {
                 <TouchableOpacity
                   style={{ padding: 10 }}
                   onPress={() => {
-                    props.chatTextInputBottomSheetRef.current.close();
+                    chatTextInputBottomSheetRef.current.close();
                     Keyboard.dismiss();
-                    props.setChatTextIput('');
+                    setChatTextInput('');
                   }}
                 >
                   <Text style={{ color: 'white', fontWeight: 'bold' }}>Close</Text>
@@ -92,16 +120,11 @@ const ChatTextInputBottomSheet = (props) => {
                 <TouchableOpacity
                   style={{ padding: 10 }}
                   onPress={() => {
-                    console.log(props.chatTextInput);
-                    props.chatTextInputBottomSheetRef.current.close();
-                    Keyboard.dismiss();
-                    props.setChatTextIput('');
+                    sendChat();
                   }}
-                  disabled={props.chatTextInput ? false : true}
+                  disabled={chatTextInput ? false : true}
                 >
-                  <Text style={{ color: props.chatTextInput ? 'white' : disabledTextColor, fontWeight: 'bold' }}>
-                    Send
-                  </Text>
+                  <Text style={{ color: chatTextInput ? 'white' : disabledTextColor, fontWeight: 'bold' }}>Send</Text>
                 </TouchableOpacity>
               </View>
             </View>

@@ -48,7 +48,7 @@ const InboxBottomSheet = (props) => {
           <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>Inbox</Text>
         </View>
         <Text style={{ color: baseTextColor, textAlign: 'center' }}>
-          You'll see all your unread messages from your friends.
+          You'll see all the unread messages from your friends.
         </Text>
       </BottomSheetView>
     </GorhomBottomSheet>

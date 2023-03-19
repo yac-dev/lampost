@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { View, Text, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
 import GlobalContext from '../../../../GlobalContext';
+import FriendChatRoomContext from './FriendChatRoomContext';
 import { baseBackgroundColor, baseTextColor, iconColorsTable } from '../../../../utils/colorsTable';
 import lampostAPI from '../../../../apis/lampost';
 import { iconsTable } from '../../../../utils/icons';
@@ -13,7 +14,6 @@ const FriendChatRoomContainer = (props) => {
   const [isFetchedFriendChats, setIsFetchedFriendChats] = useState(false);
   const chatTextInputBottomSheetRef = useRef(null);
   const chatTextInputRef = useRef(null);
-  const [chatTextInput, setChatTextIput] = useState('');
 
   const getFriendChatsByChatRoomId = async () => {
     const result = await lampostAPI.get(`/friendchats/${props.route.params.friendObject.friendChatRoom}`);
@@ -48,32 +48,38 @@ const FriendChatRoomContainer = (props) => {
     }
   };
 
+  console.log(friendChats);
+
   return (
-    <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
-      {isFetchedFriendChats ? renderFriendChats() : <ActivityIndicator />}
-      <TouchableOpacity
-        style={{
-          position: 'absolute',
-          bottom: 50,
-          alignSelf: 'center',
-          padding: 10,
-          backgroundColor: iconColorsTable['blue1'],
-          borderRadius: 7,
-        }}
-        onPress={() => {
-          chatTextInputRef.current.focus();
-          chatTextInputBottomSheetRef.current.snapToIndex(0);
-        }}
-      >
-        <MaterialCommunityIcons name='send' size={25} color='white' />
-      </TouchableOpacity>
-      <ChatTextInputBottomSheet
-        chatTextInputBottomSheetRef={chatTextInputBottomSheetRef}
-        chatTextInputRef={chatTextInputRef}
-        chatTextInput={chatTextInput}
-        setChatTextIput={setChatTextIput}
-      />
-    </View>
+    <FriendChatRoomContext.Provider
+      value={{
+        chatTextInputBottomSheetRef,
+        chatTextInputRef,
+        friendObject: props.route.params.friendObject,
+        setFriendChats,
+      }}
+    >
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
+        {isFetchedFriendChats ? renderFriendChats() : <ActivityIndicator />}
+        <TouchableOpacity
+          style={{
+            position: 'absolute',
+            bottom: 50,
+            alignSelf: 'center',
+            padding: 10,
+            backgroundColor: iconColorsTable['blue1'],
+            borderRadius: 7,
+          }}
+          onPress={() => {
+            chatTextInputRef.current.focus();
+            chatTextInputBottomSheetRef.current.snapToIndex(0);
+          }}
+        >
+          <MaterialCommunityIcons name='send' size={25} color='white' />
+        </TouchableOpacity>
+        <ChatTextInputBottomSheet />
+      </View>
+    </FriendChatRoomContext.Provider>
   );
 };
 

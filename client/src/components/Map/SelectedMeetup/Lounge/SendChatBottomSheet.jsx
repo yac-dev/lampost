@@ -13,8 +13,6 @@ import {
   screenSectionBackgroundColor,
 } from '../../../../utils/colorsTable';
 
-import { addSnackBar } from '../../../../redux/actionCreators/snackBar';
-
 const SendChatBottomSheet = (props) => {
   const { auth, setLoading, setSnackBar } = useContext(GlobalContext);
   const inputAccessoryViewID = 'SEND_CHAT_INPUT';

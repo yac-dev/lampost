@@ -4,13 +4,15 @@ import { sendPushNotification } from '../services/expo-push-sdk';
 
 export const createFriendChat = async (request, response) => {
   try {
-    const { sender, recieverId, content, friendChatRoomId } = request.body;
+    const { sender, recieverId, content, friendChatRoomId, type } = request.body;
     const friendChat = await FriendChat.create({
       sender: sender._id,
       reciever: recieverId,
       content,
+      type,
       friendChatRoom: friendChatRoomId,
       isRead: false,
+      createdAt: Date.now(),
     });
     const reciever = await User.findById(recieverId);
     const notificationMessage = {
@@ -22,9 +24,12 @@ export const createFriendChat = async (request, response) => {
     sendPushNotification(reciever.pushToken, notificationMessage);
     response.status(201).json({
       chat: {
-        user: sender.name,
-        photo: sender.photo,
-        content: sender.content,
+        user: {
+          _id: sender._id,
+          name: sender.name,
+          photo: sender.photo,
+        },
+        content: friendChat.content,
       },
     });
   } catch (error) {
