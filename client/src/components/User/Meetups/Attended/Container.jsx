@@ -12,7 +12,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 import AttendedContext from './AttendedContext';
 import UserInfo from '../../../Utils/UserInfo';
-import ClapPeopleBottomSheet from './ClapPeopleBottomSheet';
+import ActionButtonBottomSheet from './ActionButtonBottomSheet';
 
 const AttendedContainer = (props) => {
   const { auth, setLoading } = useContext(GlobalContext);
@@ -21,6 +21,7 @@ const AttendedContainer = (props) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const clapPeopleBottomSheetRef = useRef(null);
   const [myFriends, setMyFriends] = useState({});
+  const actionButtonBottomSheetRef = useRef(null);
 
   const getMeetupAttended = async () => {
     setIsFetchedAttended(false);
@@ -248,6 +249,37 @@ const AttendedContainer = (props) => {
               <UserInfo
                 user={item.user}
                 onUserNamePress={onUserNamePress}
+                subInfo={
+                  props.route.params.launcher === item.user._id ? (
+                    <Text style={{ color: baseTextColor }}>🚀 Launcher</Text>
+                  ) : null
+                }
+                actionButton={
+                  // 自分の場所には、action buttonを表示しない。
+                  item.user._id === auth.data._id ? (
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        padding: 5,
+                        borderRadius: 5,
+                        backgroundColor: iconColorsTable['blue1'],
+                      }}
+                      onPress={() => {
+                        actionButtonBottomSheetRef.current.snapToIndex(0);
+                        setSelectedUser(item.user);
+                      }}
+                    >
+                      <MaterialCommunityIcons
+                        name='chevron-down'
+                        color={'white'}
+                        size={20}
+                        style={{ marginRight: 5 }}
+                      />
+                      <Text style={{ color: 'white', marginRight: 5 }}>Connect</Text>
+                    </TouchableOpacity>
+                  ) : null
+                }
                 actionButtons={renderActionButtons(item.user)}
               />
             )}
@@ -260,14 +292,22 @@ const AttendedContainer = (props) => {
 
   return (
     <AttendedContext.Provider
-      value={{ clapPeopleBottomSheetRef, launcher: props.route.params.launcher, selectedUser, setSelectedUser }}
+      value={{
+        launcherId: props.route.params.launcher,
+        navigation: props.navigation,
+        selectedUser,
+        setSelectedUser,
+        actionButtonBottomSheetRef,
+        myFriends,
+        setMyFriends,
+      }}
     >
       <View
         style={{ backgroundColor: baseBackgroundColor, flex: 1, paddingLeft: 10, paddingRight: 10, paddingTop: 10 }}
       >
         {isFetchedAttended ? renderAttended() : <ActivityIndicator />}
+        <ActionButtonBottomSheet />
       </View>
-      <ClapPeopleBottomSheet />
     </AttendedContext.Provider>
   );
 };

@@ -58,9 +58,7 @@ const UserInfo = (props) => {
         marginBottom: 15,
       }}
     >
-      <View
-        style={{ flexDirection: 'row', marginBottom: props.actionButtons ? 10 : null, justifyContent: 'space-between' }}
-      >
+      <View style={{ flexDirection: 'row', marginBottom: 10 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <TouchableOpacity
             onPress={() => {
@@ -85,16 +83,20 @@ const UserInfo = (props) => {
               resizeMode={FastImage.resizeMode.contain}
             />
           </TouchableOpacity>
-          <View style={{ flexDirection: 'column' }}>
-            <View style={{ marginBottom: 5, flexDirection: 'row' }}>
-              <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>{props.user.name}</Text>
-              {props.rightInfo}
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ flexDirection: 'column', marginRight: 20 }}>
+              <Text style={{ color: 'white', fontSize: 17, marginBottom: 5 }}>{props.user.name}</Text>
+              {/* <Text style={{ color: baseTextColor }}>Rsvped</Text> */}
+              {props.subInfo}
             </View>
-            {renderTopBadges(props.user.topBadges)}
+            {/* <TouchableOpacity style={{ backgroundColor: 'red', padding: 5, borderRadius: 5 }}>
+              <Text>Connect</Text>
+            </TouchableOpacity> */}
+            {props.actionButton}
           </View>
         </View>
       </View>
-      {props.actionButtons}
+      {renderTopBadges(props.user.topBadges)}
     </View>
   );
 };
