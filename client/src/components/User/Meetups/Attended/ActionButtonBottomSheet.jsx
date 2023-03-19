@@ -85,7 +85,7 @@ const ActionButtonBottomSheet = (props) => {
   const addFriend = async (user) => {
     const payload = {
       friendId: user._id,
-      launcherId: props.route.params.launcher,
+      launcherId,
     };
     setLoading(true);
     const result = await lampostAPI.post(`/friendrelationships/${auth.data._id}`, payload);
@@ -98,11 +98,16 @@ const ActionButtonBottomSheet = (props) => {
       };
     });
     setLoading(false);
+    setSnackBar({
+      isVisible: true,
+      barType: 'success',
+      message: `Became friend with ${user.name}`,
+      duration: 5000,
+    });
   };
 
   const renderActionButtons = () => {
     if (selectedUser) {
-      console.log(selectedUser._id, launcherId);
       if (selectedUser._id === launcherId) {
         return (
           <View style={{ flexDirection: 'column' }}>
@@ -132,8 +137,8 @@ const ActionButtonBottomSheet = (props) => {
             <TouchableOpacity
               style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
               onPress={() => {
-                actionButtonBottomSheetRef.current.close();
                 addFriend(selectedUser);
+                actionButtonBottomSheetRef.current.close();
               }}
               disabled={myFriends[selectedUser._id] ? true : false}
             >
@@ -152,10 +157,10 @@ const ActionButtonBottomSheet = (props) => {
                   <MaterialCommunityIcons name='human-greeting-variant' color={iconColorsTable['orange1']} size={20} />
                 </View>
                 <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>
-                  Be friend with {selectedUser.name}
+                  Be friends with {selectedUser.name}
                 </Text>
               </View>
-              {myFriends[selectedUser._id] ? <Text>Already friended</Text> : null}
+              {myFriends[selectedUser._id] ? <Text style={{ color: baseTextColor }}>😁 Added</Text> : null}
             </TouchableOpacity>
             <TouchableOpacity
               style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
@@ -192,8 +197,8 @@ const ActionButtonBottomSheet = (props) => {
             <TouchableOpacity
               style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
               onPress={() => {
-                actionButtonBottomSheetRef.current.close();
                 addFriend(selectedUser);
+                actionButtonBottomSheetRef.current.close();
               }}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -211,8 +216,9 @@ const ActionButtonBottomSheet = (props) => {
                   <MaterialCommunityIcons name='human-greeting-variant' color={iconColorsTable['orange1']} size={20} />
                 </View>
                 <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>
-                  Be friend with {selectedUser.name}
+                  Be friends with {selectedUser.name}
                 </Text>
+                {myFriends[selectedUser._id] ? <Text style={{ color: baseTextColor }}>😁 Added</Text> : null}
               </View>
             </TouchableOpacity>
             <TouchableOpacity

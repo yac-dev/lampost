@@ -1,5 +1,6 @@
 import LauncherAndPatronRelationship from '../models/launcherAndPatronRelationship';
 import User from '../models/user';
+import { sendPushNotification } from '../services/expo-push-sdk';
 
 export const createLauncherAndPatronRelationship = async (request, response) => {
   try {
@@ -9,13 +10,30 @@ export const createLauncherAndPatronRelationship = async (request, response) => 
       patron: patron._id,
     });
 
-    const user = await User.findById(launcherId);
-    user.statsOverview.totalPatrons++;
-    user.save();
+    const launcher = await User.findById(launcherId);
+    launcher.fame = launcher.fame + 10;
+    launcher.save();
+
+    const notificationMessage = {
+      to: launcher.pushToken,
+      data: { notificationType: 'patronRelationship' },
+      title: `${patron.name} started supportig you.`,
+      // body: `"${content}" from ${user.name}`,
+    };
+
+    sendPushNotification(launcher.pushToken, notificationMessage);
 
     response.status(200).json({
       patron: patron,
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getMyLeadersByUserId = async (request, response) => {
+  try {
+    const o = 0;
   } catch (error) {
     console.log(error);
   }

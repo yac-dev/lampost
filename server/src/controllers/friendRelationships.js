@@ -1,5 +1,6 @@
 import FriendRelationship from '../models/friendRelationship';
 import User from '../models/user';
+import { sendPushNotification } from '../services/expo-push-sdk';
 
 export const createFriendRelationship = async (request, response) => {
   try {
@@ -16,8 +17,17 @@ export const createFriendRelationship = async (request, response) => {
       createdAt: Date.now(),
     });
 
+    const user = await User.findById(friendId);
+    const notificationMessage = {
+      to: user.pushToken,
+      data: { notificationType: 'friendshipBuilt' },
+      title: `You became friends with ${user.name}`,
+      // body: `"${content}" from ${user.name}`,
+    };
+    sendPushNotification(user.pushToken, notificationMessage);
+
     const launcher = await User.findById(launcherId);
-    launcher.fame = launcher.fame + 10;
+    launcher.fame = launcher.fame + 7;
     launcher.save();
 
     response.status(201).json({

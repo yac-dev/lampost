@@ -9,28 +9,6 @@ import FastImage from 'react-native-fast-image';
 const UserInfo = (props) => {
   const { auth } = useContext(GlobalContext);
 
-  // const renderTopBadges = (badges) => {
-  //   if (badges.length) {
-  //     const list = badges.map((badge, index) => {
-  //       return <BadgeLabel key={index} badge={badge} />;
-  //     });
-
-  //     return (
-  //       <ScrollView
-  //         horizontal={true}
-  //         // contentContainerStyle={{ paddingRight: 50 }}
-  //         showsHorizontalScrollIndicator={false}
-  //       >
-  //         {list}
-  //       </ScrollView>
-  //     );
-  //   } else {
-  //     return null;
-  //   }
-  // };
-
-  const onUserNamePress = () => {};
-
   const renderTopBadges = (badges) => {
     if (badges.length) {
       return (
@@ -58,7 +36,7 @@ const UserInfo = (props) => {
         marginBottom: 15,
       }}
     >
-      <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+      <View style={{ flexDirection: 'row', marginBottom: 10, justifyContent: 'space-between' }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <TouchableOpacity
             onPress={() => {
@@ -92,9 +70,9 @@ const UserInfo = (props) => {
             {/* <TouchableOpacity style={{ backgroundColor: 'red', padding: 5, borderRadius: 5 }}>
               <Text>Connect</Text>
             </TouchableOpacity> */}
-            {props.actionButton}
           </View>
         </View>
+        {props.actionButton}
       </View>
       {renderTopBadges(props.user.topBadges)}
     </View>
