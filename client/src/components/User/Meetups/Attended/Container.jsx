@@ -21,6 +21,8 @@ const AttendedContainer = (props) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const clapPeopleBottomSheetRef = useRef(null);
   const [myFriends, setMyFriends] = useState({});
+  const [myLaunchers, setMyLaunchers] = useState({});
+  const [isSupportingLauncher, setIsSupportingLauncher] = useState(false);
   const actionButtonBottomSheetRef = useRef(null);
 
   const getMeetupAttended = async () => {
@@ -46,8 +48,17 @@ const AttendedContainer = (props) => {
       return table;
     });
   };
+
+  const getIsSupportingLauncher = async () => {
+    const result = await lampostAPI.get(
+      `/launcherandpatronrelationships/launcher/${props.route.params.launcher}/patron/${auth.data._id}`
+    );
+    const { isSupporting } = result.data;
+    setIsSupportingLauncher(isSupporting);
+  };
   useEffect(() => {
     getMyFriends();
+    getIsSupportingLauncher();
   }, []);
 
   const addFriend = async (user) => {
@@ -299,6 +310,8 @@ const AttendedContainer = (props) => {
         actionButtonBottomSheetRef,
         myFriends,
         setMyFriends,
+        isSupportingLauncher,
+        setIsSupportingLauncher,
       }}
     >
       <View

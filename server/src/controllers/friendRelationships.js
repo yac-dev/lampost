@@ -21,7 +21,7 @@ export const createFriendRelationship = async (request, response) => {
     const notificationMessage = {
       to: user.pushToken,
       data: { notificationType: 'friendshipBuilt' },
-      title: `You became friends with ${user.name}`,
+      title: `You became friends with ${user.name}😃`,
       // body: `"${content}" from ${user.name}`,
     };
     sendPushNotification(user.pushToken, notificationMessage);

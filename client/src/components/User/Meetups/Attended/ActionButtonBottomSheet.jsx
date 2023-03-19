@@ -46,8 +46,17 @@ const INITIAL_CLAPPING_PERSONALITY = {
 const ActionButtonBottomSheet = (props) => {
   const { MaterialCommunityIcons, Foundation } = iconsTable;
   const { auth, setSnackBar, setLoading } = useContext(GlobalContext);
-  const { selectedUser, setSelectedUser, actionButtonBottomSheetRef, launcherId, myFriends, setMyFriends, navigation } =
-    useContext(AttendedContext);
+  const {
+    selectedUser,
+    setSelectedUser,
+    actionButtonBottomSheetRef,
+    launcherId,
+    myFriends,
+    setMyFriends,
+    isSupportingLauncher,
+    setIsSupportingLauncher,
+    navigation,
+  } = useContext(AttendedContext);
   const snapPoints = useMemo(() => ['40%'], []);
 
   // const onSubmitPress = async () => {
@@ -104,6 +113,29 @@ const ActionButtonBottomSheet = (props) => {
       message: `Became friend with ${user.name}`,
       duration: 5000,
     });
+    actionButtonBottomSheetRef.current.close();
+  };
+
+  const supportLauncher = async () => {
+    const payload = {
+      launcherId,
+      user: {
+        _id: auth.data._id,
+        name: auth.data.name,
+      },
+    };
+    setLoading(true);
+    const result = await lampostAPI.post('/launcherandpatronrelationships', payload);
+    const { launcher } = result.data;
+    setIsSupportingLauncher(true);
+    setLoading(false);
+    setSnackBar({
+      isVisible: true,
+      barType: 'success',
+      message: `Started supporting this launcher.`,
+      duration: 5000,
+    });
+    actionButtonBottomSheetRef.current.close();
   };
 
   const renderActionButtons = () => {
@@ -114,8 +146,9 @@ const ActionButtonBottomSheet = (props) => {
             <TouchableOpacity
               style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
               onPress={() => {
-                actionButtonBottomSheetRef.current.close();
+                supportLauncher();
               }}
+              disabled={isSupportingLauncher ? true : false}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View
@@ -131,14 +164,17 @@ const ActionButtonBottomSheet = (props) => {
                 >
                   <MaterialCommunityIcons name='hand-heart' color={iconColorsTable['pink1']} size={20} />
                 </View>
-                <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>Support {selectedUser.name}</Text>
+                <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>
+                  {isSupportingLauncher ? 'Supporting now' : `Support ${selectedUser.name}`}
+                </Text>
+                {isSupportingLauncher ? <MaterialCommunityIcons name='check-circle' size={25} color={'green'} /> : null}
               </View>
+              {/* {myLaunchers[launcherId] ? <Text style={{ color: baseTextColor }}>😁 Supporting now</Text> : null} */}
             </TouchableOpacity>
             <TouchableOpacity
               style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
               onPress={() => {
                 addFriend(selectedUser);
-                actionButtonBottomSheetRef.current.close();
               }}
               disabled={myFriends[selectedUser._id] ? true : false}
             >
@@ -157,10 +193,12 @@ const ActionButtonBottomSheet = (props) => {
                   <MaterialCommunityIcons name='human-greeting-variant' color={iconColorsTable['orange1']} size={20} />
                 </View>
                 <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>
-                  Be friends with {selectedUser.name}
+                  {myFriends[selectedUser._id] ? 'We are friends' : `Be friends with ${selectedUser.name}`}
                 </Text>
+                {myFriends[selectedUser._id] ? (
+                  <MaterialCommunityIcons name='check-circle' color={'green'} size={25} />
+                ) : null}
               </View>
-              {myFriends[selectedUser._id] ? <Text style={{ color: baseTextColor }}>😁 Added</Text> : null}
             </TouchableOpacity>
             <TouchableOpacity
               style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
@@ -198,7 +236,6 @@ const ActionButtonBottomSheet = (props) => {
               style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
               onPress={() => {
                 addFriend(selectedUser);
-                actionButtonBottomSheetRef.current.close();
               }}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
