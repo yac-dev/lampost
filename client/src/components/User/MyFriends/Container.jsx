@@ -6,7 +6,7 @@ import { baseBackgroundColor, backgroundColorsTable, iconColorsTable } from '../
 import lampostAPI from '../../../apis/lampost';
 import { iconsTable } from '../../../utils/icons';
 
-const MyFriendsContainer = () => {
+const MyFriendsContainer = (props) => {
   const { Ionicons } = iconsTable;
   const { auth } = useContext(GlobalContext);
   const [myFriends, setMyFriends] = useState([]);
@@ -46,6 +46,7 @@ const MyFriendsContainer = () => {
             backgroundColor: iconColorsTable['blue1'],
             borderRadius: 7,
           }}
+          onPress={() => props.navigation.navigate('Chat room', { userId: user._id })}
         >
           <Ionicons name='ios-chatbubbles' size={25} color={'white'} />
         </TouchableOpacity>

@@ -25,6 +25,7 @@ import badgeTagsRouter from './routers/badgeTags';
 import badgeTagAndUserRelationshipsRouter from './routers/badgeTagAndUserRelationships';
 import libraryAndAssetRelationshipsRouter from './routers/libraryAndAssetRelationships';
 import loungeChatsRouter from './routers/loungeChats';
+import friendChatsRouter from './routers/friendChats';
 import launcherAndPatronRelationshisRouter from './routers/launcherAndPatronRelationshis';
 
 // import postsRouter from './routers/posts';
@@ -58,6 +59,7 @@ app.use('/api/badgetags', badgeTagsRouter);
 app.use('/api/badgetaganduserrelationships', badgeTagAndUserRelationshipsRouter);
 app.use('/api/libraryandassetrelationships', libraryAndAssetRelationshipsRouter);
 app.use('/api/loungechats', loungeChatsRouter);
+app.use('/api/friendchats', friendChatsRouter);
 app.use('/api/launcherandpatronrelationships', launcherAndPatronRelationshisRouter);
 app.use('/api/lab', labRouter);
 

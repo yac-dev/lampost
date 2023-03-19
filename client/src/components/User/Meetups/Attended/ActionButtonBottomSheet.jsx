@@ -59,38 +59,6 @@ const ActionButtonBottomSheet = (props) => {
   } = useContext(AttendedContext);
   const snapPoints = useMemo(() => ['40%'], []);
 
-  // const onSubmitPress = async () => {
-  //   const shallowCopy = { ...clappingTraits };
-  //   for (const trait in shallowCopy) {
-  //     shallowCopy[trait] = shallowCopy[trait].clapped;
-  //   }
-  //   const payload = {
-  //     userId: auth.data._id,
-  //     clappedUserId: selectedUser._id,
-  //     traits: shallowCopy,
-  //   };
-  //   setLoading(true);
-  //   if (isClappingLauncher) {
-  //     const result = await lampostAPI.post('/claps/leadership', payload);
-  //     // console.log('clapping leadership.', payload);
-  //   } else {
-  //     const result = await lampostAPI.post('/claps/personality', payload);
-  //     // console.log('clapping personlity.', payload);
-  //   }
-  //   setLoading(false);
-  //   setClappingTraits({});
-  //   setSelectedUser(null);
-  //   setTotalClapped(0);
-  //   setIsDisabledSubmit(true);
-  //   clapPeopleBottomSheetRef.current.close();
-  //   setSnackBar({
-  //     isVisible: true,
-  //     barType: 'success',
-  //     message: 'Your clap was sent successfully.',
-  //     duration: 5000,
-  //   });
-  // };
-
   const addFriend = async (user) => {
     const payload = {
       friendId: user._id,
