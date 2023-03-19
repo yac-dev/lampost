@@ -7,34 +7,34 @@ import lampostAPI from '../../../apis/lampost';
 import { iconsTable } from '../../../utils/icons';
 
 const MyFriendsContainer = (props) => {
-  const { Ionicons } = iconsTable;
+  const { Ionicons, MaterialCommunityIcons } = iconsTable;
   const { auth } = useContext(GlobalContext);
-  const [myFriends, setMyFriends] = useState([]);
+  const [myFriendObjects, setMyFriendObjects] = useState([]);
   const [isFetchedMyFriends, setIsFetchedMyFriends] = useState(false);
 
-  const getMyFriends = async () => {
+  const getMyFriendObjects = async () => {
     const result = await lampostAPI.get(`/friendrelationships/${auth.data._id}`);
-    const { friends } = result.data;
-    setMyFriends(friends);
+    const { friendObjects } = result.data;
+    setMyFriendObjects(friendObjects);
     setIsFetchedMyFriends(true);
   };
   useEffect(() => {
-    getMyFriends();
+    getMyFriendObjects();
   }, []);
 
-  const renderItem = useCallback((user) => {
+  const renderItem = useCallback((friendObject) => {
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <FastImage
             style={{ width: 40, height: 40, borderRadius: 7, marginRight: 10 }}
             source={{
-              uri: user.photo,
+              uri: friendObject.user.photo,
               priority: FastImage.priority.normal,
             }}
             resizeMode={FastImage.resizeMode.stretch}
           />
-          <Text style={{ color: 'white' }}>{user.name}</Text>
+          <Text style={{ color: 'white' }}>{friendObject.user.name}</Text>
         </View>
         <TouchableOpacity
           style={{
@@ -46,7 +46,7 @@ const MyFriendsContainer = (props) => {
             backgroundColor: iconColorsTable['blue1'],
             borderRadius: 7,
           }}
-          onPress={() => props.navigation.navigate('Chat room', { userId: user._id })}
+          onPress={() => props.navigation.navigate('Chat room', { friendObject })}
         >
           <Ionicons name='ios-chatbubbles' size={25} color={'white'} />
         </TouchableOpacity>
@@ -55,10 +55,10 @@ const MyFriendsContainer = (props) => {
   }, []);
 
   const renderList = () => {
-    if (myFriends.length) {
+    if (myFriendObjects.length) {
       return (
         <FlatList
-          data={myFriends}
+          data={myFriendObjects}
           renderItem={({ item }) => renderItem(item)}
           keyExtractor={(item, index) => `${item._id}-${index}`}
         />
