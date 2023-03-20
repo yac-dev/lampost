@@ -3,6 +3,8 @@ import Meetup from '../models/meetup';
 import User from '../models/user';
 import UserBadgeExperience from '../models/userBadgeExperience';
 import BadgeAndUserRelationship from '../models/badgeAndUserRelationship';
+import { Expo } from 'expo-server-sdk';
+const expo = new Expo();
 
 export const joinMeetup = async (request, response) => {
   try {
@@ -256,6 +258,84 @@ export const rsvp = async (request, response) => {
 
     response.status(200).json({
       message: 'success',
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const sendStartNotification = async (request, response) => {
+  try {
+    const { meetupId } = request.body;
+    const meetupAndUserRelationships = await MeetupAndUserRelationship.find({ meetup: meetupId, rsvp: true })
+      .populate({ path: 'user' })
+      .select({ pushToken: 1 });
+    const membersPushTokens = meetupAndUserRelationships.map((rel) => {
+      return rel.user.pushToken;
+    });
+
+    const chunks = expo.chunkPushNotifications(
+      membersPushTokens.map((token) => ({
+        to: token,
+        sound: 'default',
+        data: { notificationType: 'startMeetup' },
+        title: 'Meetup started now 🔥',
+        body: 'Enjoy your time!',
+      }))
+    );
+
+    const tickets = [];
+
+    for (let chunk of chunks) {
+      try {
+        let receipts = await expo.sendPushNotificationsAsync(chunk);
+        tickets.push(...receipts);
+        console.log('Push notifications sent:', receipts);
+      } catch (error) {
+        console.error('Error sending push notification:', error);
+      }
+    }
+    response.status(200).json({
+      message: 'sent',
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const sendFinishNotification = async () => {
+  try {
+    const { meetupId } = request.body;
+    const meetupAndUserRelationships = await MeetupAndUserRelationship.find({ meetup: meetupId, rsvp: true })
+      .populate({ path: 'user' })
+      .select({ pushToken: 1 });
+    const membersPushTokens = meetupAndUserRelationships.map((rel) => {
+      return rel.user.pushToken;
+    });
+
+    const chunks = expo.chunkPushNotifications(
+      membersPushTokens.map((token) => ({
+        to: token,
+        sound: 'default',
+        data: { notificationType: 'finishMeetup' },
+        title: 'Your meetup has ended🤗',
+        body: "Did you have fun? Let's share your assets on the library, connect with your friends and write your impression from your 'Profile'!",
+      }))
+    );
+
+    const tickets = [];
+
+    for (let chunk of chunks) {
+      try {
+        let receipts = await expo.sendPushNotificationsAsync(chunk);
+        tickets.push(...receipts);
+        console.log('Push notifications sent:', receipts);
+      } catch (error) {
+        console.error('Error sending push notification:', error);
+      }
+    }
+    response.status(200).json({
+      message: 'sent',
     });
   } catch (error) {
     console.log(error);

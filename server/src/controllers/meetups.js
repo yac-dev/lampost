@@ -139,6 +139,7 @@ export const createMeetup = async (request, response) => {
       meetup: meetup._id,
       user: user._id,
       launcher: true,
+      rsvp: true,
       viewedChatsLastTime: new Date(),
     });
 
@@ -192,11 +193,7 @@ export const startMeetup = async (request, response) => {
     const meetup = await Meetup.findById(request.params.id);
     meetup.state = 'ongoing';
     meetup.save();
-    // const users = await User.find({ _id: { $in: meetup.attendees } });
-    // users.forEach((user) => {
-    //   user.ongoingMeetup = { meetup: request.params.id, state: true };
-    //   user.save();
-    // });
+    // notifyを送る。
 
     response.status(200).json({
       meetupId: meetup._id,

@@ -204,8 +204,6 @@ const Container = (props) => {
     });
     // auth.socket.emit('JOIN_A_LOUNGE', { meetupId: meetup._id });
     Keyboard.dismiss();
-    console.log(payload);
-    dispatch({ type: 'LAUNCHED', payload: '' });
     setLoading(false);
     setIsLaunchMeetupConfirmed(false);
     setLaunchLocation(null);
@@ -216,6 +214,14 @@ const Container = (props) => {
       barType: 'success',
       duration: 5000,
     });
+    const reault2 = await lampostAPI.post('/launcherandpatronrelationships', {
+      launcher: {
+        _id: auth.data._id,
+        name: auth.data.name,
+      },
+      description: state.description,
+    });
+    dispatch({ type: 'LAUNCHED', payload: '' });
   };
 
   const switchComponent = () => {

@@ -35,19 +35,6 @@ const ConfirmStartMeetup = (props) => {
             textColor='rgb(58, 126, 224)'
             onPress={async () => {
               const result = await lampostAPI.patch(`/meetups/${startingMeetup}/start`);
-              // const {} = result.data;
-              // setAuth((previous) => {
-              //   return {
-              //     ...previous,
-              //     data: {
-              //       ...previous.data,
-              //       ongoingMeetup: {
-              //         meetup: startingMeetup,
-              //         state: true,
-              //       },
-              //     },
-              //   };
-              // });
               setMyUpcomingMeetups((previous) => {
                 return {
                   ...previous,
@@ -56,6 +43,9 @@ const ConfirmStartMeetup = (props) => {
                     state: 'ongoing',
                   },
                 };
+              });
+              const result2 = await lampostAPI.post(`/meetupanduserrelationships/meetup/startnotification`, {
+                meetupId: startingMeetup,
               });
               setIsStartMeetupConfirmationModalOpen(false);
             }}

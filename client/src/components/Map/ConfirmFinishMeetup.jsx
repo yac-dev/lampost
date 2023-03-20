@@ -53,6 +53,9 @@ const ConfirmFinishMeetup = (props) => {
                 delete updating[finishingMeetup];
                 return updating;
               });
+              const result2 = await lampostAPI.post('/meetupanduserrelationships/meetup/finishnotification', {
+                meetupId: finishingMeetup,
+              });
               // ここで、meetupを地図から消さないといかん。
             }}
           >

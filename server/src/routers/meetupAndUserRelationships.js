@@ -9,6 +9,8 @@ import {
   updateViewedChatsLastTime,
   rsvp,
   checkRSVPState,
+  sendStartNotification,
+  sendFinishNotification,
 } from '../controllers/meetupAndUserRelationships';
 
 router.route('/join').post(joinMeetup);
@@ -18,5 +20,8 @@ router.route('/meetup/:meetupId/user/:userId/rsvp').get(checkRSVPState).patch(rs
 router.route('/user/:userId').get(getUserMeetups);
 router.route('/meetup/:meetupId').get(getMeetup);
 router.route('/meetup/:meetupId/users').get(getMeetupAttendees);
+router.route('/meetup/startnotification').post(sendStartNotification);
+router.route('/meetup/finishnotification').post(sendFinishNotification);
+router.route('/meetup/patronnotification').post(sendFinishNotification);
 
 export default router;
