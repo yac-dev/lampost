@@ -44,7 +44,13 @@ import LeadershipBottomSheet from './LeadershipBottomSheet';
 // badgeを取ってきて、skillも取ってくる。subscriberの数も返すし、connectionの数も返す。
 const Container = (props) => {
   const { Ionicons, MaterialCommunityIcons } = iconsTable;
-  const { auth, setLoading, setSnackBar } = useContext(GlobalContext);
+  const {
+    auth,
+    setLoading,
+    setSnackBar,
+
+    friendChatsNotificationCount,
+  } = useContext(GlobalContext);
   const [user, setUser] = useState(null);
   const [isFetchedUserData, setIsFetchedUserData] = useState(false);
   const [badgeDatas, setBadgeDatas] = useState({});
@@ -291,18 +297,49 @@ const Container = (props) => {
               <Ionicons name='ios-apps' size={25} color={'white'} />
             </TouchableOpacity>
             <TouchableOpacity
-              style={{
-                backgroundColor: iconColorsTable['pink1'],
-                padding: 10,
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderRadius: 10,
-              }}
               onPress={() => {
                 inboxBottomSheetRef.current.snapToIndex(0);
               }}
             >
-              <MaterialCommunityIcons name='mailbox' size={25} color={'white'} />
+              <View
+                style={{
+                  backgroundColor: iconColorsTable['pink1'],
+                  padding: 10,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderRadius: 10,
+                }}
+              >
+                <MaterialCommunityIcons name='email-multiple' size={25} color={'white'} />
+              </View>
+              {friendChatsNotificationCount ? (
+                <View
+                  style={{
+                    position: 'absolute',
+                    right: -7,
+                    top: -7,
+                    backgroundColor: rnDefaultBackgroundColor,
+                    width: 20,
+                    height: 20,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: 20 / 2,
+                  }}
+                >
+                  <View
+                    style={{
+                      backgroundColor: iconColorsTable['pink1'],
+                      width: '100%',
+                      height: '100%',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: 20 / 2,
+                    }}
+                  >
+                    <Text style={{ color: 'white' }}>{friendChatsNotificationCount}</Text>
+                  </View>
+                </View>
+              ) : null}
             </TouchableOpacity>
           </View>
         )}

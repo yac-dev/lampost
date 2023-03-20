@@ -9,20 +9,39 @@ import ChatTextInputBottomSheet from './ChatTextInputBottomSheet';
 
 const FriendChatRoomContainer = (props) => {
   const { MaterialCommunityIcons } = iconsTable;
-  const { auth } = useContext(GlobalContext);
+  const { auth, setUnreadFriendChats, setFriendChatsNotificationCount } = useContext(GlobalContext);
   const [friendChats, setFriendChats] = useState([]);
   const [isFetchedFriendChats, setIsFetchedFriendChats] = useState(false);
   const chatTextInputBottomSheetRef = useRef(null);
   const chatTextInputRef = useRef(null);
 
   const getFriendChatsByChatRoomId = async () => {
-    const result = await lampostAPI.get(`/friendchats/${props.route.params.friendObject.friendChatRoom}`);
+    const result = await lampostAPI.get(`/friendchats/${props.route.params.friendChatRoomId}`);
     const { friendChats } = result.data;
     setFriendChats(friendChats);
     setIsFetchedFriendChats(true);
   };
   useEffect(() => {
     getFriendChatsByChatRoomId();
+  }, []);
+  // inboxから来た場合に、unreadをreadにするようにする。
+  const updateUnreadToRead = async (chatIds) => {
+    const payload = {
+      chatIds,
+    };
+    const result = await lampostAPI.patch('/friendchats', payload);
+  };
+
+  useEffect(() => {
+    if (props.route.params.fromInbox && props.route.params.chatIds) {
+      setUnreadFriendChats((previous) => {
+        const updating = { ...previous };
+        delete updating[props.route.params.friendId];
+        return updating;
+      });
+      setFriendChatsNotificationCount((previous) => (previous -= props.route.params.chatIds.length));
+      updateUnreadToRead(props.route.params.chatIds);
+    }
   }, []);
 
   const renderFriendChats = () => {
@@ -48,14 +67,13 @@ const FriendChatRoomContainer = (props) => {
     }
   };
 
-  console.log(friendChats);
-
   return (
     <FriendChatRoomContext.Provider
       value={{
         chatTextInputBottomSheetRef,
         chatTextInputRef,
-        friendObject: props.route.params.friendObject,
+        friendChatRoomId: props.route.params.friendChatRoomId,
+        friendId: props.route.params.friendId,
         setFriendChats,
       }}
     >

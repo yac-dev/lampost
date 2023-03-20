@@ -27,12 +27,21 @@ const MyFriendsContainer = (props) => {
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <FastImage
-            style={{ width: 40, height: 40, borderRadius: 7, marginRight: 10 }}
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 7,
+              marginRight: 10,
+              backgroundColor: iconColorsTable['blue1'],
+            }}
             source={{
-              uri: friendObject.user.photo,
+              uri: friendObject.user.photo
+                ? friendObject.user.photo
+                : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
               priority: FastImage.priority.normal,
             }}
             resizeMode={FastImage.resizeMode.stretch}
+            tintColor={friendObject.user.photo ? null : 'white'}
           />
           <Text style={{ color: 'white' }}>{friendObject.user.name}</Text>
         </View>
@@ -46,7 +55,12 @@ const MyFriendsContainer = (props) => {
             backgroundColor: iconColorsTable['blue1'],
             borderRadius: 7,
           }}
-          onPress={() => props.navigation.navigate('Chat room', { friendObject })}
+          onPress={() =>
+            props.navigation.navigate('Chat room', {
+              friendChatRoomId: friendObject.friendChatRoom,
+              friendId: friendObject.user._id,
+            })
+          }
         >
           <Ionicons name='ios-chatbubbles' size={25} color={'white'} />
         </TouchableOpacity>

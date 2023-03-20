@@ -183,6 +183,7 @@ const Container = (props) => {
               backgroundColor: iconColorsTable['blue1'],
               borderRadius: 7,
               padding: 5,
+              marginBottom: 10,
             }}
             onPress={() => {
               navigation.navigate('Camera', { meetupId: meetup._id, meetupTitle: meetup.title });

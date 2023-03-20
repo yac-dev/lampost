@@ -18,7 +18,7 @@ const ChatTextInputBottomSheet = (props) => {
   const inputAccessoryViewID = 'CHAT_TEXT_INPUT';
   const snapPoints = useMemo(() => ['65%'], []);
   const { auth, setLoading } = useContext(GlobalContext);
-  const { chatTextInputBottomSheetRef, chatTextInputRef, friendObject, setFriendChats } =
+  const { chatTextInputBottomSheetRef, chatTextInputRef, friendChatRoomId, friendId, setFriendChats } =
     useContext(FriendChatRoomContext);
   const [chatTextInput, setChatTextInput] = useState('');
 
@@ -29,7 +29,6 @@ const ChatTextInputBottomSheet = (props) => {
       </TouchableOpacity>
     );
   };
-  console.log(friendObject);
   const sendChat = async () => {
     const payload = {
       sender: {
@@ -37,10 +36,10 @@ const ChatTextInputBottomSheet = (props) => {
         name: auth.data.name,
         photo: auth.data.photo,
       },
-      recieverId: friendObject.user._id,
+      recieverId: friendId,
       content: chatTextInput,
       type: 'text',
-      friendChatRoomId: friendObject.friendChatRoom,
+      friendChatRoomId,
     };
     setLoading(true);
     const result = await lampostAPI.post('/friendchats', payload);

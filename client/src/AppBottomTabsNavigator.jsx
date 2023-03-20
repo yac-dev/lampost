@@ -98,6 +98,8 @@ const AppStack = (props) => {
   const [myUpcomingMeetups, setMyUpcomingMeetups] = useState({});
   const [isFetchedMyUpcomingMeetups, setIsFetchedMyUpcomingMeetups] = useState(false);
   const [hasNotification, setHasNotification] = useState(false);
+  const [unreadFriendChats, setUnreadFriendChats] = useState({});
+  const [friendChatsNotificationCount, setFriendChatsNotificationCount] = useState(0);
 
   useEffect(() => {
     if (auth.data) {
@@ -136,6 +138,26 @@ const AppStack = (props) => {
           });
         } else if (notification.request.content.data.notificationType === 'sentImpression') {
           console.log(notification.request.content.data.notificationType);
+        } else if (notification.request.content.data.notificationType === 'friendChat') {
+          setUnreadFriendChats((previous) => {
+            const updating = { ...previous };
+            if (updating[notification.request.content.data.sender._id]) {
+              updating[notification.request.content.data.sender._id].chats.push(notification.request.content.data.chat);
+              return updating;
+            } else {
+              // updating[notification.request.content.data.sender._id]['friend'] = notification.request.content.data.sender;
+              // updating[notification.request.content.data.sender._id]['count'] = 1
+              // return updating // これダメ。。そもそもupdating[notification.request.content.data.sender._id]がundefinedだからね。
+              const obj = {
+                friend: notification.request.content.data.sender,
+                chats: [notification.request.content.data.chat],
+                friendChatRoomId: notification.request.content.data.friendChatRoomId,
+              };
+              updating[notification.request.content.data.sender._id] = obj;
+              return updating;
+            }
+          });
+          setFriendChatsNotificationCount((previous) => previous + 1);
         }
         // if (notification.request.content.data.notificationType === 'loungeChat') {
         //   setMyUpcomingMeetupAndChatsTable((previous) => {
@@ -211,6 +233,7 @@ const AppStack = (props) => {
   useEffect(() => {
     if (auth.isAuthenticated) {
       getMyUpcomingMeetupStates();
+      getUnreadFriendChats();
       // ここも、appStateが変わるたびに動かさなきゃいけない。→  app stateごとに動かすのは上で。
     }
   }, [auth.isAuthenticated]);
@@ -245,6 +268,15 @@ const AppStack = (props) => {
     });
   };
 
+  const getUnreadFriendChats = async () => {
+    setFriendChatsNotificationCount(0);
+    // recieverが自分でかつ、isReadがfalseのやつを全部とってくる。
+    const result = await lampostAPI.get(`/friendchats/reciever/${auth.data._id}`);
+    const { unreadFriendChatsTable, totalUnreads } = result.data;
+    setUnreadFriendChats(unreadFriendChatsTable);
+    setFriendChatsNotificationCount(totalUnreads);
+  };
+
   useEffect(() => {
     if (isFetchedMyUpcomingMeetups) {
       getUnreadChats();
@@ -267,6 +299,7 @@ const AppStack = (props) => {
           // getSocket();
           // getMyUpcomingMeetupsAndLoungeChatsByMeetupIds();
           getMyUpcomingMeetupStates();
+          getUnreadFriendChats();
         } else if (appState === 'active' && nextAppState === 'inactive') {
           // socket disconnect する。ここで。serverでdisconnectのlogを確認する。
           // auth.socket.disconnect();
@@ -390,6 +423,10 @@ const AppStack = (props) => {
         setChatsNotificationCount,
         myUpcomingMeetups,
         setMyUpcomingMeetups,
+        unreadFriendChats,
+        setUnreadFriendChats,
+        friendChatsNotificationCount,
+        setFriendChatsNotificationCount,
       }}
     >
       <NavigationContainer
@@ -520,6 +557,8 @@ const AppStack = (props) => {
                   <FontAwesome5 name='user-astronaut' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
                 ),
                 tabBarLabel: 'Profile',
+                tabBarBadge: friendChatsNotificationCount ? friendChatsNotificationCount : null,
+                tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
                 // () => {
                 //   return null;
                 // },
