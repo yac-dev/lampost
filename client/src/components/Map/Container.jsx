@@ -296,7 +296,7 @@ const Map = (props) => {
                     borderRadius: 10,
                   }}
                 >
-                  <MaterialCommunityIcons name='run' size={25} color={'white'} />
+                  <MaterialCommunityIcons name='party-popper' size={25} color={'white'} />
                 </View>
                 {chatsNotificationCount ? (
                   <View

@@ -49,7 +49,10 @@ export const createFriendChat = async (request, response) => {
 
 export const getFriendChatsByFriendChatRoomId = async (request, response) => {
   try {
-    const friendChats = await FriendChat.find({ friendChatRoom: request.params.friendChatRoomId });
+    const friendChats = await FriendChat.find({ friendChatRoom: request.params.friendChatRoomId }).populate({
+      path: 'sender',
+      select: 'name photo',
+    });
     response.status(201).json({
       friendChats,
     });

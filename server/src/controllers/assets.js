@@ -23,6 +23,11 @@ export const createPhoto = async (request, response) => {
       createdBy: userId,
       createdAt: new Date(),
     });
+    const meetup = await Meetup.findById(meetupId);
+    if (meetup.topPhotos.length <= 3) {
+      meetup.topPhotos.push(asset._id);
+      meetup.save();
+    }
     uploadPhoto(request.file.filename);
     response.status(200).json({
       message: 'success',

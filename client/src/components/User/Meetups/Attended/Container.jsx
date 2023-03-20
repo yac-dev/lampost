@@ -39,11 +39,12 @@ const AttendedContainer = (props) => {
 
   const getMyFriends = async () => {
     const result = await lampostAPI.get(`/friendrelationships/${auth.data._id}`);
-    const { friends } = result.data;
+    const { friendObjects } = result.data;
+    console.log(friendObjects);
     setMyFriends((previous) => {
       const table = {};
-      friends.forEach((user) => {
-        table[user._id] = user;
+      friendObjects.forEach((friendObject) => {
+        table[friendObject.user._id] = friendObject.user;
       });
       return table;
     });
@@ -284,7 +285,7 @@ const AttendedContainer = (props) => {
                       <MaterialCommunityIcons
                         name='chevron-down'
                         color={'white'}
-                        size={20}
+                        size={25}
                         style={{ marginRight: 5 }}
                       />
                       <Text style={{ color: 'white', marginRight: 5 }}>Connect</Text>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ActivityIndicator, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, ActivityIndicator, TouchableOpacity, ScrollView, FlatList } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import lampostAPI from '../../../apis/lampost';
 import {
   iconColorsTable,
@@ -83,6 +84,40 @@ const ActivitiesContainer = (props) => {
     );
   };
 
+  const renderTopPhotos = (meetup) => {
+    if (meetup.topPhotos.length) {
+      const flexWidth = 1 / meetup.topPhotos.length;
+      const list = meetup.topPhotos.map((asset, index) => {
+        return (
+          <View key={index} style={{ flex: flexWidth, aspectRatio: 1 }}>
+            <View style={{ padding: 1, borderRadius: 5 }}>
+              <FastImage
+                style={{ width: '100%', height: '100%', borderRadius: 5 }}
+                source={{ uri: asset.data }}
+                resizeMode={'cover'}
+              />
+            </View>
+          </View>
+        );
+      });
+
+      return (
+        <TouchableOpacity
+          style={{ flex: 1, flexDirection: 'row', marginBottom: 7 }}
+          onPress={() => props.navigation.navigate('Meetup assets', { meetupId: meetup._id })}
+        >
+          {list}
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <Text style={{ color: baseTextColor, textAlign: 'center', marginBottom: 10 }}>
+          No photos are taken in this meetup...
+        </Text>
+      );
+    }
+  };
+
   const renderMeetups = () => {
     if (!userMeetups.length) {
       return (
@@ -113,26 +148,52 @@ const ActivitiesContainer = (props) => {
               <MaterialCommunityIcons name='history' color='white' size={20} style={{ marginRight: 5 }} />
               {renderDate(meetup.startDateAndTime)}
             </View>
-            {renderBadges(meetup)}
+            {/* {renderBadges(meetup)} */}
             <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white', marginBottom: 10 }}>{meetup.title}</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            {renderTopPhotos(meetup)}
+            <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
               <TouchableOpacity
                 style={{
-                  backgroundColor: iconColorsTable['blue1'],
-                  borderRadius: 5,
-                  marginRight: 7,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  padding: 5,
+                  paddingRight: 2,
+                  paddingBottom: 5,
+                  paddingTop: 5,
+                  flex: 0.5,
                 }}
                 onPress={() =>
                   props.navigation.navigate('Attended', { meetupId: meetup._id, launcher: meetup.launcher._id })
                 }
               >
-                <MaterialCommunityIcons name='account-group' size={20} color={'white'} style={{ marginRight: 10 }} />
-                <Text style={{ color: 'white' }}>Members</Text>
+                <View style={{ backgroundColor: iconColorsTable['blue1'], width: '100%', padding: 5, borderRadius: 5 }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                    <MaterialCommunityIcons
+                      name='account-group'
+                      size={20}
+                      color={'white'}
+                      style={{ marginRight: 10 }}
+                    />
+                    <Text style={{ color: 'white' }}>Members</Text>
+                  </View>
+                </View>
               </TouchableOpacity>
               <TouchableOpacity
+                style={{
+                  paddingLeft: 2,
+                  paddingBottom: 5,
+                  paddingTop: 5,
+                  flex: 0.5,
+                }}
+                onPress={() =>
+                  props.navigation.navigate('Impressions', { meetupId: meetup._id, launcher: meetup.launcher._id })
+                }
+              >
+                <View style={{ backgroundColor: iconColorsTable['blue1'], borderRadius: 5, width: '100%', padding: 5 }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                    <Ionicons name='chatbubbles' size={20} color={'white'} style={{ marginRight: 10 }} />
+                    <Text style={{ color: 'white' }}>Impressions</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+              {/* <TouchableOpacity
                 style={{
                   backgroundColor: iconColorsTable['blue1'],
                   borderRadius: 5,
@@ -145,23 +206,7 @@ const ActivitiesContainer = (props) => {
               >
                 <Ionicons name='camera' size={20} color={'white'} style={{ marginRight: 10 }} />
                 <Text style={{ color: 'white' }}>Assets</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  backgroundColor: iconColorsTable['blue1'],
-                  borderRadius: 5,
-                  marginRight: 7,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  padding: 5,
-                }}
-                onPress={() =>
-                  props.navigation.navigate('Impressions', { meetupId: meetup._id, launcher: meetup.launcher._id })
-                }
-              >
-                <Ionicons name='chatbubbles' size={20} color={'white'} style={{ marginRight: 10 }} />
-                <Text style={{ color: 'white' }}>Impressions</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             {/* <ScrollView
               horizontal={true}

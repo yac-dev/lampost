@@ -38,6 +38,12 @@ const meetupSchema = new mongoose.Schema({
   totalComments: Number,
   totalAssets: Number,
   totalImpressions: Number,
+  topPhotos: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Asset',
+    },
+  ],
   // attendees: {
   //   type: [
   //     {

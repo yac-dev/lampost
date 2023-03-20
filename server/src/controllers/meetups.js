@@ -95,6 +95,7 @@ export const createMeetup = async (request, response) => {
       totalAssets: 0,
       totalComments: 0,
       totalImpressions: 0,
+      topPhotos: [],
       createdAt: new Date(),
       // endDateAndTime,
     });

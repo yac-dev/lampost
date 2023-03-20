@@ -2,7 +2,13 @@ import React, { useState, useContext, useEffect, useRef } from 'react';
 import { View, Text, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
 import GlobalContext from '../../../../GlobalContext';
 import FriendChatRoomContext from './FriendChatRoomContext';
-import { baseBackgroundColor, baseTextColor, iconColorsTable } from '../../../../utils/colorsTable';
+import FastImage from 'react-native-fast-image';
+import {
+  baseBackgroundColor,
+  baseTextColor,
+  iconColorsTable,
+  screenSectionBackgroundColor,
+} from '../../../../utils/colorsTable';
 import lampostAPI from '../../../../apis/lampost';
 import { iconsTable } from '../../../../utils/icons';
 import ChatTextInputBottomSheet from './ChatTextInputBottomSheet';
@@ -51,8 +57,37 @@ const FriendChatRoomContainer = (props) => {
           data={friendChats}
           renderItem={({ item }) => {
             return (
-              <View>
-                <Text style={{ color: 'red' }}>{item.content}</Text>
+              <View
+                style={{
+                  padding: 10,
+                  backgroundColor: screenSectionBackgroundColor,
+                  borderRadius: 5,
+                  marginBottom: 10,
+                }}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                  <FastImage
+                    source={{
+                      uri: item.sender.photo
+                        ? item.sender.photo
+                        : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
+                    }}
+                    style={{
+                      width: 40,
+                      height: 40,
+                      backgroundColor: iconColorsTable['blue1'],
+                      borderRadius: 5,
+                      marginRight: 20,
+                    }}
+                    resizeMode={'contain'}
+                    tintColor={item.sender.photo ? null : 'white'}
+                  />
+                  <View>
+                    <Text style={{ color: 'white', fontSize: 17, marginBottom: 5 }}>{item.sender.name}</Text>
+                    <Text style={{ color: 'white', color: baseTextColor }}>{item.createdAt}</Text>
+                  </View>
+                </View>
+                <Text style={{ color: 'white' }}>{item.content}</Text>
               </View>
             );
           }}
@@ -66,7 +101,7 @@ const FriendChatRoomContainer = (props) => {
       );
     }
   };
-
+  console.log(friendChats);
   return (
     <FriendChatRoomContext.Provider
       value={{

@@ -7,6 +7,7 @@ import { Text, View, TouchableOpacity } from 'react-native';
 import lampostAPI from '../../apis/lampost';
 import { Camera, CameraType } from 'expo-camera';
 import LoadingSpinner from '../Utils/LoadingSpinner';
+import SnackBar from '../Utils/SnackBar';
 import AppMenuBottomSheet from './AppMenuBotttomSheet/Container';
 // import TimeMachineBottomSheet from './TimeMachineBottomSheet/Container';
 import CameraModeBottomSheet from './ChangeModeBottomSheet/Container';
@@ -103,6 +104,17 @@ const Container = (props) => {
     setCurrentMeetup(props.route.params.meetupId);
     checkIsMeetupOngoing();
   }, []);
+
+  useEffect(() => {
+    if (!isMeetupOngoing) {
+      setSnackBar({
+        isVisible: true,
+        barType: 'warning',
+        message: 'You can take photos/videos during your meetup time',
+        duration: 7000,
+      });
+    }
+  }, [isMeetupOngoing]);
 
   const renderTimer = () => {
     if (cameraMode === 'video') {
@@ -437,6 +449,7 @@ const Container = (props) => {
         <VideoEffectBottomSheet />
         <WarningModal />
         <LoadingSpinner />
+        <SnackBar />
       </View>
     </CameraContext.Provider>
   );

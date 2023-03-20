@@ -24,7 +24,7 @@ const HeaderContainer = () => {
       <View
         style={{
           alignSelf: 'center',
-          paddingTop: 15,
+          paddingTop: 10,
           paddingBottom: 10,
           alignItems: 'center',
         }}
@@ -37,14 +37,15 @@ const HeaderContainer = () => {
             backgroundColor: screenSectionBackgroundColor,
             marginRight: user.launcher ? 20 : 0,
             borderRadius: isIpad ? 20 : 10,
-            marginBottom: 10,
           }}
         >
           <AvatarImage />
           <Stats />
         </View>
-        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 18, marginLeft: 20 }}>{user.name}</Text>
       </View>
+      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 18, textAlign: 'center', marginBottom: 5 }}>
+        {user.name}
+      </Text>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <TouchableOpacity
           style={{
