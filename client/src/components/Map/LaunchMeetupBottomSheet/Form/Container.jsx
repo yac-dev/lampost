@@ -214,7 +214,7 @@ const Container = (props) => {
       barType: 'success',
       duration: 5000,
     });
-    const reault2 = await lampostAPI.post('/launcherandpatronrelationships', {
+    const reault2 = await lampostAPI.post('/launcherandpatronrelationships/patronnotification', {
       launcher: {
         _id: auth.data._id,
         name: auth.data.name,

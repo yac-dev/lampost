@@ -1,6 +1,8 @@
 import LauncherAndPatronRelationship from '../models/launcherAndPatronRelationship';
 import User from '../models/user';
 import { sendPushNotification } from '../services/expo-push-sdk';
+import { Expo } from 'expo-server-sdk';
+const expo = new Expo();
 
 export const createLauncherAndPatronRelationship = async (request, response) => {
   try {
@@ -85,7 +87,7 @@ export const getPatronsByLauncherId = async (request, response) => {
   }
 };
 
-export const sendLaunchNotificationsToPatrons = async () => {
+export const sendLaunchNotificationsToPatrons = async (request, response) => {
   try {
     const { launcher, description } = request.body;
     const meetupAndUserRelationships = await LauncherAndPatronRelationship.find({ launcher: launcher._id })

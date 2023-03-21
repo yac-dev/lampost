@@ -33,50 +33,102 @@ const ActionButtons = (props) => {
   } = useContext(GlobalContext);
   const { selectedMeetup, setSelectedMeetup, navigation } = useContext(MapContext);
 
-  const joinMeetup = async () => {
-    setLoading(true);
-    const result = await lampostAPI.post('/meetupanduserrelationships/join', {
-      meetupId: selectedMeetup._id,
-      userId: auth.data._id,
-    });
-    const { meetup } = result.data;
-    // setAuth((previous) => {
-    //   return {
-    //     ...previous,
-    //     data: {
-    //       ...previous.data,
-    //       upcomingMeetups: [...previous.data.upcomingMeetups, meetupObject],
-    //     },
-    //   };
-    // });
-    // // launcherが必要か。
-    setMyUpcomingMeetups((previous) => {
+  // boolを返す感じ。
+  const validateJoinMeetup = (meetup) => {
+    const myDates = Object.values(myUpcomingMeetups).map((meetup) => {
+      const startDateAndTime = new Date(meetup.startDateAndTime);
+      let endDateAndTime = new Date(startDateAndTime);
+      endDateAndTime.setMinutes(startDateAndTime.getMinutes() + meetup.duration);
       return {
-        ...previous,
-        [selectedMeetup._id]: {
-          _id: selectedMeetup._id,
-          startDateAndTime: selectedMeetup.startDateAndTime,
-          title: selectedMeetup.title,
-          launcher: meetup.launcher,
-          state: meetup.state,
-          unreadChatsTable: {
-            general: 0,
-            reply: 0,
-            question: 0,
-            help: 0,
-          },
-        },
+        _id: meetup._id,
+        startDateAndTime,
+        endDateAndTime,
       };
     });
-    // auth.socket.emit('JOIN_A_LOUNGE', { meetupId: selectedMeetup._id });
-    // setSelectedMeetup((previous) => {
-    //   return {
-    //     ...previous,
-    //     totalAttendees,
-    //   };
-    // });
-    setLoading(false);
-    setSnackBar({ isVisible: true, message: 'Joined a meetup.', barType: 'success', duration: 5000 });
+
+    let isJoinable = true;
+
+    console.log(myDates);
+    if (myDates.length) {
+      const joiningStartDateAndTimeString = new Date(meetup.startDateAndTime);
+      let joiningEndDateAndTimeString = new Date(meetup.startDateAndTime);
+      joiningEndDateAndTimeString = joiningEndDateAndTimeString.setMinutes(
+        joiningStartDateAndTimeString.getMinutes() + meetup.duration
+      );
+      const joiningMeetupStartTime = joiningStartDateAndTimeString.getTime();
+      const joiningMeetupEndTime = new Date(joiningEndDateAndTimeString).getTime();
+      myDates.forEach((dateObject) => {
+        const startDateAndTimeString = new Date(dateObject.startDateAndTime);
+        const endDateAndTimeString = new Date(dateObject.endDateAndTime);
+        const startDateAndTime = startDateAndTimeString.getTime();
+        const endDateAndTime = endDateAndTimeString.getTime();
+        if (
+          (startDateAndTime < joiningMeetupStartTime && joiningMeetupStartTime < endDateAndTime) ||
+          (startDateAndTime < joiningMeetupEndTime && joiningMeetupEndTime < endDateAndTime)
+        ) {
+          setSnackBar({
+            isVisible: true,
+            barType: 'error',
+            message: 'OOPS. Not available this time. You have upcoming meetups on this time range.',
+            duration: 3000,
+          });
+          isJoinable = false;
+        } else if (
+          joiningMeetupStartTime < startDateAndTime &&
+          endDateAndTime - startDateAndTime < joiningMeetupEndTime - joiningMeetupStartTime
+        ) {
+          setSnackBar({
+            isVisible: true,
+            barType: 'error',
+            message: 'OOPS. Not available this time. You have upcoming meetups on this time range.',
+            duration: 3000,
+          });
+          isJoinable = false;
+        } else {
+          console.log("It's ok👍");
+          isJoinable = true;
+        }
+      });
+    }
+    return isJoinable;
+  };
+
+  const joinMeetup = async () => {
+    // ここでvalidation checkな。
+    const isJoinable = validateJoinMeetup(selectedMeetup);
+    if (isJoinable) {
+      console.log('hello');
+    }
+    // if (isJoinable) {
+    //   setLoading(true);
+    //   const result = await lampostAPI.post('/meetupanduserrelationships/join', {
+    //     meetupId: selectedMeetup._id,
+    //     userId: auth.data._id,
+    //   });
+    //   const { meetup } = result.data;
+    //   setMyUpcomingMeetups((previous) => {
+    //     return {
+    //       ...previous,
+    //       [selectedMeetup._id]: {
+    //         _id: selectedMeetup._id,
+    //         startDateAndTime: selectedMeetup.startDateAndTime,
+    //         title: selectedMeetup.title,
+    //         launcher: meetup.launcher,
+    //         state: meetup.state,
+    //         unreadChatsTable: {
+    //           general: 0,
+    //           reply: 0,
+    //           question: 0,
+    //           help: 0,
+    //         },
+    //       },
+    //     };
+    //   });
+    //   setLoading(false);
+    //   setSnackBar({ isVisible: true, message: 'Joined a meetup.', barType: 'success', duration: 5000 });
+    // } else {
+    //   return null;
+    // }
   };
 
   const leaveMeetup = async () => {
