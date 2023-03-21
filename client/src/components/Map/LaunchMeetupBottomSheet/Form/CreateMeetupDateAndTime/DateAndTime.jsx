@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import GlobalContext from '../../../../../GlobalContext';
 import { TextInput, Divider, IconButton, Button, Menu, Switch } from 'react-native-paper';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -114,6 +115,7 @@ const DateAndTime = (props) => {
         onConfirm={(date) => onStartDateConfirm(date)}
         onCancel={() => props.dispatch({ type: 'SET_IS_START_DATE_PICKER_VISIBLE', payload: false })}
         is24Hour={true}
+        // minimumDate={new Date()}
       />
       <DateTimePickerModal
         isVisible={props.state.isDurationPickerVisible}

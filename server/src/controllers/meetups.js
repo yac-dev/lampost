@@ -546,6 +546,7 @@ export const getMyMeetupStates = async (request, response) => {
         startDateAndTime: meetup.startDateAndTime,
         state: meetup.state,
         launcher: meetup.launcher,
+        duration: meetup.duration,
       };
       // }
       // else {

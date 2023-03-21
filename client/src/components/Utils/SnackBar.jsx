@@ -9,6 +9,12 @@ import { baseTextColor, iconColorsTable } from '../../utils/colorsTable';
 // ac
 import { removeSnackBar } from '../../redux/actionCreators/snackBar';
 
+const barTypeColor = {
+  success: iconColorsTable['blue1'],
+  warning: iconColorsTable['yellow1'],
+  error: iconColorsTable['red1'],
+};
+
 const SnackBar = (props) => {
   const { snackBar, setSnackBar } = useContext(GlobalContext);
 
@@ -25,12 +31,7 @@ const SnackBar = (props) => {
       <Snackbar
         wrapperStyle={{ top: 0 }}
         style={{
-          backgroundColor:
-            snackBar.barType === 'success'
-              ? iconColorsTable['blue1']
-              : 'warning'
-              ? iconColorsTable['yellow1']
-              : iconColorsTable['red1'],
+          backgroundColor: barTypeColor[snackBar.barType],
         }}
         visible={snackBar.isVisible}
         onDismiss={() => setSnackBar({ isVisible: false, message: '', barType: '', duration: null })}
