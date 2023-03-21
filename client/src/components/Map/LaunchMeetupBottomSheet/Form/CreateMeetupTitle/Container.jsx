@@ -8,6 +8,7 @@ import MapContext from '../../../MeetupContext';
 import { AntDesign } from '@expo/vector-icons';
 import Header from './Header';
 import Title from './Title';
+
 // import Badges from '../CreateMeetupBadges/Badges';
 
 const Container = (props) => {

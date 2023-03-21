@@ -51,9 +51,7 @@ const ConfirmLaunchMeetupModal = (props) => {
         visible={isLaunchMeetupConfirmationModalOpen}
         style={{ backgroundColor: appBottomSheetBackgroundColor, padding: 30 }}
       >
-        <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>
-          Please tap the place where you wanna host the meetup 🚀
-        </Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>Please tap the meetup point 🚀</Text>
         <Dialog.Actions>
           <Button
             textColor='rgb(58, 126, 224)'

@@ -115,7 +115,7 @@ const DateAndTime = (props) => {
         onConfirm={(date) => onStartDateConfirm(date)}
         onCancel={() => props.dispatch({ type: 'SET_IS_START_DATE_PICKER_VISIBLE', payload: false })}
         is24Hour={true}
-        // minimumDate={new Date()}
+        minimumDate={new Date()}
       />
       <DateTimePickerModal
         isVisible={props.state.isDurationPickerVisible}

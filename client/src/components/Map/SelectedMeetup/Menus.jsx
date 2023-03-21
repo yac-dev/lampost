@@ -241,9 +241,9 @@ const Menus = (props) => {
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={{ color: baseTextColor, fontSize: 15 }}>
-              {selectedMeetup.isFeeFree ? "It's free" : "It's not free"}
+              {selectedMeetup.isFeeFree ? "It's free" : `$${selectedMeetup.fee}`}
             </Text>
-            {/* <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} /> */}
+            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
           </View>
         }
         onPressMenu={() => {
