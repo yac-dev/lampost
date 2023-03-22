@@ -45,8 +45,4 @@ const BottomSheet = (props) => {
   // }
 };
 
-const mapStateToProps = (state) => {
-  return { hostMeetup: state.hostMeetup };
-};
-
-export default connect(mapStateToProps)(BottomSheet);
+export default BottomSheet;

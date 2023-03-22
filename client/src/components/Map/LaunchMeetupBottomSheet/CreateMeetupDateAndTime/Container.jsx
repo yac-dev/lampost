@@ -1,19 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react';
-import GlobalContext from '../../../../../GlobalContext';
-import MapContext from '../../../MeetupContext';
+import GlobalContext from '../../../../GlobalContext';
+import MapContext from '../../MeetupContext';
+import LaunchMeetupContext from '../LaunchMeetupContrext';
 import { View, Text, TouchableOpacity } from 'react-native';
-import ActionButton from '../../../../Utils/ActionButton';
-import { iconColorsTable } from '../../../../../utils/colorsTable';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import ActionButton from '../../../Utils/ActionButton';
+import { iconColorsTable } from '../../../../utils/colorsTable';
 import { AntDesign } from '@expo/vector-icons';
+import { iconsTable } from '../../../../utils/icons';
 
-import Header from './Header';
 import DateAndTime from './DateAndTime';
-import Deadline from './Deadline';
+import Agenda from './Agenda';
 
 const Container = (props) => {
+  const { MaterialCommunityIcons, AntDesign } = iconsTable;
   const { myUpcomingMeetups, setSnackBar } = useContext(GlobalContext);
   const { setIsCancelLaunchMeetupConfirmationModalOpen } = useContext(MapContext);
+  const { formData, setFormData, setComponent } = useContext(LaunchMeetupContext);
   const [isDisabledNext, setIsDisabledNext] = useState(true);
 
   const myDates = Object.values(myUpcomingMeetups).map((meetup) => {
@@ -32,11 +34,11 @@ const Container = (props) => {
 
   // dateのvalidation
   useEffect(() => {
-    if (props.state.startDateAndTime && props.state.duration) {
-      const launchingStartDateAndTimeString = new Date(props.state.startDateAndTime);
-      let launchingEndDateAndTimeString = new Date(props.state.startDateAndTime);
+    if (formData.startDateAndTime && formData.duration) {
+      const launchingStartDateAndTimeString = new Date(formData.startDateAndTime);
+      let launchingEndDateAndTimeString = new Date(formData.startDateAndTime);
       launchingEndDateAndTimeString = launchingEndDateAndTimeString.setMinutes(
-        launchingStartDateAndTimeString.getMinutes() + props.state.duration
+        launchingStartDateAndTimeString.getMinutes() + formData.duration
       );
       const launchingStartDateAndTime = launchingStartDateAndTimeString.getTime();
       const launchingEndDateAndTime = new Date(launchingEndDateAndTimeString).getTime();
@@ -73,7 +75,7 @@ const Container = (props) => {
         }
       });
     }
-  }, [props.state.startDateAndTime, props.state.duration]);
+  }, [formData.startDateAndTime, formData.duration]);
   // 基本、rangeのgetTimeの差がマイナスになることはない。（endtimeよりもstart timeの方が後になるってこと）durationでやっているからね。
 
   // useEffect(() => {
@@ -90,13 +92,13 @@ const Container = (props) => {
             label='Back'
             backgroundColor={iconColorsTable['blue1']}
             icon={<MaterialCommunityIcons name='hand-pointing-left' color={'white'} size={25} />}
-            onActionButtonPress={() => props.dispatch({ type: 'BACK_TO_MEETUP_PEOPLE', payload: '' })}
+            onActionButtonPress={() => setComponent('MEETUP_PEOPLE')}
           />
           <ActionButton
             label='Next'
             backgroundColor={iconColorsTable['blue1']}
             icon={<MaterialCommunityIcons name='hand-pointing-right' color={'white'} size={25} />}
-            onActionButtonPress={() => props.dispatch({ type: 'GO_TO_MEETUP_DETAIL', payload: '' })}
+            onActionButtonPress={() => setComponent('MEETUP_FEE')}
             isDisabled={isDisabledNext}
           />
         </View>
@@ -109,8 +111,8 @@ const Container = (props) => {
           />
         </View>
       </View>
-      <Header />
-      <DateAndTime state={props.state} dispatch={props.dispatch} />
+      <DateAndTime />
+      <Agenda />
       {/* <Deadline state={props.state} dispatch={props.dispatch} /> */}
     </View>
   );

@@ -1,31 +1,30 @@
 import React, { useContext, useState, useEffect } from 'react';
+import LaunchMeetupContext from '../LaunchMeetupContrext';
+import MapContext from '../../MeetupContext';
 import { View, Text, TouchableOpacity, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import ActionButton from '../../../../Utils/ActionButton';
-import { iconColorsTable, baseTextColor } from '../../../../../utils/colorsTable';
-import MapContext from '../../../MeetupContext';
+import ActionButton from '../../../Utils/ActionButton';
+import { iconColorsTable, baseTextColor } from '../../../../utils/colorsTable';
 import { AntDesign } from '@expo/vector-icons';
-import Header from './Header';
 import Title from './Title';
+import Badges from './Badges';
 
 // import Badges from '../CreateMeetupBadges/Badges';
 
 const Container = (props) => {
-  const [isDisabledNext, setIsDisabledNext] = useState(true);
   const { setIsCancelLaunchMeetupConfirmationModalOpen } = useContext(MapContext);
+  const { formData, setFormData, setComponent } = useContext(LaunchMeetupContext);
+  const [isDisabledNext, setIsDisabledNext] = useState(true);
 
   useEffect(() => {
-    if (props.state.title.length) {
-      if (props.state.title.length <= 41) {
-        setIsDisabledNext(false);
-      } else {
-        setIsDisabledNext(true);
-      }
-    } else if (!props.state.title.length) {
+    const badgesList = Object.values(formData.badges);
+    if (formData.title.length && formData.title.length <= 41 && badgesList.length) {
+      setIsDisabledNext(false);
+    } else {
       setIsDisabledNext(true);
     }
-  }, [props.state.title]);
+  }, [formData.title, formData.badges]);
 
   return (
     <View>
@@ -35,7 +34,7 @@ const Container = (props) => {
             label='Next'
             backgroundColor={iconColorsTable['blue1']}
             icon={<MaterialCommunityIcons name='hand-pointing-right' color={'white'} size={25} />}
-            onActionButtonPress={() => props.dispatch({ type: 'GO_TO_MEETUP_BADGES', payload: '' })}
+            onActionButtonPress={() => setComponent('MEETUP_PEOPLE')}
             isDisabled={isDisabledNext}
           />
         </View>
@@ -48,9 +47,8 @@ const Container = (props) => {
           />
         </View>
       </View>
-      <Header />
-      <Title state={props.state} dispatch={props.dispatch} />
-      {/* <Badges state={props.state} dispatch={props.dispatch} navigation={props.navigation} route={props.route} /> */}
+      <Title />
+      <Badges />
     </View>
   );
 };

@@ -24,7 +24,7 @@ import CancelLaunchMeetupModal from './LaunchMeetupBottomSheet/CancelLaunchMeetu
 import ConfirmStartMeetup from './ConfirmStartMeetup';
 import ConfirmFinishMeetup from './ConfirmFinishMeetup';
 
-import LaunchMeetupBottomSheet from './LaunchMeetupBottomSheet/BottomSheet';
+import LaunchMeetupBottomSheet from './LaunchMeetupBottomSheet/Container';
 import ChatStatus from './ChatStatus';
 import SnackBar from '../Utils/SnackBar';
 import LoadingSpinner from '../Utils/LoadingSpinner';

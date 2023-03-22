@@ -1,27 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import MapContext from '../../MeetupContext';
+import LaunchMeetupContext from '../LaunchMeetupContrext';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import ActionButton from '../../../../Utils/ActionButton';
-import { AntDesign } from '@expo/vector-icons';
-import { iconColorsTable } from '../../../../../utils/colorsTable';
-
-import Header from './Header';
+import ActionButton from '../../../Utils/ActionButton';
+import { iconsTable } from '../../../../utils/icons';
+import { iconColorsTable } from '../../../../utils/colorsTable';
 import AttendeesLimit from './AttendeesLimit';
+import MeetupPointDetail from './MeetupPointDetail';
 
 const Container = (props) => {
+  const { AntDesign, MaterialIcons, MaterialCommunityIcons } = iconsTable;
+  const { setIsCancelLaunchMeetupConfirmationModalOpen } = useContext(MapContext);
+  const { formData, setFormData, setComponent } = useContext(LaunchMeetupContext);
   const [isDisabledNext, setIsDisabledNext] = useState(false);
 
   useEffect(() => {
-    if (props.state.isMeetupAttendeesLimitFree) {
-      setIsDisabledNext(false);
-    } else if (!props.state.isMeetupAttendeesLimitFree) {
-      if (!props.state.meetupAttendeesLimit) {
-        setIsDisabledNext(true);
-      } else {
+    if (formData.meetupPointDetail) {
+      if (formData.isAttendeesLimitFree) {
         setIsDisabledNext(false);
+      } else {
+        if (formData.attendeesLimit) {
+          setIsDisabledNext(false);
+        } else {
+          setIsDisabledNext(true);
+        }
       }
+    } else {
+      setIsDisabledNext(true);
     }
-  }, [props.state.isMeetupAttendeesLimitFree, props.state.meetupAttendeesLimit]);
+  }, [formData.isAttendeesLimitFree, formData.attendeesLimit, formData.meetupPointDetail]);
 
   return (
     <View>
@@ -31,13 +38,13 @@ const Container = (props) => {
             label='Back'
             backgroundColor={iconColorsTable['blue1']}
             icon={<MaterialCommunityIcons name='hand-pointing-left' color={'white'} size={25} />}
-            onActionButtonPress={() => props.dispatch({ type: 'BACK_TO_MEETUP_BADGES', payload: '' })}
+            onActionButtonPress={() => setComponent('MEETUP_TITLE')}
           />
           <ActionButton
             label='Next'
             backgroundColor={iconColorsTable['blue1']}
             icon={<MaterialCommunityIcons name='hand-pointing-right' color={'white'} size={25} />}
-            onActionButtonPress={() => props.dispatch({ type: 'GO_TO_MEETUP_DATE_AND_TIME', payload: '' })}
+            onActionButtonPress={() => setComponent('MEETUP_DATE_AND_TIME')}
             isDisabled={isDisabledNext}
           />
         </View>
@@ -50,8 +57,8 @@ const Container = (props) => {
           />
         </View>
       </View>
-      <Header />
-      <AttendeesLimit state={props.state} dispatch={props.dispatch} />
+      <AttendeesLimit />
+      <MeetupPointDetail />
     </View>
   );
 };
