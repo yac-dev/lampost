@@ -9,6 +9,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
+import { Fontisto } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
@@ -19,8 +20,8 @@ import {
   sectionBackgroundColor,
   screenSectionBackgroundColor,
 } from '../../../utils/colorsTable';
-
 import Menu from './Menu';
+import { iconsTable } from '../../../utils/icons';
 
 const Menus = (props) => {
   const { auth, setIsPleaseLoginModalOpen, isIpad } = useContext(GlobalContext);
@@ -31,105 +32,6 @@ const Menus = (props) => {
     setSelectedMeetupDetailComponent,
     selectedMeetupDetailBottomSheetRef,
   } = useContext(MapContext);
-
-  // const menuOptions = [
-  //   {
-  //     name: 'Launcher',
-  //     iconBackgroundColor: iconColorsTable['red1'],
-  //     icon: <MaterialCommunityIcons name='rocket-launch' size={25} color={'white'} />,
-  //     info: (
-  //       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-  //         <View style={{ backgroundColor: 'red', width: 35, height: 35, borderRadius: 7, marginRight: 5 }}></View>
-  //         <Text>{`${props.selectedMeetup.launcher.name} >`}</Text>
-  //       </View>
-  //     ),
-  //     onPress: () => {
-  //       props.navigation.navigate('User', { userId: props.selectedMeetup.launcher._id });
-  //     },
-  //   },
-  //   {
-  //     name: 'Preferred Badges',
-  //     iconBackgroundColor: iconColorsTable['lightGreen1'],
-  //     icon: <Foundation name='sheriff-badge' size={25} color='white' />,
-  //     info: (
-  //       <Text>{`${props.selectedMeetup.launcher.name} >`}</Text>
-  //       // <View style={{ flexDirection: 'row' }}>
-  //       //   {props.selectedMeetup.badges.map((badge, index) => {
-  //       //     return (
-  //       //       <FastImage
-  //       //         style={{ height: 35, width: 35 }}
-  //       //         source={{
-  //       //           uri: props.selectedMeetup.badge.icon,
-  //       //           // headers: { Authorization: 'someAuthToken' },
-  //       //           priority: FastImage.priority.normal,
-  //       //         }}
-  //       //         tintColor={iconColorsTable[props.selectedMeetup.badge.color]}
-  //       //         resizeMode={FastImage.resizeMode.contain}
-  //       //       />
-  //       //     );
-  //       //   })}
-  //       // </View>
-  //     ),
-  //     onPress: () => {
-  //       props.handleselectedMeetupDetailBottomSheetChanges('Badges');
-  //     },
-  //   },
-  //   {
-  //     name: 'Crew',
-  //     iconBackgroundColor: iconColorsTable['violet1'],
-  //     icon: <FontAwesome5 name='user-astronaut' size={25} color='white' />,
-  //     info: <Text>{`${props.selectedMeetup.attendees.length} >`}</Text>,
-  //     onPress: () => {
-  //       props.handleselectedMeetupDetailBottomSheetChanges('Crew');
-  //     },
-  //   },
-  //   {
-  //     name: 'Q&As',
-  //     iconBackgroundColor: iconColorsTable['pink1'],
-  //     icon: <MaterialCommunityIcons name='chat-question' size={25} color='white' />,
-  //     info: <Text>{`${props.selectedMeetup.comments.length} >`}</Text>,
-  //     onPress: () => {
-  //       props.handleselectedMeetupDetailBottomSheetChanges('QandAs');
-  //     },
-  //   },
-  //   {
-  //     name: 'Fee',
-  //     // 254, 208, 0  // 236, 164, 20
-  //     iconBackgroundColor: iconColorsTable['yellow1'],
-  //     icon: <Foundation name='dollar-bill' size={25} color='white' />,
-  //     info: <View>{props.selectedMeetup.isFeeFree ? <Text>Its free</Text> : <Text>Its not free</Text>}</View>,
-  //     onPress: () => {
-  //       props.handleselectedMeetupDetailBottomSheetChanges('Fee');
-  //     },
-  //   },
-  //   {
-  //     name: 'MediaPermission',
-  //     iconBackgroundColor: iconColorsTable['lightBlue1'],
-  //     icon: <FontAwesome5 name='photo-video' size={25} color='white' />,
-  //     info: <View>{props.selectedMeetup.isMediaAllowed ? <Text>Allowed</Text> : <Text>Not allowed...</Text>}</View>,
-  //     onPress: () => {
-  //       // props.handleselectedMeetupDetailBottomSheetChanges('MediaPermission');
-  //       props.handleselectedMeetupDetailBottomSheetChanges('MediaPermission');
-  //     },
-  //   },
-  //   {
-  //     name: 'Link',
-  //     iconBackgroundColor: iconColorsTable['grey1'],
-  //     icon: <Entypo name='link' size={25} color='white' />,
-  //     info: <Text>right</Text>,
-  //     onPress: () => {
-  //       props.handleselectedMeetupDetailBottomSheetChanges('Links');
-  //     },
-  //   },
-  // ];
-
-  // const renderMenus = () => {
-  //   const menusList = menuOptions.map((menu, index) => {
-  //     return <Menu key={index} menu={menu} />;
-  //   });
-
-  //   return <View>{menusList}</View>;
-  // };
 
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
@@ -227,11 +129,17 @@ const Menus = (props) => {
               {renderDate(selectedMeetup.startDateAndTime)}
               {renderTime(selectedMeetup.startDateAndTime, selectedMeetup.duration)}
             </View>
-            {/* <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} /> */}
+            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
           </View>
         }
         onPressMenu={() => {
-          return null;
+          navigation.navigate('Meetup date', {
+            launcherId: selectedMeetup.launcher._id,
+            meetupId: selectedMeetup._id,
+            date: selectedMeetup.startDateAndTime,
+            duration: selectedMeetup.duration,
+            agenda: selectedMeetup.agenda,
+          });
         }}
       />
       <Menu
@@ -247,9 +155,12 @@ const Menus = (props) => {
           </View>
         }
         onPressMenu={() => {
-          // setSelectedMeetupDetailComponent('Fee');
-          // selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
-          navigation.navigate('Meetup fee', { isFeeFree: selectedMeetup.isFeeFree });
+          navigation.navigate('Meetup fee', {
+            launcherId: selectedMeetup.launcher._id,
+            meetupId: selectedMeetup._id,
+            isFeeFree: selectedMeetup.isFeeFree,
+            fee: selectedMeetup.fee,
+          });
         }}
       />
       <Menu
@@ -267,7 +178,11 @@ const Menus = (props) => {
           </View>
         }
         onPressMenu={() => {
-          navigation.navigate('Meetup description', { description: selectedMeetup.description });
+          navigation.navigate('Meetup description', {
+            launcherId: selectedMeetup.launcher._id,
+            meetupId: selectedMeetup._id,
+            description: selectedMeetup.description,
+          });
           // setSelectedMeetupDetailComponent('Description');
           // selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
         }}
@@ -287,6 +202,44 @@ const Menus = (props) => {
           navigation.navigate('Attendees', { meetupId: selectedMeetup._id });
         }}
       />
+      <Menu
+        label='Meetup point'
+        icon={<Fontisto name='map-marker-alt' size={20} color={iconColorsTable['pink1']} />}
+        backgroundColor={backgroundColorsTable['pink1']}
+        rightInfo={
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
+          </View>
+        }
+        onPressMenu={() => {
+          // setSelectedMeetupDetailComponent('Crew');
+          // selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
+          navigation.navigate('Meetup point', {
+            launcherId: selectedMeetup.launcher._id,
+            meetupId: selectedMeetup._id,
+            meetupPoint: selectedMeetup.meetupPoint,
+          });
+        }}
+      />
+      {selectedMeetup.link ? (
+        <Menu
+          label='Link'
+          icon={<MaterialCommunityIcons name='link' size={20} color={iconColorsTable['grey1']} />}
+          backgroundColor={backgroundColorsTable['grey1']}
+          rightInfo={
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
+            </View>
+          }
+          onPressMenu={() => {
+            navigation.navigate('Meetup link', {
+              launcherId: selectedMeetup.launcher._id,
+              meetupId: selectedMeetup._id,
+              link: selectedMeetup.link,
+            });
+          }}
+        />
+      ) : null}
       {/* <Menu
         label='Q&As'
         icon={<MaterialCommunityIcons name='chat-question' size={20} color={iconColorsTable['blue1']} />}

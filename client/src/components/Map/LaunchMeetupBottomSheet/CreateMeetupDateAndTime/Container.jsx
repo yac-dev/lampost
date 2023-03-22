@@ -34,46 +34,54 @@ const Container = (props) => {
 
   // dateのvalidation
   useEffect(() => {
-    if (formData.startDateAndTime && formData.duration) {
-      const launchingStartDateAndTimeString = new Date(formData.startDateAndTime);
-      let launchingEndDateAndTimeString = new Date(formData.startDateAndTime);
-      launchingEndDateAndTimeString = launchingEndDateAndTimeString.setMinutes(
-        launchingStartDateAndTimeString.getMinutes() + formData.duration
-      );
-      const launchingStartDateAndTime = launchingStartDateAndTimeString.getTime();
-      const launchingEndDateAndTime = new Date(launchingEndDateAndTimeString).getTime();
-      myDates.forEach((dateObject) => {
-        const startDateAndTimeString = new Date(dateObject.startDateAndTime);
-        const endDateAndTimeString = new Date(dateObject.endDateAndTime);
-        const startDateAndTime = startDateAndTimeString.getTime();
-        const endDateAndTime = endDateAndTimeString.getTime();
-        if (
-          (startDateAndTime < launchingStartDateAndTime && launchingStartDateAndTime < endDateAndTime) ||
-          (startDateAndTime < launchingEndDateAndTime && launchingEndDateAndTime < endDateAndTime)
-        ) {
-          setSnackBar({
-            isVisible: true,
-            barType: 'error',
-            message: 'OOPS. Not available this time. You have upcoming meetups on this time range.',
-            duration: 3000,
-          });
-          setIsDisabledNext(true);
-        } else if (
-          launchingStartDateAndTime < startDateAndTime &&
-          endDateAndTime - startDateAndTime < launchingEndDateAndTime - launchingStartDateAndTime
-        ) {
-          setSnackBar({
-            isVisible: true,
-            barType: 'error',
-            message: 'OOPS. Not available this time. You have upcoming meetups on this time range.',
-            duration: 3000,
-          });
-          setIsDisabledNext(true);
-        } else {
-          console.log("It's ok👍");
-          setIsDisabledNext(false);
-        }
-      });
+    if (myDates.length) {
+      if (formData.startDateAndTime && formData.duration) {
+        const launchingStartDateAndTimeString = new Date(formData.startDateAndTime);
+        let launchingEndDateAndTimeString = new Date(formData.startDateAndTime);
+        launchingEndDateAndTimeString = launchingEndDateAndTimeString.setMinutes(
+          launchingStartDateAndTimeString.getMinutes() + formData.duration
+        );
+        const launchingStartDateAndTime = launchingStartDateAndTimeString.getTime();
+        const launchingEndDateAndTime = new Date(launchingEndDateAndTimeString).getTime();
+        myDates.forEach((dateObject) => {
+          const startDateAndTimeString = new Date(dateObject.startDateAndTime);
+          const endDateAndTimeString = new Date(dateObject.endDateAndTime);
+          const startDateAndTime = startDateAndTimeString.getTime();
+          const endDateAndTime = endDateAndTimeString.getTime();
+          if (
+            (startDateAndTime < launchingStartDateAndTime && launchingStartDateAndTime < endDateAndTime) ||
+            (startDateAndTime < launchingEndDateAndTime && launchingEndDateAndTime < endDateAndTime)
+          ) {
+            setSnackBar({
+              isVisible: true,
+              barType: 'error',
+              message: 'OOPS. Not available this time. You have upcoming meetups on this time range.',
+              duration: 3000,
+            });
+            setIsDisabledNext(true);
+          } else if (
+            launchingStartDateAndTime < startDateAndTime &&
+            endDateAndTime - startDateAndTime < launchingEndDateAndTime - launchingStartDateAndTime
+          ) {
+            setSnackBar({
+              isVisible: true,
+              barType: 'error',
+              message: 'OOPS. Not available this time. You have upcoming meetups on this time range.',
+              duration: 3000,
+            });
+            setIsDisabledNext(true);
+          } else {
+            console.log("It's ok👍");
+            setIsDisabledNext(false);
+          }
+        });
+      }
+    } else {
+      if (formData.startDateAndTime && formData.duration) {
+        setIsDisabledNext(false);
+      } else {
+        setIsDisabledNext(true);
+      }
     }
   }, [formData.startDateAndTime, formData.duration]);
   // 基本、rangeのgetTimeの差がマイナスになることはない。（endtimeよりもstart timeの方が後になるってこと）durationでやっているからね。

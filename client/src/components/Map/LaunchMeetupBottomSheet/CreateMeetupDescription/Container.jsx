@@ -43,11 +43,14 @@ const Container = (props) => {
       },
       badges: Object.values(formData.badges),
       startDateAndTime: formData.startDateAndTime,
+      agenda: formData.agenda,
       duration: formData.duration,
       isAttendeesLimitFree: formData.isAttendeesLimitFree,
       attendeesLimit: formData.attendeesLimit,
+      meetupPointDetail: formData.meetupPointDetail,
       isFeeFree: formData.isFeeFree,
       fee: formData.fee,
+      feeDatail: formData.feeDatail,
       description: formData.description,
       link: formData.link,
     };
@@ -110,6 +113,7 @@ const Container = (props) => {
       description: formData.description,
     });
     setFormData(INITIAL_STATE);
+    setComponent('MEETUP_TITLE');
     // dispatch({ type: 'LAUNCHED', payload: '' });
   };
 

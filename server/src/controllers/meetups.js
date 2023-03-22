@@ -60,21 +60,19 @@ export const createMeetup = async (request, response) => {
   try {
     const {
       place,
-      badges,
+      launcher,
       title,
+      badges,
       startDateAndTime,
       duration,
-      applicationDeadline,
-      // endDateAndTime,
-      isMeetupAttendeesLimitFree,
-      meetupAttendeesLimit,
+      agenda,
+      isAttendeesLimitFree,
+      attendeesLimit,
+      meetupPointDetail,
       isMeetupFeeFree,
-      currency,
       fee,
+      feeDetail,
       description,
-      isMeetupPublic,
-      isMediaAllowed,
-      launcher,
       link,
     } = request.body;
 
@@ -83,19 +81,17 @@ export const createMeetup = async (request, response) => {
     const meetup = new Meetup({
       place,
       badges: badgeIds,
-      // preferredBadges,
+      launcher,
       title,
       startDateAndTime,
       duration,
-      applicationDeadline,
       description,
       link,
-      launcher,
       totalAttendees: 1,
-      totalAssets: 0,
-      totalComments: 0,
-      totalImpressions: 0,
+      meetupPointDetail,
       topPhotos: [],
+      isPublic: true,
+      state: 'upcoming',
       createdAt: new Date(),
       // endDateAndTime,
     });
@@ -106,34 +102,27 @@ export const createMeetup = async (request, response) => {
       meetup.isFeeFree = true;
     } else {
       meetup.isFeeFree = false;
-      meetup.currency = currency;
       meetup.fee = fee;
     }
 
-    if (isMeetupAttendeesLimitFree) {
+    if (isAttendeesLimitFree) {
       meetup.isAttendeesLimitFree = true;
     } else {
       meetup.isAttendeesLimitFree = false;
-      meetup.attendeesLimit = meetupAttendeesLimit;
+      meetup.attendeesLimit = attendeesLimit;
     }
 
-    if (isMeetupPublic) {
-      meetup.isPublic = true;
-    } else {
-      meetup.isPublic = false;
+    if (agenda) {
+      meetup.agenda = agenda;
     }
 
-    if (isMediaAllowed) {
-      meetup.isMediaAllowed = true;
-    } else {
-      meetup.isMediaAllowed = false;
+    if (feeDetail) {
+      meetup.feeDetail = feeDetail;
     }
 
     const user = await User.findById(launcher);
     user.upcomingMeetups.push(meetup._id);
     user.save();
-    // meetup.attendees.push(launcher);
-    meetup.state = 'upcoming';
     meetup.save();
     const meetupAndUserRelationship = await MeetupAndUserRelationship.create({
       meetup: meetup._id,
@@ -169,7 +158,7 @@ export const createMeetup = async (request, response) => {
         _id: meetup._id,
         place: meetup.place,
         title: meetup.title,
-        state: meetup.state, // upcomingなはず。
+        state: meetup.state,
         launcher: meetup.launcher,
         startDateAndTime: meetup.startDateAndTime,
         badge: badges[0],
@@ -178,9 +167,6 @@ export const createMeetup = async (request, response) => {
       },
       // viewedChatsLastTime: new Date(),
       launcher,
-      // badge: {
-      //   icon: badge.icon,
-      // }
     });
   } catch (error) {
     console.log(error);

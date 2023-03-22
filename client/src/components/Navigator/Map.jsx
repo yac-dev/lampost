@@ -17,7 +17,9 @@ import User from '../User/Container';
 import Meetups from '../User/Meetups/Container';
 import MeetupAssets from '../User/Meetups/Assets/Container';
 import MeetupFee from '../Map/SelectedMeetup/Fee';
+import MeetupDate from '../Map/SelectedMeetup/Date';
 import MeetupDescription from '../Map/SelectedMeetup/Description';
+import MeetupLink from '../Map/SelectedMeetup/Link';
 import Attended from '../User/Meetups/Attended/Container';
 import AddBadges from '../Utils/AddBadges/Container';
 import AboutLampost from '../Utils/AboutLampost';
@@ -111,6 +113,36 @@ const MapNavigator = (props) => {
         <Stack.Screen
           name='Meetup fee'
           component={MeetupFee}
+          options={{
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: 'white',
+            // headerTintColor: iconColorsTable['blue1'],
+          }}
+        />
+        <Stack.Screen
+          name='Meetup date'
+          component={MeetupDate}
+          options={{
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: 'white',
+            // headerTintColor: iconColorsTable['blue1'],
+          }}
+        />
+        <Stack.Screen
+          name='Meetup link'
+          component={MeetupLink}
           options={{
             headerStyle: {
               backgroundColor: appBottomSheetBackgroundColor,
