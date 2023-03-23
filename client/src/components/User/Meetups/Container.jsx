@@ -52,6 +52,14 @@ const ActivitiesContainer = (props) => {
   //   );
   // };
 
+  const renderImpression = (meetup) => {
+    if (meetup.impression) {
+      return <Text style={{ color: 'white', fontSize: 15, marginBottom: 5 }}>{meetup.impression.content}</Text>;
+    } else {
+      return null;
+    }
+  };
+
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -111,9 +119,14 @@ const ActivitiesContainer = (props) => {
       );
     } else {
       return (
-        <Text style={{ color: baseTextColor, textAlign: 'center', marginBottom: 10 }}>
-          No photos are taken in this meetup...
-        </Text>
+        <TouchableOpacity
+          style={{ paddingTop: 10, paddingBottom: 10 }}
+          onPress={() => props.navigation.navigate('Meetup assets', { meetupId: meetup._id })}
+        >
+          <Text style={{ color: baseTextColor, textAlign: 'center', marginBottom: 10 }}>
+            No photos are taken in this meetup...
+          </Text>
+        </TouchableOpacity>
       );
     }
   };
@@ -149,7 +162,8 @@ const ActivitiesContainer = (props) => {
               {renderDate(meetup.startDateAndTime)}
             </View>
             {/* {renderBadges(meetup)} */}
-            <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white', marginBottom: 10 }}>{meetup.title}</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: 18, color: 'white', marginBottom: 10 }}>{meetup.title}</Text>
+            {renderImpression(meetup)}
             {renderTopPhotos(meetup)}
             <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
               <TouchableOpacity

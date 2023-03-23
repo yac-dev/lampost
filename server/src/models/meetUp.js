@@ -61,7 +61,10 @@ const meetupSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
   },
-  representation: String,
+  representation: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Impression',
+  },
 });
 
 // function genresLimit(val) {

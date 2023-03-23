@@ -29,8 +29,8 @@ export const createImpressionByMember = async (request, response) => {
     const notificationMessage = {
       to: launcher.pushToken,
       data: { notificationType: 'sentImpression' },
-      title: 'Your meetup member wrote an impression🔥',
-      body: `"${content}" from ${user.name}`,
+      title: `${user.name} wrote an impression 🔥`,
+      body: content,
     };
     sendPushNotification(launcher.pushToken, notificationMessage);
     // 3, 書いたmemberのbadge experienceを上げる。
@@ -89,13 +89,16 @@ export const createImpressionByLauncher = async (request, response) => {
     // });
 
     console.log(membersPushTokens);
+    const meetup = await Meetup.findById(meetupId);
+    meetup.representation = impression._id;
+    meetup.save();
 
     const chunks = expo.chunkPushNotifications(
       membersPushTokens.map((token) => ({
         to: token,
         sound: 'default',
         data: { notificationType: 'sentImpression' },
-        title: 'Launcher wrote an impression',
+        title: 'Launcher wrote an impression 🔥',
         body: content,
       }))
     );

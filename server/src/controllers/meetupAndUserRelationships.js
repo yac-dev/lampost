@@ -100,6 +100,10 @@ export const getUserMeetups = async (request, response) => {
           path: 'topPhotos',
           select: 'data',
         },
+        {
+          path: 'representation',
+          select: 'content emojis',
+        },
       ],
     });
     const userMeetups = meetupAndUserRelationships.map((relationship) => {
