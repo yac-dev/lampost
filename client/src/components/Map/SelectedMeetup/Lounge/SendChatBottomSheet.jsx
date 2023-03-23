@@ -1,9 +1,8 @@
 import React, { useMemo, useContext, useState } from 'react';
-import { connect } from 'react-redux';
+import { View, Text, InputAccessoryView, Keyboard, TouchableOpacity, FlatList } from 'react-native';
 import lampostAPI from '../../../../apis/lampost';
 import GlobalContext from '../../../../GlobalContext';
 import LoungeContext from './LoungeContext';
-import { View, Text, InputAccessoryView, Keyboard, TouchableOpacity } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import {
   appBottomSheetBackgroundColor,
@@ -12,6 +11,7 @@ import {
   iconColorsTable,
   screenSectionBackgroundColor,
 } from '../../../../utils/colorsTable';
+import { emojis } from '../../../../utils/emojisList';
 
 const SendChatBottomSheet = (props) => {
   const { auth, setLoading, setSnackBar } = useContext(GlobalContext);
@@ -30,6 +30,14 @@ const SendChatBottomSheet = (props) => {
     chatType,
   } = useContext(LoungeContext);
   const [text, setText] = useState('');
+
+  const renderEmoji = (emoji) => {
+    return (
+      <TouchableOpacity style={{ padding: 10 }} onPress={() => setSendingText((previous) => previous + emoji)}>
+        <Text>{emoji}</Text>
+      </TouchableOpacity>
+    );
+  };
 
   const onSendPress = async () => {
     console.log('sending comment');
@@ -158,28 +166,40 @@ const SendChatBottomSheet = (props) => {
           backgroundColor={screenSectionBackgroundColor}
           // style={{ paddingTop: 10, paddingBottom: 10 }}
         >
-          <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-            <View></View>
-            <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity
-                style={{ padding: 10 }}
-                onPress={() => {
-                  Keyboard.dismiss();
-                  setSendingText('');
-                  setReplyingTo(null);
-                  sendChatBottomSheetRef.current.close();
-                  // appMenuBottomSheetRef.current.snapToIndex(0);
-                }}
-              >
-                <Text style={{ color: 'white', fontWeight: 'bold' }}>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{ padding: 10 }}
-                onPress={() => onSendPress()}
-                disabled={sendingText ? false : true}
-              >
-                <Text style={{ color: sendingText ? 'white' : baseTextColor, fontWeight: 'bold' }}>Send</Text>
-              </TouchableOpacity>
+          <View>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <FlatList
+                data={emojis}
+                renderItem={({ item }) => renderEmoji(item)}
+                keyExtractor={(item, index) => `${item}-${index}`}
+                horizontal={true}
+                keyboardShouldPersistTaps={'always'}
+              />
+            </View>
+
+            <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
+              <View></View>
+              <View style={{ flexDirection: 'row' }}>
+                <TouchableOpacity
+                  style={{ padding: 10 }}
+                  onPress={() => {
+                    Keyboard.dismiss();
+                    setSendingText('');
+                    setReplyingTo(null);
+                    sendChatBottomSheetRef.current.close();
+                    // appMenuBottomSheetRef.current.snapToIndex(0);
+                  }}
+                >
+                  <Text style={{ color: 'white', fontWeight: 'bold' }}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{ padding: 10 }}
+                  onPress={() => onSendPress()}
+                  disabled={sendingText ? false : true}
+                >
+                  <Text style={{ color: sendingText ? 'white' : baseTextColor, fontWeight: 'bold' }}>Send</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </InputAccessoryView>

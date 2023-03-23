@@ -51,16 +51,20 @@ const AppMenuButtons = (props) => {
     }
   };
 
+  console.log(meetupAttendees);
+
   const getAttendees = async () => {
     if (currentMeetup) {
       if (!Object.values(meetupAttendees).length) {
         setLoading(true);
         const result = await lampostAPI.get(`meetupanduserrelationships/meetup/${currentMeetup}/users`);
         const { meetupAttendees } = result.data;
+
+        console.log(meetupAttendees);
         setMeetupAttendees(() => {
           const attendeesTable = {};
-          meetupAttendees.forEach((user, index) => {
-            attendeesTable[user._id] = user;
+          meetupAttendees.forEach((attendee, index) => {
+            attendeesTable[attendee.user._id] = attendee;
           });
           return attendeesTable;
         });

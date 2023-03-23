@@ -3,7 +3,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import GlobalContext from '../../GlobalContext';
 import CameraContext from './CameraContext';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import lampostAPI from '../../apis/lampost';
 import { Camera, CameraType } from 'expo-camera';
 import LoadingSpinner from '../Utils/LoadingSpinner';
@@ -27,6 +27,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import WarningModal from './WarningModal';
 import { Video } from 'expo-av';
+import FastImage from 'react-native-fast-image';
 
 const Container = (props) => {
   const { auth, setAuth, setSnackBar, myUpcomingMeetups } = useContext(GlobalContext);
@@ -71,6 +72,38 @@ const Container = (props) => {
       setAuth((previous) => {
         return { ...previous, data: user };
       });
+    }
+  };
+
+  const renderTaggedPeople = () => {
+    const taggedPeopleList = Object.values(taggedPeople);
+    if (taggedPeopleList.length) {
+      const list = taggedPeopleList.map((attendee, index) => {
+        return (
+          <FastImage
+            key={index}
+            source={{
+              uri: attendee.user.photo
+                ? attendee.user.photo
+                : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
+            }}
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 7,
+              backgroundColor: iconColorsTable['blue1'],
+              marginRight: 10,
+            }}
+            tintColor={attendee.user.photo ? null : 'white'}
+          />
+        );
+      });
+
+      return (
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>{list}</View>
+        </ScrollView>
+      );
     }
   };
 
@@ -393,9 +426,10 @@ const Container = (props) => {
             {renderTimer()}
           </Camera>
           <View style={{ position: 'absolute', top: 70, left: 10 }}>
-            <Text numberOfLines={1} style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>
+            <Text numberOfLines={1} style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>
               {props.route.params.meetupTitle}
             </Text>
+            {renderTaggedPeople()}
           </View>
         </View>
         {auth.isAuthenticated ? (

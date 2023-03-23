@@ -26,8 +26,8 @@ const TagPeopleBottomSheet = (props) => {
   const avatarWidth = oneGridWidth * 0.6;
   const snapPoints = useMemo(() => ['50%'], []);
 
-  const renderTag = (user) => {
-    if (taggedPeople[user._id]) {
+  const renderTag = (attendee) => {
+    if (taggedPeople[attendee.user._id]) {
       return (
         <View style={{ position: 'absolute', top: -15, right: -10 }}>
           <Ionicons name='pricetag' color={iconColorsTable['lightGreen1']} size={20} />
@@ -38,18 +38,18 @@ const TagPeopleBottomSheet = (props) => {
     }
   };
 
-  const tagPeople = (user) => {
-    if (!taggedPeople[user._id]) {
+  const tagPeople = (attendee) => {
+    if (!taggedPeople[attendee.user._id]) {
       setTaggedPeople((previous) => {
         return {
           ...previous,
-          [user._id]: user,
+          [attendee.user._id]: attendee,
         };
       });
     } else {
       setTaggedPeople((previous) => {
         const updating = { ...previous };
-        delete updating[user._id];
+        delete updating[attendee.user._id];
         return updating;
       });
     }
@@ -58,7 +58,7 @@ const TagPeopleBottomSheet = (props) => {
   const renderMeetupAttendees = () => {
     const meetupAttendeesArr = Object.values(meetupAttendees);
     if (meetupAttendeesArr.length) {
-      const list = meetupAttendeesArr.map((user, index) => {
+      const list = meetupAttendeesArr.map((attendee, index) => {
         return (
           <TouchableOpacity
             key={index}
@@ -69,7 +69,7 @@ const TagPeopleBottomSheet = (props) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}
-            onPress={() => tagPeople(user)}
+            onPress={() => tagPeople(attendee)}
           >
             <View
               style={{
@@ -82,14 +82,25 @@ const TagPeopleBottomSheet = (props) => {
               }}
             >
               <FastImage
-                style={{ width: '100%', height: '100%', borderRadius: 10, marginBottom: 5 }}
-                source={{ uri: user.photo }}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: 10,
+                  marginBottom: 5,
+                  backgroundColor: iconColorsTable['blue1'],
+                }}
+                source={{
+                  uri: attendee.user.photo
+                    ? attendee.user.photo
+                    : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
+                }}
                 resizeMode={FastImage.resizeMode.stretch}
+                tintColor={attendee.user.photo ? null : 'white'}
               />
               <Text numberOfLines={1} style={{ color: 'white' }}>
-                {user.name}
+                {attendee.user.name}
               </Text>
-              {renderTag(user)}
+              {renderTag(attendee)}
             </View>
           </TouchableOpacity>
         );
@@ -149,7 +160,12 @@ const TagPeopleBottomSheet = (props) => {
       // keyboardBehavior={'interactive'}
       // onClose={() => onSelectedItemBottomSheetClose()}
     >
-      <BottomSheetView style={{ flex: 1 }}>{renderMeetupAttendees()}</BottomSheetView>
+      <BottomSheetView style={{ flex: 1 }}>
+        <View style={{ padding: 10 }}>
+          <Text style={{ color: 'white', fontSize: 20 }}>Choose the people you wanna tag</Text>
+        </View>
+        {renderMeetupAttendees()}
+      </BottomSheetView>
     </GorhomBottomSheet>
   );
 };
