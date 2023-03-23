@@ -17,7 +17,7 @@ import User from '../User/Container';
 import Meetups from '../User/Meetups/Container';
 import MeetupAssets from '../User/Meetups/Assets/Container';
 import MeetupFee from '../Map/SelectedMeetup/Fee';
-import MeetupDate from '../Map/SelectedMeetup/Date';
+import MeetupDate from '../Map/SelectedMeetup/Date/Container';
 import MeetupDescription from '../Map/SelectedMeetup/Description';
 import MeetupLink from '../Map/SelectedMeetup/Link';
 import Attended from '../User/Meetups/Attended/Container';
