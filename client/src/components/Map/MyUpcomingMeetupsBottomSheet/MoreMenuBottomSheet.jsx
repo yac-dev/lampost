@@ -15,7 +15,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { iconsTable } from '../../../utils/icons';
 
 const MyUpcomingMeetupsBottomSheet = (props) => {
-  const { Ionicons, MaterialCommunityIcons } = iconsTable;
+  const { Ionicons, MaterialCommunityIcons, Feather } = iconsTable;
   const snapPoints = useMemo(() => ['30%'], []);
   const { auth, myUpcomingMeetupAndChatsTable, totalUnreadChatsCount, isIpad } = useContext(GlobalContext);
   const { moreMenuBottomSheetRef, setMoreMenuOf, moreMenuOf, navigation } = useContext(MapContext);
@@ -40,24 +40,23 @@ const MyUpcomingMeetupsBottomSheet = (props) => {
             navigation.navigate('Lounge', { meetupId: moreMenuOf });
             moreMenuBottomSheetRef.current.close();
           }}
+          disabled={true}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View
               style={{
                 width: 40,
                 height: 40,
-                backgroundColor: backgroundColorsTable['lightBlue1'],
+                backgroundColor: backgroundColorsTable['red1'],
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 8,
                 marginRight: 10,
               }}
             >
-              <Ionicons name='chatbubbles' color={iconColorsTable['lightBlue1']} size={20} />
+              <MaterialCommunityIcons name='exit-run' color={iconColorsTable['red1']} size={20} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>
-              Go to lounge of this meetup
-            </Text>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Leave this meetup</Text>
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
         </TouchableOpacity>
@@ -85,6 +84,32 @@ const MyUpcomingMeetupsBottomSheet = (props) => {
             <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>
               Members of this meetup
             </Text>
+          </View>
+          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+          onPress={() => {
+            navigation.navigate('Lounge', { meetupId: moreMenuOf });
+            moreMenuBottomSheetRef.current.close();
+          }}
+          disabled={true}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={{
+                width: 40,
+                height: 40,
+                backgroundColor: backgroundColorsTable['lightBlue1'],
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 8,
+                marginRight: 10,
+              }}
+            >
+              <Feather name='navigation' color={iconColorsTable['lightBlue1']} size={20} />
+            </View>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Start navigation</Text>
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
         </TouchableOpacity>

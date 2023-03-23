@@ -221,6 +221,7 @@ const AppStack = (props) => {
               reply: 0,
               question: 0,
               help: 0,
+              edited: 0,
             },
           };
         }

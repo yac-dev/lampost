@@ -23,7 +23,7 @@ const chatTypeTable = {
   help: iconColorsTable['red1'],
   question: iconColorsTable['yellow1'],
   reply: iconColorsTable['green1'],
-  announcement: iconColorsTable['red1'],
+  edited: iconColorsTable['red1'],
 };
 
 const Chats = (props) => {
@@ -52,7 +52,7 @@ const Chats = (props) => {
         return <AntDesign name='exclamationcircle' size={15} color={'white'} />;
       case 'question':
         return <AntDesign name='questioncircle' size={15} color={'white'} />;
-      case 'announcement':
+      case 'edited':
         return <Entypo name='megaphone' size={15} color={'white'} />;
       default:
         return null;
@@ -233,7 +233,7 @@ const Chats = (props) => {
         );
       });
 
-      return <View style={{ padding: 10 }}>{chatsList}</View>;
+      return <View style={{}}>{chatsList}</View>;
     } else {
       return (
         <View>

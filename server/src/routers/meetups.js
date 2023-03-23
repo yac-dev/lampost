@@ -14,11 +14,12 @@ import {
   finishMeetup,
   getMyMeetupStates,
   checkIsMeetupOngoing,
+  updateMeetup,
 } from '../controllers/meetups';
 
 router.route('/upcoming').post(getUpcomingMeetups);
 router.route('/').post(createMeetup).get(getMeetups);
-router.route('/:id').get(getMeetup);
+router.route('/:id').get(getMeetup).patch(updateMeetup);
 router.route('/:id/isongoing').get(checkIsMeetupOngoing);
 router.route('/:id/crew').get(getMeetupCrew);
 router.route('/:id/selected').get(getSelectedMeetup);

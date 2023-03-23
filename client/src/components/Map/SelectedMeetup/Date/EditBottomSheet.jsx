@@ -11,9 +11,9 @@ import {
 } from '../../../../utils/colorsTable';
 import lampostAPI from '../../../../apis/lampost';
 
-const EditBottomSheet = (props) => {
+const EditBottomSheet = () => {
   const snapPoints = useMemo(() => ['50%'], []);
-  const { auth, setLoading, setSnackBar } = useContext(GlobalContext);
+  const { auth, setLoading, setSnackBar, setMyUpcomingMeetups } = useContext(GlobalContext);
   const {
     editing,
     setEditing,
@@ -34,36 +34,42 @@ const EditBottomSheet = (props) => {
 
   const updateStartDateAndTime = async () => {
     const payload = {
+      userId: auth.data._id,
       data: editedStartDateAndTime,
-      type: 'startDateAndTime',
+      field: 'startDateAndTime',
     };
-    // const result = await lampostAPI.patch(`/meetups/${meetupId}`, payload);
+    setLoading(true);
+    const result = await lampostAPI.patch(`/meetups/${meetupId}`, payload);
     setStartDateAndTime(editedStartDateAndTime);
     editBottomSheetRef.current.close();
     setEditedStartDateAndTime(null);
     setSnackBar({
       isVisible: true,
       barType: 'success',
-      message: 'Start time has been updated and notification will be sent to all members.',
+      message: 'Start time has been updated. Notifications will be sent to all members.',
       duration: 5000,
     });
+    setLoading(false);
   };
 
   const updateDuration = async () => {
     const payload = {
+      userId: auth.data._id,
       data: editedDuration,
-      type: 'duration',
+      field: 'duration',
     };
-    // const result = await lampostAPI.patch(`/meetups/${meetupId}`, payload);
+    setLoading(true);
+    const result = await lampostAPI.patch(`/meetups/${meetupId}`, payload);
     setDuration(editedDuration);
     editBottomSheetRef.current.close();
     setEditedDuration(null);
     setSnackBar({
       isVisible: true,
       barType: 'success',
-      message: 'Duration has been updated and notification will be sent to all members.',
+      message: 'Duration has been updated. Notifications will be sent to all members.',
       duration: 5000,
     });
+    setLoading(false);
   };
   const renderDuration = (duration) => {
     if (duration) {

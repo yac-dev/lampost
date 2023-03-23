@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import { iconColorsTable } from '../../utils/colorsTable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 
 const chatIconTable = {
   general: {
@@ -19,6 +20,10 @@ const chatIconTable = {
   },
   help: {
     icon: <AntDesign name='exclamationcircle' size={15} color={'white'} style={{ marginRight: 3 }} />,
+    backgroundColor: iconColorsTable['red1'],
+  },
+  edited: {
+    icon: <Entypo name='megaphone' size={15} color={'white'} style={{ marginRight: 3 }} />,
     backgroundColor: iconColorsTable['red1'],
   },
 };

@@ -84,8 +84,6 @@ const Map = (props) => {
     }
   };
 
-  console.log(selectedMeetup);
-
   const loadMe = async () => {
     const jwtToken = await SecureStore.getItemAsync('secure_token');
     if (jwtToken) {

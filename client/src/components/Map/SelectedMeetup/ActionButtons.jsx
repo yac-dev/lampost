@@ -97,38 +97,35 @@ const ActionButtons = (props) => {
     // ここでvalidation checkな。
     const isJoinable = validateJoinMeetup(selectedMeetup);
     if (isJoinable) {
-      console.log('hello');
+      setLoading(true);
+      const result = await lampostAPI.post('/meetupanduserrelationships/join', {
+        meetupId: selectedMeetup._id,
+        userId: auth.data._id,
+      });
+      const { meetup } = result.data;
+      setMyUpcomingMeetups((previous) => {
+        return {
+          ...previous,
+          [selectedMeetup._id]: {
+            _id: selectedMeetup._id,
+            startDateAndTime: selectedMeetup.startDateAndTime,
+            title: selectedMeetup.title,
+            launcher: meetup.launcher,
+            state: meetup.state,
+            unreadChatsTable: {
+              general: 0,
+              reply: 0,
+              question: 0,
+              help: 0,
+            },
+          },
+        };
+      });
+      setLoading(false);
+      setSnackBar({ isVisible: true, message: 'Joined a meetup.', barType: 'success', duration: 5000 });
+    } else {
+      return null;
     }
-    // if (isJoinable) {
-    //   setLoading(true);
-    //   const result = await lampostAPI.post('/meetupanduserrelationships/join', {
-    //     meetupId: selectedMeetup._id,
-    //     userId: auth.data._id,
-    //   });
-    //   const { meetup } = result.data;
-    //   setMyUpcomingMeetups((previous) => {
-    //     return {
-    //       ...previous,
-    //       [selectedMeetup._id]: {
-    //         _id: selectedMeetup._id,
-    //         startDateAndTime: selectedMeetup.startDateAndTime,
-    //         title: selectedMeetup.title,
-    //         launcher: meetup.launcher,
-    //         state: meetup.state,
-    //         unreadChatsTable: {
-    //           general: 0,
-    //           reply: 0,
-    //           question: 0,
-    //           help: 0,
-    //         },
-    //       },
-    //     };
-    //   });
-    //   setLoading(false);
-    //   setSnackBar({ isVisible: true, message: 'Joined a meetup.', barType: 'success', duration: 5000 });
-    // } else {
-    //   return null;
-    // }
   };
 
   const leaveMeetup = async () => {

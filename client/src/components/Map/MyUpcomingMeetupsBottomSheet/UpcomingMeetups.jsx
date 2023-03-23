@@ -157,7 +157,7 @@ const Container = (props) => {
     });
 
     return (
-      <TouchableOpacity
+      <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
@@ -169,7 +169,7 @@ const Container = (props) => {
         }}
       >
         {list}
-      </TouchableOpacity>
+      </View>
     );
   };
 
@@ -207,7 +207,8 @@ const Container = (props) => {
           >
             <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
               <Ionicons size={25} name='ios-chatbubbles' color={'white'} style={{ marginRight: 5 }} />
-              <Text style={{ color: 'white' }}>Go to lounge</Text>
+              <Text style={{ color: 'white', marginRight: 5 }}>Go to lounge</Text>
+              {renderChatStats(meetup)}
             </View>
           </TouchableOpacity>
         </View>
@@ -243,7 +244,8 @@ const Container = (props) => {
           >
             <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
               <Ionicons size={25} name='ios-chatbubbles' color={'white'} style={{ marginRight: 5 }} />
-              <Text style={{ color: 'white' }}>Go to lounge</Text>
+              <Text style={{ color: 'white', marginRight: 5 }}>Go to lounge</Text>
+              {renderChatStats(meetup)}
             </View>
           </TouchableOpacity>
         </View>
@@ -279,7 +281,6 @@ const Container = (props) => {
                 <MaterialCommunityIcons name='calendar-clock' color='white' size={20} style={{ marginRight: 10 }} />
                 {renderMeetupDateAndTime(meetup.startDateAndTime)}
               </TouchableOpacity>
-              {renderChatStats(meetup)}
             </View>
             <View
               style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 15 }}
