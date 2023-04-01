@@ -14,6 +14,7 @@ const meetupAndUserRelationshipSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  confirmed: Boolean,
   launcher: Boolean,
   viewedChatsLastTime: Date,
 });

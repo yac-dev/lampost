@@ -13,6 +13,7 @@ import AppMenuBottomSheet from './AppMenuBotttomSheet/Container';
 import CameraModeBottomSheet from './ChangeModeBottomSheet/Container';
 import FlipCameraBottomSheet from './FlipBottomSheet';
 import TagPeopleBottomSheet from './TagPeopleBottomSheet/Container';
+import PhotoEffectBottomSheet from './PhotoEffectBottomSheet/Container';
 import VideoEffectBottomSheet from './VideoEffectBottomSheet/Container';
 import {
   appBottomSheetBackgroundColor,
@@ -37,10 +38,11 @@ const Container = (props) => {
   const flipBottomSheetRef = useRef(null);
   const tagPeopleBottomSheetRef = useRef(null);
   const videoEffectBottomSheetRef = useRef(null);
+  const photoEffectBottomSheetRef = useRef(null);
   const cameraRef = useRef(null);
   const [cameraType, setCameraType] = useState(CameraType.back);
   const [cameraMode, setCameraMode] = useState('photo');
-  const [photoEffect, setPhotoEffect] = useState('auto');
+  const [photoEffect, setPhotoEffect] = useState('normal');
   const [videoEffect, setVideoEffect] = useState('normal'); // normal, black and white very old,
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [warningMessage, setWarningMessage] = useState('');
@@ -345,40 +347,67 @@ const Container = (props) => {
   const renderCameraButton = () => {
     if (cameraMode === 'photo') {
       return (
-        <TouchableOpacity style={{}} onPress={() => takePhoto()} disabled={isMeetupOngoing ? false : true}>
+        <TouchableOpacity
+          style={{ position: 'absolute', bottom: 100, alignSelf: 'center' }}
+          onPress={() => takePhoto()}
+          disabled={isMeetupOngoing ? false : true}
+        >
           <View
             style={{
-              backgroundColor: iconColorsTable['violet1'],
-              padding: 10,
+              backgroundColor: iconColorsTable['blue1'],
+              // padding: 10,
               flexDirection: 'row',
+              borderRadius: 25,
+              width: 50,
+              height: 50,
+              justifyContent: 'center',
               alignItems: 'center',
-              borderRadius: 10,
             }}
           >
-            <MaterialCommunityIcons name='camera-iris' size={25} color='white' />
+            <MaterialCommunityIcons name='camera-iris' size={35} color='white' />
           </View>
           {isCameraButtonReady()}
         </TouchableOpacity>
       );
     } else if (cameraMode === 'video') {
       return (
-        <TouchableOpacity style={{}} onPress={() => videoButton()} disabled={isMeetupOngoing ? false : true}>
-          <View
-            style={{
-              backgroundColor: iconColorsTable['violet1'],
-              padding: 10,
-              flexDirection: 'row',
-              alignItems: 'center',
-              borderRadius: 10,
-            }}
-          >
-            {isRecording ? (
-              // <Text style={{ color: 'white' }}>Recording</Text>
-              <Ionicons name='stop-circle' color={'white'} size={25} />
-            ) : (
-              <MaterialCommunityIcons name='record-rec' size={25} color='white' />
-            )}
-          </View>
+        <TouchableOpacity
+          style={{ position: 'absolute', bottom: 100, alignSelf: 'center' }}
+          onPress={() => videoButton()}
+          disabled={isMeetupOngoing ? false : true}
+        >
+          {isRecording ? (
+            // <Text style={{ color: 'white' }}>Recording</Text>
+            // <Ionicons name='stop-circle' color={'white'} size={25} />
+            <View
+              style={{
+                backgroundColor: iconColorsTable['red1'],
+                padding: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+                width: 50,
+                height: 50,
+                borderRadius: 25,
+              }}
+            >
+              <Text style={{ color: 'white' }}>Stop</Text>
+            </View>
+          ) : (
+            // <MaterialCommunityIcons name='record-rec' size={25} color='white' />
+            <View
+              style={{
+                backgroundColor: iconColorsTable['blue1'],
+                padding: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+                width: 50,
+                height: 50,
+                borderRadius: 25,
+              }}
+            >
+              <Text style={{ color: 'white' }}>Start</Text>
+            </View>
+          )}
           {isCameraButtonReady()}
         </TouchableOpacity>
       );
@@ -394,6 +423,7 @@ const Container = (props) => {
         flipBottomSheetRef,
         tagPeopleBottomSheetRef,
         videoEffectBottomSheetRef,
+        photoEffectBottomSheetRef,
         cameraMode,
         setCameraMode,
         cameraType,
@@ -414,11 +444,18 @@ const Container = (props) => {
         currentMeetup,
       }}
     >
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
         <View style={{ flex: 1 }}>
           <Camera
-            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-            flashMode={'on'}
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+              // width: '100%',
+              // aspectRatio: 1,
+              // borderRadius: 10,
+            }}
+            flashMode={'off'}
             ref={cameraRef}
             type={cameraType}
             whiteBalance={photoEffect}
@@ -432,6 +469,7 @@ const Container = (props) => {
             {renderTaggedPeople()}
           </View>
         </View>
+        {renderCameraButton()}
         {auth.isAuthenticated ? (
           <View
             style={{
@@ -445,7 +483,7 @@ const Container = (props) => {
               alignSelf: 'center',
             }}
           >
-            <TouchableOpacity style={{ marginRight: 10 }} onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}>
+            <TouchableOpacity style={{}} onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}>
               <View
                 style={{
                   backgroundColor: iconColorsTable['violet1'],
@@ -472,7 +510,6 @@ const Container = (props) => {
               </View>
               {isCameraButtonReady()}
             </TouchableOpacity> */}
-            {renderCameraButton()}
           </View>
         ) : null}
         <AppMenuBottomSheet />
@@ -480,6 +517,7 @@ const Container = (props) => {
         <CameraModeBottomSheet />
         <FlipCameraBottomSheet />
         <TagPeopleBottomSheet />
+        <PhotoEffectBottomSheet />
         <VideoEffectBottomSheet />
         <WarningModal />
         <LoadingSpinner />

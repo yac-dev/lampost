@@ -422,6 +422,29 @@ const createBadgesFunc = (type) => {
 
 const execCreate = async () => {
   const res1 = await createBadgesFunc('artsAndCrafts');
+  const res2 = await createBadgesFunc('animes');
+  const res3 = await createBadgesFunc('apps');
+  const res4 = await createBadgesFunc('books');
+  const res5 = await createBadgesFunc('business');
+  const res6 = await createBadgesFunc('vehicles');
+  const res7 = await createBadgesFunc('dancing');
+  const res8 = await createBadgesFunc('education');
+  const res9 = await createBadgesFunc('fashionAndBeauty');
+  const res10 = await createBadgesFunc('fitnessAndHealth');
+  const res11 = await createBadgesFunc('foodsAndDrinks');
+  const res12 = await createBadgesFunc('gamings');
+  const res13 = await createBadgesFunc('languagesAndEthnic');
+  const res14 = await createBadgesFunc('films');
+  const res15 = await createBadgesFunc('music');
+  const res16 = await createBadgesFunc('spirituality');
+  const res17 = await createBadgesFunc('family');
+  const res18 = await createBadgesFunc('videoGames');
+  const res19 = await createBadgesFunc('petsAndAnimals');
+  const res20 = await createBadgesFunc('photography');
+  const res21 = await createBadgesFunc('outdoors');
+  const res22 = await createBadgesFunc('sports');
+  const res23 = await createBadgesFunc('tech');
+  const res24 = await createBadgesFunc('writings');
 };
 
 execCreate();

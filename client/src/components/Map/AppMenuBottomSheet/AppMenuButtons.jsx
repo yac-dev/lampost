@@ -39,7 +39,7 @@ const AppMenuButtons = (props) => {
           >
             <MaterialCommunityIcons name='rocket-launch' color={iconColorsTable['red1']} size={20} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Launch meetup</Text>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Launch new meetup</Text>
         </View>
         <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
       </TouchableOpacity>

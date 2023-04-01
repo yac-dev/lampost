@@ -7,11 +7,13 @@ import {
   baseTextColor,
   screenSectionBackgroundColor,
 } from '../../../utils/colorsTable';
+import { iconsTable } from '../../../utils/icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 
 const Stats = () => {
+  const { Foundation } = iconsTable;
   const { user, activitiesMenuBottomSheetRef, leadershipBottomSheetRef } = useContext(UserContext);
 
   if (user.launcher) {
@@ -26,15 +28,22 @@ const Stats = () => {
         }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <MaterialCommunityIcons
-            name='torch'
-            size={45}
-            color={iconColorsTable['red1']}
-            // style={{ backgroundColor: 'blue' }}
-          />
           <View>
-            <Text style={{ color: baseTextColor }}>Fame</Text>
-            <Text style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}>{user.fame}</Text>
+            <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>Trust</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: 27,
+                  fontWeight: 'bold',
+                  color: iconColorsTable['green1'],
+                  marginRight: 5,
+                }}
+              >
+                {user.fame}
+              </Text>
+              <Foundation name='arrow-up' size={20} color={iconColorsTable['green1']} />
+            </View>
           </View>
         </View>
       </View>

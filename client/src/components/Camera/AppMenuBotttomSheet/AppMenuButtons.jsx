@@ -25,7 +25,7 @@ const AppMenuButtons = (props) => {
     cameraType,
     videoEffect,
     cameraModeBottomSheetRef,
-    timeMachineBottomSheetRef,
+    photoEffectBottomSheetRef,
     videoEffectBottomSheetRef,
     flipBottomSheetRef,
     meetupAttendees,
@@ -51,7 +51,7 @@ const AppMenuButtons = (props) => {
     }
   };
 
-  console.log(meetupAttendees);
+  // console.log(meetupAttendees);
 
   const getAttendees = async () => {
     if (currentMeetup) {
@@ -168,7 +168,8 @@ const AppMenuButtons = (props) => {
             // timeMachineBottomSheetRef.current.snapToIndex(0);
             // appMenuBottomSheetRef.current.close();
             if (cameraMode === 'photo') {
-              null;
+              appMenuBottomSheetRef.current.close();
+              photoEffectBottomSheetRef.current.snapToIndex(0);
             } else if (cameraMode === 'video') {
               appMenuBottomSheetRef.current.close();
               videoEffectBottomSheetRef.current.snapToIndex(0);
@@ -193,7 +194,7 @@ const AppMenuButtons = (props) => {
             <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Time machine</Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ color: baseTextColor }}>{videoEffect}</Text>
+            {/* <Text style={{ color: baseTextColor }}>{videoEffect}</Text> */}
             <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
           </View>
         </TouchableOpacity>

@@ -80,6 +80,7 @@ export const login = async (request, response, next) => {
     if (!user) {
       throw new Error('Nooooo.mail');
     }
+    console.log(user);
 
     const isEnteredPasswordCorrect = await user.isPasswordCorrect(password, user.password);
     if (!isEnteredPasswordCorrect) {
