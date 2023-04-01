@@ -15,6 +15,9 @@ import * as Notifications from 'expo-notifications';
 import { createNavigationContainerRef } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { appBottomSheetBackgroundColor, iconColorsTable } from './utils/colorsTable';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Button } from 'react-native-paper';
+const Stack = createNativeStackNavigator();
 
 import MapNavigator from './components/Navigator/Map';
 import LibraryNavigator from './components/Navigator/Library';
@@ -72,6 +75,8 @@ const registerForPushNotificationsAsync = async () => {
 
   return token;
 };
+
+const ChatBase = () => <View style={{ flex: 1, backgroundColor: 'red' }} />;
 
 const AppStack = (props) => {
   const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
@@ -431,6 +436,9 @@ const AppStack = (props) => {
         setFriendChatsNotificationCount,
       }}
     >
+      {/* <Stack.Navigator>
+
+       </Stack.Navigator> */}
       <NavigationContainer
         ref={ref}
         onReady={() => {
@@ -470,130 +478,113 @@ const AppStack = (props) => {
           //   },
           // }}
         >
-          <Tab.Screen
-            name='Meetups'
-            component={MapNavigator}
-            options={({ route }) => ({
-              headerShown: false,
-              tabBarIcon: ({ size, color, focused }) => (
-                <MaterialCommunityIcons
-                  name={'rocket-launch'}
-                  color={focused ? 'white' : 'rgb(102, 104, 109)'}
-                  size={size}
-                />
-              ),
-              tabBarLabel: 'Meetups',
-              // tabBarLabelStyle: { padding: 5 },
-              tabBarBadge: chatsNotificationCount ? chatsNotificationCount : null,
-              tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
-              // () => {
-              //   return null;
-              // },
-              // tabBarStyle: { display: hide ? 'none' : 'flex' },
-              // tabBarVisible: ((route) => {
-              //   const routeName = getFocusedRouteNameFromRoute(route) ?? '';
-
-              //   if (routeName === 'Camera') {
-              //     return false;
-              //   }
-
-              //   return true;
-              // })(route),
-            })}
-          />
-          {/* <Tab.Screen
-            name='Camera'
-            component={Camera}
-            options={{
-              headerShown: false,
-              tabBarLabel: 'Camera',
-              tabBarIcon: ({ size, color, focused }) => (
-                <MaterialCommunityIcons name='camera' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
-              ),
-            }}
-          /> */}
-          {/* <Tab.Screen
-            name='Video'
-            component={Video}
-            options={{
-              headerShown: false,
-              tabBarLabel: 'Video',
-              tabBarIcon: ({ size, color, focused }) => (
-                <MaterialCommunityIcons name='camera' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
-              ),
-            }}
-          /> */}
-          <Tab.Screen
-            name='LibraryNavigator'
-            component={LibraryNavigator}
-            options={{
-              headerShown: false,
-              tabBarLabel: 'Libraries',
-              tabBarIcon: ({ size, color, focused }) => (
-                <Ionicons name='ios-library-sharp' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
-              ),
-            }}
-          />
-          {/* <Tab.Screen
-            name='DummyCamera'
-            component={DummyCamera}
-            options={{
-              headerShown: false,
-              tabBarLabel: 'Dummycam',
-              tabBarIcon: ({ size, color, focused }) => (
-                <Ionicons name='ios-library-sharp' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
-              ),
-            }}
-          /> */}
-
-          {/* 全てのcomponent、navigatorを足さないといけないわ。Mapと全く同じように。この状態だと。mapの方のuser page routeに行く。*/}
-          <Tab.Screen
-            name='Auth'
-            component={AuthNavigator}
-            options={
-              ({ navigation }) => ({
+          <Tab.Group>
+            <Tab.Screen
+              name='Meetups'
+              component={MapNavigator}
+              options={({ route }) => ({
                 headerShown: false,
-                // headerTransparent: true,
-                // headerLeft: () => <Button onPress={() => navigation.navigate('Add comment')}>User page</Button>,
                 tabBarIcon: ({ size, color, focused }) => (
-                  <FontAwesome5 name='user-astronaut' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+                  <MaterialCommunityIcons
+                    name={'rocket-launch'}
+                    color={focused ? 'white' : 'rgb(102, 104, 109)'}
+                    size={size}
+                  />
                 ),
-                tabBarLabel: 'Profile',
-                tabBarBadge: friendChatsNotificationCount ? friendChatsNotificationCount : null,
+                tabBarLabel: 'Meetups',
+                // tabBarLabelStyle: { padding: 5 },
+                tabBarBadge: chatsNotificationCount ? chatsNotificationCount : null,
                 tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
                 // () => {
                 //   return null;
                 // },
-              })
-              //   {
-              //   tabBarIcon: ({ size, color }) => (
-              //     // <Image
-              //     //   color={color}
-              //     //   style={{ width: 24, height: 24 }}
-              //     //   source={require('../../../assets/app/timeMachine.png')}
-              //     // />
-              //     <MaterialCommunityIcons name='newspaper' color={color} size={size} />
-              //     // 本当はtime machineのiconにしたい。
-              //   ),
-              //   tabBarLabel: () => {
-              //     return null;
-              //   },
-              // }
-            }
-          />
+                // tabBarStyle: { display: hide ? 'none' : 'flex' },
+                // tabBarVisible: ((route) => {
+                //   const routeName = getFocusedRouteNameFromRoute(route) ?? '';
 
-          {/* <Tab.Screen
-          name='Notifications'
-          component={NotificationsNavigator}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({ size, color }) => <FontAwesome5 name='user-astronaut' color={color} size={size} />,
-            tabBarLabel: 'Profile',
-            // () => {
-            //   return null;
-            // },
-          }}
-        /> */}
+                //   if (routeName === 'Camera') {
+                //     return false;
+                //   }
+
+                //   return true;
+                // })(route),
+              })}
+            />
+            <Tab.Screen
+              name='Camera'
+              component={ChatBase}
+              options={{
+                headerShown: false,
+                tabBarLabel: 'Camera',
+                tabBarIcon: ({ size, color, focused }) => (
+                  <MaterialCommunityIcons name='camera' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+                ),
+              }}
+              listeners={({ navigation }) => ({
+                tabPress: (event) => {
+                  event.preventDefault();
+                  navigation.navigate('CameraNew'); // <-- Here you put the name where the chat component is declared
+                },
+              })}
+            />
+
+            <Tab.Screen
+              name='LibraryNavigator'
+              component={LibraryNavigator}
+              options={{
+                headerShown: false,
+                tabBarLabel: 'Libraries',
+                tabBarIcon: ({ size, color, focused }) => (
+                  <Ionicons name='ios-library-sharp' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+                ),
+              }}
+            />
+
+            {/* 全てのcomponent、navigatorを足さないといけないわ。Mapと全く同じように。この状態だと。mapの方のuser page routeに行く。*/}
+            <Tab.Screen
+              name='Auth'
+              component={AuthNavigator}
+              options={
+                ({ navigation }) => ({
+                  headerShown: false,
+                  // headerTransparent: true,
+                  // headerLeft: () => <Button onPress={() => navigation.navigate('Add comment')}>User page</Button>,
+                  tabBarIcon: ({ size, color, focused }) => (
+                    <FontAwesome5 name='user-astronaut' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+                  ),
+                  tabBarLabel: 'Profile',
+                  tabBarBadge: friendChatsNotificationCount ? friendChatsNotificationCount : null,
+                  tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
+                  // () => {
+                  //   return null;
+                  // },
+                })
+                //   {
+                //   tabBarIcon: ({ size, color }) => (
+                //     // <Image
+                //     //   color={color}
+                //     //   style={{ width: 24, height: 24 }}
+                //     //   source={require('../../../assets/app/timeMachine.png')}
+                //     // />
+                //     <MaterialCommunityIcons name='newspaper' color={color} size={size} />
+                //     // 本当はtime machineのiconにしたい。
+                //   ),
+                //   tabBarLabel: () => {
+                //     return null;
+                //   },
+                // }
+              }
+            />
+          </Tab.Group>
+          {/* <Tab.Group screenOptions={{ presentation: 'fullScreenModal' }}>
+            <Tab.Screen
+              name='CameraNew'
+              component={Camera}
+              options={{
+                headerShown: false,
+              }}
+            />
+          </Tab.Group> */}
         </Tab.Navigator>
       </NavigationContainer>
       <LoadingSpinner />

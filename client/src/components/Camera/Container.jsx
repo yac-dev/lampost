@@ -52,6 +52,7 @@ const Container = (props) => {
   const [video, setVideo] = useState();
   const [havingMeetup, setHavingMeetup] = useState(false);
   const [currentMeetup, setCurrentMeetup] = useState(null);
+  const [ongoingMeetup, setOngoingMeetup] = useState(null);
   const [taggedPeople, setTaggedPeople] = useState({});
   const [meetupAttendees, setMeetupAttendees] = useState({});
   const [isMeetupOngoing, setIsMeetupOngoing] = useState(false);
@@ -110,11 +111,14 @@ const Container = (props) => {
   };
 
   // やっていることは、単純にこのmeetupがongoingかを調べるだけ。
-  const checkIsMeetupOngoing = async () => {
-    const result = await lampostAPI.get(`/meetups/${props.route.params.meetupId}/isongoing`);
-    const { isMeetupOngoing } = result.data;
-    setIsMeetupOngoing(isMeetupOngoing);
-  };
+  // const checkIsMeetupOngoing = async () => {
+  //   const result = await lampostAPI.get(`/meetups/${props.route.params.meetupId}/isongoing`);
+  //   const { isMeetupOngoing } = result.data;
+  //   setIsMeetupOngoing(isMeetupOngoing);
+  // };
+
+  // というか、useEffectの方がいいかね。。。
+  // 今のmeetupをここでdetectする感じ。
   // useFocusEffect(
   //   React.useCallback(() => {
   //     // loadMe();
@@ -136,12 +140,18 @@ const Container = (props) => {
   // );
   // 60秒経ったら終わり。
   useEffect(() => {
-    setCurrentMeetup(props.route.params.meetupId);
-    checkIsMeetupOngoing();
+    const meetupList = Object.values(myUpcomingMeetups);
+    if (meetupList.length) {
+      meetupList.forEach((meetup) => {
+        if (meetup.state === 'ongoing') {
+          return setOngoingMeetup(meetup._id);
+        }
+      });
+    }
   }, []);
 
   useEffect(() => {
-    if (!isMeetupOngoing) {
+    if (!ongoingMeetup) {
       setSnackBar({
         isVisible: true,
         barType: 'warning',
@@ -149,7 +159,7 @@ const Container = (props) => {
         duration: 7000,
       });
     }
-  }, [isMeetupOngoing]);
+  }, [ongoingMeetup]);
 
   const renderTimer = () => {
     if (cameraMode === 'video') {
@@ -228,7 +238,7 @@ const Container = (props) => {
   }
 
   const isCameraButtonReady = () => {
-    if (isMeetupOngoing) {
+    if (ongoingMeetup) {
       return (
         <View style={{ position: 'absolute', right: -7, top: -7 }}>
           <Text>👍</Text>
@@ -263,7 +273,7 @@ const Container = (props) => {
       console.log(recordedVideo);
       setIsRecording(false);
       const formData = new FormData();
-      formData.append('meetupId', currentMeetup);
+      formData.append('meetupId', ongoingMeetup);
       formData.append('userId', auth.data._id);
       formData.append('type', cameraMode); // photo
       formData.append('effect', videoEffect);
@@ -309,7 +319,7 @@ const Container = (props) => {
         formData.append(`taggedUser${i}`, taggedUserIds[i]);
       }
     }
-    formData.append('meetupId', currentMeetup);
+    formData.append('meetupId', ongoingMeetup);
     formData.append('userId', auth.data._id);
     formData.append('type', cameraMode); // photo
     formData.append('asset', {
@@ -350,7 +360,7 @@ const Container = (props) => {
         <TouchableOpacity
           style={{ position: 'absolute', bottom: 100, alignSelf: 'center' }}
           onPress={() => takePhoto()}
-          disabled={isMeetupOngoing ? false : true}
+          disabled={ongoingMeetup ? false : true}
         >
           <View
             style={{
@@ -374,7 +384,7 @@ const Container = (props) => {
         <TouchableOpacity
           style={{ position: 'absolute', bottom: 100, alignSelf: 'center' }}
           onPress={() => videoButton()}
-          disabled={isMeetupOngoing ? false : true}
+          disabled={ongoingMeetup ? false : true}
         >
           {isRecording ? (
             // <Text style={{ color: 'white' }}>Recording</Text>
@@ -442,6 +452,7 @@ const Container = (props) => {
         meetupAttendees,
         setMeetupAttendees,
         currentMeetup,
+        ongoingMeetup,
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
@@ -463,10 +474,10 @@ const Container = (props) => {
             {renderTimer()}
           </Camera>
           <View style={{ position: 'absolute', top: 70, left: 10 }}>
-            <Text numberOfLines={1} style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>
+            {/* <Text numberOfLines={1} style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>
               {props.route.params.meetupTitle}
-            </Text>
-            {renderTaggedPeople()}
+            </Text> */}
+            {/* {renderTaggedPeople()} */}
           </View>
         </View>
         {renderCameraButton()}
@@ -520,8 +531,6 @@ const Container = (props) => {
         <PhotoEffectBottomSheet />
         <VideoEffectBottomSheet />
         <WarningModal />
-        <LoadingSpinner />
-        <SnackBar />
       </View>
     </CameraContext.Provider>
   );

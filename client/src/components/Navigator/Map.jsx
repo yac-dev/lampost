@@ -2,7 +2,6 @@ import React, { useEffect, useContext } from 'react';
 import GlobalContext from '../../GlobalContext';
 import { Text, TouchableOpacity, Image } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Button } from 'react-native-paper';
 const Stack = createNativeStackNavigator();
 import * as SecureStore from 'expo-secure-store';
 // import { io } from 'socket.io-client';
