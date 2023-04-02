@@ -10,39 +10,38 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 import { uploadPhoto, uploadNormalVideo } from '../services/s3';
 import { AddEffect } from '../services/ffmpeg';
+import { addPhotoEffect } from '../services/sharp';
+import sharp from 'sharp';
 
 export const createPhoto = async (request, response) => {
   try {
-    const { meetupId, userId, type, ...rest } = request.body;
+    const { meetupId, userId, type, effect, ...rest } = request.body;
     const taggedUserIds = Object.values(rest);
     const asset = await Asset.create({
       data: `https://lampost-${process.env.NODE_ENV}.s3.us-east-2.amazonaws.com/assets/photos/${request.file.filename}`,
       type: 'photo',
       meetup: meetupId,
+      effect: effect,
       taggedPeople: taggedUserIds,
       createdBy: userId,
       createdAt: new Date(),
     });
+    // ここでsharpを動かすわけだが、、、
     const meetup = await Meetup.findById(meetupId);
-    if (meetup.topPhotos.length <= 3) {
+    if (meetup.topPhotos.length <= 2) {
       meetup.topPhotos.push(asset._id);
       meetup.save();
     }
-    uploadPhoto(request.file.filename);
+
+    if (effect === 'normal') {
+      uploadPhoto(request.file.filename);
+    } else {
+      addPhotoEffect(request.file.filename, effect);
+    }
+
     response.status(200).json({
       message: 'success',
     });
-    // console.log(`tagged ${taggedUserIds}`);
-    // response.status(200).json({
-    //   message: 'success',
-    // });
-
-    //   const user = await User.findById(userId);
-    // if (!user.ongoingMeetup.state) {
-    //   // ここでerrorを返すのか。
-    //   throw new Error('This is the error');
-    // } else {
-    // }
   } catch (error) {
     console.log('this is the api error', error);
     response.status(400).json({
@@ -65,6 +64,7 @@ export const createVideo = async (request, response) => {
       createdBy: userId,
       createdAt: new Date(),
     });
+    // これ、何？？effectのconditionではなくて？？？
     if (type !== 'normal') {
       AddEffect(request.file.filename, effect, asset._id.toString(), asset.duration);
     } else {

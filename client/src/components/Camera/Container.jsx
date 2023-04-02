@@ -140,6 +140,7 @@ const Container = (props) => {
   // );
   // 60秒経ったら終わり。
   useEffect(() => {
+    console.log('camera compo');
     const meetupList = Object.values(myUpcomingMeetups);
     if (meetupList.length) {
       meetupList.forEach((meetup) => {
@@ -148,18 +149,18 @@ const Container = (props) => {
         }
       });
     }
-  }, []);
+  }, [myUpcomingMeetups]);
 
-  useEffect(() => {
-    if (!ongoingMeetup) {
-      setSnackBar({
-        isVisible: true,
-        barType: 'warning',
-        message: 'You can take photos/videos during your meetup time',
-        duration: 7000,
-      });
-    }
-  }, [ongoingMeetup]);
+  // useEffect(() => {
+  //   if (!ongoingMeetup) {
+  //     setSnackBar({
+  //       isVisible: true,
+  //       barType: 'warning',
+  //       message: 'You can take photos/videos during your meetup time',
+  //       duration: 7000,
+  //     });
+  //   }
+  // }, [ongoingMeetup]);
 
   const renderTimer = () => {
     if (cameraMode === 'video') {
@@ -177,16 +178,6 @@ const Container = (props) => {
           }}
         >
           <MaterialIcons name='hourglass-top' size={25} color='white' />
-          {/* <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
-            {('0' + Math.floor((time / 60000) % 60)).slice(-2)}:
-          </Text>
-          <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
-            {('0' + Math.floor((time / 1000) % 60)).slice(-2)}:
-          </Text>
-          <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
-            {('0' + ((time / 10) % 100)).slice(-2)}
-          </Text>
-          <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{time}</Text> */}
           <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{rest}</Text>
         </View>
       );
@@ -322,6 +313,7 @@ const Container = (props) => {
     formData.append('meetupId', ongoingMeetup);
     formData.append('userId', auth.data._id);
     formData.append('type', cameraMode); // photo
+    formData.append('effect', photoEffect);
     formData.append('asset', {
       name: newPhoto.uri.split('/').pop(),
       uri: newPhoto.uri,
@@ -531,6 +523,8 @@ const Container = (props) => {
         <PhotoEffectBottomSheet />
         <VideoEffectBottomSheet />
         <WarningModal />
+        <SnackBar />
+        <LoadingSpinner />
       </View>
     </CameraContext.Provider>
   );

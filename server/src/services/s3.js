@@ -58,6 +58,23 @@ export const uploadEffectedVideo = async (fileName, assetId) => {
   fs.rmSync(path.join(__dirname, 'tmp', assetId), { recursive: true, force: true });
 };
 
+export const uploadEffectedPhoto = async (fileName) => {
+  const __dirname = path.resolve();
+  const originalFilePath = path.join(__dirname, 'assets', 'photos', fileName);
+  const uploadingEffectedFilePath = path.join(__dirname, 'tmp', fileName);
+  const fileStream = fs.createReadStream(uploadingEffectedFilePath);
+
+  const uploadParams = {
+    Bucket: process.env.AWS_S3BUCKET_NAME,
+    Body: fileStream,
+    Key: `assets/photos/${fileName}`,
+  };
+  await s3.upload(uploadParams).promise();
+  console.log('photo Uploaded');
+  await unlinkFile(originalFilePath);
+  await unlinkFile(uploadingEffectedFilePath);
+};
+
 export const uploadAvatar = async (fileName) => {
   const __dirname = path.resolve();
   const filePath = path.join(__dirname, 'avatars', fileName);

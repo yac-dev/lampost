@@ -13,7 +13,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 
 const Stats = () => {
-  const { Foundation } = iconsTable;
+  const { Foundation, Entypo } = iconsTable;
   const { user, activitiesMenuBottomSheetRef, leadershipBottomSheetRef } = useContext(UserContext);
 
   if (user.launcher) {
@@ -36,13 +36,13 @@ const Stats = () => {
                   color: 'white',
                   fontSize: 27,
                   fontWeight: 'bold',
-                  color: iconColorsTable['green1'],
-                  marginRight: 5,
+                  color: iconColorsTable['lightGreen1'],
+                  marginRight: 3,
                 }}
               >
                 {user.fame}
               </Text>
-              <Foundation name='arrow-up' size={20} color={iconColorsTable['green1']} />
+              <Entypo name='triangle-up' size={20} color={iconColorsTable['lightGreen1']} />
             </View>
           </View>
         </View>

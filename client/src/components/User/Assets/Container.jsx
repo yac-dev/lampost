@@ -50,7 +50,7 @@ const Container = (props) => {
     } else {
       return (
         <Text style={{ color: baseTextColor, textAlign: 'center', paddingTop: 30 }}>
-          You'll all the assets of this user.
+          You'll see all the assets of this user😀
         </Text>
       );
     }

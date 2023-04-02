@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, Text, Platform, AppState } from 'react-native';
+import { View, Text, Platform, AppState, TouchableOpacity } from 'react-native';
 import lampostAPI from './apis/lampost';
 import GlobalContext from './GlobalContext';
-import { connect } from 'react-redux';
 // import { io } from 'socket.io-client';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -16,7 +15,6 @@ import { createNavigationContainerRef } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { appBottomSheetBackgroundColor, iconColorsTable } from './utils/colorsTable';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Button } from 'react-native-paper';
 const Stack = createNativeStackNavigator();
 
 import MapNavigator from './components/Navigator/Map';
@@ -27,8 +25,7 @@ import NotAvailableModal from './components/Utils/NotAvailableModal';
 import PleaseLoginModal from './components/Utils/PleaseLoginModal';
 import SnackBar from './components/Utils/SnackBar';
 import Camera from './components/Camera/Container';
-// import DummyCamera from './components/DummyCamera';
-import Video from './components/Video';
+import TabNavigator from './TabNavigator';
 
 const ref = createNavigationContainerRef();
 const Tab = createBottomTabNavigator();
@@ -436,157 +433,47 @@ const AppStack = (props) => {
         setFriendChatsNotificationCount,
       }}
     >
-      {/* <Stack.Navigator>
-
-       </Stack.Navigator> */}
       <NavigationContainer
-        ref={ref}
-        onReady={() => {
-          setRouteName(ref.getCurrentRoute().name);
-        }}
-        onStateChange={async () => {
-          const previousRouteName = routeName;
-          const currentRouteName = ref.getCurrentRoute().name;
-          setRouteName(currentRouteName);
-        }}
+      // ref={ref}
+      // onReady={() => {
+      //   setRouteName(ref.getCurrentRoute().name);
+      // }}
+      // onStateChange={async () => {
+      //   const previousRouteName = routeName;
+      //   const currentRouteName = ref.getCurrentRoute().name;
+      //   setRouteName(currentRouteName);
+      // }}
       >
-        <Tab.Navigator
-          screenOptions={{
-            tabBarStyle: {
-              display: hide ? 'none' : 'flex',
-              backgroundColor: appBottomSheetBackgroundColor,
-            },
-            tabBarLabelStyle: {
-              fontSize: 12,
-            },
-            tabBarActiveTintColor: 'white',
-          }}
-          // tabBarOptions={{
-          //   showLabel: false,
-          //   activeBackgroundColor: iconColorsTable['blue1'],
-          //   inactiveBackgroundColor: 'yellow',
-          //   style:{
-          //       position:'absolute',
-          //       bottom:0,
-          //       right:0,
-          //       left:0,
-          //       elevation:0,
-          //       height:55,
-          //       borderTopRightRadius: 20,
-          //       borderTopLeftRadius: 20,
-
-          //   },
-          // }}
-        >
-          <Tab.Group>
-            <Tab.Screen
-              name='Meetups'
-              component={MapNavigator}
-              options={({ route }) => ({
-                headerShown: false,
-                tabBarIcon: ({ size, color, focused }) => (
-                  <MaterialCommunityIcons
-                    name={'rocket-launch'}
-                    color={focused ? 'white' : 'rgb(102, 104, 109)'}
-                    size={size}
-                  />
-                ),
-                tabBarLabel: 'Meetups',
-                // tabBarLabelStyle: { padding: 5 },
-                tabBarBadge: chatsNotificationCount ? chatsNotificationCount : null,
-                tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
-                // () => {
-                //   return null;
-                // },
-                // tabBarStyle: { display: hide ? 'none' : 'flex' },
-                // tabBarVisible: ((route) => {
-                //   const routeName = getFocusedRouteNameFromRoute(route) ?? '';
-
-                //   if (routeName === 'Camera') {
-                //     return false;
-                //   }
-
-                //   return true;
-                // })(route),
-              })}
-            />
-            <Tab.Screen
-              name='Camera'
-              component={ChatBase}
+        <Stack.Navigator>
+          <Stack.Group>
+            <Stack.Screen
+              name='main'
               options={{
                 headerShown: false,
-                tabBarLabel: 'Camera',
-                tabBarIcon: ({ size, color, focused }) => (
-                  <MaterialCommunityIcons name='camera' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
-                ),
               }}
-              listeners={({ navigation }) => ({
-                tabPress: (event) => {
-                  event.preventDefault();
-                  navigation.navigate('CameraNew'); // <-- Here you put the name where the chat component is declared
-                },
-              })}
+              component={TabNavigator}
             />
-
-            <Tab.Screen
-              name='LibraryNavigator'
-              component={LibraryNavigator}
-              options={{
-                headerShown: false,
-                tabBarLabel: 'Libraries',
-                tabBarIcon: ({ size, color, focused }) => (
-                  <Ionicons name='ios-library-sharp' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
-                ),
-              }}
-            />
-
-            {/* 全てのcomponent、navigatorを足さないといけないわ。Mapと全く同じように。この状態だと。mapの方のuser page routeに行く。*/}
-            <Tab.Screen
-              name='Auth'
-              component={AuthNavigator}
-              options={
-                ({ navigation }) => ({
-                  headerShown: false,
-                  // headerTransparent: true,
-                  // headerLeft: () => <Button onPress={() => navigation.navigate('Add comment')}>User page</Button>,
-                  tabBarIcon: ({ size, color, focused }) => (
-                    <FontAwesome5 name='user-astronaut' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
-                  ),
-                  tabBarLabel: 'Profile',
-                  tabBarBadge: friendChatsNotificationCount ? friendChatsNotificationCount : null,
-                  tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
-                  // () => {
-                  //   return null;
-                  // },
-                })
-                //   {
-                //   tabBarIcon: ({ size, color }) => (
-                //     // <Image
-                //     //   color={color}
-                //     //   style={{ width: 24, height: 24 }}
-                //     //   source={require('../../../assets/app/timeMachine.png')}
-                //     // />
-                //     <MaterialCommunityIcons name='newspaper' color={color} size={size} />
-                //     // 本当はtime machineのiconにしたい。
-                //   ),
-                //   tabBarLabel: () => {
-                //     return null;
-                //   },
-                // }
-              }
-            />
-          </Tab.Group>
-          {/* <Tab.Group screenOptions={{ presentation: 'fullScreenModal' }}>
-            <Tab.Screen
+          </Stack.Group>
+          <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
+            <Stack.Screen
               name='CameraNew'
               component={Camera}
-              options={{
-                headerShown: false,
-              }}
+              options={({ navigation }) => ({
+                headerLeft: () => (
+                  <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Ionicons name='close-circle-outline' size={30} color={'white'} />
+                    {/* <Text style={{ color: 'white', fontSize: 20 }}>Close</Text> */}
+                  </TouchableOpacity>
+                ),
+                headerShown: true,
+                title: '',
+                headerTransparent: true,
+              })}
             />
-          </Tab.Group> */}
-        </Tab.Navigator>
+          </Stack.Group>
+        </Stack.Navigator>
       </NavigationContainer>
+
       <LoadingSpinner />
       <SnackBar />
       <NotAvailableModal />

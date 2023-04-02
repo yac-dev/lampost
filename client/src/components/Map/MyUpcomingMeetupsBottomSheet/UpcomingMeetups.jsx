@@ -186,22 +186,6 @@ const Container = (props) => {
               marginBottom: 10,
             }}
             onPress={() => {
-              navigation.navigate('Camera', { meetupId: meetup._id, meetupTitle: meetup.title });
-            }}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
-              <Ionicons size={25} name='camera' color={'white'} style={{ marginRight: 5 }} />
-              <Text style={{ color: 'white' }}>Capture moment</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              backgroundColor: iconColorsTable['blue1'],
-              borderRadius: 7,
-              padding: 5,
-              marginBottom: 10,
-            }}
-            onPress={() => {
               navigation.navigate('Lounge', { meetupId: meetup._id });
             }}
           >
@@ -216,22 +200,6 @@ const Container = (props) => {
     } else {
       return (
         <View style={{ flexDirection: 'column' }}>
-          <TouchableOpacity
-            style={{
-              backgroundColor: iconColorsTable['blue1'],
-              borderRadius: 7,
-              padding: 5,
-              marginBottom: 10,
-            }}
-            onPress={() => {
-              navigation.navigate('Camera', { meetupId: meetup._id, meetupTitle: meetup.title });
-            }}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
-              <Ionicons size={25} name='camera' color={'white'} style={{ marginRight: 5 }} />
-              <Text style={{ color: 'white' }}>Capture moment</Text>
-            </View>
-          </TouchableOpacity>
           <TouchableOpacity
             style={{
               backgroundColor: iconColorsTable['blue1'],
