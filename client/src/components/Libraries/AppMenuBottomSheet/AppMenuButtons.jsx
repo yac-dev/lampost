@@ -16,7 +16,7 @@ import AppButton from '../../Utils/AppMenuButton';
 
 const AppButtons = (props) => {
   const { auth, setIsNotAvailableModalOpen } = useContext(GlobalContext);
-  const { appMenuBottomSheetRef, createLibraryBottomSheetRef } = useContext(LibrariesContext);
+  const { appMenuBottomSheetRef, createLibraryBottomSheetRef, navigation } = useContext(LibrariesContext);
 
   if (auth.data) {
     return (
@@ -25,7 +25,8 @@ const AppButtons = (props) => {
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
             appMenuBottomSheetRef.current.close();
-            createLibraryBottomSheetRef.current.snapToIndex(0);
+            // createLibraryBottomSheetRef.current.snapToIndex(0);
+            navigation.navigate('Create new library');
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>

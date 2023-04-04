@@ -544,6 +544,9 @@ export const gamings = [
   'White Wolf',
   'Word Gaming',
   'World of Darkness',
+  'Uno',
+  'Jenga',
+  'Lego',
 ];
 
 export const languagesAndEthnic = [
@@ -933,6 +936,7 @@ export const family = [
 ];
 
 export const videoGames = [
+  'Animes',
   'Apex Legends',
   'Among Us',
   'LAN Party',
@@ -957,6 +961,7 @@ export const videoGames = [
   'War Game',
   'Warcraft & World of Warcraft',
   'Xbox',
+  'Gamer',
 ];
 
 export const petsAndAnimals = [

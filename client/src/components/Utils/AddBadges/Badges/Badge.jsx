@@ -273,7 +273,7 @@ const Badge = (props) => {
           </View>
         </TouchableOpacity>
         <Text
-          numberOfLines={1}
+          numberOfLines={2}
           style={{
             paddingLeft: 5,
             paddingRight: 5,

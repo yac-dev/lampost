@@ -41,6 +41,7 @@ export const baseBorderColor = 'rgb(72, 76, 86)';
 export const appBottomSheetBackgroundColor = 'rgb(32, 34, 37)';
 export const sectionBackgroundColor = 'rgb(42, 44, 49)';
 export const inputBackgroundColor = 'rgb(73, 75, 80)';
+export const inputBackgroundColorNew = 'rgb(88, 88, 88)';
 export const screenSectionBackgroundColor = 'rgb(64, 64, 64)';
 export const screenBorderBottomColor = 'rgb(124, 124, 124)';
 export const buttonBackgroundColor = 'rgb(86, 86, 86)';

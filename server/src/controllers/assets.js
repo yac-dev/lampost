@@ -65,7 +65,7 @@ export const createVideo = async (request, response) => {
       createdAt: new Date(),
     });
     // これ、何？？effectのconditionではなくて？？？
-    if (type !== 'normal') {
+    if (effect !== 'normal') {
       AddEffect(request.file.filename, effect, asset._id.toString(), asset.duration);
     } else {
       uploadNormalVideo(request.file.filename);

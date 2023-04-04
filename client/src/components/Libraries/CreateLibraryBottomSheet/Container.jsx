@@ -21,7 +21,19 @@ const Container = (props) => {
   const snapPoints = ['65%'];
   const [component, setComponent] = useState('LIBRARY_NAME');
   // const [formData, setFormData] = useState({ name: '', badges: {}, description: '', rolls: ['', ''] });
-  const [formData, setFormData] = useState({ name: '', badges: {}, assetType: 'photo', description: '', asset: null });
+  const [formData, setFormData] = useState({
+    name: '',
+    badges: {},
+    assetType: 'photo',
+    requiredTrust: 0,
+    isReactionAvailable: false,
+    reactionOptions: [],
+    upvoteLimit: 1,
+    isCommentAvailable: false,
+    description: '',
+    asset: null,
+  });
+  // trust機能を、launcherにだけではなくて、個々のuserにもつけたいね。優しげなコメントをしている人で、commentがupvoteされれば、trustが溜まっていく。逆に狂ったコメントしたり、reportされれば信用を落とす、そんな仕組みにしたい。product huntをやって思うんだよね。communityへの貢献て重要だなと。
 
   const switchComponent = () => {
     switch (component) {

@@ -2,6 +2,14 @@ import Badge from '../models/badge';
 import BadgeAndUserRelationship from '../models/badgeAndUserRelationship';
 import User from '../models/user';
 import Asset from '../models/asset';
+import S3 from 'aws-sdk/clients/s3';
+import path from 'path';
+
+const s3 = new S3({
+  region: process.env.AWS_S3BUCKET_REGION,
+  accessKeyId: process.env.AWS_S3BUCKET_ACCESS_KEY_FOR_SERVER, // このexpress appのbucketにアクセスするためのunique name。
+  secretAccessKey: process.env.AWS_S3BUCKET_SECRET_KEY_FOR_SERVER, // そして、それのpassword。
+});
 
 export const getBadges = async (request, response) => {
   try {
@@ -86,6 +94,23 @@ export const getBadgeRolls = async (request, response) => {
     badgeRolls = await badgeRolls.limit(10);
     response.status(200).json({
       badgeRolls: badgeRolls.rolls,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getIcons = async (request, response) => {
+  try {
+    const params = {
+      Bucket: process.env.AWS_S3BUCKET_NAME,
+      Key: 'assets/icons/',
+    };
+    s3.getObject(params, (data) => {
+      console.log(data);
+    });
+    response.status(200).json({
+      message: 'success',
     });
   } catch (error) {
     console.log(error);

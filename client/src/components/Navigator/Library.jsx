@@ -6,6 +6,9 @@ import { getFocusedRouteNameFromRoute, NavigationContainer } from '@react-naviga
 const Stack = createNativeStackNavigator();
 
 import Container from '../Libraries/Container';
+// import CreateLibrary from '../Libraries/CreateLibraryBottomSheet/ContainerNew'
+import CreateNewLibrary from '../Libraries/CreateNewLibrary/Container';
+import Icons from '../Libraries/CreateNewLibrary/Icons';
 import LibraryContainer from '../Libraries/Library/Container';
 import AuthNavigator from './Auth';
 import User from '../User/Container';
@@ -210,7 +213,47 @@ const LibraryNavigator = () => {
           })}
         /> */}
       </Stack.Group>
+      <Stack.Group screenOptions={{ presentation: 'modal' }}>
+        <Stack.Screen
+          name='Icons'
+          component={Icons}
+          options={({ navigation }) => ({
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+              </TouchableOpacity>
+            ),
+            headerTitle: 'Choose an icon',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          })}
+        />
+      </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
+        <Stack.Screen
+          name='Create new library'
+          component={CreateNewLibrary}
+          options={({ navigation }) => ({
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
+              </TouchableOpacity>
+            ),
+            headerTitle: 'Create new library',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          })}
+        />
         <Stack.Screen
           name='Profile'
           component={AuthNavigator}

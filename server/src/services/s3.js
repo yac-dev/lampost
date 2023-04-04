@@ -118,3 +118,14 @@ export const uploadIcon = async (fileName) => {
   await s3.upload(uploadParams).promise();
   console.log('icon uploaded');
 };
+
+export const getIcons = async () => {
+  const params = {
+    Bucket: process.env.AWS_S3BUCKET_NAME,
+    Body: fileStream,
+    Key: 'assets/icons/',
+  };
+  s3.getObject(params, (data) => {
+    console.log(data);
+  });
+};

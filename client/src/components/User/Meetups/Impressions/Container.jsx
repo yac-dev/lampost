@@ -70,41 +70,44 @@ const ImpressionsContainer = (props) => {
   const renderImpression = (impression) => {
     return (
       <View style={{ padding: 10, marginBottom: 10, backgroundColor: screenSectionBackgroundColor, borderRadius: 5 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-          <FastImage
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 10,
-              marginRight: 20,
-              backgroundColor: iconColorsTable['blue1'],
-            }}
-            source={{
-              uri: impression.user.photo
-                ? impression.user.photo
-                : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
-            }}
-            resizeMode={FastImage.resizeMode.stretch}
-            tintColor={impression.user.photo ? null : 'white'}
-          />
-          <View style={{ flexDirection: 'column' }}>
-            <Text style={{ marginBottom: 5, color: 'white', fontSize: 17 }}>{impression.user.name}</Text>
-            <Text style={{ color: baseTextColor }}>{renderDate(impression.createdAt)}</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, justifyContent: 'space-between' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <FastImage
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 10,
+                marginRight: 20,
+                backgroundColor: iconColorsTable['blue1'],
+              }}
+              source={{
+                uri: impression.user.photo
+                  ? impression.user.photo
+                  : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
+              }}
+              resizeMode={FastImage.resizeMode.stretch}
+              tintColor={impression.user.photo ? null : 'white'}
+            />
+            <View style={{ flexDirection: 'column' }}>
+              <Text style={{ marginBottom: 5, color: 'white', fontSize: 17 }}>{impression.user.name}</Text>
+              <Text style={{ color: baseTextColor }}>{renderDate(impression.createdAt)}</Text>
+            </View>
           </View>
-        </View>
-        <View style={{ flexDirection: 'column' }}>
           {impression.emojis.length ? (
-            <View style={{ marginBottom: 5 }}>
+            <View style={{}}>
               <FlatList
                 data={impression.emojis}
                 renderItem={({ item }) => {
-                  return <Text>{item}</Text>;
+                  return <Text style={{ fontSize: 18 }}>{item}</Text>;
                 }}
                 keyExtractor={(item, index) => `${item}-${index}`}
                 horizontal={true}
               />
             </View>
           ) : null}
+        </View>
+
+        <View style={{ flexDirection: 'column' }}>
           <Text style={{ color: 'white' }}>{impression.content}</Text>
         </View>
       </View>

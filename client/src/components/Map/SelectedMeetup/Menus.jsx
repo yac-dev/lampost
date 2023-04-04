@@ -143,27 +143,6 @@ const Menus = (props) => {
         }}
       />
       <Menu
-        label='Fee'
-        icon={<Foundation name='dollar-bill' size={20} color={iconColorsTable['yellow1']} />}
-        backgroundColor={backgroundColorsTable['yellow1']}
-        rightInfo={
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ color: baseTextColor, fontSize: 15 }}>
-              {selectedMeetup.isFeeFree ? "It's free" : `$${selectedMeetup.fee}`}
-            </Text>
-            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
-          </View>
-        }
-        onPressMenu={() => {
-          navigation.navigate('Meetup fee', {
-            launcherId: selectedMeetup.launcher._id,
-            meetupId: selectedMeetup._id,
-            isFeeFree: selectedMeetup.isFeeFree,
-            fee: selectedMeetup.fee,
-          });
-        }}
-      />
-      <Menu
         label='Description'
         backgroundColor={backgroundColorsTable['green1']}
         icon={<MaterialCommunityIcons name='card-text-outline' size={20} color={iconColorsTable['green1']} />}
@@ -185,6 +164,27 @@ const Menus = (props) => {
           });
           // setSelectedMeetupDetailComponent('Description');
           // selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
+        }}
+      />
+      <Menu
+        label='Fee'
+        icon={<Foundation name='dollar-bill' size={20} color={iconColorsTable['yellow1']} />}
+        backgroundColor={backgroundColorsTable['yellow1']}
+        rightInfo={
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ color: baseTextColor, fontSize: 15 }}>
+              {selectedMeetup.isFeeFree ? "It's free" : `$${selectedMeetup.fee}`}
+            </Text>
+            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
+          </View>
+        }
+        onPressMenu={() => {
+          navigation.navigate('Meetup fee', {
+            launcherId: selectedMeetup.launcher._id,
+            meetupId: selectedMeetup._id,
+            isFeeFree: selectedMeetup.isFeeFree,
+            fee: selectedMeetup.fee,
+          });
         }}
       />
       <Menu

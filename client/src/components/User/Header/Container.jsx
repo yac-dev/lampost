@@ -46,7 +46,7 @@ const HeaderContainer = () => {
       <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 18, textAlign: 'center', marginBottom: 5 }}>
         {user.name}
       </Text>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <TouchableOpacity
           style={{
             paddingLeft: 10,
@@ -98,7 +98,7 @@ const HeaderContainer = () => {
             </View>
           </View>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 };
