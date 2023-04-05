@@ -19,38 +19,90 @@ const Title = () => {
   const inputAccessoryViewID = 'TITLE_INPUT';
 
   useEffect(() => {
-    // if (formData.title.length && formData.title.length <= 41) {
-    //   setStageCleared((previous) => {
-    //     return {
-    //       ...previous,
-    //       title: true,
-    //     };
-    //   });
-    // } else {
-    //   setStageCleared((previous) => {
-    //     return {
-    //       ...previous,
-    //       title: false,
-    //     };
-    //   });
-    // }
-  }, [formData.title]);
-
-  useEffect(() => {
-    if (formData.isRequiredTrust === false) {
-      setStageCleared(true);
-    } else if (formData.isRequiredTrust && formData.requiredTrust) {
-      setStageCleared(true);
+    if (typeof formData.isTrustRequired === 'boolean') {
+      if (formData.isTrustRequired) {
+        if (formData.requiredTrust) {
+          setStageCleared((previous) => {
+            return {
+              ...previous,
+              trust: true,
+            };
+          });
+        } else {
+          setStageCleared((previous) => {
+            return {
+              ...previous,
+              trust: false,
+            };
+          });
+        }
+      } else {
+        setStageCleared((previous) => {
+          return {
+            ...previous,
+            trust: true,
+          };
+        });
+      }
     } else {
-      setStageCleared(false);
+      setStageCleared((previous) => {
+        return {
+          ...previous,
+          trust: false,
+        };
+      });
     }
-  }, [formData.isRequiredTrust, formData.requiredTrust]);
+  }, [formData.isTrustRequired, formData.requiredTrust]);
 
-  // <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-  //           <Text style={{ fontSize: 13, color: baseTextColor, marginRight: 20 }}>
-  //             Required to have certain trust for people to join this library?
-  //           </Text>
-  //         </View>
+  const renderCheckMarkForFree = () => {
+    if (typeof formData.isTrustRequired === 'boolean') {
+      if (formData.isTrustRequired) {
+        return null;
+      } else {
+        return (
+          <View style={{ position: 'absolute', right: -7, top: -7 }}>
+            <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
+          </View>
+        );
+      }
+    } else {
+      return null;
+    }
+  };
+
+  const renderCheckMarkForRequired = () => {
+    if (typeof formData.isTrustRequired === 'boolean') {
+      if (formData.isTrustRequired) {
+        return (
+          <View style={{ position: 'absolute', right: -7, top: -7 }}>
+            <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
+          </View>
+        );
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  };
+
+  const renderTextInputForTrust = () => {
+    if (typeof formData.isTrustRequired === 'boolean') {
+      if (formData.isTrustRequired) {
+        return (
+          <TextInput
+            style={{ backgroundColor: inputBackgroundColorNew, padding: 10, borderRadius: 5, color: baseTextColor }}
+            placeholder='How much'
+            placeholderTextColor={baseTextColor}
+          />
+        );
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  };
 
   return (
     <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 7, borderRadius: 5, marginBottom: 10 }}>
@@ -80,7 +132,7 @@ const Title = () => {
           >
             <Ionicons name='ios-heart' size={25} color={iconColorsTable['pink1']} />
           </View>
-          <Text style={{ fontWeight: 'bold', fontSize: 17, color: 'white', marginRight: 10 }}>Trust</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 17, color: 'white', marginRight: 10 }}>Trust requirements</Text>
         </TouchableOpacity>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Ionicons
@@ -108,62 +160,57 @@ const Title = () => {
         </View>
       </View>
       {accordion.trust ? (
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-          <TouchableOpacity
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              padding: 10,
-              backgroundColor: iconColorsTable['blue1'],
-              borderRadius: 5,
-              marginRight: 10,
-            }}
-            onPress={() =>
-              setFormData((previous) => {
-                return {
-                  ...previous,
-                  isRequiredTrust: false,
-                };
-              })
-            }
-          >
-            <Text style={{ color: 'white' }}>No. It's free</Text>
-            {formData.isRequiredTrust === false ? (
-              <View style={{ position: 'absolute', right: -7, top: -7 }}>
-                <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
-              </View>
-            ) : null}
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              padding: 10,
-              backgroundColor: iconColorsTable['blue1'],
-              borderRadius: 5,
-              marginRight: 10,
-            }}
-            onPress={() =>
-              setFormData((previous) => {
-                return {
-                  ...previous,
-                  isRequiredTrust: true,
-                };
-              })
-            }
-          >
-            <Text style={{ color: 'white' }}>Required</Text>
-            {formData.isRequiredTrust === false ? null : (
-              <View style={{ position: 'absolute', right: -7, top: -7 }}>
-                <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
-              </View>
-            )}
-          </TouchableOpacity>
-          <TextInput
-            style={{ backgroundColor: inputBackgroundColorNew, padding: 10, borderRadius: 5, color: baseTextColor }}
-            placeholder='How much'
-            placeholderTextColor={baseTextColor}
-          />
+        <View style={{ marginTop: 10 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Text style={{ fontSize: 13, color: baseTextColor, marginBottom: 10 }}>
+              Are people required to have certain trust to join this library?
+            </Text>
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <TouchableOpacity
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                padding: 10,
+                backgroundColor: iconColorsTable['blue1'],
+                borderRadius: 5,
+                marginRight: 10,
+              }}
+              onPress={() =>
+                setFormData((previous) => {
+                  return {
+                    ...previous,
+                    isTrustRequired: false,
+                  };
+                })
+              }
+            >
+              <Text style={{ color: 'white' }}>It's free</Text>
+              {renderCheckMarkForFree()}
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                padding: 10,
+                backgroundColor: iconColorsTable['blue1'],
+                borderRadius: 5,
+                marginRight: 10,
+              }}
+              onPress={() =>
+                setFormData((previous) => {
+                  return {
+                    ...previous,
+                    isTrustRequired: true,
+                  };
+                })
+              }
+            >
+              <Text style={{ color: 'white' }}>Required</Text>
+              {renderCheckMarkForRequired()}
+            </TouchableOpacity>
+            {renderTextInputForTrust()}
+          </View>
         </View>
       ) : null}
     </View>

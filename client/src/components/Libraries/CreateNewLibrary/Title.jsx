@@ -105,7 +105,9 @@ const Title = () => {
           <View
             style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}
           >
-            <Text style={{ fontSize: 13, color: baseTextColor }}>Please write in simple and catchy.</Text>
+            <Text style={{ fontSize: 13, color: baseTextColor }}>
+              Please write the library name in simple and catchy.
+            </Text>
             {renderTitleLength()}
           </View>
           <TextInput

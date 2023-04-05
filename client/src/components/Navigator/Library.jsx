@@ -8,6 +8,7 @@ const Stack = createNativeStackNavigator();
 import Container from '../Libraries/Container';
 // import CreateLibrary from '../Libraries/CreateLibraryBottomSheet/ContainerNew'
 import CreateNewLibrary from '../Libraries/CreateNewLibrary/Container';
+import CreateReaction from '../Libraries/CreateNewLibrary/CreateReaction/Container';
 import Icons from '../Libraries/CreateNewLibrary/Icons';
 import LibraryContainer from '../Libraries/Library/Container';
 import AuthNavigator from './Auth';
@@ -213,17 +214,17 @@ const LibraryNavigator = () => {
           })}
         /> */}
       </Stack.Group>
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
+      <Stack.Group screenOptions={{ presentation: 'modal', gestureEnabled: false }}>
         <Stack.Screen
-          name='Icons'
-          component={Icons}
+          name='Create reaction'
+          component={CreateReaction}
           options={({ navigation }) => ({
             headerLeft: () => (
               <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+                <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
               </TouchableOpacity>
             ),
-            headerTitle: 'Choose an icon',
+            headerTitle: 'Create reaction',
             headerStyle: {
               backgroundColor: appBottomSheetBackgroundColor,
             },

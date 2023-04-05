@@ -14,7 +14,7 @@ import {
 import { iconsTable } from '../../../utils/icons';
 
 const Title = () => {
-  const { AntDesign, Ionicons, MaterialIcons, MaterialCommunityIcons, Fontisto } = iconsTable;
+  const { AntDesign, Ionicons, MaterialIcons, MaterialCommunityIcons, Foundation } = iconsTable;
   const {
     formData,
     setFormData,
@@ -23,21 +23,40 @@ const Title = () => {
     accordion,
     setAccordion,
     createReactionBottomSheetRef,
+    navigation,
   } = useContext(FormContext);
 
   useEffect(() => {
-    if (formData.isReactionAvailable) {
-      setStageCleared((previous) => {
-        return {
-          ...previous,
-          reaction: true,
-        };
-      });
+    if (typeof formData.isReactionAvailable === 'boolean') {
+      if (formData.isReactionAvailable) {
+        if (formData.reactionOptions.length) {
+          setStageCleared((previous) => {
+            return {
+              ...previous,
+              reaction: true,
+            };
+          });
+        } else {
+          setStageCleared((previous) => {
+            return {
+              ...previous,
+              reaction: false,
+            };
+          });
+        }
+      } else {
+        setStageCleared((previous) => {
+          return {
+            ...previous,
+            reaction: true,
+          };
+        });
+      }
     } else {
       setStageCleared((previous) => {
         return {
           ...previous,
-          reaction: true,
+          reaction: false,
         };
       });
     }
@@ -55,6 +74,38 @@ const Title = () => {
   //           </Text>
   //         </View>
   //       </View>
+
+  const renderCheckMarkForSure = () => {
+    if (typeof formData.isReactionAvailable === 'boolean') {
+      if (formData.isReactionAvailable) {
+        return (
+          <View style={{ position: 'absolute', right: -7, top: -7 }}>
+            <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
+          </View>
+        );
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  };
+
+  const renderCheckMarkForTurnedOff = () => {
+    if (typeof formData.isReactionAvailable === 'boolean') {
+      if (formData.isReactionAvailable) {
+        return null;
+      } else {
+        return (
+          <View style={{ position: 'absolute', right: -7, top: -7 }}>
+            <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
+          </View>
+        );
+      }
+    } else {
+      return null;
+    }
+  };
 
   return (
     <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 7, borderRadius: 5, marginBottom: 10 }}>
@@ -113,9 +164,20 @@ const Title = () => {
       </View>
       {accordion.reaction ? (
         <View style={{ marginTop: 10 }}>
-          <Text style={{ fontSize: 13, color: baseTextColor, marginBottom: 10 }}>
-            Allow people to upvote👍 each photo/video?
-          </Text>
+          <View
+            style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}
+          >
+            <Text style={{ fontSize: 13, color: baseTextColor }}>
+              Allow people to upvote/like each {formData.assetType}?
+            </Text>
+            {/* <TouchableOpacity
+              onPress={() => {
+                console.log('hello');
+              }}
+            >
+              <Ionicons name='help-circle' size={20} color={iconColorsTable['yellow1']} />
+            </TouchableOpacity> */}
+          </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
             <View style={{ marginRight: 15 }}>
               <TouchableOpacity
@@ -127,15 +189,18 @@ const Title = () => {
                     };
                   });
                 }}
-                style={{ backgroundColor: iconColorsTable['blue1'], padding: 10, borderRadius: 5 }}
+                style={{
+                  backgroundColor: iconColorsTable['blue1'],
+                  padding: 10,
+                  borderRadius: 5,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}
               >
-                <Text style={{ color: 'white' }}>Sure</Text>
+                <MaterialCommunityIcons name='thumb-up' size={20} color={'white'} style={{ marginRight: 5 }} />
+                <Text style={{ color: 'white' }}>Yes, allow</Text>
               </TouchableOpacity>
-              {formData.isReactionAvailable ? (
-                <View style={{ position: 'absolute', right: -7, top: -7 }}>
-                  <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
-                </View>
-              ) : null}
+              {renderCheckMarkForSure()}
             </View>
             <View>
               <TouchableOpacity
@@ -147,21 +212,24 @@ const Title = () => {
                     };
                   });
                 }}
-                style={{ backgroundColor: iconColorsTable['blue1'], padding: 10, borderRadius: 5 }}
+                style={{
+                  backgroundColor: iconColorsTable['red1'],
+                  padding: 10,
+                  borderRadius: 5,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}
               >
-                <Text style={{ color: 'white' }}>No, it's turned off</Text>
+                <Foundation name='prohibited' size={20} color={'white'} style={{ marginRight: 5 }} />
+                <Text style={{ color: 'white' }}>No, disable</Text>
               </TouchableOpacity>
-              {formData.isReactionAvailable ? null : (
-                <View style={{ position: 'absolute', right: -7, top: -7 }}>
-                  <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
-                </View>
-              )}
+              {renderCheckMarkForTurnedOff()}
             </View>
           </View>
           {formData.isReactionAvailable ? (
             <View>
               <Text style={{ fontSize: 13, color: baseTextColor, marginBottom: 10 }}>
-                Now, please create the upvote options by combining an icon and a word.
+                Now, please create your own upvote options by combining an icon and short comment.
               </Text>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <TouchableOpacity
@@ -172,9 +240,9 @@ const Title = () => {
                     padding: 10,
                     borderRadius: 5,
                   }}
-                  onPress={() => createReactionBottomSheetRef.current.snapToIndex(0)}
+                  onPress={() => navigation.navigate('Create reaction')}
                 >
-                  <MaterialCommunityIcons name='plus' color={'white'} size={20} style={{ marginRight: 10 }} />
+                  <MaterialCommunityIcons name='plus' color={'white'} size={20} style={{ marginRight: 5 }} />
                   <Text style={{ color: 'white' }}>Add</Text>
                 </TouchableOpacity>
               </View>

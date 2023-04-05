@@ -8,20 +8,16 @@ import MediaType from './MediaType';
 import Trust from './Trust';
 import Reactions from './Reactions';
 import Description from './Description';
-import CreateReactionBottomSheet from './CreateReactionBottomSheet';
 
 const Container = (props) => {
   const [formData, setFormData] = useState({
     title: '',
     badges: {},
     assetType: '',
-    isRequiredTrust: '',
-    requiredTrust: 0,
-    isReactionAvailable: true,
-    reactionOptions: [
-      { icon: 'iconname', comment: 'lovely!!' }, // こんな感じだな
-      { icon: 'iconname', comment: 'epic' },
-    ],
+    isTrustRequired: '',
+    requiredTrust: '',
+    isReactionAvailable: '',
+    reactionOptions: [],
     upvoteLimit: 1,
     isCommentAvailable: false,
     description: '',
@@ -51,7 +47,16 @@ const Container = (props) => {
   const [creatingReaction, setCreatingReaction] = useState({ icon: null, comment: '', color: 'red1' });
 
   // iconからきたparamsを、creatingにセットしよう。
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (props.route.params?.iconName) {
+      setCreatingReaction((previous) => {
+        return {
+          ...previous,
+          icon: `https://lampost-dev.s3.us-east-2.amazonaws.com/icons/${props.route.params?.iconName}.png`,
+        };
+      });
+    }
+  }, [props.route.params?.iconName]);
 
   return (
     <FormContext.Provider
@@ -78,7 +83,7 @@ const Container = (props) => {
           <Reactions />
           {/* <Description /> */}
         </ScrollView>
-        <CreateReactionBottomSheet />
+        {/* <CreateReactionBottomSheet /> */}
       </View>
     </FormContext.Provider>
   );
