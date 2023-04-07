@@ -46,7 +46,7 @@ const UploadContent = () => {
         };
       });
     }
-  }, []);
+  }, [formData.asset]);
 
   const renderAddedAsset = () => {
     if (formData.asset) {

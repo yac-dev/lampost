@@ -234,7 +234,7 @@ const Title = () => {
             style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}
           >
             <Text style={{ fontSize: 13, color: baseTextColor }}>
-              Allow people to like/upvote each {formData.assetType}?
+              Allow people to like/upvote contents of this library?
             </Text>
             {/* <TouchableOpacity
               onPress={() => {

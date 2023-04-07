@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import FormContext from './FormContext';
 import { baseBackgroundColor, screenSectionBackgroundColor } from '../../../utils/colorsTable';
 import Title from './Title';
@@ -9,6 +9,7 @@ import Trust from './Trust';
 import Reactions from './Reactions';
 import Description from './Description';
 import UploadContent from './UploadContent';
+import Comment from './Comment';
 
 const Container = (props) => {
   const [formData, setFormData] = useState({
@@ -19,8 +20,7 @@ const Container = (props) => {
     requiredTrust: '',
     isReactionAvailable: '',
     reactionOptions: [],
-    upvoteLimit: 1,
-    isCommentAvailable: false,
+    isCommentAvailable: '',
     description: '',
     asset: null,
   });
@@ -51,12 +51,33 @@ const Container = (props) => {
     props.navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
-        // onPress={() => onDonePress()}
-        // disabled={true}
+          onPress={() => console.log(formData)}
+          disabled={
+            stageCleared.title &&
+            stageCleared.badges &&
+            stageCleared.assetType &&
+            stageCleared.trust &&
+            stageCleared.reaction &&
+            stageCleared.comment &&
+            stageCleared.description &&
+            stageCleared.asset
+              ? false
+              : true
+          }
         >
           <Text
             style={{
-              color: screenSectionBackgroundColor,
+              color:
+                stageCleared.title &&
+                stageCleared.badges &&
+                stageCleared.assetType &&
+                stageCleared.trust &&
+                stageCleared.reaction &&
+                stageCleared.comment &&
+                stageCleared.description &&
+                stageCleared.asset
+                  ? 'white'
+                  : screenSectionBackgroundColor,
               fontSize: 20,
               fontWeight: 'bold',
             }}
@@ -66,7 +87,7 @@ const Container = (props) => {
         </TouchableOpacity>
       ),
     });
-  }, [formData]);
+  }, [stageCleared]);
 
   useEffect(() => {
     if (props.route.params?.reaction) {
@@ -95,9 +116,10 @@ const Container = (props) => {
         setCreatingReaction,
       }}
     >
-      <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
+      <KeyboardAvoidingView behavior='padding' style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
         <Text style={{ color: 'white', fontSize: 15, marginBottom: 10 }}>
-          Recommended to fill out in order from top to bottom👍
+          Recommended to fill out in order from top to bottom.{'\n'}
+          Press "Done" when you finished↗️
         </Text>
         <ScrollView>
           <Title />
@@ -105,11 +127,12 @@ const Container = (props) => {
           <MediaType />
           <Trust />
           <Reactions />
-          {/* <Description /> */}
+          <Comment />
           <UploadContent />
+          <Description />
         </ScrollView>
         {/* <CreateReactionBottomSheet /> */}
-      </View>
+      </KeyboardAvoidingView>
     </FormContext.Provider>
   );
 };
