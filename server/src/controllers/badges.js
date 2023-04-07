@@ -104,13 +104,17 @@ export const getIcons = async (request, response) => {
   try {
     const params = {
       Bucket: process.env.AWS_S3BUCKET_NAME,
-      Key: 'assets/icons/',
+      Prefix: 'icons/',
     };
-    s3.getObject(params, (data) => {
-      console.log(data);
-    });
-    response.status(200).json({
-      message: 'success',
+    s3.listObjectsV2(params, (err, data) => {
+      if (err) {
+        console.log(err);
+      } else {
+        const icons = data.Contents.filter((obj) => obj.Key.match(/\.(jpg|jpeg|png|gif)$/));
+        response.status(200).json({
+          icons,
+        });
+      }
     });
   } catch (error) {
     console.log(error);

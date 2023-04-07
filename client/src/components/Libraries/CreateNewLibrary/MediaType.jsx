@@ -56,7 +56,7 @@ const Title = () => {
           >
             <Ionicons name='image' size={25} color={iconColorsTable['violet1']} />
           </View>
-          <Text style={{ fontWeight: 'bold', fontSize: 17, color: 'white', marginRight: 10 }}>Media type</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 17, color: 'white', marginRight: 10 }}>Content type</Text>
         </TouchableOpacity>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Ionicons
