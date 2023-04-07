@@ -191,30 +191,27 @@ const Badges = () => {
             <Text style={{ fontSize: 13, color: baseTextColor }}>What is your library about?</Text>
             {renderBadgesLength()}
           </View>
-          <View>
-            <TouchableOpacity
-              style={{
-                backgroundColor: iconColorsTable['blue1'],
-                borderRadius: 5,
-                flexDirection: 'row',
-                alignItems: 'center',
-                padding: 5,
-                marginBottom: 10,
-              }}
-              onPress={() => {
-                navigation.navigate('Add badges', {
-                  fromComponent: 'ADD_LIBRARY_BADGES',
-                  addedLibraryBadges: formData.badges,
-                });
-              }}
-            >
-              <View style={{ alignSelf: 'center', flexDirection: 'row', alignItems: 'center' }}>
-                <Ionicons name='add' color={'white'} size={20} />
-                <Text style={{ color: 'white' }}>Add</Text>
-              </View>
-            </TouchableOpacity>
-            {renderBadges()}
-          </View>
+          <TouchableOpacity
+            style={{
+              backgroundColor: iconColorsTable['blue1'],
+              borderRadius: 5,
+              padding: 5,
+              marginBottom: 10,
+              width: '100%',
+            }}
+            onPress={() => {
+              navigation.navigate('Add badges', {
+                fromComponent: 'ADD_LIBRARY_BADGES',
+                addedLibraryBadges: formData.badges,
+              });
+            }}
+          >
+            <View style={{ alignSelf: 'center', flexDirection: 'row', alignItems: 'center' }}>
+              <Ionicons name='add' color={'white'} size={20} />
+              <Text style={{ color: 'white' }}>Add</Text>
+            </View>
+          </TouchableOpacity>
+          {renderBadges()}
         </View>
       ) : null}
     </View>

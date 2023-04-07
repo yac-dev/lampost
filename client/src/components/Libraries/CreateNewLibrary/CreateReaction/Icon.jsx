@@ -13,112 +13,18 @@ import { iconsTable } from '../../../../utils/icons';
 import FastImage from 'react-native-fast-image';
 import lampostAPI from '../../../../apis/lampost';
 
-// const icons = [
-//   'boruto-uzumaki',
-//   'confetti',
-//   'emoji-angry',
-//   'emoji-anguished',
-//   'emoji-anime',
-//   'emoji-bored',
-//   'emoji-cool',
-//   'emoji-crazy',
-//   'emoji-crying',
-//   'emoji-deep-in-thoughts',
-//   'emoji-disgusting',
-//   'emoji-drooling',
-//   'emoji-embarrassed',
-//   'emoji-geek',
-//   'emoji-ghost',
-//   'emoji-head-exploded',
-//   'emoji-hugging',
-//   'emoji-ill-mask',
-//   'emoji-ill',
-//   'emoji-kissing',
-//   'emoji-lol-with-cry',
-//   'emoji-lol',
-//   'emoji-poop',
-//   'emoji-puke',
-//   'emoji-puzzled',
-//   'emoji-relaxing',
-//   'emoji-robot',
-//   'emoji-rofl',
-//   'emoji-sad',
-//   'emoji-sarcastic',
-//   'emoji-savouring',
-//   'emoji-shocked',
-//   'emoji-shocker',
-//   'emoji-shrug',
-//   'emoji-shy',
-//   'emoji-silent',
-//   'emoji-sleeping',
-//   'emoji-sleepy-or-tired',
-//   'emoji-smiling-with-hand',
-//   'emoji-smiling-with-heart-eyes',
-//   'emoji-smiling-with-heart-eyes2',
-//   'emoji-smiling-with-heart',
-//   'emoji-smiling-with-hearts',
-//   'emoji-smiling-with-money-eys',
-//   'emoji-smiling-with-tongue',
-//   'emoji-smiling',
-//   'emoji-smiling2',
-//   'emoji-star-struck',
-//   'emoji-surprised',
-//   'emoji-sweating',
-//   'emoji-tired-or-exhausted',
-//   'emoji-uwu',
-//   'emoji-wink',
-//   'emoji-wtf',
-//   'fire-in-my-heart',
-//   'hah-100',
-//   'head-in-sand',
-//   'heart-lock',
-//   'sleep',
-//   'xd',
-//   'animes',
-//   'apps',
-//   'artsAndCrafts',
-//   'books',
-//   'business',
-//   'dancing',
-//   'education',
-//   'family',
-//   'fashionAndBeauty',
-//   'films',
-//   'finance',
-//   'fitnessAndHealth',
-//   'foodsAndDrinks',
-//   'gamings',
-//   'languagesAndEthnic',
-//   'music',
-//   'outdoors',
-//   'petsAndAnimals',
-//   'photography',
-//   'spirituality',
-//   'sports',
-//   'tech',
-//   'vehicles',
-//   'videoGames',
-//   'writings',
-// ];
-
 const Icon = () => {
   const { accordion, setAccordion, creatingReaction, setCreatingReaction } = useContext(CreateReactionContext);
   const { MaterialCommunityIcons, Ionicons } = iconsTable;
   const [icons, setIcons] = useState([]);
   const [isIconsFetched, setIsIconFetched] = useState(false);
 
-  // const renderCheckMark = () => {
-  //   if(creatingReaction.icon?.name){
-
-  //   }
-  // }
-
   const getIcons = async () => {
     const result = await lampostAPI.get('/badges/icons');
     const { icons } = result.data;
     setIcons(() => {
       const datas = [];
-      icons.forEach((icon) => datas.push(icon.Key.split('/').join(',').split('.').join(',').split(',')[1]));
+      icons.forEach((icon) => datas.push(icon.Key));
       return datas;
     });
     setIsIconFetched(true);
@@ -179,11 +85,20 @@ const Icon = () => {
       </View>
       {accordion.icon ? (
         <View style={{ marginTop: 10 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Text style={{ fontSize: 13, color: baseTextColor, marginBottom: 10 }}>Please choose an icon.</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View
+            style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}
+          >
+            <Text style={{ fontSize: 13, color: baseTextColor }}>Please choose an icon.</Text>
+            <TouchableOpacity
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderBottomWidth: 0.3,
+                borderBottomColor: 'white',
+              }}
+            >
               <Text style={{ color: 'white' }}>Powered by icons8</Text>
-            </View>
+            </TouchableOpacity>
           </View>
           {isIconsFetched ? (
             <ScrollView contentContainerStyle={{ paddingBottom: 100 }} showsVerticalScrollIndicator={false}>
@@ -194,10 +109,7 @@ const Icon = () => {
                       setCreatingReaction((previous) => {
                         return {
                           ...previous,
-                          icon: {
-                            // name: icon,
-                            data: `https://lampost-dev.s3.us-east-2.amazonaws.com/icons/${icon}.png`,
-                          },
+                          icon: `https://lampost-dev.s3.us-east-2.amazonaws.com/${icon}`,
                         };
                       })
                     }
@@ -222,13 +134,15 @@ const Icon = () => {
                         }}
                       >
                         <FastImage
-                          source={{ uri: `https://lampost-dev.s3.us-east-2.amazonaws.com/icons/${icon}.png` }}
+                          source={{ uri: `https://lampost-dev.s3.us-east-2.amazonaws.com/${icon}` }}
                           style={{ width: 30, height: 30, color: 'black' }}
                         />
                       </View>
-                      <Text style={{ color: 'white', fontSize: 18 }}>{icon}</Text>
+                      <Text style={{ color: 'white', fontSize: 18 }}>
+                        {icon.split('/').join(',').split('.').join(',').split(',')[1]}
+                      </Text>
                     </View>
-                    {creatingReaction.icon?.name === icon ? (
+                    {creatingReaction.icon === `https://lampost-dev.s3.us-east-2.amazonaws.com/${icon}` ? (
                       <Ionicons name='checkmark-circle' color={iconColorsTable['green1']} size={25} />
                     ) : null}
                   </TouchableOpacity>

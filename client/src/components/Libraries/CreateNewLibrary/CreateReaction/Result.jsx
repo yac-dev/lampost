@@ -15,14 +15,14 @@ const Result = () => {
   const [exVotes, setExVotes] = useState(5);
 
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+    <View style={{ flexDirection: 'row' }}>
       <View style={{ flex: 0.5 }}>
         <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>e.g.)</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <TouchableOpacity
             style={{
               borderRadius: 5,
-              // backgroundColor: rnDefaultBackgroundColor,
+              backgroundColor: rnDefaultBackgroundColor,
               marginRight: 8,
             }}
             onPress={() => setExVotes((previous) => previous + 1)}
@@ -58,8 +58,8 @@ const Result = () => {
       <View style={{ flex: 0.5 }}>
         <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>
           Preview&nbsp;&nbsp;
-          {creatingReaction.icon?.data && creatingReaction.comment && creatingReaction.color ? (
-            <Text style={{ color: baseTextColor, fontSize: 13 }}>Tap and try!</Text>
+          {creatingReaction.icon && creatingReaction.comment && creatingReaction.color ? (
+            <Text style={{ color: baseTextColor, fontSize: 12 }}>Tap to try demo</Text>
           ) : null}
         </Text>
 
@@ -67,7 +67,7 @@ const Result = () => {
           <TouchableOpacity
             style={{
               borderRadius: 5,
-              backgroundColor: inputBackgroundColorNew,
+              backgroundColor: creatingReaction.upvotes ? rnDefaultBackgroundColor : inputBackgroundColorNew,
               marginRight: 8,
             }}
             onPress={() =>
@@ -88,9 +88,9 @@ const Result = () => {
                 backgroundColor: creatingReaction.upvotes ? backgroundColorsTable[creatingReaction.color] : null,
               }}
             >
-              {creatingReaction.icon?.data ? (
+              {creatingReaction.icon ? (
                 <FastImage
-                  source={{ uri: creatingReaction.icon.data }}
+                  source={{ uri: creatingReaction.icon }}
                   style={{ width: 30, height: 30, marginRight: 5 }}
                   tintColor={creatingReaction.upvotes ? iconColorsTable[creatingReaction.color] : 'white'}
                 />
@@ -108,7 +108,7 @@ const Result = () => {
               ) : null}
             </View>
           </TouchableOpacity>
-          {creatingReaction.icon?.data && creatingReaction.comment && creatingReaction.color ? (
+          {creatingReaction.icon && creatingReaction.comment && creatingReaction.color ? (
             <Text style={{ color: 'white', marginRight: 5, fontWeight: 'bold', fontSize: 17 }}>
               {creatingReaction.upvotes}
             </Text>

@@ -70,7 +70,7 @@ const Container = (props) => {
     }
   }, [addedAsset]);
   const onDoneAddAssetsPress = () => {
-    props.navigation.navigate('Libraries', { addedAsset });
+    props.navigation.navigate('Create new library', { addedAsset });
   };
 
   // これは、libraryをlaunchする時の場合ね。向こうからassetがくるから。

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { View, Text, TextInput, InputAccessoryView, Keyboard, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, InputAccessoryView, Keyboard, TouchableOpacity, ScrollView } from 'react-native';
 import FormContext from './FormContext';
 import {
   backgroundColorsTable,
@@ -12,6 +12,7 @@ import {
   disabledTextColor,
 } from '../../../utils/colorsTable';
 import { iconsTable } from '../../../utils/icons';
+import FastImage from 'react-native-fast-image';
 
 const Title = () => {
   const { AntDesign, Ionicons, MaterialIcons, MaterialCommunityIcons, Foundation } = iconsTable;
@@ -60,7 +61,7 @@ const Title = () => {
         };
       });
     }
-  }, [formData.isReactionAvailable]);
+  }, [formData.isReactionAvailable, formData]);
 
   // <View>
   //         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -104,6 +105,71 @@ const Title = () => {
       }
     } else {
       return null;
+    }
+  };
+
+  const renderReactionOptions = () => {
+    if (formData.reactionOptions.length) {
+      const list = formData.reactionOptions.map((reaction, index) => {
+        return (
+          <View
+            style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 5 }}
+            key={index}
+          >
+            <View
+              style={{
+                padding: 5,
+                backgroundColor: inputBackgroundColorNew,
+                borderRadius: 5,
+                marginRight: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <FastImage
+                source={{ uri: reaction.icon }}
+                style={{ width: 30, height: 30, marginRight: 5 }}
+                tintColor={'white'}
+              />
+              <Text style={{ color: 'white' }}>{reaction.comment}</Text>
+            </View>
+            <TouchableOpacity
+              style={{
+                backgroundColor: iconColorsTable['red1'],
+                padding: 10,
+                borderRadius: 5,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+              onPress={() => {
+                setFormData((previous) => {
+                  const updating = { ...previous };
+                  const removedOptions = updating.reactionOptions;
+                  removedOptions.splice(index, 1);
+                  updating.reactionOptions = removedOptions;
+                  return updating;
+                });
+                console.log('remove');
+              }}
+            >
+              <MaterialCommunityIcons name='minus' color={'white'} size={20} style={{ marginRight: 5 }} />
+              <Text style={{ color: 'white' }}>Remove</Text>
+            </TouchableOpacity>
+          </View>
+        );
+      });
+
+      return <View>{list}</View>;
+    } else {
+      return null;
+    }
+  };
+
+  const renderReactionOptionsLength = () => {
+    if (formData.reactionOptions.length <= 3) {
+      return <Text style={{ color: baseTextColor, fontSize: 13 }}>{formData.reactionOptions}/3</Text>;
+    } else {
+      return <Text style={{ color: 'red', fontSize: 13 }}>{formData.reactionOptions}/3</Text>;
     }
   };
 
@@ -168,7 +234,7 @@ const Title = () => {
             style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}
           >
             <Text style={{ fontSize: 13, color: baseTextColor }}>
-              Allow people to upvote/like each {formData.assetType}?
+              Allow people to like/upvote each {formData.assetType}?
             </Text>
             {/* <TouchableOpacity
               onPress={() => {
@@ -228,24 +294,38 @@ const Title = () => {
           </View>
           {formData.isReactionAvailable ? (
             <View>
-              <Text style={{ fontSize: 13, color: baseTextColor, marginBottom: 10 }}>
-                Now, please create your own upvote options by combining an icon and short comment.
-              </Text>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <TouchableOpacity
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    backgroundColor: iconColorsTable['blue1'],
-                    padding: 10,
-                    borderRadius: 5,
-                  }}
-                  onPress={() => navigation.navigate('Create reaction')}
-                >
-                  <MaterialCommunityIcons name='plus' color={'white'} size={20} style={{ marginRight: 5 }} />
-                  <Text style={{ color: 'white' }}>Add</Text>
-                </TouchableOpacity>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginBottom: 10,
+                }}
+              >
+                <Text style={{ fontSize: 13, color: baseTextColor }}>
+                  Now, please create your original like buttons.
+                </Text>
+                <Text style={{ color: formData.reactionOptions.length <= 3 ? baseTextColor : 'red', fontSize: 13 }}>
+                  {formData.reactionOptions.length}/3
+                </Text>
               </View>
+              <TouchableOpacity
+                style={{
+                  width: '100%',
+                  backgroundColor: iconColorsTable['blue1'],
+                  padding: 10,
+                  borderRadius: 5,
+                  marginRight: 10,
+                  marginBottom: 10,
+                }}
+                onPress={() => navigation.navigate('Create reaction')}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                  <MaterialCommunityIcons name='plus' color={'white'} size={20} style={{ marginRight: 5 }} />
+                  <Text style={{ color: 'white' }}>{formData.reactionOptions.length ? 'Add more' : 'Add'}</Text>
+                </View>
+              </TouchableOpacity>
+              {renderReactionOptions()}
             </View>
           ) : null}
         </View>

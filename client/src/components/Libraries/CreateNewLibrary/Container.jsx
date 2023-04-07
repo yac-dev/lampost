@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import FormContext from './FormContext';
-import { baseBackgroundColor } from '../../../utils/colorsTable';
+import { baseBackgroundColor, screenSectionBackgroundColor } from '../../../utils/colorsTable';
 import Title from './Title';
 import Badges from './Badges';
 import MediaType from './MediaType';
 import Trust from './Trust';
 import Reactions from './Reactions';
 import Description from './Description';
+import UploadContent from './UploadContent';
 
 const Container = (props) => {
   const [formData, setFormData] = useState({
@@ -46,17 +47,37 @@ const Container = (props) => {
   const createReactionBottomSheetRef = useRef(null);
   const [creatingReaction, setCreatingReaction] = useState({ icon: null, comment: '', color: 'red1' });
 
-  // iconからきたparamsを、creatingにセットしよう。
   useEffect(() => {
-    if (props.route.params?.iconName) {
-      setCreatingReaction((previous) => {
+    props.navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+        // onPress={() => onDonePress()}
+        // disabled={true}
+        >
+          <Text
+            style={{
+              color: screenSectionBackgroundColor,
+              fontSize: 20,
+              fontWeight: 'bold',
+            }}
+          >
+            Done
+          </Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, [formData]);
+
+  useEffect(() => {
+    if (props.route.params?.reaction) {
+      setFormData((previous) => {
         return {
           ...previous,
-          icon: `https://lampost-dev.s3.us-east-2.amazonaws.com/icons/${props.route.params?.iconName}.png`,
+          reactionOptions: [...previous.reactionOptions, props.route.params.reaction],
         };
       });
     }
-  }, [props.route.params?.iconName]);
+  }, [props.route.params?.reaction]);
 
   return (
     <FormContext.Provider
@@ -75,6 +96,9 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
+        <Text style={{ color: 'white', fontSize: 15, marginBottom: 10 }}>
+          Recommended to fill out in order from top to bottom👍
+        </Text>
         <ScrollView>
           <Title />
           <Badges />
@@ -82,6 +106,7 @@ const Container = (props) => {
           <Trust />
           <Reactions />
           {/* <Description /> */}
+          <UploadContent />
         </ScrollView>
         {/* <CreateReactionBottomSheet /> */}
       </View>
