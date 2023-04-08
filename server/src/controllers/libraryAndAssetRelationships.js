@@ -25,30 +25,39 @@ export const getAssetsByLibraryId = async (request, response) => {
 
 export const getAsset = async (request, response) => {
   try {
-    const libraryAndAssetRelationships = await LibraryAndAssetRelationship.findOne({
+    const libraryAndAssetRelationship = await LibraryAndAssetRelationship.findOne({
       library: request.params.libraryId,
       asset: request.params.assetId,
-    }).populate({
-      path: 'asset',
-      populate: [
-        {
-          path: 'createdBy',
-          select: 'name photo',
+    })
+      .populate({
+        path: 'asset',
+        populate: [
+          {
+            path: 'createdBy',
+            select: 'name photo',
+          },
+          {
+            path: 'meetup',
+            select: 'title',
+          },
+          {
+            path: 'taggedPeople',
+            select: 'name photo',
+          },
+        ],
+      })
+      .populate({
+        path: 'reactions',
+        populate: {
+          path: 'reaction',
         },
-        {
-          path: 'meetup',
-          select: 'title',
-        },
-        {
-          path: 'taggedPeople',
-          select: 'name photo',
-        },
-        {
-          path: 'badges',
-          select: 'name icon color',
-        },
-      ],
-    });
+      });
+    // .populate({
+    //   path: 'reactions',
+    //   populate: {
+    //     path: 'reaction',
+    //   },
+    // });
     // const asset = await Asset.findById(request.params.assetId).populate([
     //   {
     //     path: 'createdBy',
@@ -69,7 +78,8 @@ export const getAsset = async (request, response) => {
     // ]);
 
     response.status(200).json({
-      asset: libraryAndAssetRelationships.asset,
+      libraryAndAssetRelationship,
+      // asset: libraryAndAssetRelationships.asset,
     });
   } catch (error) {
     console.log(error);

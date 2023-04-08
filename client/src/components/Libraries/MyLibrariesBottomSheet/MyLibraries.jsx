@@ -33,7 +33,7 @@ const Container = (props) => {
 
   const renderAssetType = (library) => {
     if (library.assetType === 'photo') {
-      return <Ionicons name='camer' size={20} color={'white'} style={{ marginRight: 10 }} />;
+      return <Ionicons name='camera' size={20} color={'white'} style={{ marginRight: 10 }} />;
     } else if (library.assetType === 'video') {
       return <Ionicons name='videocam' size={20} color={'white'} style={{ marginRight: 10 }} />;
     } else if (library.assetType === 'photoAndVideo') {
