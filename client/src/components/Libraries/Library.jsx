@@ -32,7 +32,7 @@ const Library = (props) => {
     if (props.library.assetType === 'photo') {
       return (
         <View style={{ position: 'absolute', top: 5, right: 20 }}>
-          <Ionicons name='camer' size={20} color={'white'} />
+          <Ionicons name='camera' size={20} color={'white'} />
         </View>
       );
     } else if (props.library.assetType === 'video') {
@@ -90,7 +90,7 @@ const Library = (props) => {
             paddingRight: 10,
           }}
         >
-          {props.library.name}
+          {props.library.title}
         </Text>
         {renderAssetType()}
       </View>
@@ -135,7 +135,7 @@ const Library = (props) => {
             paddingRight: 10,
           }}
         >
-          {props.library.name}
+          {props.library.title}
         </Text>
         {renderAssetType()}
       </View>

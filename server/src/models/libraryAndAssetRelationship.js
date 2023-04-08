@@ -9,6 +9,15 @@ const libraryAndAssetRelationshipSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Asset',
   },
+  reactions: [
+    {
+      reaction: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Reaction',
+      },
+      upvoted: Number,
+    },
+  ],
 });
 
 const LibraryAndAssetRelationship = mongoose.model('LibraryAndAssetRelationship', libraryAndAssetRelationshipSchema);

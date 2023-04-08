@@ -30,7 +30,7 @@ const Title = () => {
   useEffect(() => {
     if (typeof formData.isReactionAvailable === 'boolean') {
       if (formData.isReactionAvailable) {
-        if (formData.reactionOptions.length) {
+        if (formData.reactions.length) {
           setStageCleared((previous) => {
             return {
               ...previous,
@@ -61,7 +61,7 @@ const Title = () => {
         };
       });
     }
-  }, [formData.isReactionAvailable, formData]);
+  }, [formData.isReactionAvailable, formData.reactions]);
 
   // <View>
   //         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -109,8 +109,8 @@ const Title = () => {
   };
 
   const renderReactionOptions = () => {
-    if (formData.reactionOptions.length) {
-      const list = formData.reactionOptions.map((reaction, index) => {
+    if (formData.reactions.length) {
+      const list = formData.reactions.map((reaction, index) => {
         return (
           <View
             style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 5 }}
@@ -144,9 +144,9 @@ const Title = () => {
               onPress={() => {
                 setFormData((previous) => {
                   const updating = { ...previous };
-                  const removedOptions = updating.reactionOptions;
+                  const removedOptions = updating.reactions;
                   removedOptions.splice(index, 1);
-                  updating.reactionOptions = removedOptions;
+                  updating.reactions = removedOptions;
                   return updating;
                 });
                 console.log('remove');
@@ -305,15 +305,15 @@ const Title = () => {
                 <Text style={{ fontSize: 13, color: baseTextColor }}>
                   Now, please create your original like buttons.
                 </Text>
-                <Text style={{ color: formData.reactionOptions.length <= 3 ? baseTextColor : 'red', fontSize: 13 }}>
-                  {formData.reactionOptions.length}/3
+                <Text style={{ color: formData.reactions.length <= 3 ? baseTextColor : 'red', fontSize: 13 }}>
+                  {formData.reactions.length}/3
                 </Text>
               </View>
               <TouchableOpacity
                 style={{
                   width: '100%',
                   backgroundColor: iconColorsTable['blue1'],
-                  padding: 10,
+                  padding: 5,
                   borderRadius: 5,
                   marginRight: 10,
                   marginBottom: 10,
@@ -322,7 +322,7 @@ const Title = () => {
               >
                 <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
                   <MaterialCommunityIcons name='plus' color={'white'} size={20} style={{ marginRight: 5 }} />
-                  <Text style={{ color: 'white' }}>{formData.reactionOptions.length ? 'Add more' : 'Add'}</Text>
+                  <Text style={{ color: 'white' }}>{formData.reactions.length ? 'Add more' : 'Add'}</Text>
                 </View>
               </TouchableOpacity>
               {renderReactionOptions()}

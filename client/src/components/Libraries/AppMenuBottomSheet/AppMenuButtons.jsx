@@ -43,7 +43,9 @@ const AppButtons = (props) => {
             >
               <MaterialCommunityIcons name='plus' color={iconColorsTable['lightGreen1']} size={20} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Launch library</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>
+              Create new library
+            </Text>
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
         </TouchableOpacity>

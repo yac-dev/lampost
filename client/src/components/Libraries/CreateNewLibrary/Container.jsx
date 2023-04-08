@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import GlobalContext from '../../../GlobalContext';
 import FormContext from './FormContext';
+import lampostAPI from '../../../apis/lampost';
 import { baseBackgroundColor, screenSectionBackgroundColor } from '../../../utils/colorsTable';
 import Title from './Title';
 import Badges from './Badges';
@@ -10,25 +12,25 @@ import Reactions from './Reactions';
 import Description from './Description';
 import UploadContent from './UploadContent';
 import Comment from './Comment';
+import LoadingSpinner from '../../Utils/LoadingSpinner';
 
 const Container = (props) => {
+  const { auth, setAuth, setLoading } = useContext(GlobalContext);
   const [formData, setFormData] = useState({
     title: '',
     badges: {},
     assetType: '',
-    isTrustRequired: '',
-    requiredTrust: '',
     isReactionAvailable: '',
-    reactionOptions: [],
+    reactions: [],
     isCommentAvailable: '',
-    description: '',
     asset: null,
+    description: '',
   });
   const [stageCleared, setStageCleared] = useState({
     title: false,
     badges: false,
     assetType: false,
-    trust: false,
+    // trust: false,
     reaction: false,
     comment: false,
     description: false,
@@ -38,25 +40,60 @@ const Container = (props) => {
     title: true,
     badges: false,
     assetType: false,
-    trust: false,
+    // trust: false,
     reaction: false,
     comment: false,
     description: false,
     asset: false,
   });
-  const createReactionBottomSheetRef = useRef(null);
-  const [creatingReaction, setCreatingReaction] = useState({ icon: null, comment: '', color: 'red1' });
+
+  const onDonePress = async () => {
+    const payload = {
+      title: formData.title,
+      badgeIds: Object.keys(formData.badges),
+      assetType: formData.assetType,
+      isReactionAvailable: formData.isReactionAvailable,
+      reactions: formData.reactions,
+      isCommentAvailable: formData.isCommentAvailable,
+      asset: {
+        _id: formData.asset._id,
+        data: formData.asset.data,
+        type: formData.asset.type,
+      },
+      launcher: {
+        _id: auth.data._id,
+        name: auth.data.name,
+        photo: auth.data.photo,
+      },
+      description: formData.description,
+    };
+    setLoading(true);
+    const result = await lampostAPI.post(`/libraries`, payload);
+    setLoading(false);
+    // これをもって、navigation でlibrariesに行く。
+    const { library } = result.data;
+    props.navigation.navigate('Libraries', { fromComponent: 'Create new library', library });
+    //ここからは、librariesのuseEffectでやろう。
+    // setMyJoinedLibraries((previous) => [...previous, library]);
+    // setLibraries((previous) => [...previous, library]);
+    // setSnackBar({
+    //   isVisible: true,
+    //   message: 'Launched a library.',
+    //   barType: 'success',
+    //   duration: 5000,
+    // });
+  };
 
   useEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
-          onPress={() => console.log(formData)}
+          onPress={() => onDonePress()}
           disabled={
             stageCleared.title &&
             stageCleared.badges &&
             stageCleared.assetType &&
-            stageCleared.trust &&
+            // stageCleared.trust &&
             stageCleared.reaction &&
             stageCleared.comment &&
             stageCleared.description &&
@@ -71,7 +108,7 @@ const Container = (props) => {
                 stageCleared.title &&
                 stageCleared.badges &&
                 stageCleared.assetType &&
-                stageCleared.trust &&
+                // stageCleared.trust &&
                 stageCleared.reaction &&
                 stageCleared.comment &&
                 stageCleared.description &&
@@ -94,7 +131,7 @@ const Container = (props) => {
       setFormData((previous) => {
         return {
           ...previous,
-          reactionOptions: [...previous.reactionOptions, props.route.params.reaction],
+          reactions: [...previous.reactions, props.route.params.reaction],
         };
       });
     }
@@ -111,27 +148,21 @@ const Container = (props) => {
         setAccordion,
         navigation: props.navigation,
         route: props.route,
-        createReactionBottomSheetRef,
-        creatingReaction,
-        setCreatingReaction,
       }}
     >
       <KeyboardAvoidingView behavior='padding' style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
-        <Text style={{ color: 'white', fontSize: 15, marginBottom: 10 }}>
-          Recommended to fill out in order from top to bottom.{'\n'}
-          Press "Done" when you finished↗️
-        </Text>
+        <Text style={{ color: 'white', fontSize: 15, marginBottom: 10 }}>Press "Done" when you finish&nbsp;↗️</Text>
         <ScrollView>
           <Title />
           <Badges />
           <MediaType />
-          <Trust />
+          {/* <Trust /> */}
           <Reactions />
           <Comment />
           <UploadContent />
           <Description />
         </ScrollView>
-        {/* <CreateReactionBottomSheet /> */}
+        <LoadingSpinner />
       </KeyboardAvoidingView>
     </FormContext.Provider>
   );

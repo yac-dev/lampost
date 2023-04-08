@@ -113,7 +113,7 @@ const Container = (props) => {
                     resizeMode={FastImage.resizeMode.stretch}
                   />
                 </View>
-                <Text style={{ color: baseTextColor, fontSize: 17 }}>{library.name}</Text>
+                <Text style={{ color: baseTextColor, fontSize: 17 }}>{library.title}</Text>
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 {renderAssetType(library)}
@@ -156,7 +156,7 @@ const Container = (props) => {
                     isLooping={false}
                   />
                 </View>
-                <Text style={{ color: baseTextColor }}>{library.name}</Text>
+                <Text style={{ color: baseTextColor }}>{library.title}</Text>
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 {renderAssetType(library)}

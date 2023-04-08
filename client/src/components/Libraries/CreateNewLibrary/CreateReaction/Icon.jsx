@@ -97,11 +97,11 @@ const Icon = () => {
                 borderBottomColor: 'white',
               }}
             >
-              <Text style={{ color: 'white' }}>Powered by icons8</Text>
+              <Text style={{ color: 'white' }}>Powered by icons8.com</Text>
             </TouchableOpacity>
           </View>
           {isIconsFetched ? (
-            <ScrollView contentContainerStyle={{ paddingBottom: 100 }} showsVerticalScrollIndicator={false}>
+            <ScrollView contentContainerStyle={{ paddingBottom: 250 }} showsVerticalScrollIndicator={false}>
               {icons.map((icon, index) => {
                 return (
                   <TouchableOpacity

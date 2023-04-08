@@ -120,6 +120,25 @@ const Container = (props) => {
     }
   }, [props.route.params?.leftLibraryId, props.route.params?.time]);
 
+  // libraryを作った時
+  useEffect(() => {
+    if (props.route.params?.fromComponent === 'Create new library') {
+      setLibraries((previous) => [...previous, props.route.params.library]);
+      setMyJoinedLibraries((previous) => [...previous, props.route.params.library]);
+      setSnackBar({
+        isVisible: true,
+        message: `Successfully created ${props.route.params.library.title}.`,
+        barType: 'success',
+        duration: 5000,
+      });
+      // setMyJoinedLibraries((previous) => {
+      //   const updating = [...previous];
+      //   const updated = updating.filter((library) => library._id !== props.route.params.leftLibraryId);
+      //   return updated;
+      // }) ここ、data structureどうなってたっけ？？
+    }
+  }, [props.route.params?.fromComponent]);
+
   const selectLibrary = async (libraryId) => {
     libraryOverviewBottomSheetRef.current.snapToIndex(0);
     const result = await lampostAPI.get(`/libraries/${libraryId}`);
@@ -254,8 +273,6 @@ const Container = (props) => {
         <MyLibrariesBottomSheet />
         <CreateLibraryBottomSheet />
         <LibraryOverviewBottomSheet />
-
-        {/* <InfoDetailBottomSheet /> */}
         <ConfirmCancelCreatingLibraryModal />
       </View>
     </LibrariesContext.Provider>

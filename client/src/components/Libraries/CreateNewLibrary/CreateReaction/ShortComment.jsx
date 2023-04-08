@@ -65,11 +65,18 @@ const ShortComment = () => {
       </View>
       {accordion.comment ? (
         <View style={{ marginTop: 10 }}>
-          <Text style={{ fontSize: 13, color: baseTextColor, marginBottom: 10 }}>
-            Please write a shor comment that....
-          </Text>
+          <View style={{ marginBottom: 10 }}>
+            <Text style={{ fontSize: 13, color: baseTextColor }}>
+              Please set a simple comment that represents the reaction.
+            </Text>
+            <Text
+              style={{ color: creatingReaction.comment.length <= 15 ? baseTextColor : 'red', alignSelf: 'flex-end' }}
+            >
+              {creatingReaction.comment.length}/15
+            </Text>
+          </View>
           <TextInput
-            placeholder='In 15 characters'
+            placeholder='e.g.) Love it'
             placeholderTextColor={baseTextColor}
             style={{
               padding: 10,

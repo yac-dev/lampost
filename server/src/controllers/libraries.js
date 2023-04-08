@@ -5,6 +5,7 @@ import BadgeAndAssetRelationship from '../models/badgeAndAssetRelationship';
 // import Roll from '../models/roll';
 import Asset from '../models/asset';
 import User from '../models/user';
+import Reaction from '../models/reaction';
 
 const colors = ['red1', 'blue1', 'yellow1', 'violet1', 'green1', 'lightBlue1'];
 
@@ -44,64 +45,75 @@ export const getLibrary = async (request, response) => {
 };
 
 export const createLibrary = async (request, response) => {
+  // created documents
+  // もうさ、relを作る必要ないよね。。。もう。普通に、libraryAndAssetにreactionをそのままつければいい。だって、length3つだもん。
+  // library, libraryAndAssetRelationship, libraryAndUserRelationship, reactions,  x reactionAndLibraryAssetRelationship
   try {
-    const { name, badges, description, asset, launcher, assetType } = request.body;
-    const library = await Library.create({
-      name,
-      badges,
+    const {
+      title,
+      badgeIds,
+      assetType,
+      isReactionAvailable,
+      reactions,
+      isCommentAvailable,
+      description,
+      asset,
+      launcher,
+    } = request.body;
+
+    const library = new Library({
+      title,
+      badges: badgeIds,
+      assetType,
+      isReactionAvailable,
+      isCommentAvailable,
       description,
       launcher: launcher._id,
       thumbnail: asset._id,
-      assetType: assetType,
       totalAssets: 1,
       totalMembers: 1,
       color: colors[Math.floor(Math.random() * colors.length)],
       createdAt: new Date(),
     });
 
-    // const queriedAsset = await Asset.findById(asset._id);
-    // if (!queriedAsset.badges.length) {
-    //   const arr = badges.map((badge) => {
-    //     return {
-    //       badge: badge,
-    //       totalCounts: 0,
-    //     };
-    //   });
-    //   queriedAsset.badges.push(...arr);
-    //   queriedAsset.save();
-    // } else {
-    //   for (let i = 0; i < badges.length; i++) {
-    //     if (queriedAsset.badges.some((badgeObject) => badgeObject.badge.toString() === badges[i])) {
-    //       null;
-    //     } else {
-    //       queriedAsset.badges.push({
-    //         badge: badges[i],
-    //         totalCounts: 0,
-    //       });
-    //     }
-    //   }
-    //   queriedAsset.save();
-    // }
-
-    const badgeAndAssetObjects = badges.map((badge) => {
-      return {
-        badge: badge,
-        asset: asset._id,
-      };
-    });
-    const badgeAndAssetRelationships = await BadgeAndAssetRelationship.insertMany(badgeAndAssetObjects);
-    const libraryAndAssetRelationships = await LibraryAndAssetRelationship.create({
+    const libraryAndAssetRelationship = new LibraryAndAssetRelationship({
       library: library._id,
       asset: asset._id,
     });
+
+    if (isReactionAvailable && reactions.length) {
+      const reactionOptions = reactions.map((reaction) => {
+        return {
+          library: library._id,
+          icon: reaction.icon,
+          comment: reaction.comment,
+          color: reaction.color,
+        };
+      });
+      const createdReactions = await Reaction.insertMany(reactionOptions);
+      const reactionIds = createdReactions.map((reaction) => reaction._id);
+      // ここでreactionのidだけ入れる。そんで、↓でsaveする。
+      library.reactions = reactionIds;
+      const reactionWithUpvote = reactionIds.map((reactionId) => {
+        return {
+          reaction: reactionId,
+          upvoted: 0,
+        };
+      });
+      libraryAndAssetRelationship.reactions = reactionWithUpvote;
+    }
+    library.save();
+    libraryAndAssetRelationship.save();
+
     const libraryAndUserRelationship = await LibraryAndUserRelationship.create({
       library: library._id,
       user: launcher._id,
     });
+
     response.status(200).json({
       library: {
         _id: library._id,
-        name: library.name,
+        title: library.title,
         thumbnail: { data: asset.data, type: asset.type },
         assetType: assetType,
       },

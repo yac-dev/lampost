@@ -18,7 +18,7 @@ import Menu from '../../../Map/SelectedMeetup/Menu';
 import { iconsTable } from '../../../../utils/icons';
 
 const Container = (props) => {
-  const { Fontisto, MaterialCommunityIcons, MaterialIcons } = iconsTable;
+  const { Fontisto, MaterialCommunityIcons, MaterialIcons, Ionicons } = iconsTable;
   const { auth, isIpad } = useContext(GlobalContext);
   const {
     selectedLibrary,
@@ -78,6 +78,50 @@ const Container = (props) => {
         }
       />
       <Menu
+        label='Content type'
+        onPressMenu={() => {
+          null;
+        }}
+        backgroundColor={backgroundColorsTable['pink1']}
+        icon={<Fontisto name='photograph' size={20} color={iconColorsTable['pink1']} />}
+        rightInfo={
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            {renderAssetType(selectedLibrary.assetType)}
+            <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
+          </View>
+        }
+      />
+      <Menu
+        label='Reactions'
+        onPressMenu={() => {
+          navigation.navigate('Members', { libraryId: selectedLibrary._id });
+        }}
+        backgroundColor={backgroundColorsTable['yellow1']}
+        icon={<Ionicons name='ios-thumbs-up-sharp' size={20} color={iconColorsTable['yellow1']} />}
+        rightInfo={
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ color: baseTextColor, fontSize: 15 }}>Nice</Text>
+            <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
+          </View>
+        }
+      />
+      <Menu
+        label='Comments'
+        onPressMenu={() => {
+          navigation.navigate('Members', { libraryId: selectedLibrary._id });
+        }}
+        backgroundColor={backgroundColorsTable['lightBlue1']}
+        icon={
+          <MaterialCommunityIcons name='comment-multiple-outline' size={20} color={iconColorsTable['lightBlue1']} />
+        }
+        rightInfo={
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ color: baseTextColor, fontSize: 15 }}>Available</Text>
+            <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
+          </View>
+        }
+      />
+      <Menu
         label='Members'
         onPressMenu={() => {
           navigation.navigate('Members', { libraryId: selectedLibrary._id });
@@ -92,21 +136,7 @@ const Container = (props) => {
         }
       />
       <Menu
-        label='Asset type'
-        onPressMenu={() => {
-          null;
-        }}
-        backgroundColor={backgroundColorsTable['pink1']}
-        icon={<Fontisto name='photograph' size={20} color={iconColorsTable['pink1']} />}
-        rightInfo={
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {renderAssetType(selectedLibrary.assetType)}
-            <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
-          </View>
-        }
-      />
-      <Menu
-        label='Assets'
+        label='Contents'
         onPressMenu={() => {
           navigation.navigate('Assets', { libraryId: selectedLibrary._id });
         }}
