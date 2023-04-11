@@ -27,6 +27,7 @@ import LibraryOverviewBottomSheet from './LibraryOverviewBottomSheet/Container';
 // import InfoDetailBottomSheet from './InfoDetailBottomSheet/Container';
 import ConfirmCancelCreatingLibraryModal from './ConfirmCancelCreatingLibraryModal';
 
+
 // authenticatedの場合が必要か。
 const Container = (props) => {
   const {

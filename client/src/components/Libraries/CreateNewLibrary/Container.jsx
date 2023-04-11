@@ -151,7 +151,7 @@ const Container = (props) => {
       }}
     >
       <KeyboardAvoidingView behavior='padding' style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
-        <Text style={{ color: 'white', fontSize: 15, marginBottom: 10 }}>Press "Done" when you finish&nbsp;↗️</Text>
+        {/* <Text style={{ color: 'white', fontSize: 15, marginBottom: 10 }}>Press "Done" when you finish&nbsp;↗️</Text> */}
         <ScrollView>
           <Title />
           <Badges />

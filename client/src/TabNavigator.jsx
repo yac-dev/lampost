@@ -23,12 +23,14 @@ const RootNavigator = () => {
   const { MaterialCommunityIcons, Ionicons, FontAwesome5 } = iconsTable;
   const { chatsNotificationCount, friendChatsNotificationCount } = useContext(GlobalContext);
 
+  // tabBarStyle: { display: 'none' }
   return (
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
           // display: hide ? 'none' : 'flex',
           backgroundColor: appBottomSheetBackgroundColor,
+          borderTopWidth: 0,
         },
         tabBarLabelStyle: {
           fontSize: 12,
@@ -94,6 +96,7 @@ const RootNavigator = () => {
           tabBarIcon: ({ size, color, focused }) => (
             <Ionicons name='ios-library-sharp' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
           ),
+          showLabel: false,
         }}
       />
 
@@ -108,6 +111,7 @@ const RootNavigator = () => {
           tabBarIcon: ({ size, color, focused }) => (
             <FontAwesome5 name='user-astronaut' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
           ),
+          showLabel: false,
           tabBarLabel: 'Profile',
           tabBarBadge: friendChatsNotificationCount ? friendChatsNotificationCount : null,
           tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },

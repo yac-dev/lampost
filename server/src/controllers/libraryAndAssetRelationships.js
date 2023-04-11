@@ -86,6 +86,16 @@ export const getAsset = async (request, response) => {
   }
 };
 
+// export const createReaction = async(request, response) => {
+//   try{
+//     const libraryAndAssetRelationship = await LibraryAndAssetRelationship.findOne({libraryAsset: request.params.libraryAndAssetRelationshipId,
+//     reaction:
+//     })
+//   } catch(error){
+//     console.log(error);
+//   }
+// }
+
 export const postAssetsByLibraryId = async (request, response) => {
   try {
     const { assetId } = request.body;
@@ -116,6 +126,31 @@ export const postAssetsByLibraryId = async (request, response) => {
     });
     response.status(200).json({
       message: 'success',
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const createReaction = async (request, response) => {
+  try {
+    const libraryAndAssetRelationship = await LibraryAndAssetRelationship.findOne({
+      library: request.params.libraryId,
+      asset: request.params.assetId,
+    });
+    // console.log('lib and asset rel', libraryAndAssetRelationship);
+    // console.log(request.body.reactionId, request.body.userId);
+    libraryAndAssetRelationship.reactions.forEach((reactionObject) => {
+      console.log(reactionObject.reaction);
+      console.log(request.body.reactionId);
+      if (reactionObject.reaction.toString() === request.body.reactionId) {
+        reactionObject.upvoted++;
+        reactionObject.users.push(request.body.userId);
+      }
+    });
+    libraryAndAssetRelationship.save();
+    response.status(200).json({
+      libraryAndAssetRelationship,
     });
   } catch (error) {
     console.log(error);

@@ -16,6 +16,7 @@ const libraryAndAssetRelationshipSchema = new mongoose.Schema({
         ref: 'Reaction',
       },
       upvoted: Number,
+      users: [{ type: mongoose.Schema.ObjectId }],
     },
   ],
 });
