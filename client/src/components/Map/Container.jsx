@@ -136,49 +136,13 @@ const Map = (props) => {
     props.getCurrentLocation();
   }, []);
 
-  // useEffect(() => {
-  //   if (auth.socket) {
-  //     auth.socket.on('CREATED_MEETUP', (data) => {
-  //       console.log(data.meetup);
-  //       setMeetups((previous) => [...previous, data.meetup]);
-  //       if (data.launcher === auth.data._id) {
-  //         setLoading(false);
-  //         setAuth((previous) => {
-  //           return {
-  //             ...previous,
-  //             data: {
-  //               ...previous.data,
-  //               upcomingMeetups: [
-  //                 ...previous.data.upcomingMeetups,
-  //                 { meetup: data.meetup, viewedChatsLastTime: data.viewedChatsLastTime },
-  //               ],
-  //             },
-  //           };
-  //         });
-  //         setIsLaunchMeetupConfirmed(false);
-  //         setLaunchLocation(null);
-  //         launchMeetupBottomSheetRef.current.close();
-  //         setSnackBar({
-  //           isVisible: true,
-  //           message: 'Launched a meetup.',
-  //           barType: 'success',
-  //           duration: 5000,
-  //         });
-  //       }
-  //     });
-  //   }
-  // }, [auth.socket]);
   useEffect(() => {
     if (props.route.params?.editedMeetup) {
       if (props.route.params?.editedMeetup.startDateAndTime) {
         setMyUpcomingMeetups((previous) => {
-          return {
-            ...previous,
-            [props.route.params.editedMeetup.meetupId]: {
-              ...previous[props.route.params.editedMeetup.meetupId],
-              startDateAndTime: props.route.params.editedMeetup.startDateAndTime,
-            },
-          };
+          const updating = { ...previous };
+          updating[props.route.params.meetupId].startDateAndTime = props.route.params.editedMeetup.startDateAndTime;
+          return updating;
         });
       }
       setSnackBar({

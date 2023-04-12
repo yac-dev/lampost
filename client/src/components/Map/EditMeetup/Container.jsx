@@ -7,6 +7,7 @@ import lampostAPI from '../../../apis/lampost';
 import Venue from './Venue';
 import DateAndTime from './DateAndTime';
 import LoadingSpinner from '../../Utils/LoadingSpinner';
+import SnackBar from '../../Utils/SnackBar';
 
 const Container = (props) => {
   const { auth, setLoading } = useContext(GlobalContext);
@@ -94,6 +95,7 @@ const Container = (props) => {
         <DateAndTime />
         <Text style={{ color: 'white' }}>The update will be sent directly to the lounge chat 📨</Text>
         <LoadingSpinner />
+        <SnackBar />
       </View>
     </EditMeetupContext.Provider>
   );

@@ -22,24 +22,44 @@ const Place = () => {
     useContext(EditMeetupContext);
   const [isStartDateAndTimeDatePickerVisible, setIsStartDateAndTimeDatePickerVisible] = useState(false);
   const [isDurationPickerVisible, setIsDurationPickerVisible] = useState(false);
+  const [timeRange, setTimeRange] = useState({ start: '', end: '' });
+  // const [myDates, setMyDates] = useState([]);
 
-  const myDates = Object.values(myUpcomingMeetups).map((meetup) => {
-    const startDateAndTime = new Date(meetup.startDateAndTime);
+  const myDates = Object.values(myUpcomingMeetups).map((meetupObj) => {
+    const startDateAndTime = new Date(meetupObj.startDateAndTime);
     let endDateAndTime = new Date(startDateAndTime);
-    endDateAndTime.setMinutes(startDateAndTime.getMinutes() + meetup.duration);
-
+    endDateAndTime.setMinutes(startDateAndTime.getMinutes() + meetupObj.duration);
     return {
-      _id: meetup._id,
+      _id: meetupObj._id,
       startDateAndTime,
       endDateAndTime,
     };
   });
 
-  // console.log(myDates);
+  // useEffect(() => {
+  //   if (meetup) {
+  //     Object.values(myUpcomingMeetups).forEach((meetupObj) => {
+  //       if (meetupObj._id !== meetup._id) {
+  //         const startDateAndTime = new Date(meetupObj.startDateAndTime);
+  //         let endDateAndTime = new Date(startDateAndTime);
+  //         endDateAndTime.setMinutes(startDateAndTime.getMinutes() + meetupObj.duration);
+
+  //         setMyDates((previous) => [
+  //           ...previous,
+  //           {
+  //             _id: meetupObj._id,
+  //             startDateAndTime,
+  //             endDateAndTime,
+  //           },
+  //         ]);
+  //       }
+  //     });
+  //   }
+  // }, [meetup]);
 
   // dateのvalidation
   useEffect(() => {
-    if (myDates.length) {
+    if (myDates.length && meetup) {
       if (editingData.startDateAndTime.isEdited && editingData.duration.isEdited) {
         const launchingStartDateAndTimeString = new Date(editingData.startDateAndTime.data);
         let launchingEndDateAndTimeString = new Date(editingData.startDateAndTime.data);
@@ -60,7 +80,7 @@ const Place = () => {
             setSnackBar({
               isVisible: true,
               barType: 'error',
-              message: 'OOPS. Not available this time. You have upcoming meetups on this time range.',
+              message: 'OOPS. You have upcoming meetups at this time range.',
               duration: 3000,
             });
             setStageCleared((previous) => {
@@ -76,7 +96,7 @@ const Place = () => {
             setSnackBar({
               isVisible: true,
               barType: 'error',
-              message: 'OOPS. Not available this time. You have upcoming meetups on this time range.',
+              message: 'OOPS. You have upcoming meetups at this time range.',
               duration: 3000,
             });
             setStageCleared((previous) => {
@@ -98,6 +118,132 @@ const Place = () => {
       }
     }
   }, [editingData.startDateAndTime, editingData.duration]);
+
+  useEffect(() => {
+    if (myDates.length && meetup) {
+      if (editingData.startDateAndTime.isEdited && !editingData.duration.isEdited) {
+        const launchingStartDateAndTime = new Date(editingData.startDateAndTime.data.getTime());
+        let launchingEndDateAndTime = new Date(editingData.startDateAndTime.data.getTime() + meetup.duration * 60000);
+        // launchingEndDateAndTimeString = launchingEndDateAndTimeString.setMinutes(
+        //   launchingStartDateAndTimeString.getMinutes() + meetup.duration
+        // );
+        // console.log(launchingStartDateAndTimeString);
+        // console.log(launchingStartDateAndTimeString.getMinutes() + meetup.duration);
+        // const launchingStartDateAndTime = launchingStartDateAndTimeString.getTime();
+        // const launchingEndDateAndTime = new Date(launchingEndDateAndTimeString).getTime();
+        // console.log('start launching', launchingStartDateAndTime);
+        // console.log('end launching', launchingEndDateAndTime);
+        myDates.forEach((dateObject) => {
+          const startDateAndTimeString = new Date(dateObject.startDateAndTime);
+          const endDateAndTimeString = new Date(dateObject.endDateAndTime);
+          const startDateAndTime = startDateAndTimeString.getTime();
+          const endDateAndTime = endDateAndTimeString.getTime();
+          if (
+            (startDateAndTime < launchingStartDateAndTime && launchingStartDateAndTime < endDateAndTime) ||
+            (startDateAndTime < launchingEndDateAndTime && launchingEndDateAndTime < endDateAndTime)
+          ) {
+            setSnackBar({
+              isVisible: true,
+              barType: 'error',
+              message: 'OOPS. You have upcoming meetups at this time range.',
+              duration: 3000,
+            });
+            setStageCleared((previous) => {
+              return {
+                ...previous,
+                dateAndTime: false,
+              };
+            });
+          } else if (
+            launchingStartDateAndTime < startDateAndTime &&
+            endDateAndTime - startDateAndTime < launchingEndDateAndTime - launchingStartDateAndTime
+          ) {
+            setSnackBar({
+              isVisible: true,
+              barType: 'error',
+              message: 'OOPS. You have upcoming meetups at this time range.',
+              duration: 3000,
+            });
+            setStageCleared((previous) => {
+              return {
+                ...previous,
+                dateAndTime: false,
+              };
+            });
+          } else {
+            console.log("It's ok👍");
+            setStageCleared((previous) => {
+              return {
+                ...previous,
+                dateAndTime: true,
+              };
+            });
+          }
+        });
+      }
+    }
+  }, [editingData.startDateAndTime, meetup]);
+
+  useEffect(() => {
+    if (myDates.length && meetup) {
+      if (editingData.duration.isEdited && !editingData.startDateAndTime.isEdited) {
+        const launchingStartDateAndTimeString = new Date(meetup.startDateAndTime);
+        let launchingEndDateAndTimeString = new Date(meetup.startDateAndTime);
+        launchingEndDateAndTimeString = launchingEndDateAndTimeString.setMinutes(
+          launchingStartDateAndTimeString.getMinutes() + editingData.duration.data
+        );
+        const launchingStartDateAndTime = launchingStartDateAndTimeString.getTime();
+        const launchingEndDateAndTime = new Date(launchingEndDateAndTimeString).getTime();
+        myDates.forEach((dateObject) => {
+          const startDateAndTimeString = new Date(dateObject.startDateAndTime);
+          const endDateAndTimeString = new Date(dateObject.endDateAndTime);
+          const startDateAndTime = startDateAndTimeString.getTime();
+          const endDateAndTime = endDateAndTimeString.getTime();
+          if (
+            (startDateAndTime < launchingStartDateAndTime && launchingStartDateAndTime < endDateAndTime) ||
+            (startDateAndTime < launchingEndDateAndTime && launchingEndDateAndTime < endDateAndTime)
+          ) {
+            setSnackBar({
+              isVisible: true,
+              barType: 'error',
+              message: 'OOPS. You have upcoming meetups at this time range.',
+              duration: 3000,
+            });
+            setStageCleared((previous) => {
+              return {
+                ...previous,
+                dateAndTime: false,
+              };
+            });
+          } else if (
+            launchingStartDateAndTime < startDateAndTime &&
+            endDateAndTime - startDateAndTime < launchingEndDateAndTime - launchingStartDateAndTime
+          ) {
+            setSnackBar({
+              isVisible: true,
+              barType: 'error',
+              message: 'OOPS. You have upcoming meetups at this time range.',
+              duration: 3000,
+            });
+            setStageCleared((previous) => {
+              return {
+                ...previous,
+                dateAndTime: false,
+              };
+            });
+          } else {
+            console.log("It's ok👍");
+            setStageCleared((previous) => {
+              return {
+                ...previous,
+                dateAndTime: true,
+              };
+            });
+          }
+        });
+      }
+    }
+  }, [editingData.duration, meetup]);
 
   const onStartDateConfirm = (date) => {
     // もし、
@@ -141,25 +287,27 @@ const Place = () => {
   };
 
   const renderOriginalDate = (date) => {
-    return (
-      <Text style={{ color: 'white' }}>
-        {editingData.startDateAndTime.isEdited ? '❌' : null}&nbsp;
-        {`${new Date(date).toLocaleString('en-US', {
-          weekday: 'long',
-          month: 'long',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-        })}`}
-      </Text>
-    );
+    if (editingData.startDateAndTime.isEdited) {
+      return null;
+    } else {
+      return (
+        <Text style={{ color: 'white' }}>
+          {`${new Date(date).toLocaleString('en-US', {
+            weekday: 'long',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+          })}`}
+        </Text>
+      );
+    }
   };
 
   const renderEditedDate = () => {
     if (editingData.startDateAndTime.isEdited) {
       return (
         <Text style={{ color: 'white' }}>
-          ✅&nbsp;
           {`${new Date(editingData.startDateAndTime.data).toLocaleString('en-US', {
             weekday: 'long',
             month: 'long',
@@ -173,14 +321,14 @@ const Place = () => {
   };
 
   const renderOriginalDuration = (duration) => {
-    const hours = Math.floor(duration / 60);
-    const minutes = duration % 60;
-    return (
-      <Text style={{ color: 'white' }}>
-        {editingData.duration.isEdited ? '❌' : null}&nbsp;
-        {`${hours} hours ${minutes} minutes`}
-      </Text>
-    );
+    if (editingData.duration.isEdited) {
+      return null;
+    } else {
+      const hours = Math.floor(duration / 60);
+      const minutes = duration % 60;
+
+      return <Text style={{ color: 'white' }}>{`${hours} hours ${minutes} minutes`}</Text>;
+    }
   };
 
   const renderEditedDuration = (duration) => {
@@ -248,7 +396,7 @@ const Place = () => {
               Please select date or duration if you need to change.
             </Text>
           </View>
-          <View style={{ flexDirection: 'column' }}>
+          <View style={{ flexDirection: 'column', marginBottom: 10 }}>
             <View
               style={{
                 flexDirection: 'row',
@@ -271,9 +419,7 @@ const Place = () => {
                 <Text style={{ color: 'white' }}>Start</Text>
               </TouchableOpacity>
               <View>
-                <Text style={{ color: 'white', marginBottom: editingData.startDateAndTime.isEdited ? 5 : null }}>
-                  {meetup ? renderOriginalDate(meetup.startDateAndTime) : null}
-                </Text>
+                {meetup ? renderOriginalDate(meetup.startDateAndTime) : null}
                 {renderEditedDate()}
               </View>
             </View>
@@ -298,14 +444,17 @@ const Place = () => {
                 <Text style={{ color: 'white' }}>Duration</Text>
               </TouchableOpacity>
               <View>
-                <Text style={{ color: 'white', marginBottom: editingData.duration.isEdited ? 5 : null }}>
-                  {meetup ? renderOriginalDuration(meetup.duration) : null}
-                </Text>
+                {meetup ? renderOriginalDuration(meetup.duration) : null}
                 {editingData.duration.isEdited ? (
-                  <Text style={{ color: 'white' }}>✅&nbsp;{renderEditedDuration(editingData.duration.data)}</Text>
+                  <Text style={{ color: 'white' }}>{renderEditedDuration(editingData.duration.data)}</Text>
                 ) : null}
               </View>
             </View>
+            {/* {stageCleared.dateAndTime ? (
+              <Text>👍</Text>
+            ) : (
+              <Text style={{ color: 'red' }}>This time range is not available because you have upcoming meetups</Text>
+            )} */}
           </View>
           <DateTimePickerModal
             defaultDate={meetup ? meetup.startDateAndTime : null}
