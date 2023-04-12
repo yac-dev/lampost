@@ -1,18 +1,16 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useMemo } from 'react';
 import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { mapStyleForForm } from '../../../utils/mapStyle';
 import { screenSectionBackgroundColor } from '../../../utils/colorsTable';
 
 const SelectPlace = (props) => {
-  const defaultVenue = {
-    latitude: props.route.params.editingPlace.coordinates[1],
-    longitude: props.route.params.editingPlace.coordinates[0],
-  };
-  const [editingPlace, setEditingPlace] = useState({
-    latitude: props.route.params.editingPlace.coordinates[1],
-    longitude: props.route.params.editingPlace.coordinates[0],
-  });
+  // この, objectのreference問題、結構めんどい。おそらく、lodashを使うのが一番いい方法。
+  const defaultVenue = props.route.params.editingPlace;
+  const [editingPlace, setEditingPlace] = useState(JSON.parse(JSON.stringify(props.route.params.editingPlace)));
+  console.log(defaultVenue === editingPlace);
+  console.log('default', defaultVenue);
+  console.log('editing', editingPlace);
 
   useEffect(() => {
     props.navigation.setOptions({
@@ -36,6 +34,17 @@ const SelectPlace = (props) => {
     });
   }, [editingPlace]);
 
+  const onMapPress = (event) => {
+    event.persist();
+    // console.log(event.nativeEvent.coordinate);
+    setEditingPlace((previous) => {
+      const updating = { ...previous };
+      updating.coordinates[0] = event.nativeEvent.coordinate.longitude;
+      updating.coordinates[1] = event.nativeEvent.coordinate.latitude;
+      return updating;
+    });
+  };
+
   return (
     <MapView
       style={{ width: Dimensions.get('window').width, height: Dimensions.get('window').height }}
@@ -45,20 +54,20 @@ const SelectPlace = (props) => {
       showsCompass={true}
       scrollEnabled={true}
       zoomEnabled={true}
-      onPress={(event) => setEditingPlace(event.nativeEvent.coordinate)}
+      onPress={(event) => onMapPress(event)}
       initialRegion={{
-        latitude: 37.78825,
-        longitude: -122.4324,
+        latitude: editingPlace.coordinates[1],
+        longitude: editingPlace.coordinates[0],
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       }}
-      provider='google'
+      // provider='google'
     >
       <Marker
         tracksViewChanges={false}
         coordinate={{
-          latitude: editingPlace.latitude,
-          longitude: editingPlace.longitude,
+          latitude: editingPlace.coordinates[1],
+          longitude: editingPlace.coordinates[0],
         }}
         // pinColor='black'
       ></Marker>

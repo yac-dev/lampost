@@ -40,7 +40,7 @@ const Place = () => {
       });
     }
   }, [route.params?.editedVenue]);
-  console.log(editingData);
+  // console.log(editingData);
 
   return (
     <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 7, borderRadius: 5, marginBottom: 10 }}>
@@ -109,7 +109,7 @@ const Place = () => {
             onPress={() => {
               if (editingData.venue.isEdited) {
                 navigation.navigate('Select venue', {
-                  editingPlace: { coordinates: [editingData.venue.data.longitude, editingData.venue.data.latitude] },
+                  editingPlace: editingData.venue.data,
                 });
               } else {
                 navigation.navigate('Select venue', { editingPlace: meetup.place });
@@ -149,8 +149,8 @@ const Place = () => {
               <Marker
                 tracksViewChanges={false}
                 coordinate={{
-                  latitude: editingData.venue.data.latitude,
-                  longitude: editingData.venue.data.longitude,
+                  latitude: editingData.venue.data.coordinates[1],
+                  longitude: editingData.venue.data.coordinates[0],
                 }}
               ></Marker>
             ) : null}

@@ -569,112 +569,131 @@ export const checkIsMeetupOngoing = async (request, response) => {
 
 export const updateMeetup = async (request, response) => {
   try {
-    const { data, field, userId } = request.body;
+    const { venue, startDateAndTime, duration } = request.body;
     const meetup = await Meetup.findById(request.params.id);
-    if (field === 'startDateAndTime') {
-      meetup.startDateAndTime = data;
-      meetup.save();
-      const loungeChatContent = `Start time has been changed from ${new Date(
-        meetup.startDateAndTime
-      ).toLocaleDateString('en-US', {
-        weekday: 'long',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      })} to ${new Date(data).toLocaleDateString('en-US', {
-        weekday: 'long',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      })} `;
-      const loungeChat = await LoungeChat.create({
-        meetup: request.params.id,
-        user: userId,
-        content: loungeChatContent,
-        type: 'edited',
-        replyTo: null,
-        createdAt: new Date(),
-      });
-      const meetupAndUserRelationships = await MeetupAndUserRelationship.find({
-        meetup: request.params.id,
-      })
-        .populate({ path: 'user' })
-        .select({ pushToken: 1 });
-      const membersPushTokens = meetupAndUserRelationships.map((rel) => {
-        return rel.user.pushToken;
-      });
-
-      // push notificationを全員に送る。//lounge chat contentをそのまま使うか。
-      const chunks = expo.chunkPushNotifications(
-        membersPushTokens.map((token) => ({
-          to: token,
-          sound: 'default',
-          data: { notificationType: 'loungeChat', meetupId: request.params.id, type: 'edited' },
-          title: `${meetup.title} was updated.`,
-          body: loungeChatContent,
-        }))
-      );
-
-      const tickets = [];
-
-      for (let chunk of chunks) {
-        try {
-          let receipts = await expo.sendPushNotificationsAsync(chunk);
-          tickets.push(...receipts);
-          console.log('Push notifications sent:', receipts);
-        } catch (error) {
-          console.error('Error sending push notification:', error);
-        }
-      }
-    } else if (field === 'duration') {
-      meetup.duration = data;
-      meetup.save();
-      const loungeChatContent = `Meetup duration has been changed from ${meetup.duration} minutes to ${data} minutes`;
-      const loungeChat = await LoungeChat.create({
-        meetup: request.params.id,
-        user: userId,
-        content: loungeChatContent,
-        type: 'edited',
-        replyTo: null,
-        createdAt: new Date(),
-      });
-      const meetupAndUserRelationships = await MeetupAndUserRelationship.find({
-        meetup: request.params.id,
-      })
-        .populate({ path: 'user' })
-        .select({ pushToken: 1 });
-      const membersPushTokens = meetupAndUserRelationships.map((rel) => {
-        return rel.user.pushToken;
-      });
-
-      // push notificationを全員に送る。//lounge chat contentをそのまま使うか。
-      const chunks = expo.chunkPushNotifications(
-        membersPushTokens.map((token) => ({
-          to: token,
-          sound: 'default',
-          data: { notificationType: 'loungeChat', meetupId: request.params.id, type: 'edited' },
-          title: `${meetup.title} was updated.`,
-          body: loungeChatContent,
-        }))
-      );
-
-      const tickets = [];
-
-      for (let chunk of chunks) {
-        try {
-          let receipts = await expo.sendPushNotificationsAsync(chunk);
-          tickets.push(...receipts);
-          console.log('Push notifications sent:', receipts);
-        } catch (error) {
-          console.error('Error sending push notification:', error);
-        }
-      }
-    } else if (field === 'agenda') {
-      meetup.agenda = data;
-      meetup.save();
+    let message = ``;
+    if (venue) {
+      meetup.place = venue;
+      message = message + `Venue was updated`;
     }
+    if (startDateAndTime) {
+      meetup.startDateAndTime = startDateAndTime;
+      message = message + 'Date was updated.';
+    }
+    if (duration) {
+      meetup.duration = duration;
+      message = message + 'Duration was updated.';
+    }
+    meetup.save();
+    console.log(message);
+    // if(){
+
+    // }
+
+    // if (field === 'startDateAndTime') {
+    //   meetup.startDateAndTime = data;
+    //   meetup.save();
+    //   const loungeChatContent = `Start time has been changed from ${new Date(
+    //     meetup.startDateAndTime
+    //   ).toLocaleDateString('en-US', {
+    //     weekday: 'long',
+    //     month: 'long',
+    //     day: 'numeric',
+    //     hour: '2-digit',
+    //     minute: '2-digit',
+    //   })} to ${new Date(data).toLocaleDateString('en-US', {
+    //     weekday: 'long',
+    //     month: 'long',
+    //     day: 'numeric',
+    //     hour: '2-digit',
+    //     minute: '2-digit',
+    //   })} `;
+    //   const loungeChat = await LoungeChat.create({
+    //     meetup: request.params.id,
+    //     user: userId,
+    //     content: loungeChatContent,
+    //     type: 'edited',
+    //     replyTo: null,
+    //     createdAt: new Date(),
+    //   });
+    //   const meetupAndUserRelationships = await MeetupAndUserRelationship.find({
+    //     meetup: request.params.id,
+    //   })
+    //     .populate({ path: 'user' })
+    //     .select({ pushToken: 1 });
+    //   const membersPushTokens = meetupAndUserRelationships.map((rel) => {
+    //     return rel.user.pushToken;
+    //   });
+
+    //   // push notificationを全員に送る。//lounge chat contentをそのまま使うか。
+    //   const chunks = expo.chunkPushNotifications(
+    //     membersPushTokens.map((token) => ({
+    //       to: token,
+    //       sound: 'default',
+    //       data: { notificationType: 'loungeChat', meetupId: request.params.id, type: 'edited' },
+    //       title: `${meetup.title} was updated.`,
+    //       body: loungeChatContent,
+    //     }))
+    //   );
+
+    //   const tickets = [];
+
+    //   for (let chunk of chunks) {
+    //     try {
+    //       let receipts = await expo.sendPushNotificationsAsync(chunk);
+    //       tickets.push(...receipts);
+    //       console.log('Push notifications sent:', receipts);
+    //     } catch (error) {
+    //       console.error('Error sending push notification:', error);
+    //     }
+    //   }
+    // } else if (field === 'duration') {
+    //   meetup.duration = data;
+    //   meetup.save();
+    //   const loungeChatContent = `Meetup duration has been changed from ${meetup.duration} minutes to ${data} minutes`;
+    //   const loungeChat = await LoungeChat.create({
+    //     meetup: request.params.id,
+    //     user: userId,
+    //     content: loungeChatContent,
+    //     type: 'edited',
+    //     replyTo: null,
+    //     createdAt: new Date(),
+    //   });
+    //   const meetupAndUserRelationships = await MeetupAndUserRelationship.find({
+    //     meetup: request.params.id,
+    //   })
+    //     .populate({ path: 'user' })
+    //     .select({ pushToken: 1 });
+    //   const membersPushTokens = meetupAndUserRelationships.map((rel) => {
+    //     return rel.user.pushToken;
+    //   });
+
+    //   // push notificationを全員に送る。//lounge chat contentをそのまま使うか。
+    //   const chunks = expo.chunkPushNotifications(
+    //     membersPushTokens.map((token) => ({
+    //       to: token,
+    //       sound: 'default',
+    //       data: { notificationType: 'loungeChat', meetupId: request.params.id, type: 'edited' },
+    //       title: `${meetup.title} was updated.`,
+    //       body: loungeChatContent,
+    //     }))
+    //   );
+
+    //   const tickets = [];
+
+    //   for (let chunk of chunks) {
+    //     try {
+    //       let receipts = await expo.sendPushNotificationsAsync(chunk);
+    //       tickets.push(...receipts);
+    //       console.log('Push notifications sent:', receipts);
+    //     } catch (error) {
+    //       console.error('Error sending push notification:', error);
+    //     }
+    //   }
+    // } else if (field === 'agenda') {
+    //   meetup.agenda = data;
+    //   meetup.save();
+    // }
 
     response.status(201).json({
       message: 'success',

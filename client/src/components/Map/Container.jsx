@@ -49,8 +49,16 @@ import { iconColorsTable } from '../../utils/colorsTable';
 
 const Map = (props) => {
   // setAuthがありませんよ、てきなerrorを出して欲しいわ。これなんとかならんかな。
-  const { auth, setAuth, loading, setLoading, setSnackBar, setMyUpcomingMeetupAndChatsTable, chatsNotificationCount } =
-    useContext(GlobalContext);
+  const {
+    auth,
+    setAuth,
+    loading,
+    setLoading,
+    setSnackBar,
+    setMyUpcomingMeetups,
+    setMyUpcomingMeetupAndChatsTable,
+    chatsNotificationCount,
+  } = useContext(GlobalContext);
   const [region, setRegion] = useState(null);
   const [currentSnap, setCurrentSnap] = useState();
   const [isLaunchMeetupConfirmationModalOpen, setIsLaunchMeetupConfirmationModalOpen] = useState(false);
@@ -160,6 +168,27 @@ const Map = (props) => {
   //     });
   //   }
   // }, [auth.socket]);
+  useEffect(() => {
+    if (props.route.params?.editedMeetup) {
+      if (props.route.params?.editedMeetup.startDateAndTime) {
+        setMyUpcomingMeetups((previous) => {
+          return {
+            ...previous,
+            [props.route.params.editedMeetup.meetupId]: {
+              ...previous[props.route.params.editedMeetup.meetupId],
+              startDateAndTime: props.route.params.editedMeetup.startDateAndTime,
+            },
+          };
+        });
+      }
+      setSnackBar({
+        isVisible: true,
+        barType: 'success',
+        message: 'Your meetup was updated.',
+        duration: 5000,
+      });
+    }
+  }, [props.route.params?.editedMeetup]);
 
   // これで、mapを自動で移動させる。launchMeetupの場所へ。
   useEffect(() => {

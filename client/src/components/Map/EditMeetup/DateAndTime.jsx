@@ -35,7 +35,7 @@ const Place = () => {
     };
   });
 
-  console.log(myDates);
+  // console.log(myDates);
 
   // dateのvalidation
   useEffect(() => {

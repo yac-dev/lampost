@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import GlobalContext from '../../../GlobalContext';
 import EditMeetupContext from './EditMeetupContext';
 import { baseBackgroundColor, screenSectionBackgroundColor } from '../../../utils/colorsTable';
 import lampostAPI from '../../../apis/lampost';
 import Venue from './Venue';
 import DateAndTime from './DateAndTime';
+import LoadingSpinner from '../../Utils/LoadingSpinner';
 
 const Container = (props) => {
+  const { auth, setLoading } = useContext(GlobalContext);
   const [meetup, setMeetup] = useState(null);
   const [accordion, setAccordion] = useState({
     venue: false,
@@ -28,7 +31,7 @@ const Container = (props) => {
     props.navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
-          onPress={() => console.log('Done')}
+          onPress={() => onDonePress()}
           disabled={stageCleared.venue || stageCleared.dateAndTime ? false : true}
         >
           <Text
@@ -45,12 +48,27 @@ const Container = (props) => {
     });
   }, [editingData, stageCleared]);
 
+  const onDonePress = async () => {
+    //editingdataがtrueのものだけ取ってこようか。まずは。
+    const payload = { venue: null, startDateAndTime: null, duration: null };
+    for (const key in editingData) {
+      if (editingData[key].isEdited) {
+        payload[key] = editingData[key].data;
+      }
+    }
+    console.log(payload); // これで、updateされたdataだけを送れる。
+    setLoading(true);
+    const result = await lampostAPI.patch(`/meetups/${meetup._id}`, payload);
+    setLoading(false);
+    props.navigation.navigate('Map', { editedMeetup: { ...payload }, meetupId: meetup._id });
+  };
+
   const getMeetup = async () => {
     const result = await lampostAPI.get(`/meetups/${props.route.params.meetupId}/selected`);
     const { meetup } = result.data;
     setMeetup(meetup);
   };
-  console.log(meetup);
+  // console.log(meetup);
 
   useEffect(() => {
     getMeetup();
@@ -74,7 +92,8 @@ const Container = (props) => {
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
         <Venue />
         <DateAndTime />
-        <Text style={{ color: 'white' }}>The update will be sent directly to the lounge chat📨</Text>
+        <Text style={{ color: 'white' }}>The update will be sent directly to the lounge chat 📨</Text>
+        <LoadingSpinner />
       </View>
     </EditMeetupContext.Provider>
   );
