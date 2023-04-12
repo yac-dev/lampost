@@ -37,26 +37,26 @@ const MyUpcomingMeetupsBottomSheet = (props) => {
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
-            navigation.navigate('Lounge', { meetupId: moreMenuOf });
+            navigation.navigate('Edit meetup', { meetupId: moreMenuOf });
             moreMenuBottomSheetRef.current.close();
           }}
-          disabled={true}
+          // disabled={true}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View
               style={{
                 width: 40,
                 height: 40,
-                backgroundColor: backgroundColorsTable['red1'],
+                backgroundColor: backgroundColorsTable['green1'],
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 8,
                 marginRight: 10,
               }}
             >
-              <MaterialCommunityIcons name='exit-run' color={iconColorsTable['red1']} size={20} />
+              <MaterialCommunityIcons name='file-document-edit-outline' color={iconColorsTable['green1']} size={20} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Leave this meetup</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Edit this meetup</Text>
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
         </TouchableOpacity>

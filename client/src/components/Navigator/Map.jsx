@@ -27,6 +27,8 @@ import ReportMeetupMember from '../Map/SelectedMeetup/Lounge/ReportMeetupMember'
 import ReportUser from '../Utils/ReportUser';
 import Attendees from '../Map/SelectedMeetup/Attendees';
 import ExternalWebPage from '../Utils/ExternalWebPage';
+import EditMeetup from '../Map/EditMeetup/Container';
+import SelectVenue from '../Map/EditMeetup/SelectVenue';
 
 import AuthNavigator from './Auth';
 import { appBottomSheetBackgroundColor, iconColorsTable } from '../../utils/colorsTable';
@@ -299,13 +301,52 @@ const MapNavigator = (props) => {
             headerShown: false,
           })}
         />
+        
       </Stack.Group> */}
+      <Stack.Group screenOptions={{ presentation: 'modal', gestureEnabled: false }}>
+        <Stack.Screen
+          name='Select venue'
+          component={SelectVenue}
+          options={({ navigation }) => ({
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
+              </TouchableOpacity>
+            ),
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          })}
+        />
+      </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
         <Stack.Screen
           name='Profile'
           component={AuthNavigator}
           options={({ navigation }) => ({
             headerShown: false,
+          })}
+        />
+        <Stack.Screen
+          name='Edit meetup'
+          component={EditMeetup}
+          options={({ navigation }) => ({
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
+              </TouchableOpacity>
+            ),
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
           })}
         />
         <Stack.Screen

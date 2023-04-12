@@ -13,7 +13,7 @@ const Header = () => {
   const { selectedLibrary } = useContext(LibrariesContext);
   return (
     <View style={{ marginBottom: 5 }}>
-      <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>{selectedLibrary.name}</Text>
+      <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>{selectedLibrary.title}</Text>
     </View>
   );
 };

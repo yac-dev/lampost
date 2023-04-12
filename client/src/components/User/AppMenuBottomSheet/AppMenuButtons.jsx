@@ -10,6 +10,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import {
   iconColorsTable,
   backgroundColorsTable,
@@ -122,14 +123,14 @@ const AppButtons = (props) => {
               style={{
                 width: 40,
                 height: 40,
-                backgroundColor: backgroundColorsTable['orange1'],
+                backgroundColor: backgroundColorsTable['pink1'],
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 8,
                 marginRight: 10,
               }}
             >
-              <MaterialCommunityIcons name='human-greeting-variant' color={iconColorsTable['orange1']} size={20} />
+              <MaterialCommunityIcons name='human-greeting-variant' color={iconColorsTable['pink1']} size={20} />
             </View>
             <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>My friends</Text>
           </View>
@@ -156,7 +157,7 @@ const AppButtons = (props) => {
                 marginRight: 10,
               }}
             >
-              <MaterialCommunityIcons name='human-greeting-variant' color={iconColorsTable['orange1']} size={20} />
+              <MaterialCommunityIcons name='history' color={iconColorsTable['orange1']} size={20} />
             </View>
             <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>My history</Text>
           </View>
@@ -176,14 +177,14 @@ const AppButtons = (props) => {
               style={{
                 width: 40,
                 height: 40,
-                backgroundColor: backgroundColorsTable['orange1'],
+                backgroundColor: backgroundColorsTable['violet1'],
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 8,
                 marginRight: 10,
               }}
             >
-              <MaterialCommunityIcons name='human-greeting-variant' color={iconColorsTable['orange1']} size={20} />
+              <Ionicons name='camera' color={iconColorsTable['violet1']} size={20} />
             </View>
             <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>My moments</Text>
           </View>

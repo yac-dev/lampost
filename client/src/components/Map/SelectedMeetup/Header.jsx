@@ -34,7 +34,7 @@ const Header = (props) => {
 
   return (
     <View style={{ marginBottom: 10 }}>
-      <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginBottom: 5 }}>{selectedMeetup.title}</Text>
+      <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>{selectedMeetup.title}</Text>
     </View>
   );
 };

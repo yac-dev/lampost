@@ -145,7 +145,7 @@ const AppButtons = () => {
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
             return null;
@@ -165,10 +165,10 @@ const AppButtons = () => {
             >
               <Ionicons name='image-sharp' size={20} color={iconColorsTable['pink1']} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Send a image</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Send an image</Text>
           </View>
           <Foundation name='prohibited' color={iconColorsTable['red1']} size={25} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </ScrollView>
     </View>
   );

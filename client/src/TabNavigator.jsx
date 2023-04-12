@@ -13,6 +13,7 @@ import SnackBar from './components/Utils/SnackBar';
 import Camera from './components/Camera/Container';
 import { iconsTable } from './utils/icons';
 import { appBottomSheetBackgroundColor, iconColorsTable, backgroundColorsTable } from './utils/colorsTable';
+import Cal from './components/Schedule/Container';
 
 // const ref = createNavigationContainerRef();
 const Tab = createBottomTabNavigator();
@@ -20,7 +21,7 @@ const Tab = createBottomTabNavigator();
 const CameraBase = () => <View style={{ flex: 1, backgroundColor: 'red' }} />;
 
 const RootNavigator = () => {
-  const { MaterialCommunityIcons, Ionicons, FontAwesome5 } = iconsTable;
+  const { MaterialCommunityIcons, Ionicons, FontAwesome5, MaterialIcons } = iconsTable;
   const { chatsNotificationCount, friendChatsNotificationCount } = useContext(GlobalContext);
 
   // tabBarStyle: { display: 'none' }
@@ -109,10 +110,26 @@ const RootNavigator = () => {
           // headerTransparent: true,
           // headerLeft: () => <Button onPress={() => navigation.navigate('Add comment')}>User page</Button>,
           tabBarIcon: ({ size, color, focused }) => (
-            <FontAwesome5 name='user-astronaut' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+            <Ionicons name='person' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
           ),
           showLabel: false,
           tabBarLabel: 'Profile',
+          tabBarBadge: friendChatsNotificationCount ? friendChatsNotificationCount : null,
+          tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
+        })}
+      />
+      <Tab.Screen
+        name='Cal'
+        component={Cal}
+        options={({ navigation }) => ({
+          headerShown: false,
+          // headerTransparent: true,
+          // headerLeft: () => <Button onPress={() => navigation.navigate('Add comment')}>User page</Button>,
+          tabBarIcon: ({ size, color, focused }) => (
+            <Ionicons name='person' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+          ),
+          showLabel: false,
+          tabBarLabel: 'Cal',
           tabBarBadge: friendChatsNotificationCount ? friendChatsNotificationCount : null,
           tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
         })}

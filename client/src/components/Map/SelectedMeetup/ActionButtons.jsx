@@ -241,7 +241,7 @@ const ActionButtons = (props) => {
   };
 
   return (
-    <View style={{ marginBottom: 20 }}>
+    <View style={{ marginBottom: 10 }}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         {renderApp()}
       </ScrollView>

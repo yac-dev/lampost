@@ -11,7 +11,7 @@ export const joinLibrary = async (request, response) => {
 
     await libraryAndUserRelationship.populate({
       path: 'library',
-      select: 'name color thumbnail',
+      select: 'title color thumbnail',
       populate: { path: 'thumbnail' },
     });
     response.status(201).json({
@@ -41,7 +41,7 @@ export const getMyJoinedLibrary = async (request, response) => {
       .select({ library: 1 })
       .populate({
         path: 'library',
-        select: 'name color assetType',
+        select: 'title color assetType',
         populate: { path: 'thumbnail', select: 'data type' },
       });
     // [ {library: {name: 'qqqqq', description: 'hfuhoifhiqw'}, user: {'11111'} ]って面倒だからね。
