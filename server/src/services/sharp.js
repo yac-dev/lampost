@@ -18,7 +18,7 @@ export const addPhotoEffect = async (fileName, effect) => {
     .modulate({
       brightness: 0.85,
     })
-    .blur(0.7)
+    .blur(1)
     .composite([
       {
         input: overlayInputFilePath,

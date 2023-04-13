@@ -31,7 +31,7 @@ import { Video } from 'expo-av';
 import FastImage from 'react-native-fast-image';
 
 const Container = (props) => {
-  const { auth, setAuth, setSnackBar, myUpcomingMeetups } = useContext(GlobalContext);
+  const { auth, setAuth, setSnackBar, myUpcomingMeetups, setLoading } = useContext(GlobalContext);
   const appMenuBottomSheetRef = useRef(null);
   const timeMachineBottomSheetRef = useRef(null);
   const cameraModeBottomSheetRef = useRef(null);
@@ -50,6 +50,7 @@ const Container = (props) => {
   const [hasMicrophonePermission, setHasMicrophonePermission] = useState();
   const [isRecording, setIsRecording] = useState(false);
   const [video, setVideo] = useState();
+  const [videoLength, setVideoLength] = useState(60); // time machineの時だけ、1分にする。
   const [havingMeetup, setHavingMeetup] = useState(false);
   const [currentMeetup, setCurrentMeetup] = useState(null);
   const [ongoingMeetup, setOngoingMeetup] = useState(null);
@@ -164,13 +165,13 @@ const Container = (props) => {
 
   const renderTimer = () => {
     if (cameraMode === 'video') {
-      const rest = 60 - duration;
+      const rest = videoLength - duration;
       return (
         <View
           style={{
             backgroundColor: appBottomSheetBackgroundColor,
             position: 'absolute',
-            top: 10,
+            top: 20,
             alignSelf: 'center',
             padding: 10,
             flexDirection: 'row',
@@ -283,7 +284,7 @@ const Container = (props) => {
       setDuration(0);
       setSnackBar({
         isVisible: true,
-        message: 'Video was recorded.',
+        message: 'Nice shot 📸',
         barType: 'success',
         duration: 1500,
       });
@@ -302,6 +303,7 @@ const Container = (props) => {
       base64: true,
       exif: false,
     };
+    setLoading(true);
     let newPhoto = await cameraRef.current.takePictureAsync(options);
     const formData = new FormData();
     // photo fieldよりも後にmeetupIdをappendするとダメなんだよな。。。何でだろ。。。
@@ -326,9 +328,10 @@ const Container = (props) => {
       const result = await lampostAPI.post(`/assets/photos`, formData, {
         headers: { 'Content-type': 'multipart/form-data' },
       });
+      setLoading(false);
       setSnackBar({
         isVisible: true,
-        message: 'Took photo.',
+        message: 'Nice shot 📸',
         barType: 'success',
         duration: 1500,
       });
@@ -384,7 +387,7 @@ const Container = (props) => {
               style={{
                 backgroundColor: 'white',
                 padding: 10,
-                flexDirection: 'row',
+                justifyContent: 'center',
                 alignItems: 'center',
                 width: 60,
                 height: 60,
@@ -449,25 +452,25 @@ const Container = (props) => {
       <View style={{ flex: 1, backgroundColor: 'black' }}>
         <View
           style={{
-            width: '100%',
-            paddingLeft: 10,
-            paddingRight: 10,
-            paddingTop: 70,
+            flex: cameraMode === 'photo' ? null : 1,
+            width: cameraMode === 'photo' ? '100%' : null,
+            paddingTop: cameraMode === 'photo' ? 70 : null,
             // alignItems: 'center',
             // justifyContent: 'center',
           }}
         >
           <Camera
             style={{
-              // flex: 1,
-              width: '100%',
-              aspectRatio: 1,
+              flex: cameraMode === 'photo' ? null : 1,
+              width: cameraMode === 'photo' ? '100%' : null,
+              aspectRatio: cameraMode === 'photo' ? 1 : null,
             }}
             flashMode={'off'}
             ref={cameraRef}
             type={cameraType}
             whiteBalance={photoEffect}
             ratio={'1:1'}
+            // videoQuality='480p'
           >
             {renderTimer()}
           </Camera>

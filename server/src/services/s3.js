@@ -37,7 +37,7 @@ export const uploadNormalVideo = async (fileName) => {
   };
   await s3.upload(uploadParams).promise();
   console.log('normal video Uploaded');
-  await unlinkFile(originalFilePath);
+  await unlinkFile(filePath);
 };
 
 export const uploadEffectedVideo = async (fileName, assetId) => {
