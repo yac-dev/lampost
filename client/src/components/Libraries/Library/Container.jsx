@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useEffect, useState, useCallback } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Dimensions, ActivityIndicator, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Dimensions, ActivityIndicator, FlatList, Image } from 'react-native';
 import GlobalContext from '../../../GlobalContext';
 import LibraryContext from './LibraryContext';
 import lampostAPI from '../../../apis/lampost';
@@ -52,12 +52,90 @@ const Container = (props) => {
   const [libraryMembers, setLibraryMembers] = useState([]);
   const [libraryPosts, setLibraryPosts] = useState([]);
   const oneAssetWidth = isIpad ? Dimensions.get('window').width / 4 : Dimensions.get('window').width / 2;
+  const [currentYearAndMonth, setCurrentYearAndMonth] = useState('');
+  const [assetsTable, setAssetsTable] = useState({});
+  // {2023-5: {3: assetObj , 4: assetObj, 5: assetObj}} って感じか。
 
   useEffect(() => {
     if (props.route.params?.addedAsset) {
       setAssets((previous) => [...previous, props.route.params?.addedAsset]);
     }
   }, [props.route.params?.addedAsset]);
+
+  useEffect(() => {
+    const month = new Date().getMonth() + 1;
+    const year = new Date().getFullYear();
+    const key = `${year}-${month}`;
+    setCurrentYearAndMonth(key);
+  }, []);
+
+  const getAssetsByYearAndMonth = async () => {
+    const result = await lampostAPI.get(
+      `/libraryandassetrelationships/${props.route.params.libraryId}?yearAndMonth=${currentYearAndMonth}`
+    );
+    const { libraryAssets } = result.data;
+    const table = {};
+    libraryAssets.forEach((libraryAsset) => {
+      const date = new Date(libraryAsset.asset.createdAt).toISOString().substring(0, 10);
+      // const dayOfMonth = date.getDate();
+      if (!table[date]) {
+        table[date] = { marked: true, thumbnail: libraryAsset.asset.data };
+      }
+    });
+    setAssetsTable((previous) => {
+      return {
+        ...previous,
+        [currentYearAndMonth]: table,
+      };
+    });
+  };
+  useEffect(() => {
+    if (currentYearAndMonth) {
+      if (!assetsTable[currentYearAndMonth]) {
+        // ここでそのyearとmonthでassetsをfetchしてくる。
+        // dataがなかったら、assetsをfetchして、かつassetsTableのdataも貯めると。
+        getAssetsByYearAndMonth();
+      }
+    }
+  }, [currentYearAndMonth]);
+  // console.log(assetsTable);
+
+  const DayComponent = ({ date, marking }) => {
+    // const { thumbnail } = marking;
+    return (
+      <TouchableOpacity
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          // backgroundColor: 'red',
+          width: '100%',
+          aspectRatio: 1,
+          padding: 2,
+        }}
+      >
+        {marking ? (
+          <Image
+            style={{ width: '100%', height: '100%', borderRadius: 5 }}
+            source={{
+              uri: marking.thumbnail,
+            }}
+          />
+        ) : (
+          <View
+            style={{
+              width: '100%',
+              height: '100%',
+              backgroundColor: baseBackgroundColor,
+            }}
+          ></View>
+        )}
+
+        <Text style={{ color: 'white', position: 'absolute', top: 20, textAlign: 'center', fontWeight: 'bold' }}>
+          {date.day}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
 
   // const getLibrary = async () => {
   //   const result = await lampostAPI.get(`/libraries/${props.route.params.libraryId}`);
@@ -69,17 +147,17 @@ const Container = (props) => {
   //   getLibrary();
   // }, []);
 
-  const getAssetsByLibraryId = async () => {
-    const result = await lampostAPI.get(`/libraryandassetrelationships/${props.route.params.libraryId}`);
-    const { assets } = result.data;
-    setAssets(assets);
-    setIsFetchedAssets(true);
-  };
-  useEffect(() => {
-    // if (library) {
-    getAssetsByLibraryId();
-    // }
-  }, []);
+  // const getAssetsByLibraryId = async () => {
+  //   const result = await lampostAPI.get(`/libraryandassetrelationships/${props.route.params.libraryId}`);
+  //   const { assets } = result.data;
+  //   setAssets(assets);
+  //   setIsFetchedAssets(true);
+  // };
+  // useEffect(() => {
+  //   // if (library) {
+  //   getAssetsByLibraryId();
+  //   // }
+  // }, []);
 
   const renderItem = useCallback((asset) => {
     if (asset.type === 'photo') {
@@ -140,6 +218,11 @@ const Container = (props) => {
   //   <Ionicons name='videocam' size={25} color={iconColorsTable[videoTypesTable[formData.asset.effect]]} />
   // </View>
 
+  const handleMonthChange = (monthObj) => {
+    setCurrentYearAndMonth(`${monthObj.year}-${monthObj.month}`);
+  };
+  console.log(assetsTable);
+
   return (
     <LibraryContext.Provider
       value={{
@@ -163,7 +246,7 @@ const Container = (props) => {
         setIsConfirmPostAssetsModalOpen,
       }}
     >
-      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+      {/* <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
         {!isFetchedAssets ? (
           <ActivityIndicator />
         ) : (
@@ -174,7 +257,6 @@ const Container = (props) => {
             keyExtractor={(item, index) => `${item._id}-${index}`}
           />
         )}
-        {/* {renderAssets()} */}
         {auth.isAuthenticated ? (
           <View
             style={{
@@ -220,6 +302,65 @@ const Container = (props) => {
         <AlbumsBottomSheet />
         <ConfirmLeaveLibrary />
         <ConfirmPostAssetModal />
+      </View> */}
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+        <Calendar
+          style={{
+            width: '100%',
+            aspectRatio: 1,
+          }}
+          markedDates={assetsTable[currentYearAndMonth]}
+          onMonthChange={handleMonthChange}
+          // renderDay={renderDay}
+          dayComponent={
+            DayComponent
+            //   (e) => {
+            //   // console.log(e);
+            //   return (
+            //     <TouchableOpacity
+            //       style={{
+            //         justifyContent: 'center',
+            //         alignItems: 'center',
+            //         // backgroundColor: 'red',
+            //         width: '100%',
+            //         aspectRatio: 1,
+            //         padding: 2,
+            //       }}
+            //     >
+            //       {/* <Image
+            //       style={{ width: '100%', height: '100%' }}
+            //       source={{
+            //         uri: 'https://reactnative.dev/img/tiny_logo.png',
+            //       }}
+            //     /> */}
+            //       <View
+            //         style={{
+            //           width: '100%',
+            //           height: '100%',
+            //           backgroundColor: baseBackgroundColor,
+            //         }}
+            //       ></View>
+            //       <Text
+            //         style={{ color: 'white', position: 'absolute', top: 20, textAlign: 'center', fontWeight: 'bold' }}
+            //       >
+            //         {e.date.day}
+            //       </Text>
+            //     </TouchableOpacity>
+            //   );
+            // }
+          }
+          theme={{
+            calendarBackground: baseBackgroundColor,
+            textSectionTitleColor: 'white',
+            textSectionTitleDisabledColor: '#d9e1e8',
+            // selectedDayBackgroundColor: '#00adf5',
+            // selectedDayTextColor: '#ffffff',
+            dayTextColor: 'white',
+            arrowColor: 'white',
+            monthTextColor: 'white',
+            indicatorColor: 'white',
+          }}
+        />
       </View>
     </LibraryContext.Provider>
   );

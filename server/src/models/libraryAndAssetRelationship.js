@@ -19,6 +19,7 @@ const libraryAndAssetRelationshipSchema = new mongoose.Schema({
       users: [{ type: mongoose.Schema.ObjectId }],
     },
   ],
+  createdAt: Date,
 });
 
 const LibraryAndAssetRelationship = mongoose.model('LibraryAndAssetRelationship', libraryAndAssetRelationshipSchema);

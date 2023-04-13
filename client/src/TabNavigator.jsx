@@ -118,11 +118,11 @@ const RootNavigator = () => {
           tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
         })}
       />
-      {/* <Tab.Screen
+      <Tab.Screen
         name='Cal'
         component={Cal}
         options={({ navigation }) => ({
-          headerShown: false,
+          headerShown: true,
           // headerTransparent: true,
           // headerLeft: () => <Button onPress={() => navigation.navigate('Add comment')}>User page</Button>,
           tabBarIcon: ({ size, color, focused }) => (
@@ -133,7 +133,7 @@ const RootNavigator = () => {
           tabBarBadge: friendChatsNotificationCount ? friendChatsNotificationCount : null,
           tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
         })}
-      /> */}
+      />
     </Tab.Navigator>
   );
 };

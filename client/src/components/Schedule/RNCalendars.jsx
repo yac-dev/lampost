@@ -7,6 +7,7 @@ import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 
 // ac
 import { getUpcomingJoinedMeetup } from '../../redux/actionCreators/meetups';
+import { baseBackgroundColor } from '../../utils/colorsTable';
 
 const RNCalendars = (props) => {
   let ScreenHeight = Dimensions.get('window').height;
@@ -15,7 +16,7 @@ const RNCalendars = (props) => {
     // return <SafeAreaView>{renderList()}</SafeAreaView>;
     // 個々のdate objectをどうすればいいんだろうか？？
     return (
-      <CalendarList
+      <Calendar
         markedDates={props.dates}
         style={{ height: ScreenHeight }}
         onDayPress={(day) => {
@@ -24,7 +25,7 @@ const RNCalendars = (props) => {
           props.navigation.navigate('Meetup', { meetupId: props.dates[day.dateString].data._id });
         }}
         theme={{
-          calendarBackground: '#07175E',
+          calendarBackground: baseBackgroundColor,
           textSectionTitleColor: 'white',
           textSectionTitleDisabledColor: '#d9e1e8',
           // selectedDayBackgroundColor: '#00adf5',

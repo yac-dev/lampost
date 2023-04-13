@@ -96,6 +96,70 @@ export const getAsset = async (request, response) => {
 //   }
 // }
 
+export const getLibraryAssetsByMonth = async (request, response) => {
+  try {
+    const { yearAndMonth } = request.query;
+    const year = yearAndMonth.split('-')[0];
+    const month = yearAndMonth.split('-')[1];
+    console.log(yearAndMonth, year, month);
+
+    const startDate = new Date(Date.UTC(year, month - 1, 1));
+    const endDate = new Date(Date.UTC(year, month, 1));
+    console.log(startDate, endDate);
+
+    const libraryAssets = await LibraryAndAssetRelationship.find({
+      library: request.params.libraryId,
+      createdAt: { $gte: startDate, $lt: endDate },
+    }).populate({
+      path: 'asset',
+      select: 'data createdAt',
+    });
+    console.log(libraryAssets);
+
+    response.status(200).json({
+      libraryAssets,
+    });
+
+    // LibraryAndAssetRelationship.find({
+    //   library: libraryId,
+    //   createdAt: { $gte: startDate, $lt: endDate }
+    // })
+
+    // const assets = Asset.aggregate([
+    //   {
+    //     $project: {
+    //       year: { $year: '$createdAt' },
+    //       month: { $month: '$createdAt' },
+    //       data: 1,
+    //       type: 1,
+    //       meetup: 1,
+    //       badges: 1,
+    //       place: 1,
+    //       effect: 1,
+    //       duration: 1,
+    //       createdBy: 1,
+    //       taggedPeople: 1,
+    //       createdAt: 1,
+    //     },
+    //   },
+    //   {
+    //     $match: {
+    //       year: year,
+    //       month: month,
+    //     },
+    //   },
+    // ]).exec((err, assets) => {
+    //   if (err) {
+    //     // handle error
+    //   } else {
+    //     // handle results
+    //   }
+    // });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const postAssetsByLibraryId = async (request, response) => {
   try {
     const { assetId } = request.body;
