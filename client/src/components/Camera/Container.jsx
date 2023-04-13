@@ -170,7 +170,8 @@ const Container = (props) => {
           style={{
             backgroundColor: appBottomSheetBackgroundColor,
             position: 'absolute',
-            top: 50,
+            top: 10,
+            alignSelf: 'center',
             padding: 10,
             flexDirection: 'row',
             alignItems: 'center',
@@ -356,19 +357,17 @@ const Container = (props) => {
         >
           <View
             style={{
-              backgroundColor: iconColorsTable['blue1'],
+              backgroundColor: 'white',
               // padding: 10,
               flexDirection: 'row',
-              borderRadius: 25,
-              width: 50,
-              height: 50,
+              borderRadius: 30,
+              width: 60,
+              height: 60,
               justifyContent: 'center',
               alignItems: 'center',
             }}
-          >
-            <MaterialCommunityIcons name='camera-iris' size={35} color='white' />
-          </View>
-          {isCameraButtonReady()}
+          ></View>
+          {/* {isCameraButtonReady()} */}
         </TouchableOpacity>
       );
     } else if (cameraMode === 'video') {
@@ -383,34 +382,34 @@ const Container = (props) => {
             // <Ionicons name='stop-circle' color={'white'} size={25} />
             <View
               style={{
-                backgroundColor: iconColorsTable['red1'],
+                backgroundColor: 'white',
                 padding: 10,
                 flexDirection: 'row',
                 alignItems: 'center',
-                width: 50,
-                height: 50,
-                borderRadius: 25,
+                width: 60,
+                height: 60,
+                borderRadius: 30,
               }}
             >
-              <Text style={{ color: 'white' }}>Stop</Text>
+              <Text style={{ color: 'black', fontSize: 18 }}>Stop</Text>
             </View>
           ) : (
             // <MaterialCommunityIcons name='record-rec' size={25} color='white' />
             <View
               style={{
-                backgroundColor: iconColorsTable['blue1'],
+                backgroundColor: 'white',
                 padding: 10,
-                flexDirection: 'row',
+                width: 60,
+                height: 60,
+                borderRadius: 30,
+                justifyContent: 'center',
                 alignItems: 'center',
-                width: 50,
-                height: 50,
-                borderRadius: 25,
               }}
             >
-              <Text style={{ color: 'white' }}>Start</Text>
+              <Text style={{ color: 'black', fontSize: 18 }}>Start</Text>
             </View>
           )}
-          {isCameraButtonReady()}
+          {/* {isCameraButtonReady()} */}
         </TouchableOpacity>
       );
     }
@@ -447,30 +446,31 @@ const Container = (props) => {
         ongoingMeetup,
       }}
     >
-      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: 'black' }}>
+        <View
+          style={{
+            width: '100%',
+            paddingLeft: 10,
+            paddingRight: 10,
+            paddingTop: 70,
+            // alignItems: 'center',
+            // justifyContent: 'center',
+          }}
+        >
           <Camera
             style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              // width: '100%',
-              // aspectRatio: 1,
-              // borderRadius: 10,
+              // flex: 1,
+              width: '100%',
+              aspectRatio: 1,
             }}
             flashMode={'off'}
             ref={cameraRef}
             type={cameraType}
             whiteBalance={photoEffect}
+            ratio={'1:1'}
           >
             {renderTimer()}
           </Camera>
-          <View style={{ position: 'absolute', top: 70, left: 10 }}>
-            {/* <Text numberOfLines={1} style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>
-              {props.route.params.meetupTitle}
-            </Text> */}
-            {/* {renderTaggedPeople()} */}
-          </View>
         </View>
         {renderCameraButton()}
         {auth.isAuthenticated ? (

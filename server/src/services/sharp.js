@@ -14,9 +14,9 @@ export const addPhotoEffect = async (fileName, effect) => {
 
   await sharp(inputFilePath)
     .rotate()
-    .resize(1080, 1920)
+    .resize(500, 500)
     .modulate({
-      brightness: 0.75,
+      brightness: 0.85,
     })
     .blur(0.7)
     .composite([

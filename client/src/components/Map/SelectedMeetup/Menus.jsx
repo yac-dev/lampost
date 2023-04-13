@@ -69,7 +69,7 @@ const Menus = (props) => {
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Text style={{ color: baseTextColor, fontSize: 15 }}>
-          {startDateElements[1]}&nbsp;~&nbsp;{endDateElements[1]}
+          {startDateElements[1]}&nbsp;-&nbsp;{endDateElements[1]}
         </Text>
       </View>
     );

@@ -461,8 +461,8 @@ const AppStack = (props) => {
               options={({ navigation }) => ({
                 headerLeft: () => (
                   <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Ionicons name='close-circle-outline' size={30} color={'white'} />
-                    {/* <Text style={{ color: 'white', fontSize: 20 }}>Close</Text> */}
+                    {/* <Ionicons name='close-circle-outline' size={30} color={'white'} /> */}
+                    <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
                   </TouchableOpacity>
                 ),
                 headerShown: true,

@@ -23,39 +23,39 @@ const Place = () => {
   const [isStartDateAndTimeDatePickerVisible, setIsStartDateAndTimeDatePickerVisible] = useState(false);
   const [isDurationPickerVisible, setIsDurationPickerVisible] = useState(false);
   const [timeRange, setTimeRange] = useState({ start: '', end: '' });
-  // const [myDates, setMyDates] = useState([]);
+  const [myDates, setMyDates] = useState([]);
 
-  const myDates = Object.values(myUpcomingMeetups).map((meetupObj) => {
-    const startDateAndTime = new Date(meetupObj.startDateAndTime);
-    let endDateAndTime = new Date(startDateAndTime);
-    endDateAndTime.setMinutes(startDateAndTime.getMinutes() + meetupObj.duration);
-    return {
-      _id: meetupObj._id,
-      startDateAndTime,
-      endDateAndTime,
-    };
-  });
+  // const myDates = Object.values(myUpcomingMeetups).map((meetupObj) => {
+  //   const startDateAndTime = new Date(meetupObj.startDateAndTime);
+  //   let endDateAndTime = new Date(startDateAndTime);
+  //   endDateAndTime.setMinutes(startDateAndTime.getMinutes() + meetupObj.duration);
+  //   return {
+  //     _id: meetupObj._id,
+  //     startDateAndTime,
+  //     endDateAndTime,
+  //   };
+  // });
 
-  // useEffect(() => {
-  //   if (meetup) {
-  //     Object.values(myUpcomingMeetups).forEach((meetupObj) => {
-  //       if (meetupObj._id !== meetup._id) {
-  //         const startDateAndTime = new Date(meetupObj.startDateAndTime);
-  //         let endDateAndTime = new Date(startDateAndTime);
-  //         endDateAndTime.setMinutes(startDateAndTime.getMinutes() + meetupObj.duration);
+  useEffect(() => {
+    if (meetup) {
+      Object.values(myUpcomingMeetups).forEach((meetupObj) => {
+        if (meetupObj._id !== meetup._id) {
+          const startDateAndTime = new Date(meetupObj.startDateAndTime);
+          let endDateAndTime = new Date(startDateAndTime);
+          endDateAndTime.setMinutes(startDateAndTime.getMinutes() + meetupObj.duration);
 
-  //         setMyDates((previous) => [
-  //           ...previous,
-  //           {
-  //             _id: meetupObj._id,
-  //             startDateAndTime,
-  //             endDateAndTime,
-  //           },
-  //         ]);
-  //       }
-  //     });
-  //   }
-  // }, [meetup]);
+          setMyDates((previous) => [
+            ...previous,
+            {
+              _id: meetupObj._id,
+              startDateAndTime,
+              endDateAndTime,
+            },
+          ]);
+        }
+      });
+    }
+  }, [meetup]);
 
   // dateのvalidation
   useEffect(() => {
