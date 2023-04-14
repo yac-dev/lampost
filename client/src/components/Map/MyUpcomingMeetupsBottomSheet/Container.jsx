@@ -33,7 +33,7 @@ const MyUpcomingMeetupsBottomSheet = (props) => {
         handleIndicatorStyle={{ backgroundColor: 'white' }}
       >
         <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+          {/* <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
             <View
               style={{
                 width: 40,
@@ -47,8 +47,9 @@ const MyUpcomingMeetupsBottomSheet = (props) => {
             >
               <MaterialCommunityIcons name='run' color={iconColorsTable['green1']} size={25} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>My meetups</Text>
-          </View>
+            
+          </View> */}
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My meetups</Text>
           <UpcomingMeetups />
         </BottomSheetView>
       </GorhomBottomSheet>

@@ -152,16 +152,16 @@ const Container = (props) => {
     }
   }, [myUpcomingMeetups]);
 
-  // useEffect(() => {
-  //   if (!ongoingMeetup) {
-  //     setSnackBar({
-  //       isVisible: true,
-  //       barType: 'warning',
-  //       message: 'You can take photos/videos during your meetup time',
-  //       duration: 7000,
-  //     });
-  //   }
-  // }, [ongoingMeetup]);
+  useEffect(() => {
+    if (ongoingMeetup) {
+      setSnackBar({
+        isVisible: true,
+        barType: 'success',
+        message: 'Ready to use. Capture your moment and have fun 🔥',
+        duration: 7000,
+      });
+    }
+  }, [ongoingMeetup]);
 
   const renderTimer = () => {
     if (cameraMode === 'video') {
@@ -346,9 +346,6 @@ const Container = (props) => {
     // }
   };
   // incandescent, cloudy, sunny, shadow, fluorescent, auto
-
-  if (video) {
-  }
 
   const renderCameraButton = () => {
     if (cameraMode === 'photo') {

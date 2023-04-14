@@ -571,21 +571,91 @@ export const updateMeetup = async (request, response) => {
   try {
     const { venue, startDateAndTime, duration } = request.body;
     const meetup = await Meetup.findById(request.params.id);
-    let message = ``;
+    const messages = [];
     if (venue) {
       meetup.place = venue;
-      message = message + `Venue was updated`;
+      const loungeChat = await LoungeChat.create({
+        meetup: request.params.id,
+        user: request.body.userId,
+        content: 'Meetup venue has been updated.',
+        type: 'edited',
+        replyTo: null,
+        createdAt: new Date(),
+      });
     }
     if (startDateAndTime) {
       meetup.startDateAndTime = startDateAndTime;
-      message = message + 'Date was updated.';
+      const loungeChatContent = `Meetup start time has been updated.\n❌${new Date(
+        meetup.startDateAndTime
+      ).toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      })}\n✅${new Date(startDateAndTime).toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      })} `;
+      const loungeChat = await LoungeChat.create({
+        meetup: request.params.id,
+        user: request.body.userId,
+        content: loungeChatContent,
+        type: 'edited',
+        replyTo: null,
+        createdAt: new Date(),
+      });
     }
     if (duration) {
       meetup.duration = duration;
-      message = message + 'Duration was updated.';
+      const loungeChatContent = `Meetup duration has been updated.\n❌${meetup.duration}\n✅${duration}`;
+      const loungeChat = await LoungeChat.create({
+        meetup: request.params.id,
+        user: request.body.userId,
+        content: loungeChatContent,
+        type: 'edited',
+        replyTo: null,
+        createdAt: new Date(),
+      });
     }
     meetup.save();
-    console.log(message);
+    const meetupAndUserRelationships = await MeetupAndUserRelationship.find({
+      meetup: request.params.id,
+    })
+      .populate({ path: 'user' })
+      .select({ pushToken: 1 });
+    const membersPushTokens = meetupAndUserRelationships.map((rel) => {
+      return rel.user.pushToken;
+    });
+
+    const notificationBodyMessage = `Please check the following information.\n${venue ? 'Venue' : null} ${
+      startDateAndTime ? 'Start date and time' : null
+    } ${duration ? 'Duration' : null}`;
+
+    const chunks = expo.chunkPushNotifications(
+      membersPushTokens.map((token) => ({
+        to: token,
+        sound: 'default',
+        // data: { notificationType: 'loungeChat', meetupId: request.params.id, type: 'edited' },
+        title: `${meetup.title} has been updated`,
+        body: notificationBodyMessage,
+      }))
+    );
+
+    const tickets = [];
+
+    for (let chunk of chunks) {
+      try {
+        let receipts = await expo.sendPushNotificationsAsync(chunk);
+        tickets.push(...receipts);
+        console.log('Push notifications sent:', receipts);
+      } catch (error) {
+        console.error('Error sending push notification:', error);
+      }
+    }
     // if(){
 
     // }
