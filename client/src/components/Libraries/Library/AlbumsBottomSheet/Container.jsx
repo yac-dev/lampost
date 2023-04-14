@@ -25,7 +25,7 @@ const AppMenuBottomSheet = (props) => {
       handleIndicatorStyle={{ backgroundColor: 'white' }}
     >
       <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+        {/* <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
           <View
             style={{
               width: 35,
@@ -39,8 +39,9 @@ const AppMenuBottomSheet = (props) => {
           >
             <MaterialCommunityIcons name='image-album' color={backgroundColorsTable['lightGreen1']} size={20} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>Albums</Text>
-        </View>
+         
+        </View> */}
+        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>Albums</Text>
         <Text style={{ color: baseTextColor, fontSize: 20 }}>It's not available now 🛠</Text>
       </BottomSheetView>
     </GorhomBottomSheet>

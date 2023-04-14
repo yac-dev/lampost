@@ -25,18 +25,6 @@ import Description from './Description';
 import ConfirmLeaveLibrary from './ConfirmLeaveLibrary';
 import ConfirmPostAssetModal from './ConfirmPostAssetModal';
 
-const videoTypesTable = {
-  normal: 'none',
-  olive: 'green1',
-  ocean: 'blue1',
-  camel: 'red1',
-  sepia: 'yellow1',
-};
-
-const cameraTypesTable = {
-  normal: '',
-};
-
 LocaleConfig.locales['en'] = {
   monthNames: [
     'January',
@@ -59,7 +47,7 @@ LocaleConfig.locales['en'] = {
 
 const Container = (props) => {
   const { MaterialCommunityIcons, Ionicons } = iconsTable;
-  const { auth, isIpad } = useContext(GlobalContext);
+  const { auth, isIpad, setSnackBar } = useContext(GlobalContext);
   const appMenuBottomSheetRef = useRef(null);
   const albumsBottomSheetRef = useRef(null);
   const selectedAssetBottomSheetRef = useRef(null);
@@ -80,9 +68,36 @@ const Container = (props) => {
 
   useEffect(() => {
     if (props.route.params?.addedAsset) {
-      setAssets((previous) => [...previous, props.route.params?.addedAsset]);
+      const month = new Date().getMonth() + 1;
+      const year = new Date().getFullYear();
+      const yearMonth = `${year}-${month}`;
+      const date = new Date(props.route.params.addedAsset.postedAt).toISOString().substring(0, 10);
+      if (!assetsTable[yearMonth][date]) {
+        const object = { marked: true, thumbnail: props.route.params.addedAsset.data };
+        setAssetsTable((previous) => {
+          return {
+            ...previous,
+            [yearMonth]: {
+              ...previous[yearMonth],
+              [date]: object,
+            },
+          };
+        });
+        setSnackBar({
+          isVisible: true,
+          barType: 'success',
+          message: 'Success',
+          duration: 5000,
+        });
+      }
     }
   }, [props.route.params?.addedAsset]);
+
+  // useEffect(() => {
+  //   if (props.route.params?.addedAsset) {
+  //     setAssets((previous) => [...previous, props.route.params?.addedAsset]);
+  //   }
+  // }, [props.route.params?.addedAsset]);
 
   useEffect(() => {
     const month = new Date().getMonth() + 1;
@@ -123,9 +138,8 @@ const Container = (props) => {
   // console.log(assetsTable);
 
   const DayComponent = ({ date, marking }) => {
-    // const { thumbnail } = marking;
     return (
-      <TouchableOpacity
+      <View
         style={{
           justifyContent: 'center',
           alignItems: 'center',
@@ -134,36 +148,28 @@ const Container = (props) => {
           aspectRatio: 1,
           paddingRight: 2,
           paddingLeft: 2,
-          borderRadius: 5,
-          marginTop: 0,
-          marginBottom: 0,
         }}
-        onPress={() =>
-          props.navigation.navigate('Date assets', { libraryId: props.route.params.libraryId, date: date })
-        }
       >
         {marking ? (
-          <Image
-            style={{ width: '100%', height: '100%', borderRadius: 5 }}
-            source={{
-              uri: marking.thumbnail,
-            }}
-          />
-        ) : // <View
-        //   style={{
-        //     width: '100%',
-        //     height: '100%',
-        //     backgroundColor: baseBackgroundColor,
-        //     justifyContent: 'center',
-        //     alignItems: 'center',
-        //   }}
-        // ></View>
-        null}
+          <TouchableOpacity
+            style={{ width: '100%', height: '100%', borderRadius: 8 }}
+            onPress={() =>
+              props.navigation.navigate('Date assets', { libraryId: props.route.params.libraryId, date: date })
+            }
+          >
+            <FastImage
+              style={{ width: '100%', height: '100%', borderRadius: 8 }}
+              source={{
+                uri: marking.thumbnail,
+              }}
+            />
+          </TouchableOpacity>
+        ) : null}
 
         <Text style={{ color: 'white', position: 'absolute', top: 20, textAlign: 'center', fontWeight: 'bold' }}>
           {date.day}
         </Text>
-      </TouchableOpacity>
+      </View>
     );
   };
 
@@ -188,65 +194,6 @@ const Container = (props) => {
   //   getAssetsByLibraryId();
   //   // }
   // }, []);
-
-  const renderItem = useCallback((asset) => {
-    if (asset.type === 'photo') {
-      return (
-        <TouchableOpacity
-          style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
-          onPress={() => {
-            props.navigation.navigate('Asset', {
-              asset: asset,
-              libraryId: props.route.params.libraryId,
-              assetType: asset.type,
-            });
-          }}
-        >
-          <FastImage
-            style={{ width: '100%', height: '100%', borderRadius: 7 }}
-            source={{
-              uri: asset.data,
-              priority: FastImage.priority.normal,
-            }}
-            resizeMode={FastImage.resizeMode.stretch}
-          />
-          <View style={{ position: 'absolute', top: 10, right: 10 }}>
-            <Ionicons name='camera' size={25} color={'white'} />
-          </View>
-        </TouchableOpacity>
-      );
-    } else if (asset.type === 'video') {
-      return (
-        <TouchableOpacity
-          style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
-          onPress={() => {
-            props.navigation.navigate('Asset', {
-              asset: asset,
-              libraryId: props.route.params.libraryId,
-              assetType: asset.type,
-            });
-          }}
-        >
-          <Video
-            style={{ width: '100%', height: '100%', borderRadius: 7 }}
-            source={{
-              uri: asset.data,
-            }}
-            useNativeControls={false}
-            resizeMode='stretch'
-            isLooping={false}
-          />
-          <View style={{ position: 'absolute', top: 10, right: 10 }}>
-            <Ionicons name='videocam' size={25} color={iconColorsTable[videoTypesTable[asset.effect]]} />
-          </View>
-        </TouchableOpacity>
-      );
-    }
-  }, []);
-
-  //   <View style={{ position: 'absolute', top: 10, right: 10 }}>
-  //   <Ionicons name='videocam' size={25} color={iconColorsTable[videoTypesTable[formData.asset.effect]]} />
-  // </View>
 
   const handleMonthChange = (monthObj) => {
     setCurrentYearAndMonth(`${monthObj.year}-${monthObj.month}`);
@@ -276,17 +223,27 @@ const Container = (props) => {
         setIsConfirmPostAssetsModalOpen,
       }}
     >
-      {/* <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        {!isFetchedAssets ? (
-          <ActivityIndicator />
-        ) : (
-          <FlatList
-            numColumns={2}
-            data={assets}
-            renderItem={({ item }) => renderItem(item)}
-            keyExtractor={(item, index) => `${item._id}-${index}`}
-          />
-        )}
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+        <Calendar
+          style={{
+            width: '100%',
+            aspectRatio: 1,
+          }}
+          // horizontal={true}
+          locale={'en'}
+          markedDates={assetsTable[currentYearAndMonth]}
+          onMonthChange={handleMonthChange}
+          dayComponent={DayComponent}
+          theme={{
+            calendarBackground: baseBackgroundColor,
+            textSectionTitleColor: baseTextColor,
+            dayTextColor: 'white',
+            arrowColor: 'white',
+            monthTextColor: 'white',
+            indicatorColor: 'white',
+            textMonthFontWeight: 'bold',
+          }}
+        />
         {auth.isAuthenticated ? (
           <View
             style={{
@@ -331,38 +288,6 @@ const Container = (props) => {
         <AppMenuBottomSheet />
         <AlbumsBottomSheet />
         <ConfirmLeaveLibrary />
-        <ConfirmPostAssetModal />
-      </View> */}
-      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        <Calendar
-          style={{
-            width: '100%',
-            aspectRatio: 1,
-          }}
-          // horizontal={true}
-          locale={'en'}
-          markedDates={assetsTable[currentYearAndMonth]}
-          onMonthChange={handleMonthChange}
-          // renderDay={renderDay}
-          dayComponent={DayComponent}
-          theme={{
-            calendarBackground: baseBackgroundColor,
-            textSectionTitleColor: baseTextColor,
-            // selectedDayBackgroundColor: '#00adf5',
-            // selectedDayTextColor: '#ffffff',
-            dayTextColor: 'white',
-            arrowColor: 'white',
-            monthTextColor: 'white',
-            indicatorColor: 'white',
-            textMonthFontWeight: 'bold',
-            // 'stylesheet.calendar.dayHeader': {
-            //   marginTop: 0,
-            //   marginBottom: 0,
-            //   width: 50,
-            //   textAlign: 'center',
-            // },
-          }}
-        />
       </View>
     </LibraryContext.Provider>
   );

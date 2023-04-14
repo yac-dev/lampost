@@ -170,32 +170,45 @@ export const postAssetsByLibraryId = async (request, response) => {
   try {
     const { assetId } = request.body;
     const library = await Library.findById(request.params.libraryId);
-    const libraryBadges = library.badges;
+    // const libraryBadges = library.badges;
     const asset = await Asset.findById(assetId);
-    console.log('library badgeIds', libraryBadges);
-    console.log('asset is ', asset);
+    // console.log('library badgeIds', libraryBadges);
+    // console.log('asset is ', asset);
 
     // loopが動かない。lengthがないと。
-    if (!asset.badges.length) {
-      asset.badges.push(...libraryBadges);
-      asset.save();
-    } else {
-      for (let i = 0; i < libraryBadges.length; i++) {
-        if (asset.badges.some((badgeId) => badgeId.toString() === libraryBadges[i])) {
-          null;
-        } else {
-          asset.badges.push(libraryBadges[i]);
-        }
-      }
-      asset.save();
-    }
-
-    const libraryAndAssetRelationships = await LibraryAndAssetRelationship.create({
+    // if (!asset.badges.length) {
+    //   asset.badges.push(...libraryBadges);
+    //   asset.save();
+    // } else {
+    //   for (let i = 0; i < libraryBadges.length; i++) {
+    //     if (asset.badges.some((badgeId) => badgeId.toString() === libraryBadges[i])) {
+    //       null;
+    //     } else {
+    //       asset.badges.push(libraryBadges[i]);
+    //     }
+    //   }
+    //   asset.save();
+    // }
+    const libraryAndAssetRelationship = new LibraryAndAssetRelationship({
       asset: assetId,
       library: request.params.libraryId,
+      createdAt: new Date(),
     });
+    // let libraryReactions = [];
+    if (library.reactions.length) {
+      const libraryReactions = library.reactions.map((reaction) => {
+        return {
+          reaction,
+          upvoted: 0,
+          users: [],
+        };
+      });
+      libraryAndAssetRelationship.reactions = libraryReactions;
+    }
+    libraryAndAssetRelationship.save();
+
     response.status(200).json({
-      message: 'success',
+      libraryAndAssetRelationship,
     });
   } catch (error) {
     console.log(error);

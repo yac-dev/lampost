@@ -18,7 +18,8 @@ import { iconsTable } from '../../../utils/icons';
 const Container = (props) => {
   const { Ionicons, MaterialCommunityIcons, MaterialIcons } = iconsTable;
   const { auth } = useContext(GlobalContext);
-  const { myJoinedLibraries, setMyJoinedLibraries, navigation, appMenuBottomSheetRef } = useContext(LibrariesContext);
+  const { myJoinedLibraries, setMyJoinedLibraries, navigation, appMenuBottomSheetRef, myLibrariesBottomSheetRef } =
+    useContext(LibrariesContext);
 
   const getMyJoinedLibraries = async () => {
     const result = await lampostAPI.get(`/libraryanduserrelationships/${auth.data._id}`);
@@ -91,7 +92,7 @@ const Container = (props) => {
                 justifyContent: 'space-between',
               }}
               onPress={() => {
-                appMenuBottomSheetRef.current.close();
+                myLibrariesBottomSheetRef.current.close();
                 navigation.navigate('Library', { libraryId: library._id, libraryAssetType: library.assetType });
               }}
             >
@@ -133,7 +134,7 @@ const Container = (props) => {
                 justifyContent: 'space-between',
               }}
               onPress={() => {
-                appMenuBottomSheetRef.current.close();
+                myLibrariesBottomSheetRef.current.close();
                 navigation.navigate('Library', { libraryId: library._id, libraryAssetType: library.assetType });
               }}
             >

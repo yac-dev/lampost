@@ -41,11 +41,12 @@ const AppMenuButtons = () => {
   return (
     <View style={{}}>
       {/* <ScrollView style={{ flexDirection: 'row' }} horizontal={true}> */}
+      <Text style={{ marginBottom: 10, fontSize: 20, fontWeight: 'bold', color: 'white' }}>Menu</Text>
       <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
         onPress={() => {
           // setIsConfirmPostAssetsModalOpen(true);
-          appMenuBottomSheetRef.current.snapToIndex(0);
+          appMenuBottomSheetRef.current.close();
           navigation.navigate('Add assets', {
             libraryId,
             fromComponent: 'ADD_ASSET_FOR_POSTING',
@@ -58,16 +59,16 @@ const AppMenuButtons = () => {
             style={{
               width: 40,
               height: 40,
-              backgroundColor: backgroundColorsTable['red1'],
+              backgroundColor: backgroundColorsTable['yellow1'],
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: 8,
               marginRight: 10,
             }}
           >
-            <MaterialCommunityIcons name='plus' color={iconColorsTable['red1']} size={20} />
+            <MaterialCommunityIcons name='plus' color={iconColorsTable['yellow1']} size={20} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Post my asset</Text>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Post my moments</Text>
         </View>
         <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
       </TouchableOpacity>

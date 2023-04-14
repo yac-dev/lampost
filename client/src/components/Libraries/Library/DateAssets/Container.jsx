@@ -5,6 +5,18 @@ import { baseBackgroundColor } from '../../../../utils/colorsTable';
 import LibraryAssetContext from './LibraryAsset/LibraryAssetContext';
 import LibraryAsset from './LibraryAsset/Container';
 
+const videoTypesTable = {
+  normal: 'none',
+  olive: 'green1',
+  ocean: 'blue1',
+  camel: 'red1',
+  sepia: 'yellow1',
+};
+
+const cameraTypesTable = {
+  normal: '',
+};
+
 const DateAssetsContainer = (props) => {
   const [libraryAssets, setLibraryAssets] = useState([]);
   const [isFetchedLibraryAssets, setIsFetchedLibraryAssets] = useState(false);
@@ -21,7 +33,7 @@ const DateAssetsContainer = (props) => {
     getLibraryAssetsByDate();
   }, []);
 
-  console.log(libraryAssets);
+  // console.log(libraryAssets);
 
   const renderLibraryAsset = useCallback((libraryAsset) => {
     return (

@@ -42,8 +42,12 @@ const Container = (props) => {
     const result = await lampostAPI.post(`/libraryandassetrelationships/${props.route.params.libraryId}`, {
       assetId: addedAsset._id,
     });
+    const { libraryAndAssetRelationship } = result.data;
     setLoading(false);
-    props.navigation.navigate('Library', { addedAsset });
+    console.log(addedAsset);
+    props.navigation.navigate('Library', {
+      addedAsset: { data: addedAsset.data, postedAt: libraryAndAssetRelationship.createdAt },
+    });
   };
 
   useEffect(() => {
