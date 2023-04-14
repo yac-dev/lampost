@@ -36,7 +36,7 @@ const DateAssetsContainer = (props) => {
 
   const renderLibraryAsset = useCallback((libraryAsset) => {
     return (
-      <LibraryAssetContext.Provider value={{ libraryAsset }}>
+      <LibraryAssetContext.Provider value={{ libraryAsset, libraryId: props.route.params.libraryId }}>
         <LibraryAsset />
       </LibraryAssetContext.Provider>
     );

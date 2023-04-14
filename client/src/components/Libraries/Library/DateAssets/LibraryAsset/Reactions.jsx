@@ -9,15 +9,34 @@ import {
   backgroundColorsTable,
 } from '../../../../../utils/colorsTable';
 import FastImage from 'react-native-fast-image';
+import lampostAPI from '../../../../../apis/lampost';
 
 const Reactions = () => {
   const { auth } = useContext(GlobalContext);
-  const { libraryAsset } = useContext(LibraryAssetContext);
+  const { libraryAsset, libraryId } = useContext(LibraryAssetContext);
   const [reactions, setReactions] = useState([]);
 
   useEffect(() => {
     setReactions(libraryAsset.reactions);
   }, []);
+
+  const createReaction = async (reactionId) => {
+    const result = await lampostAPI.post(`/libraryandassetrelationships/${libraryId}/${libraryAsset.asset._id}`, {
+      reactionId,
+      userId: auth.data._id,
+    });
+    setReactions((previous) => {
+      const updating = [...previous];
+      updating.forEach((reactionObject) => {
+        if (reactionObject.reaction._id === reactionId) {
+          reactionObject.upvoted++;
+          reactionObject.users.push(auth.data._id);
+        }
+      });
+
+      return updating;
+    });
+  };
 
   const renderReaction = useCallback((reactionObject) => {
     return (
@@ -53,7 +72,7 @@ const Reactions = () => {
           }}
           // disabled={reactionObject.users.includes(auth.data._id) ? true : false}
           onPress={() => {
-            // creatReaction(reactionObject.reaction._id);
+            createReaction(reactionObject.reaction._id);
             console.log('hello');
           }}
         >
