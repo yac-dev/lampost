@@ -15,14 +15,15 @@ import { Foundation } from '@expo/vector-icons';
 const AppMenuButtons = (props) => {
   // 何だろう。。。scrollviewをtopのcomponentにするとなんかバグる。
   const { setIsNotAvailableModalOpen } = useContext(GlobalContext);
-  const { appMenuBottomSheetRef, setIsLaunchMeetupConfirmationModalOpen } = useContext(MapContext);
+  const { appMenuBottomSheetRef, setIsLaunchMeetupConfirmationModalOpen, navigation } = useContext(MapContext);
   return (
     <View style={{ marginBottom: 10 }}>
       <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
         onPress={() => {
           appMenuBottomSheetRef.current.close();
-          setIsLaunchMeetupConfirmationModalOpen(true);
+          navigation.navigate('Launch new meetup');
+          // setIsLaunchMeetupConfirmationModalOpen(true);
         }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>

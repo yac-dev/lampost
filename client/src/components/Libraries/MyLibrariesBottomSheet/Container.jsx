@@ -30,7 +30,7 @@ const AppMenuBottomSheet = (props) => {
       // onClose={() => onSelectedItemBottomSheetClose()}
     >
       <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+        {/* <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
           <View
             style={{
               width: 40,
@@ -44,8 +44,9 @@ const AppMenuBottomSheet = (props) => {
           >
             <Ionicons name='ios-library' color={iconColorsTable['yellow1']} size={20} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>My libraries</Text>
-        </View>
+          
+        </View> */}
+        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>My libraries</Text>
         <MyLibraries />
       </BottomSheetView>
     </GorhomBottomSheet>
