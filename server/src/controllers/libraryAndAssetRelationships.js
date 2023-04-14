@@ -131,6 +131,7 @@ export const getLibraryAssetsByDate = async (request, response) => {
     const year = datestring.split('-')[0];
     const month = datestring.split('-')[1];
     const day = datestring.split('-')[2];
+    console.log(year, month, day);
     const startDate = new Date(Date.UTC(year, month - 1, day, 0));
     const endDate = new Date(Date.UTC(year, month - 1, day, 23, 59));
     console.log(startDate, endDate);

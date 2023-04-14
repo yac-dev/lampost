@@ -20,6 +20,7 @@ const cameraTypesTable = {
 const DateAssetsContainer = (props) => {
   const [libraryAssets, setLibraryAssets] = useState([]);
   const [isFetchedLibraryAssets, setIsFetchedLibraryAssets] = useState(false);
+  console.log(props.route.params.libraryId);
 
   const getLibraryAssetsByDate = async () => {
     const result = await lampostAPI.get(
@@ -32,8 +33,6 @@ const DateAssetsContainer = (props) => {
   useEffect(() => {
     getLibraryAssetsByDate();
   }, []);
-
-  // console.log(libraryAssets);
 
   const renderLibraryAsset = useCallback((libraryAsset) => {
     return (

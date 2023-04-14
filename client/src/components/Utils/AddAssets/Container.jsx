@@ -44,9 +44,14 @@ const Container = (props) => {
     });
     const { libraryAndAssetRelationship } = result.data;
     setLoading(false);
-    console.log(addedAsset);
+    // console.log(addedAsset);
+    console.log(libraryAndAssetRelationship);
     props.navigation.navigate('Library', {
-      addedAsset: { data: addedAsset.data, postedAt: libraryAndAssetRelationship.createdAt },
+      addedAsset: {
+        data: addedAsset.data,
+        postedAt: libraryAndAssetRelationship.createdAt,
+        libraryId: libraryAndAssetRelationship.library,
+      },
     });
   };
 

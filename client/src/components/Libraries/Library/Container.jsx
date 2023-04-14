@@ -73,7 +73,11 @@ const Container = (props) => {
       const yearMonth = `${year}-${month}`;
       const date = new Date(props.route.params.addedAsset.postedAt).toISOString().substring(0, 10);
       if (!assetsTable[yearMonth][date]) {
-        const object = { marked: true, thumbnail: props.route.params.addedAsset.data };
+        const object = {
+          marked: true,
+          thumbnail: props.route.params.addedAsset.data,
+          libraryId: props.route.params.addedAsset.libraryId,
+        };
         setAssetsTable((previous) => {
           return {
             ...previous,
@@ -92,6 +96,7 @@ const Container = (props) => {
       }
     }
   }, [props.route.params?.addedAsset]);
+  console.log(assetsTable);
 
   // useEffect(() => {
   //   if (props.route.params?.addedAsset) {
@@ -113,10 +118,10 @@ const Container = (props) => {
     const { libraryAssets } = result.data;
     const table = {};
     libraryAssets.forEach((libraryAsset) => {
-      const date = new Date(libraryAsset.asset.createdAt).toISOString().substring(0, 10);
+      const date = new Date(libraryAsset.createdAt).toISOString().substring(0, 10);
       // const dayOfMonth = date.getDate();
       if (!table[date]) {
-        table[date] = { marked: true, thumbnail: libraryAsset.asset.data };
+        table[date] = { marked: true, thumbnail: libraryAsset.asset.data, libraryId: libraryAsset.library };
       }
     });
     setAssetsTable((previous) => {
@@ -153,9 +158,7 @@ const Container = (props) => {
         {marking ? (
           <TouchableOpacity
             style={{ width: '100%', height: '100%', borderRadius: 8 }}
-            onPress={() =>
-              props.navigation.navigate('Date assets', { libraryId: props.route.params.libraryId, date: date })
-            }
+            onPress={() => props.navigation.navigate('Date assets', { libraryId: marking.libraryId, date: date })}
           >
             <FastImage
               style={{ width: '100%', height: '100%', borderRadius: 8 }}
@@ -198,8 +201,6 @@ const Container = (props) => {
   const handleMonthChange = (monthObj) => {
     setCurrentYearAndMonth(`${monthObj.year}-${monthObj.month}`);
   };
-  console.log(assetsTable);
-
   return (
     <LibraryContext.Provider
       value={{
