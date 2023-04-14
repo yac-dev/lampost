@@ -6,6 +6,7 @@ import lampostAPI from '../../../apis/lampost';
 import {
   backgroundColorsTable,
   baseBackgroundColor,
+  baseTextColor,
   iconColorsTable,
   rnDefaultBackgroundColor,
   screenSectionBackgroundColor,
@@ -14,6 +15,7 @@ import { iconsTable } from '../../../utils/icons';
 import { Video } from 'expo-av';
 import FastImage from 'react-native-fast-image';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import { LocaleConfig } from 'react-native-calendars';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import AlbumsBottomSheet from './AlbumsBottomSheet/Container';
 import MembersBottomSheet from './MembersBottomSheet';
@@ -33,6 +35,26 @@ const videoTypesTable = {
 
 const cameraTypesTable = {
   normal: '',
+};
+
+LocaleConfig.locales['en'] = {
+  monthNames: [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ],
+  monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+  dayNamesShort: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
 };
 
 const Container = (props) => {
@@ -110,8 +132,15 @@ const Container = (props) => {
           // backgroundColor: 'red',
           width: '100%',
           aspectRatio: 1,
-          padding: 2,
+          paddingRight: 2,
+          paddingLeft: 2,
+          borderRadius: 5,
+          marginTop: 0,
+          marginBottom: 0,
         }}
+        onPress={() =>
+          props.navigation.navigate('Date assets', { libraryId: props.route.params.libraryId, date: date })
+        }
       >
         {marking ? (
           <Image
@@ -120,15 +149,16 @@ const Container = (props) => {
               uri: marking.thumbnail,
             }}
           />
-        ) : (
-          <View
-            style={{
-              width: '100%',
-              height: '100%',
-              backgroundColor: baseBackgroundColor,
-            }}
-          ></View>
-        )}
+        ) : // <View
+        //   style={{
+        //     width: '100%',
+        //     height: '100%',
+        //     backgroundColor: baseBackgroundColor,
+        //     justifyContent: 'center',
+        //     alignItems: 'center',
+        //   }}
+        // ></View>
+        null}
 
         <Text style={{ color: 'white', position: 'absolute', top: 20, textAlign: 'center', fontWeight: 'bold' }}>
           {date.day}
@@ -309,56 +339,28 @@ const Container = (props) => {
             width: '100%',
             aspectRatio: 1,
           }}
+          // horizontal={true}
+          locale={'en'}
           markedDates={assetsTable[currentYearAndMonth]}
           onMonthChange={handleMonthChange}
           // renderDay={renderDay}
-          dayComponent={
-            DayComponent
-            //   (e) => {
-            //   // console.log(e);
-            //   return (
-            //     <TouchableOpacity
-            //       style={{
-            //         justifyContent: 'center',
-            //         alignItems: 'center',
-            //         // backgroundColor: 'red',
-            //         width: '100%',
-            //         aspectRatio: 1,
-            //         padding: 2,
-            //       }}
-            //     >
-            //       {/* <Image
-            //       style={{ width: '100%', height: '100%' }}
-            //       source={{
-            //         uri: 'https://reactnative.dev/img/tiny_logo.png',
-            //       }}
-            //     /> */}
-            //       <View
-            //         style={{
-            //           width: '100%',
-            //           height: '100%',
-            //           backgroundColor: baseBackgroundColor,
-            //         }}
-            //       ></View>
-            //       <Text
-            //         style={{ color: 'white', position: 'absolute', top: 20, textAlign: 'center', fontWeight: 'bold' }}
-            //       >
-            //         {e.date.day}
-            //       </Text>
-            //     </TouchableOpacity>
-            //   );
-            // }
-          }
+          dayComponent={DayComponent}
           theme={{
             calendarBackground: baseBackgroundColor,
-            textSectionTitleColor: 'white',
-            textSectionTitleDisabledColor: '#d9e1e8',
+            textSectionTitleColor: baseTextColor,
             // selectedDayBackgroundColor: '#00adf5',
             // selectedDayTextColor: '#ffffff',
             dayTextColor: 'white',
             arrowColor: 'white',
             monthTextColor: 'white',
             indicatorColor: 'white',
+            textMonthFontWeight: 'bold',
+            // 'stylesheet.calendar.dayHeader': {
+            //   marginTop: 0,
+            //   marginBottom: 0,
+            //   width: 50,
+            //   textAlign: 'center',
+            // },
           }}
         />
       </View>

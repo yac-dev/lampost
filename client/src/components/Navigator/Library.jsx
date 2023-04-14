@@ -11,6 +11,7 @@ import CreateNewLibrary from '../Libraries/CreateNewLibrary/Container';
 import CreateReaction from '../Libraries/CreateNewLibrary/CreateReaction/Container';
 import Icons from '../Libraries/CreateNewLibrary/Icons';
 import LibraryContainer from '../Libraries/Library/Container';
+import DateAssets from '../Libraries/Library/DateAssets/Container';
 import AuthNavigator from './Auth';
 import User from '../User/Container';
 import Description from '../Libraries/LibraryOverviewBottomSheet/Description';
@@ -115,6 +116,22 @@ const LibraryNavigator = () => {
             },
           })}
         />
+        <Stack.Screen
+          name='Date assets'
+          component={DateAssets}
+          options={({ navigation }) => ({
+            headerShown: true,
+            title: 'Date assets',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          })}
+        />
+
         <Stack.Screen
           name='Asset'
           component={Asset}

@@ -119,42 +119,48 @@ export const getLibraryAssetsByMonth = async (request, response) => {
     response.status(200).json({
       libraryAssets,
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-    // LibraryAndAssetRelationship.find({
-    //   library: libraryId,
-    //   createdAt: { $gte: startDate, $lt: endDate }
-    // })
-
-    // const assets = Asset.aggregate([
-    //   {
-    //     $project: {
-    //       year: { $year: '$createdAt' },
-    //       month: { $month: '$createdAt' },
-    //       data: 1,
-    //       type: 1,
-    //       meetup: 1,
-    //       badges: 1,
-    //       place: 1,
-    //       effect: 1,
-    //       duration: 1,
-    //       createdBy: 1,
-    //       taggedPeople: 1,
-    //       createdAt: 1,
-    //     },
-    //   },
-    //   {
-    //     $match: {
-    //       year: year,
-    //       month: month,
-    //     },
-    //   },
-    // ]).exec((err, assets) => {
-    //   if (err) {
-    //     // handle error
-    //   } else {
-    //     // handle results
-    //   }
-    // });
+export const getLibraryAssetsByDate = async (request, response) => {
+  try {
+    // これも同様に、その日の0時から23:59まででfetchしてくればいいか。
+    const { datestring } = request.query;
+    const year = datestring.split('-')[0];
+    const month = datestring.split('-')[1];
+    const day = datestring.split('-')[2];
+    const startDate = new Date(Date.UTC(year, month - 1, day, 0));
+    const endDate = new Date(Date.UTC(year, month - 1, day, 23, 59));
+    console.log(startDate, endDate);
+    const libraryAndAssets = await LibraryAndAssetRelationship.find({
+      library: request.params.libraryId,
+      createdAt: { $gte: startDate, $lt: endDate },
+    })
+      .populate({
+        path: 'asset',
+        select: 'data type meetup createdBy createdAt',
+        populate: [
+          {
+            path: 'meetup',
+            select: 'title',
+          },
+          {
+            path: 'createdBy',
+            select: 'name photo',
+          },
+        ],
+      })
+      .populate({
+        path: 'reactions',
+        populate: {
+          path: 'reaction',
+        },
+      });
+    response.status(200).json({
+      libraryAndAssets,
+    });
   } catch (error) {
     console.log(error);
   }

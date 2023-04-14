@@ -118,7 +118,7 @@ const RootNavigator = () => {
           tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
         })}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name='Cal'
         component={Cal}
         options={({ navigation }) => ({
@@ -133,7 +133,7 @@ const RootNavigator = () => {
           tabBarBadge: friendChatsNotificationCount ? friendChatsNotificationCount : null,
           tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
         })}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };
