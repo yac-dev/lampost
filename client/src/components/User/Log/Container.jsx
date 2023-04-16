@@ -13,6 +13,7 @@ import {
 } from '../../../utils/colorsTable';
 import { iconsTable } from '../../../utils/icons';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import FastImage from 'react-native-fast-image';
 import { LocaleConfig } from 'react-native-calendars';
 import SelectedDateBottomSheet from './SelectedDateBottomSheet/Container';
 
@@ -47,6 +48,7 @@ const LogContainer = (props) => {
   const [dateMeetups, setDateMeetups] = useState([]);
   const [isFetchedDateMeetups, setIsFetchedDateMeetups] = useState(false);
   // {2023-5: {3: assetObj , 4: assetObj, 5: assetObj}} って感じか。
+  console.log(meetupsTable);
 
   useEffect(() => {
     const month = new Date().getMonth() + 1;
@@ -65,7 +67,10 @@ const LogContainer = (props) => {
       const date = new Date(relationship.createdAt).toISOString().substring(0, 10);
       // const dayOfMonth = date.getDate();
       if (!table[date]) {
-        table[date] = { marked: true };
+        table[date] = {
+          marked: true,
+          badge: { icon: relationship.meetup.badges[0].icon, color: relationship.meetup.badges[0].color },
+        };
       }
     });
     setMeetupsTable((previous) => {
@@ -111,15 +116,48 @@ const LogContainer = (props) => {
         }}
       >
         {marking ? (
-          <TouchableOpacity
-            style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}
-            onPress={() => {
-              setSelectedDate(date.dateString);
-              selectedDateBottomSheetRef.current.snapToIndex(0);
+          <View
+            style={{
+              width: '100%',
+              height: '100%',
+              paddingLeft: 2,
+              paddingRight: 2,
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
-            <Text style={{ fontSize: 18 }}>🔥</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: '100%',
+                aspectRatio: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: rnDefaultBackgroundColor,
+                borderRadius: 7,
+              }}
+              onPress={() => {
+                setSelectedDate(date.dateString);
+                selectedDateBottomSheetRef.current.snapToIndex(0);
+              }}
+            >
+              <View
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: backgroundColorsTable[marking.badge.color],
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 7,
+                }}
+              >
+                <FastImage
+                  style={{ width: 30, height: 30 }}
+                  source={{ uri: marking.badge.icon }}
+                  tintColor={iconColorsTable[marking.badge.color]}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
         ) : null}
 
         <Text style={{ color: 'white', position: 'absolute', top: 20, textAlign: 'center', fontWeight: 'bold' }}>

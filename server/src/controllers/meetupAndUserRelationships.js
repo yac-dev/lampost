@@ -361,6 +361,13 @@ export const getUserMeetupsByYearMonth = async (request, response) => {
       user: request.params.userId,
       rsvp: true,
       createdAt: { $gte: startDate, $lt: endDate },
+    }).populate({
+      path: 'meetup',
+      select: 'badges',
+      populate: {
+        path: 'badges',
+        select: 'icon color',
+      },
     });
     console.log(meetupAndUserRelationships);
 
