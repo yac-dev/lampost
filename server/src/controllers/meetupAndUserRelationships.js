@@ -363,7 +363,7 @@ export const getUserMeetupsByYearMonth = async (request, response) => {
       createdAt: { $gte: startDate, $lt: endDate },
     }).populate({
       path: 'meetup',
-      select: 'badges',
+      select: 'badges _id',
       populate: {
         path: 'badges',
         select: 'icon color',

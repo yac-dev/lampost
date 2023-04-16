@@ -173,7 +173,14 @@ const LogContainer = (props) => {
 
   return (
     <LogContext.Provider
-      value={{ selectedDateBottomSheetRef, selectedDate, setSelectedDate, dateMeetups, setDateMeetups }}
+      value={{
+        selectedDateBottomSheetRef,
+        selectedDate,
+        setSelectedDate,
+        dateMeetups,
+        setDateMeetups,
+        navigation: props.navigation,
+      }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
         <Calendar

@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import LogContext from '../../LogContext';
+import MeetupContext from './MeetupContext';
 import { iconColorsTable } from '../../../../../utils/colorsTable';
 import { iconsTable } from '../../../../../utils/icons';
 
 const ActionButtons = (props) => {
   const { Ionicons, MaterialCommunityIcons } = iconsTable;
+  const { navigation } = useContext(LogContext);
+  const { meetupObject } = useContext(MeetupContext);
 
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
@@ -15,7 +19,7 @@ const ActionButtons = (props) => {
           paddingTop: 5,
           flex: 0.5,
         }}
-        // onPress={() => props.navigation.navigate('Attended', { meetupId: meetup._id, launcher: meetup.launcher._id })}
+        onPress={() => navigation.navigate('Meetup assets', { meetupId: meetupObject.meetup._id })}
       >
         <View style={{ backgroundColor: iconColorsTable['blue1'], width: '100%', padding: 5, borderRadius: 5 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
@@ -31,9 +35,7 @@ const ActionButtons = (props) => {
           paddingTop: 5,
           flex: 0.5,
         }}
-        // onPress={() =>
-        //   props.navigation.navigate('Impressions', { meetupId: meetup._id, launcher: meetup.launcher._id })
-        // }
+        onPress={() => navigation.navigate('Attended', { meetupId: meetupObject.meetup._id })}
       >
         <View style={{ backgroundColor: iconColorsTable['blue1'], borderRadius: 5, width: '100%', padding: 5 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>

@@ -17,9 +17,11 @@ const Container = () => {
   const renderItem = useCallback((meetupObject) => {
     return (
       <MeetupContext.Provider value={{ meetupObject }}>
-        <Header />
-        <MyImpression />
-        <ActionButtons />
+        <View style={{ marginBottom: 10 }}>
+          <Header />
+          <MyImpression />
+          <ActionButtons />
+        </View>
       </MeetupContext.Provider>
     );
   }, []);

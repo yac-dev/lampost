@@ -30,20 +30,17 @@ const Stats = () => {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View>
             <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>Trust</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text
-                style={{
-                  color: 'white',
-                  fontSize: 27,
-                  fontWeight: 'bold',
-                  color: iconColorsTable['lightGreen1'],
-                  marginRight: 3,
-                }}
-              >
-                {user.fame}
-              </Text>
-              <Entypo name='triangle-up' size={20} color={iconColorsTable['lightGreen1']} />
-            </View>
+            <Text
+              style={{
+                color: 'white',
+                fontSize: 27,
+                fontWeight: 'bold',
+                color: 'white',
+                textAlign: 'center',
+              }}
+            >
+              {user.fame}
+            </Text>
           </View>
         </View>
       </View>
