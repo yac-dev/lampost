@@ -4,6 +4,8 @@ import GlobalContext from '../../../GlobalContext';
 import FormContext from './FormContext';
 import Title from './Title';
 import Venue from './Venue';
+import Badges from './Badges';
+import DateAndTime from './DateAndTime';
 
 import { baseBackgroundColor } from '../../../utils/colorsTable';
 
@@ -37,7 +39,7 @@ const Container = (props) => {
     link: false,
   });
   const [accordion, setAccordion] = useState({
-    title: true,
+    title: false,
     venue: false,
     badges: false,
     dateAndTime: false,
@@ -57,11 +59,13 @@ const Container = (props) => {
         stageCleared,
         setStageCleared,
         navigation: props.navigation,
+        route: props.route,
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
         <Title />
         <Venue />
+        <Badges />
       </View>
     </FormContext.Provider>
   );

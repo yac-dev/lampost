@@ -132,6 +132,7 @@ export const createMeetup = async (request, response) => {
       launcher: true,
       rsvp: true,
       viewedChatsLastTime: new Date(),
+      createdAt: new Date(),
     });
 
     const badgeAndUserTables = badgeIds.map((badgeId) => {

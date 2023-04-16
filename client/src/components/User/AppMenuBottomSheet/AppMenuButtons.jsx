@@ -115,6 +115,33 @@ const AppButtons = (props) => {
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
             appMenuBottomSheetRef.current.close();
+            // navigation.navigate('My friends');
+            navigation.navigate('My log', { userId: auth.data._id });
+            // console.log('move to history');
+          }}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={{
+                width: 40,
+                height: 40,
+                backgroundColor: backgroundColorsTable['orange1'],
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 8,
+                marginRight: 10,
+              }}
+            >
+              <MaterialCommunityIcons name='history' color={iconColorsTable['orange1']} size={20} />
+            </View>
+            <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>My log</Text>
+          </View>
+          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+          onPress={() => {
+            appMenuBottomSheetRef.current.close();
             navigation.navigate('My friends');
           }}
         >
@@ -133,33 +160,6 @@ const AppButtons = (props) => {
               <MaterialCommunityIcons name='human-greeting-variant' color={iconColorsTable['pink1']} size={20} />
             </View>
             <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>My friends</Text>
-          </View>
-          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
-          onPress={() => {
-            appMenuBottomSheetRef.current.close();
-            // navigation.navigate('My friends');
-            navigation.navigate('Meetups', { userId: auth.data._id });
-            // console.log('move to history');
-          }}
-        >
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View
-              style={{
-                width: 40,
-                height: 40,
-                backgroundColor: backgroundColorsTable['orange1'],
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 8,
-                marginRight: 10,
-              }}
-            >
-              <MaterialCommunityIcons name='history' color={iconColorsTable['orange1']} size={20} />
-            </View>
-            <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>My history</Text>
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
         </TouchableOpacity>

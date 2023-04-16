@@ -15,6 +15,7 @@ export const joinMeetup = async (request, response) => {
       launcher: false,
       viewedChatsLastTime: new Date(),
       rsvp: false,
+      createdAt: new Date(),
     });
     // ここ、いちいちqueryするの、めんどいよね。totalAttendeesだけを変えるだけだから、別にいらないかも。
     const meetup = await Meetup.findById(meetupId);
@@ -340,6 +341,66 @@ export const sendFinishNotification = async () => {
     }
     response.status(200).json({
       message: 'sent',
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getUserMeetupsByYearMonth = async (request, response) => {
+  try {
+    const { yearAndMonth } = request.query;
+    const year = yearAndMonth.split('-')[0];
+    const month = yearAndMonth.split('-')[1];
+    console.log(yearAndMonth, year, month);
+
+    const startDate = new Date(Date.UTC(year, month - 1, 1));
+    const endDate = new Date(Date.UTC(year, month, 1));
+
+    const meetupAndUserRelationships = await MeetupAndUserRelationship.find({
+      user: request.params.userId,
+      rsvp: true,
+      createdAt: { $gte: startDate, $lt: endDate },
+    });
+    console.log(meetupAndUserRelationships);
+
+    response.status(200).json({
+      meetupAndUserRelationships,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getUserMeetupsByDate = async (request, response) => {
+  try {
+    const { datestring } = request.query;
+    const year = datestring.split('-')[0];
+    const month = datestring.split('-')[1];
+    const day = datestring.split('-')[2];
+    console.log(year, month, day);
+    const startDate = new Date(Date.UTC(year, month - 1, day, 0));
+    const endDate = new Date(Date.UTC(year, month - 1, day, 23, 59, 59));
+    console.log(startDate, endDate);
+    const meetupAndUserRelationships = await MeetupAndUserRelationship.find({
+      user: request.params.userId,
+      rsvp: true,
+      createdAt: { $gte: startDate, $lt: endDate },
+    })
+      .populate({
+        path: 'meetup',
+        select: 'title badges',
+        populate: {
+          path: 'badges',
+          select: 'icon _id name color',
+        },
+      })
+      .populate({
+        path: 'impression',
+      });
+    console.log(meetupAndUserRelationships);
+
+    response.status(200).json({
+      meetupAndUserRelationships,
     });
   } catch (error) {
     console.log(error);

@@ -1,28 +1,22 @@
-import React, { useContext, useState, useEffect, useMemo } from 'react';
-import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { mapStyleForForm } from '../../../utils/mapStyle';
 import { screenSectionBackgroundColor } from '../../../utils/colorsTable';
 
-const SelectVenue = (props) => {
-  // この, objectのreference問題、結構めんどい。おそらく、lodashを使うのが一番いい方法。
-  const defaultVenue = props.route.params.editingPlace;
-  const [editingPlace, setEditingPlace] = useState(JSON.parse(JSON.stringify(props.route.params.editingPlace)));
-  console.log(defaultVenue === editingPlace);
-  console.log('default', defaultVenue);
-  console.log('editing', editingPlace);
+const SelectVenueForLaunch = (props) => {
+  // const defaultVenue = props.route.params.editingPlace;
+  // const [selectingVenue, setSelectingVenue] = useState(JSON.parse(JSON.stringify(props.route.params.editingPlace)));
+  const [selectingVenue, setSelectingVenue] = useState(null);
 
   useEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity
-          onPress={() => props.navigation.navigate('Edit meetup', { editedVenue: editingPlace })}
-          disabled={JSON.stringify(defaultVenue) === JSON.stringify(editingPlace) ? true : false}
-        >
+        <TouchableOpacity onPress={() => props.navigation.navigate('Launch new meetup')} disabled={true}>
           <Text
             style={{
-              color:
-                JSON.stringify(defaultVenue) === JSON.stringify(editingPlace) ? screenSectionBackgroundColor : 'white',
+              // color:
+              //   JSON.stringify(defaultVenue) === JSON.stringify(editingPlace) ? screenSectionBackgroundColor : 'white',
               fontSize: 20,
               fontWeight: 'bold',
             }}
@@ -32,7 +26,7 @@ const SelectVenue = (props) => {
         </TouchableOpacity>
       ),
     });
-  }, [editingPlace]);
+  }, []);
 
   const onMapPress = (event) => {
     event.persist();
@@ -56,23 +50,23 @@ const SelectVenue = (props) => {
       zoomEnabled={true}
       onPress={(event) => onMapPress(event)}
       initialRegion={{
-        latitude: editingPlace.coordinates[1],
-        longitude: editingPlace.coordinates[0],
+        latitude: 37.78825,
+        longitude: -122.4324,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       }}
       // provider='google'
     >
-      <Marker
+      {/* <Marker
         tracksViewChanges={false}
         coordinate={{
           latitude: editingPlace.coordinates[1],
           longitude: editingPlace.coordinates[0],
         }}
         // pinColor='black'
-      ></Marker>
+      ></Marker> */}
     </MapView>
   );
 };
 
-export default SelectVenue;
+export default SelectVenueForLaunch;

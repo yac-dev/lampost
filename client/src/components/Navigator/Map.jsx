@@ -30,6 +30,7 @@ import ExternalWebPage from '../Utils/ExternalWebPage';
 import LaunchNewMeetup from '../Map/LaunchNewMeetup/Container';
 import EditMeetup from '../Map/EditMeetup/Container';
 import SelectVenue from '../Map/EditMeetup/SelectVenue';
+import SelectVenueForLaunch from '../Map/LaunchNewMeetup/SelectVenueForLaunch';
 
 import AuthNavigator from './Auth';
 import { appBottomSheetBackgroundColor, iconColorsTable } from '../../utils/colorsTable';
@@ -309,6 +310,25 @@ const MapNavigator = (props) => {
           name='Select venue'
           component={SelectVenue}
           options={({ navigation }) => ({
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
+              </TouchableOpacity>
+            ),
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          })}
+        />
+        <Stack.Screen
+          name='Select venue for launch'
+          component={SelectVenueForLaunch}
+          options={({ navigation }) => ({
+            title: 'Select venue',
             headerLeft: () => (
               <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>

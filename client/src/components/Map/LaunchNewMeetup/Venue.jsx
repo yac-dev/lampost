@@ -73,7 +73,12 @@ const Place = () => {
           <Text style={{ fontWeight: 'bold', fontSize: 17, color: 'white', marginRight: 10 }}>Venue</Text>
         </TouchableOpacity>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          {/* <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} style={{ marginRight: 10 }} /> */}
+          <Ionicons
+            name='checkmark-circle'
+            size={20}
+            color={stageCleared.title ? iconColorsTable['green1'] : disabledTextColor}
+            style={{ marginRight: 10 }}
+          />
           <TouchableOpacity
             onPress={() =>
               setAccordion((previous) => {
@@ -112,7 +117,7 @@ const Place = () => {
               //     editingPlace: editingData.venue.data,
               //   });
               // } else {
-              navigation.navigate('Select venue');
+              navigation.navigate('Select venue for launch');
               // }
             }}
           >
@@ -132,7 +137,7 @@ const Place = () => {
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }}
-            provider='google'
+            // provider='google'
             pitchEnabled={false}
           >
             {/* {editingData.venue.isEdited ? (
