@@ -180,12 +180,12 @@ const Map = (props) => {
 
   useEffect(() => {
     if (selectedMeetup) {
-      const newLat = selectedMeetup.place.coordinates[1] - 0.024;
+      const newLat = selectedMeetup.place.coordinates[1] - 0.0065;
       mapRef.current.animateToRegion({
         latitude: newLat,
         longitude: selectedMeetup.place.coordinates[0],
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
+        latitudeDelta: 0.0322,
+        longitudeDelta: 0.0221,
       });
     }
   }, [selectedMeetup]);

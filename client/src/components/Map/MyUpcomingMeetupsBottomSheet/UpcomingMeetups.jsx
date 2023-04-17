@@ -9,6 +9,7 @@ import {
   baseTextColor,
   iconColorsTable,
   screenSectionBackgroundColor,
+  inputBackgroundColorNew,
 } from '../../../utils/colorsTable';
 import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
@@ -42,45 +43,91 @@ const Container = (props) => {
   } = useContext(MapContext);
 
   // console.log(myUpcomingMeetupAndChatsTable);
-  const renderDate = (date) => {
-    const d = new Date(date).toLocaleDateString('en-US', {
-      weekday: 'short',
-      month: 'short',
-      day: 'numeric',
-    });
-    const dateElements = d.split(',').join('').split(' ');
-    return (
-      <View
-        style={{
-          // padding: 10,
-          borderRadius: 7,
-          marginRight: 15,
-          backgroundColor: screenSectionBackgroundColor,
-          width: 60,
-          height: 60,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Text style={{ fontSize: 15, textAlign: 'center', color: 'white' }}>{dateElements[0]}</Text>
-        <Text style={{ fontSize: 17, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
-          {dateElements[1]}&nbsp;{dateElements[2]}
-        </Text>
-      </View>
-    );
-  };
+  // const renderDate = (date) => {
+  //   const d = new Date(date).toLocaleDateString('en-US', {
+  //     weekday: 'short',
+  //     month: 'short',
+  //     day: 'numeric',
+  //   });
+  //   const dateElements = d.split(',').join('').split(' ');
+  //   return (
+  //     <View
+  //       style={{
+  //         // padding: 10,
+  //         borderRadius: 7,
+  //         marginRight: 15,
+  //         backgroundColor: screenSectionBackgroundColor,
+  //         width: 60,
+  //         height: 60,
+  //         justifyContent: 'center',
+  //         alignItems: 'center',
+  //       }}
+  //     >
+  //       <Text style={{ fontSize: 15, textAlign: 'center', color: 'white' }}>{dateElements[0]}</Text>
+  //       <Text style={{ fontSize: 17, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
+  //         {dateElements[1]}&nbsp;{dateElements[2]}
+  //       </Text>
+  //     </View>
+  //   );
+  // };
 
   const renderTime = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
       hour: '2-digit',
       minute: '2-digit',
+      weekday: 'long',
     });
     const dateTable = { ...d.split(' ') };
     return (
       <Text style={{ color: 'white' }}>
-        Starts at&nbsp;{dateTable[1]}
+        {dateTable[0]}&nbsp;Starts at&nbsp;{dateTable[1]}
         {dateTable[2]}
       </Text>
+    );
+  };
+
+  const renderDate = (date) => {
+    const d = new Date(date).toLocaleDateString('en-US', {
+      month: 'short',
+      day: '2-digit',
+    });
+    const dateElements = d.split(' ');
+
+    return (
+      <View
+        style={{
+          flexDirection: 'column',
+          width: 50,
+          height: 50,
+          backgroundColor: inputBackgroundColorNew,
+          borderRadius: 8,
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginRight: 10,
+        }}
+      >
+        <View>
+          <Text
+            style={{
+              fontSize: 15,
+              color: 'white',
+            }}
+          >
+            {dateElements[0]}
+          </Text>
+        </View>
+        <View>
+          <Text
+            style={{
+              fontSize: 22,
+              color: 'white',
+              fontWeight: 'bold',
+            }}
+          >
+            {dateElements[1]}
+          </Text>
+        </View>
+      </View>
     );
   };
 
@@ -237,7 +284,7 @@ const Container = (props) => {
             }}
           >
             <View
-              style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}
+              style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 5 }}
             >
               <TouchableOpacity
                 style={{
@@ -246,36 +293,29 @@ const Container = (props) => {
                 }}
                 onPress={() => getMeetup(meetup._id)}
               >
-                <MaterialCommunityIcons name='calendar-clock' color='white' size={20} style={{ marginRight: 10 }} />
-                {renderMeetupDateAndTime(meetup.startDateAndTime)}
+                {renderDate(meetup.startDateAndTime)}
+                <View>
+                  <Text style={{ fontWeight: 'bold', fontSize: 18, color: 'white' }}>{meetup.title}</Text>
+                  {renderTime(meetup.startDateAndTime)}
+                </View>
               </TouchableOpacity>
             </View>
-            <View
-              style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 15 }}
+            <TouchableOpacity
+              style={{
+                marginRight: 5,
+                flexDirection: 'row',
+                alignItems: 'center',
+                alignSelf: 'flex-end',
+                marginBottom: 5,
+              }}
+              onPress={() => {
+                setMoreMenuOf(meetup._id);
+                moreMenuBottomSheetRef.current.snapToIndex(0);
+              }}
             >
-              <TouchableOpacity onPress={() => getMeetup(meetup._id)}>
-                <Text style={{ fontWeight: 'bold', fontSize: 18, color: 'white' }}>{meetup.title}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  marginRight: 5,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-                onPress={() => {
-                  setMoreMenuOf(meetup._id);
-                  moreMenuBottomSheetRef.current.snapToIndex(0);
-                }}
-              >
-                <MaterialCommunityIcons
-                  name='chevron-down'
-                  size={20}
-                  color={baseTextColor}
-                  style={{ marginRight: 5 }}
-                />
-                <Text style={{ color: baseTextColor }}>More</Text>
-              </TouchableOpacity>
-            </View>
+              <MaterialCommunityIcons name='chevron-down' size={20} color={baseTextColor} style={{ marginRight: 5 }} />
+              <Text style={{ color: baseTextColor }}>More</Text>
+            </TouchableOpacity>
             {renderActionButtons(meetup)}
           </View>
         );
