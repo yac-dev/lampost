@@ -168,6 +168,17 @@ const Map = (props) => {
   }, [isLaunchMeetupConfirmed, launchLocation]);
 
   useEffect(() => {
+    if (props.route.params?.launchedMeetup) {
+      setSnackBar({
+        isVisible: true,
+        barType: 'success',
+        message: 'Launched meetup successfully 🚀',
+        duration: 5000,
+      });
+    }
+  }, [props.route.params?.launchedMeetup]);
+
+  useEffect(() => {
     if (selectedMeetup) {
       const newLat = selectedMeetup.place.coordinates[1] - 0.024;
       mapRef.current.animateToRegion({

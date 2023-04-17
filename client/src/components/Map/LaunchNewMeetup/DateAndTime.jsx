@@ -8,27 +8,111 @@ import { iconsTable } from '../../../utils/icons';
 import { iconColorsTable, backgroundColorsTable, baseTextColor, disabledTextColor } from '../../../utils/colorsTable';
 
 const DateAndTime = () => {
-  const { auth, setSnackBar } = useContext(GlobalContext);
+  const { auth, setSnackBar, myUpcomingMeetups } = useContext(GlobalContext);
   const { AntDesign, Ionicons, MaterialCommunityIcons, MaterialIcons } = iconsTable;
   const { formData, setFormData, stageCleared, setStageCleared, accordion, setAccordion } = useContext(FormContext);
   const [isStartDateAndTimeDatePickerVisible, setIsStartDateAndTimeDatePickerVisible] = useState(false);
   const [isDurationPickerVisible, setIsDurationPickerVisible] = useState(false);
 
+  // useEffect(() => {
+  //   if (formData.startDateAndTime && formData.duration) {
+  //     setStageCleared((previous) => {
+  //       return {
+  //         ...previous,
+  //         dateAndTime: true,
+  //       };
+  //     });
+  //   } else {
+  //     setStageCleared((previous) => {
+  //       return {
+  //         ...previous,
+  //         dateAndTime: false,
+  //       };
+  //     });
+  //   }
+  // }, [formData.startDateAndTime, formData.duration]);
+
+  const myDates = Object.values(myUpcomingMeetups).map((meetup) => {
+    const startDateAndTime = new Date(meetup.startDateAndTime);
+    let endDateAndTime = new Date(startDateAndTime);
+    endDateAndTime.setMinutes(startDateAndTime.getMinutes() + meetup.duration);
+
+    return {
+      _id: meetup._id,
+      startDateAndTime,
+      endDateAndTime,
+    };
+  });
+
+  // console.log(myDates);
+
+  // dateのvalidation
   useEffect(() => {
-    if (formData.startDateAndTime && formData.duration) {
-      setStageCleared((previous) => {
-        return {
-          ...previous,
-          dateAndTime: true,
-        };
-      });
+    if (myDates.length) {
+      if (formData.startDateAndTime && formData.duration) {
+        const launchingStartDateAndTimeString = new Date(formData.startDateAndTime);
+        let launchingEndDateAndTimeString = new Date(formData.startDateAndTime);
+        launchingEndDateAndTimeString = launchingEndDateAndTimeString.setMinutes(
+          launchingStartDateAndTimeString.getMinutes() + formData.duration
+        );
+        const launchingStartDateAndTime = launchingStartDateAndTimeString.getTime();
+        const launchingEndDateAndTime = new Date(launchingEndDateAndTimeString).getTime();
+        myDates.forEach((dateObject) => {
+          const startDateAndTimeString = new Date(dateObject.startDateAndTime);
+          const endDateAndTimeString = new Date(dateObject.endDateAndTime);
+          const startDateAndTime = startDateAndTimeString.getTime();
+          const endDateAndTime = endDateAndTimeString.getTime();
+          if (
+            (startDateAndTime < launchingStartDateAndTime && launchingStartDateAndTime < endDateAndTime) ||
+            (startDateAndTime < launchingEndDateAndTime && launchingEndDateAndTime < endDateAndTime)
+          ) {
+            setSnackBar({
+              isVisible: true,
+              barType: 'error',
+              message: 'You have upcoming meetups on this time range.',
+              duration: 3000,
+            });
+            setStageCleared((previous) => {
+              return {
+                ...previous,
+                dateAndTime: false,
+              };
+            });
+            // setIsDisabledNext(true);
+          } else if (
+            launchingStartDateAndTime < startDateAndTime &&
+            endDateAndTime - startDateAndTime < launchingEndDateAndTime - launchingStartDateAndTime
+          ) {
+            setSnackBar({
+              isVisible: true,
+              barType: 'error',
+              message: 'You have upcoming meetups on this time range.',
+              duration: 3000,
+            });
+            setStageCleared((previous) => {
+              return {
+                ...previous,
+                dateAndTime: false,
+              };
+            });
+          } else {
+            // console.log("It's ok👍");
+            // setIsDisabledNext(false);
+            setStageCleared((previous) => {
+              return {
+                ...previous,
+                dateAndTime: true,
+              };
+            });
+          }
+        });
+      }
     } else {
-      setStageCleared((previous) => {
-        return {
-          ...previous,
-          dateAndTime: false,
-        };
-      });
+      if (formData.startDateAndTime && formData.duration) {
+        setIsDisabledNext(false);
+      } else {
+        setIsDisabledNext(true);
+      }
     }
   }, [formData.startDateAndTime, formData.duration]);
 

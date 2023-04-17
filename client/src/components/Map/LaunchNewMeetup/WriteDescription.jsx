@@ -17,7 +17,7 @@ const WriteDescription = (props) => {
       headerRight: () => (
         <TouchableOpacity
           onPress={() => props.navigation.navigate('Launch new meetup', { description: writingText })}
-          disabled={writingText ? false : true}
+          disabled={writingText && writingText.length <= 300 ? false : true}
         >
           <Text
             style={{
@@ -47,8 +47,24 @@ const WriteDescription = (props) => {
     );
   };
 
+  const renderDescriptionLength = () => {
+    return (
+      <Text
+        style={{
+          fontSize: 13,
+          color: writingText.length <= 300 ? baseTextColor : 'red',
+          textAlign: 'right',
+          marginBottom: 10,
+        }}
+      >
+        {writingText.length}/300
+      </Text>
+    );
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
+      {renderDescriptionLength()}
       <View style={{ height: '100%', flexDirection: 'row' }}>
         <TextInput
           multiline={true}

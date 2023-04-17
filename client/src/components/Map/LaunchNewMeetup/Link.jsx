@@ -52,7 +52,7 @@ const Link = () => {
             setAccordion((previous) => {
               return {
                 ...previous,
-                title: !previous.title,
+                link: !previous.link,
               };
             })
           }
@@ -78,7 +78,7 @@ const Link = () => {
           {/* <Ionicons
             name='checkmark-circle'
             size={20}
-            color={stageCleared.title ? iconColorsTable['green1'] : disabledTextColor}
+            color={stageCleared.link ? iconColorsTable['green1'] : disabledTextColor}
             style={{ marginRight: 10 }}
           /> */}
           <TouchableOpacity
@@ -92,13 +92,57 @@ const Link = () => {
             }
           >
             <MaterialCommunityIcons
-              name={accordion.title ? 'chevron-up' : 'chevron-down'}
+              name={accordion.link ? 'chevron-up' : 'chevron-down'}
               color={baseTextColor}
               size={25}
             />
           </TouchableOpacity>
         </View>
       </View>
+      {accordion.link ? (
+        <View style={{ marginTop: 10 }}>
+          <Text style={{ marginBottom: 10, color: baseTextColor }}>
+            Please paste the external url of this meetup if you have.
+          </Text>
+          <TextInput
+            style={{
+              flex: 1,
+              padding: 10,
+              backgroundColor: inputBackgroundColorNew,
+              color: baseTextColor,
+              borderRadius: 5,
+            }}
+            placeholder={'https://abcde.com'}
+            placeholderTextColor={baseTextColor}
+            inputAccessoryViewID={inputAccessoryViewID}
+            value={formData.link}
+            onChangeText={(text) =>
+              setFormData((previous) => {
+                return {
+                  ...previous,
+                  link: text,
+                };
+              })
+            }
+            autoCapitalize='none'
+          />
+          <InputAccessoryView
+            nativeID={inputAccessoryViewID}
+            backgroundColor={sectionBackgroundColor}
+            // style={{ paddingTop: 10, paddingBottom: 10, paddingRight: 10 }}
+          >
+            <View style={{ alignItems: 'flex-end' }}>
+              <TouchableOpacity
+                onPress={() => {
+                  Keyboard.dismiss();
+                }}
+              >
+                <Text style={{ color: 'white', padding: 10, fontWeight: 'bold' }}>Done</Text>
+              </TouchableOpacity>
+            </View>
+          </InputAccessoryView>
+        </View>
+      ) : null}
     </View>
   );
 };

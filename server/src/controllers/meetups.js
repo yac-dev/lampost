@@ -67,13 +67,13 @@ export const createMeetup = async (request, response) => {
       badges,
       startDateAndTime,
       duration,
-      agenda,
+      // agenda,
       isAttendeesLimitFree,
       attendeesLimit,
-      meetupPointDetail,
-      isMeetupFeeFree,
+      // meetupPointDetail,
+      isFeeFree,
       fee,
-      feeDetail,
+      // feeDetail,
       description,
       link,
     } = request.body;
@@ -90,8 +90,8 @@ export const createMeetup = async (request, response) => {
       description,
       link,
       totalAttendees: 1,
-      meetupPointDetail,
-      topPhotos: [],
+      // meetupPointDetail,
+      // topPhotos: [],
       isPublic: true,
       state: 'upcoming',
       createdAt: new Date(),
@@ -100,7 +100,7 @@ export const createMeetup = async (request, response) => {
 
     // console.log(request.body);
 
-    if (isMeetupFeeFree) {
+    if (isFeeFree) {
       meetup.isFeeFree = true;
     } else {
       meetup.isFeeFree = false;
@@ -114,13 +114,13 @@ export const createMeetup = async (request, response) => {
       meetup.attendeesLimit = attendeesLimit;
     }
 
-    if (agenda) {
-      meetup.agenda = agenda;
-    }
+    // if (agenda) {
+    //   meetup.agenda = agenda;
+    // }
 
-    if (feeDetail) {
-      meetup.feeDetail = feeDetail;
-    }
+    // if (feeDetail) {
+    //   meetup.feeDetail = feeDetail;
+    // }
 
     const user = await User.findById(launcher);
     user.upcomingMeetups.push(meetup._id);
