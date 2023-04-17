@@ -1,11 +1,16 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, KeyboardAvoidingView, ScrollView } from 'react-native';
 import GlobalContext from '../../../GlobalContext';
 import FormContext from './FormContext';
+import LoadingSpinner from '../../Utils/LoadingSpinner';
 import Title from './Title';
 import Venue from './Venue';
 import Badges from './Badges';
 import DateAndTime from './DateAndTime';
+import Member from './Member';
+import Fee from './Fee';
+import Description from './Description';
+import Link from './Link';
 
 import { baseBackgroundColor } from '../../../utils/colorsTable';
 
@@ -13,7 +18,7 @@ const Container = (props) => {
   const { auth, setLoading } = useContext(GlobalContext);
   const [formData, setFormData] = useState({
     title: '',
-    place: '',
+    place: null,
     meetupPoint: '',
     badges: {},
     startDateAndTime: '',
@@ -26,7 +31,7 @@ const Container = (props) => {
     fee: '',
     feeDetail: '',
     description: '',
-    link: '',
+    // link: '',
   });
   const [stageCleared, setStageCleared] = useState({
     title: false,
@@ -62,11 +67,19 @@ const Container = (props) => {
         route: props.route,
       }}
     >
-      <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
-        <Title />
-        <Venue />
-        <Badges />
-      </View>
+      <KeyboardAvoidingView style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
+        <ScrollView>
+          <Title />
+          <Venue />
+          <Badges />
+          <DateAndTime />
+          <Member />
+          <Fee />
+          <Description />
+          <Link />
+          <LoadingSpinner />
+        </ScrollView>
+      </KeyboardAvoidingView>
     </FormContext.Provider>
   );
 };

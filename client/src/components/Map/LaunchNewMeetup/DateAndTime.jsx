@@ -1,43 +1,62 @@
-import React, { useContext } from 'react';
-import { View, Text } from 'react-native';
+import React, { useContext, useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import GlobalContext from '../../../GlobalContext';
+import FormContext from './FormContext';
 import { screenSectionBackgroundColor } from '../../../utils/colorsTable';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { iconsTable } from '../../../utils/icons';
-import { iconColorsTable, backgroundColorsTable } from '../../../utils/colorsTable';
+import { iconColorsTable, backgroundColorsTable, baseTextColor, disabledTextColor } from '../../../utils/colorsTable';
 
 const DateAndTime = () => {
-  const { AntDesign, Ionicons, MaterialCommunityIcons } = iconsTable;
+  const { auth, setSnackBar } = useContext(GlobalContext);
+  const { AntDesign, Ionicons, MaterialCommunityIcons, MaterialIcons } = iconsTable;
   const { formData, setFormData, stageCleared, setStageCleared, accordion, setAccordion } = useContext(FormContext);
+  const [isStartDateAndTimeDatePickerVisible, setIsStartDateAndTimeDatePickerVisible] = useState(false);
+  const [isDurationPickerVisible, setIsDurationPickerVisible] = useState(false);
+
+  useEffect(() => {
+    if (formData.startDateAndTime && formData.duration) {
+      setStageCleared((previous) => {
+        return {
+          ...previous,
+          dateAndTime: true,
+        };
+      });
+    } else {
+      setStageCleared((previous) => {
+        return {
+          ...previous,
+          dateAndTime: false,
+        };
+      });
+    }
+  }, [formData.startDateAndTime, formData.duration]);
 
   const onStartDateConfirm = (date) => {
-    // props.dispatch({ type: 'SET_START_DATE_AND_TIME', payload: date });
-    // props.dispatch({ type: 'SET_IS_START_DATE_PICKER_VISIBLE', payload: false });
     setFormData((previous) => {
       return {
         ...previous,
         startDateAndTime: date,
-        isStartDatePickerVisible: false,
       };
     });
+    setIsStartDateAndTimeDatePickerVisible(false);
   };
 
   const onDurationConfirm = (date) => {
     const minutes = date.getMinutes() + date.getHours() * 60;
-    // props.dispatch({ type: 'SET_DURATION', payload: minutes });
-    // props.dispatch({ type: 'SET_IS_DURATION_PICKER_VISIBLE', payload: false });
     setFormData((previous) => {
       return {
         ...previous,
         duration: minutes,
-        isDurationPickerVisible: false,
       };
     });
+    setIsDurationPickerVisible(false);
   };
 
   const renderDate = (date) => {
     if (date) {
       return (
-        <Text style={{ color: baseTextColor }}>{`${new Date(date).toLocaleString('en-US', {
+        <Text style={{ color: 'white' }}>{`${new Date(date).toLocaleString('en-US', {
           weekday: 'long',
           month: 'long',
           day: 'numeric',
@@ -54,7 +73,7 @@ const DateAndTime = () => {
     if (duration) {
       const hours = Math.floor(duration / 60);
       const minutes = duration % 60;
-      return <Text style={{ color: baseTextColor }}>{`${hours} hours ${minutes} minutes`}</Text>;
+      return <Text style={{ color: 'white' }}>{`${hours} hours ${minutes} minutes`}</Text>;
     } else {
       return null;
     }
@@ -76,7 +95,7 @@ const DateAndTime = () => {
         >
           <View
             style={{
-              backgroundColor: backgroundColorsTable['yellow1'],
+              backgroundColor: backgroundColorsTable['orange1'],
               padding: 5,
               borderRadius: 7,
               width: 40,
@@ -86,12 +105,17 @@ const DateAndTime = () => {
               marginRight: 12,
             }}
           >
-            <MaterialCommunityIcons name='calendar-clock' size={25} color={iconColorsTable['yellow1']} />
+            <MaterialCommunityIcons name='calendar-clock' size={25} color={iconColorsTable['orange1']} />
           </View>
           <Text style={{ fontWeight: 'bold', fontSize: 17, color: 'white', marginRight: 10 }}>Date & Time</Text>
         </TouchableOpacity>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          {/* <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} style={{ marginRight: 10 }} /> */}
+          <Ionicons
+            name='checkmark-circle'
+            size={20}
+            color={stageCleared.dateAndTime ? iconColorsTable['green1'] : disabledTextColor}
+            style={{ marginRight: 10 }}
+          />
           <TouchableOpacity
             onPress={() =>
               setAccordion((previous) => {
@@ -139,10 +163,7 @@ const DateAndTime = () => {
                 <MaterialIcons name='hourglass-top' color={'white'} size={20} style={{ marginRight: 5 }} />
                 <Text style={{ color: 'white' }}>Start</Text>
               </TouchableOpacity>
-              <View>
-                {meetup ? renderOriginalDate(meetup.startDateAndTime) : null}
-                {renderEditedDate()}
-              </View>
+              {renderDate(formData.startDateAndTime)}
             </View>
             <View
               style={{
@@ -164,28 +185,17 @@ const DateAndTime = () => {
                 <MaterialIcons name='hourglass-bottom' color={'white'} size={20} style={{ marginRight: 5 }} />
                 <Text style={{ color: 'white' }}>Duration</Text>
               </TouchableOpacity>
-              <View>
-                {meetup ? renderOriginalDuration(meetup.duration) : null}
-                {editingData.duration.isEdited ? (
-                  <Text style={{ color: 'white' }}>{renderEditedDuration(editingData.duration.data)}</Text>
-                ) : null}
-              </View>
+              {renderDuration(formData.duration)}
             </View>
-            {/* {stageCleared.dateAndTime ? (
-              <Text>👍</Text>
-            ) : (
-              <Text style={{ color: 'red' }}>This time range is not available because you have upcoming meetups</Text>
-            )} */}
           </View>
           <DateTimePickerModal
-            defaultDate={meetup ? meetup.startDateAndTime : null}
+            defaultDate={formData.startDateAndTime ? formData.startDateAndTime : null}
             isVisible={isStartDateAndTimeDatePickerVisible}
             mode='datetime'
             onConfirm={(date) => onStartDateConfirm(date)}
             onCancel={() => setIsStartDateAndTimeDatePickerVisible(false)}
             is24Hour={true}
             minimumDate={new Date()}
-            isConfirmBtnDisabled={false}
           />
           <DateTimePickerModal
             isVisible={isDurationPickerVisible}
@@ -194,11 +204,10 @@ const DateAndTime = () => {
             onConfirm={(date) => onDurationConfirm(date)}
             onCancel={() => setIsDurationPickerVisible(false)}
             locale='en_GB'
-            isConfirmBtnDisabled={true}
           />
         </View>
       ) : null}
-      <DateTimePickerModal
+      {/* <DateTimePickerModal
         isVisible={formData.isStartDatePickerVisible}
         mode='datetime'
         onConfirm={(date) => onStartDateConfirm(date)}
@@ -228,7 +237,7 @@ const DateAndTime = () => {
         }
         locale='en_GB'
         {...props}
-      />
+      /> */}
     </View>
   );
 };

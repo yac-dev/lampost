@@ -180,7 +180,7 @@ const ImpressionsContainer = (props) => {
         ) : null}
 
         <TextInput
-          placeholder="How was this meetup? Let's share your thoughts!"
+          placeholder="Let's share your feeling👏"
           placeholderTextColor={baseTextColor}
           inputAccessoryViewID={inputAccessoryViewID}
           autoCapitalize='none'

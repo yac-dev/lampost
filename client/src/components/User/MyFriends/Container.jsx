@@ -78,7 +78,9 @@ const MyFriendsContainer = (props) => {
         />
       );
     } else {
-      return <Text style={{ color: 'white' }}>You'll see all the friends you added.</Text>;
+      return (
+        <Text style={{ color: 'white', textAlign: 'center', paddingTop: 30 }}>You'll see all your friends here.</Text>
+      );
     }
   };
 

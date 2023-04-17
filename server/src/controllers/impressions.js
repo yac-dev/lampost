@@ -53,6 +53,9 @@ export const createImpressionByMember = async (request, response) => {
         });
       }
     }
+    const meetupAndUserRelationship = await MeetupAndUserRelationship.findOne({ meetup: meetupId, user: user._id });
+    meetupAndUserRelationship.impression = impression._id;
+    meetupAndUserRelationship.save();
 
     response.status(201).json({
       impression: {

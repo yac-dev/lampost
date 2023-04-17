@@ -7,7 +7,7 @@ import { iconsTable } from '../../../../../utils/icons';
 
 const ActionButtons = (props) => {
   const { Ionicons, MaterialCommunityIcons } = iconsTable;
-  const { navigation } = useContext(LogContext);
+  const { navigation, selectedDateBottomSheetRef } = useContext(LogContext);
   const { meetupObject } = useContext(MeetupContext);
 
   return (
@@ -19,7 +19,10 @@ const ActionButtons = (props) => {
           paddingTop: 5,
           flex: 0.5,
         }}
-        onPress={() => navigation.navigate('Meetup assets', { meetupId: meetupObject.meetup._id })}
+        onPress={() => {
+          selectedDateBottomSheetRef.current.close();
+          navigation.navigate('Meetup assets', { meetupId: meetupObject.meetup._id });
+        }}
       >
         <View style={{ backgroundColor: iconColorsTable['blue1'], width: '100%', padding: 5, borderRadius: 5 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
@@ -35,7 +38,10 @@ const ActionButtons = (props) => {
           paddingTop: 5,
           flex: 0.5,
         }}
-        onPress={() => navigation.navigate('Attended', { meetupId: meetupObject.meetup._id })}
+        onPress={() => {
+          selectedDateBottomSheetRef.current.close();
+          navigation.navigate('Attended', { meetupId: meetupObject.meetup._id });
+        }}
       >
         <View style={{ backgroundColor: iconColorsTable['blue1'], borderRadius: 5, width: '100%', padding: 5 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>

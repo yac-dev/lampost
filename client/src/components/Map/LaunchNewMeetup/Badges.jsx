@@ -185,11 +185,10 @@ const Badges = () => {
       </View>
       {accordion.badges ? (
         <View style={{ marginTop: 10 }}>
-          <View
-            style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}
-          >
-            <Text style={{ fontSize: 13, color: baseTextColor }}>
-              Add up to 5 badges so attendees know what your meetup is about. The first one will be appear on the map.
+          <View style={{ flexDirection: 'column', marginBottom: 10 }}>
+            <Text style={{ fontSize: 13, color: baseTextColor, marginBottom: 5 }}>
+              Please add some badges so attendees know what this meetup is about. The first one will be appear on the
+              map.
             </Text>
             {renderBadgesLength()}
           </View>

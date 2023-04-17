@@ -5,18 +5,18 @@ import { mapStyleForForm } from '../../../utils/mapStyle';
 import { screenSectionBackgroundColor } from '../../../utils/colorsTable';
 
 const SelectVenueForLaunch = (props) => {
-  // const defaultVenue = props.route.params.editingPlace;
-  // const [selectingVenue, setSelectingVenue] = useState(JSON.parse(JSON.stringify(props.route.params.editingPlace)));
   const [selectingVenue, setSelectingVenue] = useState(null);
 
   useEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity onPress={() => props.navigation.navigate('Launch new meetup')} disabled={true}>
+        <TouchableOpacity
+          onPress={() => props.navigation.navigate('Launch new meetup', { selectedVenue: selectingVenue })}
+          disabled={selectingVenue ? false : true}
+        >
           <Text
             style={{
-              // color:
-              //   JSON.stringify(defaultVenue) === JSON.stringify(editingPlace) ? screenSectionBackgroundColor : 'white',
+              color: selectingVenue ? 'white' : screenSectionBackgroundColor,
               fontSize: 20,
               fontWeight: 'bold',
             }}
@@ -26,17 +26,21 @@ const SelectVenueForLaunch = (props) => {
         </TouchableOpacity>
       ),
     });
-  }, []);
+  }, [selectingVenue]);
 
   const onMapPress = (event) => {
     event.persist();
     // console.log(event.nativeEvent.coordinate);
-    setEditingPlace((previous) => {
-      const updating = { ...previous };
-      updating.coordinates[0] = event.nativeEvent.coordinate.longitude;
-      updating.coordinates[1] = event.nativeEvent.coordinate.latitude;
-      return updating;
+    setSelectingVenue({
+      coordinates: [event.nativeEvent.coordinate.longitude, event.nativeEvent.coordinate.latitude],
+      type: 'Point',
     });
+    // setSelectingVenue((previous) => {
+    //   const updating = { ...previous };
+    //   updating.coordinates[0] = event.nativeEvent.coordinate.longitude;
+    //   updating.coordinates[1] = event.nativeEvent.coordinate.latitude;
+    //   return updating;
+    // });
   };
 
   return (
@@ -57,14 +61,16 @@ const SelectVenueForLaunch = (props) => {
       }}
       // provider='google'
     >
-      {/* <Marker
-        tracksViewChanges={false}
-        coordinate={{
-          latitude: editingPlace.coordinates[1],
-          longitude: editingPlace.coordinates[0],
-        }}
-        // pinColor='black'
-      ></Marker> */}
+      {selectingVenue ? (
+        <Marker
+          tracksViewChanges={false}
+          coordinate={{
+            latitude: selectingVenue.coordinates[1],
+            longitude: selectingVenue.coordinates[0],
+          }}
+          // pinColor='black'
+        ></Marker>
+      ) : null}
     </MapView>
   );
 };

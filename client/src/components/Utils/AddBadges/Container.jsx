@@ -304,7 +304,7 @@ const Container = (props) => {
     }
   }, []);
   const onAddMeetupBadgesDone = () => {
-    props.navigation.navigate('Map', { addedMeetupBadges: addedBadges });
+    props.navigation.navigate('Launch new meetup', { addedMeetupBadges: addedBadges });
   };
 
   // ADD_LIBRARY_BADGESの時。

@@ -15,32 +15,39 @@ import { iconsTable } from '../../../utils/icons';
 import MapView, { Marker } from 'react-native-maps';
 import { mapStyleForForm } from '../../../utils/mapStyle';
 
-const Place = () => {
+const Place = (props) => {
   const { AntDesign, Ionicons, MaterialCommunityIcons, Fontisto } = iconsTable;
   const { accordion, setAccordion, formData, setFormData, navigation, route, meetup, stageCleared, setStageCleared } =
     useContext(FormContext);
 
-  // useEffect(() => {
-  //   if (route.params?.editedVenue) {
-  //     setEditingData((previous) => {
-  //       return {
-  //         ...previous,
-  //         venue: {
-  //           isEdited: true,
-  //           data: route.params?.editedVenue,
-  //         },
-  //       };
-  //     });
+  useEffect(() => {
+    if (formData.place) {
+      setStageCleared((previous) => {
+        return {
+          ...previous,
+          venue: true,
+        };
+      });
+    } else {
+      setStageCleared((previous) => {
+        return {
+          ...previous,
+          venue: false,
+        };
+      });
+    }
+  }, [formData.place]);
 
-  //     setStageCleared((previous) => {
-  //       return {
-  //         ...previous,
-  //         venue: true,
-  //       };
-  //     });
-  //   }
-  // }, [route.params?.editedVenue]);
-  // console.log(editingData);
+  useEffect(() => {
+    if (route.params?.selectedVenue) {
+      setFormData((previous) => {
+        return {
+          ...previous,
+          place: route.params.selectedVenue,
+        };
+      });
+    }
+  }, [route.params?.selectedVenue]);
 
   return (
     <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 7, borderRadius: 5, marginBottom: 10 }}>
@@ -76,7 +83,7 @@ const Place = () => {
           <Ionicons
             name='checkmark-circle'
             size={20}
-            color={stageCleared.title ? iconColorsTable['green1'] : disabledTextColor}
+            color={stageCleared.venue ? iconColorsTable['green1'] : disabledTextColor}
             style={{ marginRight: 10 }}
           />
           <TouchableOpacity
@@ -129,26 +136,25 @@ const Place = () => {
           <MapView
             style={{ width: '100%', height: 200 }}
             customMapStyle={mapStyleForForm}
-            // initial regionっていうのは、最初に地図がloadされたときに画面の中心にどのlatitudeとlongitudeを映すかって言うことね。
             // 今の自分の場所
             initialRegion={{
-              latitude: 37.78825,
-              longitude: -122.4324,
+              latitude: formData.place ? formData.place.coordinates[1] : 37.78825,
+              longitude: formData.place ? formData.place.coordinates[0] : -122.4324,
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }}
             // provider='google'
             pitchEnabled={false}
           >
-            {/* {editingData.venue.isEdited ? (
+            {formData.place ? (
               <Marker
                 tracksViewChanges={false}
                 coordinate={{
-                  latitude: editingData.venue.data.coordinates[1],
-                  longitude: editingData.venue.data.coordinates[0],
+                  latitude: formData.place.coordinates[1],
+                  longitude: formData.place.coordinates[0],
                 }}
               ></Marker>
-            ) : null} */}
+            ) : null}
           </MapView>
         </View>
       ) : null}
