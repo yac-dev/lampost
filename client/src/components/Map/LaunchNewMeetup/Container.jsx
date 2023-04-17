@@ -54,41 +54,6 @@ const Container = (props) => {
     link: false,
   });
 
-  // const onDonePress = async () => {
-  //   const payload = {
-  //     title: formData.title,
-  //     badgeIds: Object.keys(formData.badges),
-  //     assetType: formData.assetType,
-  //     isReactionAvailable: formData.isReactionAvailable,
-  //     reactions: formData.reactions,
-  //     isCommentAvailable: formData.isCommentAvailable,
-  //     asset: {
-  //       _id: formData.asset._id,
-  //       data: formData.asset.data,
-  //       type: formData.asset.type,
-  //     },
-  //     launcher: {
-  //       _id: auth.data._id,
-  //       name: auth.data.name,
-  //       photo: auth.data.photo,
-  //     },
-  //     description: formData.description,
-  //   };
-  //   setLoading(true);
-  //   const result = await lampostAPI.post(`/libraries`, payload);
-  //   setLoading(false);
-  //   // これをもって、navigation でlibrariesに行く。
-  //   const { library } = result.data;
-  //   props.navigation.navigate('Libraries', { fromComponent: 'Create new library', library });
-  // };
-
-  // setSnackBar({
-  //   isVisible: true,
-  //   message: 'Launched a meetup.',
-  //   barType: 'success',
-  //   duration: 5000,
-  // });
-
   const onDonePress = async () => {
     setLoading(true);
     const payload = {
@@ -139,7 +104,7 @@ const Container = (props) => {
         },
       };
     });
-    const reault2 = await lampostAPI.post('/launcherandpatronrelationships/patronnotification', {
+    const reault2 = await lampostAPI.post(`/followrelationships/notification/meetup-launch`, {
       launcher: {
         _id: auth.data._id,
         name: auth.data.name,

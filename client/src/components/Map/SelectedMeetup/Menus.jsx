@@ -93,7 +93,7 @@ const Menus = (props) => {
               </View>
             ) : null}
             <View style={{ width: 80 }}>
-              <Text numberOfLines={1} style={{ color: baseTextColor, fontSize: 15 }}>
+              <Text numberOfLines={1} style={{ color: baseTextColor, fontSize: 15, textAlign: 'right' }}>
                 {selectedMeetup.launcher.name}
               </Text>
             </View>
@@ -144,15 +144,15 @@ const Menus = (props) => {
       />
       <Menu
         label='Description'
-        backgroundColor={backgroundColorsTable['green1']}
-        icon={<MaterialCommunityIcons name='card-text-outline' size={20} color={iconColorsTable['green1']} />}
+        backgroundColor={backgroundColorsTable['lightGreen1']}
+        icon={<MaterialIcons name='description' size={20} color={iconColorsTable['lightGreen1']} />}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {/* <View style={{ width: 80 }}>
+            <View style={{ width: 80 }}>
               <Text numberOfLines={1} style={{ color: baseTextColor, fontSize: 15 }}>
                 {selectedMeetup.description}
               </Text>
-            </View> */}
+            </View>
             <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
           </View>
         }
@@ -193,16 +193,21 @@ const Menus = (props) => {
         backgroundColor={backgroundColorsTable['violet1']}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ color: baseTextColor }}>
+              {selectedMeetup.totalAttendees}/
+              {selectedMeetup.isAttendeesLimitFree ? <Text>&infin;</Text> : selectedMeetup.attendeesLimit}
+            </Text>
             <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
           </View>
         }
         onPressMenu={() => {
           // setSelectedMeetupDetailComponent('Crew');
           // selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
+
           navigation.navigate('Attendees', { meetupId: selectedMeetup._id });
         }}
       />
-      <Menu
+      {/* <Menu
         label='Meetup point'
         icon={<Fontisto name='map-marker-alt' size={20} color={iconColorsTable['pink1']} />}
         backgroundColor={backgroundColorsTable['pink1']}
@@ -220,7 +225,7 @@ const Menus = (props) => {
             meetupPoint: selectedMeetup.meetupPoint,
           });
         }}
-      />
+      /> */}
       {selectedMeetup.link ? (
         <Menu
           label='Link'

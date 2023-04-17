@@ -127,7 +127,7 @@ const DateCompo = (props) => {
                 }
               )}`}</Text>
             </View>
-            {renderEdit('startDateAndTime')}
+            {/* {renderEdit('startDateAndTime')} */}
           </View>
         </View>
         <View
@@ -158,7 +158,7 @@ const DateCompo = (props) => {
             </View>
             <Text style={{ color: 'white', fontSize: 20 }}>{duration} minutes</Text>
           </View>
-          {renderEdit('duration')}
+          {/* {renderEdit('duration')} */}
         </View>
         <View
           style={{
@@ -187,29 +187,8 @@ const DateCompo = (props) => {
             </View>
             <Text style={{ color: 'white', fontSize: 20 }}>{props.route.params.agenda} minutes</Text>
           </View>
-          {renderEdit('agenda')}
+          {/* {renderEdit('agenda')} */}
         </View>
-        <EditBottomSheet />
-        <DateTimePickerModal
-          isVisible={isDateTimePickerModalOpen}
-          mode='datetime'
-          onConfirm={(date) => onStartDateAndTimeConfirm(date)}
-          onCancel={() => setIsDateTimePickerModalOpen(false)}
-          is24Hour={true}
-          minimumDate={new Date()}
-          {...props}
-        />
-        <DateTimePickerModal
-          isVisible={isDurationPickerModalOpen}
-          mode='time'
-          date={new Date(new Date().setHours(0, 0, 0, 0))}
-          onConfirm={(date) => onDurationConfirm(date)}
-          onCancel={() => {
-            setIsDurationPickerModalOpen(false);
-          }}
-          locale='en_GB'
-          {...props}
-        />
       </View>
     </DateContext.Provider>
   );

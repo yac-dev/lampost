@@ -16,7 +16,7 @@ import { emojis } from '../../../../utils/emojisList';
 const SendChatBottomSheet = (props) => {
   const { auth, setLoading, setSnackBar } = useContext(GlobalContext);
   const inputAccessoryViewID = 'SEND_CHAT_INPUT';
-  const snapPoints = useMemo(() => ['65%'], []);
+  const snapPoints = useMemo(() => ['75%'], []);
   const {
     appMenuBottomSheetRef,
     sendChatBottomSheetRef,

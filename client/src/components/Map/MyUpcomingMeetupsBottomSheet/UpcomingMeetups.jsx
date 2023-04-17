@@ -309,7 +309,7 @@ const Container = (props) => {
                 marginBottom: 5,
               }}
               onPress={() => {
-                setMoreMenuOf(meetup._id);
+                setMoreMenuOf(meetup);
                 moreMenuBottomSheetRef.current.snapToIndex(0);
               }}
             >

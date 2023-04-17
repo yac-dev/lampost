@@ -40,7 +40,7 @@ const AppMenuButtons = (props) => {
           >
             <MaterialCommunityIcons name='rocket-launch' color={iconColorsTable['red1']} size={20} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Launch new meetup</Text>
+          <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>Launch new meetup</Text>
         </View>
         <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
       </TouchableOpacity>
@@ -65,7 +65,7 @@ const AppMenuButtons = (props) => {
           >
             <MaterialCommunityIcons name='map-search-outline' color={iconColorsTable['lightBlue1']} size={20} />
           </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Search for meetup</Text>
+          <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>Search for meetup</Text>
         </View>
         <Foundation name='prohibited' color={iconColorsTable['red1']} size={25} />
       </TouchableOpacity>

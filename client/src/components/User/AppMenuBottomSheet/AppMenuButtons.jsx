@@ -125,16 +125,16 @@ const AppButtons = (props) => {
               style={{
                 width: 40,
                 height: 40,
-                backgroundColor: backgroundColorsTable['orange1'],
+                backgroundColor: backgroundColorsTable['yellow1'],
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 8,
                 marginRight: 10,
               }}
             >
-              <MaterialCommunityIcons name='history' color={iconColorsTable['orange1']} size={20} />
+              <MaterialCommunityIcons name='history' color={iconColorsTable['yellow1']} size={20} />
             </View>
-            <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>My log</Text>
+            <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>Log</Text>
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
         </TouchableOpacity>
@@ -159,7 +159,7 @@ const AppButtons = (props) => {
             >
               <MaterialCommunityIcons name='human-greeting-variant' color={iconColorsTable['pink1']} size={20} />
             </View>
-            <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>My friends</Text>
+            <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>Friends</Text>
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
         </TouchableOpacity>
@@ -186,7 +186,7 @@ const AppButtons = (props) => {
             >
               <Ionicons name='camera' color={iconColorsTable['violet1']} size={20} />
             </View>
-            <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>My moments</Text>
+            <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>Snaps</Text>
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
         </TouchableOpacity>

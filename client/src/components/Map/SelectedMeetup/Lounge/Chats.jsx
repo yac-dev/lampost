@@ -238,7 +238,7 @@ const Chats = (props) => {
       return (
         <View>
           <Text style={{ color: baseTextColor, textAlign: 'center', marginTop: 50, fontSize: 15 }}>
-            You'll see all the chats of this meetup group.
+            You'll see all the private chat messages of this meetup.
           </Text>
         </View>
       );

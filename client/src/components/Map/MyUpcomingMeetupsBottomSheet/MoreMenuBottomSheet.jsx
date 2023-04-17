@@ -16,9 +16,11 @@ import { iconsTable } from '../../../utils/icons';
 
 const MyUpcomingMeetupsBottomSheet = (props) => {
   const { Ionicons, MaterialCommunityIcons, Feather } = iconsTable;
-  const snapPoints = useMemo(() => ['30%'], []);
+  const snapPoints = useMemo(() => ['40%'], []);
   const { auth, myUpcomingMeetupAndChatsTable, totalUnreadChatsCount, isIpad } = useContext(GlobalContext);
   const { moreMenuBottomSheetRef, setMoreMenuOf, moreMenuOf, navigation } = useContext(MapContext);
+
+  console.log(moreMenuOf);
 
   return (
     <GorhomBottomSheet
@@ -34,37 +36,42 @@ const MyUpcomingMeetupsBottomSheet = (props) => {
       handleIndicatorStyle={{ backgroundColor: 'white' }}
     >
       <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
-        <TouchableOpacity
-          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
-          onPress={() => {
-            navigation.navigate('Edit meetup', { meetupId: moreMenuOf });
-            moreMenuBottomSheetRef.current.close();
-          }}
-          // disabled={true}
-        >
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View
-              style={{
-                width: 40,
-                height: 40,
-                backgroundColor: backgroundColorsTable['green1'],
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 8,
-                marginRight: 10,
-              }}
-            >
-              <MaterialCommunityIcons name='file-document-edit-outline' color={iconColorsTable['green1']} size={20} />
+        {auth.data._id === moreMenuOf.launcher ? (
+          <TouchableOpacity
+            style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+            onPress={() => {
+              navigation.navigate('Edit meetup', { meetupId: moreMenuOf._id });
+              moreMenuBottomSheetRef.current.close();
+            }}
+            // disabled={true}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View
+                style={{
+                  width: 40,
+                  height: 40,
+                  backgroundColor: backgroundColorsTable['green1'],
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 8,
+                  marginRight: 10,
+                }}
+              >
+                <MaterialCommunityIcons name='file-document-edit-outline' color={iconColorsTable['green1']} size={20} />
+              </View>
+              <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>
+                Edit this meetup
+              </Text>
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Edit this meetup</Text>
-          </View>
-          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
-        </TouchableOpacity>
+            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+          </TouchableOpacity>
+        ) : null}
+
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
             moreMenuBottomSheetRef.current.close();
-            navigation.navigate('Attendees', { meetupId: moreMenuOf });
+            navigation.navigate('Attendees', { meetupId: moreMenuOf._id });
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>

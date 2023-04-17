@@ -109,9 +109,19 @@ const DateAndTime = () => {
       }
     } else {
       if (formData.startDateAndTime && formData.duration) {
-        setIsDisabledNext(false);
+        setStageCleared((previous) => {
+          return {
+            ...previous,
+            dateAndTime: true,
+          };
+        });
       } else {
-        setIsDisabledNext(true);
+        setStageCleared((previous) => {
+          return {
+            ...previous,
+            dateAndTime: false,
+          };
+        });
       }
     }
   }, [formData.startDateAndTime, formData.duration]);
