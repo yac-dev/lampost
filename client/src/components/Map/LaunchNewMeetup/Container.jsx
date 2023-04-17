@@ -24,14 +24,13 @@ const Container = (props) => {
     startDateAndTime: '',
     duration: '',
     agenda: [],
-    isAttendeesLimitFree: true,
-    attendeesLimit: '',
+    isAttendeesLimitFree: '', // should be boolean
+    attendeesLimit: '', // should be number
+    isFeeFree: '', // shoukd be boolean
+    fee: '', // should be number
+    feeDatail: '',
     description: '',
-    isFeeFree: true,
-    fee: '',
-    feeDetail: '',
-    description: '',
-    // link: '',
+    link: '',
   });
   const [stageCleared, setStageCleared] = useState({
     title: false,

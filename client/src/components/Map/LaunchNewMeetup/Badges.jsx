@@ -68,7 +68,7 @@ const Badges = () => {
                 backgroundColor: rnDefaultBackgroundColor,
                 width: 45,
                 height: 45,
-                borderRadius: 7,
+                borderRadius: 10,
                 marginBottom: 5,
               }}
             >
@@ -78,7 +78,7 @@ const Badges = () => {
                   height: '100%',
                   alignItems: 'center', // これと
                   justifyContent: 'center', // これで中のimageを上下左右真ん中にする
-                  borderRadius: 7,
+                  borderRadius: 10,
                   backgroundColor: backgroundColorsTable[badge.color],
                   borderColor: backgroundColorsTable[badge.color],
                   borderWidth: 0.3,
@@ -122,7 +122,7 @@ const Badges = () => {
 
   const renderBadgesLength = () => {
     return (
-      <Text style={{ color: Object.keys(formData.badges).length <= 5 ? baseTextColor : 'red' }}>
+      <Text style={{ color: Object.keys(formData.badges).length <= 5 ? baseTextColor : 'red', textAlign: 'right' }}>
         {Object.keys(formData.badges).length}/5
       </Text>
     );

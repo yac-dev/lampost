@@ -16,60 +16,127 @@ import { iconsTable } from '../../../utils/icons';
 const Member = () => {
   const { AntDesign, Ionicons, MaterialCommunityIcons, Fontisto } = iconsTable;
   const { formData, setFormData, stageCleared, setStageCleared, accordion, setAccordion } = useContext(FormContext);
+  const inputAccessoryViewID = 'ATTENDEES_LIMIT_INPUT';
+
+  useEffect(() => {
+    if (typeof formData.isAttendeesLimitFree === 'boolean') {
+      if (formData.isAttendeesLimitFree) {
+        setStageCleared((previous) => {
+          return {
+            ...previous,
+            member: true,
+          };
+        });
+      } else {
+        if (formData.attendeesLimit) {
+          setStageCleared((previous) => {
+            return {
+              ...previous,
+              member: true,
+            };
+          });
+        } else {
+          setStageCleared((previous) => {
+            return {
+              ...previous,
+              member: false,
+            };
+          });
+        }
+      }
+    } else {
+      setStageCleared((previous) => {
+        return {
+          ...previous,
+          comment: false,
+        };
+      });
+    }
+  }, [formData.isAttendeesLimitFree, formData.attendeesLimit]);
+
+  const renderCheckMarkForFree = () => {
+    if (typeof formData.isAttendeesLimitFree === 'boolean') {
+      if (formData.isAttendeesLimitFree) {
+        return (
+          <View style={{ position: 'absolute', right: -7, top: -7 }}>
+            <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
+          </View>
+        );
+      } else {
+        return null;
+      }
+    }
+  };
+
+  const renderCheckMarkForLimited = () => {
+    if (typeof formData.isAttendeesLimitFree === 'boolean') {
+      if (formData.isAttendeesLimitFree) {
+        return null;
+      } else {
+        return (
+          <View style={{ position: 'absolute', right: -7, top: -7 }}>
+            <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
+          </View>
+        );
+      }
+    }
+  };
 
   const renderAttendeesLimitForm = () => {
-    if (!formData.isAttendeesLimitFree) {
-      return (
-        <View style={{ width: 130 }}>
-          {/* <TextInput
-            style={{ width: 200, marginLeft: 10, color: baseTextColor }}
-            mode='outlined'
-            label='How many people?'
-            value={props.state.fee}
-            onChangeText={(text) => props.dispatch({ type: 'SET_MEETUP_FEE', payload: text })}
-          /> */}
-          <BottomSheetTextInput
-            style={{
-              // flex: 1,
-              padding: 10,
-              backgroundColor: inputBackgroundColor,
-              color: baseTextColor,
-              borderRadius: 5,
-            }}
-            keyboardType='numeric'
-            // maxLength={999} //setting limit of input
-            placeholder='How many is it?'
-            placeholderTextColor={baseTextColor}
-            inputAccessoryViewID={inputAccessoryViewID}
-            value={formData.attendeesLimit}
-            onChangeText={(text) =>
-              setFormData((previous) => {
-                return {
-                  ...previous,
-                  attendeesLimit: text,
-                };
-              })
-            }
-            autoCapitalize='none'
-          />
-          <InputAccessoryView
-            nativeID={inputAccessoryViewID}
-            backgroundColor={sectionBackgroundColor}
-            // style={{ paddingTop: 10, paddingBottom: 10, paddingRight: 10 }}
-          >
-            <View style={{ alignItems: 'flex-end' }}>
-              <TouchableOpacity
-                onPress={() => {
-                  Keyboard.dismiss();
-                  // launchMeetupBottomSheetRef.current.snapToIndex(0);
-                }}
-              >
-                <Text style={{ color: 'white', padding: 10, fontWeight: 'bold' }}>Done</Text>
-              </TouchableOpacity>
-            </View>
-          </InputAccessoryView>
-        </View>
-      );
+    if (typeof formData.isAttendeesLimitFree === 'boolean') {
+      if (!formData.isAttendeesLimitFree) {
+        return (
+          <View style={{ width: 130 }}>
+            {/* <TextInput
+              style={{ width: 200, marginLeft: 10, color: baseTextColor }}
+              mode='outlined'
+              label='How many people?'
+              value={props.state.fee}
+              onChangeText={(text) => props.dispatch({ type: 'SET_MEETUP_FEE', payload: text })}
+            /> */}
+            <TextInput
+              style={{
+                // flex: 1,
+                padding: 10,
+                backgroundColor: inputBackgroundColorNew,
+                color: baseTextColor,
+                borderRadius: 5,
+              }}
+              keyboardType='numeric'
+              // maxLength={999} //setting limit of input
+              placeholder='How many is it?'
+              placeholderTextColor={baseTextColor}
+              inputAccessoryViewID={inputAccessoryViewID}
+              value={formData.attendeesLimit}
+              onChangeText={(text) =>
+                setFormData((previous) => {
+                  return {
+                    ...previous,
+                    attendeesLimit: text,
+                  };
+                })
+              }
+              autoCapitalize='none'
+            />
+            <InputAccessoryView
+              nativeID={inputAccessoryViewID}
+              backgroundColor={sectionBackgroundColor}
+              // style={{ paddingTop: 10, paddingBottom: 10, paddingRight: 10 }}
+            >
+              <View style={{ alignItems: 'flex-end' }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    Keyboard.dismiss();
+                    // launchMeetupBottomSheetRef.current.snapToIndex(0);
+                  }}
+                >
+                  <Text style={{ color: 'white', padding: 10, fontWeight: 'bold' }}>Done</Text>
+                </TouchableOpacity>
+              </View>
+            </InputAccessoryView>
+          </View>
+        );
+      }
     } else {
       return null;
     }
@@ -112,7 +179,7 @@ const Member = () => {
           <Ionicons
             name='checkmark-circle'
             size={20}
-            color={stageCleared.title ? iconColorsTable['green1'] : disabledTextColor}
+            color={stageCleared.member ? iconColorsTable['green1'] : disabledTextColor}
             style={{ marginRight: 10 }}
           />
           <TouchableOpacity
@@ -136,9 +203,7 @@ const Member = () => {
       {accordion.member ? (
         <View style={{ marginTop: 10 }}>
           <View style={{ flexDirection: 'column', marginBottom: 10 }}>
-            <Text style={{ fontSize: 13, color: baseTextColor, marginBottom: 5 }}>
-              How many people can join this meetup?
-            </Text>
+            <Text style={{ fontSize: 13, color: baseTextColor }}>How many people can join this meetup?</Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <TouchableOpacity
@@ -150,22 +215,18 @@ const Member = () => {
                 flexDirection: 'row',
                 alignItems: 'center',
               }}
-              // onPress={() =>
-              //   setFormData((previous) => {
-              //     return {
-              //       ...previous,
-              //       isAttendeesLimitFree: true,
-              //     };
-              //   })
-              // }
+              onPress={() =>
+                setFormData((previous) => {
+                  return {
+                    ...previous,
+                    isAttendeesLimitFree: true,
+                  };
+                })
+              }
             >
               <Fontisto name='unlocked' size={15} color={'white'} style={{ marginRight: 10 }} />
               <Text style={{ color: 'white' }}>It's free</Text>
-              {/* {formData.isAttendeesLimitFree ? (
-            <View style={{ position: 'absolute', top: -8, right: -8 }}>
-              <MaterialCommunityIcons name='check-circle' color={'green'} size={20} />
-            </View>
-          ) : null} */}
+              {renderCheckMarkForFree()}
             </TouchableOpacity>
             <TouchableOpacity
               style={{
@@ -176,23 +237,20 @@ const Member = () => {
                 alignItems: 'center',
                 marginRight: 15,
               }}
-              // onPress={() =>
-              //   setFormData((previous) => {
-              //     return {
-              //       ...previous,
-              //       isAttendeesLimitFree: false,
-              //     };
-              //   })
-              // }
+              onPress={() =>
+                setFormData((previous) => {
+                  return {
+                    ...previous,
+                    isAttendeesLimitFree: false,
+                  };
+                })
+              }
             >
               <Fontisto name='locked' size={15} color={'white'} style={{ marginRight: 10 }} />
               <Text style={{ color: 'white' }}>Limited</Text>
-              {/* {formData.isAttendeesLimitFree ? null : (
-            <View style={{ position: 'absolute', top: -8, right: -8 }}>
-              <MaterialCommunityIcons name='check-circle' color={'green'} size={20} />
-            </View>
-          )} */}
+              {renderCheckMarkForLimited()}
             </TouchableOpacity>
+            {renderAttendeesLimitForm()}
           </View>
         </View>
       ) : null}

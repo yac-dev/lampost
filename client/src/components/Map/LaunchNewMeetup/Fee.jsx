@@ -14,8 +14,101 @@ import {
 import { iconsTable } from '../../../utils/icons';
 
 const Fee = () => {
-  const { AntDesign, Ionicons, MaterialCommunityIcons, Foundation } = iconsTable;
+  const { AntDesign, Ionicons, MaterialCommunityIcons, Foundation, Fontisto } = iconsTable;
   const { formData, setFormData, stageCleared, setStageCleared, accordion, setAccordion } = useContext(FormContext);
+  const inputAccessoryViewID = 'MEETUP_FEE_INPUT';
+
+  useEffect(() => {
+    if (typeof formData.isFeeFree === 'boolean') {
+      if (formData.isFeeFree) {
+        setStageCleared((previous) => {
+          return {
+            ...previous,
+            fee: true,
+          };
+        });
+      } else {
+        if (formData.fee) {
+          setStageCleared((previous) => {
+            return {
+              ...previous,
+              fee: true,
+            };
+          });
+        } else {
+          setStageCleared((previous) => {
+            return {
+              ...previous,
+              fee: false,
+            };
+          });
+        }
+      }
+    } else {
+      setStageCleared((previous) => {
+        return {
+          ...previous,
+          fee: false,
+        };
+      });
+    }
+  }, [formData.isFeeFree, formData.fee]);
+
+  const renderFeeForm = () => {
+    if (typeof formData.isFeeFree === 'boolean') {
+      if (!formData.isFeeFree) {
+        return (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Fontisto name='dollar' size={15} color={baseTextColor} style={{ padding: 10 }} />
+            <View style={{ width: 130 }}>
+              <TextInput
+                style={{
+                  // flex: 1,
+                  padding: 10,
+                  backgroundColor: inputBackgroundColorNew,
+                  color: baseTextColor,
+                  borderRadius: 5,
+                }}
+                keyboardType='numeric'
+                // maxLength={999} //setting limit of input
+                placeholder='How much is it?'
+                placeholderTextColor={baseTextColor}
+                inputAccessoryViewID={inputAccessoryViewID}
+                value={formData.fee}
+                onChangeText={(text) =>
+                  setFormData((previous) => {
+                    return {
+                      ...previous,
+                      fee: text,
+                    };
+                  })
+                }
+                autoCapitalize='none'
+              />
+              <InputAccessoryView
+                nativeID={inputAccessoryViewID}
+                backgroundColor={sectionBackgroundColor}
+                // style={{ paddingTop: 10, paddingBottom: 10, paddingRight: 10 }}
+              >
+                <View style={{ alignItems: 'flex-end' }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      Keyboard.dismiss();
+                      // launchMeetupBottomSheetRef.current.snapToIndex(0);
+                    }}
+                  >
+                    <Text style={{ color: 'white', padding: 10, fontWeight: 'bold' }}>Done</Text>
+                  </TouchableOpacity>
+                </View>
+              </InputAccessoryView>
+            </View>
+          </View>
+        );
+      }
+    } else {
+      return null;
+    }
+  };
 
   return (
     <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 7, borderRadius: 5, marginBottom: 10 }}>
@@ -85,14 +178,14 @@ const Fee = () => {
                 flexDirection: 'row',
                 alignItems: 'center',
               }}
-              // onPress={() =>
-              //   setFormData((previous) => {
-              //     return {
-              //       ...previous,
-              //       isFeeFree: true,
-              //     };
-              //   })
-              // }
+              onPress={() =>
+                setFormData((previous) => {
+                  return {
+                    ...previous,
+                    isFeeFree: true,
+                  };
+                })
+              }
             >
               <Text style={{ color: 'white' }}>It's free</Text>
               {formData.isFeeFree ? (
@@ -110,14 +203,14 @@ const Fee = () => {
                 alignItems: 'center',
                 marginRight: 15,
               }}
-              // onPress={() =>
-              //   setFormData((previous) => {
-              //     return {
-              //       ...previous,
-              //       isFeeFree: false,
-              //     };
-              //   })
-              // }
+              onPress={() =>
+                setFormData((previous) => {
+                  return {
+                    ...previous,
+                    isFeeFree: false,
+                  };
+                })
+              }
             >
               <Text style={{ color: 'white' }}>Not free</Text>
               {/* {formData.isFeeFree ? null : (
@@ -126,7 +219,7 @@ const Fee = () => {
                 </View>
               )} */}
             </TouchableOpacity>
-            {/* {renderFeeForm()} */}
+            {renderFeeForm()}
           </View>
         </View>
       ) : null}

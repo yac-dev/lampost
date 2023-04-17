@@ -117,8 +117,6 @@ const Title = () => {
               color: baseTextColor,
               borderRadius: 5,
             }}
-            placeholder={'In 40 characters long'}
-            placeholderTextColor={baseTextColor}
             inputAccessoryViewID={inputAccessoryViewID}
             value={formData.title}
             onChangeText={(text) =>

@@ -15,13 +15,45 @@ import { iconsTable } from '../../../utils/icons';
 
 const Description = () => {
   const { AntDesign, Ionicons, MaterialCommunityIcons, MaterialIcons } = iconsTable;
-  const { formData, setFormData, stageCleared, setStageCleared, accordion, setAccordion } = useContext(FormContext);
+  const { formData, setFormData, stageCleared, setStageCleared, accordion, setAccordion, navigation, route } =
+    useContext(FormContext);
   const inputAccessoryViewID = 'MEETUP_DESCRIPTION';
+
+  useEffect(() => {
+    if (formData.description.length && formData.description.length <= 300) {
+      setStageCleared((previous) => {
+        return {
+          ...previous,
+          description: true,
+        };
+      });
+    } else {
+      setStageCleared((previous) => {
+        return {
+          ...previous,
+          description: false,
+        };
+      });
+    }
+  }, [formData.description]);
+
+  useEffect(() => {
+    if (route.params?.description) {
+      setFormData((previous) => {
+        return {
+          ...previous,
+          description: route.params.description,
+        };
+      });
+    }
+  }, [route.params?.description]);
 
   const renderDescriptionLength = () => {
     return (
-      <Text style={{ fontSize: 13, color: formData.description.length <= 300 ? baseTextColor : 'red' }}>
-        {formData.description.length}/40
+      <Text
+        style={{ fontSize: 13, color: formData.description.length <= 300 ? baseTextColor : 'red', textAlign: 'right' }}
+      >
+        {formData.description.length}/300
       </Text>
     );
   };
@@ -60,7 +92,7 @@ const Description = () => {
           <Ionicons
             name='checkmark-circle'
             size={20}
-            color={stageCleared.title ? iconColorsTable['green1'] : disabledTextColor}
+            color={stageCleared.description ? iconColorsTable['green1'] : disabledTextColor}
             style={{ marginRight: 10 }}
           />
           <TouchableOpacity
@@ -83,15 +115,30 @@ const Description = () => {
       </View>
       {accordion.description ? (
         <View style={{ marginTop: 10 }}>
-          <View
-            style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}
-          >
+          <View style={{ marginBottom: 10 }}>
             <Text style={{ fontSize: 13, color: baseTextColor }}>
-              Please write the description or message to the attendees.
+              Please write more deatils about this meetup or message to the attendees.
             </Text>
+            {renderDescriptionLength()}
           </View>
-          {renderDescriptionLength()}
-          <TextInput
+          <TouchableOpacity
+            style={{
+              padding: 5,
+              backgroundColor: iconColorsTable['blue1'],
+              borderRadius: 5,
+              marginBottom: 10,
+            }}
+            onPress={() => {
+              navigation.navigate('Write meetup description', { description: formData.description });
+            }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+              <AntDesign name='edit' size={20} color={'white'} style={{ marginRight: 10 }} />
+              <Text style={{ color: 'white' }}>Write</Text>
+            </View>
+          </TouchableOpacity>
+          <Text style={{ color: 'white' }}>{formData.description}</Text>
+          {/* <TextInput
             style={{
               flex: 1,
               padding: 10,
@@ -134,7 +181,7 @@ const Description = () => {
                 <Text style={{ color: 'white', padding: 10, fontWeight: 'bold' }}>Done</Text>
               </TouchableOpacity>
             </View>
-          </InputAccessoryView>
+          </InputAccessoryView> */}
         </View>
       ) : null}
     </View>

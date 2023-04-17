@@ -28,6 +28,7 @@ import ReportUser from '../Utils/ReportUser';
 import Attendees from '../Map/SelectedMeetup/Attendees';
 import ExternalWebPage from '../Utils/ExternalWebPage';
 import LaunchNewMeetup from '../Map/LaunchNewMeetup/Container';
+import WriteDescription from '../Map/LaunchNewMeetup/WriteDescription';
 import EditMeetup from '../Map/EditMeetup/Container';
 import SelectVenue from '../Map/EditMeetup/SelectVenue';
 import SelectVenueForLaunch from '../Map/LaunchNewMeetup/SelectVenueForLaunch';
@@ -329,6 +330,25 @@ const MapNavigator = (props) => {
           component={SelectVenueForLaunch}
           options={({ navigation }) => ({
             title: 'Select venue',
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
+              </TouchableOpacity>
+            ),
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          })}
+        />
+        <Stack.Screen
+          name='Write meetup description'
+          component={WriteDescription}
+          options={({ navigation }) => ({
+            title: 'Write meetup description',
             headerLeft: () => (
               <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
