@@ -1,6 +1,8 @@
 import LoungeChat from '../models/loungeChat';
 import Meetup from '../models/meetup';
 import MeetupAndUserRelationship from '../models/meetupAndUserRelationship';
+import { Expo } from 'expo-server-sdk';
+const expo = new Expo();
 
 // export const getMyLoungeStatus = async (request, response) => {
 //   try {
@@ -148,15 +150,62 @@ export const getSelectedMeetupLoungeChats = async (request, response) => {
 
 export const createLoungeChat = async (request, response) => {
   try {
-    const { meetupId, user, content, type, replyTo } = request.body;
+    const { meetup, user, content, type, replyTo } = request.body;
     const loungeChat = await LoungeChat.create({
-      meetup: meetupId,
+      meetup: meetup._id,
       user: user._id,
       content: content,
       type: type,
       createdAt: new Date(),
       replyTo: replyTo ? replyTo._id : null,
     });
+
+    const meetupAndUserRelationships = await MeetupAndUserRelationship.find({
+      meetup: meetup._id,
+      user: { $ne: user._id },
+    })
+      .populate({ path: 'user' })
+      .select({ pushToken: 1 });
+    const membersPushTokens = meetupAndUserRelationships.map((rel) => {
+      return rel.user.pushToken;
+    });
+
+    let notificationTitle = '';
+    if (type === 'general') {
+      notificationTitle = meetup.title;
+    } else if (type === 'question') {
+      notificationTitle = `Question for ${meetup.title}`;
+    } else if (type === 'help') {
+      notificationTitle = `Need help with ${meetup.title}`;
+    }
+
+    const notificationData = {
+      notificationType: 'loungeChat',
+      meetupId: meetup._id,
+      type,
+    };
+
+    const chunks = expo.chunkPushNotifications(
+      membersPushTokens.map((token) => ({
+        to: token,
+        sound: 'default',
+        data: notificationData,
+        title: notificationTitle,
+        body: loungeChat.content,
+      }))
+    );
+
+    const tickets = [];
+
+    for (let chunk of chunks) {
+      try {
+        let receipts = await expo.sendPushNotificationsAsync(chunk);
+        tickets.push(...receipts);
+        console.log('Push notifications sent:', receipts);
+      } catch (error) {
+        console.error('Error sending push notification:', error);
+      }
+    }
 
     response.status(201).json({
       loungeChatObject: {

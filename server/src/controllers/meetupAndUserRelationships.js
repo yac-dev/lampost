@@ -5,6 +5,7 @@ import UserBadgeExperience from '../models/userBadgeExperience';
 import BadgeAndUserRelationship from '../models/badgeAndUserRelationship';
 import { Expo } from 'expo-server-sdk';
 const expo = new Expo();
+import { sendPushNotification } from '../services/expo-push-sdk';
 
 export const joinMeetup = async (request, response) => {
   try {
@@ -28,6 +29,14 @@ export const joinMeetup = async (request, response) => {
     // };
     user.upcomingMeetups.push(meetupId);
     user.save();
+    // notificationを送る。
+    const launcher = await User.findById(meetup.launcher);
+    const notificationMessage = {
+      to: launcher.pushToken,
+      data: { notificationType: 'joinedMeeetup' },
+      title: `${user.name} joined ${meetup.title}`,
+    };
+    sendPushNotification(launcher.pushToken, notificationMessage);
 
     response.status(200).json({
       meetup: {

@@ -31,15 +31,7 @@ const userSchema = new mongoose.Schema({
   pushToken: {
     type: String,
   },
-  patrons: {
-    type: Number,
-    default: 0,
-  },
   fame: {
-    type: Number,
-    default: 0,
-  },
-  trust: {
     type: Number,
     default: 0,
   },

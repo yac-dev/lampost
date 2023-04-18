@@ -29,7 +29,7 @@ const SendChatBottomSheet = (props) => {
     setReplyingTo,
     chatType,
   } = useContext(LoungeContext);
-  const [text, setText] = useState('');
+  // const [text, setText] = useState('');
 
   const renderEmoji = (emoji) => {
     return (
@@ -44,7 +44,10 @@ const SendChatBottomSheet = (props) => {
     setLoading(true);
     const payload = {
       launcher: meetup.launcher._id === auth.data._id ? '' : meetup.launcher._id,
-      meetupId: meetup._id,
+      meetup: {
+        _id: meetup._id,
+        title: meetup.title,
+      },
       user: {
         _id: auth.data._id,
         name: auth.data.name,
@@ -100,7 +103,7 @@ const SendChatBottomSheet = (props) => {
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
       handleIndicatorStyle={{ backgroundColor: 'white' }}
       keyboardBehavior={'extend'}
-      onClose={() => setText('')}
+      // onClose={() => setText('')}
     >
       <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
         {replyingTo ? (

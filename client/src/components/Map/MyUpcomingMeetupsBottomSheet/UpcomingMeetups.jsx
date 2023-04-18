@@ -346,7 +346,7 @@ const Container = (props) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 alignSelf: 'flex-end',
-                marginBottom: 5,
+                marginBottom: 13,
               }}
               onPress={() => {
                 setMoreMenuOf(meetup);

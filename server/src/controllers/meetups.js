@@ -124,6 +124,9 @@ export const createMeetup = async (request, response) => {
 
     const user = await User.findById(launcher);
     user.upcomingMeetups.push(meetup._id);
+    if (!user.launcher) {
+      user.launcher = true;
+    }
     user.save();
     meetup.save();
     const meetupAndUserRelationship = await MeetupAndUserRelationship.create({

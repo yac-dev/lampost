@@ -36,7 +36,7 @@ const AppButtons = () => {
   return (
     <View style={{}}>
       <ScrollView>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
             setIsConfirmRSVPModalOpen(true);
@@ -63,7 +63,7 @@ const AppButtons = () => {
             <Text style={{ color: 'white', marginRight: 10 }}>{isRSVPed ? 'Already done 👍' : 'Not yet'}</Text>
             <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
