@@ -206,7 +206,10 @@ const AppStack = (props) => {
   // upcomingのmeetupをgetしてくる
   const getMyUpcomingMeetupStates = async () => {
     if (auth.data.upcomingMeetups.length) {
-      const result = await lampostAPI.post('/meetups/mymeetupstates', { upcomingMeetupIds: auth.data.upcomingMeetups });
+      const result = await lampostAPI.post('/meetups/mymeetupstates', {
+        upcomingMeetupIds: auth.data.upcomingMeetups,
+        userId: auth.data._id,
+      });
       const { myUpcomingMeetups } = result.data;
       setMyUpcomingMeetups((previous) => {
         const updating = { ...previous };
@@ -218,6 +221,7 @@ const AppStack = (props) => {
             startDateAndTime: myUpcomingMeetups[meetupId].startDateAndTime,
             launcher: myUpcomingMeetups[meetupId].launcher,
             duration: myUpcomingMeetups[meetupId].duration,
+            isRSVPed: myUpcomingMeetups[meetupId].isRSVPed,
             unreadChatsTable: {
               general: 0,
               reply: 0,

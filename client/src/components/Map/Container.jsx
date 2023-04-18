@@ -23,7 +23,7 @@ import ConfirmLaunchMeetupModal from './LaunchMeetupBottomSheet/ConfirmLaunchMee
 import CancelLaunchMeetupModal from './LaunchMeetupBottomSheet/CancelLaunchMeetupModal';
 import ConfirmStartMeetup from './ConfirmStartMeetup';
 import ConfirmFinishMeetup from './ConfirmFinishMeetup';
-
+import ConfirmRSVP from './ConfirmRSVP';
 import LaunchMeetupBottomSheet from './LaunchMeetupBottomSheet/Container';
 import ChatStatus from './ChatStatus';
 import SnackBar from '../Utils/SnackBar';
@@ -78,8 +78,10 @@ const Map = (props) => {
   const selectedMeetupDetailBottomSheetRef = useRef(null);
   const [isStartMeetupConfirmationModalOpen, setIsStartMeetupConfirmationModalOpen] = useState(false);
   const [isFinishMeetupConfirmationModalOpen, setIsFinishMeetupConfirmationModalOpen] = useState(false);
+  const [isRSVPConfirmationModalOpen, setIsRSVPConfirmationModalOpen] = useState(false);
   const [startingMeetup, setStartingMeetup] = useState('');
   const [finishingMeetup, setFinishingMeetup] = useState('');
+  const [RSVPingMeetup, setRSVPingMeetup] = useState(null);
 
   // 基本は、mapのいずれをtapしてもなにも起きないようにする。launchMeetupがtrueのときだけ、mapをtapしたらlocationをsetして、launchのformを出す。
   const setMeetupLocation = (event) => {
@@ -221,10 +223,14 @@ const Map = (props) => {
           setIsStartMeetupConfirmationModalOpen,
           isFinishMeetupConfirmationModalOpen,
           setIsFinishMeetupConfirmationModalOpen,
+          isRSVPConfirmationModalOpen,
+          setIsRSVPConfirmationModalOpen,
           startingMeetup,
           setStartingMeetup,
           finishingMeetup,
           setFinishingMeetup,
+          RSVPingMeetup,
+          setRSVPingMeetup,
         }}
       >
         <View style={styles.container}>
@@ -337,6 +343,7 @@ const Map = (props) => {
           <CancelLaunchMeetupModal />
           <ConfirmStartMeetup />
           <ConfirmFinishMeetup />
+          <ConfirmRSVP />
           <AppMenusBottomSheet />
           <MyUpcomingMeetupsBottomSheet />
           <MoreMenuBottomSheet />

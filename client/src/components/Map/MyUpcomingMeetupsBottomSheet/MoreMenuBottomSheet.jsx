@@ -1,8 +1,8 @@
 import React, { useMemo, useContext, useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import GlobalContext from '../../../GlobalContext';
 import MapContext from '../MeetupContext';
-import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity, ScrollView, Platform } from 'react-native';
+import lampostAPI from '../../../apis/lampost';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import UpcomingMeetups from './UpcomingMeetups';
 import {
@@ -17,10 +17,26 @@ import { iconsTable } from '../../../utils/icons';
 const MyUpcomingMeetupsBottomSheet = (props) => {
   const { Ionicons, MaterialCommunityIcons, Feather } = iconsTable;
   const snapPoints = useMemo(() => ['40%'], []);
-  const { auth, myUpcomingMeetupAndChatsTable, totalUnreadChatsCount, isIpad } = useContext(GlobalContext);
+  const { auth, setMyUpcomingMeetups, totalUnreadChatsCount, isIpad, setLoading } = useContext(GlobalContext);
   const { moreMenuBottomSheetRef, setMoreMenuOf, moreMenuOf, navigation } = useContext(MapContext);
 
-  console.log(moreMenuOf);
+  // console.log(moreMenuOf);
+
+  const leaveMeetup = async () => {
+    setLoading(true);
+    const result = await lampostAPI.post('/meetupanduserrelationships/leave', {
+      meetupId: selectedMeetup._id,
+      userId: auth.data._id,
+    });
+    const { meetupId } = result.data; // filteringするだけよ。
+    setMyUpcomingMeetups((previous) => {
+      const updating = { ...previous };
+      delete updating[moreMenuOf._id];
+      return updating;
+    });
+    setLoading(false);
+    setSnackBar({ isVisible: true, message: 'Left a meetup.', barType: 'success', duration: 5000 });
+  };
 
   return (
     <GorhomBottomSheet
@@ -36,7 +52,7 @@ const MyUpcomingMeetupsBottomSheet = (props) => {
       handleIndicatorStyle={{ backgroundColor: 'white' }}
     >
       <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
-        {auth.data._id === moreMenuOf.launcher ? (
+        {auth.isAuthenticated && moreMenuOf && auth.data._id === moreMenuOf.launcher ? (
           <TouchableOpacity
             style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
             onPress={() => {
@@ -65,7 +81,36 @@ const MyUpcomingMeetupsBottomSheet = (props) => {
             </View>
             <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
           </TouchableOpacity>
-        ) : null}
+        ) : // <TouchableOpacity
+        //   style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+        //   onPress={() => {
+        //     // navigation.navigate('Edit meetup', { meetupId: moreMenuOf._id });
+        //     leaveMeetup();
+        //     moreMenuBottomSheetRef.current.close();
+        //   }}
+        //   // disabled={true}
+        // >
+        //   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        //     <View
+        //       style={{
+        //         width: 40,
+        //         height: 40,
+        //         backgroundColor: backgroundColorsTable['red1'],
+        //         justifyContent: 'center',
+        //         alignItems: 'center',
+        //         borderRadius: 8,
+        //         marginRight: 10,
+        //       }}
+        //     >
+        //       <MaterialCommunityIcons name='file-document-edit-outline' color={iconColorsTable['red1']} size={20} />
+        //     </View>
+        //     <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>
+        //       Leave this meetup
+        //     </Text>
+        //   </View>
+        //   <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+        // </TouchableOpacity>
+        null}
 
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}

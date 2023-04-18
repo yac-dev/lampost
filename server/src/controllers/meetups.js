@@ -528,14 +528,27 @@ export const getMyMeetupStates = async (request, response) => {
         state: meetup.state,
         launcher: meetup.launcher,
         duration: meetup.duration,
+        isRSVPed: false,
       };
       // }
       // else {
       //   alreadyFinishedMeetups[meetup._id] = true;
       // }
     });
-    console.log(myUpcomingMeetups);
 
+    //  こっから、rsvpのcheck
+    const myUpcomingMeetupIds = meetups.map((meetup) => meetup._id);
+    // console.log(myUpcomingMeetups);
+    const meetupAndUserRelationships = await MeetupAndUserRelationship.find({
+      meetup: { $in: myUpcomingMeetupIds },
+      user: userId,
+    });
+    // console.log(myUpcomingMeetupIds);
+    // console.log(meetupAndUserRelationships);
+    meetupAndUserRelationships.forEach((relationship) => {
+      // console.log(relationship.rsvp);
+      myUpcomingMeetups[relationship.meetup].isRSVPed = relationship.rsvp;
+    });
     // if (Object.values(alreadyFinishedMeetups).length) {
     //   const user = await User.findById(userId);
     //   user.upcomingMeetups.forEach((meetup) => {

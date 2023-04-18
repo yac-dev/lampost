@@ -269,6 +269,13 @@ export const rsvp = async (request, response) => {
   }
 };
 
+export const cancelRSVP = async (request, response) => {
+  try {
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const sendStartNotification = async (request, response) => {
   try {
     const { meetupId } = request.body;

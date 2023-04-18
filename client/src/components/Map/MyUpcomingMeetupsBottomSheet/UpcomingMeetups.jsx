@@ -38,8 +38,10 @@ const Container = (props) => {
     navigation,
     setIsFinishMeetupConfirmationModalOpen,
     setIsStartMeetupConfirmationModalOpen,
+    setIsRSVPConfirmationModalOpen,
     setStartingMeetup,
     setFinishingMeetup,
+    setRSVPingMeetup,
   } = useContext(MapContext);
 
   // console.log(myUpcomingMeetupAndChatsTable);
@@ -220,6 +222,32 @@ const Container = (props) => {
     );
   };
 
+  const renderRSVP = (meetup) => {
+    if (meetup.isRSVPed) {
+      return null;
+    } else {
+      return (
+        <TouchableOpacity
+          style={{
+            backgroundColor: iconColorsTable['blue1'],
+            borderRadius: 7,
+            padding: 5,
+            marginBottom: 10,
+          }}
+          onPress={() => {
+            setRSVPingMeetup({ _id: meetup._id, title: meetup.title });
+            setIsRSVPConfirmationModalOpen(true);
+          }}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+            <MaterialCommunityIcons size={25} name='email-fast' color={'white'} style={{ marginRight: 5 }} />
+            <Text style={{ color: 'white', marginRight: 5 }}>Send RSVP</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    }
+  };
+
   const renderActionButtons = (meetup) => {
     if (meetup.launcher === auth.data._id) {
       return (
@@ -247,6 +275,7 @@ const Container = (props) => {
     } else {
       return (
         <View style={{ flexDirection: 'column' }}>
+          {renderRSVP(meetup)}
           <TouchableOpacity
             style={{
               backgroundColor: iconColorsTable['blue1'],
@@ -299,6 +328,17 @@ const Container = (props) => {
                   {renderTime(meetup.startDateAndTime)}
                 </View>
               </TouchableOpacity>
+              {meetup.isRSVPed ? (
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Ionicons
+                    name='checkmark-circle'
+                    size={20}
+                    color={iconColorsTable['green1']}
+                    style={{ marginRight: 5 }}
+                  />
+                  <Text style={{ color: 'white' }}>RSVPed</Text>
+                </View>
+              ) : null}
             </View>
             <TouchableOpacity
               style={{

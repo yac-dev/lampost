@@ -30,7 +30,9 @@ const ConfirmRSVPModal = (props) => {
   return (
     <Portal>
       <Dialog visible={isConfirmRSVPModalOpen} style={{ backgroundColor: appBottomSheetBackgroundColor, padding: 30 }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>Are you ready for this meetup?</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 15, color: baseTextColor }}>
+          Are you ready to start this meetup?
+        </Text>
         <Dialog.Actions>
           <Button
             textColor='rgb(58, 126, 224)'

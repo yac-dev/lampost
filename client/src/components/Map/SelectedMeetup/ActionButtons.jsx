@@ -3,12 +3,13 @@ import React, { useContext, useState } from 'react';
 import lampostAPI from '../../../apis/lampost';
 import GlobalContext from '../../../GlobalContext';
 import MapContext from '../MeetupContext';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
 import {
   backgroundColorsTable,
   baseTextColor,
@@ -31,7 +32,7 @@ const ActionButtons = (props) => {
     setMyUpcomingMeetups,
     isIpad,
   } = useContext(GlobalContext);
-  const { selectedMeetup, setSelectedMeetup, navigation } = useContext(MapContext);
+  const { selectedMeetup, setSelectedMeetup, navigation, selectedMeetupBottomSheetRef } = useContext(MapContext);
 
   // boolを返す感じ。
   const validateJoinMeetup = (meetup) => {
@@ -122,7 +123,13 @@ const ActionButtons = (props) => {
         };
       });
       setLoading(false);
-      setSnackBar({ isVisible: true, message: 'Joined a meetup.', barType: 'success', duration: 5000 });
+      selectedMeetupBottomSheetRef.current.close();
+      setSnackBar({
+        isVisible: true,
+        message: `Joined ${selectedMeetup.title} 😎 \nTap the red button below to join the private chat.`,
+        barType: 'success',
+        duration: 5000,
+      });
     } else {
       return null;
     }
@@ -160,7 +167,8 @@ const ActionButtons = (props) => {
     //   };
     // });
     setLoading(false);
-    setSnackBar({ isVisible: true, message: 'Left a meetup.', barType: 'success', duration: 5000 });
+    selectedMeetupBottomSheetRef.current.close();
+    setSnackBar({ isVisible: true, message: `Left ${selectedMeetup.title}`, barType: 'success', duration: 5000 });
   };
 
   // joinしたらmeetupのid使ってroomに入るようにするんだが、、、reloadしたらsocket切れるよな。切れたら、upcomingのmeetupid使って再度roomに入るようにする感じか。
@@ -170,66 +178,119 @@ const ActionButtons = (props) => {
       // selectedMmeetupをlaunchした人が自分だった場合のmenu
       if (myUpcomingMeetups[selectedMeetup._id]?.launcher === auth.data._id) {
         return (
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {/* <ActionButton
-              label='Start meetup now'
-              icon={<Feather name='power' size={20} color={'white'} />}
-              backgroundColor={iconColorsTable['blue1']}
-              onActionButtonPress={() => console.log('start meetup now', selectedMeetup._id)}
-            /> */}
-            <ActionButton
-              label='Go to lounge'
-              icon={<Ionicons name='ios-chatbubbles' size={25} color={'white'} />}
-              backgroundColor={iconColorsTable['blue1']}
-              onActionButtonPress={() => navigation.navigate('Lounge', { meetupId: selectedMeetup._id })}
-              // 'rgb(55, 55, 55)'
-            />
-          </View>
+          // <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          //   <ActionButton
+          //     label='Go to lounge'
+          //     icon={<Ionicons name='ios-chatbubbles' size={25} color={'white'} />}
+          //     backgroundColor={iconColorsTable['blue1']}
+          //     onActionButtonPress={() => navigation.navigate('Lounge', { meetupId: selectedMeetup._id })}
+          //     // 'rgb(55, 55, 55)'
+          //   />
+          // </View>
+          null
         );
       } else {
         // それ以外。
         if (myUpcomingMeetups[selectedMeetup._id]) {
           return (
-            <View style={{ flexDirection: 'row' }}>
-              <ActionButton
-                label='Leave this meetup'
-                icon={<MaterialCommunityIcons name='exit-run' size={25} color={'white'} />}
-                backgroundColor={iconColorsTable['red1']}
-                onActionButtonPress={() => leaveMeetup()}
-              />
-              <ActionButton
-                label='Go to lounge'
-                icon={<Ionicons name='ios-chatbubbles' size={25} color={'white'} />}
-                backgroundColor={iconColorsTable['blue1']}
-                onActionButtonPress={() => navigation.navigate('Lounge', { meetupId: selectedMeetup._id })}
-              />
-              <ActionButton
-                label='Report this meetup'
-                icon={<MaterialIcons name='report-problem' size={25} color={'white'} />}
-                backgroundColor={iconColorsTable['blue1']}
-                onActionButtonPress={() =>
-                  navigation.navigate('Report meetup', { title: selectedMeetup.title, id: selectedMeetup._id })
-                }
-              />
+            <View style={{ flexDirection: 'row', width: '100%' }}>
+              <View style={{ flex: 0.5, paddingRight: 5 }}>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: iconColorsTable['red1'],
+                    padding: 10,
+
+                    borderRadius: 8,
+                    width: '100%',
+                  }}
+                  onPress={() => leaveMeetup()}
+                >
+                  <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                    <MaterialCommunityIcons name='exit-run' size={25} color={'white'} style={{ marginRight: 5 }} />
+                    <Text style={{ color: 'white' }}>Leave this meetup</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <View style={{ flex: 0.5, paddingLeft: 5 }}>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: iconColorsTable['blue1'],
+                    padding: 10,
+
+                    borderRadius: 8,
+                    width: '100%',
+                  }}
+                  onPress={() =>
+                    navigation.navigate('Report meetup', { title: selectedMeetup.title, id: selectedMeetup._id })
+                  }
+                >
+                  <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                    <MaterialIcons name='report-problem' size={25} color={'white'} style={{ marginRight: 5 }} />
+                    <Text style={{ color: 'white' }}>Report this meetup</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
           );
         } else {
           return (
-            <View style={{ flexDirection: 'row' }}>
-              <ActionButton
-                label='Join this meetup'
-                icon={<MaterialCommunityIcons name='human-greeting-variant' size={25} color={'white'} />}
-                backgroundColor={iconColorsTable['blue1']}
-                onActionButtonPress={() => joinMeetup(selectedMeetup._id)}
-              />
-              <ActionButton
-                label='Report this meetup'
-                icon={<MaterialIcons name='report-problem' size={25} color={'white'} />}
-                backgroundColor={iconColorsTable['blue1']}
-                onActionButtonPress={() =>
-                  navigation.navigate('Report meetup', { title: selectedMeetup.title, id: selectedMeetup._id })
-                }
-              />
+            <View style={{ flexDirection: 'row', width: '100%' }}>
+              <View style={{ flex: 0.5, paddingRight: 5 }}>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: iconColorsTable['blue1'],
+                    padding: 10,
+                    borderRadius: 8,
+                    width: '100%',
+                  }}
+                  onPress={() => joinMeetup(selectedMeetup._id)}
+                  disabled={
+                    !selectedMeetup.isAttendeesLimitFree &&
+                    selectedMeetup.attendeesLimit === selectedMeetup.totalAttendees
+                      ? true
+                      : false
+                  }
+                >
+                  <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                    {!selectedMeetup.isAttendeesLimitFree &&
+                    selectedMeetup.attendeesLimit === selectedMeetup.totalAttendees ? (
+                      <Foundation
+                        name='prohibited'
+                        size={25}
+                        color={iconColorsTable['red1']}
+                        style={{ marginRight: 5 }}
+                      />
+                    ) : (
+                      <MaterialCommunityIcons
+                        name='human-greeting-variant'
+                        size={25}
+                        color={'white'}
+                        style={{ marginRight: 5 }}
+                      />
+                    )}
+                    <Text style={{ color: 'white' }}>Join this meetup</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <View style={{ flex: 0.5, paddingLeft: 5 }}>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: iconColorsTable['blue1'],
+                    padding: 10,
+
+                    borderRadius: 8,
+                    width: '100%',
+                  }}
+                  onPress={() =>
+                    navigation.navigate('Report meetup', { title: selectedMeetup.title, id: selectedMeetup._id })
+                  }
+                >
+                  <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                    <MaterialIcons name='report-problem' size={25} color={'white'} style={{ marginRight: 5 }} />
+                    <Text style={{ color: 'white' }}>Report this meetup</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
           );
         }
@@ -242,9 +303,9 @@ const ActionButtons = (props) => {
 
   return (
     <View style={{ marginBottom: 10 }}>
-      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        {renderApp()}
-      </ScrollView>
+      {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> */}
+      {renderApp()}
+      {/* </ScrollView> */}
     </View>
   );
 };
