@@ -163,6 +163,7 @@ export const getMeetupAttendees = async (request, response) => {
       return {
         user: relationship.user,
         rsvp: relationship.rsvp,
+        launcher: relationship.launcher,
       };
     });
 

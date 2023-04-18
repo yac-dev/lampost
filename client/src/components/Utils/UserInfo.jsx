@@ -61,16 +61,12 @@ const UserInfo = (props) => {
               resizeMode={FastImage.resizeMode.contain}
             />
           </TouchableOpacity>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>{props.user.name}</Text>
+          {props.subInfo}
+          {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ flexDirection: 'column', marginRight: 20 }}>
-              <Text style={{ color: 'white', fontSize: 17, marginBottom: 5 }}>{props.user.name}</Text>
-              {/* <Text style={{ color: baseTextColor }}>Rsvped</Text> */}
-              {props.subInfo}
             </View>
-            {/* <TouchableOpacity style={{ backgroundColor: 'red', padding: 5, borderRadius: 5 }}>
-              <Text>Connect</Text>
-            </TouchableOpacity> */}
-          </View>
+          </View> */}
         </View>
         {props.actionButton}
       </View>

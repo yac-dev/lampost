@@ -7,7 +7,7 @@ import UserInfo from '../../Utils/UserInfo';
 import { iconsTable } from '../../../utils/icons';
 
 const AttendeesContainer = (props) => {
-  const { MaterialCommunityIcons } = iconsTable;
+  const { MaterialCommunityIcons, Ionicons } = iconsTable;
   const { auth, setSnackBar } = useContext(GlobalContext);
   const [isFetchedAttendees, setIsFetchedAttendees] = useState(false);
   const [fetchedAttendees, setFetchedAttendees] = useState([]);
@@ -18,6 +18,8 @@ const AttendeesContainer = (props) => {
     setFetchedAttendees(meetupAttendees);
     setIsFetchedAttendees(true);
   };
+
+  console.log(fetchedAttendees);
 
   const onUserNamePress = (user) => {
     if (!auth.data) {
@@ -40,6 +42,33 @@ const AttendeesContainer = (props) => {
     getMeetupAttendees();
   }, []);
 
+  const renderSubInfo = (userObject) => {
+    if (userObject.launcher) {
+      return (
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <MaterialCommunityIcons
+            name='rocket-launch'
+            size={20}
+            color={iconColorsTable['red1']}
+            style={{ marginRight: 5 }}
+          />
+          <Text style={{ color: 'white' }}>Launcher</Text>
+        </View>
+      );
+    } else {
+      if (userObject.rsvp) {
+        return (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Ionicons name='checkmark-circle' color={iconColorsTable['green1']} size={20} style={{ marginRight: 5 }} />
+            <Text style={{ color: 'white' }}>RSVPed</Text>
+          </View>
+        );
+      } else {
+        return null;
+      }
+    }
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: baseBackgroundColor, paddingLeft: 10, paddingRight: 10, paddingTop: 10 }}>
       {!isFetchedAttendees ? (
@@ -51,7 +80,7 @@ const AttendeesContainer = (props) => {
             <UserInfo
               user={item.user}
               onUserNamePress={() => onUserNamePress(item.user)}
-              rightInfo={item.rsvp ? <Text style={{ color: 'white' }}>👍 RVSP</Text> : null}
+              subInfo={renderSubInfo(item)}
             />
           )}
           keyExtractor={(item, index) => `${item.user._id}-${index}`}
