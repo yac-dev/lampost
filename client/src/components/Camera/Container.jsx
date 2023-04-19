@@ -157,7 +157,7 @@ const Container = (props) => {
       setSnackBar({
         isVisible: true,
         barType: 'success',
-        message: 'Ready to use. Capture your moment and have fun 🔥',
+        message: 'Ready to use. Capture your snapshots and have fun 🔥',
         duration: 7000,
       });
     }
@@ -524,7 +524,7 @@ const Container = (props) => {
         <VideoEffectBottomSheet />
         <WarningModal />
         <SnackBar />
-        <LoadingSpinner />
+        <LoadingSpinner textContent={'😎😎😎'} />
       </View>
     </CameraContext.Provider>
   );

@@ -91,32 +91,36 @@ const Badge = () => {
             tintColor={iconColorsTable[badgeData.badge.color]}
             resizeMode={FastImage.resizeMode.contain}
           />
-          {badgeData.badgeTags.length ? (
+          <View
+            style={{
+              backgroundColor: rnDefaultBackgroundColor,
+              // width: isIpad ? 25 : 16,
+              // height: isIpad ? 25 : 16,
+              // borderRadius: isIpad ? 12.5 : 8,
+              top: isIpad ? -7 : -7,
+              right: isIpad ? -7 : -10,
+              position: 'absolute',
+              borderRadius: 7,
+            }}
+          >
             <View
+              style={{ backgroundColor: backgroundColorsTable[badgeData.badge.color], padding: 3, borderRadius: 7 }}
+            >
+              <Text style={{ color: iconColorsTable[badgeData.badge.color] }}>🔥1</Text>
+            </View>
+            {/* <View
               style={{
-                backgroundColor: rnDefaultBackgroundColor,
-                width: isIpad ? 25 : 16,
-                height: isIpad ? 25 : 16,
-                top: isIpad ? -7 : -7,
-                right: isIpad ? -7 : -7,
-                position: 'absolute',
-                borderRadius: isIpad ? 12.5 : 8,
+                backgroundColor: iconColorsTable['grey1'],
+                width: '100%',
+                height: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: isIpad ? 12.5 : 10,
               }}
             >
-              <View
-                style={{
-                  backgroundColor: iconColorsTable['green1'],
-                  width: '100%',
-                  height: '100%',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: isIpad ? 12.5 : 10,
-                }}
-              >
-                <Ionicons name='pricetags' size={10} color={'white'} />
-              </View>
-            </View>
-          ) : null}
+              
+            </View> */}
+          </View>
           {badgeData.links.length ? (
             <View
               style={{

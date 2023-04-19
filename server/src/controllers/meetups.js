@@ -127,6 +127,7 @@ export const createMeetup = async (request, response) => {
     if (!user.launcher) {
       user.launcher = true;
     }
+
     user.save();
     meetup.save();
     const meetupAndUserRelationship = await MeetupAndUserRelationship.create({
@@ -202,6 +203,9 @@ export const finishMeetup = async (request, response) => {
     const meetup = await Meetup.findById(request.params.id);
     meetup.state = 'finished';
     meetup.save();
+    const launcher = await User.findById(request.body.userId);
+    launcher.fame = launcher.fame + 20;
+    launcher.save();
     // const users = await User.find({ _id: { $in: meetup.attendees } });
 
     // for (let i = 0; i < users.length; i++) {

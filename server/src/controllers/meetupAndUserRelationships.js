@@ -292,6 +292,7 @@ export const sendStartNotification = async (request, response) => {
     const meetupAndUserRelationships = await MeetupAndUserRelationship.find({ meetup: meetupId, rsvp: true })
       .populate({ path: 'user' })
       .select({ pushToken: 1 });
+
     const membersPushTokens = meetupAndUserRelationships.map((rel) => {
       return rel.user.pushToken;
     });
@@ -412,7 +413,7 @@ export const getUserMeetupsByDate = async (request, response) => {
     })
       .populate({
         path: 'meetup',
-        select: 'title badges',
+        select: 'title badges launcher',
         populate: {
           path: 'badges',
           select: 'icon _id name color',

@@ -7,7 +7,7 @@ import { baseTextColor, appBottomSheetBackgroundColor } from '../../utils/colors
 import lampostAPI from '../../apis/lampost';
 
 const ConfirmFinishMeetup = (props) => {
-  const { auth, setAuth, setMyUpcomingMeetupAndChatsTable } = useContext(GlobalContext);
+  const { auth, setAuth, setMyUpcomingMeetups } = useContext(GlobalContext);
   const { isFinishMeetupConfirmationModalOpen, setIsFinishMeetupConfirmationModalOpen, finishingMeetup, setMeetups } =
     useContext(MapContext);
 
@@ -27,21 +27,21 @@ const ConfirmFinishMeetup = (props) => {
           <Button
             textColor='rgb(58, 126, 224)'
             onPress={async () => {
-              const result = await lampostAPI.patch(`/meetups/${finishingMeetup}/finish`);
+              const result = await lampostAPI.patch(`/meetups/${finishingMeetup}/finish`, { userId: auth.data._id });
               // upcomingから取り除いて、自分のisInMeetupを''に直して。pastmeetupに加える。
               setAuth((previous) => {
                 return {
                   ...previous,
                   data: {
                     ...previous.data,
-                    ongoingMeetup: { state: false },
+                    // ongoingMeetup: { state: false },
                     upcomingMeetups: [...previous.data.upcomingMeetups].filter(
                       (element) => element.meetup !== finishingMeetup
                     ),
                   },
                 };
               });
-              setMyUpcomingMeetupAndChatsTable((previous) => {
+              setMyUpcomingMeetups((previous) => {
                 const updating = { ...previous };
                 delete updating[finishingMeetup];
                 return updating;
