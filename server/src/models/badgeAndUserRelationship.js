@@ -9,22 +9,12 @@ const badgeAndUserRelationshipSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
-  links: [
-    {
-      platform: String, // youtube, reddit, discord, facebook, instagram ,other,....って感じ
-      name: String,
-      url: String,
-    },
-  ],
-  badgeTags: [{ type: mongoose.Schema.ObjectId, ref: 'BadgeTag' }],
-  totalExperience: Number,
+  passion: Number,
+  emoji: {
+    type: String,
+    default: '🔥',
+  },
   createdAt: Date,
-  // badgeTags: [
-  //   {
-  //     type: mongoose.Schema.ObjectId,
-  //     ref: 'BadgeTag',
-  //   },
-  // ], // 別にidで持つ必要もない。ここに、20000document入ることもないからね。
 });
 
 const BadgeAndUserRelationship = mongoose.model('BadgeAndUserRelationship', badgeAndUserRelationshipSchema);

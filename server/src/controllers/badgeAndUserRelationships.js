@@ -11,9 +11,7 @@ export const addBadgesToUser = async (request, response) => {
       return {
         badge: badgeId,
         user: request.params.userId,
-        badgeTags: [],
-        links: [],
-        totalExperience: 1,
+        passion: 0,
         createdAt: new Date(),
       };
     });
@@ -37,18 +35,15 @@ export const addBadgesToUser = async (request, response) => {
 
 export const getBadgeDatasByUserId = async (request, response) => {
   try {
-    const badgeAndUserRelationships = await BadgeAndUserRelationship.find({ user: request.params.userId })
-      .populate({
-        path: 'badge',
-        select: 'name icon color',
-      })
-      .populate({ path: 'badgeTags' });
+    const badgeAndUserRelationships = await BadgeAndUserRelationship.find({ user: request.params.userId }).populate({
+      path: 'badge',
+      select: 'name icon color',
+    });
+    // .populate({ path: 'badgeTags' });
     const userBadgeDatas = badgeAndUserRelationships.map((relationship) => {
       return {
         badge: relationship.badge,
-        links: relationship.links,
-        badgeTags: relationship.badgeTags,
-        totalExperience: relationship.totalExperience,
+        passion: relationship.passion,
       };
     });
     // console.log(userBadgeDatas);
@@ -70,7 +65,7 @@ export const getClapFriendBadgeDatasByUserId = async (request, response) => {
       return {
         relationshipId: relationship._id,
         badge: relationship.badge,
-        totalExperience: relationship.Experience,
+        passion: relationship.passion,
       };
     });
     response.status(200).json({
@@ -81,13 +76,35 @@ export const getClapFriendBadgeDatasByUserId = async (request, response) => {
   }
 };
 
+// 10% upvote
+// 誰がclapしたか、通知しようかね。。。どうしようか。。。こういうのこそ、anonymousの方が面白い気するんだよね。
 export const clapBadge = async (request, response) => {
   try {
     const { clappingTable, launcherId } = request.body;
     const badgeAndUserRelationshipIds = Object.keys(clappingTable);
     const relationships = await BadgeAndUserRelationship.find({ _id: { $in: badgeAndUserRelationshipIds } });
     relationships.forEach((relationship) => {
-      relationship.totalExperience = relationship.totalExperience + clappingTable[relationship._id]['totalClaps'];
+      relationship.passion = relationship.passion + clappingTable[relationship._id]['totalClaps'];
+      relationship.save();
+    });
+    // const launcher = await User.findById(launcherId);
+    // launcher.fame = launcher.fame + 5;
+    // launcher.save();
+    response.status(201).json({
+      message: 'success',
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const growMyBadges = async (request, response) => {
+  try {
+    const { growingTable, launcherId } = request.body;
+    const badgeAndUserRelationshipIds = Object.keys(growingTable);
+    const relationships = await BadgeAndUserRelationship.find({ _id: { $in: badgeAndUserRelationshipIds } });
+    relationships.forEach((relationship) => {
+      relationship.passion = relationship.passion + growingTable[relationship._id]['growed'];
       relationship.save();
     });
     // const launcher = await User.findById(launcherId);

@@ -146,19 +146,19 @@ export const createMeetup = async (request, response) => {
       };
     });
 
-    for (const table of badgeAndUserTables) {
-      const badgeAndUserRelationship = await BadgeAndUserRelationship.findOne({ badge: table.badge, user: table.user });
-      // meetupのlaunchでは、experienceを20あげる。
-      if (badgeAndUserRelationship) {
-        badgeAndUserRelationship.totalExperience = badgeAndUserRelationship.totalExperience + 20;
-        await badgeAndUserRelationship.save();
-        const userBadgeExperience = await UserBadgeExperience.create({
-          badgeAndUserRelationship: badgeAndUserRelationship._id,
-          type: 'meetupLaunch',
-          experience: 20,
-        });
-      }
-    }
+    // for (const table of badgeAndUserTables) {
+    //   const badgeAndUserRelationship = await BadgeAndUserRelationship.findOne({ badge: table.badge, user: table.user });
+    //   // meetupのlaunchでは、experienceを20あげる。
+    //   if (badgeAndUserRelationship) {
+    //     badgeAndUserRelationship.totalExperience = badgeAndUserRelationship.totalExperience + 20;
+    //     await badgeAndUserRelationship.save();
+    //     const userBadgeExperience = await UserBadgeExperience.create({
+    //       badgeAndUserRelationship: badgeAndUserRelationship._id,
+    //       type: 'meetupLaunch',
+    //       experience: 20,
+    //     });
+    //   }
+    // }
 
     response.status(201).json({
       meetup: {
@@ -205,6 +205,7 @@ export const finishMeetup = async (request, response) => {
     meetup.save();
     const launcher = await User.findById(request.body.userId);
     launcher.fame = launcher.fame + 20;
+    launcher.experience = launcher.experience + 40;
     launcher.save();
     // const users = await User.find({ _id: { $in: meetup.attendees } });
 

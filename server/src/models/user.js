@@ -35,6 +35,10 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  experience: {
+    type: Number,
+    default: 20,
+  },
   launcher: {
     type: Boolean,
     default: false,

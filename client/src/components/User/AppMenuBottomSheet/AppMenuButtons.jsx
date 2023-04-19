@@ -115,6 +115,32 @@ const AppButtons = (props) => {
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
             appMenuBottomSheetRef.current.close();
+            navigation.navigate('Boost badges');
+            // console.log('grow badges');
+          }}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={{
+                width: 40,
+                height: 40,
+                backgroundColor: backgroundColorsTable['red1'],
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 8,
+                marginRight: 10,
+              }}
+            >
+              <MaterialCommunityIcons name='fire' color={iconColorsTable['red1']} size={20} />
+            </View>
+            <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>Boost badges</Text>
+          </View>
+          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+          onPress={() => {
+            appMenuBottomSheetRef.current.close();
             // navigation.navigate('My friends');
             navigation.navigate('My log', { userId: auth.data._id });
             // console.log('move to history');

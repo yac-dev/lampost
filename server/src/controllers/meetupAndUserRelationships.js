@@ -257,19 +257,21 @@ export const rsvp = async (request, response) => {
         user: userId,
       };
     });
+    const user = await User.findById(userId);
+    user.experience = user.experience + 20;
     // [{badge: 2, user: 3, badge: 4, user:3, badge: 10, user: 3}] // これに一致するbadgeAndUserRelationshipを一つずつ見つけて、それを+10upvotteする感じか。その後に、userBadgePassionのmodelも作っていく感じか。
-    for (const table of badgeAndUserTable) {
-      const badgeAndUserRelationship = await BadgeAndUserRelationship.findOne({ badge: table.badge, user: table.user });
-      if (badgeAndUserRelationship) {
-        badgeAndUserRelationship.totalExperience = badgeAndUserRelationship.totalExperience + 10;
-        await badgeAndUserRelationship.save();
-        const userBadgeExperience = await UserBadgeExperience.create({
-          badgeAndUserRelationship: badgeAndUserRelationship._id,
-          type: 'meetupRSVP',
-          experience: 10,
-        });
-      }
-    }
+    // for (const table of badgeAndUserTable) {
+    //   const badgeAndUserRelationship = await BadgeAndUserRelationship.findOne({ badge: table.badge, user: table.user });
+    //   if (badgeAndUserRelationship) {
+    //     badgeAndUserRelationship.totalExperience = badgeAndUserRelationship.totalExperience + 10;
+    //     await badgeAndUserRelationship.save();
+    //     const userBadgeExperience = await UserBadgeExperience.create({
+    //       badgeAndUserRelationship: badgeAndUserRelationship._id,
+    //       type: 'meetupRSVP',
+    //       experience: 10,
+    //     });
+    //   }
+    // }
 
     response.status(200).json({
       message: 'success',

@@ -32,6 +32,9 @@ export const createImpressionByMember = async (request, response) => {
       title: `${user.name} wrote an impression 🔥`,
       body: content,
     };
+    const impressionWriter = await User.findById(user._id);
+    impressionWriter.experience = impressionWriter.experience + 10;
+    impressionWriter.save();
     sendPushNotification(launcher.pushToken, notificationMessage);
     // 3, 書いたmemberのbadge experienceを上げる。
     const meetup = await Meetup.findById(meetupId);
@@ -41,18 +44,6 @@ export const createImpressionByMember = async (request, response) => {
         user: user._id,
       };
     });
-    for (const table of badgeAndUserTable) {
-      const badgeAndUserRelationship = await BadgeAndUserRelationship.findOne({ badge: table.badge, user: table.user });
-      if (badgeAndUserRelationship) {
-        badgeAndUserRelationship.totalExperience = badgeAndUserRelationship.totalExperience + 3;
-        await badgeAndUserRelationship.save();
-        const userBadgeExperience = await UserBadgeExperience.create({
-          badgeAndUserRelationship: badgeAndUserRelationship._id,
-          type: 'meetupImpression',
-          experience: 3,
-        });
-      }
-    }
     const meetupAndUserRelationship = await MeetupAndUserRelationship.findOne({ meetup: meetupId, user: user._id });
     meetupAndUserRelationship.impression = impression._id;
     meetupAndUserRelationship.save();

@@ -42,7 +42,7 @@ const Badge = () => {
         // padding: 10, // これは単純に、25%幅に対して
         // marginBottom: 10,
         // backgroundColor: 'red',
-        paddingTop: 10,
+        paddingTop: 15,
         // backgroundColor: 'red',
         alignItems: 'center',
         // backgroundColor: 'red',
@@ -64,11 +64,11 @@ const Badge = () => {
           borderWidth: 0.3,
           marginBottom: 5,
         }}
-        onPress={() => {
-          badgeDetailBottomSheetRef.current.snapToIndex(0);
-          setPressedBadgeData(badgeData);
-          console.log('hey');
-        }}
+        // onPress={() => {
+        //   badgeDetailBottomSheetRef.current.snapToIndex(0);
+        //   setPressedBadgeData(badgeData);
+        //   console.log('hey');
+        // }}
       >
         <View
           style={{
@@ -91,59 +91,20 @@ const Badge = () => {
             tintColor={iconColorsTable[badgeData.badge.color]}
             resizeMode={FastImage.resizeMode.contain}
           />
-          <View
-            style={{
-              backgroundColor: rnDefaultBackgroundColor,
-              // width: isIpad ? 25 : 16,
-              // height: isIpad ? 25 : 16,
-              // borderRadius: isIpad ? 12.5 : 8,
-              top: isIpad ? -7 : -7,
-              right: isIpad ? -7 : -10,
-              position: 'absolute',
-              borderRadius: 7,
-            }}
-          >
-            <View
-              style={{ backgroundColor: backgroundColorsTable[badgeData.badge.color], padding: 3, borderRadius: 7 }}
-            >
-              <Text style={{ color: iconColorsTable[badgeData.badge.color] }}>🔥1</Text>
-            </View>
-            {/* <View
-              style={{
-                backgroundColor: iconColorsTable['grey1'],
-                width: '100%',
-                height: '100%',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: isIpad ? 12.5 : 10,
-              }}
-            >
-              
-            </View> */}
-          </View>
-          {badgeData.links.length ? (
+          {badgeData.passion ? (
             <View
               style={{
                 backgroundColor: rnDefaultBackgroundColor,
-                width: isIpad ? 25 : 16,
-                height: isIpad ? 25 : 16,
-                top: isIpad ? -7 : 8,
-                right: isIpad ? -7 : -7,
+                top: isIpad ? -7 : -13,
+                right: isIpad ? -7 : -15,
                 position: 'absolute',
-                borderRadius: isIpad ? 12.5 : 8,
+                borderRadius: 7,
               }}
             >
               <View
-                style={{
-                  backgroundColor: iconColorsTable['grey1'],
-                  width: '100%',
-                  height: '100%',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: isIpad ? 12.5 : 10,
-                }}
+                style={{ backgroundColor: backgroundColorsTable[badgeData.badge.color], padding: 5, borderRadius: 7 }}
               >
-                <MaterialCommunityIcons name='link-variant' size={10} color={'white'} />
+                <Text style={{ color: iconColorsTable[badgeData.badge.color] }}>🔥{badgeData.passion}</Text>
               </View>
             </View>
           ) : null}
