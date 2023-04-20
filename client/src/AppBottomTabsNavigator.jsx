@@ -211,47 +211,42 @@ const AppStack = (props) => {
 
   // upcomingのmeetupをgetしてくる
   const getMyUpcomingMeetupStates = async () => {
-    if (auth.data.upcomingMeetups.length) {
-      const result = await lampostAPI.post('/meetups/mymeetupstates', {
-        upcomingMeetupIds: auth.data.upcomingMeetups,
-        userId: auth.data._id,
-      });
-      const { myUpcomingMeetups, myUpcomingMeetupIds } = result.data;
-      setMyUpcomingMeetups((previous) => {
-        const updating = { ...previous };
-        for (const meetupId in myUpcomingMeetups) {
-          updating[meetupId] = {
-            _id: myUpcomingMeetups[meetupId]._id,
-            title: myUpcomingMeetups[meetupId].title,
-            state: myUpcomingMeetups[meetupId].state,
-            startDateAndTime: myUpcomingMeetups[meetupId].startDateAndTime,
-            launcher: myUpcomingMeetups[meetupId].launcher,
-            duration: myUpcomingMeetups[meetupId].duration,
-            isRSVPed: myUpcomingMeetups[meetupId].isRSVPed,
-            unreadChatsTable: {
-              general: 0,
-              reply: 0,
-              question: 0,
-              help: 0,
-              edited: 0,
-            },
-          };
-        }
+    const result = await lampostAPI.get(`/meetupanduserrelationships/upcoming/user/${auth.data._id}`);
+    const { myUpcomingMeetups } = result.data;
+    setMyUpcomingMeetups((previous) => {
+      const updating = { ...previous };
+      for (const meetupId in myUpcomingMeetups) {
+        updating[meetupId] = {
+          _id: myUpcomingMeetups[meetupId]._id,
+          title: myUpcomingMeetups[meetupId].title,
+          state: myUpcomingMeetups[meetupId].state,
+          startDateAndTime: myUpcomingMeetups[meetupId].startDateAndTime,
+          launcher: myUpcomingMeetups[meetupId].launcher,
+          duration: myUpcomingMeetups[meetupId].duration,
+          isRSVPed: myUpcomingMeetups[meetupId].isRSVPed,
+          unreadChatsTable: {
+            general: 0,
+            reply: 0,
+            question: 0,
+            help: 0,
+            edited: 0,
+          },
+        };
+      }
 
-        return updating;
-      });
-      // setAuth((previous) => {
-      //   return {
-      //     ...previous,
-      //     data: {
-      //       ...previous.data,
-      //       upcomingMeetups: myUpcomingMeetupIds,
-      //     },
-      //   };
-      // });
-      setIsFetchedMyUpcomingMeetups(true);
-      setChatsNotificationCount(0);
-    }
+      return updating;
+    });
+    // setAuth((previous) => {
+    //   return {
+    //     ...previous,
+    //     data: {
+    //       ...previous.data,
+    //       upcomingMeetups: myUpcomingMeetupIds,
+    //     },
+    //   };
+    // });
+    setIsFetchedMyUpcomingMeetups(true);
+    setChatsNotificationCount(0);
   };
   useEffect(() => {
     if (auth.isAuthenticated) {
@@ -263,32 +258,35 @@ const AppStack = (props) => {
 
   // unreadchatsをgetする。
   const getUnreadChats = async () => {
-    const result = await lampostAPI.post('/loungechats/unreadchats', {
-      upcomingMeetupIds: Object.keys(myUpcomingMeetups),
-      userId: auth.data._id,
-    });
-    const { chatsTable } = result.data;
-    let totalUnread = 0;
-    setMyUpcomingMeetups((previous) => {
-      const updating = { ...previous };
-      for (const meetupId in chatsTable) {
-        updating[meetupId].unreadChatsTable = chatsTable[meetupId];
-        // for (const chatType in chatsTable[meetupId]) {
-        // こんな感じで、setStateのなかで別のsetStateをやろうとすると、なんかbugる。よくわからんことになる。
-        //   setChatsNotificationCount((previous) => previous + chatsTable[meetupId][chatType]);
-        // }
-      }
-      return updating;
-    });
+    // console.log(myUpcomingMeetups);
+    if (Object.keys(myUpcomingMeetups).length) {
+      const result = await lampostAPI.post('/loungechats/unreadchats', {
+        upcomingMeetupIds: Object.keys(myUpcomingMeetups),
+        userId: auth.data._id,
+      });
+      const { chatsTable } = result.data;
+      let totalUnread = 0;
+      setMyUpcomingMeetups((previous) => {
+        const updating = { ...previous };
+        for (const meetupId in chatsTable) {
+          updating[meetupId].unreadChatsTable = chatsTable[meetupId];
+          // for (const chatType in chatsTable[meetupId]) {
+          // こんな感じで、setStateのなかで別のsetStateをやろうとすると、なんかbugる。よくわからんことになる。
+          //   setChatsNotificationCount((previous) => previous + chatsTable[meetupId][chatType]);
+          // }
+        }
+        return updating;
+      });
 
-    setChatsNotificationCount((previous) => {
-      for (const meetupId in chatsTable) {
-        const chatsTableValueArr = Object.values(chatsTable[meetupId]);
-        totalUnread =
-          totalUnread + chatsTableValueArr.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-      }
-      return previous + totalUnread;
-    });
+      setChatsNotificationCount((previous) => {
+        for (const meetupId in chatsTable) {
+          const chatsTableValueArr = Object.values(chatsTable[meetupId]);
+          totalUnread =
+            totalUnread + chatsTableValueArr.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+        }
+        return previous + totalUnread;
+      });
+    }
   };
 
   const getUnreadFriendChats = async () => {

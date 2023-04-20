@@ -187,26 +187,36 @@ export const getMeetupAttendees = async (request, response) => {
 export const getMyUpcomingMeetups = async (request, response) => {
   try {
     const myUpcomingMeetups = {};
-    const alreadyFinishedMeetups = {};
-    const meetupAndUserRelationships = await MeetupAndUserRelationship.find({ user: request.params.user });
-    // const meetups = await Meetup.find({ _id: { $in: upcomingMeetupIds } });
-    // meetups.forEach((meetup) => {
-    //   if (meetup.state !== 'finished') {
-    //     myUpcomingMeetups[meetup._id] = {
-    //       _id: meetup._id,
-    //       title: meetup.title,
-    //       startDateAndTime: meetup.startDateAndTime,
-    //       state: meetup.state,
-    //       launcher: meetup.launcher,
-    //     };
-    //   } else {
-    //     alreadyFinishedMeetups[meetup._id] = true;
-    //   }
+    const meetupAndUserRelationships = await MeetupAndUserRelationship.find({
+      user: request.params.userId,
+    }).populate({
+      path: 'meetup',
+      select: '_id title startDateAndTime state launcher',
+    });
+    // .populate({
+    //   path: 'meetup',
+    //   select: '_id title startDateAndTime state launcher',
     // });
+    const myUpcomingMeetupAndUserRelationships = meetupAndUserRelationships.filter(
+      (relationship) => relationship.meetup.state !== 'finished'
+    );
 
-    // response.status(200).json({
-    //   myUpcomingMeetups,
-    // });
+    const myUpcomingMeetupsArr = myUpcomingMeetupAndUserRelationships.map((relationship) => relationship.meetup);
+
+    myUpcomingMeetupsArr.forEach((meetup) => {
+      myUpcomingMeetups[meetup._id] = {
+        _id: meetup._id,
+        title: meetup.title,
+        startDateAndTime: meetup.startDateAndTime,
+        state: meetup.state,
+        launcher: meetup.launcher,
+      };
+    });
+
+    response.status(200).json({
+      myUpcomingMeetups,
+      // meetupAndUserRelationships,
+    });
   } catch (error) {
     console.log(error);
   }

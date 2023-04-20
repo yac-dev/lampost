@@ -13,6 +13,7 @@ import {
   sendFinishNotification,
   getUserMeetupsByYearMonth,
   getUserMeetupsByDate,
+  getMyUpcomingMeetups,
 } from '../controllers/meetupAndUserRelationships';
 
 router.route('/join').post(joinMeetup);
@@ -26,5 +27,6 @@ router.route('/meetup/:meetupId/users').get(getMeetupAttendees);
 router.route('/meetup/startnotification').post(sendStartNotification);
 router.route('/meetup/finishnotification').post(sendFinishNotification);
 router.route('/meetup/patronnotification').post(sendFinishNotification);
+router.route('/upcoming/user/:userId').get(getMyUpcomingMeetups);
 
 export default router;
