@@ -2,20 +2,23 @@
 import React, { useContext, useEffect } from 'react';
 import GlobalContext from '../../GlobalContext';
 import { connect } from 'react-redux';
-import { Text } from 'react-native';
+import { View, Text } from 'react-native';
 import { Snackbar } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { baseTextColor, iconColorsTable } from '../../utils/colorsTable';
+import { iconsTable } from '../../utils/icons';
 // ac
 import { removeSnackBar } from '../../redux/actionCreators/snackBar';
 
 const barTypeColor = {
-  success: iconColorsTable['blue1'],
+  success: iconColorsTable['green1'],
+  info: iconColorsTable['blue1'],
   warning: iconColorsTable['yellow1'],
   error: iconColorsTable['red1'],
 };
 
 const SnackBar = (props) => {
+  const { Ionicons, Foundation } = iconsTable;
   const { snackBar, setSnackBar } = useContext(GlobalContext);
 
   useEffect(() => {
@@ -25,6 +28,21 @@ const SnackBar = (props) => {
       }, snackBar.duration);
     }
   }, [snackBar.isVisible]);
+
+  const renderBarTypeIcon = () => {
+    switch (snackBar.barType) {
+      case 'success':
+        return <Ionicons name='checkmark-circle' size={20} color={'white'} style={{ marginRight: 10 }} />;
+      case 'info':
+        return <Ionicons name='information-circle-sharp' size={20} color={'white'} style={{ marginRight: 10 }} />;
+      case 'warning':
+        return <Ionicons name='ios-warning-sharp' size={20} color={'white'} style={{ marginRight: 10 }} />;
+      case 'error':
+        return <Foundation name='prohibited' size={20} color={'white'} style={{ marginRight: 10 }} />;
+      default:
+        return null;
+    }
+  };
 
   if (snackBar.isVisible) {
     return (
@@ -40,7 +58,10 @@ const SnackBar = (props) => {
           onPress: () => setSnackBar({ isVisible: false, message: '', barType: '', duration: null }),
         }}
       >
-        <Text style={{ color: 'white' }}>{snackBar.message}</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          {renderBarTypeIcon()}
+          <Text style={{ color: 'white' }}>{snackBar.message}</Text>
+        </View>
       </Snackbar>
     );
   } else {

@@ -149,6 +149,13 @@ const Container = (props) => {
           return setOngoingMeetup(meetup._id);
         }
       });
+    } else {
+      setSnackBar({
+        isVisible: true,
+        barType: 'info',
+        message: 'Camera can only be used during the meetup.',
+        duration: 5000,
+      });
     }
   }, [myUpcomingMeetups]);
 
