@@ -28,6 +28,8 @@ const BoostBadgesContainer = (props) => {
   const badgeIconWidth = badgeContainerWidth * 0.65;
   const [growingTable, setGrowingTable] = useState({});
   const emojisPickerBottomSheetRef = useRef(null);
+  const [changingEmojiBadge, setChangingEmojiBadge] = useState(null);
+  console.log(badgeDatas);
 
   useEffect(() => {
     props.navigation.setOptions({
@@ -51,17 +53,16 @@ const BoostBadgesContainer = (props) => {
     const payload = {
       growingTable,
     };
-    console.log(payload);
     // props.navigation.navigate('Auth', { growedBadges: payload });
     setLoading(true);
     console.log(payload);
     const result = await lampostAPI.patch(`/badgeanduserrelationships/${auth.data._id}/grow`, payload);
     setLoading(false);
-    // props.navigation.navigate('Auth', { growingTable });
+    props.navigation.navigate('Profile', { growedMyBadges: growingTable });
     setSnackBar({
       isVisible: true,
       barType: 'success',
-      message: 'Your claps was sent.',
+      message: 'Boosted your badges.',
       duration: 5000,
     });
   };
@@ -94,6 +95,8 @@ const BoostBadgesContainer = (props) => {
           userBadgeDatasTable[badgeData.relationshipId] = {
             relationshipId: badgeData.relationshipId,
             badge: badgeData.badge,
+            passion: badgeData.passion,
+            emoji: badgeData.emoji,
             growed: 0,
           };
         });
@@ -108,71 +111,92 @@ const BoostBadgesContainer = (props) => {
 
   const renderBadge = (badgeData, index) => {
     return (
-      <View
-        style={{
-          width: oneGridWidth,
-          height: oneGridHeight,
-          paddingTop: 10,
-          alignItems: 'center',
-          // backgroundColor: 'red',
-        }}
-        key={index}
-      >
-        <TouchableOpacity
+      <View style={{ flexDirection: 'row', alignItems: 'center' }} key={index}>
+        <View
           style={{
-            width: badgeContainerWidth,
-            aspectRatio: 1,
-            // height: '100%',
-            alignItems: 'center', // これと
-            justifyContent: 'center', // これで中のimageを上下左右真ん中にする
-            borderRadius: 15,
-            backgroundColor: rnDefaultBackgroundColor,
-            borderWidth: 0.3,
-            marginBottom: 5,
-          }}
-          disabled={!restExperience ? true : false}
-          onPress={() => {
-            setGrowingTable((previous) => {
-              const updating = { ...previous };
-              if (!updating[badgeData.relationshipId]) {
-                updating[badgeData.relationshipId] = { relationshipId: badgeData.relationshipId, growed: 1 };
-              } else {
-                updating[badgeData.relationshipId]['growed'] = updating[badgeData.relationshipId]['growed'] + 1;
-              }
-              return updating;
-            });
-            setRestExxperience((previous) => previous - 1);
+            width: oneGridWidth,
+            height: oneGridHeight,
+            paddingTop: 10,
+            alignItems: 'center',
+            // backgroundColor: 'red',
           }}
         >
-          <View
+          <TouchableOpacity
             style={{
-              width: '100%',
-              height: '100%',
-              alignItems: 'center',
-              justifyContent: 'center',
+              width: badgeContainerWidth,
+              aspectRatio: 1,
+              // height: '100%',
+              alignItems: 'center', // これと
+              justifyContent: 'center', // これで中のimageを上下左右真ん中にする
               borderRadius: 15,
-              backgroundColor: backgroundColorsTable[badgeData.badge.color],
+              backgroundColor: rnDefaultBackgroundColor,
               borderWidth: 0.3,
-              borderColor: backgroundColorsTable[badgeData.badge.color],
+              marginBottom: 5,
             }}
+            // onPress={() => {
+            //   setGrowingTable((previous) => {
+            //     const updating = { ...previous };
+            //     if (!updating[badgeData.relationshipId]) {
+            //       updating[badgeData.relationshipId] = { relationshipId: badgeData.relationshipId, growed: 1 };
+            //     } else {
+            //       updating[badgeData.relationshipId]['growed'] = updating[badgeData.relationshipId]['growed'] + 1;
+            //     }
+            //     return updating;
+            //   });
+            //   setRestExxperience((previous) => previous - 1);
+            // }}
           >
-            <FastImage
-              style={{ height: badgeIconWidth, width: badgeIconWidth }}
-              source={{
-                uri: badgeData.badge.icon,
-                priority: FastImage.priority.normal,
+            <View
+              style={{
+                width: '100%',
+                height: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 15,
+                backgroundColor: backgroundColorsTable[badgeData.badge.color],
+                borderWidth: 0.3,
+                borderColor: backgroundColorsTable[badgeData.badge.color],
               }}
-              tintColor={iconColorsTable[badgeData.badge.color]}
-              resizeMode={FastImage.resizeMode.contain}
-            />
-          </View>
-        </TouchableOpacity>
-        {growingTable[badgeData.relationshipId]?.growed ? (
-          <View
+            >
+              <FastImage
+                style={{ height: badgeIconWidth, width: badgeIconWidth }}
+                source={{
+                  uri: badgeData.badge.icon,
+                  priority: FastImage.priority.normal,
+                }}
+                tintColor={iconColorsTable[badgeData.badge.color]}
+                resizeMode={FastImage.resizeMode.contain}
+              />
+            </View>
+          </TouchableOpacity>
+          {growingTable[badgeData.relationshipId]?.growed ? (
+            <View
+              style={{
+                backgroundColor: rnDefaultBackgroundColor,
+                borderRadius: 5,
+
+                top: isIpad ? -7 : 0,
+                right: isIpad ? -7 : 0,
+                position: 'absolute',
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+              // onPress={() => emojisPickerBottomSheetRef.current.snapToIndex(0)}
+            >
+              <View style={{ backgroundColor: backgroundColorsTable[badgeData.badge.color], padding: 5 }}>
+                <Text style={{ color: iconColorsTable[badgeData.badge.color] }}>
+                  {growingTable[badgeData.relationshipId].emoji
+                    ? growingTable[badgeData.relationshipId].emoji
+                    : badgeData.emoji}
+                  +{growingTable[badgeData.relationshipId]?.growed}
+                </Text>
+              </View>
+            </View>
+          ) : null}
+          {/* <View
             style={{
               backgroundColor: rnDefaultBackgroundColor,
               borderRadius: 5,
-
               top: isIpad ? -7 : 0,
               right: isIpad ? -7 : 0,
               position: 'absolute',
@@ -183,28 +207,129 @@ const BoostBadgesContainer = (props) => {
           >
             <View style={{ backgroundColor: backgroundColorsTable[badgeData.badge.color], padding: 5 }}>
               <Text style={{ color: iconColorsTable[badgeData.badge.color] }}>
-                🔥+{growingTable[badgeData.relationshipId]?.growed}
+                {badgeData.emoji}
+                {badgeData.passion}
               </Text>
             </View>
-          </View>
-        ) : null}
-        <Text
-          numberOfLines={1}
-          style={{
-            paddingLeft: 5,
-            paddingRight: 5,
-            color: baseTextColor,
-            fontWeight: 'bold',
-            alignSelf: 'center',
-            fontSize: 12,
-            textAlign: 'center',
-          }}
-        >
-          {badgeData.badge.name}
-        </Text>
+          </View> */}
+          <Text
+            numberOfLines={1}
+            style={{
+              paddingLeft: 5,
+              paddingRight: 5,
+              color: baseTextColor,
+              fontWeight: 'bold',
+              alignSelf: 'center',
+              fontSize: 12,
+              textAlign: 'center',
+            }}
+          >
+            {badgeData.badge.name}
+          </Text>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <TouchableOpacity
+            style={{
+              paddingLeft: 20,
+              paddingRight: 20,
+              paddingTop: 10,
+              paddingBottom: 10,
+              backgroundColor: iconColorsTable['blue1'],
+              borderRadius: 5,
+              marginRight: 10,
+            }}
+            disabled={!restExperience ? true : false}
+            onPress={() => {
+              setGrowingTable((previous) => {
+                const updating = { ...previous };
+                if (!updating[badgeData.relationshipId]) {
+                  updating[badgeData.relationshipId] = {
+                    relationshipId: badgeData.relationshipId,
+                    growed: 1,
+                    badgeId: badgeData.badge._id,
+                  };
+                } else {
+                  updating[badgeData.relationshipId]['growed'] = updating[badgeData.relationshipId]['growed'] + 1;
+                  // updating[badgeData.emoji] = '';
+                }
+                return updating;
+              });
+              setRestExxperience((previous) => previous - 1);
+              // setBadgeDatas((previous) => {
+              //   const updating = { ...previous };
+              //   updating[badgeData.relationshipId].passion++;
+              //   return updating;
+              // });
+            }}
+          >
+            <Text style={{ color: 'white' }}>+1</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              paddingLeft: 20,
+              paddingRight: 20,
+              paddingTop: 10,
+              paddingBottom: 10,
+              backgroundColor: iconColorsTable['blue1'],
+              borderRadius: 5,
+              marginRight: 10,
+            }}
+            disabled={!restExperience || restExperience < 10 ? true : false}
+            onPress={() => {
+              setGrowingTable((previous) => {
+                const updating = { ...previous };
+                if (!updating[badgeData.relationshipId]) {
+                  updating[badgeData.relationshipId] = {
+                    relationshipId: badgeData.relationshipId,
+                    growed: 10,
+                    badgeId: badgeData.badge._id,
+                  };
+                } else {
+                  updating[badgeData.relationshipId]['growed'] = updating[badgeData.relationshipId]['growed'] + 10;
+                  // updating[badgeData.emoji] = '';
+                }
+                return updating;
+              });
+              setRestExxperience((previous) => previous - 10);
+              // setBadgeDatas((previous) => {
+              //   const updating = { ...previous };
+              //   updating[badgeData.relationshipId].passion = updating[badgeData.relationshipId].passion + 10;
+              //   return updating;
+              // });
+            }}
+          >
+            <Text style={{ color: 'white' }}>+10</Text>
+          </TouchableOpacity>
+          {growingTable[badgeData.relationshipId] ? (
+            <TouchableOpacity
+              style={{
+                paddingLeft: 20,
+                paddingRight: 20,
+                paddingTop: 10,
+                paddingBottom: 10,
+                backgroundColor: iconColorsTable['blue1'],
+                borderRadius: 5,
+              }}
+              // emoji pickerを開く
+              onPress={() => {
+                setChangingEmojiBadge(badgeData.relationshipId);
+                emojisPickerBottomSheetRef.current.snapToIndex(0);
+              }}
+            >
+              <Text style={{ color: 'white' }}>
+                {growingTable[badgeData.relationshipId].emoji
+                  ? growingTable[badgeData.relationshipId].emoji
+                  : badgeData.emoji}{' '}
+                Emotion
+              </Text>
+            </TouchableOpacity>
+          ) : null}
+        </View>
       </View>
     );
   };
+
+  console.log(growingTable);
 
   const renderBadges = () => {
     const badgeDatasList = Object.values(badgeDatas);
@@ -214,7 +339,7 @@ const BoostBadgesContainer = (props) => {
       });
       return (
         <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: 10 }}>{badgesList}</View>
+          <View style={{ paddingTop: 10 }}>{badgesList}</View>
         </ScrollView>
       );
     } else {
@@ -268,7 +393,11 @@ const BoostBadgesContainer = (props) => {
         </View>
       </View>
       {isFetchedBadgeDatas ? renderBadges() : <ActivityIndicator />}
-      {/* <EmojisPickerBottomSheet emojisPickerBottomSheetRef={emojisPickerBottomSheetRef} /> */}
+      <EmojisPickerBottomSheet
+        emojisPickerBottomSheetRef={emojisPickerBottomSheetRef}
+        changingEmojiBadge={changingEmojiBadge}
+        setGrowingTable={setGrowingTable}
+      />
       <LoadingSpinner />
     </View>
   );

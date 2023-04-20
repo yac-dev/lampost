@@ -44,6 +44,7 @@ export const getBadgeDatasByUserId = async (request, response) => {
       return {
         badge: relationship.badge,
         passion: relationship.passion,
+        emoji: relationship.emoji,
       };
     });
     // console.log(userBadgeDatas);
@@ -66,6 +67,7 @@ export const getClapFriendBadgeDatasByUserId = async (request, response) => {
         relationshipId: relationship._id,
         badge: relationship.badge,
         passion: relationship.passion,
+        emoji: relationship.emoji,
       };
     });
     response.status(200).json({
@@ -105,8 +107,18 @@ export const growMyBadges = async (request, response) => {
     const relationships = await BadgeAndUserRelationship.find({ _id: { $in: badgeAndUserRelationshipIds } });
     relationships.forEach((relationship) => {
       relationship.passion = relationship.passion + growingTable[relationship._id]['growed'];
+      if (growingTable[relationship._id].hasOwnProperty('emoji')) {
+        relationship.emoji = growingTable[relationship._id]['emoji'];
+      }
       relationship.save();
     });
+    let totalComsumedExperience = 0;
+    for (let key in growingTable) {
+      totalComsumedExperience = totalComsumedExperience + growingTable[key].growed;
+    }
+    const user = await User.findById(request.params.userId);
+    user.experience = user.experience - totalComsumedExperience;
+    user.save();
     // const launcher = await User.findById(launcherId);
     // launcher.fame = launcher.fame + 5;
     // launcher.save();

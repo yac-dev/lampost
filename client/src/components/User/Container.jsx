@@ -44,13 +44,7 @@ import LeadershipBottomSheet from './LeadershipBottomSheet';
 // badgeを取ってきて、skillも取ってくる。subscriberの数も返すし、connectionの数も返す。
 const Container = (props) => {
   const { Ionicons, MaterialCommunityIcons } = iconsTable;
-  const {
-    auth,
-    setLoading,
-    setSnackBar,
-
-    friendChatsNotificationCount,
-  } = useContext(GlobalContext);
+  const { auth, setLoading, setSnackBar, setAuth, friendChatsNotificationCount } = useContext(GlobalContext);
   const [user, setUser] = useState(null);
   const [isFetchedUserData, setIsFetchedUserData] = useState(false);
   const [badgeDatas, setBadgeDatas] = useState({});
@@ -77,7 +71,7 @@ const Container = (props) => {
   const [isOpenCreateBadgeTagTextInput, setIsOpenCreateBadgeTagTextInput] = useState(false);
   // これで、自分のpageを見ているか、他人のpageを見ているかのstateを管理する。
 
-  console.log(badgeDatas);
+  // console.log(badgeDatas);
   useEffect(() => {
     if (auth.isAuthenticated && props.route.params.userId === auth.data._id) {
       setIsMyPage(true);
@@ -101,6 +95,7 @@ const Container = (props) => {
   useFocusEffect(
     useCallback(() => {
       getUser();
+      getBadgeDatasByUserId();
     }, [])
   );
 
@@ -140,6 +135,7 @@ const Container = (props) => {
     getBadgeDatasByUserId();
   }, []);
 
+  // これ、もういらない。useFocusにしたから。
   useEffect(() => {
     if (props.route.params?.addedUserBadges) {
       const addedBadges = JSON.parse(props.route.params.addedUserBadges);

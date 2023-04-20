@@ -98,13 +98,16 @@ const Badge = () => {
                 top: isIpad ? -7 : -13,
                 right: isIpad ? -7 : -15,
                 position: 'absolute',
-                borderRadius: 7,
+                borderRadius: 20,
               }}
             >
               <View
-                style={{ backgroundColor: backgroundColorsTable[badgeData.badge.color], padding: 5, borderRadius: 7 }}
+                style={{ backgroundColor: backgroundColorsTable[badgeData.badge.color], padding: 5, borderRadius: 20 }}
               >
-                <Text style={{ color: iconColorsTable[badgeData.badge.color] }}>🔥{badgeData.passion}</Text>
+                <Text style={{ color: iconColorsTable[badgeData.badge.color] }}>
+                  {badgeData.emoji}
+                  {badgeData.passion}
+                </Text>
               </View>
             </View>
           ) : null}
