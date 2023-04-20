@@ -26,6 +26,8 @@ const Container = () => {
     );
   }, []);
 
+  console.log(dateMeetups);
+
   return (
     <GorhomBottomSheet
       index={-1}

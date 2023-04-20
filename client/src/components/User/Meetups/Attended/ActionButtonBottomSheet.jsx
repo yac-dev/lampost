@@ -44,7 +44,7 @@ const INITIAL_CLAPPING_PERSONALITY = {
 };
 
 const ActionButtonBottomSheet = (props) => {
-  const { MaterialCommunityIcons, Foundation, MaterialIcons } = iconsTable;
+  const { MaterialCommunityIcons, Foundation, MaterialIcons, Ionicons } = iconsTable;
   const { auth, setSnackBar, setLoading } = useContext(GlobalContext);
   const {
     selectedUser,
@@ -55,9 +55,11 @@ const ActionButtonBottomSheet = (props) => {
     setMyFriends,
     isSupportingLauncher,
     setIsSupportingLauncher,
+    isFollowingLauncher,
+    setIsFollowingLauncher,
     navigation,
   } = useContext(AttendedContext);
-  const snapPoints = useMemo(() => ['40%'], []);
+  const snapPoints = useMemo(() => ['30%'], []);
 
   const addFriend = async (user) => {
     const payload = {
@@ -84,18 +86,18 @@ const ActionButtonBottomSheet = (props) => {
     actionButtonBottomSheetRef.current.close();
   };
 
-  const supportLauncher = async () => {
+  const followLauncher = async () => {
     const payload = {
-      launcherId,
+      followeeId: launcherId,
       user: {
         _id: auth.data._id,
         name: auth.data.name,
       },
     };
     setLoading(true);
-    const result = await lampostAPI.post('/launcherandpatronrelationships', payload);
-    const { launcher } = result.data;
-    setIsSupportingLauncher(true);
+    const result = await lampostAPI.post('/followrelationships', payload);
+    // const { launcher } = result.data;
+    setIsFollowingLauncher(true);
     setLoading(false);
     setSnackBar({
       isVisible: true,
@@ -112,7 +114,7 @@ const ActionButtonBottomSheet = (props) => {
         return (
           <View style={{ flexDirection: 'column' }}>
             <ScrollView>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
@@ -140,7 +142,7 @@ const ActionButtonBottomSheet = (props) => {
                   <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>{`Tip ${selectedUser.name}`}</Text>
                 </View>
                 <MaterialCommunityIcons name='chevron-right' size={25} color={baseTextColor} />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <TouchableOpacity
                 style={{
                   flexDirection: 'row',
@@ -149,26 +151,26 @@ const ActionButtonBottomSheet = (props) => {
                   justifyContent: 'space-between',
                 }}
                 onPress={() => {
-                  supportLauncher();
+                  followLauncher();
                 }}
-                disabled={isSupportingLauncher ? true : false}
+                disabled={isFollowingLauncher ? true : false}
               >
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <View
                     style={{
                       width: 40,
                       height: 40,
-                      backgroundColor: backgroundColorsTable['red1'],
+                      backgroundColor: backgroundColorsTable['blue1'],
                       justifyContent: 'center',
                       alignItems: 'center',
                       borderRadius: 8,
                       marginRight: 10,
                     }}
                   >
-                    <MaterialCommunityIcons name='fire' color={iconColorsTable['red1']} size={20} />
+                    <Ionicons name='people' color={iconColorsTable['blue1']} size={20} />
                   </View>
                   <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>
-                    {isSupportingLauncher ? 'Supporting now 🔥' : `Support ${selectedUser.name}`}
+                    {isFollowingLauncher ? 'Following now' : `Follow ${selectedUser.name}`}
                   </Text>
                   {/* {isSupportingLauncher ? (
                     <MaterialCommunityIcons name='check-circle' size={25} color={'green'} />
@@ -193,18 +195,14 @@ const ActionButtonBottomSheet = (props) => {
                     style={{
                       width: 40,
                       height: 40,
-                      backgroundColor: backgroundColorsTable['orange1'],
+                      backgroundColor: backgroundColorsTable['pink1'],
                       justifyContent: 'center',
                       alignItems: 'center',
                       borderRadius: 8,
                       marginRight: 10,
                     }}
                   >
-                    <MaterialCommunityIcons
-                      name='human-greeting-variant'
-                      color={iconColorsTable['orange1']}
-                      size={20}
-                    />
+                    <MaterialCommunityIcons name='human-greeting-variant' color={iconColorsTable['pink1']} size={20} />
                   </View>
                   <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>
                     {myFriends[selectedUser._id] ? 'We are friends 😁' : `Be friends with ${selectedUser.name}`}
@@ -263,14 +261,14 @@ const ActionButtonBottomSheet = (props) => {
                   style={{
                     width: 40,
                     height: 40,
-                    backgroundColor: backgroundColorsTable['orange1'],
+                    backgroundColor: backgroundColorsTable['pink1'],
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderRadius: 8,
                     marginRight: 10,
                   }}
                 >
-                  <MaterialCommunityIcons name='human-greeting-variant' color={iconColorsTable['orange1']} size={20} />
+                  <MaterialCommunityIcons name='human-greeting-variant' color={iconColorsTable['pink1']} size={20} />
                 </View>
                 <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>
                   Be friends with {selectedUser.name}

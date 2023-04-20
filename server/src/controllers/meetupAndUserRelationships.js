@@ -184,6 +184,34 @@ export const getMeetupAttendees = async (request, response) => {
   }
 };
 
+export const getMyUpcomingMeetups = async (request, response) => {
+  try {
+    const myUpcomingMeetups = {};
+    const alreadyFinishedMeetups = {};
+    const meetupAndUserRelationships = await MeetupAndUserRelationship.find({ user: request.params.user });
+    // const meetups = await Meetup.find({ _id: { $in: upcomingMeetupIds } });
+    // meetups.forEach((meetup) => {
+    //   if (meetup.state !== 'finished') {
+    //     myUpcomingMeetups[meetup._id] = {
+    //       _id: meetup._id,
+    //       title: meetup.title,
+    //       startDateAndTime: meetup.startDateAndTime,
+    //       state: meetup.state,
+    //       launcher: meetup.launcher,
+    //     };
+    //   } else {
+    //     alreadyFinishedMeetups[meetup._id] = true;
+    //   }
+    // });
+
+    // response.status(200).json({
+    //   myUpcomingMeetups,
+    // });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getMyMeetupStates = async (request, response) => {
   try {
     const { upcomingMeetupIds, userId } = request.body;
@@ -259,6 +287,7 @@ export const rsvp = async (request, response) => {
     });
     const user = await User.findById(userId);
     user.experience = user.experience + 20;
+    user.save();
     // [{badge: 2, user: 3, badge: 4, user:3, badge: 10, user: 3}] // これに一致するbadgeAndUserRelationshipを一つずつ見つけて、それを+10upvotteする感じか。その後に、userBadgePassionのmodelも作っていく感じか。
     // for (const table of badgeAndUserTable) {
     //   const badgeAndUserRelationship = await BadgeAndUserRelationship.findOne({ badge: table.badge, user: table.user });
@@ -328,7 +357,7 @@ export const sendStartNotification = async (request, response) => {
   }
 };
 
-export const sendFinishNotification = async () => {
+export const sendFinishNotification = async (request, response) => {
   try {
     const { meetupId } = request.body;
     const meetupAndUserRelationships = await MeetupAndUserRelationship.find({ meetup: meetupId, rsvp: true })
@@ -342,9 +371,9 @@ export const sendFinishNotification = async () => {
       membersPushTokens.map((token) => ({
         to: token,
         sound: 'default',
-        data: { notificationType: 'finishMeetup' },
-        title: 'Your meetup has ended🤗',
-        body: "Did you have fun? Let's share your assets on the library, connect with your friends and write your impression from your 'Profile'!",
+        data: { notificationType: 'meetupHasEnded', meetupId },
+        title: 'Your meetup has ended.',
+        body: "The meetup has finished. Now you can check your log. Let's connect with friends and share your impression.",
       }))
     );
 

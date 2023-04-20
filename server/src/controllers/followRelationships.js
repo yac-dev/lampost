@@ -1,16 +1,30 @@
 import FollowRelationship from '../models/followRelationship';
+import User from '../models/user';
 import { sendPushNotification } from '../services/expo-push-sdk';
 import { Expo } from 'expo-server-sdk';
 const expo = new Expo();
 
 export const createFollowRelationship = async (request, response) => {
   try {
-    const { followerId, followeeId } = request.body;
+    const { user, followeeId } = request.body;
     const followRelationship = await FollowRelationship.create({
       followee: followeeId,
-      follower: followerId,
+      follower: user._id,
       createdAt: new Date(),
     });
+
+    const launcher = await User.findById(followeeId);
+    launcher.fame = launcher.fame + 10;
+    launcher.save();
+
+    const notificationMessage = {
+      to: launcher.pushToken,
+      data: { notificationType: 'patronRelationship' },
+      title: `${user.name} started supporting you.`,
+      // body: `"${content}" from ${user.name}`,
+    };
+
+    sendPushNotification(launcher.pushToken, notificationMessage);
 
     response.status(201).json({
       message: 'success',
@@ -58,6 +72,24 @@ export const sendMeetupLaunchNotificationToFollowers = async (request, response)
 
 export const unfollowUser = async (request, response) => {
   try {
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const isFollowing = async (request, response) => {
+  try {
+    const followRelationship = await FollowRelationship.findOne({
+      followee: request.params.followeeId,
+      follower: request.params.followerId,
+    });
+    let isFollowing = false;
+    if (followRelationship) {
+      isFollowing = true;
+    }
+    response.status(200).json({
+      isFollowing,
+    });
   } catch (error) {
     console.log(error);
   }

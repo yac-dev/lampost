@@ -127,7 +127,7 @@ export const createMeetup = async (request, response) => {
     if (!user.launcher) {
       user.launcher = true;
     }
-
+    user.experience = user.experience + 50;
     user.save();
     meetup.save();
     const meetupAndUserRelationship = await MeetupAndUserRelationship.create({
@@ -139,12 +139,12 @@ export const createMeetup = async (request, response) => {
       createdAt: new Date(),
     });
 
-    const badgeAndUserTables = badgeIds.map((badgeId) => {
-      return {
-        badge: badgeId,
-        user: launcher,
-      };
-    });
+    // const badgeAndUserTables = badgeIds.map((badgeId) => {
+    //   return {
+    //     badge: badgeId,
+    //     user: launcher,
+    //   };
+    // });
 
     // for (const table of badgeAndUserTables) {
     //   const badgeAndUserRelationship = await BadgeAndUserRelationship.findOne({ badge: table.badge, user: table.user });
@@ -565,6 +565,7 @@ export const getMyMeetupStates = async (request, response) => {
 
     response.status(200).json({
       myUpcomingMeetups,
+      myUpcomingMeetupIds,
     });
     // const meetupAndUserRelationship = await MeetupAndUserRelationship.find(queryConditon);
   } catch (error) {

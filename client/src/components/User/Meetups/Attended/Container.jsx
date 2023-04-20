@@ -23,6 +23,7 @@ const AttendedContainer = (props) => {
   const [myFriends, setMyFriends] = useState({});
   const [myLaunchers, setMyLaunchers] = useState({});
   const [isSupportingLauncher, setIsSupportingLauncher] = useState(false);
+  const [isFollowingLauncher, setIsFollowingLauncher] = useState(false);
   const actionButtonBottomSheetRef = useRef(null);
 
   const getMeetupAttended = async () => {
@@ -50,22 +51,29 @@ const AttendedContainer = (props) => {
     });
   };
 
-  const getIsSupportingLauncher = async () => {
+  // const getIsSupportingLauncher = async () => {
+  //   const result = await lampostAPI.get(
+  //     `/launcherandpatronrelationships/launcher/${props.route.params.launcherId}/patron/${auth.data._id}`
+  //   );
+  //   const { isSupporting } = result.data;
+  //   setIsSupportingLauncher(isSupporting);
+  // };
+  const getIsFollowing = async () => {
     const result = await lampostAPI.get(
-      `/launcherandpatronrelationships/launcher/${props.route.params.launcher}/patron/${auth.data._id}`
+      `/followrelationships/followee/${props.route.params.launcherId}/follower/${auth.data._id}`
     );
-    const { isSupporting } = result.data;
-    setIsSupportingLauncher(isSupporting);
+    const { isFollowing } = result.data;
+    setIsFollowingLauncher(isFollowing);
   };
   useEffect(() => {
     getMyFriends();
-    getIsSupportingLauncher();
+    getIsFollowing();
   }, []);
 
   const addFriend = async (user) => {
     const payload = {
       friendId: user._id,
-      launcherId: props.route.params.launcher,
+      launcherId: props.route.params.launcherId,
     };
     setLoading(true);
     const result = await lampostAPI.post(`/friendrelationships/${auth.data._id}`, payload);
@@ -86,7 +94,7 @@ const AttendedContainer = (props) => {
   //   if (user._id === auth.data._id) {
   //     return null;
   //   } else {
-  //     if (user._id === props.route.params.launcher) {
+  //     if (user._id === props.route.params.launcherId) {
   //       return (
   //         <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
   //           <TouchableOpacity
@@ -133,7 +141,7 @@ const AttendedContainer = (props) => {
   //               padding: 5,
   //             }}
   //             onPress={() => {
-  //               props.navigation.navigate('Clap friend', { userId: user._id, launcherId: props.route.params.launcher });
+  //               props.navigation.navigate('Clap friend', { userId: user._id, launcherId: props.route.params.launcherId });
   //             }}
   //           >
   //             <MaterialCommunityIcons name='hand-clap' size={22} color='white' style={{ marginRight: 5 }} />
@@ -168,7 +176,7 @@ const AttendedContainer = (props) => {
   //               onPress={() => {
   //                 props.navigation.navigate('Clap friend', {
   //                   userId: user._id,
-  //                   launcherId: props.route.params.launcher,
+  //                   launcherId: props.route.params.launcherId,
   //                 });
   //               }}
   //             >
@@ -217,7 +225,7 @@ const AttendedContainer = (props) => {
   //               onPress={() => {
   //                 props.navigation.navigate('Clap friend', {
   //                   userId: user._id,
-  //                   launcherId: props.route.params.launcher,
+  //                   launcherId: props.route.params.launcherId,
   //                 });
   //               }}
   //             >
@@ -262,7 +270,7 @@ const AttendedContainer = (props) => {
                 user={item.user}
                 onUserNamePress={onUserNamePress}
                 subInfo={
-                  props.route.params.launcher === item.user._id ? (
+                  props.route.params.launcherId === item.user._id ? (
                     <Text style={{ color: baseTextColor }}>🚀 Launcher</Text>
                   ) : null
                 }
@@ -304,7 +312,7 @@ const AttendedContainer = (props) => {
   return (
     <AttendedContext.Provider
       value={{
-        launcherId: props.route.params.launcher,
+        launcherId: props.route.params.launcherId,
         navigation: props.navigation,
         selectedUser,
         setSelectedUser,
@@ -313,6 +321,8 @@ const AttendedContainer = (props) => {
         setMyFriends,
         isSupportingLauncher,
         setIsSupportingLauncher,
+        isFollowingLauncher,
+        setIsFollowingLauncher,
       }}
     >
       <View

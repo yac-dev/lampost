@@ -40,7 +40,10 @@ const ActionButtons = (props) => {
         }}
         onPress={() => {
           selectedDateBottomSheetRef.current.close();
-          navigation.navigate('Attended', { meetupId: meetupObject.meetup._id });
+          navigation.navigate('Attended', {
+            meetupId: meetupObject.meetup._id,
+            launcherId: meetupObject.meetup.launcher,
+          });
         }}
       >
         <View style={{ backgroundColor: iconColorsTable['blue1'], borderRadius: 5, width: '100%', padding: 5 }}>

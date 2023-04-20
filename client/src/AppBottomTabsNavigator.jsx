@@ -160,6 +160,12 @@ const AppStack = (props) => {
             }
           });
           setFriendChatsNotificationCount((previous) => previous + 1);
+        } else if (notification.request.content.data.notificationType === 'meetupHasEnded') {
+          setMyUpcomingMeetups((previous) => {
+            const updating = { ...previous };
+            delete updating[notification.request.content.data.meetupId];
+            return updating;
+          });
         }
         // if (notification.request.content.data.notificationType === 'loungeChat') {
         //   setMyUpcomingMeetupAndChatsTable((previous) => {
@@ -210,7 +216,7 @@ const AppStack = (props) => {
         upcomingMeetupIds: auth.data.upcomingMeetups,
         userId: auth.data._id,
       });
-      const { myUpcomingMeetups } = result.data;
+      const { myUpcomingMeetups, myUpcomingMeetupIds } = result.data;
       setMyUpcomingMeetups((previous) => {
         const updating = { ...previous };
         for (const meetupId in myUpcomingMeetups) {
@@ -234,6 +240,15 @@ const AppStack = (props) => {
 
         return updating;
       });
+      // setAuth((previous) => {
+      //   return {
+      //     ...previous,
+      //     data: {
+      //       ...previous.data,
+      //       upcomingMeetups: myUpcomingMeetupIds,
+      //     },
+      //   };
+      // });
       setIsFetchedMyUpcomingMeetups(true);
       setChatsNotificationCount(0);
     }
