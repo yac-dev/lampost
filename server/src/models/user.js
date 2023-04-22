@@ -35,10 +35,10 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  experience: {
-    type: Number,
-    default: 20,
-  },
+  // experience: {
+  //   type: Number,
+  //   default: 20,
+  // },
   launcher: {
     type: Boolean,
     default: false,
@@ -58,12 +58,12 @@ const userSchema = new mongoose.Schema({
     },
     // 4つまで
   ],
-  upcomingMeetups: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Meetup',
-    },
-  ],
+  // upcomingMeetups: [
+  //   {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'Meetup',
+  //   },
+  // ],
   // leadership: {
   //   teamManagement: Number,
   //   timeManagement: Number,

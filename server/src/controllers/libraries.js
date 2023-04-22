@@ -1,7 +1,7 @@
 import Library from '../models/library';
 import LibraryAndAssetRelationship from '../models/libraryAndAssetRelationship';
 import LibraryAndUserRelationship from '../models/libraryAndUserRelationship';
-import BadgeAndAssetRelationship from '../models/badgeAndAssetRelationship';
+// import BadgeAndAssetRelationship from '../models/badgeAndAssetRelationship';
 // import Roll from '../models/roll';
 import Asset from '../models/asset';
 import User from '../models/user';

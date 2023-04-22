@@ -49,7 +49,7 @@ const s3 = new S3({
 // models
 import Badge from '../models/badge.js'; // なんでこの時だけ.jsが必要なるんだ？
 import BadgeType from '../models/badgeType.js';
-import BadgeTypeAndBadgeRelationship from '../models/badgeTypeAndBadgeRelationship.js';
+import BadgeTypeAndBadgeRelationship from '../models/badgeAndBadgeTypeRelationship.js';
 
 mongoose
   .connect(process.env.MONGODB_URL, {

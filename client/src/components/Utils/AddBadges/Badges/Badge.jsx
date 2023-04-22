@@ -264,7 +264,7 @@ const Badge = (props) => {
             <FastImage
               style={{ height: badgeIconWidth, width: badgeIconWidth }}
               source={{
-                uri: badge.icon,
+                uri: badge.icon.url,
                 priority: FastImage.priority.normal,
               }}
               tintColor={iconColorsTable[badge.color]}

@@ -85,13 +85,13 @@ const Badge = () => {
           <FastImage
             style={{ height: badgeIconWidth, width: badgeIconWidth }}
             source={{
-              uri: badgeData.badge.icon,
+              uri: badgeData.badge.icon.url,
               priority: FastImage.priority.normal,
             }}
             tintColor={iconColorsTable[badgeData.badge.color]}
             resizeMode={FastImage.resizeMode.contain}
           />
-          {badgeData.passion ? (
+          {badgeData.mojiTags.length ? (
             <View
               style={{
                 backgroundColor: rnDefaultBackgroundColor,
@@ -102,12 +102,15 @@ const Badge = () => {
               }}
             >
               <View
-                style={{ backgroundColor: backgroundColorsTable[badgeData.badge.color], padding: 5, borderRadius: 20 }}
+                style={{
+                  backgroundColor: backgroundColorsTable[badgeData.badge.color],
+                  padding: 5,
+                  borderRadius: 20,
+                  flexDirection: 'row',
+                }}
               >
-                <Text style={{ color: iconColorsTable[badgeData.badge.color] }}>
-                  {badgeData.emoji}
-                  {badgeData.passion}
-                </Text>
+                <Text>❤️</Text>
+                <Text>❤️</Text>
               </View>
             </View>
           ) : null}

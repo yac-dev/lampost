@@ -16,38 +16,38 @@ const Stats = () => {
   const { Foundation, Entypo } = iconsTable;
   const { user, activitiesMenuBottomSheetRef, leadershipBottomSheetRef } = useContext(UserContext);
 
-  if (user.launcher) {
-    return (
-      <View
-        style={{
-          paddingLeft: 15,
-          paddingRight: 15,
-          // alignItems: 'center',
-          justifyContent: 'center',
-          borderRadius: 5,
-        }}
-      >
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View>
-            <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>Trust</Text>
-            <Text
-              style={{
-                color: 'white',
-                fontSize: 27,
-                fontWeight: 'bold',
-                color: 'white',
-                textAlign: 'center',
-              }}
-            >
-              {user.fame}
-            </Text>
-          </View>
+  // if (user.launcher) {
+  return (
+    <View
+      style={{
+        paddingLeft: 15,
+        paddingRight: 15,
+        // alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
+      }}
+    >
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View>
+          <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>Trust</Text>
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 27,
+              fontWeight: 'bold',
+              color: 'white',
+              textAlign: 'center',
+            }}
+          >
+            {user.fame}
+          </Text>
         </View>
       </View>
-    );
-  } else {
-    return null;
-  }
+    </View>
+  );
+  // } else {
+  //   return null;
+  // }
 };
 
 export default Stats;

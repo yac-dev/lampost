@@ -9,11 +9,7 @@ const badgeAndUserRelationshipSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
-  passion: Number,
-  emoji: {
-    type: String,
-    default: '🔥',
-  },
+  mojiTags: [{ type: mongoose.Schema.ObjectId, ref: 'MojiTag' }],
   createdAt: Date,
 });
 

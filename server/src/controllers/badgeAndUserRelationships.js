@@ -1,8 +1,7 @@
 import BadgeAndUserRelationship from '../models/badgeAndUserRelationship';
-import BadgeTag from '../models/badgeTag';
-import BadgeTagAndUserRelationship from '../models/badgeTagAndUserRelationship';
 import User from '../models/user';
-import UserBadgeExperience from '../models/userBadgeExperience';
+import Icon from '../models/icon';
+import MojiTag from '../models/mojiTag';
 
 export const addBadgesToUser = async (request, response) => {
   try {
@@ -35,10 +34,20 @@ export const addBadgesToUser = async (request, response) => {
 
 export const getBadgeDatasByUserId = async (request, response) => {
   try {
-    const badgeAndUserRelationships = await BadgeAndUserRelationship.find({ user: request.params.userId }).populate({
-      path: 'badge',
-      select: 'name icon color',
-    });
+    const badgeAndUserRelationships = await BadgeAndUserRelationship.find({ user: request.params.userId })
+      .populate({
+        path: 'badge',
+        select: 'name icon color',
+        populate: {
+          path: 'icon',
+          model: Icon,
+        },
+      })
+      .populate({
+        path: 'mojiTags',
+        model: MojiTag,
+        // MissingSchemaError: Schema hasn't been registered for model "MojiTag". これなんだろね。。。上のicon fieldに関しても同様に。。。
+      });
     // .populate({ path: 'badgeTags' });
     const userBadgeDatas = badgeAndUserRelationships.map((relationship) => {
       return {
@@ -235,74 +244,74 @@ export const getBadgeHolders = async (request, response) => {
 // };
 
 // とりえずこうしておいて、userに早く結果を返す。その後にbadgeTagとuserの関係を作る。
-export const addBadgeTagsToUser = async (request, response) => {
-  try {
-    const { addedBadgeTags, createdBadgeTags } = request.body;
-    console.log(addedBadgeTags, createdBadgeTags);
-    // あくまで、このpushingっていうのはfieldにpushするためのもの
-    const pushingBadgeTagIds = Object.values(addedBadgeTags).map((badgeTagObject) => {
-      return badgeTagObject._id;
-    });
-    let badgeTags;
+// export const addBadgeTagsToUser = async (request, response) => {
+//   try {
+//     const { addedBadgeTags, createdBadgeTags } = request.body;
+//     console.log(addedBadgeTags, createdBadgeTags);
+//     // あくまで、このpushingっていうのはfieldにpushするためのもの
+//     const pushingBadgeTagIds = Object.values(addedBadgeTags).map((badgeTagObject) => {
+//       return badgeTagObject._id;
+//     });
+//     let badgeTags;
 
-    // まず、badge user relationshipを見つける。これがなきゃ始まらない。
-    const badgeAndUserRelationship = await BadgeAndUserRelationship.findOne({
-      badge: request.params.badgeId,
-      user: request.params.userId,
-    });
+//     // まず、badge user relationshipを見つける。これがなきゃ始まらない。
+//     const badgeAndUserRelationship = await BadgeAndUserRelationship.findOne({
+//       badge: request.params.badgeId,
+//       user: request.params.userId,
+//     });
 
-    // もしbadge tagをcreateしようとしているなら、これを動かす。
-    if (createdBadgeTags.length) {
-      const badgeTagObjects = createdBadgeTags.map((badgeTag) => {
-        return {
-          name: badgeTag,
-          badge: request.params.badgeId,
-          totalHolders: 0,
-        };
-      });
-      badgeTags = await BadgeTag.insertMany(badgeTagObjects);
-      const createdBadgeTagIds = badgeTags.map((badgeTag) => {
-        return badgeTag._id;
-      });
-      pushingBadgeTagIds.push(...createdBadgeTagIds);
-    }
-    console.log(pushingBadgeTagIds);
+//     // もしbadge tagをcreateしようとしているなら、これを動かす。
+//     if (createdBadgeTags.length) {
+//       const badgeTagObjects = createdBadgeTags.map((badgeTag) => {
+//         return {
+//           name: badgeTag,
+//           badge: request.params.badgeId,
+//           totalHolders: 0,
+//         };
+//       });
+//       badgeTags = await BadgeTag.insertMany(badgeTagObjects);
+//       const createdBadgeTagIds = badgeTags.map((badgeTag) => {
+//         return badgeTag._id;
+//       });
+//       pushingBadgeTagIds.push(...createdBadgeTagIds);
+//     }
+//     console.log(pushingBadgeTagIds);
 
-    badgeAndUserRelationship.badgeTags.push(...pushingBadgeTagIds);
-    badgeAndUserRelationship.save();
+//     badgeAndUserRelationship.badgeTags.push(...pushingBadgeTagIds);
+//     badgeAndUserRelationship.save();
 
-    // badgeTagの数を更新する。
-    // const badgeTags = await BadgeTag.find({ _id: { $in: pushingBadgeTagIds } });
-    // for (let i = 0; i < badgeTags.length; i++) {
-    //   badgeTags[i].totalHolders++;
-    //   badgeTags[i].save();
-    // }
+//     // badgeTagの数を更新する。
+//     // const badgeTags = await BadgeTag.find({ _id: { $in: pushingBadgeTagIds } });
+//     // for (let i = 0; i < badgeTags.length; i++) {
+//     //   badgeTags[i].totalHolders++;
+//     //   badgeTags[i].save();
+//     // }
 
-    //最終的なresponseでは、badge tagsのdataそのものを返す。idではなくて。
-    response.status(200).json({
-      badgeId: request.params.badgeId,
-      badgeTags: [...addedBadgeTags, ...badgeTags], // createしたbadgeTagsが"badgeTags"ね。
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     //最終的なresponseでは、badge tagsのdataそのものを返す。idではなくて。
+//     response.status(200).json({
+//       badgeId: request.params.badgeId,
+//       badgeTags: [...addedBadgeTags, ...badgeTags], // createしたbadgeTagsが"badgeTags"ね。
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
-export const addLinkToUser = async (request, response) => {
-  try {
-    const { linkObject } = request.body;
-    const badgeAndUserRelationship = await BadgeAndUserRelationship.findOne({
-      badge: request.params.badgeId,
-      user: request.params.userId,
-    });
-    badgeAndUserRelationship.links.push(linkObject);
-    badgeAndUserRelationship.save();
+// export const addLinkToUser = async (request, response) => {
+//   try {
+//     const { linkObject } = request.body;
+//     const badgeAndUserRelationship = await BadgeAndUserRelationship.findOne({
+//       badge: request.params.badgeId,
+//       user: request.params.userId,
+//     });
+//     badgeAndUserRelationship.links.push(linkObject);
+//     badgeAndUserRelationship.save();
 
-    response.status(200).json({
-      badgeId: request.params.badgeId,
-      linkObject,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     response.status(200).json({
+//       badgeId: request.params.badgeId,
+//       linkObject,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };

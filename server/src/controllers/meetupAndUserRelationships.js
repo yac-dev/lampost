@@ -23,12 +23,8 @@ export const joinMeetup = async (request, response) => {
     meetup.totalAttendees++;
     meetup.save();
     const user = await User.findById(request.body.userId);
-    // const meetupObj = {
-    //   meetup: meetup._id,
-    //   viewedChatsLastTime: new Date(),
-    // };
-    user.upcomingMeetups.push(meetupId);
-    user.save();
+    // user.upcomingMeetups.push(meetupId);
+    // user.save();
     // notificationを送る。
     const launcher = await User.findById(meetup.launcher);
     const notificationMessage = {
@@ -68,18 +64,18 @@ export const leaveMeetup = async (request, response) => {
     // console.log(meetup.attendees, 'removing this index', indexOfUser);
     meetup.totalAttendees--;
     meetup.save();
-    const user = await User.findById(userId);
-    let indexOfMeetup = 0;
-    for (let i = 0; i < user.upcomingMeetups.length; i++) {
-      if (user.upcomingMeetups[i] === meetupId) {
-        indexOfMeetup = i;
-      }
-    }
-    // const indexOfMeetup = user.upcomingMeetups.indexOf(meetup._id);
-    if (indexOfMeetup > -1) {
-      user.upcomingMeetups.splice(indexOfMeetup, 1);
-    }
-    user.save();
+    // const user = await User.findById(userId);
+    // let indexOfMeetup = 0;
+    // for (let i = 0; i < user.upcomingMeetups.length; i++) {
+    //   if (user.upcomingMeetups[i] === meetupId) {
+    //     indexOfMeetup = i;
+    //   }
+    // }
+    // // const indexOfMeetup = user.upcomingMeetups.indexOf(meetup._id);
+    // if (indexOfMeetup > -1) {
+    //   user.upcomingMeetups.splice(indexOfMeetup, 1);
+    // }
+    // user.save();
     console.log('left meetup');
     response.status(200).json({
       meetupId: meetupId,
@@ -197,21 +193,24 @@ export const getMyUpcomingMeetups = async (request, response) => {
     //   path: 'meetup',
     //   select: '_id title startDateAndTime state launcher',
     // });
-    const myUpcomingMeetupAndUserRelationships = meetupAndUserRelationships.filter(
-      (relationship) => relationship.meetup.state !== 'finished'
-    );
+    // ない場合はこの操作をやってはいかんのね。
+    if (meetupAndUserRelationships.length) {
+      const myUpcomingMeetupAndUserRelationships = meetupAndUserRelationships.filter(
+        (relationship) => relationship.meetup.state !== 'finished'
+      );
 
-    const myUpcomingMeetupsArr = myUpcomingMeetupAndUserRelationships.map((relationship) => relationship.meetup);
+      const myUpcomingMeetupsArr = myUpcomingMeetupAndUserRelationships.map((relationship) => relationship.meetup);
 
-    myUpcomingMeetupsArr.forEach((meetup) => {
-      myUpcomingMeetups[meetup._id] = {
-        _id: meetup._id,
-        title: meetup.title,
-        startDateAndTime: meetup.startDateAndTime,
-        state: meetup.state,
-        launcher: meetup.launcher,
-      };
-    });
+      myUpcomingMeetupsArr.forEach((meetup) => {
+        myUpcomingMeetups[meetup._id] = {
+          _id: meetup._id,
+          title: meetup.title,
+          startDateAndTime: meetup.startDateAndTime,
+          state: meetup.state,
+          launcher: meetup.launcher,
+        };
+      });
+    }
 
     response.status(200).json({
       myUpcomingMeetups,

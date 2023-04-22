@@ -5,8 +5,8 @@ import {
   getBadgeDatasByUserId,
   // getBadgeDetailByUserId,
   getBadgeHolders,
-  addBadgeTagsToUser,
-  addLinkToUser,
+  // addBadgeTagsToUser,
+  // addLinkToUser,
   getClapFriendBadgeDatasByUserId,
   clapBadge,
   growMyBadges,
@@ -18,8 +18,8 @@ router.route('/:userId').get(getBadgeDatasByUserId).post(addBadgesToUser);
 router.route('/:userId/clap').get(getClapFriendBadgeDatasByUserId).patch(clapBadge);
 router.route('/:userId/grow').patch(growMyBadges);
 router.route('/holders/:badgeId').get(getBadgeHolders);
-router.route('/add/:badgeId/:userId').patch(addBadgeTagsToUser);
-router.route('/link/:badgeId/:userId').patch(addLinkToUser);
+// router.route('/add/:badgeId/:userId').patch(addBadgeTagsToUser);
+// router.route('/link/:badgeId/:userId').patch(addLinkToUser);
 // router.route('/:badgeId/:userId')
 
 export default router;

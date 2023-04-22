@@ -165,6 +165,8 @@ const Container = (props) => {
   const badgeContainerWidth = oneGridWidth * 0.6;
   const badgeIconWidth = badgeContainerWidth * 0.7;
 
+  console.log(badges);
+
   // 基本、hash tableにdataをためて、render時にarrayに変えて表示する。
   // genreのbadgeが既にある場合は、queryしない。
   const [badges, setBadges] = useState({
@@ -172,7 +174,9 @@ const Container = (props) => {
     animes: [],
     apps: [],
     petsAndAnimals: [],
-    business: [],
+    businessAndFinance: [],
+    brands: [],
+    people: [],
     family: [],
     dancing: [],
     education: [],
@@ -184,11 +188,10 @@ const Container = (props) => {
     videoGames: [],
     books: [],
     music: [],
-    outdoors: [],
     photography: [],
     spirituality: [],
     vehicles: [],
-    sports: [],
+    sportsAndOutdoors: [],
     tech: [],
     writings: [],
     languagesAndEthnic: [],
@@ -205,6 +208,7 @@ const Container = (props) => {
       updating[selectedFilterOption] = badges;
       return updating;
     });
+    console.log(badges);
   };
 
   useEffect(() => {
@@ -427,7 +431,7 @@ const Container = (props) => {
                 <FastImage
                   style={{ height: badgeIconWidth, width: badgeIconWidth }}
                   source={{
-                    uri: badge.icon,
+                    uri: badge.icon.url,
                     priority: FastImage.priority.normal,
                   }}
                   tintColor={iconColorsTable[badge.color]}
@@ -567,10 +571,10 @@ const Container = (props) => {
               onFilterOptionPress={() => setSelectedFilterOption('books')}
             />
             <FilterOption
-              label='Business'
-              value='business'
+              label='Business & Finance'
+              value='businessAndFinance'
               icon={<MaterialCommunityIcons name='finance' size={25} color={'white'} style={{ marginRight: 10 }} />}
-              onFilterOptionPress={() => setSelectedFilterOption('business')}
+              onFilterOptionPress={() => setSelectedFilterOption('businessAndFinance')}
             />
             <FilterOption
               label='Vehicles'
@@ -604,12 +608,12 @@ const Container = (props) => {
               icon={<MaterialCommunityIcons name='food' size={25} color={'white'} style={{ marginRight: 10 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('foodsAndDrinks')}
             />
-            <FilterOption
+            {/* <FilterOption
               label='Fitness & Health'
               value='fitnessAndHealth'
               icon={<Ionicons name='fitness' size={25} color={'white'} style={{ marginRight: 10 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('fitnessAndHealth')}
-            />
+            /> */}
             <FilterOption
               label='Gamings'
               value='gamings'
@@ -653,10 +657,10 @@ const Container = (props) => {
               onFilterOptionPress={() => setSelectedFilterOption('videoGames')}
             />
             <FilterOption
-              label='Sports'
-              value='sports'
+              label='Sports & Outdoors'
+              value='sportsAndOutdoors'
               icon={<Ionicons name='basketball' size={25} color={'white'} style={{ marginRight: 10 }} />}
-              onFilterOptionPress={() => setSelectedFilterOption('sports')}
+              onFilterOptionPress={() => setSelectedFilterOption('sportsAndOutdoors')}
             />
             <FilterOption
               label='Tech'
@@ -664,12 +668,12 @@ const Container = (props) => {
               icon={<Entypo name='code' size={25} color={'white'} style={{ marginRight: 10 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('tech')}
             />
-            <FilterOption
+            {/* <FilterOption
               label='Outdoors'
               value='outdoors'
               icon={<MaterialCommunityIcons name='hiking' size={25} color={'white'} style={{ marginRight: 10 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('outdoors')}
-            />
+            /> */}
             <FilterOption
               label='Pets & Animals'
               value='petsAndAnimals'
