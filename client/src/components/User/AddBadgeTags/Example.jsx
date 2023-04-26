@@ -4,7 +4,7 @@ import { baseTextColor, inputBackgroundColorNew } from '../../../utils/colorsTab
 
 const Example = () => {
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 45 }}>
+    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 30 }}>
       <Text style={{ color: baseTextColor, marginRight: 10 }}>e.g.)</Text>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -41,10 +41,23 @@ const Example = () => {
               alignItems: 'center',
               padding: 5,
               borderRadius: 5,
+              marginRight: 10,
             }}
           >
             <Text style={{ marginRight: 5, fontSize: 18 }}>🤤</Text>
             <Text style={{ fontSize: 18, color: baseTextColor }}>everyday eating</Text>
+          </View>
+          <View
+            style={{
+              backgroundColor: inputBackgroundColorNew,
+              flexDirection: 'row',
+              alignItems: 'center',
+              padding: 5,
+              borderRadius: 5,
+            }}
+          >
+            <Text style={{ marginRight: 5, fontSize: 18 }}>🎮</Text>
+            <Text style={{ fontSize: 18, color: baseTextColor }}>everyday playing</Text>
           </View>
         </View>
       </ScrollView>

@@ -22,9 +22,12 @@ import { iconsTable } from '../../../utils/icons';
 const AddBadgeTagsContainer = (props) => {
   const { MaterialCommunityIcons } = iconsTable;
   const { auth, setLoading } = useContext(GlobalContext);
-  const [addingBadgeTags, setAddingBadgeTags] = useState([{ emoji: '', text: '' }]);
+  const [addedBadgeTags, setAddedBadgeTags] = useState([]);
   const [tappedEmoji, setTappedEmoji] = useState(null);
   const userBadge = props.route.params.userBadge;
+  const [doneDisabled, setDoneDisabled] = useState(true);
+  const [selectedEmoji, setSelectedEmoji] = useState('');
+  const [badgeTagTextInput, setBadgeTagTextInput] = useState('');
   // doneの時に、emoji、text共に空欄のやつは自動で除くようにする。
 
   const onDonePress = async () => {
@@ -39,10 +42,10 @@ const AddBadgeTagsContainer = (props) => {
     // setMyBadges(props.route.params.myBadges);
     props.navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity onPress={() => onDonePress()} disabled={true}>
+        <TouchableOpacity disabled={addedBadgeTags.length ? false : true} onPress={() => onDonePress()}>
           <Text
             style={{
-              color: disabledTextColor,
+              color: addedBadgeTags.length ? 'white' : disabledTextColor,
               fontSize: 20,
             }}
           >
@@ -51,68 +54,47 @@ const AddBadgeTagsContainer = (props) => {
         </TouchableOpacity>
       ),
     });
-  }, [addingBadgeTags]);
+  }, [addedBadgeTags]);
 
   useEffect(() => {
     if (props.route.params?.selectedEmoji) {
-      setAddingBadgeTags((previous) => {
-        const updating = [...previous];
-        updating[tappedEmoji].emoji = props.route.params.selectedEmoji;
-        return updating;
-      });
+      setSelectedEmoji(props.route.params.selectedEmoji);
     }
   }, [props.route.params?.selectedEmoji]);
 
   // 全部空欄状態なら、doneできないように。かつ、一回のaddで、5つまで。
-  const renderAddingBadgeTags = () => {
-    const list = addingBadgeTags.map((badgeTag, index) => {
-      return (
-        <View key={index} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
-          <TouchableOpacity
+  const renderAddedBadgeTags = () => {
+    if (addedBadgeTags.length) {
+      const list = addedBadgeTags.map((badgeTag, index) => {
+        return (
+          <View
+            key={index}
             style={{
               backgroundColor: inputBackgroundColorNew,
-              width: 40,
-              height: 40,
-              borderRadius: 5,
-              marginRight: 5,
-              justifyContent: 'center',
+              flexDirection: 'row',
               alignItems: 'center',
-            }}
-            onPress={() => {
-              setTappedEmoji(index);
-              props.navigation.navigate('Emoji picker');
+              marginRight: 10,
+              padding: 7,
+              borderRadius: 5,
             }}
           >
-            {badgeTag.emoji ? (
-              <Text style={{ fontSize: 30 }}>{badgeTag.emoji}</Text>
-            ) : (
-              <MaterialCommunityIcons name='emoticon-excited-outline' size={25} color={baseTextColor} />
-            )}
-          </TouchableOpacity>
-          <TextInput
-            placeholder='Type text here'
-            placeholderTextColor={baseTextColor}
-            style={{
-              padding: 10,
-              backgroundColor: inputBackgroundColorNew,
-              borderRadius: 5,
-              height: 40,
-              flex: 1,
-              color: baseTextColor,
-            }}
-            value={badgeTag.text}
-            onChangeText={(text) =>
-              setAddingBadgeTags((previous) => {
-                const updating = [...previous];
-                updating[index].text = text;
-                return updating;
-              })
-            }
-          />
-        </View>
+            <Text style={{ fontSize: 18, marginRight: 5 }}>{badgeTag.emoji}</Text>
+            <Text style={{ fontSize: 18, color: baseTextColor }}>{badgeTag.text}</Text>
+          </View>
+        );
+      });
+      return (
+        <ScrollView
+          horizontal={true}
+          contentContainerStyle={{ paddingRight: 50 }}
+          showsHorizontalScrollIndicator={false}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>{list}</View>
+        </ScrollView>
       );
-    });
-    return <View style={{ marginBottom: 15 }}>{list}</View>;
+    } else {
+      return null;
+    }
   };
 
   return (
@@ -121,7 +103,8 @@ const AddBadgeTagsContainer = (props) => {
         <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 22 }}>Add badge tags</Text>
       </View>
       <Text style={{ color: baseTextColor, marginBottom: 10 }}>Express your badge more by using emoji and text.</Text>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+      <Example />
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 30 }}>
         <View
           style={{ width: 60, height: 60, backgroundColor: rnDefaultBackgroundColor, borderRadius: 8, marginRight: 15 }}
         >
@@ -142,23 +125,69 @@ const AddBadgeTagsContainer = (props) => {
             />
           </View>
         </View>
-        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>{userBadge.badge.name}</Text>
+        <View style={{ flexDirection: 'column' }}>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginBottom: 7 }}>
+            {userBadge.badge.name}
+          </Text>
+          {renderAddedBadgeTags()}
+        </View>
       </View>
-      {renderAddingBadgeTags()}
-      {addingBadgeTags.length <= 4 ? (
+      <View style={{}}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: inputBackgroundColorNew,
+              width: 40,
+              height: 40,
+              borderRadius: 5,
+              marginRight: 5,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onPress={() => {
+              props.navigation.navigate('Emoji picker');
+            }}
+          >
+            {selectedEmoji ? (
+              <Text style={{ fontSize: 30 }}>{selectedEmoji}</Text>
+            ) : (
+              <MaterialCommunityIcons name='emoticon-excited-outline' size={25} color={baseTextColor} />
+            )}
+          </TouchableOpacity>
+          <TextInput
+            placeholder='Type text here'
+            placeholderTextColor={baseTextColor}
+            style={{
+              padding: 10,
+              backgroundColor: inputBackgroundColorNew,
+              borderRadius: 5,
+              height: 40,
+              flex: 1,
+              color: baseTextColor,
+              fontSize: 18,
+            }}
+            value={badgeTagTextInput}
+            onChangeText={(text) => setBadgeTagTextInput(text)}
+          />
+        </View>
         <TouchableOpacity
           style={{
-            backgroundColor: iconColorsTable['blue1'],
+            backgroundColor: selectedEmoji && badgeTagTextInput ? iconColorsTable['blue1'] : '#535353',
             paddingTop: 10,
             paddingBottom: 10,
             borderRadius: 5,
             marginBottom: 10,
           }}
-          onPress={() => setAddingBadgeTags((previous) => [...previous, { emoji: '', text: '' }])}
+          onPress={() => {
+            setAddedBadgeTags((previous) => [...previous, { emoji: selectedEmoji, text: badgeTagTextInput }]);
+            setSelectedEmoji('');
+            setBadgeTagTextInput('');
+          }}
+          disabled={selectedEmoji && badgeTagTextInput ? false : true}
         >
-          <Text style={{ color: 'white', textAlign: 'center' }}>Add more</Text>
+          <Text style={{ color: 'white', textAlign: 'center' }}>Add this tag</Text>
         </TouchableOpacity>
-      ) : null}
+      </View>
 
       <SnackBar />
       <LoadingSpinner />
