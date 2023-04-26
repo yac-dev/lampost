@@ -11,7 +11,7 @@ const badgeIndexSchema = new mongoose.Schema({
       ref: 'BadgeAndUserRelationship',
     },
   ],
-  createdBy: {
+  user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },

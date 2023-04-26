@@ -3,29 +3,47 @@ import User from '../models/user';
 import Icon from '../models/icon';
 import MojiTag from '../models/mojiTag';
 
-export const addBadgesToUser = async (request, response) => {
+// export const addBadgesToUser = async (request, response) => {
+//   try {
+//     const { badgeIds } = request.body;
+//     const relationshipObjects = badgeIds.map((badgeId) => {
+//       return {
+//         badge: badgeId,
+//         user: request.params.userId,
+//         passion: 0,
+//         createdAt: new Date(),
+//       };
+//     });
+//     const user = await User.findById(request.params.userId);
+//     if (user.topBadges.length <= 4) {
+//       const restSpace = 4 - user.topBadges.length;
+//       const copiedBadges = [...badgeIds];
+//       const spliced = copiedBadges.splice(0, restSpace);
+//       user.topBadges.push(...spliced);
+//       user.save();
+//     }
+//     // これ、array of objects [{badgeId: 111, userId: 3333, url: '', createdAt: new Date()}, {badgeId: 2222, userId: 3333}]でinsertManyだな。
+//     const badgeAndUserRelationships = await BadgeAndUserRelationship.insertMany(relationshipObjects);
+//     response.status(200).json({
+//       message: 'success',
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+export const getBadgeDatasByUserId = async (request, response) => {
   try {
-    const { badgeIds } = request.body;
-    const relationshipObjects = badgeIds.map((badgeId) => {
-      return {
-        badge: badgeId,
-        user: request.params.userId,
-        passion: 0,
-        createdAt: new Date(),
-      };
+    const badgeAndUserRelationships = await BadgeAndUserRelationship.find({ user: request.params.userId }).populate({
+      path: 'badge',
+      select: 'name icon color',
+      populate: {
+        path: 'icon',
+        model: Icon,
+      },
     });
-    const user = await User.findById(request.params.userId);
-    if (user.topBadges.length <= 4) {
-      const restSpace = 4 - user.topBadges.length;
-      const copiedBadges = [...badgeIds];
-      const spliced = copiedBadges.splice(0, restSpace);
-      user.topBadges.push(...spliced);
-      user.save();
-    }
-    // これ、array of objects [{badgeId: 111, userId: 3333, url: '', createdAt: new Date()}, {badgeId: 2222, userId: 3333}]でinsertManyだな。
-    const badgeAndUserRelationships = await BadgeAndUserRelationship.insertMany(relationshipObjects);
     response.status(200).json({
-      message: 'success',
+      badgeAndUserRelationships,
     });
   } catch (error) {
     console.log(error);
@@ -58,24 +76,6 @@ export const addUserBadges = async (request, response) => {
 
     response.status(201).json({
       badgeAndUserRelationships: responseDocument,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getBadgeDatasByUserId = async (request, response) => {
-  try {
-    const badgeAndUserRelationships = await BadgeAndUserRelationship.find({ user: request.params.userId }).populate({
-      path: 'badge',
-      select: 'name icon color',
-      populate: {
-        path: 'icon',
-        model: Icon,
-      },
-    });
-    response.status(200).json({
-      badgeAndUserRelationships,
     });
   } catch (error) {
     console.log(error);

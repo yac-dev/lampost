@@ -24,6 +24,7 @@ import Meetups from '../User/Meetups/Container';
 import Attended from '../User/Meetups/Attended/Container';
 import ClapFriend from '../User/Meetups/Attended/ClapFriend/Container';
 import BoostBadges from '../User/BoostBadges/Container';
+import CreateBadgesIndex from '../User/CreateBadgesIndex/Container';
 // import Meetup from '../User/Meetups/Meetup/Container';
 import Assets from '../User/Assets/Container';
 // import Asset from '../Utils/Asset';
@@ -271,6 +272,25 @@ const Auth = (props) => {
           <Stack.Screen
             name='Add badge tags'
             component={AddBadgeTags}
+            options={({ navigation }) => ({
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
+                </TouchableOpacity>
+              ),
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+              headerTintColor: 'white',
+            })}
+          />
+          <Stack.Screen
+            name='Create badges index'
+            component={CreateBadgesIndex}
             options={({ navigation }) => ({
               headerLeft: () => (
                 <TouchableOpacity onPress={() => navigation.goBack()}>

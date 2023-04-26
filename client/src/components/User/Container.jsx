@@ -48,6 +48,7 @@ const Container = (props) => {
   const [user, setUser] = useState(null);
   const [isFetchedUserData, setIsFetchedUserData] = useState(false);
   const [userBadges, setUserBadges] = useState({});
+  const [isFetchedUserBadges, setIsFetchedUserBadges] = useState(false);
   const [pressedBadgeData, setPressedBadgeData] = useState(null);
   const [isMyPage, setIsMyPage] = useState();
   const [isBlocked, setIsBlocked] = useState(false);
@@ -70,7 +71,8 @@ const Container = (props) => {
   const [fetchedBadgeTags, setFetchedBadgeTags] = useState([]);
   const [isOpenCreateBadgeTagTextInput, setIsOpenCreateBadgeTagTextInput] = useState(false);
   // これで、自分のpageを見ているか、他人のpageを見ているかのstateを管理する。
-  console.log(userBadges);
+  const [badgeIndexes, setBadgeIndexes] = useState({});
+  console.log(badgeIndexes);
 
   // console.log(badgeDatas);
   useEffect(() => {
@@ -131,11 +133,57 @@ const Container = (props) => {
         return userBadgesTable;
       });
     }
+    setIsFetchedUserBadges(true);
+  };
+
+  // indiesだけを、create indexに持ってくる感じかな。
+  const getBadgeIndexes = async () => {
+    const result = await lampostAPI.get(`/badgeindexes/${props.route.params.userId}`);
+    const { badgeIndexes } = result.data;
+    // badge indexesがあれば。
+    if (badgeIndexes.length) {
+      const copiedUserBadges = { ...userBadges };
+      setBadgeIndexes(() => {
+        const table = {};
+        badgeIndexes.forEach((badgeIndex) => {
+          table[badgeIndex.title] = {
+            title: badgeIndex.title,
+            userBadges: badgeIndex.userBadges.map((userBadgeId) => {
+              const val = copiedUserBadges[userBadgeId];
+              delete copiedUserBadges[userBadgeId];
+              return val;
+            }),
+          };
+        });
+        table['indies'] = {
+          title: '',
+          userBadges: Object.values(copiedUserBadges),
+        };
+        return table;
+      });
+    } else {
+      const copiedUserBadges = { ...userBadges };
+      setBadgeIndexes(() => {
+        const table = {
+          indies: {
+            title: '',
+            userBadges: Object.values(copiedUserBadges),
+          },
+        };
+        return table;
+      });
+    }
   };
 
   useEffect(() => {
     getBadgeDatasByUserId();
   }, []);
+
+  useEffect(() => {
+    if (isFetchedUserBadges) {
+      getBadgeIndexes();
+    }
+  }, [isFetchedUserBadges]);
 
   // これ、もういらない。useFocusにしたから。
   useEffect(() => {
@@ -276,7 +324,7 @@ const Container = (props) => {
         ) : (
           <View>
             <View style={{ width: '100%', paddingLeft: 10, paddingRight: 10 }}>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={{
                   width: '100%',
                   padding: 5,
@@ -289,7 +337,7 @@ const Container = (props) => {
                   <Entypo name='bookmark' color={baseTextColor} size={20} style={{ marginRight: 10 }} />
                   <Text style={{ color: 'white' }}>Create index</Text>
                 </View>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
           </View>
@@ -428,6 +476,8 @@ const Container = (props) => {
         leadershipBottomSheetRef,
         isConfirmBlockUserModalOpen,
         setIsConfirmBlockUserModalOpen,
+        badgeIndexes,
+        setBadgeIndexes,
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>

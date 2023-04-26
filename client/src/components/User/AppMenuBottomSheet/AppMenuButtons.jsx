@@ -20,8 +20,7 @@ import {
 import AppMenuButton from '../../Utils/AppMenuButton';
 
 const AppButtons = (props) => {
-  const { auth, setAuth, setMyUpcomingMeetupAndChatsTable, setTotalUnreadChatsCount, setIsNotAvailableModalOpen } =
-    useContext(GlobalContext);
+  const { auth, setAuth, setMyUpcomingMeetupAndChatsTable, setTotalUnreadChatsCount } = useContext(GlobalContext);
   const {
     user,
     navigation,
@@ -29,6 +28,7 @@ const AppButtons = (props) => {
     userBadges,
     setIsConfirmLogoutModalOpen,
     setIsConfirmDeleteAccountModalOpen,
+    badgeIndexes,
   } = useContext(UserContext);
 
   const logout = async () => {
@@ -108,6 +108,31 @@ const AppButtons = (props) => {
               <Foundation name='sheriff-badge' color={iconColorsTable['green1']} size={20} />
             </View>
             <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>Add badges</Text>
+          </View>
+          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+          onPress={() => {
+            appMenuBottomSheetRef.current.close();
+            navigation.navigate('Create badges index', { independentBadges: badgeIndexes.indies.userBadges });
+          }}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={{
+                width: 40,
+                height: 40,
+                backgroundColor: backgroundColorsTable['orange1'],
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 8,
+                marginRight: 10,
+              }}
+            >
+              <Ionicons name='folder-open' color={iconColorsTable['orange1']} size={20} />
+            </View>
+            <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>Create badge section</Text>
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
         </TouchableOpacity>
