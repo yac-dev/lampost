@@ -11,6 +11,7 @@ import SignUp from '../Auth/SignUp';
 import LogIn from '../Auth/LogIn';
 import EULA from '../Auth/EULA';
 import AddBadgeTags from '../User/AddBadgeTags/Container';
+import EmojiPicker from '../User/AddBadgeTags/EmojiPicker';
 import AddLink from '../User/AddLink';
 // import AddLinks from '../User/AddLink/Container';
 
@@ -267,11 +268,27 @@ const Auth = (props) => {
               headerTintColor: 'white',
             })}
           />
-        </Stack.Group>
-        <Stack.Group screenOptions={{ presentation: 'modal', gestureEnabled: false }}>
           <Stack.Screen
             name='Add badge tags'
             component={AddBadgeTags}
+            options={({ navigation }) => ({
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
+                </TouchableOpacity>
+              ),
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitle: '',
+              headerTintColor: 'white',
+            })}
+          />
+        </Stack.Group>
+        <Stack.Group screenOptions={{ presentation: 'modal', gestureEnabled: false }}>
+          <Stack.Screen
+            name='Create badges index'
+            component={CreateBadgesIndex}
             options={({ navigation }) => ({
               headerLeft: () => (
                 <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -289,8 +306,8 @@ const Auth = (props) => {
             })}
           />
           <Stack.Screen
-            name='Create badges index'
-            component={CreateBadgesIndex}
+            name='Emoji picker'
+            component={EmojiPicker}
             options={({ navigation }) => ({
               headerLeft: () => (
                 <TouchableOpacity onPress={() => navigation.goBack()}>

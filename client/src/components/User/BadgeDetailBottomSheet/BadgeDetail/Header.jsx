@@ -116,7 +116,10 @@ const Header = () => {
           {isMyPage ? (
             <ScrollView horizontal={true}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <TouchableOpacity style={{ marginRight: 10, backgroundColor: 'red', padding: 5, borderRadius: 5 }}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Add badge tags', { userBadge: pressedBadgeData })}
+                  style={{ marginRight: 10, backgroundColor: 'red', padding: 5, borderRadius: 5 }}
+                >
                   <Text style={{ color: 'white' }}>BadgeTags</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={{ marginRight: 10, backgroundColor: 'red', padding: 5, borderRadius: 5 }}>
