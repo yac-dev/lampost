@@ -93,7 +93,7 @@ const Header = () => {
             <FastImage
               style={{ width: 55, height: 55 }}
               source={{
-                uri: pressedBadgeData.badge.icon,
+                uri: pressedBadgeData.badge.icon.url,
                 priority: FastImage.priority.normal,
               }}
               tintColor={iconColorsTable[pressedBadgeData.badge.color]}
@@ -101,31 +101,37 @@ const Header = () => {
             />
           </TouchableOpacity>
         </View>
-        <View style={{ flexDirection: 'column' }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <MaterialCommunityIcons name='fire' size={35} color={'red'} style={{ marginRight: 10 }} />
-            <View>
-              <Text style={{ color: baseTextColor, marginBottom: 5 }}>Passion</Text>
-              <Text style={{ color: 'white', fontSize: 23, fontWeight: 'bold' }}>
-                {pressedBadgeData.totalExperience}
-              </Text>
-            </View>
-          </View>
+        <View>
+          <Text
+            style={{
+              paddingLeft: 10,
+              fontWeight: 'bold',
+              fontSize: 20,
+              color: 'white',
+              marginBottom: 5,
+            }}
+          >
+            {pressedBadgeData.badge.name}
+          </Text>
+          {isMyPage ? (
+            <ScrollView horizontal={true}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity style={{ marginRight: 10, backgroundColor: 'red', padding: 5, borderRadius: 5 }}>
+                  <Text style={{ color: 'white' }}>BadgeTags</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={{ marginRight: 10, backgroundColor: 'red', padding: 5, borderRadius: 5 }}>
+                  <Text style={{ color: 'white' }}>Badge friends</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={{ backgroundColor: 'red', padding: 5, borderRadius: 5 }}>
+                  <Text style={{ color: 'white' }}>Badge snaps</Text>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
+          ) : null}
         </View>
 
         {/* {renderActionButtons()} */}
       </View>
-      <Text
-        style={{
-          paddingLeft: 10,
-          fontWeight: 'bold',
-          fontSize: 20,
-          color: 'white',
-          marginBottom: 10,
-        }}
-      >
-        {pressedBadgeData.badge.name}
-      </Text>
     </View>
   );
 };

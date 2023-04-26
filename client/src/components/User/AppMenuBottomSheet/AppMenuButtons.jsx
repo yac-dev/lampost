@@ -26,7 +26,7 @@ const AppButtons = (props) => {
     user,
     navigation,
     appMenuBottomSheetRef,
-    badgeDatas,
+    userBadges,
     setIsConfirmLogoutModalOpen,
     setIsConfirmDeleteAccountModalOpen,
   } = useContext(UserContext);
@@ -90,7 +90,7 @@ const AppButtons = (props) => {
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
             appMenuBottomSheetRef.current.close();
-            navigation.navigate('Add badges', { fromComponent: 'ADD_USER_BADGES', myBadges: badgeDatas });
+            navigation.navigate('Add badges', { fromComponent: 'ADD_USER_BADGES', myBadges: userBadges });
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -243,8 +243,9 @@ const AppButtons = (props) => {
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
-            appMenuBottomSheetRef.current.close();
-            navigation.navigate('Add badges', { fromComponent: 'ADD_USER_BADGES', myBadges: badgeDatas });
+            // appMenuBottomSheetRef.current.close();
+            // navigation.navigate('Add badges', { fromComponent: 'ADD_USER_BADGES', myBadges: badgeDatas });
+            console.log('delete my account');
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>

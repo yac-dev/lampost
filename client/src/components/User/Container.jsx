@@ -43,11 +43,11 @@ import LeadershipBottomSheet from './LeadershipBottomSheet';
 
 // badgeを取ってきて、skillも取ってくる。subscriberの数も返すし、connectionの数も返す。
 const Container = (props) => {
-  const { Ionicons, MaterialCommunityIcons } = iconsTable;
+  const { Ionicons, MaterialCommunityIcons, Entypo } = iconsTable;
   const { auth, setLoading, setSnackBar, setAuth, friendChatsNotificationCount } = useContext(GlobalContext);
   const [user, setUser] = useState(null);
   const [isFetchedUserData, setIsFetchedUserData] = useState(false);
-  const [badgeDatas, setBadgeDatas] = useState({});
+  const [userBadges, setUserBadges] = useState({});
   const [pressedBadgeData, setPressedBadgeData] = useState(null);
   const [isMyPage, setIsMyPage] = useState();
   const [isBlocked, setIsBlocked] = useState(false);
@@ -70,6 +70,7 @@ const Container = (props) => {
   const [fetchedBadgeTags, setFetchedBadgeTags] = useState([]);
   const [isOpenCreateBadgeTagTextInput, setIsOpenCreateBadgeTagTextInput] = useState(false);
   // これで、自分のpageを見ているか、他人のpageを見ているかのstateを管理する。
+  console.log(userBadges);
 
   // console.log(badgeDatas);
   useEffect(() => {
@@ -95,7 +96,7 @@ const Container = (props) => {
   useFocusEffect(
     useCallback(() => {
       getUser();
-      getBadgeDatasByUserId();
+      // getBadgeDatasByUserId();
     }, [])
   );
 
@@ -119,14 +120,15 @@ const Container = (props) => {
 
   const getBadgeDatasByUserId = async () => {
     const result = await lampostAPI.get(`/badgeanduserrelationships/${props.route.params.userId}`);
-    const { userBadgeDatas } = result.data;
-    if (userBadgeDatas.length) {
-      setBadgeDatas(() => {
-        const userBadgeDatasTable = {};
-        userBadgeDatas.forEach((badgeData) => {
-          userBadgeDatasTable[badgeData.badge._id] = badgeData;
+    const { badgeAndUserRelationships } = result.data;
+    if (badgeAndUserRelationships.length) {
+      setUserBadges(() => {
+        const userBadgesTable = {};
+        badgeAndUserRelationships.forEach((badgeAndUserRelationship) => {
+          userBadgesTable[badgeAndUserRelationship._id] = badgeAndUserRelationship;
+          // userBadgesTable[badgeData.badge._id] = badgeData;
         });
-        return userBadgeDatasTable;
+        return userBadgesTable;
       });
     }
   };
@@ -138,21 +140,26 @@ const Container = (props) => {
   // これ、もういらない。useFocusにしたから。
   useEffect(() => {
     if (props.route.params?.addedUserBadges) {
-      const addedBadges = JSON.parse(props.route.params.addedUserBadges);
-      const addedBadgeDatasTable = { ...addedBadges };
-      for (const key in addedBadgeDatasTable) {
-        addedBadgeDatasTable[key]['totalExperience'] = 0;
-        addedBadgeDatasTable[key]['badge'] = addedBadgeDatasTable[key];
-        addedBadgeDatasTable[key]['links'] = [];
-        addedBadgeDatasTable[key]['badgeTags'] = [];
-      }
-      setBadgeDatas((previous) => {
-        return {
-          ...previous,
-          ...addedBadgeDatasTable,
-        };
+      const addedUserBadges = JSON.parse(props.route.params.addedUserBadges);
+      // const addedBadgeDatasTable = { ...addedBadges };
+      // for (const key in addedBadgeDatasTable) {
+      //   addedBadgeDatasTable[key]['totalExperience'] = 0;
+      //   addedBadgeDatasTable[key]['badge'] = addedBadgeDatasTable[key];
+      //   addedBadgeDatasTable[key]['links'] = [];
+      //   addedBadgeDatasTable[key]['badgeTags'] = [];
+      // }
+      setUserBadges((previous) => {
+        const updating = { ...previous };
+        addedUserBadges.forEach((userBadge) => {
+          updating[userBadge._id] = userBadge;
+        });
+        return updating;
+        // return {
+        //   ...previous,
+        //   ...addedBadgeDatasTable,
+        // };
       });
-      console.log('I added these badg', props.route.params.addedUserBadges);
+      // console.log('I added these badg', props.route.params.addedUserBadges);
       setSnackBar({
         isVisible: true,
         barType: 'success',
@@ -203,11 +210,11 @@ const Container = (props) => {
   }, [props.route.params?.badgeTags]);
 
   const renderBadges = () => {
-    const badgeDatasList = Object.values(badgeDatas);
-    if (badgeDatasList.length) {
-      const badgesList = badgeDatasList.map((badgeData, index) => {
+    const userBadgesList = Object.values(userBadges);
+    if (userBadgesList.length) {
+      const badgesList = userBadgesList.map((userBadge, index) => {
         return (
-          <BadgeContext.Provider value={{ badgeData }} key={index}>
+          <BadgeContext.Provider value={{ userBadge }} key={index}>
             <Badge />
           </BadgeContext.Provider>
         );
@@ -267,7 +274,25 @@ const Container = (props) => {
             </View>
           </View>
         ) : (
-          <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
+          <View>
+            <View style={{ width: '100%', paddingLeft: 10, paddingRight: 10 }}>
+              <TouchableOpacity
+                style={{
+                  width: '100%',
+                  padding: 5,
+                  borderWidth: 0.3,
+                  borderColor: baseTextColor,
+                  borderRadius: 8,
+                }}
+              >
+                <View style={{ alignSelf: 'center', flexDirection: 'row', alignItems: 'center' }}>
+                  <Entypo name='bookmark' color={baseTextColor} size={20} style={{ marginRight: 10 }} />
+                  <Text style={{ color: 'white' }}>Create index</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
+          </View>
         )}
         {!auth.isAuthenticated || !isMyPage ? null : (
           <View
@@ -344,7 +369,7 @@ const Container = (props) => {
 
         <AppMenuBottomSheet />
         <InboxBottomSheet />
-        {/* <BadgeDetailBottomSheet /> */}
+        <BadgeDetailBottomSheet />
         <AddBadgeTagsBottomSheet />
         <AddLinkBottomSheet />
         <FlagUserMenuBottomSheet />
@@ -380,8 +405,8 @@ const Container = (props) => {
         setAddLinkOrBadgeTagsBottomSheetType,
         pressedBadgeData,
         setPressedBadgeData,
-        badgeDatas,
-        setBadgeDatas,
+        userBadges,
+        setUserBadges,
         isConfirmEditProfileModalOpen,
         setIsConfirmEditProfileModalOpen,
         isConfirmLogoutModalOpen,

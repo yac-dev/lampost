@@ -9,7 +9,22 @@ const badgeAndUserRelationshipSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
-  mojiTags: [{ type: mongoose.Schema.ObjectId, ref: 'MojiTag' }],
+  badgeTags: [{ type: mongoose.Schema.ObjectId, ref: 'BadgeTag' }],
+  badgeFriends: {
+    emoji: String,
+    title: String,
+    users: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
+  },
+  badgeSnaps: {
+    emoji: String,
+    title: String,
+    snaps: [{ type: mongoose.Schema.ObjectId, ref: 'Asset' }],
+  },
+  badgeLink: {
+    title: String,
+    type: String, // social mediaのtype youtube snapchat discord ...
+    url: String,
+  },
   createdAt: Date,
 });
 

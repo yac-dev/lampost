@@ -165,7 +165,7 @@ const Container = (props) => {
   const badgeContainerWidth = oneGridWidth * 0.6;
   const badgeIconWidth = badgeContainerWidth * 0.7;
 
-  console.log(badges);
+  console.log(addedBadges);
 
   // 基本、hash tableにdataをためて、render時にarrayに変えて表示する。
   // genreのbadgeが既にある場合は、queryしない。
@@ -251,9 +251,12 @@ const Container = (props) => {
   const onDoneAddUserBadgesPress = async () => {
     // api requestではbadge idsとuserIdをpost dataとして送るのはよし。client側では、単純にbadge dataを送るだけでいい。
     setLoading(true);
-    const badgeIds = Object.keys(addedBadges);
-    console.log('Sending these badge ids', badgeIds);
-    const result = await lampostAPI.post(`/badgeanduserrelationships/${auth.data._id}`, { badgeIds });
+    // const badgeIds = Object.keys(addedBadges);
+    const payload = {
+      badges: addedBadges,
+    };
+    console.log('Sending these badge ids', addedBadges);
+    const result = await lampostAPI.post(`/badgeanduserrelationships/${auth.data._id}`, payload);
     // const newBadgeDatas = Object.values(addedBadges).map((addedBadge) => {
     //   return {
     //     badge: addedBadge,
@@ -263,7 +266,11 @@ const Container = (props) => {
     // });
     // ここのNon-serializable values were found in the navigation state(Circular reference)は、よく分からない。何が起こっているか。
     // arrayでやってたときはこんなエラー別に出なかったのに。まあ、jsonにしたらエラーは消えたけど。
-    props.navigation.navigate('Profile', { userId: auth.data._id, addedUserBadges: JSON.stringify(addedBadges) });
+    const { badgeAndUserRelationships } = result.data;
+    props.navigation.navigate('Profile', {
+      userId: auth.data._id,
+      addedUserBadges: JSON.stringify(badgeAndUserRelationships),
+    });
     setLoading(false);
   };
 

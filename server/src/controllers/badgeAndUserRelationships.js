@@ -32,33 +32,50 @@ export const addBadgesToUser = async (request, response) => {
   }
 };
 
-export const getBadgeDatasByUserId = async (request, response) => {
+export const addUserBadges = async (request, response) => {
   try {
-    const badgeAndUserRelationships = await BadgeAndUserRelationship.find({ user: request.params.userId })
-      .populate({
-        path: 'badge',
-        select: 'name icon color',
-        populate: {
-          path: 'icon',
-          model: Icon,
-        },
-      })
-      .populate({
-        path: 'mojiTags',
-        model: MojiTag,
-        // MissingSchemaError: Schema hasn't been registered for model "MojiTag". これなんだろね。。。上のicon fieldに関しても同様に。。。
-      });
-    // .populate({ path: 'badgeTags' });
-    const userBadgeDatas = badgeAndUserRelationships.map((relationship) => {
+    const { badges } = request.body; // これ、objectで送ろうか。
+    const relationshipObjects = Object.values(badges).map((badge) => {
       return {
-        badge: relationship.badge,
-        passion: relationship.passion,
-        emoji: relationship.emoji,
+        badge: badge._id,
+        user: request.params.userId,
+        badgeTags: [],
+        createdAt: new Date(),
       };
     });
-    // console.log(userBadgeDatas);
+
+    const badgeAndUserRelationships = await BadgeAndUserRelationship.insertMany(relationshipObjects);
+
+    const responseDocument = badgeAndUserRelationships.map((relationship) => {
+      return {
+        _id: relationship._id,
+        badge: badges[relationship.badge],
+        badgeTags: relationship.badgeTags,
+        badgeFriends: relationship.badgeFriends,
+        badgeSnaps: relationship.badgeSnaps,
+      };
+    });
+
+    response.status(201).json({
+      badgeAndUserRelationships: responseDocument,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getBadgeDatasByUserId = async (request, response) => {
+  try {
+    const badgeAndUserRelationships = await BadgeAndUserRelationship.find({ user: request.params.userId }).populate({
+      path: 'badge',
+      select: 'name icon color',
+      populate: {
+        path: 'icon',
+        model: Icon,
+      },
+    });
     response.status(200).json({
-      userBadgeDatas,
+      badgeAndUserRelationships,
     });
   } catch (error) {
     console.log(error);

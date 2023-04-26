@@ -17,7 +17,7 @@ import FastImage from 'react-native-fast-image';
 
 const Badge = () => {
   const { Ionicons, MaterialCommunityIcons } = iconsTable;
-  const { badgeData } = useContext(BadgeContext);
+  const { userBadge } = useContext(BadgeContext);
   const { setPressedBadgeData, badgeDetailBottomSheetRef } = useContext(UserContext);
   const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
   const oneGridWidth = isIpad ? Dimensions.get('window').width / 6 : Dimensions.get('window').width / 4;
@@ -64,11 +64,11 @@ const Badge = () => {
           borderWidth: 0.3,
           marginBottom: 5,
         }}
-        // onPress={() => {
-        //   badgeDetailBottomSheetRef.current.snapToIndex(0);
-        //   setPressedBadgeData(badgeData);
-        //   console.log('hey');
-        // }}
+        onPress={() => {
+          badgeDetailBottomSheetRef.current.snapToIndex(0);
+          setPressedBadgeData(userBadge);
+          console.log('hey');
+        }}
       >
         <View
           style={{
@@ -77,21 +77,21 @@ const Badge = () => {
             alignItems: 'center',
             justifyContent: 'center',
             borderRadius: 15,
-            backgroundColor: backgroundColorsTable[badgeData.badge.color],
+            backgroundColor: backgroundColorsTable[userBadge.badge.color],
             borderWidth: 0.3,
-            borderColor: backgroundColorsTable[badgeData.badge.color],
+            borderColor: backgroundColorsTable[userBadge.badge.color],
           }}
         >
           <FastImage
             style={{ height: badgeIconWidth, width: badgeIconWidth }}
             source={{
-              uri: badgeData.badge.icon.url,
+              uri: userBadge.badge.icon.url,
               priority: FastImage.priority.normal,
             }}
-            tintColor={iconColorsTable[badgeData.badge.color]}
+            tintColor={iconColorsTable[userBadge.badge.color]}
             resizeMode={FastImage.resizeMode.contain}
           />
-          {badgeData.mojiTags.length ? (
+          {/* {badgeData.mojiTags.length ? (
             <View
               style={{
                 backgroundColor: rnDefaultBackgroundColor,
@@ -113,7 +113,7 @@ const Badge = () => {
                 <Text>❤️</Text>
               </View>
             </View>
-          ) : null}
+          ) : null} */}
         </View>
       </TouchableOpacity>
 
@@ -132,7 +132,7 @@ const Badge = () => {
           // padding: 4,
         }}
       >
-        {badgeData.badge.name}
+        {userBadge.badge.name}
       </Text>
     </View>
   );

@@ -11,8 +11,8 @@ const Container = (props) => {
     <View>
       <Header />
       {/* <BadgeTags /> */}
-      <Links />
-      <Communities />
+      {/* <Links />
+      <Communities /> */}
     </View>
   );
 };
