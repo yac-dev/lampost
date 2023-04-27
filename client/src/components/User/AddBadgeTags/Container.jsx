@@ -32,10 +32,14 @@ const AddBadgeTagsContainer = (props) => {
 
   const onDonePress = async () => {
     setLoading(true);
-    const { badgeId, badgeTags } = result.data;
+    const result = await lampostAPI.post(`/badgeanduserrelationships/${props.route.params.userBadge._id}/badgetag`, {
+      addedBadgeTags,
+    });
+    const { badgeTags } = result.data;
+    props.navigation.navigate('Profile', {
+      addedBadgeTags: { userBadgeId: props.route.params.userBadge._id, data: badgeTags },
+    });
     setLoading(false);
-    console.log(result.data);
-    props.navigation.navigate('Profile', { badgeId: badgeId, badgeTags });
   };
 
   useEffect(() => {
@@ -47,6 +51,7 @@ const AddBadgeTagsContainer = (props) => {
             style={{
               color: addedBadgeTags.length ? 'white' : disabledTextColor,
               fontSize: 20,
+              fontWeight: addedBadgeTags.length ? 'bold' : null,
             }}
           >
             Done
@@ -86,14 +91,14 @@ const AddBadgeTagsContainer = (props) => {
       return (
         <ScrollView
           horizontal={true}
-          contentContainerStyle={{ paddingRight: 50 }}
+          contentContainerStyle={{ paddingRight: 70 }}
           showsHorizontalScrollIndicator={false}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>{list}</View>
         </ScrollView>
       );
     } else {
-      return null;
+      return <Example />;
     }
   };
 
@@ -102,8 +107,9 @@ const AddBadgeTagsContainer = (props) => {
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, justifyContent: 'space-between' }}>
         <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 22 }}>Add badge tags</Text>
       </View>
-      <Text style={{ color: baseTextColor, marginBottom: 10 }}>Express your badge more by using emoji and text.</Text>
-      <Example />
+      <Text style={{ color: baseTextColor, marginBottom: 10 }}>
+        Express your badge more by using emoji and text. Your status, mood, how much you love,,, whatever you want.
+      </Text>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 30 }}>
         <View
           style={{ width: 60, height: 60, backgroundColor: rnDefaultBackgroundColor, borderRadius: 8, marginRight: 15 }}
@@ -185,7 +191,7 @@ const AddBadgeTagsContainer = (props) => {
           }}
           disabled={selectedEmoji && badgeTagTextInput ? false : true}
         >
-          <Text style={{ color: 'white', textAlign: 'center' }}>Add this tag</Text>
+          <Text style={{ color: 'white', textAlign: 'center' }}>Add</Text>
         </TouchableOpacity>
       </View>
 

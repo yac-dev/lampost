@@ -5,7 +5,7 @@ const badgeTagSchema = new mongoose.Schema({
   emoji: {
     type: String,
   },
-  title: {
+  text: {
     type: String,
   },
   userBadge: {
@@ -17,6 +17,7 @@ const badgeTagSchema = new mongoose.Schema({
     ref: 'User',
   },
   createdAt: Date,
+  //　まあ、多分userBadgeのrefはいらない。 これ自体、まんまuserBadgeの方にrefをembedするから。
 });
 
 const BadgeTag = mongoose.model('BadgeTag', badgeTagSchema);

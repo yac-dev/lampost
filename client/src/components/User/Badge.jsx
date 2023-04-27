@@ -32,6 +32,17 @@ const Badge = () => {
   //   setTappedBadge(badge);
   // };
 
+  const renderMojiTags = (badgeTags) => {
+    const firstTwo = badgeTags.slice(0, 2);
+    console.log(firstTwo);
+
+    const list = firstTwo.map((badgeTag, index) => {
+      return <Text key={index}>{badgeTag.emoji}</Text>;
+    });
+
+    return <>{list}</>;
+  };
+
   return (
     <View
       // このviewは、textも含めての守備範囲のことな。
@@ -91,7 +102,7 @@ const Badge = () => {
             tintColor={iconColorsTable[userBadge.badge.color]}
             resizeMode={FastImage.resizeMode.contain}
           />
-          {/* {badgeData.mojiTags.length ? (
+          {userBadge.badgeTags.length ? (
             <View
               style={{
                 backgroundColor: rnDefaultBackgroundColor,
@@ -103,17 +114,16 @@ const Badge = () => {
             >
               <View
                 style={{
-                  backgroundColor: backgroundColorsTable[badgeData.badge.color],
+                  backgroundColor: backgroundColorsTable[userBadge.badge.color],
                   padding: 5,
                   borderRadius: 20,
                   flexDirection: 'row',
                 }}
               >
-                <Text>❤️</Text>
-                <Text>❤️</Text>
+                {renderMojiTags(userBadge.badgeTags)}
               </View>
             </View>
-          ) : null} */}
+          ) : null}
         </View>
       </TouchableOpacity>
 

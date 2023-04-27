@@ -72,9 +72,7 @@ const Container = (props) => {
   const [isOpenCreateBadgeTagTextInput, setIsOpenCreateBadgeTagTextInput] = useState(false);
   // これで、自分のpageを見ているか、他人のpageを見ているかのstateを管理する。
   const [badgeIndexes, setBadgeIndexes] = useState({});
-  console.log(badgeIndexes);
-
-  // console.log(badgeDatas);
+  console.log(userBadges);
   useEffect(() => {
     if (auth.isAuthenticated && props.route.params.userId === auth.data._id) {
       setIsMyPage(true);
@@ -189,33 +187,45 @@ const Container = (props) => {
   useEffect(() => {
     if (props.route.params?.addedUserBadges) {
       const addedUserBadges = JSON.parse(props.route.params.addedUserBadges);
-      // const addedBadgeDatasTable = { ...addedBadges };
-      // for (const key in addedBadgeDatasTable) {
-      //   addedBadgeDatasTable[key]['totalExperience'] = 0;
-      //   addedBadgeDatasTable[key]['badge'] = addedBadgeDatasTable[key];
-      //   addedBadgeDatasTable[key]['links'] = [];
-      //   addedBadgeDatasTable[key]['badgeTags'] = [];
-      // }
       setUserBadges((previous) => {
         const updating = { ...previous };
         addedUserBadges.forEach((userBadge) => {
           updating[userBadge._id] = userBadge;
         });
         return updating;
-        // return {
-        //   ...previous,
-        //   ...addedBadgeDatasTable,
-        // };
       });
-      // console.log('I added these badg', props.route.params.addedUserBadges);
+
       setSnackBar({
         isVisible: true,
         barType: 'success',
-        message: 'Badge added.',
+        message: 'Badges have been added successfully.',
         duration: 5000,
       });
     }
   }, [props.route.params?.addedUserBadges]);
+
+  useEffect(() => {
+    if (props.route.params?.addedBadgeTags) {
+      setUserBadges((previous) => {
+        return {
+          ...previous,
+          [props.route.params.addedBadgeTags.userBadgeId]: {
+            ...previous[props.route.params.addedBadgeTags.userBadgeId],
+            badgeTags: [
+              ...previous[props.route.params.addedBadgeTags.userBadgeId].badgeTags,
+              ...props.route.params.addedBadgeTags.data,
+            ],
+          },
+        };
+      });
+      setSnackBar({
+        isVisible: true,
+        barType: 'success',
+        message: 'Badge Tags have been added successfully.',
+        duration: 5000,
+      });
+    }
+  }, [props.route.params?.addedBadgeTags]);
 
   useEffect(() => {
     if (props.route.params?.linkObject) {
@@ -236,26 +246,6 @@ const Container = (props) => {
       });
     }
   }, [props.route.params?.linkObject]);
-
-  useEffect(() => {
-    if (props.route.params?.badgeTags) {
-      setBadgeDatas((previous) => {
-        return {
-          ...previous,
-          [props.route.params.badgeId]: {
-            ...previous[props.route.params.badgeId],
-            badgeTags: [...previous[props.route.params.badgeId].badgeTags, ...props.route.params.badgeTags],
-          },
-        };
-      });
-      setSnackBar({
-        isVisible: true,
-        barType: 'success',
-        message: 'Link added.',
-        duration: 5000,
-      });
-    }
-  }, [props.route.params?.badgeTags]);
 
   const renderBadges = () => {
     const userBadgesList = Object.values(userBadges);

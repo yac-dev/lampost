@@ -9,7 +9,7 @@ import { appBottomSheetBackgroundColor, baseTextColor } from '../../../utils/col
 import BadgeDetail from './BadgeDetail/Container';
 
 const Container = (props) => {
-  const snapPoints = useMemo(() => ['50%', '80%', '100%'], []);
+  const snapPoints = useMemo(() => ['50%', '80%'], []);
   const { pressedBadgeData, badgeDetailBottomSheetRef } = useContext(UserContext);
 
   // const onBadgeDetailBottomSheetClose = () => {

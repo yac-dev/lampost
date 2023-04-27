@@ -2,8 +2,9 @@ import express from 'express';
 const router = express.Router();
 import {
   // addBadgesToUser,
-  addUserBadges,
   getBadgeDatasByUserId,
+  addUserBadges,
+  addBadgeTag,
   // getBadgeDetailByUserId,
   getBadgeHolders,
   // addBadgeTagsToUser,
@@ -15,6 +16,7 @@ import {
 
 // router.route('/').post(addBadgesToUser);
 // routerで(/11111)ってきたら、か。addからきたらまあ、こっちが反応するようになるか。
+router.route('/:id/badgetag').post(addBadgeTag);
 router.route('/:userId').get(getBadgeDatasByUserId).post(addUserBadges);
 router.route('/:userId/clap').get(getClapFriendBadgeDatasByUserId).patch(clapBadge);
 router.route('/:userId/grow').patch(growMyBadges);

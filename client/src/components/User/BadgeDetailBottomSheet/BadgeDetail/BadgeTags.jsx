@@ -22,63 +22,28 @@ const BadgeTags = () => {
           <TouchableOpacity
             style={{
               backgroundColor: screenSectionBackgroundColor,
-              padding: 7,
-              marginRight: 10,
+              padding: 5,
+              marginRight: 5,
               marginBottom: 10,
               borderRadius: 5,
+              flexDirection: 'row',
+              alignItems: 'center',
             }}
             key={index}
           >
-            <Text style={{ color: 'white', fontSize: 17 }}>{badgeTag.name}</Text>
+            <Text style={{ fontSize: 18, marginRight: 5 }}>{badgeTag.emoji}</Text>
+            <Text style={{ color: 'white', fontSize: 18 }}>{badgeTag.text}</Text>
           </TouchableOpacity>
         );
       });
 
       return <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>{badgeTagsList}</View>;
     } else {
-      return <Text style={{ color: baseTextColor }}>No badge tags added yet.</Text>;
+      return null;
     }
   };
 
-  return (
-    <View style={{ marginBottom: 25 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15, justifyContent: 'space-between' }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View
-            style={{
-              width: 35,
-              height: 35,
-              backgroundColor: backgroundColorsTable['lightGreen1'],
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 5,
-              marginRight: 10,
-            }}
-          >
-            <Ionicons name='pricetags' color={iconColorsTable['lightGreen1']} size={20} />
-          </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginRight: 10 }}>Badge tags</Text>
-        </View>
-        {isMyPage ? (
-          <ActionButton
-            icon={<MaterialCommunityIcons name='tag-multiple' size={20} color={'white'} />}
-            backgroundColor={iconColorsTable['blue1']}
-            onActionButtonPress={() => {
-              // setConfirmActionButtonModal({ isOpen: true, type: 'Add badge tags' });
-              navigation.navigate('Add badge tags', {
-                badgeId: pressedBadgeData.badge._id,
-                badgeTags: pressedBadgeData.badgeTags,
-              });
-              badgeDetailBottomSheetRef.current.close();
-            }}
-            label='Add'
-          />
-        ) : null}
-      </View>
-
-      {renderTags()}
-    </View>
-  );
+  return <View style={{ marginBottom: 20 }}>{renderTags()}</View>;
 };
 
 export default BadgeTags;

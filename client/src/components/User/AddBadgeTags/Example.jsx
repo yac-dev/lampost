@@ -4,9 +4,13 @@ import { baseTextColor, inputBackgroundColorNew } from '../../../utils/colorsTab
 
 const Example = () => {
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 30 }}>
+    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <Text style={{ color: baseTextColor, marginRight: 10 }}>e.g.)</Text>
-      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+      <ScrollView
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ paddingRight: 120 }}
+      >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View
             style={{

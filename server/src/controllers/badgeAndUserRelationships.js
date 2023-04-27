@@ -1,7 +1,7 @@
 import BadgeAndUserRelationship from '../models/badgeAndUserRelationship';
 import User from '../models/user';
 import Icon from '../models/icon';
-import MojiTag from '../models/mojiTag';
+import BadgeTag from '../models/badgeTag';
 
 // export const addBadgesToUser = async (request, response) => {
 //   try {
@@ -34,14 +34,18 @@ import MojiTag from '../models/mojiTag';
 
 export const getBadgeDatasByUserId = async (request, response) => {
   try {
-    const badgeAndUserRelationships = await BadgeAndUserRelationship.find({ user: request.params.userId }).populate({
-      path: 'badge',
-      select: 'name icon color',
-      populate: {
-        path: 'icon',
-        model: Icon,
-      },
-    });
+    const badgeAndUserRelationships = await BadgeAndUserRelationship.find({ user: request.params.userId })
+      .populate({
+        path: 'badge',
+        select: 'name icon color',
+        populate: {
+          path: 'icon',
+          model: Icon,
+        },
+      })
+      .populate({
+        path: 'badgeTags',
+      });
     response.status(200).json({
       badgeAndUserRelationships,
     });
@@ -76,6 +80,23 @@ export const addUserBadges = async (request, response) => {
 
     response.status(201).json({
       badgeAndUserRelationships: responseDocument,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addBadgeTag = async (request, response) => {
+  try {
+    const { addedBadgeTags } = request.body;
+    const badgeTags = await BadgeTag.insertMany(addedBadgeTags);
+    const badgeAndUserRelationship = await BadgeAndUserRelationship.findById(request.params.id);
+    const badgeTagIds = badgeTags.map((badgeTag) => badgeTag._id);
+    console.log(badgeTagIds);
+    badgeAndUserRelationship.badgeTags.push(...badgeTagIds);
+    badgeAndUserRelationship.save();
+    response.status(201).json({
+      badgeTags,
     });
   } catch (error) {
     console.log(error);

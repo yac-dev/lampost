@@ -11,10 +11,12 @@ import {
 import ActionButton from '../../../Utils/ActionButton';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { iconsTable } from '../../../../utils/icons';
 
 const Header = () => {
   const { pressedBadgeData, isMyPage, setConfirmActionButtonModal, badgeDetailBottomSheetRef, navigation } =
     useContext(UserContext);
+  const { MaterialIcons, Ionicons } = iconsTable;
 
   const renderActionButtons = () => {
     if (isMyPage) {
@@ -66,7 +68,7 @@ const Header = () => {
   };
 
   return (
-    <View>
+    <View style={{ marginBottom: 20 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, paddingTop: 10, paddingLeft: 10 }}>
         <View
           style={{
@@ -113,28 +115,58 @@ const Header = () => {
           >
             {pressedBadgeData.badge.name}
           </Text>
-          {isMyPage ? (
-            <ScrollView horizontal={true}>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('Add badge tags', { userBadge: pressedBadgeData })}
-                  style={{ marginRight: 10, backgroundColor: 'red', padding: 5, borderRadius: 5 }}
-                >
-                  <Text style={{ color: 'white' }}>BadgeTags</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{ marginRight: 10, backgroundColor: 'red', padding: 5, borderRadius: 5 }}>
-                  <Text style={{ color: 'white' }}>Badge friends</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{ backgroundColor: 'red', padding: 5, borderRadius: 5 }}>
-                  <Text style={{ color: 'white' }}>Badge snaps</Text>
-                </TouchableOpacity>
-              </View>
-            </ScrollView>
-          ) : null}
         </View>
 
         {/* {renderActionButtons()} */}
       </View>
+      {isMyPage ? (
+        <ScrollView horizontal={true}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Add badge tags', { userBadge: pressedBadgeData });
+                badgeDetailBottomSheetRef.current.close();
+              }}
+              style={{
+                marginRight: 10,
+                backgroundColor: iconColorsTable['blue1'],
+                padding: 5,
+                borderRadius: 5,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <MaterialIcons name='tag-faces' color='white' size={20} style={{ marginRight: 5 }} />
+              <Text style={{ color: 'white' }}>Add Moji Tags</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                marginRight: 10,
+                backgroundColor: iconColorsTable['blue1'],
+                padding: 5,
+                borderRadius: 5,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <MaterialIcons name='groups' color='white' size={20} style={{ marginRight: 5 }} />
+              <Text style={{ color: 'white' }}>Add Badge Friends</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                backgroundColor: iconColorsTable['blue1'],
+                padding: 5,
+                borderRadius: 5,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <Ionicons name='camera' color='white' size={20} style={{ marginRight: 5 }} />
+              <Text style={{ color: 'white' }}>Add Badge Snaps</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      ) : null}
     </View>
   );
 };
