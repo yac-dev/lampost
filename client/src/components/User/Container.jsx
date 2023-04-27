@@ -27,6 +27,7 @@ import Header from './Header/Container';
 import ActionButttons from './Header/ActionButttons';
 import Badge from './Badge';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
+import BadgeMenuBottomSheet from './BadgeMenuBottomSheet';
 import InboxBottomSheet from './InboxBottomSheet/Container';
 import BadgeDetailBottomSheet from './BadgeDetailBottomSheet/Container';
 import AddBadgeTagsBottomSheet from './AddBadgeTagsBottomSheet/Container';
@@ -43,7 +44,7 @@ import LeadershipBottomSheet from './LeadershipBottomSheet';
 
 // badgeを取ってきて、skillも取ってくる。subscriberの数も返すし、connectionの数も返す。
 const Container = (props) => {
-  const { Ionicons, MaterialCommunityIcons, Entypo } = iconsTable;
+  const { Ionicons, MaterialCommunityIcons, Entypo, Foundation } = iconsTable;
   const { auth, setLoading, setSnackBar, setAuth, friendChatsNotificationCount } = useContext(GlobalContext);
   const [user, setUser] = useState(null);
   const [isFetchedUserData, setIsFetchedUserData] = useState(false);
@@ -60,6 +61,7 @@ const Container = (props) => {
   const [confirmActionButtonModal, setConfirmActionButtonModal] = useState({ isOpen: false, type: '' });
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
   const appMenuBottomSheetRef = useRef(null);
+  const badgeMenuBottomSheetRef = useRef(null);
   const inboxBottomSheetRef = useRef(null);
   const badgeDetailBottomSheetRef = useRef(null);
   const addBadgeTagsBottomSheetRef = useRef(null);
@@ -337,7 +339,7 @@ const Container = (props) => {
             style={{
               position: 'absolute',
               bottom: 20,
-              backgroundColor: backgroundColorsTable['pink1'],
+              backgroundColor: backgroundColorsTable['green1'],
               borderRadius: 10,
               alignSelf: 'center',
               padding: 10,
@@ -346,7 +348,7 @@ const Container = (props) => {
           >
             <TouchableOpacity
               style={{
-                backgroundColor: iconColorsTable['pink1'],
+                backgroundColor: iconColorsTable['green1'],
                 padding: 10,
                 flexDirection: 'row',
                 alignItems: 'center',
@@ -359,19 +361,19 @@ const Container = (props) => {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                inboxBottomSheetRef.current.snapToIndex(0);
+                badgeMenuBottomSheetRef.current.snapToIndex(0);
               }}
             >
               <View
                 style={{
-                  backgroundColor: iconColorsTable['pink1'],
+                  backgroundColor: iconColorsTable['green1'],
                   padding: 10,
                   flexDirection: 'row',
                   alignItems: 'center',
                   borderRadius: 10,
                 }}
               >
-                <MaterialCommunityIcons name='email-multiple' size={25} color={'white'} />
+                <Ionicons name='hammer' size={25} color={'white'} />
               </View>
               {friendChatsNotificationCount ? (
                 <View
@@ -407,6 +409,7 @@ const Container = (props) => {
 
         <AppMenuBottomSheet />
         <InboxBottomSheet />
+        <BadgeMenuBottomSheet />
         <BadgeDetailBottomSheet />
         <AddBadgeTagsBottomSheet />
         <AddLinkBottomSheet />
@@ -435,6 +438,7 @@ const Container = (props) => {
         setIsBlocked,
         navigation: props.navigation,
         appMenuBottomSheetRef,
+        badgeMenuBottomSheetRef,
         inboxBottomSheetRef,
         badgeDetailBottomSheetRef,
         addBadgeTagsBottomSheetRef,

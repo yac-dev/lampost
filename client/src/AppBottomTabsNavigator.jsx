@@ -26,7 +26,7 @@ import PleaseLoginModal from './components/Utils/PleaseLoginModal';
 import SnackBar from './components/Utils/SnackBar';
 import Camera from './components/Camera/Container';
 import TabNavigator from './TabNavigator';
-
+import UserMenuBottomSheet from './components/UserMenuBottomSheet';
 const ref = createNavigationContainerRef();
 const Tab = createBottomTabNavigator();
 // ac
@@ -102,6 +102,7 @@ const AppStack = (props) => {
   const [hasNotification, setHasNotification] = useState(false);
   const [unreadFriendChats, setUnreadFriendChats] = useState({});
   const [friendChatsNotificationCount, setFriendChatsNotificationCount] = useState(0);
+  const userMenuBottomSheetRef = useRef(null);
 
   useEffect(() => {
     if (auth.data) {
@@ -448,6 +449,8 @@ const AppStack = (props) => {
         setUnreadFriendChats,
         friendChatsNotificationCount,
         setFriendChatsNotificationCount,
+        userMenuBottomSheetRef,
+        navigation: props.navigation,
       }}
     >
       <NavigationContainer
@@ -487,10 +490,24 @@ const AppStack = (props) => {
                 headerTransparent: true,
               })}
             />
+            {/* <Stack.Screen
+              name='Profile'
+              component={AuthNavigator}
+              options={({ navigation }) => ({
+                headerLeft: () => (
+                  <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+                  </TouchableOpacity>
+                ),
+                headerShown: true,
+                title: '',
+                headerTransparent: true,
+              })}
+            /> */}
           </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>
-
+      {/* <UserMenuBottomSheet /> */}
       <LoadingSpinner />
       <SnackBar />
       <NotAvailableModal />

@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import GlobalContext from '../../GlobalContext';
-import { Text, TouchableOpacity, Image } from 'react-native';
+import { Text, TouchableOpacity, Image, View } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 import * as SecureStore from 'expo-secure-store';
@@ -32,17 +32,18 @@ import WriteDescription from '../Map/LaunchNewMeetup/WriteDescription';
 import EditMeetup from '../Map/EditMeetup/Container';
 import SelectVenue from '../Map/EditMeetup/SelectVenue';
 import SelectVenueForLaunch from '../Map/LaunchNewMeetup/SelectVenueForLaunch';
-
+import UserMenuBottomSheet from '../UserMenuBottomSheet';
 import AuthNavigator from './Auth';
 import { appBottomSheetBackgroundColor, iconColorsTable } from '../../utils/colorsTable';
 import { iconsTable } from '../../utils/icons';
 // ac
 import { loadMe } from '../../redux/actionCreators/auth';
+import FastImage from 'react-native-fast-image';
 // import { getSocket } from '../../redux/actionCreators/auth';
 
 const MapNavigator = (props) => {
   const { Ionicons } = iconsTable;
-  const { auth } = useContext(GlobalContext);
+  const { auth, userMenuBottomSheetRef } = useContext(GlobalContext);
   // mapの画面から、どんなcomponentへの遷移があるか、それが重要なのかもな。mainのmapはもちろん、そっからカメラのcomponent, 各userのpage, chat component、、、ここは色々多くなるはず。
   // 基本、map画面における全てのroutingをここに登録しておく。
 
@@ -54,19 +55,19 @@ const MapNavigator = (props) => {
           component={Map}
           options={({ navigation }) => ({
             headerShown: true,
-            title: 'Map',
+            title: '',
             headerTransparent: true,
             headerTitleStyle: {
               fontWeight: 'bold',
               color: 'white',
             },
-            headerLeft: () => {
-              return (
-                <TouchableOpacity onPress={() => navigation.navigate('About Lampost')}>
-                  <Ionicons name='information-circle' size={25} color={'white'} />
-                </TouchableOpacity>
-              );
-            },
+            // headerLeft: () => {
+            //   return (
+            //     <TouchableOpacity onPress={() => navigation.navigate('About Lampost')}>
+            //       <Ionicons name='information-circle' size={25} color={'white'} />
+            //     </TouchableOpacity>
+            //   );
+            // },
           })}
         />
         <Stack.Screen
@@ -365,13 +366,18 @@ const MapNavigator = (props) => {
         />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
-        <Stack.Screen
+        {/* <Stack.Screen
           name='Profile'
           component={AuthNavigator}
           options={({ navigation }) => ({
             headerShown: false,
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
+              </TouchableOpacity>
+            ),
           })}
-        />
+        /> */}
         <Stack.Screen
           name='Launch new meetup'
           component={LaunchNewMeetup}

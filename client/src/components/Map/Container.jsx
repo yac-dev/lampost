@@ -7,12 +7,12 @@ import MapContext from './MeetupContext';
 import { connect } from 'react-redux';
 import { StyleSheet, Platform, View, StatusBar, Dimensions, TouchableOpacity, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import FastImage from 'react-native-fast-image';
 import { backgroundColorsTable, baseTextColor, rnDefaultBackgroundColor } from '../../utils/colorsTable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
-// components
 import MapMarkers from './MapMarkers';
 import SelectedMeetup from './SelectedMeetup/Container';
 import SelectedMeetupInfoDetail from './SelectedMeetup/InfoDetail/Container';
@@ -28,6 +28,7 @@ import LaunchMeetupBottomSheet from './LaunchMeetupBottomSheet/Container';
 import ChatStatus from './ChatStatus';
 import SnackBar from '../Utils/SnackBar';
 import LoadingSpinner from '../Utils/LoadingSpinner';
+import UserMenuBottomSheet from './UserMenuBottomSheet';
 
 // utils
 import { mapStyle } from '../../utils/mapStyle';
@@ -82,6 +83,7 @@ const Map = (props) => {
   const [startingMeetup, setStartingMeetup] = useState('');
   const [finishingMeetup, setFinishingMeetup] = useState('');
   const [RSVPingMeetup, setRSVPingMeetup] = useState(null);
+  const userMenuBottomSheetRef = useRef(null);
 
   // 基本は、mapのいずれをtapしてもなにも起きないようにする。launchMeetupがtrueのときだけ、mapをtapしたらlocationをsetして、launchのformを出す。
   const setMeetupLocation = (event) => {
@@ -119,6 +121,39 @@ const Map = (props) => {
       getMeetups();
     }, [])
   );
+
+  // useEffect(() => {
+  //   props.navigation.setOptions({
+  //     headerRight: () => {
+  //       if (auth.isAuthenticated) {
+  //         return (
+  //           <TouchableOpacity style={{}} onPress={() => userMenuBottomSheetRef.current.snapToIndex(0)}>
+  //             <FastImage
+  //               source={{
+  //                 uri: auth.data.photo
+  //                   ? auth.data.photo
+  //                   : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
+  //               }}
+  //               style={{
+  //                 width: 30,
+  //                 height: 30,
+  //                 borderRadius: 7,
+  //                 backgroundColor: iconColorsTable['blue1'],
+  //               }}
+  //               tintColor={auth.data.photo ? null : 'white'}
+  //             />
+  //           </TouchableOpacity>
+  //         );
+  //       } else {
+  //         return (
+  //           <TouchableOpacity onPress={() => navigation.navigate('About Lampost')}>
+  //             <MaterialCommunityIcons name='account' size={25} color={'white'} />
+  //           </TouchableOpacity>
+  //         );
+  //       }
+  //     },
+  //   });
+  // }, [auth.isAuthenticated]);
 
   useEffect(() => {
     // (async () => {
@@ -231,6 +266,7 @@ const Map = (props) => {
           setFinishingMeetup,
           RSVPingMeetup,
           setRSVPingMeetup,
+          userMenuBottomSheetRef,
         }}
       >
         <View style={styles.container}>

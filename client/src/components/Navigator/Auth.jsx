@@ -12,6 +12,8 @@ import LogIn from '../Auth/LogIn';
 import EULA from '../Auth/EULA';
 import AddBadgeTags from '../User/AddBadgeTags/Container';
 import EmojiPicker from '../User/AddBadgeTags/EmojiPicker';
+import IconPicker from '../Utils/IconPicker/Container';
+import CreateBadge from '../User/CreateBadge/Container';
 import AddLink from '../User/AddLink';
 // import AddLinks from '../User/AddLink/Container';
 
@@ -255,7 +257,7 @@ const Auth = (props) => {
             options={({ navigation }) => ({
               headerLeft: () => (
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
+                  <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
                 </TouchableOpacity>
               ),
               headerStyle: {
@@ -274,7 +276,23 @@ const Auth = (props) => {
             options={({ navigation }) => ({
               headerLeft: () => (
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
+                  <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+                </TouchableOpacity>
+              ),
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitle: '',
+              headerTintColor: 'white',
+            })}
+          />
+          <Stack.Screen
+            name='Create badge'
+            component={CreateBadge}
+            options={({ navigation }) => ({
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
                 </TouchableOpacity>
               ),
               headerStyle: {
@@ -292,7 +310,7 @@ const Auth = (props) => {
             options={({ navigation }) => ({
               headerLeft: () => (
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
+                  <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
                 </TouchableOpacity>
               ),
               headerStyle: {
@@ -311,7 +329,7 @@ const Auth = (props) => {
             options={({ navigation }) => ({
               headerLeft: () => (
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
+                  <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
                 </TouchableOpacity>
               ),
               headerStyle: {
@@ -325,52 +343,15 @@ const Auth = (props) => {
             })}
           />
           <Stack.Screen
-            name='Add link'
-            component={AddLink}
+            name='Icon picker'
+            component={IconPicker}
             options={({ navigation }) => ({
               headerLeft: () => (
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
+                  <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
                 </TouchableOpacity>
               ),
-              headerStyle: {
-                backgroundColor: appBottomSheetBackgroundColor,
-              },
-              headerTitleStyle: {
-                fontWeight: 'bold',
-                color: 'white',
-              },
-              headerTintColor: 'white',
-            })}
-          />
-          <Stack.Screen
-            name='Clap friend'
-            component={ClapFriend}
-            options={({ navigation }) => ({
-              headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
-                </TouchableOpacity>
-              ),
-              headerStyle: {
-                backgroundColor: appBottomSheetBackgroundColor,
-              },
-              headerTitleStyle: {
-                fontWeight: 'bold',
-                color: 'white',
-              },
-              headerTintColor: 'white',
-            })}
-          />
-          <Stack.Screen
-            name='Boost badges'
-            component={BoostBadges}
-            options={({ navigation }) => ({
-              headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
-                </TouchableOpacity>
-              ),
+              headerTitle: 'Choose an icon',
               headerStyle: {
                 backgroundColor: appBottomSheetBackgroundColor,
               },

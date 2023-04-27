@@ -86,7 +86,7 @@ const AppButtons = (props) => {
   return (
     <ScrollView>
       <View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
             appMenuBottomSheetRef.current.close();
@@ -135,7 +135,7 @@ const AppButtons = (props) => {
             <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>Create badge section</Text>
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         {/* <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
@@ -323,6 +323,3 @@ const AppButtons = (props) => {
 };
 
 export default AppButtons;
-{
-  /* <Foundation name='prohibited' color={iconColorsTable['red1']} size={20} /> */
-}

@@ -551,6 +551,10 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+        <Text style={{ color: 'white', paddingTop: 10, paddingRight: 10, paddingLeft: 10 }}>
+          🤔 If you can't find your topics or interests here, please close this page and then go to "Create badge" to
+          make the unique badge.
+        </Text>
         <View style={{ height: 70, padding: 10 }}>
           <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
             <FilterOption
