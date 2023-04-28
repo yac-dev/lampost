@@ -1,4 +1,5 @@
 import Badge from '../models/badge';
+import BadgeAndBadgeTypeRelationship from '../models/badgeAndBadgeTypeRelationship';
 import BadgeAndUserRelationship from '../models/badgeAndUserRelationship';
 import User from '../models/user';
 import Asset from '../models/asset';
@@ -115,6 +116,30 @@ export const getIcons = async (request, response) => {
           icons,
         });
       }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const createBadge = async (request, response) => {
+  try {
+    const { iconId, name, color, userId, badgeTypeId } = request.body;
+    const badge = await Badge.create({
+      icon: iconId,
+      name,
+      color,
+      createdBy: userId,
+      createdAt: Date.now(),
+    });
+    const badgeAndBadgeTypeRelationship = await BadgeAndBadgeTypeRelationship.create({
+      badge: badge._id,
+      badgeType: badgeTypeId,
+    });
+
+    response.status(201).json({
+      badge,
+      badgeType: badgeTypeId,
     });
   } catch (error) {
     console.log(error);

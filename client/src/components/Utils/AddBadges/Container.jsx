@@ -17,11 +17,13 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 // components
 import Badges from './Badges/Container';
 import SearchBadgeBottomSheet from './SearchBadgeBottomSheet/Container';
 import BadgeDetailBottomSheet from './BadgeDetailBottomSheet/Container';
 import LoadingSpinner from '../LoadingSpinner';
+import SnackBar from '../SnackBar';
 import FilterOption from './FilterOption';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -353,6 +355,28 @@ const Container = (props) => {
     props.navigation.navigate('Create new library', { addedLibraryBadges: addedBadges });
   };
 
+  useEffect(() => {
+    if (props.route.params?.createdBadge) {
+      setAddedBadges((previous) => {
+        return {
+          ...previous,
+          [props.route.params.createdBadge._id]: props.route.params.createdBadge,
+        };
+      });
+      setSnackBar({
+        isVisible: true,
+        barType: 'success',
+        message: 'New badge have been created successfully.',
+        duration: 5000,
+      });
+      // setBadges((previous) => {
+      //   const updating = {...previous}
+      //   updating[props.route.params.createdBadge.badgeType].push(props.route.params.createdBadge.badge);
+      //   return updating
+      // })
+    }
+  }, [props.route.params?.createdBadge]);
+
   // query
   // useEffect(() => {
   //   if (props.route.params.fromComponent === 'ADD_USER_BADGES') {
@@ -446,7 +470,7 @@ const Container = (props) => {
                 />
                 <TouchableOpacity
                   style={{
-                    backgroundColor: rnDefaultBackgroundColor,
+                    backgroundColor: iconColorsTable['red1'],
                     top: -5,
                     right: -5,
                     position: 'absolute',
@@ -464,19 +488,19 @@ const Container = (props) => {
                     })
                   }
                 >
-                  <View
+                  <Feather name='minus' size={20} color={'white'} />
+                  {/* <View
                     style={{
                       width: '100%',
                       height: '100%',
                       borderRadius: 10,
-
+                      justifyContent: 'center',
+                      alignItems: 'center',
                       backgroundColor: iconColorsTable['red1'],
                     }}
                   >
-                    <View>
-                      <Ionicons name='remove' size={20} color={'white'} />
-                    </View>
-                  </View>
+                   
+                  </View> */}
                 </TouchableOpacity>
               </View>
             </View>
@@ -484,8 +508,8 @@ const Container = (props) => {
             <Text
               numberOfLines={1}
               style={{
-                paddingLeft: 5,
-                paddingRight: 5,
+                // paddingLeft: 5,
+                // paddingRight: 5,
                 color: baseTextColor,
                 fontWeight: 'bold',
                 alignSelf: 'center',
@@ -501,14 +525,16 @@ const Container = (props) => {
       return (
         <View
           style={{
-            height: 150,
+            height: 130,
             width: '100%',
-            padding: 10,
+            // padding: 10,
             backgroundColor: screenSectionBackgroundColor,
             borderRadius: 10,
           }}
         >
-          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>Adding badges</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', paddingLeft: 15, paddingTop: 10 }}>
+            Adding badges...
+          </Text>
           <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
             {list}
           </ScrollView>
@@ -551,164 +577,177 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        <Text style={{ color: 'white', paddingTop: 10, paddingRight: 10, paddingLeft: 10 }}>
+        {/* <Text style={{ color: 'white', paddingTop: 10, paddingRight: 10, paddingLeft: 10 }}>
           🤔 If you can't find your topics or interests here, please close this page and then go to "Create badge" to
           make the unique badge.
-        </Text>
-        <View style={{ height: 70, padding: 10 }}>
+        </Text> */}
+        <View style={{ padding: 10 }}>
           <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
             <FilterOption
               label='Arts & Crafts'
               value={'artsAndCrafts'}
-              icon={<MaterialIcons name='color-lens' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<MaterialIcons name='color-lens' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('artsAndCrafts')}
             />
             <FilterOption
               label='Animes'
               value='animes'
-              icon={<MaterialCommunityIcons name='pokeball' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<MaterialCommunityIcons name='pokeball' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('animes')}
             />
             <FilterOption
               label='Apps'
               value='apps'
-              icon={<MaterialCommunityIcons name='instagram' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<MaterialCommunityIcons name='instagram' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('apps')}
             />
             <FilterOption
               label='Books'
               value='books'
-              icon={<Entypo name='book' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<Entypo name='book' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('books')}
             />
             <FilterOption
               label='Business & Finance'
               value='businessAndFinance'
-              icon={<MaterialCommunityIcons name='finance' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<MaterialCommunityIcons name='finance' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('businessAndFinance')}
             />
             <FilterOption
               label='Vehicles'
               value='vehicles'
-              icon={<MaterialCommunityIcons name='motorbike' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<MaterialCommunityIcons name='motorbike' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('vehicles')}
             />
             <FilterOption
               label='Dancing'
               value='dancing'
               icon={
-                <MaterialCommunityIcons name='dance-ballroom' size={25} color={'white'} style={{ marginRight: 10 }} />
+                <MaterialCommunityIcons name='dance-ballroom' size={25} color={'white'} style={{ marginRight: 5 }} />
               }
               onFilterOptionPress={() => setSelectedFilterOption('dancing')}
             />
             <FilterOption
               label='Education'
               value='education'
-              icon={<Entypo name='graduation-cap' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<Entypo name='graduation-cap' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('education')}
             />
             <FilterOption
               label='Fashion & Beauty'
               value='fashionAndBeauty'
-              icon={<MaterialCommunityIcons name='shopping' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<MaterialCommunityIcons name='shopping' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('fashionAndBeauty')}
             />
             <FilterOption
               label='Foods & Drinks'
               value='foodsAndDrinks'
-              icon={<MaterialCommunityIcons name='food' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<MaterialCommunityIcons name='food' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('foodsAndDrinks')}
             />
             {/* <FilterOption
               label='Fitness & Health'
               value='fitnessAndHealth'
-              icon={<Ionicons name='fitness' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<Ionicons name='fitness' size={25} color={'white'} style={{ marginRight:5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('fitnessAndHealth')}
             /> */}
             <FilterOption
               label='Gamings'
               value='gamings'
-              icon={<MaterialCommunityIcons name='chess-pawn' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<MaterialCommunityIcons name='chess-pawn' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('gamings')}
             />
             <FilterOption
               label='Languages & Ethnic'
               value='languagesAndEthnic'
-              icon={<Entypo name='globe' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<Entypo name='globe' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('languagesAndEthnic')}
             />
             <FilterOption
               label='Films'
               value='films'
-              icon={<Fontisto name='film' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<Fontisto name='film' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('films')}
             />
             <FilterOption
               label='Music'
               value='music'
-              icon={<Ionicons name='musical-notes' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<Ionicons name='musical-notes' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('music')}
             />
             <FilterOption
               label='Spirituality'
               value='spirituality'
-              icon={<MaterialCommunityIcons name='ufo-outline' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<MaterialCommunityIcons name='ufo-outline' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('spirituality')}
             />
             <FilterOption
               label='Family'
               value='family'
-              icon={<MaterialIcons name='family-restroom' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<MaterialIcons name='family-restroom' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('family')}
             />
             <FilterOption
               label='Video games'
               value='videoGames'
-              icon={<Ionicons name='ios-game-controller' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<Ionicons name='ios-game-controller' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('videoGames')}
             />
             <FilterOption
               label='Sports & Outdoors'
               value='sportsAndOutdoors'
-              icon={<Ionicons name='basketball' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<Ionicons name='basketball' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('sportsAndOutdoors')}
             />
             <FilterOption
               label='Tech'
               value='tech'
-              icon={<Entypo name='code' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<Entypo name='code' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('tech')}
             />
             {/* <FilterOption
               label='Outdoors'
               value='outdoors'
-              icon={<MaterialCommunityIcons name='hiking' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<MaterialCommunityIcons name='hiking' size={25} color={'white'} style={{ marginRight:5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('outdoors')}
             /> */}
             <FilterOption
               label='Pets & Animals'
               value='petsAndAnimals'
-              icon={<MaterialIcons name='pets' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<MaterialIcons name='pets' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('petsAndAnimals')}
             />
             <FilterOption
               label='Photography'
               value='photography'
-              icon={<Fontisto name='photograph' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<Fontisto name='photograph' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('photography')}
             />
             <FilterOption
               label='Writings'
               value='writings'
-              icon={<Ionicons name='pencil' size={25} color={'white'} style={{ marginRight: 10 }} />}
+              icon={<Ionicons name='pencil' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('writings')}
             />
           </ScrollView>
         </View>
-        <View style={{ padding: 10, borderRadius: 15 }}>{renderAddedBadges()}</View>
+        {Object.values(addedBadges).length ? <View style={{}}>{renderAddedBadges()}</View> : null}
+
         <Badges />
+        <View style={{ paddingLeft: 10, paddingRight: 10, width: '100%' }}>
+          <TouchableOpacity
+            style={{ backgroundColor: iconColorsTable['blue1'], padding: 10, borderRadius: 7 }}
+            onPress={() => props.navigation.navigate('Create badge')}
+          >
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 18, textAlign: 'center' }}>Create new?</Text>
+            <Text style={{ color: 'white', fontSize: 12 }}>
+              Could't find your topics above? Let's create your original one here.
+            </Text>
+          </TouchableOpacity>
+        </View>
         {/* <BadgeDetailBottomSheet /> */}
         <LoadingSpinner />
+        <SnackBar />
       </View>
     </AddBadgesContext.Provider>
   );

@@ -12,13 +12,11 @@ const badgeSchema = new mongoose.Schema({
   color: {
     type: String,
   },
-  creator: {
-    user: {
-      type: mongoose.Schema.ObjectId,
-      ref: 'User',
-    },
-    createdAt: Date,
+  createdBy: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
   },
+  createdAt: Date,
 });
 
 // badgeSchema.set('toJSON', { virtuals: true });

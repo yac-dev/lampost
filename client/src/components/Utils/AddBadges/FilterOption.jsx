@@ -11,7 +11,7 @@ const FilterOption = (props) => {
         padding: 10,
         backgroundColor: selectedFilterOption === props.value ? iconColorsTable['blue1'] : screenSectionBackgroundColor,
         justifyContent: 'center',
-        borderRadius: 10,
+        borderRadius: 7,
         marginRight: 10,
         flexDirection: 'row',
         alignItems: 'center',

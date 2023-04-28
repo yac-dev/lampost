@@ -1,8 +1,8 @@
 import express from 'express';
 const router = express.Router();
-import { getBadges, getBadgesByRolls, getBadgeRolls, getIcons } from '../controllers/badges';
+import { getBadges, getBadgesByRolls, getBadgeRolls, getIcons, createBadge } from '../controllers/badges';
 
-router.route('/').post(getBadges);
+router.route('/').post(createBadge);
 router.route('/rolls').get(getBadgesByRolls);
 router.route('/icons').get(getIcons);
 
