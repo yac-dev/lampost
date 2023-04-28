@@ -15,7 +15,8 @@ import { iconsTable } from '../../../utils/icons';
 
 const Public = () => {
   const { AntDesign, Ionicons, MaterialCommunityIcons } = iconsTable;
-  const { formData, setFormData, stageCleared, setStageCleared, accordion, setAccordion } = useContext(FormContext);
+  const { formData, setFormData, stageCleared, setStageCleared, accordion, setAccordion, navigation } =
+    useContext(FormContext);
 
   useEffect(() => {
     if (typeof formData.public === 'boolean') {
@@ -170,9 +171,12 @@ const Public = () => {
               {renderCheckMarkForJustFriends()}
             </TouchableOpacity>
           </View>
-          {!formData.public ? (
+          {typeof formData.public === 'boolean' && !formData.public ? (
             <View style={{ marginTop: 10 }}>
-              <TouchableOpacity style={{ backgroundColor: iconColorsTable['blue1'], borderRadius: 5, padding: 5 }}>
+              <TouchableOpacity
+                style={{ backgroundColor: iconColorsTable['blue1'], borderRadius: 5, padding: 5 }}
+                onPress={() => navigation.navigate('My friends')}
+              >
                 <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
                   <MaterialCommunityIcons
                     name='human-greeting-variant'

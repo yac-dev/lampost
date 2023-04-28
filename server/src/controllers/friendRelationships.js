@@ -52,16 +52,16 @@ export const getMyFriends = async (request, response) => {
       path: 'friend',
       select: '_id name photo topBadges',
     });
-    const friendObjects = friendRelationships.map((relationship) => {
+    const myFriends = friendRelationships.map((relationship) => {
       return {
         _id: relationship._id,
-        user: relationship.friend,
-        friendChatRoom: relationship.friendChatRoom,
+        friend: relationship.friend,
+        // friendChatRoom: relationship.friendChatRoom,
       };
     });
 
     response.status(200).json({
-      friendObjects,
+      myFriends,
     });
   } catch (error) {
     console.log(error);
