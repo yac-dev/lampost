@@ -7,6 +7,7 @@ import { baseBackgroundColor, screenSectionBackgroundColor } from '../../../util
 import Title from './Title';
 import Badges from './Badges';
 import MediaType from './MediaType';
+import Public from './Public';
 import Trust from './Trust';
 import Reactions from './Reactions';
 import Description from './Description';
@@ -20,6 +21,7 @@ const Container = (props) => {
     title: '',
     badges: {},
     assetType: '',
+    public: '',
     isReactionAvailable: '',
     reactions: [],
     isCommentAvailable: '',
@@ -31,6 +33,7 @@ const Container = (props) => {
     badges: false,
     assetType: false,
     // trust: false,
+    public: false,
     reaction: false,
     comment: false,
     description: false,
@@ -41,6 +44,7 @@ const Container = (props) => {
     badges: false,
     assetType: false,
     // trust: false,
+    public: false,
     reaction: false,
     comment: false,
     description: false,
@@ -52,6 +56,7 @@ const Container = (props) => {
       title: formData.title,
       badgeIds: Object.keys(formData.badges),
       assetType: formData.assetType,
+      public: formData.public,
       isReactionAvailable: formData.isReactionAvailable,
       reactions: formData.reactions,
       isCommentAvailable: formData.isCommentAvailable,
@@ -93,6 +98,7 @@ const Container = (props) => {
             stageCleared.title &&
             stageCleared.badges &&
             stageCleared.assetType &&
+            stageCleared.public &&
             // stageCleared.trust &&
             stageCleared.reaction &&
             stageCleared.comment &&
@@ -108,6 +114,7 @@ const Container = (props) => {
                 stageCleared.title &&
                 stageCleared.badges &&
                 stageCleared.assetType &&
+                stageCleared.public &&
                 // stageCleared.trust &&
                 stageCleared.reaction &&
                 stageCleared.comment &&
@@ -156,6 +163,7 @@ const Container = (props) => {
           <Title />
           <Badges />
           <MediaType />
+          <Public />
           {/* <Trust /> */}
           <Reactions />
           <Comment />
