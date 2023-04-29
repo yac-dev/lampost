@@ -5,6 +5,7 @@ import GlobalContext from './GlobalContext';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MapNavigator from './components/Navigator/Map';
 import LibraryNavigator from './components/Navigator/Library';
+import HomeNavigator from './components/Navigator/Home';
 import AuthNavigator from './components/Navigator/Auth';
 import DiscoverTopTab from './components/Navigator/DiscoverTopTab';
 import LoadingSpinner from './components/Utils/LoadingSpinner';
@@ -22,7 +23,7 @@ const Tab = createBottomTabNavigator();
 const CameraBase = () => <View style={{ flex: 1, backgroundColor: 'red' }} />;
 
 const RootNavigator = () => {
-  const { MaterialCommunityIcons, Ionicons, FontAwesome5, MaterialIcons } = iconsTable;
+  const { MaterialCommunityIcons, Ionicons, FontAwesome5, MaterialIcons, Entypo } = iconsTable;
   const { chatsNotificationCount, friendChatsNotificationCount } = useContext(GlobalContext);
 
   // tabBarStyle: { display: 'none' }
@@ -41,6 +42,52 @@ const RootNavigator = () => {
       }}
     >
       <Tab.Screen
+        name='Basecamp'
+        component={HomeNavigator}
+        options={{
+          headerShown: false,
+          tabBarLabel: 'Basecamp',
+          tabBarIcon: ({ size, color, focused }) => (
+            <Entypo name='basecamp' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name='Discover'
+        component={DiscoverTopTab}
+        options={({ navigation }) => ({
+          headerShown: false,
+          // headerTransparent: true,
+          // headerLeft: () => <Button onPress={() => navigation.navigate('Add comment')}>User page</Button>,
+          tabBarIcon: ({ size, color, focused }) => (
+            <Ionicons name='compass' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+          ),
+          showLabel: false,
+          tabBarLabel: 'Discover',
+          // tabBarBadge: friendChatsNotificationCount ? friendChatsNotificationCount : null,
+          // tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
+        })}
+      />
+
+      <Tab.Screen
+        name='Camera'
+        component={CameraBase}
+        options={{
+          headerShown: false,
+          tabBarLabel: 'Camera',
+          tabBarIcon: ({ size, color, focused }) => (
+            <MaterialCommunityIcons name='camera' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+          ),
+        }}
+        listeners={({ navigation }) => ({
+          tabPress: (event) => {
+            event.preventDefault();
+            navigation.navigate('CameraNew'); // <-- Here you put the name where the chat component is declared
+          },
+        })}
+      />
+
+      {/* <Tab.Screen
         name='Meetups'
         component={MapNavigator}
         options={({ route }) => ({
@@ -71,23 +118,6 @@ const RootNavigator = () => {
           // })(route),
         })}
       />
-      <Tab.Screen
-        name='Camera'
-        component={CameraBase}
-        options={{
-          headerShown: false,
-          tabBarLabel: 'Camera',
-          tabBarIcon: ({ size, color, focused }) => (
-            <MaterialCommunityIcons name='camera' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
-          ),
-        }}
-        listeners={({ navigation }) => ({
-          tabPress: (event) => {
-            event.preventDefault();
-            navigation.navigate('CameraNew'); // <-- Here you put the name where the chat component is declared
-          },
-        })}
-      />
 
       <Tab.Screen
         name='LibraryNavigator'
@@ -100,7 +130,7 @@ const RootNavigator = () => {
           ),
           showLabel: false,
         }}
-      />
+      /> */}
 
       {/* 全てのcomponent、navigatorを足さないといけないわ。Mapと全く同じように。この状態だと。mapの方のuser page routeに行く。*/}
       <Tab.Screen
@@ -117,22 +147,6 @@ const RootNavigator = () => {
           tabBarLabel: 'Profile',
           tabBarBadge: friendChatsNotificationCount ? friendChatsNotificationCount : null,
           tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
-        })}
-      />
-      <Tab.Screen
-        name='Discover'
-        component={DiscoverTopTab}
-        options={({ navigation }) => ({
-          headerShown: false,
-          // headerTransparent: true,
-          // headerLeft: () => <Button onPress={() => navigation.navigate('Add comment')}>User page</Button>,
-          tabBarIcon: ({ size, color, focused }) => (
-            <Ionicons name='compass' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
-          ),
-          showLabel: false,
-          tabBarLabel: 'Discover',
-          // tabBarBadge: friendChatsNotificationCount ? friendChatsNotificationCount : null,
-          // tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
         })}
       />
 
