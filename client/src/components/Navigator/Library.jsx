@@ -37,8 +37,8 @@ const LibraryNavigator = () => {
           name='Libraries'
           component={Container}
           options={({ navigation }) => ({
-            headerShown: true,
-            title: 'Libraries',
+            headerShown: false,
+            // title: 'Libraries',
             headerStyle: {
               backgroundColor: appBottomSheetBackgroundColor,
             },

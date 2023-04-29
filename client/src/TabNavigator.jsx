@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MapNavigator from './components/Navigator/Map';
 import LibraryNavigator from './components/Navigator/Library';
 import AuthNavigator from './components/Navigator/Auth';
+import DiscoverTopTab from './components/Navigator/DiscoverTopTab';
 import LoadingSpinner from './components/Utils/LoadingSpinner';
 import NotAvailableModal from './components/Utils/NotAvailableModal';
 import PleaseLoginModal from './components/Utils/PleaseLoginModal';
@@ -118,6 +119,23 @@ const RootNavigator = () => {
           tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
         })}
       />
+      <Tab.Screen
+        name='Discover'
+        component={DiscoverTopTab}
+        options={({ navigation }) => ({
+          headerShown: false,
+          // headerTransparent: true,
+          // headerLeft: () => <Button onPress={() => navigation.navigate('Add comment')}>User page</Button>,
+          tabBarIcon: ({ size, color, focused }) => (
+            <Ionicons name='compass' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+          ),
+          showLabel: false,
+          tabBarLabel: 'Discover',
+          // tabBarBadge: friendChatsNotificationCount ? friendChatsNotificationCount : null,
+          // tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
+        })}
+      />
+
       {/* <Tab.Screen
         name='Cal'
         component={Cal}

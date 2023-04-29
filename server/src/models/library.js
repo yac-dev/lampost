@@ -36,7 +36,7 @@ const librarySchema = new mongoose.Schema({
   totalMembers: Number,
   rate: Number,
   createdAt: Date,
-  public: Boolean, // true or false(private)
+  isPublic: Boolean, // true or false(private)
 });
 
 // このlibraryに紐づくalbumがいくともある感じになる。
