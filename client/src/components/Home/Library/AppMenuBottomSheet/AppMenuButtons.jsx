@@ -30,6 +30,8 @@ const AppMenuButtons = () => {
     setLibraryPosts,
     membersBottomSheetRef,
     setIsConfirmPostAssetsModalOpen,
+    isMenuTapped,
+    setIsMenuTapped,
   } = useContext(LibraryContext);
 
   // const getUsersByLibraryId = async () => {
@@ -40,8 +42,6 @@ const AppMenuButtons = () => {
 
   return (
     <View style={{}}>
-      {/* <ScrollView style={{ flexDirection: 'row' }} horizontal={true}> */}
-      <Text style={{ marginBottom: 10, fontSize: 20, fontWeight: 'bold', color: 'white' }}>Menu</Text>
       <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
         onPress={() => {
@@ -97,35 +97,9 @@ const AppMenuButtons = () => {
         <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
       </TouchableOpacity>
       {/* <TouchableOpacity
-        style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
-        onPress={() => {
-          null;
-        }}
-      >
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View
-            style={{
-              width: 35,
-              height: 35,
-              backgroundColor: backgroundColorsTable['violet1'],
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 7,
-              marginRight: 10,
-            }}
-          >
-            <Ionicons name='library-sharp' color={iconColorsTable['violet1']} size={20} />
-          </View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Library detail</Text>
-        </View>
-        <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
-      </TouchableOpacity> */}
-      {/* {library?.launcher._id === auth.data?._id ? null : (
-        <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
-            setIsLeaveLibraryConfirmationModalOpen(true);
-            appMenuBottomSheetRef.current.snapToIndex(0);
+            null;
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -133,22 +107,48 @@ const AppMenuButtons = () => {
               style={{
                 width: 35,
                 height: 35,
-                backgroundColor: backgroundColorsTable['green1'],
+                backgroundColor: backgroundColorsTable['violet1'],
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 7,
                 marginRight: 10,
               }}
             >
-              <MaterialCommunityIcons name='exit-run' color={iconColorsTable['green1']} size={20} />
+              <Ionicons name='library-sharp' color={iconColorsTable['violet1']} size={20} />
             </View>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>
-              Leave this library
-            </Text>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Library detail</Text>
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
-        </TouchableOpacity>
-      )} */}
+        </TouchableOpacity> */}
+      {/* {library?.launcher._id === auth.data?._id ? null : (
+          <TouchableOpacity
+            style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+            onPress={() => {
+              setIsLeaveLibraryConfirmationModalOpen(true);
+              appMenuBottomSheetRef.current.snapToIndex(0);
+            }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View
+                style={{
+                  width: 35,
+                  height: 35,
+                  backgroundColor: backgroundColorsTable['green1'],
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 7,
+                  marginRight: 10,
+                }}
+              >
+                <MaterialCommunityIcons name='exit-run' color={iconColorsTable['green1']} size={20} />
+              </View>
+              <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>
+                Leave this library
+              </Text>
+            </View>
+            <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+          </TouchableOpacity>
+        )} */}
       {/* </ScrollView> */}
     </View>
   );

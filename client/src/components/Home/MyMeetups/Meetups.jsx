@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import GlobalContext from '../../../GlobalContext';
+import MyMeetupsContext from './MyMeetupsContext';
 import {
   iconColorsTable,
   inputBackgroundColorNew,
@@ -13,6 +14,7 @@ const { Ionicons, MaterialCommunityIcons } = iconsTable;
 
 const Meetups = (props) => {
   const { auth, myUpcomingMeetups } = useContext(GlobalContext);
+  const { navigation } = useContext(MyMeetupsContext);
 
   const renderTime = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {

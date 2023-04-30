@@ -16,7 +16,7 @@ import { Video } from 'expo-av';
 import FastImage from 'react-native-fast-image';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import { LocaleConfig } from 'react-native-calendars';
-import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
+import AppMenuBottomSheet from './Menu';
 // import AlbumsBottomSheet from './AlbumsBottomSheet/Container';
 // import MembersBottomSheet from './MembersBottomSheet';
 import Header from './Header';
@@ -64,6 +64,7 @@ const Container = (props) => {
   const oneAssetWidth = isIpad ? Dimensions.get('window').width / 4 : Dimensions.get('window').width / 2;
   const [currentYearAndMonth, setCurrentYearAndMonth] = useState('');
   const [assetsTable, setAssetsTable] = useState({});
+  const [isMenuTapped, setIsMenuTapped] = useState(false);
   // {2023-5: {3: assetObj , 4: assetObj, 5: assetObj}} って感じか。
 
   useEffect(() => {
@@ -227,13 +228,15 @@ const Container = (props) => {
         setIsLeaveLibraryConfirmationModalOpen,
         isConfirmPostAssetsModalOpen,
         setIsConfirmPostAssetsModalOpen,
+        isMenuTapped,
+        setIsMenuTapped,
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
         <Calendar
           style={{
             width: '100%',
-            aspectRatio: 1,
+            // aspectRatio: 1,
           }}
           // horizontal={true}
           locale={'en'}
@@ -250,57 +253,28 @@ const Container = (props) => {
             textMonthFontWeight: 'bold',
           }}
         />
-        {/* <View>
-          <Text style={{ color: 'red' }}>Helloooo</Text>
-        </View> */}
-        {auth.isAuthenticated ? (
-          <View
-            style={{
-              position: 'absolute',
-              bottom: 20,
-              backgroundColor: backgroundColorsTable['yellow1'],
-              borderRadius: 10,
-              alignSelf: 'center',
-              padding: 10,
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}
-          >
-            <TouchableOpacity
-              style={{
-                backgroundColor: iconColorsTable['yellow1'],
-                padding: 10,
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderRadius: 10,
-                marginRight: 10,
-              }}
-              onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
-            >
-              <Ionicons name='ios-apps' size={25} color={'white'} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                backgroundColor: iconColorsTable['yellow1'],
-                padding: 10,
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderRadius: 10,
-              }}
-              onPress={() => albumsBottomSheetRef.current.snapToIndex(0)}
-            >
-              <MaterialCommunityIcons name='image-album' size={25} color={'white'} />
-            </TouchableOpacity>
-          </View>
-        ) : null}
-        {/* <TouchableOpacity onPress={() => props.navigation.navigate('Page1')}>
-          <Text style={{ color: 'red' }}>He</Text>
-        </TouchableOpacity> */}
-
-        <AppMenuBottomSheet />
-        {/* <AlbumsBottomSheet /> */}
+        <TouchableOpacity
+          style={{
+            backgroundColor: iconColorsTable['blue1'],
+            padding: 10,
+            flexDirection: 'row',
+            alignItems: 'center',
+            borderRadius: 7,
+            position: 'absolute',
+            bottom: 20,
+            right: 20,
+            alignSelf: 'center',
+          }}
+          onPress={() => {
+            setIsMenuTapped(true);
+          }}
+        >
+          <MaterialCommunityIcons name='lightbulb-on' size={25} color={'white'} style={{ marginRight: 10 }} />
+          <Text style={{ color: 'white' }}>Action</Text>
+        </TouchableOpacity>
         <ConfirmLeaveLibrary />
       </View>
+      <AppMenuBottomSheet />
     </LibraryContext.Provider>
   );
 };

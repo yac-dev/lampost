@@ -1,18 +1,21 @@
 import React, { useContext } from 'react';
 import GlobalContext from '../../../GlobalContext';
+import MyMeetupsContext from './MyMeetupsContext';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { baseBackgroundColor, screenSectionBackgroundColor } from '../../../utils/colorsTable';
 import Meetups from './Meetups';
 
-const Container = () => {
+const Container = (props) => {
   const { auth, isFetchedAuthData } = useContext(GlobalContext);
 
   if (isFetchedAuthData) {
     if (auth.isAuthenticated) {
       return (
-        <View style={{ flex: 1, padding: 10, backgroundColor: baseBackgroundColor }}>
-          <Meetups />
-        </View>
+        <MyMeetupsContext.Provider value={{ navigation: props.navigation }}>
+          <View style={{ flex: 1, padding: 10, backgroundColor: baseBackgroundColor }}>
+            <Meetups />
+          </View>
+        </MyMeetupsContext.Provider>
       );
     } else {
       return (

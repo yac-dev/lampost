@@ -5,9 +5,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { getFocusedRouteNameFromRoute, NavigationContainer } from '@react-navigation/native';
 const Stack = createNativeStackNavigator();
 import LibraryContainer from '../../Home/Library/Container';
-import Page1 from '../../Home/Library/Page1';
-import AddAssets from '../../Utils/AddAssets/Container';
 import DateAssets from '../../Home/Library/DateAssets/Container';
+import Members from '../../Home/Library/Members';
+import AddAssets from '../../Utils/AddAssets/Container';
 import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 
 const LibraryNavigator = () => {
@@ -45,14 +45,13 @@ const LibraryNavigator = () => {
           })}
         />
 
-        {/* <Stack.Screen
-          name='Library'
-          component={Library}
+        <Stack.Screen
+          name='Members'
+          component={Members}
           options={({ navigation }) => ({
-            headerStyle: {
-              backgroundColor: appBottomSheetBackgroundColor,
-              borderBottomWidth: 0,
-            },
+            headerShown: true,
+            title: '',
+            headerTransparent: true,
             // title: 'Basecamp',
             headerTitleStyle: {
               fontWeight: 'bold',
@@ -63,7 +62,7 @@ const LibraryNavigator = () => {
             //   color: 'white',
             // },
           })}
-        /> */}
+        />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'modal', gestureEnabled: false }}>
         <Stack.Screen

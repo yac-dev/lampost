@@ -6,6 +6,7 @@ import { getFocusedRouteNameFromRoute, NavigationContainer } from '@react-naviga
 const Stack = createNativeStackNavigator();
 
 import MeetupsContainer from '../../Home/MyMeetups/Container';
+import Lounge from '../../Home/MyMeetups/Lounge/Container';
 // import CreateLibrary from '../Libraries/CreateLibraryBottomSheet/ContainerNew'
 import CreateNewLibrary from '../../Libraries/CreateNewLibrary/Container';
 import CreateReaction from '../../Libraries/CreateNewLibrary/CreateReaction/Container';
@@ -53,6 +54,25 @@ const HomeMyMeetupsNavigator = () => {
         />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
+        <Stack.Screen
+          name='Lounge'
+          component={Lounge}
+          options={({ navigation }) => ({
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+              </TouchableOpacity>
+            ),
+            headerTitle: 'Lounge',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          })}
+        />
         {/* <Stack.Screen
           name='Create new library'
           component={CreateNewLibrary}

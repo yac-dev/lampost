@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, ActivityIndicator, FlatList } from 'react-native';
+import { View, Text, ActivityIndicator, FlatList, SafeAreaView } from 'react-native';
 import GlobalContext from '../../../GlobalContext';
 import lampostAPI from '../../../apis/lampost';
 import { baseBackgroundColor } from '../../../utils/colorsTable';
@@ -44,17 +44,19 @@ const Members = (props) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: baseBackgroundColor, paddingLeft: 10, paddingRight: 10 }}>
-      {!isFetchedMembers ? (
-        <ActivityIndicator textContent={'🧒👨🏽‍🦳👨🏾‍🦱🙋'} />
-      ) : (
-        <FlatList
-          data={members}
-          renderItem={({ item }) => renderItem(item)}
-          keyExtractor={(item, index) => `${item._id}-${index}`}
-        />
-      )}
-    </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
+      <View style={{ paddingLeft: 10, paddingRight: 10 }}>
+        {!isFetchedMembers ? (
+          <ActivityIndicator textContent={'🧒👨🏽‍🦳👨🏾‍🦱🙋'} />
+        ) : (
+          <FlatList
+            data={members}
+            renderItem={({ item }) => renderItem(item)}
+            keyExtractor={(item, index) => `${item._id}-${index}`}
+          />
+        )}
+      </View>
+    </SafeAreaView>
   );
 };
 
