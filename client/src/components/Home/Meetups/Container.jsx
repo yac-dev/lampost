@@ -1,20 +1,33 @@
 import React, { useContext } from 'react';
 import GlobalContext from '../../../GlobalContext';
-import { View, Text } from 'react-native';
-import { screenSectionBackgroundColor } from '../../../utils/colorsTable';
+import { View, Text, ActivityIndicator } from 'react-native';
+import { baseBackgroundColor, screenSectionBackgroundColor } from '../../../utils/colorsTable';
+import Meetups from './Meetups';
 
 const Container = () => {
-  const { auth } = useContext(GlobalContext);
-  return (
-    <View style={{ padding: 10, marginBottom: 25 }}>
-      <Text style={{ color: 'white', fontSize: 22, fontWeight: 'bold', marginBottom: 10 }}>My upcoming meetups</Text>
-      <View style={{ backgroundColor: screenSectionBackgroundColor, borderRadius: 10, padding: 15 }}>
-        <Text style={{ textAlign: 'center', color: 'white' }}>
-          You'll see all the meetups you've launched or joined.
-        </Text>
+  const { auth, isFetchedAuthData } = useContext(GlobalContext);
+
+  if (isFetchedAuthData) {
+    if (auth.isAuthenticated) {
+      return (
+        <View style={{ flex: 1, padding: 10, backgroundColor: baseBackgroundColor }}>
+          <Meetups />
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          <Text style={{ color: 'white' }}>Please login</Text>
+        </View>
+      );
+    }
+  } else {
+    return (
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
+        <ActivityIndicator />
       </View>
-    </View>
-  );
+    );
+  }
 };
 
 export default Container;

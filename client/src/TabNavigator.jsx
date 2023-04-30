@@ -5,6 +5,7 @@ import GlobalContext from './GlobalContext';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MapNavigator from './components/Navigator/Map';
 import LibraryNavigator from './components/Navigator/Library';
+import HomeTopTab from './components/Navigator/HomeTopTab';
 import HomeNavigator from './components/Navigator/Home';
 import AuthNavigator from './components/Navigator/Auth';
 import DiscoverTopTab from './components/Navigator/DiscoverTopTab';
@@ -43,10 +44,21 @@ const RootNavigator = () => {
     >
       <Tab.Screen
         name='Basecamp'
-        component={HomeNavigator}
+        component={HomeTopTab}
         options={{
-          headerShown: false,
+          headerShown: true,
+          title: 'Basecamp',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: appBottomSheetBackgroundColor,
+            borderBottomWidth: 0,
+          },
           tabBarLabel: 'Basecamp',
+          tabBarStyle: {
+            // display: hide ? 'none' : 'flex',
+            backgroundColor: appBottomSheetBackgroundColor,
+            borderTopWidth: 0,
+          },
           tabBarIcon: ({ size, color, focused }) => (
             <Entypo name='basecamp' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
           ),

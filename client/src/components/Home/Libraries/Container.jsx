@@ -1,18 +1,50 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import { screenSectionBackgroundColor } from '../../../utils/colorsTable';
+import React, { useEffect, useContext } from 'react';
+import GlobalContext from '../../../GlobalContext';
+import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { screenSectionBackgroundColor, baseBackgroundColor } from '../../../utils/colorsTable';
+import lampostAPI from '../../../apis/lampost';
+import Libraries from './Libraries';
 
 const Container = () => {
-  return (
-    <View style={{ padding: 10, marginBottom: 25 }}>
-      <Text style={{ color: 'white', fontSize: 22, fontWeight: 'bold', marginBottom: 10 }}>My Libraries</Text>
-      <View style={{ backgroundColor: screenSectionBackgroundColor, borderRadius: 10, padding: 15 }}>
-        <Text style={{ textAlign: 'center', color: 'white' }}>
-          You'll see all libraries you've created or joined.{'\n'}
-        </Text>
+  const { auth, setMyJoinedLibraries, isFetchedAuthData } = useContext(GlobalContext);
+
+  const getMyJoinedLibraries = async () => {
+    const result = await lampostAPI.get(`/libraryanduserrelationships/${auth.data._id}`);
+    const { myJoinedLibraries } = result.data;
+    setMyJoinedLibraries(myJoinedLibraries);
+  };
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      getMyJoinedLibraries();
+    }
+  }, [auth.isAuthenticated]);
+
+  if (isFetchedAuthData) {
+    if (auth.isAuthenticated) {
+      return (
+        <View style={{ flex: 1, padding: 10, backgroundColor: baseBackgroundColor }}>
+          <Libraries />
+        </View>
+      );
+    } else {
+      <View>
+        <Text style={{ marginBottom: 30 }}>Once you login, .....</Text>
+        <TouchableOpacity style={{ backgroundColor: 'red', padding: 10 }}>
+          <Text>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={{ backgroundColor: 'red', padding: 10 }}>
+          <Text>Signup</Text>
+        </TouchableOpacity>
+      </View>;
+    }
+  } else {
+    return (
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
+        <ActivityIndicator />
       </View>
-    </View>
-  );
+    );
+  }
 };
 
 export default Container;

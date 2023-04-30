@@ -77,6 +77,7 @@ const ChatBase = () => <View style={{ flex: 1, backgroundColor: 'red' }} />;
 
 const AppStack = (props) => {
   const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
+  const [isFetchedAuthData, setIsFetchedAuthData] = useState(false);
   const [auth, setAuth] = useState({
     data: null,
     socket: null,
@@ -98,6 +99,8 @@ const AppStack = (props) => {
   const [chatsNotificationCount, setChatsNotificationCount] = useState(0);
   const hide = routeName === 'Dummy2' || routeName === 'Q&A';
   const [myUpcomingMeetups, setMyUpcomingMeetups] = useState({});
+  const [myJoinedLibraries, setMyJoinedLibraries] = useState([]);
+  const [selectedLibraryDetailComponent, setSelectedLibraryDetailComponent] = useState('');
   const [isFetchedMyUpcomingMeetups, setIsFetchedMyUpcomingMeetups] = useState(false);
   const [hasNotification, setHasNotification] = useState(false);
   const [unreadFriendChats, setUnreadFriendChats] = useState({});
@@ -346,81 +349,16 @@ const AppStack = (props) => {
         return { ...previous, data: user, isAuthenticated: true };
       });
     }
+    setIsFetchedAuthData(true);
   };
   useEffect(() => {
     loadMe();
   }, []);
 
-  // あー。このapiのendpointが。。。
-  // const getSocket = () => {
-  //   // 'https://lampost-server-production.onrender.com/api'
-  //   //
-  //   // console.log(Constants.manifest.extra.socketEndpoint);
-  //   // const { socketEndpoint } = Constants.manifest.extra.socketEndpoint;
-  //   // 'http://192.168.11.5:3500'
-  //   // const socket = io('https://lampost-server-production.onrender.com', {
-  //   const socket = io('http://192.168.11.5:3500', {
-  //     path: '/mysocket',
-  //   });
-  //   setAuth((previous) => {
-  //     return { ...previous, socket: socket };
-  //   });
-  // };
-  // // loginされたら、socketを取る。
-  // useEffect(() => {
-  //   if (auth.isAuthenticated) {
-  //     getSocket();
-  //   }
-  // }, [auth.isAuthenticated]);
-
-  // これ、なんでこんなに動いている？そもそも.
-
-  // [auth.isAuthenticated, auth.data?.ongoingMeetup] dependencyがこれだと、毎回動いていた。つまり、多分auth.dataのupdateにつれて動いていたんだろうね。。。これまた発見。
-
-  // socketが接続されたら、loungeに入る。
-  // useEffect(() => {
-  //   if (auth.socket) {
-  //     const meetupIds = auth.data.upcomingMeetups.map((meetupObject) => meetupObject.meetup);
-  //     auth.socket.emit('JOIN_LOUNGES', { meetupIds });
-
-  //     return () => {
-  //       auth.socket.off('JOIN_LOUNGES');
-  //       // console.log('hello');
-  //     };
-  //   }
-  // }, [auth.socket]);
-  // console.log(myUpcomingMeetupAndChatsTable);
-
-  // useEffect(() => {
-  //   if (auth.socket && routeName !== 'Lounge') {
-  //     auth.socket.on('I_GOT_A_CHAT_OUT_OF_THE_ROOM.GO_CHECK_OUT_THE_LOUNGE', (data) => {
-  //       // lounge以外のscreenにいる時でこのsocket eventを受けたら、chatのstateを変える。
-  //       // if (routeName !== 'Lounge') {
-  //       // }
-  //       // console.log(routeName);
-  //       if (data.user._id !== auth.data._id) {
-  //         setMyUpcomingMeetupAndChatsTable((previous) => {
-  //           const updating = { ...previous };
-  //           if (routeName !== 'Lounge') {
-  //             updating[data.meetup].unreadChatsCount = updating[data.meetup].unreadChatsCount + 1;
-  //           }
-  //           return updating;
-  //         });
-  //         if (routeName !== 'Lounge') {
-  //           setTotalUnreadChatsCount((previous) => previous + 1);
-  //         }
-  //       }
-  //     });
-
-  //     return () => {
-  //       auth.socket.off('I_GOT_A_CHAT_OUT_OF_THE_ROOM.GO_CHECK_OUT_THE_LOUNGE');
-  //     };
-  //   }
-  // }, [auth.socket, routeName]);
-
   return (
     <GlobalContext.Provider
       value={{
+        isFetchedAuthData,
         isIpad,
         auth,
         setAuth,
@@ -445,6 +383,8 @@ const AppStack = (props) => {
         setChatsNotificationCount,
         myUpcomingMeetups,
         setMyUpcomingMeetups,
+        myJoinedLibraries,
+        setMyJoinedLibraries,
         unreadFriendChats,
         setUnreadFriendChats,
         friendChatsNotificationCount,
