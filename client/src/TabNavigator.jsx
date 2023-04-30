@@ -3,10 +3,11 @@ import { View, Text } from 'react-native';
 import GlobalContext from './GlobalContext';
 // import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MapNavigator from './components/Navigator/Map';
-import LibraryNavigator from './components/Navigator/Library';
-import HomeTopTab from './components/Navigator/HomeTopTab';
-import HomeNavigator from './components/Navigator/Home';
+import MapNavigator from './components/Navigator/Discover/Map';
+import LibraryNavigator from './components/Navigator/Discover/Libraries';
+import HomeTopTabsNavigator from './components/Navigator/Home/TopTabsNavigator';
+// import HomeTopTab from './components/Navigator/HomeTopTab';
+// import HomeNavigator from './components/Navigator/Home';
 import AuthNavigator from './components/Navigator/Auth';
 import DiscoverTopTab from './components/Navigator/DiscoverTopTab';
 import LoadingSpinner from './components/Utils/LoadingSpinner';
@@ -44,7 +45,7 @@ const RootNavigator = () => {
     >
       <Tab.Screen
         name='Home'
-        component={HomeTopTab}
+        component={HomeTopTabsNavigator}
         options={{
           headerShown: true,
           title: 'Home',

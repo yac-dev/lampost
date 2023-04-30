@@ -5,7 +5,7 @@ import { screenSectionBackgroundColor, baseBackgroundColor } from '../../../util
 import lampostAPI from '../../../apis/lampost';
 import Libraries from './Libraries';
 
-const Container = () => {
+const Container = (props) => {
   const { auth, setMyJoinedLibraries, isFetchedAuthData } = useContext(GlobalContext);
 
   const getMyJoinedLibraries = async () => {
@@ -24,7 +24,7 @@ const Container = () => {
     if (auth.isAuthenticated) {
       return (
         <View style={{ flex: 1, padding: 10, backgroundColor: baseBackgroundColor }}>
-          <Libraries />
+          <Libraries navigation={props.navigation} />
         </View>
       );
     } else {

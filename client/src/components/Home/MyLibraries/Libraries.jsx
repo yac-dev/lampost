@@ -7,7 +7,7 @@ import { baseTextColor, inputBackgroundColorNew } from '../../../utils/colorsTab
 import { iconsTable } from '../../../utils/icons';
 const { Ionicons, MaterialCommunityIcons, MaterialIcons } = iconsTable;
 
-const Libraries = () => {
+const Libraries = (props) => {
   const { auth, myJoinedLibraries } = useContext(GlobalContext);
 
   const renderAssetType = (library) => {
@@ -39,8 +39,16 @@ const Libraries = () => {
               justifyContent: 'space-between',
             }}
             onPress={() => {
-              myLibrariesBottomSheetRef.current.close();
-              navigation.navigate('Library', { libraryId: library._id, libraryAssetType: library.assetType });
+              // myLibrariesBottomSheetRef.current.close();
+              // navigation.navigate('Library', { libraryId: library._id, libraryAssetType: library.assetType });
+              props.navigation.navigate('Library', {
+                screen: 'Library',
+                params: { libraryId: library._id, libraryAssetType: library.assetType, libraryTitle: library.title },
+              });
+              // screen: 'expeFormOneScreen',
+              //   params: {
+              //     currentItem: someValue
+              //   },
             }}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>

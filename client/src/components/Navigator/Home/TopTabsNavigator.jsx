@@ -1,13 +1,15 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import MapNavigator from './Discover/Map';
-import LibrariesContaier from './Discover/Libraries';
-import { appBottomSheetBackgroundColor } from '../../utils/colorsTable';
-import { iconsTable } from '../../utils/icons';
+// import MapNavigator from './Map';
+import MyMeetupsNavigator from './MyMeetups';
+import MyLibrariesNavigator from './MyLibraries';
+// import LibrariesContaier from './Discover/Libraries';
+import { iconsTable } from '../../../utils/icons';
 const { MaterialCommunityIcons } = iconsTable;
+import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 
 const Tab = createMaterialTopTabNavigator();
 
-const DiscoverTopTab = () => {
+const HomeTopTab = () => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -15,6 +17,8 @@ const DiscoverTopTab = () => {
         headerShown: true,
         headerStyle: {
           backgroundColor: appBottomSheetBackgroundColor,
+          paddingTop: 20,
+          marginTop: 20,
         },
         // tabBarLabel: 'Hello',
         tabBarStyle: {
@@ -32,8 +36,8 @@ const DiscoverTopTab = () => {
       }}
     >
       <Tab.Screen
-        name='Meetups'
-        component={MapNavigator}
+        name='Upcoming'
+        component={MyMeetupsNavigator}
         options={({ route }) => ({
           // headerShown: false,
           // tabBarIcon: ({ size, color, focused }) => (
@@ -43,14 +47,14 @@ const DiscoverTopTab = () => {
           //     size={size}
           //   />
           // ),
-          tabBarLabel: 'Meetups',
+          tabBarLabel: 'Upcoming',
           tabBarLabelStyle: { textTransform: 'none', fontWeight: 'bold' },
           // tabBarLabelStyle: { padding: 5 },
         })}
       />
       <Tab.Screen
         name='Libraries'
-        component={LibrariesContaier}
+        component={MyLibrariesNavigator}
         options={({ route }) => ({
           // headerShown: false,
           // tabBarIcon: ({ size, color, focused }) => (
@@ -60,7 +64,7 @@ const DiscoverTopTab = () => {
           //     size={size}
           //   />
           // ),
-          tabBarLabel: 'Libraries',
+          tabBarLabel: 'My Libraries',
           tabBarLabelStyle: { textTransform: 'none', fontWeight: 'bold' },
           // tabBarLabelStyle: { padding: 5 },
         })}
@@ -69,4 +73,4 @@ const DiscoverTopTab = () => {
   );
 };
 
-export default DiscoverTopTab;
+export default HomeTopTab;

@@ -1,31 +1,33 @@
 import React, { useContext } from 'react';
-import GlobalContext from '../../GlobalContext';
+import GlobalContext from '../../../GlobalContext';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { getFocusedRouteNameFromRoute, NavigationContainer } from '@react-navigation/native';
 const Stack = createNativeStackNavigator();
 
-import MeetupsContainer from '../Home/Meetups/Container';
+import MyLibrariesContainer from '../../Home/MyLibraries/Container';
+import Library from '../../Home/MyLibraries/Library/Container';
+import LibraryNavigator from './Library';
 // import CreateLibrary from '../Libraries/CreateLibraryBottomSheet/ContainerNew'
-import CreateNewLibrary from '../Libraries/CreateNewLibrary/Container';
-import CreateReaction from '../Libraries/CreateNewLibrary/CreateReaction/Container';
-import MyFriends from '../Libraries/CreateNewLibrary/MyFriends';
-import Icons from '../Libraries/CreateNewLibrary/Icons';
-import LibraryContainer from '../Libraries/Library/Container';
-import DateAssets from '../Libraries/Library/DateAssets/Container';
-import AuthNavigator from './Auth';
-import User from '../User/Container';
-import Description from '../Libraries/LibraryOverviewBottomSheet/Description';
-import Members from '../Libraries/LibraryOverviewBottomSheet/Members';
-import Assets from '../Libraries/LibraryOverviewBottomSheet/Assets';
-import Logs from '../User/Logs/Container';
-import Asset from '../Libraries/Library/Asset/Container';
-import LibraryMembers from '../Libraries/Library/Members';
-import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
-import AddBadges from '../Utils/AddBadges/Container';
-import AddAssets from '../Utils/AddAssets/Container';
-import ReportLibrary from '../Libraries/ReportLibrary';
-import ReportAsset from '../Utils/ReportAsset';
+import CreateNewLibrary from '../../Libraries/CreateNewLibrary/Container';
+import CreateReaction from '../../Libraries/CreateNewLibrary/CreateReaction/Container';
+import MyFriends from '../../Libraries/CreateNewLibrary/MyFriends';
+import Icons from '../../Libraries/CreateNewLibrary/Icons';
+import LibraryContainer from '../../Libraries/Library/Container';
+import DateAssets from '../../Libraries/Library/DateAssets/Container';
+import AuthNavigator from '../Auth';
+import User from '../../User/Container';
+import Description from '../../Libraries/LibraryOverviewBottomSheet/Description';
+import Members from '../../Libraries/LibraryOverviewBottomSheet/Members';
+import Assets from '../../Libraries/LibraryOverviewBottomSheet/Assets';
+import Logs from '../../User/Logs/Container';
+import Asset from '../../Libraries/Library/Asset/Container';
+import LibraryMembers from '../../Libraries/Library/Members';
+import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
+import AddBadges from '../../Utils/AddBadges/Container';
+import AddAssets from '../../Utils/AddAssets/Container';
+import ReportLibrary from '../../Libraries/ReportLibrary';
+import ReportAsset from '../../Utils/ReportAsset';
 
 const HomeMyMeetupsNavigator = () => {
   const { auth } = useContext(GlobalContext);
@@ -34,14 +36,12 @@ const HomeMyMeetupsNavigator = () => {
     <Stack.Navigator>
       <Stack.Group>
         <Stack.Screen
-          name='MyMeetups'
-          component={MeetupsContainer}
+          name='MyLibraries'
+          component={MyLibrariesContainer}
           options={({ navigation }) => ({
             headerShown: false,
             // title: 'Basecamp',
-            headerStyle: {
-              backgroundColor: appBottomSheetBackgroundColor,
-            },
+
             headerTitleStyle: {
               fontWeight: 'bold',
               color: 'white',
@@ -51,8 +51,51 @@ const HomeMyMeetupsNavigator = () => {
             },
           })}
         />
+        {/* <Stack.Screen
+          name='Library'
+          component={Library}
+          options={({ navigation }) => ({
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+              borderBottomWidth: 0,
+            },
+            // title: 'Basecamp',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: 'white',
+            // headerTintColor: {
+            //   color: 'white',
+            // },
+          })}
+        /> */}
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
+        <Stack.Screen
+          name='Library'
+          component={LibraryNavigator}
+          options={({ navigation, route }) => ({
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+              borderBottomWidth: 0,
+            },
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+              </TouchableOpacity>
+            ),
+            title: '',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: 'white',
+            // headerTintColor: {
+            //   color: 'white',
+            // },
+          })}
+        />
         {/* <Stack.Screen
           name='Create new library'
           component={CreateNewLibrary}

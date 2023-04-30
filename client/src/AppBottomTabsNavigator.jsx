@@ -17,8 +17,8 @@ import { appBottomSheetBackgroundColor, iconColorsTable } from './utils/colorsTa
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 
-import MapNavigator from './components/Navigator/Map';
-import LibraryNavigator from './components/Navigator/Library';
+// import MapNavigator from './components/Navigator/Discover/Map';
+// import LibraryNavigator from './components/Navigator/Discover/Libraries';
 import AuthNavigator from './components/Navigator/Auth';
 import LoadingSpinner from './components/Utils/LoadingSpinner';
 import NotAvailableModal from './components/Utils/NotAvailableModal';

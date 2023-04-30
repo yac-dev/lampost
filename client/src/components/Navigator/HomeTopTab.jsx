@@ -2,7 +2,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 // import MapNavigator from './Map';
 import HomeMyMeetupsNavigator from './HomeMyMeetups';
 import HomeMyLibrariesNavigator from './HomeMyLibraries';
-import LibrariesContaier from './Library';
+import LibrariesContaier from './Discover/Libraries';
 import { iconsTable } from '../../utils/icons';
 const { MaterialCommunityIcons } = iconsTable;
 import { appBottomSheetBackgroundColor } from '../../utils/colorsTable';
@@ -17,6 +17,8 @@ const HomeTopTab = () => {
         headerShown: true,
         headerStyle: {
           backgroundColor: appBottomSheetBackgroundColor,
+          paddingTop: 20,
+          marginTop: 20,
         },
         // tabBarLabel: 'Hello',
         tabBarStyle: {

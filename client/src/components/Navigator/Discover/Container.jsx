@@ -1,8 +1,8 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import MapNavigator from './Discover/Map';
-import LibrariesContaier from './Discover/Libraries';
-import { appBottomSheetBackgroundColor } from '../../utils/colorsTable';
-import { iconsTable } from '../../utils/icons';
+import MapNavigator from './Map';
+import LibrariesContaier from './Libraries';
+import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
+import { iconsTable } from '../../../utils/icons';
 const { MaterialCommunityIcons } = iconsTable;
 
 const Tab = createMaterialTopTabNavigator();

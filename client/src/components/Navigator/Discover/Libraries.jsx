@@ -1,31 +1,31 @@
 import React, { useContext } from 'react';
-import GlobalContext from '../../GlobalContext';
+import GlobalContext from '../../../GlobalContext';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { getFocusedRouteNameFromRoute, NavigationContainer } from '@react-navigation/native';
 const Stack = createNativeStackNavigator();
 
-import Container from '../Libraries/Container';
+import Container from '../../Libraries/Container';
 // import CreateLibrary from '../Libraries/CreateLibraryBottomSheet/ContainerNew'
-import CreateNewLibrary from '../Libraries/CreateNewLibrary/Container';
-import CreateReaction from '../Libraries/CreateNewLibrary/CreateReaction/Container';
-import MyFriends from '../Libraries/CreateNewLibrary/MyFriends';
-import Icons from '../Libraries/CreateNewLibrary/Icons';
-import LibraryContainer from '../Libraries/Library/Container';
-import DateAssets from '../Libraries/Library/DateAssets/Container';
-import AuthNavigator from './Auth';
-import User from '../User/Container';
-import Description from '../Libraries/LibraryOverviewBottomSheet/Description';
-import Members from '../Libraries/LibraryOverviewBottomSheet/Members';
-import Assets from '../Libraries/LibraryOverviewBottomSheet/Assets';
-import Logs from '../User/Logs/Container';
-import Asset from '../Libraries/Library/Asset/Container';
-import LibraryMembers from '../Libraries/Library/Members';
-import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
-import AddBadges from '../Utils/AddBadges/Container';
-import AddAssets from '../Utils/AddAssets/Container';
-import ReportLibrary from '../Libraries/ReportLibrary';
-import ReportAsset from '../Utils/ReportAsset';
+import CreateNewLibrary from '../../Libraries/CreateNewLibrary/Container';
+import CreateReaction from '../../Libraries/CreateNewLibrary/CreateReaction/Container';
+import MyFriends from '../../Libraries/CreateNewLibrary/MyFriends';
+import Icons from '../../Libraries/CreateNewLibrary/Icons';
+import LibraryContainer from '../../Libraries/Library/Container';
+import DateAssets from '../../Libraries/Library/DateAssets/Container';
+import AuthNavigator from '../Auth';
+import User from '../../User/Container';
+import Description from '../../Libraries/LibraryOverviewBottomSheet/Description';
+import Members from '../../Libraries/LibraryOverviewBottomSheet/Members';
+import Assets from '../../Libraries/LibraryOverviewBottomSheet/Assets';
+import Logs from '../../User/Logs/Container';
+import Asset from '../../Libraries/Library/Asset/Container';
+import LibraryMembers from '../../Libraries/Library/Members';
+import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
+import AddBadges from '../../Utils/AddBadges/Container';
+import AddAssets from '../../Utils/AddAssets/Container';
+import ReportLibrary from '../../Libraries/ReportLibrary';
+import ReportAsset from '../../Utils/ReportAsset';
 
 const LibraryNavigator = () => {
   const { auth } = useContext(GlobalContext);

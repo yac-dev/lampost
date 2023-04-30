@@ -10,8 +10,8 @@ import { NavigationContainer } from '@react-navigation/native';
 
 // components
 import AppBottomTabsNavigator from './src/AppBottomTabsNavigator';
-import MapNavigator from './src/components/Navigator/Map';
-import Map from './src/components/Map/Container';
+// import MapNavigator from './src/components/Navigator/Map';
+// import Map from './src/components/Map/Container';
 
 // ac
 // import { loadMe } from './src/redux/actionCreators/auth'; // いや、やっぱここでは使えない。redux appはこっからprovideされるから。だから、appbottomでこれやっている。
