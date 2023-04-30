@@ -13,12 +13,12 @@ const assetSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Meetup',
   },
-  badges: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Badge',
-    },
-  ],
+  // badges: [
+  //   {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'Badge',
+  //   },
+  // ],
   place: {
     type: {
       type: String,
@@ -26,7 +26,6 @@ const assetSchema = new mongoose.Schema({
       default: 'Point',
     },
     coordinates: [Number],
-    name: String,
   },
   effect: String,
   duration: Number,

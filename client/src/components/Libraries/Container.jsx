@@ -27,7 +27,6 @@ import LibraryOverviewBottomSheet from './LibraryOverviewBottomSheet/Container';
 // import InfoDetailBottomSheet from './InfoDetailBottomSheet/Container';
 import ConfirmCancelCreatingLibraryModal from './ConfirmCancelCreatingLibraryModal';
 
-
 // authenticatedの場合が必要か。
 const Container = (props) => {
   const {
@@ -249,13 +248,13 @@ const Container = (props) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 borderRadius: 10,
-                marginRight: 10,
+                // marginRight: 10,
               }}
               onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
             >
               <Ionicons name='ios-apps' size={25} color={'white'} />
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{
                 backgroundColor: iconColorsTable['blue1'],
                 padding: 10,
@@ -266,7 +265,7 @@ const Container = (props) => {
               onPress={() => myLibrariesBottomSheetRef.current.snapToIndex(0)}
             >
               <Ionicons name='ios-library' size={25} color={'white'} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         ) : null}
 

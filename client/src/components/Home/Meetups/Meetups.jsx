@@ -8,6 +8,7 @@ import {
   screenSectionBackgroundColor,
 } from '../../../utils/colorsTable';
 import { iconsTable } from '../../../utils/icons';
+import ChatStatus from '../../Map/ChatStatus';
 const { Ionicons, MaterialCommunityIcons } = iconsTable;
 
 const Meetups = (props) => {

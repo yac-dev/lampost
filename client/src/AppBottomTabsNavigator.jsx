@@ -217,6 +217,7 @@ const AppStack = (props) => {
   const getMyUpcomingMeetupStates = async () => {
     const result = await lampostAPI.get(`/meetupanduserrelationships/upcoming/user/${auth.data._id}`);
     const { myUpcomingMeetups } = result.data;
+    console.log(myUpcomingMeetups);
     setMyUpcomingMeetups((previous) => {
       const updating = { ...previous };
       for (const meetupId in myUpcomingMeetups) {
@@ -240,22 +241,12 @@ const AppStack = (props) => {
 
       return updating;
     });
-    // setAuth((previous) => {
-    //   return {
-    //     ...previous,
-    //     data: {
-    //       ...previous.data,
-    //       upcomingMeetups: myUpcomingMeetupIds,
-    //     },
-    //   };
-    // });
     setIsFetchedMyUpcomingMeetups(true);
     setChatsNotificationCount(0);
   };
   useEffect(() => {
     if (auth.isAuthenticated) {
       getMyUpcomingMeetupStates();
-      getUnreadFriendChats();
       // ここも、appStateが変わるたびに動かさなきゃいけない。→  app stateごとに動かすのは上で。
     }
   }, [auth.isAuthenticated]);
@@ -293,15 +284,6 @@ const AppStack = (props) => {
     }
   };
 
-  const getUnreadFriendChats = async () => {
-    setFriendChatsNotificationCount(0);
-    // recieverが自分でかつ、isReadがfalseのやつを全部とってくる。
-    const result = await lampostAPI.get(`/friendchats/reciever/${auth.data._id}`);
-    const { unreadFriendChatsTable, totalUnreads } = result.data;
-    setUnreadFriendChats(unreadFriendChatsTable);
-    setFriendChatsNotificationCount(totalUnreads);
-  };
-
   useEffect(() => {
     if (isFetchedMyUpcomingMeetups) {
       getUnreadChats();
@@ -324,7 +306,7 @@ const AppStack = (props) => {
           // getSocket();
           // getMyUpcomingMeetupsAndLoungeChatsByMeetupIds();
           getMyUpcomingMeetupStates();
-          getUnreadFriendChats();
+          // getUnreadFriendChats();
         } else if (appState === 'active' && nextAppState === 'inactive') {
           // socket disconnect する。ここで。serverでdisconnectのlogを確認する。
           // auth.socket.disconnect();

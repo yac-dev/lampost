@@ -63,7 +63,7 @@ const MapMarker = (props) => {
                 height: '100%',
               }}
               source={{
-                uri: props.meetup.badge.icon,
+                uri: props.meetup.badge.icon.url,
                 priority: FastImage.priority.normal,
               }}
               tintColor={iconColorsTable[props.meetup.badge.color]}

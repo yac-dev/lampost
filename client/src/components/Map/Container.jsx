@@ -316,10 +316,7 @@ const Map = (props) => {
                 alignItems: 'center',
               }}
             >
-              <TouchableOpacity
-                style={{ marginRight: 10 }}
-                onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
-              >
+              <TouchableOpacity style={{}} onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}>
                 <View
                   style={{
                     backgroundColor: iconColorsTable['red1'],
@@ -332,7 +329,7 @@ const Map = (props) => {
                   <Ionicons name='ios-apps' size={25} color={'white'} />
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => myUpcomingMeetupsBottomSheetRef.current.snapToIndex(0)}>
+              {/* <TouchableOpacity onPress={() => myUpcomingMeetupsBottomSheetRef.current.snapToIndex(0)}>
                 <View
                   style={{
                     backgroundColor: iconColorsTable['red1'],
@@ -372,7 +369,7 @@ const Map = (props) => {
                     </View>
                   </View>
                 ) : null}
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           ) : null}
           <ConfirmLaunchMeetupModal />

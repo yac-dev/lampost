@@ -43,42 +43,26 @@ const RootNavigator = () => {
       }}
     >
       <Tab.Screen
-        name='Basecamp'
+        name='Home'
         component={HomeTopTab}
         options={{
           headerShown: true,
-          title: 'Basecamp',
+          title: 'Home',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: appBottomSheetBackgroundColor,
             borderBottomWidth: 0,
           },
-          tabBarLabel: 'Basecamp',
+          tabBarLabel: 'Home',
           tabBarStyle: {
             // display: hide ? 'none' : 'flex',
             backgroundColor: appBottomSheetBackgroundColor,
             borderTopWidth: 0,
           },
           tabBarIcon: ({ size, color, focused }) => (
-            <Entypo name='basecamp' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+            <Ionicons name='list' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
           ),
         }}
-      />
-      <Tab.Screen
-        name='Discover'
-        component={DiscoverTopTab}
-        options={({ navigation }) => ({
-          headerShown: false,
-          // headerTransparent: true,
-          // headerLeft: () => <Button onPress={() => navigation.navigate('Add comment')}>User page</Button>,
-          tabBarIcon: ({ size, color, focused }) => (
-            <Ionicons name='compass' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
-          ),
-          showLabel: false,
-          tabBarLabel: 'Discover',
-          // tabBarBadge: friendChatsNotificationCount ? friendChatsNotificationCount : null,
-          // tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
-        })}
       />
 
       <Tab.Screen
@@ -96,6 +80,29 @@ const RootNavigator = () => {
             event.preventDefault();
             navigation.navigate('CameraNew'); // <-- Here you put the name where the chat component is declared
           },
+        })}
+      />
+
+      <Tab.Screen
+        name='Discover'
+        component={DiscoverTopTab}
+        options={({ navigation }) => ({
+          headerShown: true,
+          title: 'Discover',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: appBottomSheetBackgroundColor,
+            borderBottomWidth: 0,
+          },
+          // headerTransparent: true,
+          // headerLeft: () => <Button onPress={() => navigation.navigate('Add comment')}>User page</Button>,
+          tabBarIcon: ({ size, color, focused }) => (
+            <Ionicons name='compass' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+          ),
+          showLabel: false,
+          tabBarLabel: 'Discover',
+          // tabBarBadge: friendChatsNotificationCount ? friendChatsNotificationCount : null,
+          // tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
         })}
       />
 

@@ -46,8 +46,8 @@ const Libraries = () => {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View
                 style={{
-                  width: 40,
-                  height: 40,
+                  width: 70,
+                  height: 70,
                   marginRight: 15,
                   borderRadius: 7,
                 }}
@@ -61,12 +61,9 @@ const Libraries = () => {
                   resizeMode={FastImage.resizeMode.stretch}
                 />
               </View>
-              <Text style={{ color: baseTextColor, fontSize: 17 }}>{library.title}</Text>
+              <Text style={{ color: 'white', fontSize: 20 }}>{library.title}</Text>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              {renderAssetType(library)}
-              <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
-            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>{renderAssetType(library)}</View>
           </TouchableOpacity>
         );
       } else if (library.thumbnail.type === 'video') {

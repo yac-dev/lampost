@@ -116,14 +116,14 @@ export const createLibrary = async (request, response) => {
     });
 
     // ここで、友達たちにinvitationを送る。
-    for (const friendId of friendIds) {
-      const invitation = await Invitation.create({
-        type: 'library',
-        from: launcher,
-        to: friendId,
-        title: `You got a library invitation from ${launcher.name}. Why don't you join there?`,
-      });
-    }
+    // for (const friendId of friendIds) {
+    //   const invitation = await Invitation.create({
+    //     type: 'library',
+    //     from: launcher,
+    //     to: friendId,
+    //     title: `You got a library invitation from ${launcher.name}. Why don't you join there?`,
+    //   });
+    // }
 
     response.status(200).json({
       library: {

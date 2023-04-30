@@ -87,7 +87,7 @@ const Badges = () => {
                 <FastImage
                   style={{ width: 30, height: 30 }}
                   source={{
-                    uri: badge.icon,
+                    uri: badge.icon.url,
                     priority: FastImage.priority.normal,
                   }}
                   tintColor={iconColorsTable[badge.color]}

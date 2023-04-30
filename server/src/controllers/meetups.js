@@ -1,6 +1,7 @@
 import Meetup from '../models/meetup';
 import User from '../models/user';
 import LoungeChat from '../models/loungeChat';
+import Icon from '../models/icon';
 import Badge from '../models/badge';
 import Comment from '../models/comment';
 import schedule from 'node-schedule';
@@ -252,6 +253,11 @@ export const getMeetups = async (request, response) => {
         path: 'badges',
         model: Badge,
         select: { icon: 1, color: 1 },
+        populate: {
+          path: 'icon',
+          model: Icon,
+          select: { url: 1 },
+        },
       });
 
     // 返すbadgeの数は一個でいい。それをどうするか。
