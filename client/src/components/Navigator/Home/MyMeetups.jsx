@@ -7,6 +7,9 @@ const Stack = createNativeStackNavigator();
 
 import MeetupsContainer from '../../Home/MyMeetups/Container';
 import Lounge from '../../Home/MyMeetups/Lounge/Container';
+import MembersNavigator from './MembersNavigator';
+import EditMeetup from '../../Home/MyMeetups/EditMeetup/Container';
+import SelectVenue from '../../Home/MyMeetups/EditMeetup/SelectVenue';
 // import CreateLibrary from '../Libraries/CreateLibraryBottomSheet/ContainerNew'
 import CreateNewLibrary from '../../Libraries/CreateNewLibrary/Container';
 import CreateReaction from '../../Libraries/CreateNewLibrary/CreateReaction/Container';
@@ -73,16 +76,16 @@ const HomeMyMeetupsNavigator = () => {
             },
           })}
         />
-        {/* <Stack.Screen
-          name='Create new library'
-          component={CreateNewLibrary}
+        <Stack.Screen
+          name='Edit meetup'
+          component={EditMeetup}
           options={({ navigation }) => ({
             headerLeft: () => (
               <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
               </TouchableOpacity>
             ),
-            headerTitle: 'Create new library',
+            headerTitle: 'Edit meetup',
             headerStyle: {
               backgroundColor: appBottomSheetBackgroundColor,
             },
@@ -93,22 +96,36 @@ const HomeMyMeetupsNavigator = () => {
           })}
         />
         <Stack.Screen
-          name='Profile'
-          component={AuthNavigator}
+          name='MembersNavigator'
+          component={MembersNavigator}
           options={({ navigation }) => ({
-            headerShown: false,
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+              </TouchableOpacity>
+            ),
+            headerTitle: 'Members',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
           })}
         />
+      </Stack.Group>
+      <Stack.Group screenOptions={{ presentation: 'modal', gestureEnabled: false }}>
         <Stack.Screen
-          name='Add badges'
-          component={AddBadges}
+          name='Select venue'
+          component={SelectVenue}
           options={({ navigation }) => ({
             headerLeft: () => (
               <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
               </TouchableOpacity>
             ),
-            headerTitle: 'Badges for library',
+            headerTitle: 'Members',
             headerStyle: {
               backgroundColor: appBottomSheetBackgroundColor,
             },
@@ -118,25 +135,6 @@ const HomeMyMeetupsNavigator = () => {
             },
           })}
         />
-        <Stack.Screen // assetsのfull screen
-          name='Add assets'
-          component={AddAssets}
-          options={({ navigation }) => ({
-            headerLeft: () => (
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
-              </TouchableOpacity>
-            ),
-            headerTitle: 'Add assets',
-            headerStyle: {
-              backgroundColor: appBottomSheetBackgroundColor,
-            },
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              color: 'white',
-            },
-          })}
-        /> */}
       </Stack.Group>
     </Stack.Navigator>
   );

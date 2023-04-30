@@ -31,7 +31,7 @@ const LoungeContainer = (props) => {
   const [selectedChat, setSelectedChat] = useState(null);
   const appMenuBottomSheetRef = useRef(null);
   const sendChatBottomSheetRef = useRef(null);
-  const crewBottomSheetRef = useRef(null);
+  const memberBottomSheetRef = useRef(null);
   const selectedChatBottomSheetRef = useRef(null);
   const textInputRef = useRef(null);
   const [replyingTo, setReplyingTo] = useState(null);
@@ -43,6 +43,7 @@ const LoungeContainer = (props) => {
   const [isConfirmRSVPModalOpen, setIsConfirmRSVPModalOpen] = useState(false);
   const [isMenuBottomSheetOpen, setIsMenuBottomSheetOpen] = useState(false);
   const [isSendChatBottomSheetOpen, setIsSendChatBottomSheetOpen] = useState(false);
+  const [isMemberBottomSheetOpen, setIsMemberBottomSheetOpen] = useState(false);
 
   const getLoungeChatsByMeetupId = async () => {
     const result = await lampostAPI.get(`/loungechats/${props.route.params.meetupId}`);
@@ -206,7 +207,7 @@ const LoungeContainer = (props) => {
         navigation: props.navigation,
         appMenuBottomSheetRef,
         sendChatBottomSheetRef,
-        crewBottomSheetRef,
+        memberBottomSheetRef,
         selectedChatBottomSheetRef,
         sendingText,
         setSendingText,
@@ -227,6 +228,8 @@ const LoungeContainer = (props) => {
         setIsMenuBottomSheetOpen,
         isSendChatBottomSheetOpen,
         setIsSendChatBottomSheetOpen,
+        isMemberBottomSheetOpen,
+        setIsMemberBottomSheetOpen,
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>

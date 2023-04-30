@@ -14,7 +14,7 @@ const { Ionicons, MaterialCommunityIcons } = iconsTable;
 
 const Meetups = (props) => {
   const { auth, myUpcomingMeetups } = useContext(GlobalContext);
-  const { navigation } = useContext(MyMeetupsContext);
+  const { navigation, setMenuMenu, moreMenuBottomSheetRef } = useContext(MyMeetupsContext);
 
   const renderTime = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
@@ -292,7 +292,10 @@ const Meetups = (props) => {
                 marginBottom: 13,
               }}
               onPress={() => {
-                setMoreMenuOf(meetup);
+                setMenuMenu({
+                  _id: meetup._id,
+                  launcher: meetup.launcher,
+                });
                 moreMenuBottomSheetRef.current.snapToIndex(0);
               }}
             >

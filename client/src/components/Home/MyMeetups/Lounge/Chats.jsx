@@ -147,7 +147,7 @@ const Chats = (props) => {
       const chatsList = chats.map((chat, index) => {
         // launcherのchatだけは、背景を少し変える。
         return (
-          <TouchableOpacity key={index} style={{ padding: 10 }} onLongPress={() => console.log('hello')}>
+          <View key={index} style={{ padding: 10 }}>
             <View style={{ flexDirection: 'row' }}>
               {renderUserAvatar(chat)}
               <View style={{ flexDirection: 'column', flexShrink: 1 }}>
@@ -229,7 +229,7 @@ const Chats = (props) => {
                 ) : null}
               </View>
             </View>
-          </TouchableOpacity>
+          </View>
         );
       });
 
