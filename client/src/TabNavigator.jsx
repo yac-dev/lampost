@@ -6,10 +6,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MapNavigator from './components/Navigator/Discover/Map';
 import LibraryNavigator from './components/Navigator/Discover/Libraries';
 import HomeTopTabsNavigator from './components/Navigator/Home/TopTabsNavigator';
+import HomeTopLevel from './components/Navigator/Home/TopLevel';
+import DiscoverTopLevel from './components/Navigator/Discover/TopLevel';
 // import HomeTopTab from './components/Navigator/HomeTopTab';
 // import HomeNavigator from './components/Navigator/Home';
 import AuthNavigator from './components/Navigator/Auth';
-import DiscoverTopTab from './components/Navigator/DiscoverTopTab';
+// import DiscoverNavigatorContainer from './components/Navigator/Discover/Container';
+// import DiscoverTopTab from './components/Navigator/DiscoverTopTab';
 import LoadingSpinner from './components/Utils/LoadingSpinner';
 import NotAvailableModal from './components/Utils/NotAvailableModal';
 import PleaseLoginModal from './components/Utils/PleaseLoginModal';
@@ -45,9 +48,9 @@ const RootNavigator = () => {
     >
       <Tab.Screen
         name='Home'
-        component={HomeTopTabsNavigator}
+        component={HomeTopLevel}
         options={{
-          headerShown: true,
+          headerShown: false,
           title: 'Home',
           headerTintColor: 'white',
           headerStyle: {
@@ -86,9 +89,9 @@ const RootNavigator = () => {
 
       <Tab.Screen
         name='Discover'
-        component={DiscoverTopTab}
+        component={DiscoverTopLevel}
         options={({ navigation }) => ({
-          headerShown: true,
+          headerShown: false,
           title: 'Discover',
           headerTintColor: 'white',
           headerStyle: {

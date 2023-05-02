@@ -10,6 +10,7 @@ import Lounge from '../../Home/MyMeetups/Lounge/Container';
 import MembersNavigator from './MembersNavigator';
 import EditMeetup from '../../Home/MyMeetups/EditMeetup/Container';
 import SelectVenue from '../../Home/MyMeetups/EditMeetup/SelectVenue';
+import Dummy from '../../Home/MyMeetups/Dummy';
 // import CreateLibrary from '../Libraries/CreateLibraryBottomSheet/ContainerNew'
 import CreateNewLibrary from '../../Libraries/CreateNewLibrary/Container';
 import CreateReaction from '../../Libraries/CreateNewLibrary/CreateReaction/Container';
@@ -43,6 +44,27 @@ const HomeMyMeetupsNavigator = () => {
           options={({ navigation }) => ({
             headerShown: false,
             // title: 'Basecamp',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: {
+              color: 'white',
+            },
+          })}
+        />
+        <Stack.Screen
+          name='Dummy'
+          component={Dummy}
+          options={({ navigation }) => ({
+            headerShown: false,
+            // title: 'Basecamp',
+            tabBarStyle: {
+              display: 'none',
+            },
             headerStyle: {
               backgroundColor: appBottomSheetBackgroundColor,
             },

@@ -3,24 +3,26 @@ import MapNavigator from './Map';
 import LibrariesContaier from './Libraries';
 import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 import { iconsTable } from '../../../utils/icons';
-const { MaterialCommunityIcons } = iconsTable;
+const { MaterialCommunityIcons, Ionicons } = iconsTable;
 
 const Tab = createMaterialTopTabNavigator();
 
-const DiscoverTopTab = () => {
+const DiscoverTopTabsNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={{
         // lazy: true,
         headerShown: true,
-        headerStyle: {
-          backgroundColor: appBottomSheetBackgroundColor,
-        },
+        headerTransparent: true,
+        // headerStyle: {
+        //   backgroundColor: appBottomSheetBackgroundColor,
+        // },
         // tabBarLabel: 'Hello',
         tabBarStyle: {
           // display: hide ? 'none' : 'flex',
           backgroundColor: appBottomSheetBackgroundColor,
           borderTopWidth: 0,
+          paddingTop: 20,
         },
         tabBarLabelStyle: {
           fontSize: 12,
@@ -69,4 +71,4 @@ const DiscoverTopTab = () => {
   );
 };
 
-export default DiscoverTopTab;
+export default DiscoverTopTabsNavigator;

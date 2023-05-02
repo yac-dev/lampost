@@ -305,72 +305,22 @@ const Map = (props) => {
             <MapMarkers />
           </MapView>
           {auth.isAuthenticated ? (
-            <View
+            <TouchableOpacity
               style={{
-                backgroundColor: backgroundColorsTable['red1'],
-                position: 'absolute',
-                bottom: 20,
-                borderRadius: 10,
-                padding: 10,
                 flexDirection: 'row',
                 alignItems: 'center',
+                borderRadius: 10,
+                padding: 10,
+                position: 'absolute',
+                bottom: 20,
+                right: 20,
+                backgroundColor: iconColorsTable['red1'],
               }}
+              onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
             >
-              <TouchableOpacity style={{}} onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}>
-                <View
-                  style={{
-                    backgroundColor: iconColorsTable['red1'],
-                    padding: 10,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderRadius: 10,
-                  }}
-                >
-                  <Ionicons name='ios-apps' size={25} color={'white'} />
-                </View>
-              </TouchableOpacity>
-              {/* <TouchableOpacity onPress={() => myUpcomingMeetupsBottomSheetRef.current.snapToIndex(0)}>
-                <View
-                  style={{
-                    backgroundColor: iconColorsTable['red1'],
-                    padding: 10,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderRadius: 10,
-                  }}
-                >
-                  <MaterialCommunityIcons name='party-popper' size={25} color={'white'} />
-                </View>
-                {chatsNotificationCount ? (
-                  <View
-                    style={{
-                      position: 'absolute',
-                      right: -7,
-                      top: -7,
-                      backgroundColor: rnDefaultBackgroundColor,
-                      width: 20,
-                      height: 20,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderRadius: 20 / 2,
-                    }}
-                  >
-                    <View
-                      style={{
-                        backgroundColor: iconColorsTable['red1'],
-                        width: '100%',
-                        height: '100%',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        borderRadius: 20 / 2,
-                      }}
-                    >
-                      <Text style={{ color: 'white' }}>{chatsNotificationCount}</Text>
-                    </View>
-                  </View>
-                ) : null}
-              </TouchableOpacity> */}
-            </View>
+              <MaterialCommunityIcons name='rocket-launch' size={25} color={'white'} style={{ marginRight: 10 }} />
+              <Text style={{ color: 'white' }}>Action</Text>
+            </TouchableOpacity>
           ) : null}
           <ConfirmLaunchMeetupModal />
           <CancelLaunchMeetupModal />

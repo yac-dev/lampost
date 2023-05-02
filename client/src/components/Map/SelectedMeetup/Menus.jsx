@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import GlobalContext from '../../../GlobalContext';
 import MapContext from '../MeetupContext';
+import DiscoverNavigatorContext from '../../Navigator/Discover/DiscoverNavigatorContext';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView, Image } from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -32,6 +33,7 @@ const Menus = (props) => {
     setSelectedMeetupDetailComponent,
     selectedMeetupDetailBottomSheetRef,
   } = useContext(MapContext);
+  const { topLevelNavigation } = useContext(DiscoverNavigatorContext);
 
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
@@ -133,7 +135,7 @@ const Menus = (props) => {
           </View>
         }
         onPressMenu={() => {
-          navigation.navigate('Meetup date', {
+          topLevelNavigation.navigate('Meetup date', {
             launcherId: selectedMeetup.launcher._id,
             meetupId: selectedMeetup._id,
             date: selectedMeetup.startDateAndTime,
@@ -157,7 +159,7 @@ const Menus = (props) => {
           </View>
         }
         onPressMenu={() => {
-          navigation.navigate('Meetup description', {
+          topLevelNavigation.navigate('Meetup description', {
             launcherId: selectedMeetup.launcher._id,
             meetupId: selectedMeetup._id,
             description: selectedMeetup.description,
@@ -179,7 +181,7 @@ const Menus = (props) => {
           </View>
         }
         onPressMenu={() => {
-          navigation.navigate('Meetup fee', {
+          topLevelNavigation.navigate('Meetup fee', {
             launcherId: selectedMeetup.launcher._id,
             meetupId: selectedMeetup._id,
             isFeeFree: selectedMeetup.isFeeFree,
@@ -194,8 +196,8 @@ const Menus = (props) => {
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={{ color: baseTextColor }}>
-              {selectedMeetup.totalAttendees}/
-              {selectedMeetup.isAttendeesLimitFree ? <Text>&infin;</Text> : selectedMeetup.attendeesLimit}
+              {selectedMeetup.totalAttendees}&nbsp;/
+              {selectedMeetup.isAttendeesLimitFree ? <Text>&nbsp;free</Text> : selectedMeetup.attendeesLimit}
             </Text>
             <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
           </View>
@@ -204,7 +206,7 @@ const Menus = (props) => {
           // setSelectedMeetupDetailComponent('Crew');
           // selectedMeetupDetailBottomSheetRef.current.snapToIndex(0);
 
-          navigation.navigate('Attendees', { meetupId: selectedMeetup._id });
+          topLevelNavigation.navigate('Meetup members', { meetupId: selectedMeetup._id });
         }}
       />
       {/* <Menu

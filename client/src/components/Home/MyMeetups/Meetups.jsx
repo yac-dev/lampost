@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import GlobalContext from '../../../GlobalContext';
 import MyMeetupsContext from './MyMeetupsContext';
+import HomeNavigatorContext from '../../Navigator/Home/HomeNavigatorContext';
 import {
   iconColorsTable,
   inputBackgroundColorNew,
@@ -15,6 +16,7 @@ const { Ionicons, MaterialCommunityIcons } = iconsTable;
 const Meetups = (props) => {
   const { auth, myUpcomingMeetups } = useContext(GlobalContext);
   const { navigation, setMenuMenu, moreMenuBottomSheetRef } = useContext(MyMeetupsContext);
+  const { topLevelHomeNavigation } = useContext(HomeNavigatorContext);
 
   const renderTime = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
@@ -307,7 +309,14 @@ const Meetups = (props) => {
         );
       });
 
-      return <View style={{}}>{myUpcomingMeetupslist}</View>;
+      return (
+        <View style={{}}>
+          {myUpcomingMeetupslist}
+          <TouchableOpacity onPress={() => navigation.navigate('Dummy')}>
+            <Text style={{ color: 'red' }}>To dummy</Text>
+          </TouchableOpacity>
+        </View>
+      );
     } else {
       return (
         <View>

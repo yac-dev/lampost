@@ -2,6 +2,7 @@ import React, { useContext, useMemo } from 'react';
 import { View, Text, InputAccessoryView, Keyboard, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import GlobalContext from '../../../GlobalContext';
 import MyMeetupsContext from './MyMeetupsContext';
+import HomeNavigatorContext from '../../Navigator/Home/HomeNavigatorContext';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import {
   appBottomSheetBackgroundColor,
@@ -18,6 +19,7 @@ const MoreMenuBottomSheet = (props) => {
   const snapPoints = useMemo(() => ['40%'], []);
   const { auth, setLoading, setSnackBar } = useContext(GlobalContext);
   const { moreMenuBottomSheetRef, navigation, moreMenu } = useContext(MyMeetupsContext);
+  const { topLevelHomeNavigation } = useContext(HomeNavigatorContext);
 
   return (
     <GorhomBottomSheet
@@ -66,7 +68,8 @@ const MoreMenuBottomSheet = (props) => {
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
             moreMenuBottomSheetRef.current.close();
-            navigation.navigate('MembersNavigator', { screen: 'Members', params: { meetupId: moreMenu._id } });
+            navigation.navigate('MembersNavigator', { meetupId: moreMenu._id });
+            // navigation.navigate('MembersNavigator', { screen: 'Members', params: { meetupId: moreMenu._id } });
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
