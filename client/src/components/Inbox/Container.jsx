@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { View, Text, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
 import GlobalContext from '../../GlobalContext';
-import { baseBackgroundColor, baseTextColor } from '../../utils/colorsTable';
+import { baseBackgroundColor, baseTextColor, inputBackgroundColorNew } from '../../utils/colorsTable';
 import lampostAPI from '../../apis/lampost';
 import { iconsTable } from '../../utils/icons';
 const { MaterialCommunityIcons } = iconsTable;
@@ -24,8 +24,17 @@ const Container = (props) => {
 
   const Notification = useCallback((notification) => {
     return (
-      <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <View></View>
+      <TouchableOpacity style={{}}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}></View>
+          <View>
+            <Text>read state</Text>
+          </View>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View></View>
+          <Text>message here....</Text>
+        </View>
       </TouchableOpacity>
     );
   }, []);
@@ -42,10 +51,24 @@ const Container = (props) => {
     } else {
       return (
         <View style={{ marginTop: 80, alignSelf: 'center' }}>
-          <View style={{ width: 60, height: 60, justifyContent: 'center', alignItems: 'center' }}>
-            <MaterialCommunityIcons name='mailbox' size={40} color={baseTextColor} style={{ marginBottom: 10 }} />
+          <View
+            style={{
+              borderRadius: 10,
+              width: 80,
+              height: 80,
+              marginTop: 80,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: inputBackgroundColorNew,
+              alignSelf: 'center',
+              marginBottom: 10,
+            }}
+          >
+            <MaterialCommunityIcons name='mailbox' size={50} color={baseTextColor} style={{}} />
           </View>
-          <Text style={{ color: 'white', textAlign: 'center' }}>You'll see all the notifications to you.</Text>
+          <Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>
+            You'll see all the notifications you've received here.
+          </Text>
         </View>
       );
     }
