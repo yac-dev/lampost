@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { connect } from 'react-redux';
 import GlobalContext from '../../../../GlobalContext';
+import DiscoverNavigatorContext from '../../../Navigator/Discover/DiscoverNavigatorContext';
 import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import LibrariesContext from '../../LibrariesContext';
 import {
@@ -26,6 +27,7 @@ const Container = (props) => {
     selectedLibraryDetailComponentBottomSheetRef,
     setSelectedLibraryDetailComponent,
   } = useContext(LibrariesContext);
+  const { topLevelNavigation } = useContext(DiscoverNavigatorContext);
 
   const renderAssetType = (assetType) => {
     if (assetType === 'photo') {
@@ -43,7 +45,7 @@ const Container = (props) => {
         label='Launcher'
         onPressMenu={() => {
           if (!auth.data || auth.data._id !== selectedLibrary.launcher._id) {
-            navigation.navigate('User', { userId: selectedLibrary.launcher._id });
+            topLevelNavigation.navigate('User', { userId: selectedLibrary.launcher._id });
           }
         }}
         backgroundColor={backgroundColorsTable['red1']}
@@ -124,7 +126,7 @@ const Container = (props) => {
       <Menu
         label='Members'
         onPressMenu={() => {
-          navigation.navigate('Members', { libraryId: selectedLibrary._id });
+          topLevelNavigation.navigate('Library members', { libraryId: selectedLibrary._id });
         }}
         backgroundColor={backgroundColorsTable['blue1']}
         icon={<MaterialIcons name='groups' size={20} color={iconColorsTable['blue1']} />}
@@ -136,12 +138,12 @@ const Container = (props) => {
         }
       />
       <Menu
-        label='Contents'
+        label='Snaps'
         onPressMenu={() => {
           navigation.navigate('Assets', { libraryId: selectedLibrary._id });
         }}
         backgroundColor={backgroundColorsTable['orange1']}
-        icon={<MaterialIcons name='camera-roll' size={20} color={iconColorsTable['orange1']} />}
+        icon={<Ionicons name='camera' size={20} color={iconColorsTable['orange1']} />}
         rightInfo={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             {/* <Text style={{ color: baseTextColor }}>{selectedLibrary.totalAssets}</Text> */}

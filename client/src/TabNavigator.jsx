@@ -8,6 +8,7 @@ import LibraryNavigator from './components/Navigator/Discover/Libraries';
 import HomeTopTabsNavigator from './components/Navigator/Home/TopTabsNavigator';
 import HomeTopLevel from './components/Navigator/Home/TopLevel';
 import DiscoverTopLevel from './components/Navigator/Discover/TopLevel';
+import InboxTopLevel from './components/Navigator/Inbox/TopLevel';
 // import HomeTopTab from './components/Navigator/HomeTopTab';
 // import HomeNavigator from './components/Navigator/Home';
 import AuthNavigator from './components/Navigator/Auth';
@@ -70,6 +71,29 @@ const RootNavigator = () => {
       />
 
       <Tab.Screen
+        name='Discover'
+        component={DiscoverTopLevel}
+        options={({ navigation }) => ({
+          headerShown: false,
+          title: 'Discover',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: appBottomSheetBackgroundColor,
+            borderBottomWidth: 0,
+          },
+          // headerTransparent: true,
+          // headerLeft: () => <Button onPress={() => navigation.navigate('Add comment')}>User page</Button>,
+          tabBarIcon: ({ size, color, focused }) => (
+            <Ionicons name='compass' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+          ),
+          showLabel: false,
+          tabBarLabel: 'Find',
+          // tabBarBadge: friendChatsNotificationCount ? friendChatsNotificationCount : null,
+          // tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
+        })}
+      />
+
+      <Tab.Screen
         name='Camera'
         component={CameraBase}
         options={{
@@ -88,11 +112,10 @@ const RootNavigator = () => {
       />
 
       <Tab.Screen
-        name='Discover'
-        component={DiscoverTopLevel}
+        name='Inbox'
+        component={InboxTopLevel}
         options={({ navigation }) => ({
           headerShown: false,
-          title: 'Discover',
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: appBottomSheetBackgroundColor,
@@ -101,10 +124,10 @@ const RootNavigator = () => {
           // headerTransparent: true,
           // headerLeft: () => <Button onPress={() => navigation.navigate('Add comment')}>User page</Button>,
           tabBarIcon: ({ size, color, focused }) => (
-            <Ionicons name='compass' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
+            <MaterialCommunityIcons name='mailbox' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
           ),
           showLabel: false,
-          tabBarLabel: 'Discover',
+          tabBarLabel: 'Inbox',
           // tabBarBadge: friendChatsNotificationCount ? friendChatsNotificationCount : null,
           // tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
         })}

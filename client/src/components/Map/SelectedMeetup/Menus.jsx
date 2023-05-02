@@ -108,7 +108,7 @@ const Menus = (props) => {
           // } else {
           // Map tab内では、自分のpageを見せないようにする。ごちゃごちゃになってめんどいからね。
           if (!auth.data || auth.data._id !== selectedMeetup.launcher._id) {
-            navigation.navigate('User', { userId: selectedMeetup.launcher._id });
+            topLevelNavigation.navigate('User', { userId: selectedMeetup.launcher._id });
           }
           // }
         }}

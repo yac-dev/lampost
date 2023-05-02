@@ -65,7 +65,7 @@ const Menu = (props) => {
             {props.icon}
           </View>
         </View>
-        <Text style={{ color: baseTextColor, fontSize: 15 }}>{props.label}</Text>
+        <Text style={{ color: 'white', fontSize: 17 }}>{props.label}</Text>
       </View>
       {props.rightInfo}
     </TouchableOpacity>

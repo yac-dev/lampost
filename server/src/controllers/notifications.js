@@ -1,31 +1,11 @@
-import Invitation from '../models/invitation';
+import Notification from '../models/notification';
 
-// library creatorがfromになって、友達たちがtoになる感じだ。
-export const createInvitation = async (request, response) => {
+export const getNotifications = async (request, response) => {
   try {
-    const { type, from, to } = request.body; // typeによって、titleを変える。
-    const invitation = await Invitation.create({
-      type,
-      from,
-      to,
-      isRead: false,
-      createdAt: Date.now(),
-    });
-
-    response.status(201).json({
-      message: 'success',
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getInvitations = async (request, response) => {
-  try {
-    const invitations = await Invitation.find({ to: request.params.userId });
+    const notifications = await Notification.find({ to: request.params.userId });
     // client側で、unread readのやつだけ取ってくればいい。
     response.status(200).json({
-      invitations,
+      notifications,
     });
   } catch (error) {
     console.log(error);

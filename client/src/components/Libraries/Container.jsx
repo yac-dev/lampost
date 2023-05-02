@@ -224,49 +224,23 @@ const Container = (props) => {
 
         {renderLibraries()}
         {auth.isAuthenticated ? (
-          <View
+          <TouchableOpacity
             style={{
               position: 'absolute',
               bottom: 20,
-              backgroundColor: backgroundColorsTable['blue1'],
-              borderRadius: 10,
-              alignSelf: 'center',
+              right: 20,
+              backgroundColor: iconColorsTable['blue1'],
               padding: 10,
-              // elevation: 5,
-              // shadowColor: '#000',
-              // shadowOffset: { width: 0, height: 0 },
-              // shadowOpacity: 0.1,
-              // shadowRadius: 5,
               flexDirection: 'row',
               alignItems: 'center',
+              borderRadius: 5,
+              // marginRight: 10,
             }}
+            onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
           >
-            <TouchableOpacity
-              style={{
-                backgroundColor: iconColorsTable['blue1'],
-                padding: 10,
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderRadius: 10,
-                // marginRight: 10,
-              }}
-              onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
-            >
-              <Ionicons name='ios-apps' size={25} color={'white'} />
-            </TouchableOpacity>
-            {/* <TouchableOpacity
-              style={{
-                backgroundColor: iconColorsTable['blue1'],
-                padding: 10,
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderRadius: 10,
-              }}
-              onPress={() => myLibrariesBottomSheetRef.current.snapToIndex(0)}
-            >
-              <Ionicons name='ios-library' size={25} color={'white'} />
-            </TouchableOpacity> */}
-          </View>
+            <Ionicons name='library' size={25} color={'white'} style={{ marginRight: 10 }} />
+            <Text style={{ color: 'white' }}>Action</Text>
+          </TouchableOpacity>
         ) : null}
 
         <AppMenuBottomSheet />

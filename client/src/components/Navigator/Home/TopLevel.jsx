@@ -43,17 +43,16 @@ const TopLevelHomeNavigator = (props) => {
             component={TopTabsNavigator}
             options={({ navigation }) => ({
               headerShown: false,
-              title: 'Basecamp',
-              headerStyle: {
-                backgroundColor: appBottomSheetBackgroundColor,
-              },
-              headerTitleStyle: {
-                fontWeight: 'bold',
-                color: 'white',
-              },
-              headerTintColor: {
-                color: 'white',
-              },
+              // headerStyle: {
+              //   backgroundColor: appBottomSheetBackgroundColor,
+              // },
+              // headerTitleStyle: {
+              //   fontWeight: 'bold',
+              //   color: 'white',
+              // },
+              // headerTintColor: {
+              //   color: 'white',
+              // },
             })}
           />
           {/* 

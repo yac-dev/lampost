@@ -27,6 +27,7 @@ import loungeChatsRouter from './routers/loungeChats';
 import friendChatsRouter from './routers/friendChats';
 import launcherAndPatronRelationshisRouter from './routers/launcherAndPatronRelationshis';
 import followRelationshipsRouter from './routers/followRelationships';
+import notificationsRouter from './routers/notifications';
 
 // import postsRouter from './routers/posts';
 // import usersRouter from './routers/users';
@@ -61,6 +62,7 @@ app.use('/api/loungechats', loungeChatsRouter);
 app.use('/api/friendchats', friendChatsRouter);
 app.use('/api/launcherandpatronrelationships', launcherAndPatronRelationshisRouter);
 app.use('/api/followrelationships', followRelationshipsRouter);
+app.use('/api/notifications', notificationsRouter);
 app.use('/api/lab', labRouter);
 
 // app.use(globalErrorHandler);

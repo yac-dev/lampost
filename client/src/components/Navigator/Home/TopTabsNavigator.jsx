@@ -15,18 +15,19 @@ const HomeTopTab = () => {
       screenOptions={{
         // lazy: true,
         headerShown: true,
+        headerTransparent: true,
         headerStyle: {
-          backgroundColor: appBottomSheetBackgroundColor,
+          backgroundColor: 'red',
         },
         // tabBarLabel: 'Hello',
         tabBarStyle: {
           // display: hide ? 'none' : 'flex',
           backgroundColor: appBottomSheetBackgroundColor,
-          borderTopWidth: 0,
+          // borderTopWidth: 0,
           paddingTop: 20,
         },
         tabBarLabelStyle: {
-          fontSize: 12,
+          fontSize: 17,
         },
         tabBarActiveTintColor: 'white',
         tabBarIndicatorStyle: {
@@ -47,7 +48,7 @@ const HomeTopTab = () => {
           //   />
           // ),
           tabBarLabel: 'Upcoming',
-          tabBarLabelStyle: { textTransform: 'none', fontWeight: 'bold' },
+          tabBarLabelStyle: { textTransform: 'none', fontWeight: 'bold', fontSize: 17 },
           // tabBarLabelStyle: { padding: 5 },
         })}
       />
@@ -64,7 +65,7 @@ const HomeTopTab = () => {
           //   />
           // ),
           tabBarLabel: 'My Libraries',
-          tabBarLabelStyle: { textTransform: 'none', fontWeight: 'bold' },
+          tabBarLabelStyle: { textTransform: 'none', fontWeight: 'bold', fontSize: 17 },
           // tabBarLabelStyle: { padding: 5 },
         })}
       />

@@ -309,14 +309,7 @@ const Meetups = (props) => {
         );
       });
 
-      return (
-        <View style={{}}>
-          {myUpcomingMeetupslist}
-          <TouchableOpacity onPress={() => navigation.navigate('Dummy')}>
-            <Text style={{ color: 'red' }}>To dummy</Text>
-          </TouchableOpacity>
-        </View>
-      );
+      return <View style={{}}>{myUpcomingMeetupslist}</View>;
     } else {
       return (
         <View>

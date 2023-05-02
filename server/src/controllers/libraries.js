@@ -6,7 +6,7 @@ import LibraryAndUserRelationship from '../models/libraryAndUserRelationship';
 import Asset from '../models/asset';
 import User from '../models/user';
 import Reaction from '../models/reaction';
-import Invitation from '../models/invitation';
+import Notification from '../models/notification';
 
 const colors = ['red1', 'blue1', 'yellow1', 'violet1', 'green1', 'lightBlue1'];
 
@@ -62,6 +62,7 @@ export const createLibrary = async (request, response) => {
       asset,
       launcher,
       friendIds,
+      invitationMessage,
     } = request.body;
 
     const library = new Library({
@@ -116,14 +117,20 @@ export const createLibrary = async (request, response) => {
     });
 
     // ここで、友達たちにinvitationを送る。
-    // for (const friendId of friendIds) {
-    //   const invitation = await Invitation.create({
-    //     type: 'library',
-    //     from: launcher,
-    //     to: friendId,
-    //     title: `You got a library invitation from ${launcher.name}. Why don't you join there?`,
-    //   });
-    // }
+    if (friendIds.length) {
+      for (const friendId of friendIds) {
+        const notifications = await Notification.create({
+          type: 'invitation',
+          platform: 'library',
+          from: launcher,
+          to: friendId,
+          title: `You got a library invitation.`,
+          message: invitationMessage,
+          library: library._id,
+          createdAt: new Date(),
+        });
+      }
+    }
 
     response.status(200).json({
       library: {

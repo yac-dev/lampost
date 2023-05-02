@@ -11,6 +11,7 @@ import MeetupDate from '../../Map/SelectedMeetup/Date/Container';
 import MeetupDescription from '../../Map/SelectedMeetup/Description/Container';
 import MeetupFee from '../../Map/SelectedMeetup/Fee';
 import MeetupMembers from '../../Map/SelectedMeetup/Attendees';
+import LibraryMembers from '../../Libraries/LibraryOverviewBottomSheet/Members';
 
 const DiscoverNavigatorContainer = (props) => {
   return (
@@ -87,6 +88,22 @@ const DiscoverNavigatorContainer = (props) => {
           <Stack.Screen
             name='Meetup members'
             component={MeetupMembers}
+            options={({ navigation }) => ({
+              headerShown: true,
+              title: 'Members',
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+              headerTintColor: 'white',
+            })}
+          />
+          <Stack.Screen
+            name='Library members'
+            component={LibraryMembers}
             options={({ navigation }) => ({
               headerShown: true,
               title: 'Members',

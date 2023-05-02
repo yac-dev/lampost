@@ -28,7 +28,7 @@ const MoreMenuBottomSheet = (props) => {
       ref={moreMenuBottomSheetRef}
       snapPoints={snapPoints}
       backdropComponent={(backdropProps) => (
-        <BottomSheetBackdrop {...backdropProps} appearsOnIndex={0} disappearsOnIndex={-1} pressBehavior='none' />
+        <BottomSheetBackdrop {...backdropProps} appearsOnIndex={0} disappearsOnIndex={-1} />
       )}
       enablePanDownToClose={true}
       backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}

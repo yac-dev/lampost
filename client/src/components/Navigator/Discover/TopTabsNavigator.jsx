@@ -46,7 +46,7 @@ const DiscoverTopTabsNavigator = () => {
           //   />
           // ),
           tabBarLabel: 'Meetups',
-          tabBarLabelStyle: { textTransform: 'none', fontWeight: 'bold' },
+          tabBarLabelStyle: { textTransform: 'none', fontWeight: 'bold', fontSize: 17 },
           // tabBarLabelStyle: { padding: 5 },
         })}
       />
@@ -63,7 +63,7 @@ const DiscoverTopTabsNavigator = () => {
           //   />
           // ),
           tabBarLabel: 'Libraries',
-          tabBarLabelStyle: { textTransform: 'none', fontWeight: 'bold' },
+          tabBarLabelStyle: { textTransform: 'none', fontWeight: 'bold', fontSize: 17 },
           // tabBarLabelStyle: { padding: 5 },
         })}
       />
