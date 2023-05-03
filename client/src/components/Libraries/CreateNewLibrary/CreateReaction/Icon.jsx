@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import CreateReactionContext from './CreateReactionContext';
+import FormContext from '../FormContext';
 import {
   screenSectionBackgroundColor,
   backgroundColorsTable,
@@ -8,31 +9,33 @@ import {
   baseTextColor,
   disabledTextColor,
   rnDefaultBackgroundColor,
+  inputBackgroundColorNew,
 } from '../../../../utils/colorsTable';
 import { iconsTable } from '../../../../utils/icons';
 import FastImage from 'react-native-fast-image';
 import lampostAPI from '../../../../apis/lampost';
 
 const Icon = () => {
-  const { accordion, setAccordion, creatingReaction, setCreatingReaction } = useContext(CreateReactionContext);
+  const { accordion, setAccordion, creatingReaction, setCreatingReaction, navigation } =
+    useContext(CreateReactionContext);
   const { MaterialCommunityIcons, Ionicons } = iconsTable;
   const [icons, setIcons] = useState([]);
   const [isIconsFetched, setIsIconFetched] = useState(false);
 
-  const getIcons = async () => {
-    const result = await lampostAPI.get('/badges/icons');
-    const { icons } = result.data;
-    setIcons(() => {
-      const datas = [];
-      icons.forEach((icon) => datas.push(icon.Key));
-      return datas;
-    });
-    setIsIconFetched(true);
-  };
+  // const getIcons = async () => {
+  //   const result = await lampostAPI.get('/badges/icons');
+  //   const { icons } = result.data;
+  //   setIcons(() => {
+  //     const datas = [];
+  //     icons.forEach((icon) => datas.push(icon.Key));
+  //     return datas;
+  //   });
+  //   setIsIconFetched(true);
+  // };
 
-  useEffect(() => {
-    getIcons();
-  }, []);
+  // useEffect(() => {
+  //   getIcons();
+  // }, []);
 
   return (
     <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 7, borderRadius: 5, marginBottom: 10 }}>
@@ -89,7 +92,7 @@ const Icon = () => {
             style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}
           >
             <Text style={{ fontSize: 13, color: baseTextColor }}>Please choose an icon.</Text>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
@@ -98,9 +101,27 @@ const Icon = () => {
               }}
             >
               <Text style={{ color: 'white' }}>Powered by icons8.com</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
-          {isIconsFetched ? (
+          <TouchableOpacity
+            style={{
+              width: 60,
+              height: 60,
+              justifyContent: 'center',
+              alignItems: 'center',
+              alignSelf: 'center',
+              backgroundColor: rnDefaultBackgroundColor,
+              borderRadius: 5,
+            }}
+            onPress={() => navigation.navigate('Icon picker')}
+          >
+            {creatingReaction.icon ? (
+              <FastImage source={{ uri: creatingReaction.icon.url }} style={{ width: 40, height: 40 }} />
+            ) : (
+              <MaterialCommunityIcons name='plus' color={'black'} size={40} />
+            )}
+          </TouchableOpacity>
+          {/* {isIconsFetched ? (
             <ScrollView contentContainerStyle={{ paddingBottom: 250 }} showsVerticalScrollIndicator={false}>
               {icons.map((icon, index) => {
                 return (
@@ -149,7 +170,7 @@ const Icon = () => {
                 );
               })}
             </ScrollView>
-          ) : null}
+          ) : null} */}
         </View>
       ) : null}
     </View>

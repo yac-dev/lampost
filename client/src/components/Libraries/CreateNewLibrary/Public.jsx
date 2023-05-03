@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, TextInput, InputAccessoryView, Keyboard, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, InputAccessoryView, Keyboard, TouchableOpacity, ScrollView } from 'react-native';
 import FormContext from './FormContext';
 import {
   backgroundColorsTable,
@@ -12,14 +12,17 @@ import {
   disabledTextColor,
 } from '../../../utils/colorsTable';
 import { iconsTable } from '../../../utils/icons';
+import FastImage from 'react-native-fast-image';
 
-const Public = () => {
+const Public = (props) => {
   const { AntDesign, Ionicons, MaterialCommunityIcons } = iconsTable;
-  const { formData, setFormData, stageCleared, setStageCleared, accordion, setAccordion, navigation } =
+  const { formData, setFormData, stageCleared, setStageCleared, accordion, setAccordion, navigation, route } =
     useContext(FormContext);
 
+  console.log(formData.friends);
+
   useEffect(() => {
-    if (typeof formData.public === 'boolean') {
+    if (typeof formData.isPublic === 'boolean') {
       setStageCleared((previous) => {
         return {
           ...previous,
@@ -34,11 +37,22 @@ const Public = () => {
         };
       });
     }
-  }, [formData.public]);
+  }, [formData.isPublic]);
+
+  useEffect(() => {
+    if (route.params?.selectedFriends) {
+      setFormData((previous) => {
+        return {
+          ...previous,
+          friends: route.params.selectedFriends,
+        };
+      });
+    }
+  }, [route.params?.selectedFriends]);
 
   const renderCheckMarkForOpenToAnyone = () => {
-    if (typeof formData.public === 'boolean') {
-      if (formData.public) {
+    if (typeof formData.isPublic === 'boolean') {
+      if (formData.isPublic) {
         return (
           <View style={{ position: 'absolute', right: -7, top: -7 }}>
             <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
@@ -51,8 +65,8 @@ const Public = () => {
   };
 
   const renderCheckMarkForJustFriends = () => {
-    if (typeof formData.public === 'boolean') {
-      if (formData.public) {
+    if (typeof formData.isPublic === 'boolean') {
+      if (formData.isPublic) {
         return null;
       } else {
         return (
@@ -61,6 +75,41 @@ const Public = () => {
           </View>
         );
       }
+    }
+  };
+
+  const renderSelectedFriends = () => {
+    if (Object.values(formData.friends)) {
+      const list = Object.values(formData.friends).map((friendRelationship, index) => {
+        return (
+          <View key={index} style={{ marginRight: 10 }}>
+            <FastImage
+              source={{
+                uri: friendRelationship.friend.photo
+                  ? friendRelationship.friend.photo
+                  : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
+              }}
+              style={{
+                backgroundColor: iconColorsTable['blue1'],
+                width: 40,
+                height: 40,
+                borderRadius: 7,
+                marginBottom: 5,
+              }}
+              tintColor={friendRelationship.friend.photo ? null : 'white'}
+            />
+            <Text style={{ color: 'white' }}>{friendRelationship.friend.name}</Text>
+          </View>
+        );
+      });
+
+      return (
+        <ScrollView horizontal={true}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>{list}</View>
+        </ScrollView>
+      );
+    } else {
+      return null;
     }
   };
 
@@ -142,7 +191,7 @@ const Public = () => {
                 setFormData((previous) => {
                   return {
                     ...previous,
-                    public: true,
+                    isPublic: true,
                   };
                 })
               }
@@ -162,7 +211,7 @@ const Public = () => {
                 setFormData((previous) => {
                   return {
                     ...previous,
-                    public: false,
+                    isPublic: false,
                   };
                 })
               }
@@ -171,11 +220,11 @@ const Public = () => {
               {renderCheckMarkForJustFriends()}
             </TouchableOpacity>
           </View>
-          {typeof formData.public === 'boolean' && !formData.public ? (
+          {typeof formData.isPublic === 'boolean' && !formData.isPublic ? (
             <View style={{ marginTop: 10 }}>
               <TouchableOpacity
-                style={{ backgroundColor: iconColorsTable['blue1'], borderRadius: 5, padding: 5 }}
-                onPress={() => navigation.navigate('My friends')}
+                style={{ backgroundColor: iconColorsTable['blue1'], borderRadius: 5, padding: 5, marginBottom: 10 }}
+                onPress={() => navigation.navigate('My friends', { selectedFriendships: formData.friends })}
               >
                 <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
                   <MaterialCommunityIcons
@@ -187,6 +236,7 @@ const Public = () => {
                   <Text style={{ color: 'white' }}>Invite your friends now? (Optional)</Text>
                 </View>
               </TouchableOpacity>
+              {renderSelectedFriends()}
             </View>
           ) : null}
         </View>

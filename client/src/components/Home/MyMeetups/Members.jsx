@@ -5,12 +5,14 @@ import lampostAPI from '../../../apis/lampost';
 import { baseBackgroundColor, iconColorsTable, screenSectionBackgroundColor } from '../../../utils/colorsTable';
 import UserInfo from '../../Utils/UserInfo';
 import { iconsTable } from '../../../utils/icons';
+import HomeNavigatorContext from '../../Navigator/Home/HomeNavigatorContext';
 
 const AttendeesContainer = (props) => {
   const { MaterialCommunityIcons, Ionicons } = iconsTable;
   const { auth, setSnackBar } = useContext(GlobalContext);
   const [isFetchedAttendees, setIsFetchedAttendees] = useState(false);
   const [fetchedAttendees, setFetchedAttendees] = useState([]);
+  const { topLevelHomeNavigation } = useContext(HomeNavigatorContext);
 
   console.log(props.route.params);
 
@@ -33,7 +35,7 @@ const AttendeesContainer = (props) => {
       });
     } else {
       if (auth.data._id !== user._id) {
-        props.navigation.navigate('User', { userId: user._id });
+        topLevelHomeNavigation.navigate('User', { userId: user._id });
       } else {
         return null;
       }

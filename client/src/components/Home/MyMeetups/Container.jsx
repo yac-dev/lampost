@@ -1,13 +1,16 @@
 import React, { useContext, useState, useRef } from 'react';
+import { View, Text, ActivityIndicator } from 'react-native';
 import GlobalContext from '../../../GlobalContext';
 import MyMeetupsContext from './MyMeetupsContext';
-import { View, Text, ActivityIndicator } from 'react-native';
 import { baseBackgroundColor, screenSectionBackgroundColor } from '../../../utils/colorsTable';
 import Meetups from './Meetups';
 import MoreMenuBottomSheet from './MoreMenuBottomSheet';
+import ConfirmStartMeetup from './ConfirmStartMeetup';
 
 const Container = (props) => {
   const { auth, isFetchedAuthData } = useContext(GlobalContext);
+  const [isStartMeetupConfirmationModalOpen, setIsStartMeetupConfirmationModalOpen] = useState(false);
+  const [startingMeetup, setStartingMeetup] = useState(null);
   const moreMenuBottomSheetRef = useRef(null);
   const [moreMenu, setMenuMenu] = useState(null);
 
@@ -16,11 +19,20 @@ const Container = (props) => {
     if (auth.isAuthenticated) {
       return (
         <MyMeetupsContext.Provider
-          value={{ navigation: props.navigation, moreMenuBottomSheetRef, moreMenu, setMenuMenu }}
+          value={{
+            moreMenuBottomSheetRef,
+            moreMenu,
+            setMenuMenu,
+            isStartMeetupConfirmationModalOpen,
+            setIsStartMeetupConfirmationModalOpen,
+            startingMeetup,
+            setStartingMeetup,
+          }}
         >
           <View style={{ flex: 1, padding: 10, backgroundColor: baseBackgroundColor }}>
             <Meetups />
             <MoreMenuBottomSheet />
+            <ConfirmStartMeetup />
           </View>
         </MyMeetupsContext.Provider>
       );

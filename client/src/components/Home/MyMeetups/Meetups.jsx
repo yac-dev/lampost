@@ -15,7 +15,14 @@ const { Ionicons, MaterialCommunityIcons } = iconsTable;
 
 const Meetups = (props) => {
   const { auth, myUpcomingMeetups } = useContext(GlobalContext);
-  const { navigation, setMenuMenu, moreMenuBottomSheetRef } = useContext(MyMeetupsContext);
+  const {
+    setMenuMenu,
+    moreMenuBottomSheetRef,
+    isStartMeetupConfirmationModalOpen,
+    setIsStartMeetupConfirmationModalOpen,
+    startingMeetup,
+    setStartingMeetup,
+  } = useContext(MyMeetupsContext);
   const { topLevelHomeNavigation } = useContext(HomeNavigatorContext);
 
   const renderTime = (date) => {
@@ -206,7 +213,7 @@ const Meetups = (props) => {
               marginBottom: 10,
             }}
             onPress={() => {
-              navigation.navigate('Lounge', { meetupId: meetup._id });
+              topLevelHomeNavigation.navigate('Lounge', { meetupId: meetup._id });
             }}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
@@ -228,7 +235,7 @@ const Meetups = (props) => {
               padding: 5,
             }}
             onPress={() => {
-              navigation.navigate('Lounge', { meetupId: meetup._id });
+              topLevelHomeNavigation.navigate('Lounge', { meetupId: meetup._id });
             }}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>

@@ -48,9 +48,11 @@ const Container = (props) => {
   };
 
   return (
-    <CreateReactionContext.Provider value={{ creatingReaction, setCreatingReaction, accordion, setAccordion }}>
+    <CreateReactionContext.Provider
+      value={{ creatingReaction, setCreatingReaction, accordion, setAccordion, navigation: props.navigation }}
+    >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
-        <Text style={{ fontSize: 23, fontWeight: 'bold', marginBottom: 15, color: 'white' }}>Heads up</Text>
+        <Text style={{ fontSize: 23, fontWeight: 'bold', marginBottom: 15, color: 'white' }}>📣 Note</Text>
         <Text style={{ color: 'white', marginBottom: 10 }}>
           On each library, we don't use traditional ❤️/👍 button to like each content. Instead, we use the like buttons
           which are created by the library creator(you). You can make multiple original buttons (up to 3) and these are

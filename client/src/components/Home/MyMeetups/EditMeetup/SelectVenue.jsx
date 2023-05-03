@@ -3,6 +3,7 @@ import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { mapStyleForForm } from '../../../../utils/mapStyle';
 import { screenSectionBackgroundColor } from '../../../../utils/colorsTable';
+import HomeNavigatorContext from '../../../Navigator/Home/HomeNavigatorContext';
 
 const SelectVenue = (props) => {
   // この, objectのreference問題、結構めんどい。おそらく、lodashを使うのが一番いい方法。
@@ -11,12 +12,13 @@ const SelectVenue = (props) => {
   console.log(defaultVenue === editingPlace);
   console.log('default', defaultVenue);
   console.log('editing', editingPlace);
+  const { topLevelHomeNavigation } = useContext(HomeNavigatorContext);
 
   useEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
-          onPress={() => props.navigation.navigate('Edit meetup', { editedVenue: editingPlace })}
+          onPress={() => topLevelHomeNavigation.navigate('Edit meetup', { editedVenue: editingPlace })}
           disabled={JSON.stringify(defaultVenue) === JSON.stringify(editingPlace) ? true : false}
         >
           <Text

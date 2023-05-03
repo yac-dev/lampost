@@ -8,6 +8,7 @@ import Venue from './Venue';
 import DateAndTime from './DateAndTime';
 import LoadingSpinner from '../../../Utils/LoadingSpinner';
 import SnackBar from '../../../Utils/SnackBar';
+import HomeNavigatorContext from '../../../Navigator/Home/HomeNavigatorContext';
 
 const Container = (props) => {
   const { auth, setLoading } = useContext(GlobalContext);
@@ -27,6 +28,7 @@ const Container = (props) => {
     startDateAndTime: { isEdited: false, data: '' },
     duration: { isEdited: false, data: '' },
   });
+  const { topLevelHomeNavigation } = useContext(HomeNavigatorContext);
 
   useEffect(() => {
     props.navigation.setOptions({
@@ -61,7 +63,7 @@ const Container = (props) => {
     setLoading(true);
     const result = await lampostAPI.patch(`/meetups/${meetup._id}`, payload);
     setLoading(false);
-    props.navigation.navigate('Map', { editedMeetup: { ...payload }, meetupId: meetup._id });
+    topLevelHomeNavigation.navigate('Home', { editedMeetup: { ...payload }, meetupId: meetup._id });
   };
 
   const getMeetup = async () => {

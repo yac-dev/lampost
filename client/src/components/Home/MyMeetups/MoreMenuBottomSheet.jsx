@@ -40,7 +40,7 @@ const MoreMenuBottomSheet = (props) => {
           <TouchableOpacity
             style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
             onPress={() => {
-              navigation.navigate('Edit meetup', { meetupId: moreMenu._id });
+              topLevelHomeNavigation.navigate('Edit meetup', { meetupId: moreMenu._id });
               moreMenuBottomSheetRef.current.close();
             }}
           >
@@ -68,7 +68,7 @@ const MoreMenuBottomSheet = (props) => {
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
             moreMenuBottomSheetRef.current.close();
-            navigation.navigate('MembersNavigator', { meetupId: moreMenu._id });
+            topLevelHomeNavigation.navigate('Meetup members', { meetupId: moreMenu._id });
             // navigation.navigate('MembersNavigator', { screen: 'Members', params: { meetupId: moreMenu._id } });
           }}
         >
@@ -90,13 +90,13 @@ const MoreMenuBottomSheet = (props) => {
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
-            navigation.navigate('Lounge', { meetupId: moreMenu });
+            topLevelHomeNavigation.navigate('Lounge', { meetupId: moreMenu });
             moreMenuBottomSheetRef.current.close();
           }}
-          disabled={true}
+          // disabled={true}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View
@@ -115,7 +115,7 @@ const MoreMenuBottomSheet = (props) => {
             <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Meetup Detail</Text>
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </BottomSheetView>
     </GorhomBottomSheet>
   );

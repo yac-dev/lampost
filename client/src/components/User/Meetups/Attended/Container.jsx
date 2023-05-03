@@ -40,11 +40,11 @@ const AttendedContainer = (props) => {
 
   const getMyFriends = async () => {
     const result = await lampostAPI.get(`/friendrelationships/${auth.data._id}`);
-    const { friendObjects } = result.data;
-    console.log(friendObjects);
+    const { myFriends } = result.data;
+    console.log(myFriends);
     setMyFriends((previous) => {
       const table = {};
-      friendObjects.forEach((friendObject) => {
+      myFriends.forEach((friendObject) => {
         table[friendObject.user._id] = friendObject.user;
       });
       return table;
@@ -87,158 +87,6 @@ const AttendedContainer = (props) => {
     });
     setLoading(false);
   };
-
-  // const renderActionButtons = (user) => {
-  //   // if (auth.data._id !== user._id) {
-  //   // can't clap myself
-  //   if (user._id === auth.data._id) {
-  //     return null;
-  //   } else {
-  //     if (user._id === props.route.params.launcherId) {
-  //       return (
-  //         <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
-  //           <TouchableOpacity
-  //             style={{
-  //               flexDirection: 'row',
-  //               alignItems: 'center',
-  //               backgroundColor: 'rgb(84, 84, 84)',
-  //               borderRadius: 5,
-  //               padding: 5,
-  //               marginRight: 10,
-  //             }}
-  //             disabled={true}
-  //           >
-  //             <MaterialCommunityIcons name='hand-heart' size={22} color='white' style={{ marginRight: 5 }} />
-  //             <Text style={{ color: 'white' }}>Give a tip</Text>
-  //           </TouchableOpacity>
-  //           <TouchableOpacity
-  //             style={{
-  //               flexDirection: 'row',
-  //               alignItems: 'center',
-  //               backgroundColor: iconColorsTable['blue1'],
-  //               borderRadius: 5,
-  //               padding: 5,
-  //               marginRight: 10,
-  //             }}
-  //             onPress={() => {
-  //               addFriend(user);
-  //             }}
-  //           >
-  //             <MaterialCommunityIcons
-  //               name='human-greeting-variant'
-  //               size={22}
-  //               color='white'
-  //               style={{ marginRight: 5 }}
-  //             />
-  //             <Text style={{ color: 'white' }}>Be my friend</Text>
-  //           </TouchableOpacity>
-  //           <TouchableOpacity
-  //             style={{
-  //               flexDirection: 'row',
-  //               alignItems: 'center',
-  //               backgroundColor: iconColorsTable['blue1'],
-  //               borderRadius: 5,
-  //               padding: 5,
-  //             }}
-  //             onPress={() => {
-  //               props.navigation.navigate('Clap friend', { userId: user._id, launcherId: props.route.params.launcherId });
-  //             }}
-  //           >
-  //             <MaterialCommunityIcons name='hand-clap' size={22} color='white' style={{ marginRight: 5 }} />
-  //             <Text style={{ color: 'white' }}>Clap</Text>
-  //           </TouchableOpacity>
-  //         </ScrollView>
-  //       );
-  //     } else {
-  //       if (myFriends[user._id]) {
-  //         return (
-  //           <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
-  //             <View
-  //               style={{
-  //                 flexDirection: 'row',
-  //                 alignItems: 'center',
-  //                 backgroundColor: iconColorsTable['green1'],
-  //                 borderRadius: 5,
-  //                 padding: 5,
-  //               }}
-  //             >
-  //               <MaterialCommunityIcons name='check' size={22} color='white' style={{ marginRight: 5 }} />
-  //               <Text style={{ color: 'white' }}>Already my friend</Text>
-  //             </View>
-  //             <TouchableOpacity
-  //               style={{
-  //                 flexDirection: 'row',
-  //                 alignItems: 'center',
-  //                 backgroundColor: iconColorsTable['blue1'],
-  //                 borderRadius: 5,
-  //                 padding: 5,
-  //               }}
-  //               onPress={() => {
-  //                 props.navigation.navigate('Clap friend', {
-  //                   userId: user._id,
-  //                   launcherId: props.route.params.launcherId,
-  //                 });
-  //               }}
-  //             >
-  //               <MaterialCommunityIcons
-  //                 name='human-greeting-variant'
-  //                 size={22}
-  //                 color='white'
-  //                 style={{ marginRight: 5 }}
-  //               />
-  //               <Text style={{ color: 'white' }}>Clap</Text>
-  //             </TouchableOpacity>
-  //           </ScrollView>
-  //         );
-  //       } else {
-  //         return (
-  //           <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
-  //             <TouchableOpacity
-  //               style={{
-  //                 flexDirection: 'row',
-  //                 alignItems: 'center',
-  //                 backgroundColor: iconColorsTable['blue1'],
-  //                 borderRadius: 5,
-  //                 padding: 5,
-  //                 marginRight: 10,
-  //               }}
-  //               onPress={() => {
-  //                 addFriend(user);
-  //               }}
-  //             >
-  //               <MaterialCommunityIcons
-  //                 name='human-greeting-variant'
-  //                 size={22}
-  //                 color='white'
-  //                 style={{ marginRight: 5 }}
-  //               />
-  //               <Text style={{ color: 'white' }}>Be my friend</Text>
-  //             </TouchableOpacity>
-  //             <TouchableOpacity
-  //               style={{
-  //                 flexDirection: 'row',
-  //                 alignItems: 'center',
-  //                 backgroundColor: iconColorsTable['blue1'],
-  //                 borderRadius: 5,
-  //                 padding: 5,
-  //               }}
-  //               onPress={() => {
-  //                 props.navigation.navigate('Clap friend', {
-  //                   userId: user._id,
-  //                   launcherId: props.route.params.launcherId,
-  //                 });
-  //               }}
-  //             >
-  //               <MaterialCommunityIcons name='hand-clap' size={22} color='white' style={{ marginRight: 5 }} />
-  //               <Text style={{ color: 'white' }}>Clap</Text>
-  //             </TouchableOpacity>
-  //           </ScrollView>
-  //         );
-  //       }
-  //     }
-  //   }
-  //   // }
-  // };
 
   const onUserNamePress = (user) => {
     if (!auth.data) {

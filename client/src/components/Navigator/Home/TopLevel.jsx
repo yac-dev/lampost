@@ -9,6 +9,9 @@ const Stack = createNativeStackNavigator();
 // import Container from './Container';
 import TopTabsNavigator from './TopTabsNavigator';
 import EditMeetup from '../../Home/MyMeetups/EditMeetup/Container';
+import SelectVenue from '../../Home/MyMeetups/EditMeetup/SelectVenue';
+import MeetupMembers from '../../Home/MyMeetups/Members';
+import Lounge from '../../Home/MyMeetups/Lounge/Container';
 import Members from '../../Home/MyMeetups/Members';
 // import CreateLibrary from '../Libraries/CreateLibraryBottomSheet/ContainerNew'
 import CreateNewLibrary from '../../Libraries/CreateNewLibrary/Container';
@@ -55,14 +58,12 @@ const TopLevelHomeNavigator = (props) => {
               // },
             })}
           />
-          {/* 
-          // 純粋にroutingさせたいものはここに書いていく。
           <Stack.Screen
-            name='Members'
-            component={Members}
+            name='Meetup members'
+            component={MeetupMembers}
             options={({ navigation }) => ({
               headerShown: true,
-              title: 'Members',
+              title: 'Meetup members',
               headerStyle: {
                 backgroundColor: appBottomSheetBackgroundColor,
               },
@@ -74,7 +75,25 @@ const TopLevelHomeNavigator = (props) => {
                 color: 'white',
               },
             })}
-          /> */}
+          />
+          <Stack.Screen
+            name='User'
+            component={User}
+            options={({ navigation }) => ({
+              headerShown: true,
+              title: 'User',
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+              headerTintColor: {
+                color: 'white',
+              },
+            })}
+          />
         </Stack.Group>
         <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
           <Stack.Screen
@@ -87,6 +106,46 @@ const TopLevelHomeNavigator = (props) => {
                 </TouchableOpacity>
               ),
               headerTitle: 'Edit meetup',
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+            })}
+          />
+          <Stack.Screen
+            name='Lounge'
+            component={Lounge}
+            options={({ navigation }) => ({
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+                </TouchableOpacity>
+              ),
+              headerTitle: 'Lounge',
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+            })}
+          />
+        </Stack.Group>
+        <Stack.Group screenOptions={{ presentation: 'modal', gestureEnabled: false }}>
+          <Stack.Screen
+            name='Select venue'
+            component={SelectVenue}
+            options={({ navigation }) => ({
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+                </TouchableOpacity>
+              ),
+              headerTitle: 'Select venue',
               headerStyle: {
                 backgroundColor: appBottomSheetBackgroundColor,
               },

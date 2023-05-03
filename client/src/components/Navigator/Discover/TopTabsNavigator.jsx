@@ -34,7 +34,7 @@ const DiscoverTopTabsNavigator = () => {
       }}
     >
       <Tab.Screen
-        name='Meetups'
+        name='Meetups navigator'
         component={MapNavigator}
         options={({ route }) => ({
           // headerShown: false,
@@ -51,7 +51,7 @@ const DiscoverTopTabsNavigator = () => {
         })}
       />
       <Tab.Screen
-        name='Libraries'
+        name='Libraries navigator'
         component={LibrariesContaier}
         options={({ route }) => ({
           // headerShown: false,

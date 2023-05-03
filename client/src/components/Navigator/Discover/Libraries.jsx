@@ -9,6 +9,7 @@ import Container from '../../Libraries/Container';
 // import CreateLibrary from '../Libraries/CreateLibraryBottomSheet/ContainerNew'
 import CreateNewLibrary from '../../Libraries/CreateNewLibrary/Container';
 import CreateReaction from '../../Libraries/CreateNewLibrary/CreateReaction/Container';
+import IconPicker from '../../Utils/IconPicker/Container';
 import MyFriends from '../../Libraries/CreateNewLibrary/MyFriends';
 import Icons from '../../Libraries/CreateNewLibrary/Icons';
 import LibraryContainer from '../../Libraries/Library/Container';
@@ -243,6 +244,25 @@ const LibraryNavigator = () => {
               </TouchableOpacity>
             ),
             headerTitle: 'Create reaction',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          })}
+        />
+        <Stack.Screen
+          name='Icon picker'
+          component={IconPicker}
+          options={({ navigation }) => ({
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+              </TouchableOpacity>
+            ),
+            headerTitle: 'Icon picker',
             headerStyle: {
               backgroundColor: appBottomSheetBackgroundColor,
             },

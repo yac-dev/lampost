@@ -22,13 +22,17 @@ const Container = (props) => {
   const [isFetchedNotifications, setIsFetchedNotifications] = useState(false);
   const libraryDetailBottomSheetRef = useRef(null);
   const [selectedLibrary, setSelectedLibrary] = useState(null);
-  console.log(selectedLibrary);
+  // console.log(selectedLibrary);
 
   const getNotifications = async () => {
     const result = await lampostAPI.get(`/notifications/${auth.data._id}`);
     const { notifications } = result.data;
     setNotifications(notifications);
     setIsFetchedNotifications(true);
+  };
+
+  const readNotification = async (notification) => {
+    const result = await lampostAPI.post(`/notifications/read/${notification._id}`);
   };
 
   useEffect(() => {

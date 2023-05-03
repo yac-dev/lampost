@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, TextInput, InputAccessoryView, Keyboard, TouchableOpacity } from 'react-native';
+import HomeNavigatorContext from '../../../Navigator/Home/HomeNavigatorContext';
 import EditMeetupContext from './EditMeetupContext';
 import {
   backgroundColorsTable,
@@ -19,6 +20,7 @@ const Place = () => {
   const { AntDesign, Ionicons, MaterialCommunityIcons, Fontisto } = iconsTable;
   const { accordion, setAccordion, editingData, setEditingData, navigation, route, meetup, setStageCleared } =
     useContext(EditMeetupContext);
+  const { topLevelHomeNavigation } = useContext(HomeNavigatorContext);
 
   useEffect(() => {
     if (route.params?.editedVenue) {
@@ -108,11 +110,11 @@ const Place = () => {
             }}
             onPress={() => {
               if (editingData.venue.isEdited) {
-                navigation.navigate('Select venue', {
+                topLevelHomeNavigation.navigate('Select venue', {
                   editingPlace: editingData.venue.data,
                 });
               } else {
-                navigation.navigate('Select venue', { editingPlace: meetup.place });
+                topLevelHomeNavigation.navigate('Select venue', { editingPlace: meetup.place });
               }
             }}
           >

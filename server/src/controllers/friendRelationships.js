@@ -60,6 +60,8 @@ export const getMyFriends = async (request, response) => {
       };
     });
 
+    console.log(myFriends);
+
     response.status(200).json({
       myFriends,
     });
