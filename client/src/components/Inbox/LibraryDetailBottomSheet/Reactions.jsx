@@ -1,0 +1,76 @@
+import React, { useState, useEffect, useContext } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import InboxContext from '../InboxContext';
+import {
+  screenSectionBackgroundColor,
+  backgroundColorsTable,
+  iconColorsTable,
+  baseTextColor,
+} from '../../../utils/colorsTable';
+import { iconsTable } from '../../../utils/icons';
+const { MaterialCommunityIcons, MaterialIcons, Ionicons } = iconsTable;
+
+const Reactions = () => {
+  const { selectedLibrary } = useContext(InboxContext);
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+
+  return (
+    <View style={{ padding: 5, borderRadius: 5, marginBottom: 5 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <TouchableOpacity
+          onPress={() => setIsAccordionOpen((previous) => !previous)}
+          style={{ flexDirection: 'row', alignItems: 'center' }}
+        >
+          <View
+            style={{
+              backgroundColor: backgroundColorsTable['yellow1'],
+              padding: 5,
+              borderRadius: 7,
+              width: 40,
+              height: 40,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginRight: 12,
+            }}
+          >
+            <Ionicons name='ios-thumbs-up-sharp' size={20} color={iconColorsTable['yellow1']} />
+          </View>
+          <Text style={{ fontWeight: 'bold', fontSize: 15, color: 'white' }}>Reactions</Text>
+        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          {selectedLibrary.isReactionAvailable ? (
+            <View>
+              <Text>ji</Text>
+            </View>
+          ) : (
+            <View>
+              <MaterialIcons name='do-not-disturb-on' color={iconColorsTable['yellow1']} size={20} />
+            </View>
+          )}
+          <TouchableOpacity onPress={() => setIsAccordionOpen((previous) => !previous)}>
+            <MaterialCommunityIcons
+              name={isAccordionOpen ? 'chevron-up' : 'chevron-down'}
+              color={baseTextColor}
+              size={25}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+      {isAccordionOpen ? (
+        <View style={{ marginTop: 10, marginBottom: 10 }}>
+          {selectedLibrary.isReactionAvailable ? (
+            <View>
+              <Text>Reactions here</Text>
+            </View>
+          ) : (
+            <Text style={{ textAlign: 'center', color: 'white' }}>
+              Just enjoy the photos and videos without any upvotes/likes!
+            </Text>
+          )}
+        </View>
+      ) : null}
+    </View>
+  );
+};
+
+export default Reactions;

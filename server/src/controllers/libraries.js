@@ -124,7 +124,7 @@ export const createLibrary = async (request, response) => {
           platform: 'library',
           from: launcher,
           to: friendId,
-          title: `You got a library invitation.`,
+          title: `You got a library invitation from ${launcher.name}`,
           message: invitationMessage,
           library: library._id,
           createdAt: new Date(),

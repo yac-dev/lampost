@@ -48,7 +48,7 @@ const RootNavigator = () => {
       }}
     >
       <Tab.Screen
-        name='Home'
+        name='HomeTopLevel'
         component={HomeTopLevel}
         options={{
           headerShown: false,
@@ -71,7 +71,7 @@ const RootNavigator = () => {
       />
 
       <Tab.Screen
-        name='Discover'
+        name='DiscoverTopLevel'
         component={DiscoverTopLevel}
         options={({ navigation }) => ({
           headerShown: false,
@@ -112,7 +112,7 @@ const RootNavigator = () => {
       />
 
       <Tab.Screen
-        name='Inbox'
+        name='InboxTopLevel'
         component={InboxTopLevel}
         options={({ navigation }) => ({
           headerShown: false,
