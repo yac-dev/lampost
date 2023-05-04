@@ -27,7 +27,7 @@ const Assets = (props) => {
   const oneAssetWidth = isIpad ? Dimensions.get('window').width / 4 : Dimensions.get('window').width / 2;
 
   const getAssetsByLibraryId = async () => {
-    const result = await lampostAPI.get(`/libraryandassetrelationships/${props.route.params.libraryId}`);
+    const result = await lampostAPI.get(`/libraryandassetrelationships/${props.route.params.libraryId}/assets`);
     const { assets } = result.data;
     setAssets(assets);
     setIsFetchedAssets(true);

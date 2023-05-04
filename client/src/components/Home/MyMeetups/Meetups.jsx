@@ -18,10 +18,12 @@ const Meetups = (props) => {
   const {
     setMenuMenu,
     moreMenuBottomSheetRef,
-    isStartMeetupConfirmationModalOpen,
     setIsStartMeetupConfirmationModalOpen,
-    startingMeetup,
     setStartingMeetup,
+    setIsFinishMeetupConfirmationModalOpen,
+    setFinishingMeetup,
+    setIsRSVPConfirmationModalOpen,
+    setRSVPingMeetup,
   } = useContext(MyMeetupsContext);
   const { topLevelHomeNavigation } = useContext(HomeNavigatorContext);
 
@@ -154,27 +156,27 @@ const Meetups = (props) => {
     }
   };
 
-  const renderChatStats = (meetup) => {
-    const list = Object.keys(meetup.unreadChatsTable).map((key) => {
-      return <ChatStatus key={key} chatType={key} status={meetup.unreadChatsTable[key]} />;
-    });
+  // const renderChatStats = (meetup) => {
+  //   const list = Object.keys(meetup.unreadChatsTable).map((key) => {
+  //     return <ChatStatus key={key} chatType={key} status={meetup.unreadChatsTable[key]} />;
+  //   });
 
-    return (
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          // flexWrap: 'wrap',
-        }}
-        onPress={() => {
-          appMenuBottomSheetRef.current.close();
-          navigation.navigate('Lounge', { meetupId: meetup._id });
-        }}
-      >
-        {list}
-      </View>
-    );
-  };
+  //   return (
+  //     <View
+  //       style={{
+  //         flexDirection: 'row',
+  //         alignItems: 'center',
+  //         // flexWrap: 'wrap',
+  //       }}
+  //       onPress={() => {
+  //         appMenuBottomSheetRef.current.close();
+  //         navigation.navigate('Lounge', { meetupId: meetup._id });
+  //       }}
+  //     >
+  //       {list}
+  //     </View>
+  //   );
+  // };
 
   const renderRSVP = (meetup) => {
     if (meetup.isRSVPed) {
@@ -221,7 +223,7 @@ const Meetups = (props) => {
             <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
               <Ionicons size={25} name='ios-chatbubbles' color={'white'} style={{ marginRight: 5 }} />
               <Text style={{ color: 'white', marginRight: 5 }}>Go to lounge</Text>
-              {renderChatStats(meetup)}
+              {/* {renderChatStats(meetup)} */}
             </View>
           </TouchableOpacity>
         </View>
@@ -243,7 +245,7 @@ const Meetups = (props) => {
             <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
               <Ionicons size={25} name='ios-chatbubbles' color={'white'} style={{ marginRight: 5 }} />
               <Text style={{ color: 'white', marginRight: 5 }}>Go to lounge</Text>
-              {renderChatStats(meetup)}
+              {/* {renderChatStats(meetup)} */}
             </View>
           </TouchableOpacity>
         </View>
@@ -330,7 +332,7 @@ const Meetups = (props) => {
               marginTop: 80,
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: inputBackgroundColorNew,
+              backgroundColor: iconColorsTable['red1'],
               alignSelf: 'center',
               marginBottom: 10,
             }}
