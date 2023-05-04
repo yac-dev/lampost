@@ -127,6 +127,7 @@ const Meetups = (props) => {
             <Ionicons size={25} name='power' color={'white'} style={{ marginRight: 5 }} />
             <Text style={{ color: 'white' }}>Start meetup</Text>
           </View>
+          <Text style={{ color: baseTextColor, textAlign: 'center' }}>Tap here when ready.</Text>
         </TouchableOpacity>
       );
     } else if (meetupAndChatsTable.state === 'ongoing') {
@@ -147,6 +148,7 @@ const Meetups = (props) => {
             <Ionicons size={25} name='power' color={'white'} />
             <Text style={{ color: 'white' }}>Finish meetup</Text>
           </View>
+          <Text style={{ color: baseTextColor, textAlign: 'center' }}>Tap here after your meetup ends.</Text>
         </TouchableOpacity>
       );
     }

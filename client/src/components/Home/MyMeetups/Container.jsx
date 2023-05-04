@@ -6,11 +6,17 @@ import { baseBackgroundColor, screenSectionBackgroundColor } from '../../../util
 import Meetups from './Meetups';
 import MoreMenuBottomSheet from './MoreMenuBottomSheet';
 import ConfirmStartMeetup from './ConfirmStartMeetup';
+import ConfirmFinishMeetup from './ConfirmFinishMeetup';
+import ConfirmRSVP from './ConfirmRSVP';
 
 const Container = (props) => {
   const { auth, isFetchedAuthData } = useContext(GlobalContext);
   const [isStartMeetupConfirmationModalOpen, setIsStartMeetupConfirmationModalOpen] = useState(false);
   const [startingMeetup, setStartingMeetup] = useState(null);
+  const [isFinishMeetupConfirmationModalOpen, setIsFinishMeetupConfirmationModalOpen] = useState(false);
+  const [finishingMeetup, setFinishingMeetup] = useState('');
+  const [isRSVPConfirmationModalOpen, setIsRSVPConfirmationModalOpen] = useState(false);
+  const [RSVPingMeetup, setRSVPingMeetup] = useState(null);
   const moreMenuBottomSheetRef = useRef(null);
   const [moreMenu, setMenuMenu] = useState(null);
 
@@ -27,12 +33,22 @@ const Container = (props) => {
             setIsStartMeetupConfirmationModalOpen,
             startingMeetup,
             setStartingMeetup,
+            isFinishMeetupConfirmationModalOpen,
+            setIsFinishMeetupConfirmationModalOpen,
+            finishingMeetup,
+            setFinishingMeetup,
+            isRSVPConfirmationModalOpen,
+            setIsRSVPConfirmationModalOpen,
+            RSVPingMeetup,
+            setRSVPingMeetup,
           }}
         >
           <View style={{ flex: 1, padding: 10, backgroundColor: baseBackgroundColor }}>
             <Meetups />
             <MoreMenuBottomSheet />
             <ConfirmStartMeetup />
+            <ConfirmFinishMeetup />
+            <ConfirmRSVP />
           </View>
         </MyMeetupsContext.Provider>
       );
