@@ -425,6 +425,9 @@ export const getUserMeetupsByYearMonth = async (request, response) => {
       populate: {
         path: 'badges',
         select: 'icon color',
+        populate: {
+          path: 'icon',
+        },
       },
     });
     console.log(meetupAndUserRelationships);
@@ -457,6 +460,9 @@ export const getUserMeetupsByDate = async (request, response) => {
         populate: {
           path: 'badges',
           select: 'icon _id name color',
+          populate: {
+            path: 'icon',
+          },
         },
       })
       .populate({

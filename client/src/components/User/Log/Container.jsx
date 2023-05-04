@@ -152,7 +152,7 @@ const LogContainer = (props) => {
               >
                 <FastImage
                   style={{ width: 30, height: 30 }}
-                  source={{ uri: marking.badge.icon }}
+                  source={{ uri: marking.badge.icon.url }}
                   tintColor={iconColorsTable[marking.badge.color]}
                 />
               </View>

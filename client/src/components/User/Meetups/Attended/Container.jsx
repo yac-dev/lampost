@@ -42,10 +42,10 @@ const AttendedContainer = (props) => {
     const result = await lampostAPI.get(`/friendrelationships/${auth.data._id}`);
     const { myFriends } = result.data;
     console.log(myFriends);
-    setMyFriends((previous) => {
+    setMyFriends(() => {
       const table = {};
-      myFriends.forEach((friendObject) => {
-        table[friendObject.user._id] = friendObject.user;
+      myFriends.forEach((friendRelationship) => {
+        table[friendRelationship.friend._id] = friendRelationship.friend;
       });
       return table;
     });
@@ -133,18 +133,18 @@ const AttendedContainer = (props) => {
                         borderRadius: 5,
                         backgroundColor: iconColorsTable['blue1'],
                       }}
-                      onPress={() => {
-                        actionButtonBottomSheetRef.current.snapToIndex(0);
-                        setSelectedUser(item.user);
-                      }}
+                      // onPress={() => {
+                      //   actionButtonBottomSheetRef.current.snapToIndex(0);
+                      //   setSelectedUser(item.user);
+                      // }}
                     >
                       <MaterialCommunityIcons
-                        name='chevron-down'
+                        name='human-greeting-variant'
                         color={'white'}
                         size={25}
                         style={{ marginRight: 5 }}
                       />
-                      <Text style={{ color: 'white', marginRight: 5 }}>Connect</Text>
+                      <Text style={{ color: 'white', marginRight: 5 }}>Be friends</Text>
                     </TouchableOpacity>
                   ) : null
                 }

@@ -14,17 +14,24 @@ const MyFriendsContainer = (props) => {
 
   const getMyFriendObjects = async () => {
     const result = await lampostAPI.get(`/friendrelationships/${auth.data._id}`);
-    const { friendObjects } = result.data;
-    setMyFriendObjects(friendObjects);
+    const { myFriends } = result.data;
+    setMyFriendObjects(myFriends);
     setIsFetchedMyFriends(true);
   };
   useEffect(() => {
     getMyFriendObjects();
   }, []);
-
-  const renderItem = useCallback((friendObject) => {
+  console.log(myFriendObjects);
+  const renderItem = useCallback((friendRelationship) => {
     return (
-      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+      <TouchableOpacity
+        style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
+        onPress={() =>
+          props.navigation.navigate('User', {
+            userId: friendRelationship.friend._id,
+          })
+        }
+      >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <FastImage
             style={{
@@ -35,36 +42,17 @@ const MyFriendsContainer = (props) => {
               backgroundColor: iconColorsTable['blue1'],
             }}
             source={{
-              uri: friendObject.user.photo
-                ? friendObject.user.photo
+              uri: friendRelationship.friend.photo
+                ? friendRelationship.friend.photo
                 : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
               priority: FastImage.priority.normal,
             }}
             resizeMode={FastImage.resizeMode.stretch}
-            tintColor={friendObject.user.photo ? null : 'white'}
+            tintColor={friendRelationship.friend.photo ? null : 'white'}
           />
-          <Text style={{ color: 'white' }}>{friendObject.user.name}</Text>
+          <Text style={{ color: 'white' }}>{friendRelationship.friend.name}</Text>
         </View>
-        <TouchableOpacity
-          style={{
-            width: 40,
-            height: 40,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginRight: 10,
-            backgroundColor: iconColorsTable['blue1'],
-            borderRadius: 7,
-          }}
-          onPress={() =>
-            props.navigation.navigate('Chat room', {
-              friendChatRoomId: friendObject.friendChatRoom,
-              friendId: friendObject.user._id,
-            })
-          }
-        >
-          <Ionicons name='ios-chatbubbles' size={25} color={'white'} />
-        </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
     );
   }, []);
 

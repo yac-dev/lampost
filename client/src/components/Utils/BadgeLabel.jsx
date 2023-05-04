@@ -39,7 +39,7 @@ const BadgeLabel = (props) => {
           <FastImage
             style={{ width: 17, height: 17 }}
             source={{
-              uri: props.badge.icon,
+              uri: props.badge.icon.url,
               priority: FastImage.priority.normal,
             }}
             tintColor={iconColorsTable[props.badge.color]}

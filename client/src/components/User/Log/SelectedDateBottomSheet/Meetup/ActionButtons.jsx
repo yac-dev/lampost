@@ -12,7 +12,7 @@ const ActionButtons = (props) => {
 
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={{
           paddingRight: 2,
           paddingBottom: 5,
@@ -30,7 +30,7 @@ const ActionButtons = (props) => {
             <Text style={{ color: 'white' }}>Moments</Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity
         style={{
           paddingLeft: 2,

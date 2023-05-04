@@ -17,7 +17,7 @@ import CreateBadge from '../User/CreateBadge/Container';
 import AddLink from '../User/AddLink';
 // import AddLinks from '../User/AddLink/Container';
 
-import UserHome from '../User/Container';
+import User from '../User/Container';
 // import Launched from '../User/LaunchedMeetups/Container';
 // import LaunchedMeetup from '../User/LaunchedMeetups/LaunchedMeetup/Container';
 import Patrons from '../User/Patrons/Container';
@@ -51,7 +51,7 @@ const Auth = (props) => {
         <Stack.Group>
           <Stack.Screen
             name='Profile'
-            component={UserHome}
+            component={User}
             initialParams={{ userId: auth.data._id }}
             options={{
               // headerShown: false,
@@ -162,8 +162,8 @@ const Auth = (props) => {
             }}
           />
           <Stack.Screen
-            name='Chat room'
-            component={FriendChatRoom}
+            name='User'
+            component={User}
             options={{
               headerStyle: {
                 backgroundColor: appBottomSheetBackgroundColor,
