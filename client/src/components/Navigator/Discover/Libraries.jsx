@@ -9,7 +9,7 @@ import Container from '../../Libraries/Container';
 // import CreateLibrary from '../Libraries/CreateLibraryBottomSheet/ContainerNew'
 import CreateNewLibrary from '../../Libraries/CreateNewLibrary/Container';
 import CreateReaction from '../../Libraries/CreateNewLibrary/CreateReaction/Container';
-import IconPicker from '../../Utils/IconPicker/Container';
+import IconPicker from '../../Libraries/CreateNewLibrary/CreateReaction/IconPicker';
 import MyFriends from '../../Libraries/CreateNewLibrary/MyFriends';
 import Icons from '../../Libraries/CreateNewLibrary/Icons';
 import LibraryContainer from '../../Libraries/Library/Container';

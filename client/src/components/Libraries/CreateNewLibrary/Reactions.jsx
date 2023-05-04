@@ -127,7 +127,7 @@ const Title = () => {
               }}
             >
               <FastImage
-                source={{ uri: reaction.icon }}
+                source={{ uri: reaction.icon.url }}
                 style={{ width: 30, height: 30, marginRight: 5 }}
                 tintColor={'white'}
               />

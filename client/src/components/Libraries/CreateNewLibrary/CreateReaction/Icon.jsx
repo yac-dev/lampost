@@ -16,7 +16,7 @@ import FastImage from 'react-native-fast-image';
 import lampostAPI from '../../../../apis/lampost';
 
 const Icon = () => {
-  const { accordion, setAccordion, creatingReaction, setCreatingReaction, navigation } =
+  const { accordion, setAccordion, creatingReaction, setCreatingReaction, navigation, route } =
     useContext(CreateReactionContext);
   const { MaterialCommunityIcons, Ionicons } = iconsTable;
   const [icons, setIcons] = useState([]);
@@ -36,6 +36,17 @@ const Icon = () => {
   // useEffect(() => {
   //   getIcons();
   // }, []);
+
+  useEffect(() => {
+    if (route.params?.selectedIcon) {
+      setCreatingReaction((previous) => {
+        return {
+          ...previous,
+          icon: route.params.selectedIcon,
+        };
+      });
+    }
+  }, [route.params?.selectedIcon]);
 
   return (
     <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 7, borderRadius: 5, marginBottom: 10 }}>

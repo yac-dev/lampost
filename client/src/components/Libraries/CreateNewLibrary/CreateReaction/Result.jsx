@@ -111,7 +111,7 @@ const Result = () => {
             >
               {creatingReaction.icon ? (
                 <FastImage
-                  source={{ uri: creatingReaction.icon }}
+                  source={{ uri: creatingReaction.icon.url }}
                   style={{ width: 30, height: 30, marginRight: 5 }}
                   tintColor={creatingReaction.upvotes ? iconColorsTable[creatingReaction.color] : 'white'}
                 />

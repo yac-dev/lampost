@@ -49,7 +49,14 @@ const Container = (props) => {
 
   return (
     <CreateReactionContext.Provider
-      value={{ creatingReaction, setCreatingReaction, accordion, setAccordion, navigation: props.navigation }}
+      value={{
+        creatingReaction,
+        setCreatingReaction,
+        accordion,
+        setAccordion,
+        navigation: props.navigation,
+        route: props.route,
+      }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
         <Text style={{ fontSize: 23, fontWeight: 'bold', marginBottom: 15, color: 'white' }}>📣 Note</Text>
