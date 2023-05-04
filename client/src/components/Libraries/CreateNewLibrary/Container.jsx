@@ -16,13 +16,14 @@ import Comment from './Comment';
 import LoadingSpinner from '../../Utils/LoadingSpinner';
 
 const Container = (props) => {
-  const { auth, setAuth, setLoading } = useContext(GlobalContext);
+  const { auth, setAuth, setLoading, setMyJoinedLibraries } = useContext(GlobalContext);
   const [formData, setFormData] = useState({
     title: '',
     badges: {},
     assetType: '',
     isPublic: '',
     friends: {},
+    invitationMessage: '',
     isReactionAvailable: '',
     reactions: [],
     isCommentAvailable: '',
@@ -58,7 +59,8 @@ const Container = (props) => {
       badgeIds: Object.keys(formData.badges),
       assetType: formData.assetType,
       isPublic: formData.isPublic,
-      friendIds: formData.friends.map((friendRelationship) => friendRelationship.friend._id),
+      friendIds: Object.values(formData.friends).map((friendRelationship) => friendRelationship.friend._id),
+      invitationMessage: formData.invitationMessage,
       isReactionAvailable: formData.isReactionAvailable,
       reactions: formData.reactions,
       isCommentAvailable: formData.isCommentAvailable,
@@ -77,18 +79,9 @@ const Container = (props) => {
     setLoading(true);
     const result = await lampostAPI.post(`/libraries`, payload);
     setLoading(false);
-    // これをもって、navigation でlibrariesに行く。
     const { library } = result.data;
     props.navigation.navigate('Libraries', { fromComponent: 'Create new library', library });
-    //ここからは、librariesのuseEffectでやろう。
-    // setMyJoinedLibraries((previous) => [...previous, library]);
-    // setLibraries((previous) => [...previous, library]);
-    // setSnackBar({
-    //   isVisible: true,
-    //   message: 'Launched a library.',
-    //   barType: 'success',
-    //   duration: 5000,
-    // });
+    setMyJoinedLibraries((previous) => [...previous, library]);
   };
 
   useEffect(() => {

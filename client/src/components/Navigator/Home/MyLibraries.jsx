@@ -73,7 +73,7 @@ const HomeMyMeetupsNavigator = () => {
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
         <Stack.Screen
-          name='Library'
+          name='LibraryNavigator'
           component={LibraryNavigator}
           options={({ navigation, route }) => ({
             headerStyle: {

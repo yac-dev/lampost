@@ -89,7 +89,7 @@ const Reactions = () => {
             }}
           >
             <FastImage
-              source={{ uri: reactionObject.reaction.icon }}
+              source={{ uri: reactionObject.reaction.icon.url }}
               style={{ width: 30, height: 30 }}
               tintColor={
                 reactionObject.users.includes(auth.data._id) ? iconColorsTable[reactionObject.reaction.color] : 'white'

@@ -12,7 +12,7 @@ const colors = ['red1', 'blue1', 'yellow1', 'violet1', 'green1', 'lightBlue1'];
 
 export const getLibraries = async (request, response) => {
   try {
-    const libraries = await Library.find({})
+    const libraries = await Library.find({ isPublic: true })
       .select({ title: 1, thumbnail: 1, assetType: 1 })
 
       .populate({
@@ -84,13 +84,14 @@ export const createLibrary = async (request, response) => {
     const libraryAndAssetRelationship = new LibraryAndAssetRelationship({
       library: library._id,
       asset: asset._id,
+      createdAt: new Date(),
     });
 
     if (isReactionAvailable && reactions.length) {
       const reactionOptions = reactions.map((reaction) => {
         return {
           library: library._id,
-          icon: reaction.icon,
+          icon: reaction.icon._id,
           comment: reaction.comment,
           color: reaction.color,
         };
@@ -138,6 +139,7 @@ export const createLibrary = async (request, response) => {
         title: library.title,
         thumbnail: { data: asset.data, type: asset.type },
         assetType: assetType,
+        isPublic: library.isPublic,
       },
     });
   } catch (error) {

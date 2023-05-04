@@ -5,7 +5,10 @@ const reactionSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Library',
   },
-  icon: String, // awsのlinkね。
+  icon: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Icon',
+  },
   comment: {
     type: String,
     maxLength: 15,

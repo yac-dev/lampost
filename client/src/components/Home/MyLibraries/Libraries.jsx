@@ -1,14 +1,16 @@
 import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import GlobalContext from '../../../GlobalContext';
+import HomeNavigatorContext from '../../Navigator/Home/HomeNavigatorContext';
 import FastImage from 'react-native-fast-image';
 import { Video } from 'expo-av';
-import { baseTextColor, inputBackgroundColorNew } from '../../../utils/colorsTable';
+import { baseTextColor, iconColorsTable, inputBackgroundColorNew } from '../../../utils/colorsTable';
 import { iconsTable } from '../../../utils/icons';
 const { Ionicons, MaterialCommunityIcons, MaterialIcons } = iconsTable;
 
 const Libraries = (props) => {
   const { auth, myJoinedLibraries } = useContext(GlobalContext);
+  const { topLevelHomeNavigation } = useContext(HomeNavigatorContext);
 
   const renderAssetType = (library) => {
     if (library.assetType === 'photo') {
@@ -41,7 +43,7 @@ const Libraries = (props) => {
             onPress={() => {
               // myLibrariesBottomSheetRef.current.close();
               // navigation.navigate('Library', { libraryId: library._id, libraryAssetType: library.assetType });
-              props.navigation.navigate('Library', {
+              props.navigation.navigate('LibraryNavigator', {
                 screen: 'Library',
                 params: { libraryId: library._id, libraryAssetType: library.assetType, libraryTitle: library.title },
               });
@@ -87,7 +89,7 @@ const Libraries = (props) => {
             }}
             onPress={() => {
               myLibrariesBottomSheetRef.current.close();
-              navigation.navigate('Library', { libraryId: library._id, libraryAssetType: library.assetType });
+              navigation.navigate('LibraryNavigator', { libraryId: library._id, libraryAssetType: library.assetType });
             }}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -136,7 +138,7 @@ const Libraries = (props) => {
             marginTop: 80,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: inputBackgroundColorNew,
+            backgroundColor: iconColorsTable['blue1'],
             alignSelf: 'center',
             marginBottom: 10,
           }}

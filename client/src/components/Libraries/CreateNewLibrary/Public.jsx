@@ -79,7 +79,7 @@ const Public = (props) => {
   };
 
   const renderSelectedFriends = () => {
-    if (Object.values(formData.friends)) {
+    if (Object.values(formData.friends).length) {
       const list = Object.values(formData.friends).map((friendRelationship, index) => {
         return (
           <View key={index} style={{ marginRight: 10 }}>
@@ -104,9 +104,25 @@ const Public = (props) => {
       });
 
       return (
-        <ScrollView horizontal={true}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>{list}</View>
-        </ScrollView>
+        <View>
+          <ScrollView horizontal={true} style={{ marginBottom: 10 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>{list}</View>
+          </ScrollView>
+          <TextInput
+            placeholder='Please write the invitation message to your friend.'
+            placeholderTextColor={baseTextColor}
+            style={{ borderRadius: 5, backgroundColor: inputBackgroundColorNew, padding: 10, color: 'white' }}
+            value={formData.invitationMessage}
+            onChangeText={(text) =>
+              setFormData((previous) => {
+                return {
+                  ...previous,
+                  invitationMessage: text,
+                };
+              })
+            }
+          />
+        </View>
       );
     } else {
       return null;

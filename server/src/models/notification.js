@@ -25,6 +25,7 @@ const notificationSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'meetup',
   },
+  createdAt: Date,
 });
 
 const Notification = mongoose.model('Notification', notificationSchema);

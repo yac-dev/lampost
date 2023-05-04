@@ -42,7 +42,7 @@ const Container = (props) => {
   const [libraries, setLibraries] = useState([]);
   const [selectedLibrary, setSelectedLibrary] = useState(null);
   const [libraryAssets, setLibraryAssets] = useState([]);
-  const [myJoinedLibraries, setMyJoinedLibraries] = useState([]);
+  // const [myJoinedLibraries, setMyJoinedLibraries] = useState([]);
   const [selectedLibraryDetailComponent, setSelectedLibraryDetailComponent] = useState('');
   const [isConfirmCancelCreatingLibraryModalOpen, setIsConfirmCancelCreatingLibraryModalOpen] = useState(false);
 
@@ -123,8 +123,10 @@ const Container = (props) => {
   // libraryを作った時
   useEffect(() => {
     if (props.route.params?.fromComponent === 'Create new library') {
-      setLibraries((previous) => [...previous, props.route.params.library]);
-      setMyJoinedLibraries((previous) => [...previous, props.route.params.library]);
+      if (props.route.params.library.isPublic) {
+        setLibraries((previous) => [...previous, props.route.params.library]);
+      }
+      // setMyJoinedLibraries((previous) => [...previous, props.route.params.library]);
       setSnackBar({
         isVisible: true,
         message: `Successfully created ${props.route.params.library.title}.`,
@@ -185,7 +187,7 @@ const Container = (props) => {
       return (
         <View>
           <Text style={{ color: baseTextColor, textAlign: 'center' }}>
-            You'll see all the libraries which were created.
+            You'll see all the public libraries which were created.
           </Text>
         </View>
       );
@@ -209,8 +211,8 @@ const Container = (props) => {
         selectLibrary,
         libraryAssets,
         setLibraryAssets,
-        myJoinedLibraries,
-        setMyJoinedLibraries,
+        // myJoinedLibraries,
+        // setMyJoinedLibraries,
         selectedLibraryDetailComponent,
         setSelectedLibraryDetailComponent,
         isConfirmCancelCreatingLibraryModalOpen,
@@ -244,8 +246,8 @@ const Container = (props) => {
         ) : null}
 
         <AppMenuBottomSheet />
-        <MyLibrariesBottomSheet />
-        <CreateLibraryBottomSheet />
+        {/* <MyLibrariesBottomSheet /> */}
+        {/* <CreateLibraryBottomSheet /> */}
         <LibraryOverviewBottomSheet />
         <ConfirmCancelCreatingLibraryModal />
       </View>

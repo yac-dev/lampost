@@ -157,6 +157,9 @@ export const getLibraryAssetsByDate = async (request, response) => {
         path: 'reactions',
         populate: {
           path: 'reaction',
+          populate: {
+            path: 'icon',
+          },
         },
       });
     response.status(200).json({
