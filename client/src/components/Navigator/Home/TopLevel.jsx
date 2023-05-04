@@ -59,7 +59,7 @@ const TopLevelHomeNavigator = (props) => {
             })}
           />
           <Stack.Screen
-            name='Meetup members'
+            name='Home meetup members'
             component={MeetupMembers}
             options={({ navigation }) => ({
               headerShown: true,
@@ -97,7 +97,7 @@ const TopLevelHomeNavigator = (props) => {
         </Stack.Group>
         <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
           <Stack.Screen
-            name='Edit meetup'
+            name='Home edit meetup'
             component={EditMeetup}
             options={({ navigation }) => ({
               headerLeft: () => (
@@ -116,7 +116,7 @@ const TopLevelHomeNavigator = (props) => {
             })}
           />
           <Stack.Screen
-            name='Lounge'
+            name='Home lounge'
             component={Lounge}
             options={({ navigation }) => ({
               headerLeft: () => (
@@ -137,7 +137,7 @@ const TopLevelHomeNavigator = (props) => {
         </Stack.Group>
         <Stack.Group screenOptions={{ presentation: 'modal', gestureEnabled: false }}>
           <Stack.Screen
-            name='Select venue'
+            name='Home select venue'
             component={SelectVenue}
             options={({ navigation }) => ({
               headerLeft: () => (

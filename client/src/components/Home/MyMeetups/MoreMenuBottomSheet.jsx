@@ -40,7 +40,7 @@ const MoreMenuBottomSheet = (props) => {
           <TouchableOpacity
             style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
             onPress={() => {
-              topLevelHomeNavigation.navigate('Edit meetup', { meetupId: moreMenu._id });
+              topLevelHomeNavigation.navigate('Home edit meetup', { meetupId: moreMenu._id });
               moreMenuBottomSheetRef.current.close();
             }}
           >
@@ -68,7 +68,7 @@ const MoreMenuBottomSheet = (props) => {
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
             moreMenuBottomSheetRef.current.close();
-            topLevelHomeNavigation.navigate('Meetup members', { meetupId: moreMenu._id });
+            topLevelHomeNavigation.navigate('Home meetup members', { meetupId: moreMenu._id });
             // navigation.navigate('MembersNavigator', { screen: 'Members', params: { meetupId: moreMenu._id } });
           }}
         >

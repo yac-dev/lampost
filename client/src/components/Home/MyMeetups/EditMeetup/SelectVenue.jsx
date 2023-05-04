@@ -18,7 +18,7 @@ const SelectVenue = (props) => {
     props.navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
-          onPress={() => topLevelHomeNavigation.navigate('Edit meetup', { editedVenue: editingPlace })}
+          onPress={() => topLevelHomeNavigation.navigate('Home edit meetup', { editedVenue: editingPlace })}
           disabled={JSON.stringify(defaultVenue) === JSON.stringify(editingPlace) ? true : false}
         >
           <Text

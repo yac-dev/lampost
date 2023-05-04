@@ -605,7 +605,7 @@ export const updateMeetup = async (request, response) => {
       meetup.place = venue;
       const loungeChat = await LoungeChat.create({
         meetup: request.params.id,
-        user: request.body.userId,
+        user: meetup.launcher,
         content: 'Meetup venue has been updated.',
         type: 'edited',
         replyTo: null,
@@ -631,7 +631,7 @@ export const updateMeetup = async (request, response) => {
       })} `;
       const loungeChat = await LoungeChat.create({
         meetup: request.params.id,
-        user: request.body.userId,
+        user: meetup.launcher,
         content: loungeChatContent,
         type: 'edited',
         replyTo: null,
@@ -643,7 +643,7 @@ export const updateMeetup = async (request, response) => {
       const loungeChatContent = `Meetup duration has been updated.\n❌${meetup.duration}\n✅${duration}`;
       const loungeChat = await LoungeChat.create({
         meetup: request.params.id,
-        user: request.body.userId,
+        user: meetup.launcher,
         content: loungeChatContent,
         type: 'edited',
         replyTo: null,
@@ -660,9 +660,9 @@ export const updateMeetup = async (request, response) => {
       return rel.user.pushToken;
     });
 
-    const notificationBodyMessage = `Please check the following information.\n${venue ? 'Venue' : null} ${
-      startDateAndTime ? 'Start date and time' : null
-    } ${duration ? 'Duration' : null}`;
+    const notificationBodyMessage = `Please check the following information.\n${venue ? '🗺Venue' : null} ${
+      startDateAndTime ? '⌚️Start date and time' : null
+    } ${duration ? '⏳Duration' : null}`;
 
     const chunks = expo.chunkPushNotifications(
       membersPushTokens.map((token) => ({

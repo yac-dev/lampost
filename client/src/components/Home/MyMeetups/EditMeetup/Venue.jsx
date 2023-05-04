@@ -110,11 +110,11 @@ const Place = () => {
             }}
             onPress={() => {
               if (editingData.venue.isEdited) {
-                topLevelHomeNavigation.navigate('Select venue', {
+                topLevelHomeNavigation.navigate('Home select venue', {
                   editingPlace: editingData.venue.data,
                 });
               } else {
-                topLevelHomeNavigation.navigate('Select venue', { editingPlace: meetup.place });
+                topLevelHomeNavigation.navigate('Home select venue', { editingPlace: meetup.place });
               }
             }}
           >

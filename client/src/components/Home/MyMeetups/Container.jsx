@@ -21,6 +21,10 @@ const Container = (props) => {
   const [moreMenu, setMenuMenu] = useState(null);
 
   console.log(moreMenu);
+
+  // useEffect(() => {
+  //   if(props.route){}
+  // },[])
   if (isFetchedAuthData) {
     if (auth.isAuthenticated) {
       return (

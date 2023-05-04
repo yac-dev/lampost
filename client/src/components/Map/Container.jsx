@@ -309,7 +309,7 @@ const Map = (props) => {
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                borderRadius: 10,
+                borderRadius: 5,
                 padding: 10,
                 position: 'absolute',
                 bottom: 20,

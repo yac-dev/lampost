@@ -349,7 +349,7 @@ const MapNavigator = (props) => {
           name='Write meetup description'
           component={WriteDescription}
           options={({ navigation }) => ({
-            title: 'Write meetup description',
+            title: 'Meetup description',
             headerLeft: () => (
               <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>

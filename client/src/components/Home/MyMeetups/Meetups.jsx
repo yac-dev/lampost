@@ -217,7 +217,7 @@ const Meetups = (props) => {
               marginBottom: 10,
             }}
             onPress={() => {
-              topLevelHomeNavigation.navigate('Lounge', { meetupId: meetup._id });
+              topLevelHomeNavigation.navigate('Home lounge', { meetupId: meetup._id });
             }}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
@@ -239,7 +239,7 @@ const Meetups = (props) => {
               padding: 5,
             }}
             onPress={() => {
-              topLevelHomeNavigation.navigate('Lounge', { meetupId: meetup._id });
+              topLevelHomeNavigation.navigate('Home lounge', { meetupId: meetup._id });
             }}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>

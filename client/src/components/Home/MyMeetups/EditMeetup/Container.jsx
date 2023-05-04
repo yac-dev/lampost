@@ -11,7 +11,7 @@ import SnackBar from '../../../Utils/SnackBar';
 import HomeNavigatorContext from '../../../Navigator/Home/HomeNavigatorContext';
 
 const Container = (props) => {
-  const { auth, setLoading } = useContext(GlobalContext);
+  const { auth, setLoading, setMyUpcomingMeetups } = useContext(GlobalContext);
   const [meetup, setMeetup] = useState(null);
   const [accordion, setAccordion] = useState({
     venue: false,
@@ -63,7 +63,14 @@ const Container = (props) => {
     setLoading(true);
     const result = await lampostAPI.patch(`/meetups/${meetup._id}`, payload);
     setLoading(false);
-    topLevelHomeNavigation.navigate('Home', { editedMeetup: { ...payload }, meetupId: meetup._id });
+    setMyUpcomingMeetups((previous) => {
+      const updating = { ...previous };
+      if (payload.startDateAndTime) {
+        updating[meetup._id].startDateAndTime = payload.startDateAndTime;
+      }
+      return updating;
+    });
+    topLevelHomeNavigation.goBack();
   };
 
   const getMeetup = async () => {
