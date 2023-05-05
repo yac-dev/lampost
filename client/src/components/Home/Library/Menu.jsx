@@ -84,6 +84,7 @@ const AppMenuBottomSheet = (props) => {
           <TouchableOpacity
             style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
             onPress={() => {
+              appMenuBottomSheetRef.current.close();
               navigation.navigate('Members', { libraryId });
             }}
           >
@@ -109,6 +110,8 @@ const AppMenuBottomSheet = (props) => {
             style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
             onPress={() => {
               // navigation.navigate('LibraryMembers', { libraryId });
+              appMenuBottomSheetRef.current.close();
+              navigation.navigate('Invite my friends', { libraryId });
             }}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>

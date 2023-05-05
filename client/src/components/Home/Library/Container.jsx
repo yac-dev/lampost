@@ -17,6 +17,8 @@ import FastImage from 'react-native-fast-image';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import { LocaleConfig } from 'react-native-calendars';
 import AppMenuBottomSheet from './Menu';
+import LoadingSpinner from '../../Utils/LoadingSpinner';
+import SnackBar from '../../Utils/SnackBar';
 // import AlbumsBottomSheet from './AlbumsBottomSheet/Container';
 // import MembersBottomSheet from './MembersBottomSheet';
 import Header from './Header';
@@ -127,7 +129,12 @@ const Container = (props) => {
       const date = new Date(libraryAsset.createdAt).toISOString().substring(0, 10);
       // const dayOfMonth = date.getDate();
       if (!table[date]) {
-        table[date] = { marked: true, thumbnail: libraryAsset.asset.data, libraryId: libraryAsset.library };
+        table[date] = {
+          marked: true,
+          thumbnail: libraryAsset.asset.data,
+          libraryId: libraryAsset.library,
+          type: libraryAsset.asset.type,
+        };
       }
     });
     setAssetsTable((previous) => {
@@ -166,12 +173,24 @@ const Container = (props) => {
             style={{ width: '100%', height: '100%', borderRadius: 8 }}
             onPress={() => props.navigation.navigate('Date assets', { libraryId: marking.libraryId, date: date })}
           >
-            <FastImage
-              style={{ width: '100%', height: '100%', borderRadius: 8 }}
-              source={{
-                uri: marking.thumbnail,
-              }}
-            />
+            {marking.type === 'photo' ? (
+              <FastImage
+                style={{ width: '100%', height: '100%', borderRadius: 8 }}
+                source={{
+                  uri: marking.thumbnail,
+                }}
+              />
+            ) : (
+              <Video
+                style={{ width: '100%', height: '100%', borderRadius: 8 }}
+                source={{
+                  uri: marking.thumbnail,
+                }}
+                useNativeControls={false}
+                resizeMode='stretch'
+                isLooping={false}
+              />
+            )}
           </TouchableOpacity>
         ) : null}
 
@@ -275,6 +294,8 @@ const Container = (props) => {
         <ConfirmLeaveLibrary />
       </View>
       <AppMenuBottomSheet />
+      <LoadingSpinner />
+      <SnackBar />
     </LibraryContext.Provider>
   );
 };

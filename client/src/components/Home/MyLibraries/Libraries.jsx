@@ -14,7 +14,7 @@ const Libraries = (props) => {
 
   const renderAssetType = (library) => {
     if (library.assetType === 'photo') {
-      return <Ionicons name='camera' size={20} color={'white'} style={{ marginRight: 10 }} />;
+      return <Ionicons name='image' size={20} color={'white'} style={{ marginRight: 5 }} />;
     } else if (library.assetType === 'video') {
       return <Ionicons name='videocam' size={20} color={'white'} style={{ marginRight: 10 }} />;
     } else if (library.assetType === 'photoAndVideo') {
@@ -88,15 +88,18 @@ const Libraries = (props) => {
               justifyContent: 'space-between',
             }}
             onPress={() => {
-              myLibrariesBottomSheetRef.current.close();
-              navigation.navigate('LibraryNavigator', { libraryId: library._id, libraryAssetType: library.assetType });
+              // myLibrariesBottomSheetRef.current.close();
+              props.navigation.navigate('LibraryNavigator', {
+                screen: 'Library',
+                params: { libraryId: library._id, libraryAssetType: library.assetType, libraryTitle: library.title },
+              });
             }}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View
                 style={{
-                  width: 40,
-                  height: 40,
+                  width: 70,
+                  height: 70,
                   marginRight: 15,
                   borderRadius: 7,
                 }}
@@ -111,12 +114,9 @@ const Libraries = (props) => {
                   isLooping={false}
                 />
               </View>
-              <Text style={{ color: baseTextColor }}>{library.title}</Text>
+              <Text style={{ color: 'white', fontSize: 20 }}>{library.title}</Text>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              {renderAssetType(library)}
-              <MaterialCommunityIcons name='chevron-right' size={20} color={baseTextColor} />
-            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>{renderAssetType(library)}</View>
           </TouchableOpacity>
         );
       }

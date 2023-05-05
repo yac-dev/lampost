@@ -52,7 +52,7 @@ const UploadContent = () => {
     if (formData.asset) {
       if (formData.asset.type === 'photo') {
         return (
-          <TouchableOpacity style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}>
+          <TouchableOpacity style={{ width: oneAssetWidth, height: oneAssetWidth, alignSelf: 'center' }}>
             <FastImage
               style={{ width: '100%', height: '100%', borderRadius: 7 }}
               source={{
@@ -68,7 +68,7 @@ const UploadContent = () => {
         );
       } else if (formData.asset.type === 'video') {
         return (
-          <TouchableOpacity style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}>
+          <TouchableOpacity style={{ width: oneAssetWidth, height: oneAssetWidth, alignSelf: 'center' }}>
             <Video
               style={{ width: '100%', height: '100%', borderRadius: 7 }}
               source={{
@@ -78,9 +78,9 @@ const UploadContent = () => {
               resizeMode='stretch'
               isLooping={false}
             />
-            <View style={{ position: 'absolute', top: 10, right: 10 }}>
+            {/* <View style={{ position: 'absolute', top: 10, right: 10 }}>
               <Ionicons name='videocam' size={25} color={iconColorsTable[videoTypesTable[formData.asset.effect]]} />
-            </View>
+            </View> */}
           </TouchableOpacity>
         );
       }

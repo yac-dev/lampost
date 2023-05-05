@@ -112,7 +112,7 @@ export const getLibraryAssetsByMonth = async (request, response) => {
       createdAt: { $gte: startDate, $lt: endDate },
     }).populate({
       path: 'asset',
-      select: 'data createdAt',
+      select: 'data createdAt type',
     });
     console.log(libraryAssets);
 

@@ -8,6 +8,7 @@ import LibraryContainer from '../../Home/Library/Container';
 import DateAssets from '../../Home/Library/DateAssets/Container';
 import Members from '../../Home/Library/Members';
 import AddAssets from '../../Utils/AddAssets/Container';
+import InviteMyFriends from '../../Home/Library/InviteMyFriends';
 import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 
 const LibraryNavigator = () => {
@@ -70,6 +71,28 @@ const LibraryNavigator = () => {
           component={AddAssets}
           options={({ navigation }) => ({
             title: 'Post my snaps',
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+              borderBottomWidth: 0,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: 'white',
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+              </TouchableOpacity>
+            ),
+          })}
+        />
+        <Stack.Screen
+          name='Invite my friends'
+          component={InviteMyFriends}
+          options={({ navigation }) => ({
+            title: 'Invite my friends',
             headerShown: true,
             headerStyle: {
               backgroundColor: appBottomSheetBackgroundColor,
