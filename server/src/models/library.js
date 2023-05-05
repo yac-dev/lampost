@@ -23,7 +23,12 @@ const librarySchema = new mongoose.Schema({
   assetType: String, //['video', 'photo', 'videoAndPhoto']
   isCommentAvailable: Boolean,
   description: String,
-  reactions: [],
+  reactions: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Reaction',
+    },
+  ],
   albums: [
     {
       type: mongoose.Schema.ObjectId,

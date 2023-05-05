@@ -24,7 +24,7 @@ const { MaterialCommunityIcons, Feather } = iconsTable;
 const LibraryDetailBottomSheet = (props) => {
   const snapPoints = useMemo(() => ['70%'], []);
   const { libraryDetailBottomSheetRef, selectedLibrary, setSelectedLibrary, navigation } = useContext(LibrariesContext);
-
+  console.log(selectedLibrary);
   return (
     <GorhomBottomSheet
       index={-1}

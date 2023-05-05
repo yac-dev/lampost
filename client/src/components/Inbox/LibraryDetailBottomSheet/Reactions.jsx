@@ -14,6 +14,35 @@ const Reactions = () => {
   const { selectedLibrary } = useContext(InboxContext);
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
 
+  const renderReactionIcons = () => {
+    const list = selectedLibrary.reactions.map((reaction, index) => {
+      return (
+        <View key={index} style={{ width: 40, height: 40, backgroundColor: rnDefaultBackgroundColor, borderRadius: 5 }}>
+          <View
+            style={{
+              width: '100%',
+              height: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: backgroundColorsTable[reaction.color],
+              borderRadius: 5,
+            }}
+          >
+            <FastImage
+              source={{ uri: reaction.icon.url }}
+              style={{ width: 30, height: 30 }}
+              tintColor={iconColorsTable[reaction.color]}
+            />
+          </View>
+        </View>
+      );
+    });
+
+    return <View>{list}</View>;
+  };
+
+  const renderReactions = () => {};
+
   return (
     <View style={{ padding: 5, borderRadius: 5, marginBottom: 5 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -39,9 +68,7 @@ const Reactions = () => {
         </TouchableOpacity>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {selectedLibrary.isReactionAvailable ? (
-            <View>
-              <Text>ji</Text>
-            </View>
+            renderReactionIcons()
           ) : (
             <View>
               <MaterialIcons name='do-not-disturb-on' color={iconColorsTable['yellow1']} size={20} />

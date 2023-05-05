@@ -7,6 +7,7 @@ import Asset from '../models/asset';
 import User from '../models/user';
 import Reaction from '../models/reaction';
 import Notification from '../models/notification';
+import Icon from '../models/icon';
 
 const colors = ['red1', 'blue1', 'yellow1', 'violet1', 'green1', 'lightBlue1'];
 
@@ -36,7 +37,20 @@ export const getLibrary = async (request, response) => {
       })
       .populate({
         path: 'badges',
+        populate: {
+          path: 'icon',
+          model: Icon,
+        },
+      })
+      .populate({
+        path: 'reactions',
+        populate: {
+          path: 'icon',
+          model: Icon,
+        },
       });
+
+    console.log(library);
     response.status(200).json({
       library,
     });
