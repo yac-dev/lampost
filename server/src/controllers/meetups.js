@@ -543,6 +543,7 @@ export const getMyMeetupStates = async (request, response) => {
         launcher: meetup.launcher,
         duration: meetup.duration,
         isRSVPed: false,
+        place: meetup.place,
       };
       // }
       // else {

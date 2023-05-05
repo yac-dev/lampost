@@ -12,6 +12,7 @@ import EditMeetup from '../../Home/MyMeetups/EditMeetup/Container';
 import SelectVenue from '../../Home/MyMeetups/EditMeetup/SelectVenue';
 import MeetupMembers from '../../Home/MyMeetups/Members';
 import Lounge from '../../Home/MyMeetups/Lounge/Container';
+import MeetupLocation from '../../Home/MyMeetups/MeetupLocation';
 import Members from '../../Home/MyMeetups/Members';
 // import CreateLibrary from '../Libraries/CreateLibraryBottomSheet/ContainerNew'
 import CreateNewLibrary from '../../Libraries/CreateNewLibrary/Container';
@@ -155,32 +156,25 @@ const TopLevelHomeNavigator = (props) => {
               },
             })}
           />
-          {/* <Stack.Screen
-          name='Lounge'
-          component={AuthNavigator}
-          options={({ navigation }) => ({
-            headerShown: false,
-          })}
-        />
-        <Stack.Screen
-          name='Meetup detail'
-          component={AddBadges}
-          options={({ navigation }) => ({
-            headerLeft: () => (
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
-              </TouchableOpacity>
-            ),
-            headerTitle: 'Badges for library',
-            headerStyle: {
-              backgroundColor: appBottomSheetBackgroundColor,
-            },
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              color: 'white',
-            },
-          })}
-        /> */}
+          <Stack.Screen
+            name='Home meetup venue'
+            component={MeetupLocation}
+            options={({ navigation }) => ({
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+                </TouchableOpacity>
+              ),
+              headerTitle: 'Venue',
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+            })}
+          />
         </Stack.Group>
       </Stack.Navigator>
     </HomeNavigatorContext.Provider>

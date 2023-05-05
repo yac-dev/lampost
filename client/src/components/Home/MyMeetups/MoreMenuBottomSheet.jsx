@@ -90,6 +90,31 @@ const MoreMenuBottomSheet = (props) => {
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
         </TouchableOpacity>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+          onPress={() => {
+            moreMenuBottomSheetRef.current.close();
+            topLevelHomeNavigation.navigate('Home meetup venue', { venue: moreMenu.place });
+          }}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={{
+                width: 40,
+                height: 40,
+                backgroundColor: backgroundColorsTable['red1'],
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 8,
+                marginRight: 10,
+              }}
+            >
+              <MaterialCommunityIcons name='map-marker' color={iconColorsTable['red1']} size={20} />
+            </View>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>Where to?</Text>
+          </View>
+          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
+        </TouchableOpacity>
         {/* <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {

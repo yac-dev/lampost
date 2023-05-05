@@ -308,6 +308,7 @@ const Meetups = (props) => {
                 setMenuMenu({
                   _id: meetup._id,
                   launcher: meetup.launcher,
+                  place: meetup.place,
                 });
                 moreMenuBottomSheetRef.current.snapToIndex(0);
               }}

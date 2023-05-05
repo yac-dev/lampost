@@ -187,7 +187,7 @@ export const getMyUpcomingMeetups = async (request, response) => {
       user: request.params.userId,
     }).populate({
       path: 'meetup',
-      select: '_id title startDateAndTime state launcher',
+      select: '_id title startDateAndTime state launcher place',
     });
     // .populate({
     //   path: 'meetup',
@@ -208,6 +208,7 @@ export const getMyUpcomingMeetups = async (request, response) => {
           startDateAndTime: meetup.startDateAndTime,
           state: meetup.state,
           launcher: meetup.launcher,
+          place: meetup.place,
         };
       });
     }
@@ -235,6 +236,7 @@ export const getMyMeetupStates = async (request, response) => {
           startDateAndTime: meetup.startDateAndTime,
           state: meetup.state,
           launcher: meetup.launcher,
+          place: meetup.place,
         };
       } else {
         alreadyFinishedMeetups[meetup._id] = true;
