@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext, useRef, useCallback } from 'react';
 import { View, Text, FlatList, ActivityIndicator, ScrollView, TouchableOpacity } from 'react-native';
 import GlobalContext from '../../../../GlobalContext';
 import lampostAPI from '../../../../apis/lampost';
@@ -8,6 +8,7 @@ import {
   iconColorsTable,
   screenSectionBackgroundColor,
 } from '../../../../utils/colorsTable';
+import FastImage from 'react-native-fast-image';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 import AttendedContext from './AttendedContext';
@@ -73,7 +74,7 @@ const AttendedContainer = (props) => {
   const addFriend = async (user) => {
     const payload = {
       friendId: user._id,
-      launcherId: props.route.params.launcherId,
+      launcherId,
     };
     setLoading(true);
     const result = await lampostAPI.post(`/friendrelationships/${auth.data._id}`, payload);
@@ -86,73 +87,176 @@ const AttendedContainer = (props) => {
       };
     });
     setLoading(false);
+    setSnackBar({
+      isVisible: true,
+      barType: 'success',
+      message: `Became friend with ${user.name}`,
+      duration: 5000,
+    });
   };
 
-  const onUserNamePress = (user) => {
-    if (!auth.data) {
-      setSnackBar({
-        isVisible: true,
-        barType: 'error',
-        message: 'You are required to login or signup',
-        duration: 2000,
-      });
+  const followLauncher = async () => {
+    const payload = {
+      followeeId: launcherId,
+      user: {
+        _id: auth.data._id,
+        name: auth.data.name,
+      },
+    };
+    setLoading(true);
+    const result = await lampostAPI.post('/followrelationships', payload);
+    // const { launcher } = result.data;
+    setIsFollowingLauncher(true);
+    setLoading(false);
+    setSnackBar({
+      isVisible: true,
+      barType: 'success',
+      message: `Started supporting this launcher.`,
+      duration: 5000,
+    });
+  };
+
+  const renderActionButtons = (userInfo) => {
+    if (userInfo.user._id === auth.data._id) {
+      return null;
     } else {
-      if (auth.data._id !== user._id) {
-        console.log('page opening');
+      if (userInfo.launcher) {
+        return (
+          <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', marginBottom: 7 }}>
+            <TouchableOpacity style={{ flex: 0.5, borderRadius: 5, paddingRight: 2 }} onPress={() => followLauncher()}>
+              <View
+                style={{
+                  backgroundColor: isFollowingLauncher ? iconColorsTable['green1'] : iconColorsTable['blue1'],
+                  width: '100%',
+                  borderRadius: 5,
+                  padding: 5,
+                }}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                  <MaterialCommunityIcons name='account-multiple' size={20} color={'white'} />
+                  <Text style={{ color: 'white' }}>{isFollowingLauncher ? 'Following' : 'Follow'}</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ flex: 0.5, borderRadius: 5, paddingLeft: 2 }}
+              disabled={myFriends[userInfo.user._id] ? true : false}
+              onPress={() => addFriend(userInfo.user)}
+            >
+              <View
+                style={{
+                  backgroundColor: myFriends[userInfo.user._id] ? iconColorsTable['green1'] : iconColorsTable['blue1'],
+                  width: '100%',
+                  borderRadius: 5,
+                  padding: 5,
+                }}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                  <MaterialCommunityIcons name='account-multiple' size={20} color={'white'} />
+                  <Text style={{ color: 'white' }}>
+                    {myFriends[userInfo.user._id] ? 'Already friended' : 'Be friends'}
+                  </Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+        );
       } else {
-        console.log('Not gonna navigate to my page');
+        return (
+          <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', marginBottom: 7 }}>
+            <TouchableOpacity
+              style={{ flex: 1, borderRadius: 5, paddingLeft: 2 }}
+              disabled={myFriends[userInfo.user._id] ? true : false}
+              onPress={() => addFriend(userInfo.user)}
+            >
+              <View
+                style={{
+                  backgroundColor: myFriends[userInfo.user._id] ? iconColorsTable['green1'] : iconColorsTable['blue1'],
+                  width: '100%',
+                  borderRadius: 5,
+                  padding: 5,
+                }}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                  <MaterialCommunityIcons name='human-greeting-variant' size={20} color={'white'} />
+                  <Text style={{ color: 'white' }}>
+                    {myFriends[userInfo.user._id] ? 'Already friended' : 'Be friends'}
+                  </Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+        );
       }
     }
   };
 
-  const renderAttended = () => {
+  const renderUser = (userInfo) => {
+    return (
+      <TouchableOpacity
+        style={{ flexDirection: 'row', marginBottom: 15 }}
+        onPress={() => {
+          if (auth.data._id !== userInfo.user._id) {
+            props.navigation.navigate('User', { userId: userInfo.user._id });
+          } else {
+            return null;
+          }
+        }}
+      >
+        <View style={{ flex: 0.15 }}>
+          <FastImage
+            source={{
+              uri: userInfo.user.photo
+                ? userInfo.user.photo
+                : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
+            }}
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 5,
+              // marginRight: 10,
+              backgroundColor: iconColorsTable['blue1'],
+            }}
+            tintColor={userInfo.user.photo ? null : 'white'}
+          />
+        </View>
+        <View
+          style={{
+            borderBottomWidth: 0.3,
+            borderBottomColor: baseTextColor,
+            flex: 0.85,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: 'column',
+              // alignItems: 'center',
+              marginBottom: 10,
+              width: '100%',
+            }}
+          >
+            <View>
+              <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 17, marginBottom: 10 }}>
+                {userInfo.launcher ? '🚀' : '🔥'}&nbsp;{userInfo.user.name}
+              </Text>
+              {renderActionButtons(userInfo)}
+            </View>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderMembers = () => {
     if (!fetchedAttended.length) {
       return <Text style={{ color: baseTextColor }}>You'll see all those who joined this meetup.</Text>;
     } else {
       return (
-        <View>
-          <FlatList
-            data={fetchedAttended}
-            renderItem={({ item }) => (
-              <UserInfo
-                user={item.user}
-                onUserNamePress={onUserNamePress}
-                subInfo={
-                  props.route.params.launcherId === item.user._id ? (
-                    <Text style={{ color: baseTextColor }}>🚀 Launcher</Text>
-                  ) : null
-                }
-                actionButton={
-                  // 自分の場所には、action buttonを表示しない。
-                  item.user._id !== auth.data._id ? (
-                    <TouchableOpacity
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        padding: 5,
-                        borderRadius: 5,
-                        backgroundColor: iconColorsTable['blue1'],
-                      }}
-                      // onPress={() => {
-                      //   actionButtonBottomSheetRef.current.snapToIndex(0);
-                      //   setSelectedUser(item.user);
-                      // }}
-                    >
-                      <MaterialCommunityIcons
-                        name='human-greeting-variant'
-                        color={'white'}
-                        size={25}
-                        style={{ marginRight: 5 }}
-                      />
-                      <Text style={{ color: 'white', marginRight: 5 }}>Be friends</Text>
-                    </TouchableOpacity>
-                  ) : null
-                }
-              />
-            )}
-            keyExtractor={(item, index) => `${item._id}-${index}`}
-          />
-        </View>
+        <FlatList
+          data={fetchedAttended}
+          renderItem={({ item }) => renderUser(item)}
+          keyExtractor={(item, index) => `${item._id}-${index}`}
+        />
       );
     }
   };
@@ -176,7 +280,7 @@ const AttendedContainer = (props) => {
       <View
         style={{ backgroundColor: baseBackgroundColor, flex: 1, paddingLeft: 10, paddingRight: 10, paddingTop: 10 }}
       >
-        {isFetchedAttended ? renderAttended() : <ActivityIndicator />}
+        {isFetchedAttended ? renderMembers() : <ActivityIndicator />}
         <ActionButtonBottomSheet />
       </View>
     </AttendedContext.Provider>

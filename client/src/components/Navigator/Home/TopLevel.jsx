@@ -77,7 +77,7 @@ const TopLevelHomeNavigator = (props) => {
             })}
           />
           <Stack.Screen
-            name='User'
+            name='Home user'
             component={User}
             options={({ navigation }) => ({
               headerShown: true,

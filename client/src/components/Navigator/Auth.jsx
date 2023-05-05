@@ -54,7 +54,7 @@ const Auth = (props) => {
             component={User}
             initialParams={{ userId: auth.data._id }}
             options={{
-              // headerShown: false,
+              headerShown: false,
               headerStyle: {
                 backgroundColor: appBottomSheetBackgroundColor,
               },

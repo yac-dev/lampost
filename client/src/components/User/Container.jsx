@@ -3,7 +3,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import GlobalContext from '../../GlobalContext';
 import UserContext from './UserContext';
 import BadgeContext from './BadgeContext';
-import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator, SafeAreaView, Dimensions } from 'react-native';
 import lampostAPI from '../../apis/lampost';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
@@ -16,6 +16,7 @@ import {
   sectionBackgroundColor,
   rnDefaultBackgroundColor,
   backgroundColorsTable,
+  inputBackgroundColorNew,
 } from '../../utils/colorsTable';
 import { iconsTable } from '../../utils/icons';
 import { Provider as PaperProvider } from 'react-native-paper';
@@ -45,7 +46,12 @@ import LeadershipBottomSheet from './LeadershipBottomSheet';
 // badgeを取ってきて、skillも取ってくる。subscriberの数も返すし、connectionの数も返す。
 const Container = (props) => {
   const { Ionicons, MaterialCommunityIcons, Entypo, Foundation } = iconsTable;
-  const { auth, setLoading, setSnackBar, setAuth, friendChatsNotificationCount } = useContext(GlobalContext);
+  const { auth, setLoading, setSnackBar, setAuth, isIpad } = useContext(GlobalContext);
+  const oneGridWidth = isIpad ? Dimensions.get('window').width / 6 : Dimensions.get('window').width / 4;
+  const oneGridHeight = isIpad ? Dimensions.get('window').height / 7.5 : Dimensions.get('window').height / 7.5;
+  const badgeContainerWidth = oneGridWidth * 0.6;
+  const badgeIconWidth = badgeContainerWidth * 0.65;
+
   const [user, setUser] = useState(null);
   const [isFetchedUserData, setIsFetchedUserData] = useState(false);
   const [userBadges, setUserBadges] = useState({});
@@ -344,8 +350,12 @@ const Container = (props) => {
               alignSelf: 'center',
               padding: 10,
               flexDirection: 'row',
+              // width: '100%',
             }}
           >
+            {/* <TouchableOpacity
+              style={{ width: badgeContainerWidth, aspectRatio: 1, backgroundColor: 'red' }}
+            ></TouchableOpacity> */}
             <TouchableOpacity
               style={{
                 backgroundColor: iconColorsTable['green1'],
@@ -375,40 +385,12 @@ const Container = (props) => {
               >
                 <Ionicons name='hammer' size={25} color={'white'} />
               </View>
-              {friendChatsNotificationCount ? (
-                <View
-                  style={{
-                    position: 'absolute',
-                    right: -7,
-                    top: -7,
-                    backgroundColor: rnDefaultBackgroundColor,
-                    width: 20,
-                    height: 20,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: 20 / 2,
-                  }}
-                >
-                  <View
-                    style={{
-                      backgroundColor: iconColorsTable['pink1'],
-                      width: '100%',
-                      height: '100%',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderRadius: 20 / 2,
-                    }}
-                  >
-                    <Text style={{ color: 'white' }}>{friendChatsNotificationCount}</Text>
-                  </View>
-                </View>
-              ) : null}
             </TouchableOpacity>
           </View>
         )}
 
         <AppMenuBottomSheet />
-        <InboxBottomSheet />
+        {/* <InboxBottomSheet /> */}
         <BadgeMenuBottomSheet />
         <BadgeDetailBottomSheet />
         <AddBadgeTagsBottomSheet />
@@ -475,7 +457,7 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        {!isFetchedUserData ? <ActivityIndicator /> : renderUserData()}
+        <SafeAreaView style={{ flex: 1 }}>{!isFetchedUserData ? <ActivityIndicator /> : renderUserData()}</SafeAreaView>
       </View>
     </UserContext.Provider>
   );
