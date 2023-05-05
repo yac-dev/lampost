@@ -12,18 +12,18 @@ import { iconsTable } from '../../utils/icons';
 const Library = (props) => {
   const { Ionicons } = iconsTable;
   const { auth, isIpad } = useContext(GlobalContext);
-  const { libraryOverviewBottomSheetRef, setSelectedLibrary, setLibraryAssets } = useContext(LibrariesContext);
+  const { setSelectedLibrary, setLibraryAssets, libraryDetailBottomSheetRef } = useContext(LibrariesContext);
   const [loaded, setLoaded] = useState(false);
   const oneGridWidth = isIpad ? Dimensions.get('window').width / 4 : Dimensions.get('window').width / 2;
   const oneGridHeight = isIpad ? Dimensions.get('window').height / 4 : Dimensions.get('window').height / 3.2;
   const libraryContainerWidth = oneGridWidth * 0.85;
 
   const selectLibrary = async (libraryId) => {
-    libraryOverviewBottomSheetRef.current.snapToIndex(0);
+    libraryDetailBottomSheetRef.current.snapToIndex(0);
     const result = await lampostAPI.get(`/libraries/${libraryId}`);
     const { library } = result.data;
     setSelectedLibrary(library);
-    const res = await lampostAPI.get(`/libraryandassetrelationships/${libraryId}`);
+    const res = await lampostAPI.get(`/libraries/${libraryId}`);
     const { assets } = res.data;
     setLibraryAssets(assets);
   };

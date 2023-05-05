@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import InboxContext from '../InboxContext';
+import LibrariesContext from '../LibrariesContext';
 import {
   screenSectionBackgroundColor,
   backgroundColorsTable,
@@ -8,33 +8,11 @@ import {
   baseTextColor,
 } from '../../../utils/colorsTable';
 import { iconsTable } from '../../../utils/icons';
-const { MaterialCommunityIcons, MaterialIcons, Fontisto, Ionicons } = iconsTable;
+const { MaterialCommunityIcons, MaterialIcons, Ionicons } = iconsTable;
 
-const SnapType = () => {
-  const { selectedLibrary } = useContext(InboxContext);
+const Reactions = () => {
+  const { selectedLibrary } = useContext(LibrariesContext);
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
-
-  const renderAssetType = (assetType) => {
-    if (assetType === 'photo') {
-      return <Text style={{ color: baseTextColor }}>Photo</Text>;
-    } else if (assetType === 'video') {
-      return <Text style={{ color: baseTextColor }}>Video</Text>;
-    } else {
-      return <Text style={{ color: baseTextColor }}>Photo & Video</Text>;
-    }
-  };
-
-  const renderExplanation = (assetType) => {
-    if (assetType === 'photo') {
-      return <Text style={{ color: 'white', textAlign: 'center' }}>You can post only photos in this library.</Text>;
-    } else if (assetType === 'video') {
-      return <Text style={{ color: 'white', textAlign: 'center' }}>You can post only videos in this library.</Text>;
-    } else {
-      return (
-        <Text style={{ color: 'white', textAlign: 'center' }}>You can post photos and videos in this library.</Text>
-      );
-    }
-  };
 
   return (
     <View style={{ padding: 5, borderRadius: 5, marginBottom: 5 }}>
@@ -45,7 +23,7 @@ const SnapType = () => {
         >
           <View
             style={{
-              backgroundColor: backgroundColorsTable['pink1'],
+              backgroundColor: backgroundColorsTable['yellow1'],
               padding: 5,
               borderRadius: 7,
               width: 40,
@@ -55,12 +33,20 @@ const SnapType = () => {
               marginRight: 12,
             }}
           >
-            <Ionicons name='camera' size={20} color={iconColorsTable['pink1']} />
+            <Ionicons name='ios-thumbs-up-sharp' size={20} color={iconColorsTable['yellow1']} />
           </View>
-          <Text style={{ fontWeight: 'bold', fontSize: 15, color: 'white' }}>Snap type</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 15, color: 'white' }}>Reactions</Text>
         </TouchableOpacity>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          {renderAssetType(selectedLibrary.assetType)}
+          {selectedLibrary.isReactionAvailable ? (
+            <View>
+              <Text>ji</Text>
+            </View>
+          ) : (
+            <View>
+              <MaterialIcons name='do-not-disturb-on' color={iconColorsTable['yellow1']} size={20} />
+            </View>
+          )}
           <TouchableOpacity onPress={() => setIsAccordionOpen((previous) => !previous)}>
             <MaterialCommunityIcons
               name={isAccordionOpen ? 'chevron-up' : 'chevron-down'}
@@ -71,10 +57,20 @@ const SnapType = () => {
         </View>
       </View>
       {isAccordionOpen ? (
-        <View style={{ marginTop: 10, marginBottom: 10 }}>{renderExplanation(selectedLibrary.assetType)}</View>
+        <View style={{ marginTop: 10, marginBottom: 10 }}>
+          {selectedLibrary.isReactionAvailable ? (
+            <View>
+              <Text>Reactions here</Text>
+            </View>
+          ) : (
+            <Text style={{ textAlign: 'center', color: 'white' }}>
+              Just enjoy the photos and videos without any upvotes/likes!
+            </Text>
+          )}
+        </View>
       ) : null}
     </View>
   );
 };
 
-export default SnapType;
+export default Reactions;

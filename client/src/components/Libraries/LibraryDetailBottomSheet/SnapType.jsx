@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import InboxContext from '../InboxContext';
+import LibrariesContext from '../LibrariesContext';
 import {
   screenSectionBackgroundColor,
   backgroundColorsTable,
@@ -11,7 +11,7 @@ import { iconsTable } from '../../../utils/icons';
 const { MaterialCommunityIcons, MaterialIcons, Fontisto, Ionicons } = iconsTable;
 
 const SnapType = () => {
-  const { selectedLibrary } = useContext(InboxContext);
+  const { selectedLibrary } = useContext(LibrariesContext);
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
 
   const renderAssetType = (assetType) => {

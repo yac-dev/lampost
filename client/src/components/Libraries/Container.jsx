@@ -24,6 +24,7 @@ import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import MyLibrariesBottomSheet from './MyLibrariesBottomSheet/Container';
 import CreateLibraryBottomSheet from './CreateLibraryBottomSheet/Container';
 import LibraryOverviewBottomSheet from './LibraryOverviewBottomSheet/Container';
+import LibraryDetailBottomSheet from './LibraryDetailBottomSheet/Container';
 // import InfoDetailBottomSheet from './InfoDetailBottomSheet/Container';
 import ConfirmCancelCreatingLibraryModal from './ConfirmCancelCreatingLibraryModal';
 
@@ -50,6 +51,7 @@ const Container = (props) => {
   const myLibrariesBottomSheetRef = useRef(null);
   const createLibraryBottomSheetRef = useRef(null);
   const libraryOverviewBottomSheetRef = useRef(null);
+  const libraryDetailBottomSheetRef = useRef(null);
   const selectedLibraryDetailComponentBottomSheetRef = useRef(null);
   const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
 
@@ -57,17 +59,6 @@ const Container = (props) => {
   const oneGridHeight = isIpad ? Dimensions.get('window').height / 4 : Dimensions.get('window').height / 3.2;
   const libraryContainerWidth = oneGridWidth * 0.85;
   const libraryIconWidth = libraryContainerWidth * 0.4;
-
-  const experimentSendPushNotification = async () => {
-    const pushNotificationObject = {
-      to: 'ExponentPushToken[rl0CZGA2qvVsWqorA1rqGG]',
-      title: 'Sent by my lampost backend server',
-      body: 'This push notification was sent by a Lampost.',
-      data: { message: 'Did you get this?' },
-    };
-
-    const result = await lampostAPI.post('/lab', { pushToken: 'ExponentPushToken[rl0CZGA2qvVsWqorA1rqGG]' });
-  };
 
   const getLibraries = async () => {
     const result = await lampostAPI.get('/libraries');
@@ -142,7 +133,7 @@ const Container = (props) => {
   }, [props.route.params?.fromComponent]);
 
   const selectLibrary = async (libraryId) => {
-    libraryOverviewBottomSheetRef.current.snapToIndex(0);
+    libraryDetailBottomSheetRef.current.snapToIndex(0);
     const result = await lampostAPI.get(`/libraries/${libraryId}`);
     const { library } = result.data;
     setSelectedLibrary(library);
@@ -201,6 +192,7 @@ const Container = (props) => {
         myLibrariesBottomSheetRef,
         createLibraryBottomSheetRef,
         libraryOverviewBottomSheetRef,
+        libraryDetailBottomSheetRef,
         selectedLibraryDetailComponentBottomSheetRef,
         libraries,
         setLibraries,
@@ -248,7 +240,7 @@ const Container = (props) => {
         <AppMenuBottomSheet />
         {/* <MyLibrariesBottomSheet /> */}
         {/* <CreateLibraryBottomSheet /> */}
-        <LibraryOverviewBottomSheet />
+        <LibraryDetailBottomSheet />
         <ConfirmCancelCreatingLibraryModal />
       </View>
     </LibrariesContext.Provider>

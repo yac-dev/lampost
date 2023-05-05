@@ -11,9 +11,8 @@ import { backgroundColorsTable, baseTextColor, iconColorsTable } from '../../../
 import ActionButton from '../../../Utils/ActionButton';
 
 const ActionButtons = (props) => {
-  const { auth, setSnackBar, setLoading } = useContext(GlobalContext);
-  const { selectedLibrary, myJoinedLibraries, setMyJoinedLibraries, navigation, libraryOverviewBottomSheetRef } =
-    useContext(LibrariesContext);
+  const { auth, setSnackBar, setLoading, myJoinedLibraries } = useContext(GlobalContext);
+  const { selectedLibrary, navigation, libraryOverviewBottomSheetRef } = useContext(LibrariesContext);
 
   const joinLibrary = async () => {
     const formData = {
