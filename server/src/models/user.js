@@ -54,7 +54,7 @@ const userSchema = new mongoose.Schema({
   topBadges: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: 'Badge',
+      ref: 'BadgeAndUserRelationship',
     },
     // 4つまで
   ],

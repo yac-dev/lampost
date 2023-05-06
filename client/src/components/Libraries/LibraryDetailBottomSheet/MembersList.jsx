@@ -1,57 +1,41 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, ActivityIndicator, FlatList, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useEffect, useContext, useState } from 'react';
 import GlobalContext from '../../../GlobalContext';
 import DiscoverNavigatorContext from '../../Navigator/Discover/DiscoverNavigatorContext';
+import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator, FlatList } from 'react-native';
 import lampostAPI from '../../../apis/lampost';
-import FastImage from 'react-native-fast-image';
 import {
+  sectionBackgroundColor,
+  baseTextColor,
   baseBackgroundColor,
   iconColorsTable,
-  screenSectionBackgroundColor,
-  baseTextColor,
 } from '../../../utils/colorsTable';
-import BadgeLabel from '../../Utils/BadgeLabel';
-import { iconsTable } from '../../../utils/icons';
+import FastImage from 'react-native-fast-image';
 
-const AttendeesContainer = (props) => {
-  const { MaterialCommunityIcons, Ionicons } = iconsTable;
+const MembersList = (props) => {
   const { auth, setSnackBar } = useContext(GlobalContext);
-  const [isFetchedAttendees, setIsFetchedAttendees] = useState(false);
-  const [fetchedAttendees, setFetchedAttendees] = useState([]);
+  const [isFetchedMembers, setIsFetchedMembers] = useState(false);
+  const [members, setMembers] = useState([]);
   const { topLevelNavigation } = useContext(DiscoverNavigatorContext);
 
-  const getMeetupAttendees = async () => {
-    const result = await lampostAPI.get(`/meetupanduserrelationships/meetup/${props.route.params.meetupId}/users`);
-    const { meetupAttendees } = result.data;
-    setFetchedAttendees(meetupAttendees);
-    setIsFetchedAttendees(true);
+  const getUsersByLibraryId = async () => {
+    const result = await lampostAPI.get(`/libraryanduserrelationships/users/${props.route.params.libraryId}`);
+    const { users } = result.data;
+    setMembers(users);
+    setIsFetchedMembers(true);
   };
-
   useEffect(() => {
-    getMeetupAttendees();
+    getUsersByLibraryId();
   }, []);
 
-  const renderTopBadges = (userInfo) => {
-    const list = userInfo.user.topBadges.map((userBadge, index) => {
-      return <BadgeLabel key={index} badge={userBadge.badge} />;
-    });
-
-    return (
-      <ScrollView horizontal={true}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>{list}</View>
-      </ScrollView>
-    );
-  };
-
-  const renderUser = (userInfo) => {
+  const renderUser = (user) => {
     return (
       <View style={{ flexDirection: 'row', marginBottom: 15 }}>
-        {userInfo ? ( // null 対策
+        {user ? ( // null 対策
           <TouchableOpacity
             style={{ flex: 0.15 }}
             onPress={() => {
-              if (auth.data._id !== userInfo.user._id) {
-                topLevelNavigation.navigate('Meetup member', { userId: userInfo.user._id });
+              if (auth.data._id !== user._id) {
+                topLevelNavigation.navigate('Library member', { userId: user._id });
               } else {
                 return null;
               }
@@ -59,9 +43,7 @@ const AttendeesContainer = (props) => {
           >
             <FastImage
               source={{
-                uri: userInfo.user.photo
-                  ? userInfo.user.photo
-                  : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
+                uri: user.photo ? user.photo : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
               }}
               style={{
                 width: 40,
@@ -70,7 +52,7 @@ const AttendeesContainer = (props) => {
                 // marginRight: 10,
                 backgroundColor: iconColorsTable['blue1'],
               }}
-              tintColor={userInfo.user.photo ? null : 'white'}
+              tintColor={user.photo ? null : 'white'}
             />
           </TouchableOpacity>
         ) : (
@@ -102,12 +84,9 @@ const AttendeesContainer = (props) => {
               width: '100%',
             }}
           >
-            {userInfo ? (
+            {user ? (
               <View>
-                <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 17, marginBottom: 10 }}>
-                  {userInfo.launcher ? '🚀' : userInfo.rsvped ? '🔥' : null}&nbsp;{userInfo.user.name}
-                </Text>
-                {renderTopBadges(userInfo)}
+                <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 17, marginBottom: 10 }}>{user.name}</Text>
               </View>
             ) : (
               <Text style={{ color: 'white', fontSize: 20 }}>This user doesn't exist</Text>
@@ -119,12 +98,12 @@ const AttendeesContainer = (props) => {
   };
 
   const renderMembers = () => {
-    if (!fetchedAttendees.length) {
+    if (!members.length) {
       return <Text style={{ color: baseTextColor }}>You'll see all those who joined this meetup.</Text>;
     } else {
       return (
         <FlatList
-          data={fetchedAttendees}
+          data={members}
           renderItem={({ item }) => renderUser(item)}
           keyExtractor={(item, index) => `${item._id}-${index}`}
         />
@@ -133,10 +112,10 @@ const AttendeesContainer = (props) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: baseBackgroundColor, paddingLeft: 10, paddingRight: 10, paddingTop: 10 }}>
-      {!isFetchedAttendees ? <ActivityIndicator /> : renderMembers()}
+    <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
+      {!isFetchedMembers ? <ActivityIndicator /> : renderMembers()}
     </View>
   );
 };
 
-export default AttendeesContainer;
+export default MembersList;

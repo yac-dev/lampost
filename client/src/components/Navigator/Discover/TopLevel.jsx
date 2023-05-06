@@ -10,7 +10,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 import MeetupMembers from '../../Map/MeetupDetailBottomSheet/Attendees';
 import User from '../../User/Container';
-import LibraryMembers from '../../Libraries/LibraryOverviewBottomSheet/Members';
+import LibraryMembers from '../../Libraries/LibraryDetailBottomSheet/MembersList';
 import Report from '../../Utils/Report';
 
 const DiscoverNavigatorContainer = (props) => {

@@ -6,6 +6,7 @@ import BadgeAndUserRelationship from '../models/badgeAndUserRelationship';
 import { Expo } from 'expo-server-sdk';
 const expo = new Expo();
 import { sendPushNotification } from '../services/expo-push-sdk';
+import Icon from '../models/icon';
 
 export const joinMeetup = async (request, response) => {
   try {
@@ -160,7 +161,15 @@ export const getMeetupAttendees = async (request, response) => {
       select: 'name topBadges photo',
       populate: {
         path: 'topBadges',
-        select: 'name color icon',
+        populate: {
+          path: 'badge',
+          select: 'icon color name',
+          populate: {
+            path: 'icon',
+            model: Icon,
+            select: 'url',
+          },
+        },
       },
     });
 

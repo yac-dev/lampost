@@ -65,9 +65,15 @@ export const addUserBadges = async (request, response) => {
         createdAt: new Date(),
       };
     });
-
     const badgeAndUserRelationships = await BadgeAndUserRelationship.insertMany(relationshipObjects);
-
+    const firstFour = badgeAndUserRelationships.slice(0, 4);
+    const user = await User.findById(request.params.userId);
+    if (user.topBadges.length <= 4) {
+      const restSpace = 4 - user.topBadges.length;
+      const adding = firstFour.splice(0, restSpace);
+      user.topBadges.push(...adding);
+      user.save();
+    }
     const responseDocument = badgeAndUserRelationships.map((relationship) => {
       return {
         _id: relationship._id,
