@@ -11,6 +11,7 @@ import {
   screenSectionBackgroundColor,
 } from '../../../utils/colorsTable';
 import { iconsTable } from '../../../utils/icons';
+import BadgeLabels from './BadgeLabels';
 import ActionButtons from './ActionButtons';
 import CreatedBy from './CreatedBy';
 import Description from './Description';
@@ -44,7 +45,10 @@ const LibraryDetailBottomSheet = (props) => {
         {selectedLibrary ? (
           <>
             <View style={{ marginBottom: 10 }}>
-              <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 18 }}>{selectedLibrary.title}</Text>
+              <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 18, marginBottom: 7 }}>
+                {selectedLibrary.title}
+              </Text>
+              <BadgeLabels />
               {selectedLibrary.isPublic ? null : (
                 <Text style={{ alignSelf: 'flex-end', color: baseTextColor }}>This is a private library</Text>
               )}

@@ -32,49 +32,53 @@ const ActionButtons = () => {
     });
   };
 
-  return (
-    <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-      {myJoinedLibraries.some((library) => library._id === selectedLibrary._id) ? (
-        <View style={{ width: '100%', backgroundColor: iconColorsTable['blue1'], borderRadius: 5, padding: 10 }}>
-          <Text style={{ color: 'white', textAlign: 'center' }}>You've already joined</Text>
-        </View>
-      ) : (
-        <>
-          <View style={{ flex: 0.5, paddingRight: 5 }}>
-            <TouchableOpacity
-              style={{ width: '100%', backgroundColor: iconColorsTable['blue1'], padding: 7, borderRadius: 5 }}
-              onPress={() => joinLibrary()}
-            >
-              <View style={{ alignSelf: 'center' }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <MaterialCommunityIcons
-                    name='human-greeting-variant'
-                    size={20}
-                    color={'white'}
-                    style={{ marginRight: 10 }}
-                  />
-                  <Text style={{ color: 'white' }}>Join this library</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
+  if (auth.data) {
+    return (
+      <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+        {myJoinedLibraries.some((library) => library._id === selectedLibrary._id) ? (
+          <View style={{ width: '100%', backgroundColor: iconColorsTable['blue1'], borderRadius: 5, padding: 10 }}>
+            <Text style={{ color: 'white', textAlign: 'center' }}>You've already joined</Text>
           </View>
-          <View style={{ flex: 0.5, paddingLeft: 5 }}>
-            <TouchableOpacity
-              style={{ width: '100%', backgroundColor: iconColorsTable['red1'], padding: 7, borderRadius: 5 }}
-              onPress={() => topLevelNavigation.navigate('Discover report', { report: selectedLibrary.title })}
-            >
-              <View style={{ alignSelf: 'center' }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <MaterialIcons name='report-problem' size={20} color={'white'} style={{ marginRight: 10 }} />
-                  <Text style={{ color: 'white' }}>Report</Text>
+        ) : (
+          <>
+            <View style={{ flex: 0.5, paddingRight: 5 }}>
+              <TouchableOpacity
+                style={{ width: '100%', backgroundColor: iconColorsTable['blue1'], padding: 7, borderRadius: 5 }}
+                onPress={() => joinLibrary()}
+              >
+                <View style={{ alignSelf: 'center' }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <MaterialCommunityIcons
+                      name='human-greeting-variant'
+                      size={20}
+                      color={'white'}
+                      style={{ marginRight: 10 }}
+                    />
+                    <Text style={{ color: 'white' }}>Join this library</Text>
+                  </View>
                 </View>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </>
-      )}
-    </View>
-  );
+              </TouchableOpacity>
+            </View>
+            <View style={{ flex: 0.5, paddingLeft: 5 }}>
+              <TouchableOpacity
+                style={{ width: '100%', backgroundColor: iconColorsTable['red1'], padding: 7, borderRadius: 5 }}
+                onPress={() => topLevelNavigation.navigate('Discover report', { report: selectedLibrary.title })}
+              >
+                <View style={{ alignSelf: 'center' }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <MaterialIcons name='report-problem' size={20} color={'white'} style={{ marginRight: 10 }} />
+                    <Text style={{ color: 'white' }}>Report</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </>
+        )}
+      </View>
+    );
+  } else {
+    return <Text style={{ color: 'white' }}>Please login or signup to join this meetup.</Text>;
+  }
 };
 
 export default ActionButtons;

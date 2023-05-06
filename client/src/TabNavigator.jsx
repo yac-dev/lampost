@@ -30,7 +30,7 @@ const CameraBase = () => <View style={{ flex: 1, backgroundColor: 'red' }} />;
 
 const RootNavigator = () => {
   const { MaterialCommunityIcons, Ionicons, FontAwesome5, MaterialIcons, Entypo } = iconsTable;
-  const { chatsNotificationCount, friendChatsNotificationCount } = useContext(GlobalContext);
+  const { chatsNotificationCount } = useContext(GlobalContext);
 
   // tabBarStyle: { display: 'none' }
   return (
@@ -59,6 +59,7 @@ const RootNavigator = () => {
             borderBottomWidth: 0,
           },
           tabBarLabel: 'Home',
+          tabBarBadge: chatsNotificationCount ? chatsNotificationCount : null,
           tabBarStyle: {
             // display: hide ? 'none' : 'flex',
             backgroundColor: appBottomSheetBackgroundColor,
@@ -191,7 +192,6 @@ const RootNavigator = () => {
           ),
           showLabel: false,
           tabBarLabel: 'Profile',
-          tabBarBadge: friendChatsNotificationCount ? friendChatsNotificationCount : null,
           tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
         })}
       />

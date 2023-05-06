@@ -36,7 +36,7 @@ import ReportLibrary from '../../Libraries/ReportLibrary';
 import ReportAsset from '../../Utils/ReportAsset';
 
 const TopLevelHomeNavigator = (props) => {
-  const { auth } = useContext(GlobalContext);
+  const { auth, chatsNotificationCount } = useContext(GlobalContext);
   // navigation={navigation}
   // console.log(props.navigation, 'nav');
   return (
@@ -48,6 +48,7 @@ const TopLevelHomeNavigator = (props) => {
             component={TopTabsNavigator}
             options={({ navigation }) => ({
               headerShown: false,
+
               // headerStyle: {
               //   backgroundColor: appBottomSheetBackgroundColor,
               // },
