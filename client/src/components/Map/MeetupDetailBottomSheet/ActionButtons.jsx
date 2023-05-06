@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import GlobalContext from '../../../GlobalContext';
 import MeetupContext from '../MeetupContext';
+import DiscoverNavigatorContext from '../../Navigator/Discover/DiscoverNavigatorContext';
 import lampostAPI from '../../../apis/lampost';
 import { iconColorsTable, baseTextColor } from '../../../utils/colorsTable';
 import { iconsTable } from '../../../utils/icons';
@@ -10,6 +11,7 @@ const { MaterialCommunityIcons, MaterialIcons } = iconsTable;
 const ActionButtons = () => {
   const { auth, setLoading, myUpcomingMeetups, setMyUpcomingMeetups, setSnackBar } = useContext(GlobalContext);
   const { selectedMeetup, meetupDetailBottomSheetRef } = useContext(MeetupContext);
+  const { topLevelNavigation } = useContext(DiscoverNavigatorContext);
 
   const validateJoinMeetup = (meetup) => {
     const myDates = Object.values(myUpcomingMeetups).map((meetup) => {
@@ -97,10 +99,10 @@ const ActionButtons = () => {
         };
       });
       setLoading(false);
-      selectedMeetupBottomSheetRef.current.close();
+      meetupDetailBottomSheetRef.current.close();
       setSnackBar({
         isVisible: true,
-        message: `Joined ${selectedMeetup.title} 😎 \nTap the red button below to join the private chat.`,
+        message: `Joined ${selectedMeetup.title} successfully. \n Don't forget to RSVP when you are ready.`,
         barType: 'success',
         duration: 5000,
       });
@@ -122,18 +124,22 @@ const ActionButtons = () => {
       return updating;
     });
     setLoading(false);
-    selectedMeetupBottomSheetRef.current.close();
-    setSnackBar({ isVisible: true, message: `Left ${selectedMeetup.title}`, barType: 'success', duration: 5000 });
+    meetupDetailBottomSheetRef.current.close();
+    setSnackBar({ isVisible: true, message: `Left ${selectedMeetup.title}.`, barType: 'success', duration: 5000 });
   };
 
   if (auth.data) {
     if (myUpcomingMeetups[selectedMeetup._id]?.launcher === auth.data._id) {
       // launcherが自分なら、何も表示しない。
-      return null;
+      return (
+        <View style={{ width: '100%', backgroundColor: iconColorsTable['blue1'], borderRadius: 5, padding: 10 }}>
+          <Text style={{ color: 'white', textAlign: 'center' }}>🚀You've launched</Text>
+        </View>
+      );
     } else {
       if (myUpcomingMeetups[selectedMeetup._id]) {
         return (
-          <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+          <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ flex: 0.5, paddingRight: 5 }}>
               <TouchableOpacity
                 style={{ width: '100%', backgroundColor: iconColorsTable['red1'], padding: 7, borderRadius: 5 }}
@@ -155,6 +161,7 @@ const ActionButtons = () => {
             <View style={{ flex: 0.5, paddingLeft: 5 }}>
               <TouchableOpacity
                 style={{ width: '100%', backgroundColor: iconColorsTable['red1'], padding: 7, borderRadius: 5 }}
+                onPress={() => topLevelNavigation.navigate('Discover report', { report: selectedMeetup.title })}
               >
                 <View style={{ alignSelf: 'center' }}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -168,7 +175,7 @@ const ActionButtons = () => {
         );
       } else {
         return (
-          <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+          <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ flex: 0.5, paddingRight: 5 }}>
               <TouchableOpacity
                 style={{ width: '100%', backgroundColor: iconColorsTable['blue1'], padding: 7, borderRadius: 5 }}
@@ -189,7 +196,8 @@ const ActionButtons = () => {
             </View>
             <View style={{ flex: 0.5, paddingLeft: 5 }}>
               <TouchableOpacity
-                style={{ width: '100%', backgroundColor: iconColorsTable['blue1'], padding: 7, borderRadius: 5 }}
+                style={{ width: '100%', backgroundColor: iconColorsTable['red1'], padding: 7, borderRadius: 5 }}
+                onPress={() => topLevelNavigation.navigate('Discover report', { report: selectedMeetup.title })}
               >
                 <View style={{ alignSelf: 'center' }}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>

@@ -23,7 +23,7 @@ import Members from './Members';
 const MeetupDetailBottomSheet = (props) => {
   const snapPoints = useMemo(() => ['65%'], []);
   const { meetupDetailBottomSheetRef, selectedMeetup, setSelectedMeetup } = useContext(MeetupContext);
-  console.log(selectedMeetup);
+
   return (
     <GorhomBottomSheet
       index={-1}

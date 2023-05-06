@@ -6,10 +6,12 @@ import lampostAPI from '../../../apis/lampost';
 import { iconColorsTable } from '../../../utils/colorsTable';
 import { iconsTable } from '../../../utils/icons';
 const { MaterialCommunityIcons, MaterialIcons } = iconsTable;
+import DiscoverNavigatorContext from '../../Navigator/Discover/DiscoverNavigatorContext';
 
 const ActionButtons = () => {
   const { auth, setLoading, myJoinedLibraries, setMyJoinedLibraries, setSnackBar } = useContext(GlobalContext);
   const { navigation, selectedLibrary, libraryDetailBottomSheetRef } = useContext(LibrariesContext);
+  const { topLevelNavigation } = useContext(DiscoverNavigatorContext);
 
   const joinLibrary = async () => {
     const formData = {
@@ -58,7 +60,8 @@ const ActionButtons = () => {
           </View>
           <View style={{ flex: 0.5, paddingLeft: 5 }}>
             <TouchableOpacity
-              style={{ width: '100%', backgroundColor: iconColorsTable['blue1'], padding: 7, borderRadius: 5 }}
+              style={{ width: '100%', backgroundColor: iconColorsTable['red1'], padding: 7, borderRadius: 5 }}
+              onPress={() => topLevelNavigation.navigate('Discover report', { report: selectedLibrary.title })}
             >
               <View style={{ alignSelf: 'center' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>

@@ -215,11 +215,7 @@ const Chats = (props) => {
                         borderRadius: 7,
                       }}
                       onPress={() => {
-                        navigation.navigate('Report meetup member', {
-                          userId: chat.user._id,
-                          userName: chat.user.name,
-                          meetupId: meetup._id,
-                        });
+                        navigation.navigate('Lounge report', { report: chat.user.name });
                       }}
                     >
                       <MaterialIcons name='report-problem' size={20} color={baseTextColor} style={{ marginRight: 5 }} />

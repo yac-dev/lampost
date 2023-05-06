@@ -1,4 +1,5 @@
 import DiscoverNavigatorContext from './DiscoverNavigatorContext';
+import { TouchableOpacity, Text } from 'react-native';
 import MapNavigator from './Map';
 import LibrariesContaier from './Libraries';
 import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
@@ -12,6 +13,7 @@ import MeetupDescription from '../../Map/SelectedMeetup/Description/Container';
 import MeetupFee from '../../Map/SelectedMeetup/Fee';
 import MeetupMembers from '../../Map/SelectedMeetup/Attendees';
 import LibraryMembers from '../../Libraries/LibraryOverviewBottomSheet/Members';
+import Report from '../../Utils/Report';
 
 const DiscoverNavigatorContainer = (props) => {
   return (
@@ -118,134 +120,30 @@ const DiscoverNavigatorContainer = (props) => {
             })}
           />
         </Stack.Group>
-        <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
-          {/* <Stack.Screen
-          name='Create new library'
-          component={CreateNewLibrary}
-          options={({ navigation }) => ({
-            headerLeft: () => (
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
-              </TouchableOpacity>
-            ),
-            headerTitle: 'Create new library',
-            headerStyle: {
-              backgroundColor: appBottomSheetBackgroundColor,
-            },
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              color: 'white',
-            },
-          })}
-        />
-        <Stack.Screen
-          name='Profile'
-          component={AuthNavigator}
-          options={({ navigation }) => ({
-            headerShown: false,
-          })}
-        />
-        <Stack.Screen
-          name='Add badges'
-          component={AddBadges}
-          options={({ navigation }) => ({
-            headerLeft: () => (
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
-              </TouchableOpacity>
-            ),
-            headerTitle: 'Badges for library',
-            headerStyle: {
-              backgroundColor: appBottomSheetBackgroundColor,
-            },
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              color: 'white',
-            },
-          })}
-        />
-        <Stack.Screen // assetsのfull screen
-          name='Add assets'
-          component={AddAssets}
-          options={({ navigation }) => ({
-            headerLeft: () => (
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
-              </TouchableOpacity>
-            ),
-            headerTitle: 'Add assets',
-            headerStyle: {
-              backgroundColor: appBottomSheetBackgroundColor,
-            },
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              color: 'white',
-            },
-          })}
-        /> */}
+        <Stack.Group screenOptions={{ presentation: 'modal', gestureEnabled: false }}>
+          <Stack.Screen
+            name='Discover report'
+            component={Report}
+            options={({ navigation }) => ({
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+                </TouchableOpacity>
+              ),
+              headerTitle: 'Report',
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+            })}
+          />
         </Stack.Group>
       </Stack.Navigator>
     </DiscoverNavigatorContext.Provider>
   );
-  // return (
-  //   <Tab.Navigator
-  //     screenOptions={{
-  //       // lazy: true,
-  //       headerShown: false,
-  //       headerStyle: {
-  //         backgroundColor: appBottomSheetBackgroundColor,
-  //       },
-  //       // tabBarLabel: 'Hello',
-  //       tabBarStyle: {
-  //         // display: hide ? 'none' : 'flex',
-  //         backgroundColor: appBottomSheetBackgroundColor,
-  //         borderTopWidth: 0,
-  //       },
-  //       tabBarLabelStyle: {
-  //         fontSize: 12,
-  //       },
-  //       tabBarActiveTintColor: 'white',
-  //       tabBarIndicatorStyle: {
-  //         height: 0,
-  //       },
-  //     }}
-  //   >
-  //     <Tab.Screen
-  //       name='DiscoverTopTabsNavigator'
-  //       component={DiscoverTopTabsNavigator}
-  //       options={({ route }) => ({
-  //         headerShown: false,
-  //         // tabBarIcon: ({ size, color, focused }) => (
-  //         //   <MaterialCommunityIcons
-  //         //     name={'rocket-launch'}
-  //         //     color={focused ? 'white' : 'rgb(102, 104, 109)'}
-  //         //     size={size}
-  //         //   />
-  //         // ),
-  //         // tabBarLabel: 'Meetups',
-  //         tabBarLabelStyle: { textTransform: 'none', fontWeight: 'bold' },
-  //         // tabBarLabelStyle: { padding: 5 },
-  //       })}
-  //     />
-  //     {/*  ここに、detaialのcomponentとか、userとかを入れていく感じだ。<Tab.Screen
-  //       name='Libraries'
-  //       component={LibrariesContaier}
-  //       options={({ route }) => ({
-  //         // headerShown: false,
-  //         // tabBarIcon: ({ size, color, focused }) => (
-  //         //   <MaterialCommunityIcons
-  //         //     name={'rocket-launch'}
-  //         //     color={focused ? 'white' : 'rgb(102, 104, 109)'}
-  //         //     size={size}
-  //         //   />
-  //         // ),
-  //         tabBarLabel: 'Libraries',
-  //         tabBarLabelStyle: { textTransform: 'none', fontWeight: 'bold' },
-  //         // tabBarLabelStyle: { padding: 5 },
-  //       })}
-  //     /> */}
-  //   </Tab.Navigator>
-  // );
 };
 
 export default DiscoverNavigatorContainer;
