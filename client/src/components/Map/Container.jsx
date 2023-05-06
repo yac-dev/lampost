@@ -29,6 +29,7 @@ import ChatStatus from './ChatStatus';
 import SnackBar from '../Utils/SnackBar';
 import LoadingSpinner from '../Utils/LoadingSpinner';
 import UserMenuBottomSheet from './UserMenuBottomSheet';
+import MeetupDetailBottomSheet from './MeetupDetailBottomSheet/Container';
 
 // utils
 import { mapStyle } from '../../utils/mapStyle';
@@ -76,6 +77,7 @@ const Map = (props) => {
   const moreMenuBottomSheetRef = useRef(null);
   const launchMeetupBottomSheetRef = useRef(null);
   const selectedMeetupBottomSheetRef = useRef(null);
+  const meetupDetailBottomSheetRef = useRef(null);
   const selectedMeetupDetailBottomSheetRef = useRef(null);
   const [isStartMeetupConfirmationModalOpen, setIsStartMeetupConfirmationModalOpen] = useState(false);
   const [isFinishMeetupConfirmationModalOpen, setIsFinishMeetupConfirmationModalOpen] = useState(false);
@@ -254,6 +256,7 @@ const Map = (props) => {
           selectedMeetupDetailComponent,
           setSelectedMeetupDetailComponent,
           selectedMeetupDetailBottomSheetRef,
+          meetupDetailBottomSheetRef,
           isStartMeetupConfirmationModalOpen,
           setIsStartMeetupConfirmationModalOpen,
           isFinishMeetupConfirmationModalOpen,
@@ -331,8 +334,9 @@ const Map = (props) => {
           <MyUpcomingMeetupsBottomSheet />
           <MoreMenuBottomSheet />
           <LaunchMeetupBottomSheet navigation={props.navigation} route={props.route} />
-          <SelectedMeetup />
-          <SelectedMeetupInfoDetail />
+          <MeetupDetailBottomSheet />
+          {/* <SelectedMeetup /> */}
+          {/* <SelectedMeetupInfoDetail /> */}
 
           {/* <LoggedOutModal navigation={props.navigation} /> */}
           {/* <LoadingSpinner /> */}

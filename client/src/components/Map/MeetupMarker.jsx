@@ -11,15 +11,15 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const MapMarker = (props) => {
   const { isIpad } = useContext(GlobalContext);
-  const { selectedMeetup, setSelectedMeetup, selectedMeetupBottomSheetRef } = useContext(MapContext);
+  const { selectedMeetup, setSelectedMeetup, meetupDetailBottomSheetRef } = useContext(MapContext);
   // const [trackView, setTrackView] = useState(true);
   const [initialRender, setInitialRender] = useState(true);
 
   const getSelectedMeetup = async (meetupId) => {
+    meetupDetailBottomSheetRef.current.snapToIndex(0);
     const result = await lampostAPI.get(`/meetups/${meetupId}/selected`);
     const { meetup } = result.data;
     setSelectedMeetup(meetup);
-    selectedMeetupBottomSheetRef.current.snapToIndex(0);
   };
 
   return (

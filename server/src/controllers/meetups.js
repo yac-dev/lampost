@@ -327,6 +327,10 @@ export const getSelectedMeetup = async (request, response) => {
       .populate({
         path: 'badges',
         model: Badge,
+        populate: {
+          path: 'icon',
+          model: Icon,
+        },
       });
     // .populate({
     //   path: 'comments',
