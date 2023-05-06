@@ -7,6 +7,7 @@ const Stack = createNativeStackNavigator();
 import LibraryContainer from '../../Home/Library/Container';
 import DateAssets from '../../Home/Library/DateAssets/Container';
 import Members from '../../Home/Library/Members';
+import User from '../../User/Container';
 import AddAssets from '../../Utils/AddAssets/Container';
 import InviteMyFriends from '../../Home/Library/InviteMyFriends';
 import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
@@ -54,6 +55,24 @@ const LibraryNavigator = () => {
             title: '',
             headerTransparent: true,
             // title: 'Basecamp',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: 'white',
+            // headerTintColor: {
+            //   color: 'white',
+            // },
+          })}
+        />
+        <Stack.Screen
+          name='Home library member'
+          component={User}
+          options={({ navigation }) => ({
+            headerShown: true,
+            title: '',
+            headerTransparent: true,
+            title: 'User',
             headerTitleStyle: {
               fontWeight: 'bold',
               color: 'white',

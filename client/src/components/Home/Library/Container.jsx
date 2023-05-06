@@ -50,6 +50,10 @@ LocaleConfig.locales['en'] = {
 const Container = (props) => {
   const { MaterialCommunityIcons, Ionicons } = iconsTable;
   const { auth, isIpad, setSnackBar } = useContext(GlobalContext);
+  const oneGridWidth = isIpad ? Dimensions.get('window').width / 6 : Dimensions.get('window').width / 4;
+  const oneGridHeight = isIpad ? Dimensions.get('window').height / 7.5 : Dimensions.get('window').height / 7.5;
+  const badgeContainerWidth = oneGridWidth * 0.6;
+  const badgeIconWidth = badgeContainerWidth * 0.65;
   const appMenuBottomSheetRef = useRef(null);
   const albumsBottomSheetRef = useRef(null);
   const selectedAssetBottomSheetRef = useRef(null);
@@ -272,10 +276,11 @@ const Container = (props) => {
             textMonthFontWeight: 'bold',
           }}
         />
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{
             backgroundColor: iconColorsTable['blue1'],
-            padding: 10,
+            paddingTop: 5,
+            paddingBottom: 5,
             flexDirection: 'row',
             alignItems: 'center',
             borderRadius: 7,
@@ -290,7 +295,160 @@ const Container = (props) => {
         >
           <MaterialCommunityIcons name='lightbulb-on' size={25} color={'white'} style={{ marginRight: 10 }} />
           <Text style={{ color: 'white' }}>Action</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+        <ScrollView
+          horizontal={true}
+          style={{ backgroundColor: screenSectionBackgroundColor, position: 'absolute', width: '100%', bottom: 0 }}
+        >
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              alignSelf: 'center',
+              paddingTop: 5,
+              paddingBottom: 5,
+            }}
+          >
+            <View
+              style={{
+                width: oneGridWidth,
+                height: 80,
+                justifyContent: 'center',
+                alignItems: 'center',
+                // backgroundColor: 'red',
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  backgroundColor: iconColorsTable['red1'],
+                  padding: 10,
+                  borderRadius: 10,
+                  width: 50,
+                  height: 50,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginBottom: 5,
+                }}
+                onPress={() => {
+                  props.navigation.navigate('Post my snap', {
+                    libraryId: props.route.params.libraryId,
+                    fromComponent: 'ADD_ASSET_FOR_POSTING',
+                    assetType: props.route.params.libraryAssetType,
+                  });
+                }}
+              >
+                <MaterialCommunityIcons name='plus' size={20} color={'white'} />
+              </TouchableOpacity>
+
+              <Text style={{ color: 'white', textAlign: 'center' }}>Post</Text>
+            </View>
+            <View
+              style={{
+                width: oneGridWidth,
+                height: 80,
+                justifyContent: 'center',
+                alignItems: 'center',
+                // backgroundColor: 'red',
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  backgroundColor: iconColorsTable['blue1'],
+                  padding: 10,
+                  borderRadius: 10,
+                  width: 50,
+                  height: 50,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginBottom: 5,
+                }}
+                onPress={() =>
+                  props.navigation.navigate('Invite my friends', { libraryId: props.route.params.libraryId })
+                }
+              >
+                <MaterialCommunityIcons name='human-greeting-variant' size={20} color={'white'} />
+              </TouchableOpacity>
+
+              <Text style={{ color: 'white', textAlign: 'center' }}>Invite</Text>
+            </View>
+            <View
+              style={{
+                width: oneGridWidth,
+                height: 80,
+                justifyContent: 'center',
+                alignItems: 'center',
+                // backgroundColor: 'red',
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  backgroundColor: iconColorsTable['yellow1'],
+                  padding: 10,
+                  borderRadius: 10,
+                  width: 50,
+                  height: 50,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginBottom: 5,
+                }}
+                onPress={() => props.navigation.navigate('Members', { libraryId: props.route.params.libraryId })}
+              >
+                <MaterialCommunityIcons name='account-group' size={20} color={'white'} />
+              </TouchableOpacity>
+              <Text style={{ color: 'white', textAlign: 'center' }}>Members</Text>
+            </View>
+            <View
+              style={{
+                width: oneGridWidth,
+                height: 80,
+                justifyContent: 'center',
+                alignItems: 'center',
+                // backgroundColor: 'red',
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  backgroundColor: iconColorsTable['green1'],
+                  padding: 10,
+                  borderRadius: 10,
+                  width: 50,
+                  height: 50,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginBottom: 5,
+                }}
+              >
+                <Ionicons name='ios-albums' size={20} color={'white'} />
+              </TouchableOpacity>
+              <Text style={{ color: 'white', textAlign: 'center' }}>Albums</Text>
+            </View>
+            <View
+              style={{
+                width: oneGridWidth,
+                height: 80,
+                justifyContent: 'center',
+                alignItems: 'center',
+                // backgroundColor: 'red',
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  backgroundColor: iconColorsTable['grey1'],
+                  padding: 10,
+                  borderRadius: 10,
+                  width: 50,
+                  height: 50,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginBottom: 5,
+                }}
+              >
+                <Ionicons name='information-circle' size={20} color={'white'} />
+              </TouchableOpacity>
+              <Text style={{ color: 'white', textAlign: 'center' }}>About</Text>
+            </View>
+          </View>
+        </ScrollView>
         <ConfirmLeaveLibrary />
       </View>
       <AppMenuBottomSheet />

@@ -1,5 +1,6 @@
 import LibraryAndUserRelationship from '../models/libraryAndUserRelationship';
 import Library from '../models/library';
+import Icon from '../models/icon';
 
 export const joinLibrary = async (request, response) => {
   try {
@@ -62,7 +63,17 @@ export const getUsersByLibraryId = async (request, response) => {
       library: request.params.libraryId,
     }).populate({
       path: 'user',
-      populate: { path: 'topBadges' },
+      select: '_id name photo topBadges',
+      populate: {
+        path: 'topBadges',
+        populate: {
+          path: 'badge',
+          populate: {
+            path: 'icon',
+            model: Icon,
+          },
+        },
+      },
     });
     const users = libraryAndUserRelationships.map((relationship) => {
       return relationship.user;
