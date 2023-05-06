@@ -3,7 +3,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import GlobalContext from '../../GlobalContext';
 import CameraContext from './CameraContext';
-import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import lampostAPI from '../../apis/lampost';
 import { Camera, CameraType } from 'expo-camera';
 import LoadingSpinner from '../Utils/LoadingSpinner';
@@ -22,6 +22,9 @@ import {
   rnDefaultBackgroundColor,
   iconColorsTable,
   backgroundColorsTable,
+  inputBackgroundColorNew,
+  screenSectionBackgroundColor,
+  sectionBackgroundColor,
 } from '../../utils/colorsTable';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -31,7 +34,11 @@ import { Video } from 'expo-av';
 import FastImage from 'react-native-fast-image';
 
 const Container = (props) => {
-  const { auth, setAuth, setSnackBar, myUpcomingMeetups, setLoading } = useContext(GlobalContext);
+  const { auth, setAuth, setSnackBar, myUpcomingMeetups, setLoading, isIpad } = useContext(GlobalContext);
+  const oneGridWidth = isIpad ? Dimensions.get('window').width / 6 : Dimensions.get('window').width / 4;
+  const oneGridHeight = isIpad ? Dimensions.get('window').height / 7.5 : Dimensions.get('window').height / 7.5;
+  const badgeContainerWidth = oneGridWidth * 0.6;
+  const badgeIconWidth = badgeContainerWidth * 0.65;
   const appMenuBottomSheetRef = useRef(null);
   const timeMachineBottomSheetRef = useRef(null);
   const cameraModeBottomSheetRef = useRef(null);
@@ -141,12 +148,19 @@ const Container = (props) => {
   // );
   // 60秒経ったら終わり。
   useEffect(() => {
-    console.log('camera compo');
+    // console.log('camera compo');
     const meetupList = Object.values(myUpcomingMeetups);
     if (meetupList.length) {
       meetupList.forEach((meetup) => {
         if (meetup.state === 'ongoing') {
           return setOngoingMeetup(meetup._id);
+        } else {
+          setSnackBar({
+            isVisible: true,
+            barType: 'info',
+            message: 'Camera can only be used during the meetup.',
+            duration: 5000,
+          });
         }
       });
     } else {
@@ -358,7 +372,7 @@ const Container = (props) => {
     if (cameraMode === 'photo') {
       return (
         <TouchableOpacity
-          style={{ position: 'absolute', bottom: 100, alignSelf: 'center' }}
+          style={{ position: 'absolute', bottom: 120, alignSelf: 'center' }}
           onPress={() => takePhoto()}
           disabled={ongoingMeetup ? false : true}
         >
@@ -380,7 +394,7 @@ const Container = (props) => {
     } else if (cameraMode === 'video') {
       return (
         <TouchableOpacity
-          style={{ position: 'absolute', bottom: 100, alignSelf: 'center' }}
+          style={{ position: 'absolute', bottom: 120, alignSelf: 'center' }}
           onPress={() => videoButton()}
           disabled={ongoingMeetup ? false : true}
         >
@@ -422,6 +436,7 @@ const Container = (props) => {
     }
   };
 
+  // recordingとtakingの時は、buttonをdisableにしないといかん。
   return (
     <CameraContext.Provider
       value={{
@@ -481,46 +496,193 @@ const Container = (props) => {
         </View>
         {renderCameraButton()}
         {auth.isAuthenticated ? (
-          <View
-            style={{
-              backgroundColor: backgroundColorsTable['violet1'],
-              position: 'absolute',
-              bottom: 20,
-              borderRadius: 10,
-              padding: 10,
-              flexDirection: 'row',
-              alignItems: 'center',
-              alignSelf: 'center',
-            }}
-          >
-            <TouchableOpacity style={{}} onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}>
+          // <View
+          //   style={{
+          //     backgroundColor: backgroundColorsTable['violet1'],
+          //     position: 'absolute',
+          //     bottom: 20,
+          //     borderRadius: 10,
+          //     padding: 10,
+          //     flexDirection: 'row',
+          //     alignItems: 'center',
+          //     alignSelf: 'center',
+          //   }}
+          // >
+          //   <TouchableOpacity style={{}} onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}>
+          //     <View
+          //       style={{
+          //         backgroundColor: iconColorsTable['violet1'],
+          //         padding: 10,
+          //         flexDirection: 'row',
+          //         alignItems: 'center',
+          //         borderRadius: 10,
+          //       }}
+          //     >
+          //       <Ionicons name='ios-apps' size={25} color={'white'} />
+          //     </View>
+          //   </TouchableOpacity>
+          // </View>
+          isRecording ? null : (
+            <View
+              style={{
+                backgroundColor: sectionBackgroundColor,
+                position: 'absolute',
+                bottom: 0,
+                flexDirection: 'row',
+                alignItems: 'center',
+                alignSelf: 'center',
+                width: '100%',
+                paddingTop: 5,
+                paddingBottom: 5,
+              }}
+            >
               <View
                 style={{
-                  backgroundColor: iconColorsTable['violet1'],
-                  padding: 10,
-                  flexDirection: 'row',
+                  width: oneGridWidth,
+                  height: 80,
+                  justifyContent: 'center',
                   alignItems: 'center',
-                  borderRadius: 10,
+                  // backgroundColor: 'red',
                 }}
               >
-                <Ionicons name='ios-apps' size={25} color={'white'} />
+                {cameraMode === 'photo' ? (
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: iconColorsTable['red1'],
+                      padding: 10,
+                      borderRadius: 10,
+                      width: 50,
+                      height: 50,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginBottom: 5,
+                    }}
+                    onPress={() => setCameraMode('video')}
+                  >
+                    <Ionicons name='videocam' size={25} color={'white'} />
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: iconColorsTable['red1'],
+                      padding: 10,
+                      borderRadius: 10,
+                      width: 50,
+                      height: 50,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginBottom: 5,
+                    }}
+                    onPress={() => setCameraMode('photo')}
+                  >
+                    <Ionicons name='image' size={25} color={'white'} />
+                  </TouchableOpacity>
+                )}
+
+                <Text style={{ color: 'white', textAlign: 'center' }}>Video</Text>
               </View>
-            </TouchableOpacity>
-            {/* <TouchableOpacity style={{}} onPress={() => takePhoto()} disabled={currentMeetup ? false : true}>
               <View
                 style={{
-                  backgroundColor: iconColorsTable['violet1'],
-                  padding: 10,
-                  flexDirection: 'row',
+                  width: oneGridWidth,
+                  height: 80,
+                  justifyContent: 'center',
                   alignItems: 'center',
-                  borderRadius: 10,
+                  // backgroundColor: 'red',
                 }}
               >
-                <MaterialCommunityIcons name='camera-iris' size={25} color='white' />
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: iconColorsTable['grey1'],
+                    padding: 10,
+                    borderRadius: 10,
+                    width: 50,
+                    height: 50,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                  onPress={() => {
+                    if (cameraType === CameraType.back) {
+                      setCameraType(CameraType.front);
+                    } else {
+                      setCameraType(CameraType.back);
+                    }
+                  }}
+                >
+                  <MaterialCommunityIcons name='camera-flip' size={20} color={'white'} />
+                </TouchableOpacity>
+                <Text style={{ color: 'white', textAlign: 'center' }}>Flip</Text>
               </View>
-              {isCameraButtonReady()}
-            </TouchableOpacity> */}
-          </View>
+              <View
+                style={{
+                  width: oneGridWidth,
+                  height: 80,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  // backgroundColor: 'red',
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: iconColorsTable['green1'],
+                    padding: 10,
+                    borderRadius: 10,
+                    width: 50,
+                    height: 50,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                  onPress={() => {
+                    if (ongoingMeetup) {
+                    } else {
+                      setSnackBar({
+                        isVisible: true,
+                        barType: 'warning',
+                        message: 'OOPS. Tagging people is only available during the meetup.',
+                        duration: 5000,
+                      });
+                    }
+                  }}
+                >
+                  <Ionicons name='ios-pricetags' size={20} color={'white'} />
+                </TouchableOpacity>
+                <Text style={{ color: 'white', textAlign: 'center' }}>Tag people</Text>
+              </View>
+              <View
+                style={{
+                  width: oneGridWidth,
+                  height: 80,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  // backgroundColor: 'red',
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: iconColorsTable['blue1'],
+                    padding: 10,
+                    borderRadius: 10,
+                    width: 50,
+                    height: 50,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                  onPress={() => {
+                    if (cameraMode === 'photo') {
+                      photoEffectBottomSheetRef.current.snapToIndex(0);
+                    } else if (cameraMode === 'video') {
+                      videoEffectBottomSheetRef.current.snapToIndex(0);
+                    }
+                  }}
+                >
+                  <MaterialCommunityIcons name='history' size={20} color={'white'} />
+                </TouchableOpacity>
+                <Text style={{ color: 'white', textAlign: 'center' }}>Time Machine</Text>
+              </View>
+            </View>
+          )
         ) : null}
         <AppMenuBottomSheet />
         {/* <TimeMachineBottomSheet /> */}

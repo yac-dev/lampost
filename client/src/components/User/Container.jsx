@@ -341,52 +341,197 @@ const Container = (props) => {
           </View>
         )}
         {!auth.isAuthenticated || !isMyPage ? null : (
-          <View
-            style={{
-              position: 'absolute',
-              bottom: 20,
-              backgroundColor: backgroundColorsTable['green1'],
-              borderRadius: 10,
-              alignSelf: 'center',
-              padding: 10,
-              flexDirection: 'row',
-              // width: '100%',
-            }}
+          // <View
+          //   style={{
+          //     position: 'absolute',
+          //     bottom: 20,
+          //     backgroundColor: backgroundColorsTable['green1'],
+          //     borderRadius: 10,
+          //     alignSelf: 'center',
+          //     padding: 10,
+          //     flexDirection: 'row',
+          //   }}
+          // >
+          //   <TouchableOpacity
+          //     style={{
+          //       backgroundColor: iconColorsTable['green1'],
+          //       padding: 10,
+          //       flexDirection: 'row',
+          //       alignItems: 'center',
+          //       borderRadius: 10,
+          //       marginRight: 10,
+          //     }}
+          //     onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
+          //   >
+          //     <Ionicons name='ios-apps' size={25} color={'white'} />
+          //   </TouchableOpacity>
+          //   <TouchableOpacity
+          //     onPress={() => {
+          //       badgeMenuBottomSheetRef.current.snapToIndex(0);
+          //     }}
+          //   >
+          //     <View
+          //       style={{
+          //         backgroundColor: iconColorsTable['green1'],
+          //         padding: 10,
+          //         flexDirection: 'row',
+          //         alignItems: 'center',
+          //         borderRadius: 10,
+          //       }}
+          //     >
+          //       <Ionicons name='hammer' size={25} color={'white'} />
+          //     </View>
+          //   </TouchableOpacity>
+          // </View>
+          <ScrollView
+            horizontal={true}
+            style={{ backgroundColor: screenSectionBackgroundColor, position: 'absolute', width: '100%', bottom: 0 }}
           >
-            {/* <TouchableOpacity
-              style={{ width: badgeContainerWidth, aspectRatio: 1, backgroundColor: 'red' }}
-            ></TouchableOpacity> */}
-            <TouchableOpacity
+            <View
               style={{
-                backgroundColor: iconColorsTable['green1'],
-                padding: 10,
                 flexDirection: 'row',
                 alignItems: 'center',
-                borderRadius: 10,
-                marginRight: 10,
-              }}
-              onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
-            >
-              <Ionicons name='ios-apps' size={25} color={'white'} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                badgeMenuBottomSheetRef.current.snapToIndex(0);
+                alignSelf: 'center',
+                paddingTop: 5,
+                paddingBottom: 5,
               }}
             >
               <View
                 style={{
-                  backgroundColor: iconColorsTable['green1'],
-                  padding: 10,
-                  flexDirection: 'row',
+                  width: oneGridWidth,
+                  height: 80,
+                  justifyContent: 'center',
                   alignItems: 'center',
-                  borderRadius: 10,
+                  // backgroundColor: 'red',
                 }}
               >
-                <Ionicons name='hammer' size={25} color={'white'} />
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: iconColorsTable['red1'],
+                    padding: 10,
+                    borderRadius: 10,
+                    width: 50,
+                    height: 50,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                  onPress={() =>
+                    props.navigation.navigate('Add badges', { fromComponent: 'ADD_USER_BADGES', myBadges: userBadges })
+                  }
+                >
+                  <MaterialCommunityIcons name='plus' size={20} color={'white'} />
+                </TouchableOpacity>
+
+                <Text style={{ color: 'white', textAlign: 'center' }}>Add badges</Text>
               </View>
-            </TouchableOpacity>
-          </View>
+              <View
+                style={{
+                  width: oneGridWidth,
+                  height: 80,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  // backgroundColor: 'red',
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: iconColorsTable['blue1'],
+                    padding: 10,
+                    borderRadius: 10,
+                    width: 50,
+                    height: 50,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                  onPress={() => props.navigation.navigate('My log', { userId: auth.data._id })}
+                >
+                  <MaterialCommunityIcons name='history' size={20} color={'white'} />
+                </TouchableOpacity>
+
+                <Text style={{ color: 'white', textAlign: 'center' }}>Log</Text>
+              </View>
+              <View
+                style={{
+                  width: oneGridWidth,
+                  height: 80,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  // backgroundColor: 'red',
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: iconColorsTable['yellow1'],
+                    padding: 10,
+                    borderRadius: 10,
+                    width: 50,
+                    height: 50,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                  onPress={() => props.navigation.navigate('My friends')}
+                >
+                  <MaterialCommunityIcons name='human-greeting-variant' size={20} color={'white'} />
+                </TouchableOpacity>
+                <Text style={{ color: 'white', textAlign: 'center' }}>Friends</Text>
+              </View>
+              <View
+                style={{
+                  width: oneGridWidth,
+                  height: 80,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  // backgroundColor: 'red',
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: iconColorsTable['violet1'],
+                    padding: 10,
+                    borderRadius: 10,
+                    width: 50,
+                    height: 50,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                  onPress={() => props.navigation.navigate('Assets', { userId: auth.data._id })}
+                >
+                  <Ionicons name='camera' size={20} color={'white'} />
+                </TouchableOpacity>
+                <Text style={{ color: 'white', textAlign: 'center' }}>Snaps</Text>
+              </View>
+              <View
+                style={{
+                  width: oneGridWidth,
+                  height: 80,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  // backgroundColor: 'red',
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: iconColorsTable['grey1'],
+                    padding: 10,
+                    borderRadius: 10,
+                    width: 50,
+                    height: 50,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                  onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
+                >
+                  <Ionicons name='settings' size={20} color={'white'} />
+                </TouchableOpacity>
+                <Text style={{ color: 'white', textAlign: 'center' }}>Setting</Text>
+              </View>
+            </View>
+          </ScrollView>
         )}
 
         <AppMenuBottomSheet />

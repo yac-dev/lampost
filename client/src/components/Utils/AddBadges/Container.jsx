@@ -734,7 +734,7 @@ const Container = (props) => {
         {Object.values(addedBadges).length ? <View style={{}}>{renderAddedBadges()}</View> : null}
 
         <Badges />
-        {props.route.params.fromComponent !== 'ADD_MEETUP_BADGES' ? null : (
+        {props.route.params.fromComponent === 'ADD_USER_BADGES' ? (
           <View style={{ paddingLeft: 10, paddingRight: 10, width: '100%' }}>
             <TouchableOpacity
               style={{ backgroundColor: iconColorsTable['blue1'], padding: 10, borderRadius: 7 }}
@@ -746,7 +746,7 @@ const Container = (props) => {
               </Text>
             </TouchableOpacity>
           </View>
-        )}
+        ) : null}
 
         {/* <BadgeDetailBottomSheet /> */}
         <LoadingSpinner />
