@@ -23,37 +23,41 @@ const MyFriendsContainer = (props) => {
   }, []);
   console.log(myFriendObjects);
   const renderItem = useCallback((friendRelationship) => {
-    return (
-      <TouchableOpacity
-        style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
-        onPress={() =>
-          props.navigation.navigate('User', {
-            userId: friendRelationship.friend._id,
-          })
-        }
-      >
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <FastImage
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 7,
-              marginRight: 10,
-              backgroundColor: iconColorsTable['blue1'],
-            }}
-            source={{
-              uri: friendRelationship.friend.photo
-                ? friendRelationship.friend.photo
-                : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
-              priority: FastImage.priority.normal,
-            }}
-            resizeMode={FastImage.resizeMode.stretch}
-            tintColor={friendRelationship.friend.photo ? null : 'white'}
-          />
-          <Text style={{ color: 'white' }}>{friendRelationship.friend.name}</Text>
-        </View>
-      </TouchableOpacity>
-    );
+    if (friendRelationship.friend) {
+      return (
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
+          onPress={() =>
+            props.navigation.navigate('User', {
+              userId: friendRelationship.friend._id,
+            })
+          }
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <FastImage
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 7,
+                marginRight: 10,
+                backgroundColor: iconColorsTable['blue1'],
+              }}
+              source={{
+                uri: friendRelationship.friend.photo
+                  ? friendRelationship.friend.photo
+                  : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
+                priority: FastImage.priority.normal,
+              }}
+              resizeMode={FastImage.resizeMode.stretch}
+              tintColor={friendRelationship.friend.photo ? null : 'white'}
+            />
+            <Text style={{ color: 'white' }}>{friendRelationship.friend.name}</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    } else {
+      return null;
+    }
   }, []);
 
   const renderList = () => {

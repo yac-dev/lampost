@@ -192,59 +192,64 @@ const AttendedContainer = (props) => {
   };
 
   const renderUser = (userInfo) => {
-    return (
-      <TouchableOpacity
-        style={{ flexDirection: 'row', marginBottom: 15 }}
-        onPress={() => {
-          if (auth.data._id !== userInfo.user._id) {
-            props.navigation.navigate('User', { userId: userInfo.user._id });
-          } else {
-            return null;
-          }
-        }}
-      >
-        <View style={{ flex: 0.15 }}>
-          <FastImage
-            source={{
-              uri: userInfo.user.photo
-                ? userInfo.user.photo
-                : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
-            }}
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 5,
-              // marginRight: 10,
-              backgroundColor: iconColorsTable['blue1'],
-            }}
-            tintColor={userInfo.user.photo ? null : 'white'}
-          />
-        </View>
-        <View
-          style={{
-            borderBottomWidth: 0.3,
-            borderBottomColor: baseTextColor,
-            flex: 0.85,
+    if (userInfo.user) {
+      return (
+        <TouchableOpacity
+          style={{ flexDirection: 'row', marginBottom: 15 }}
+          onPress={() => {
+            if (auth.data._id !== userInfo.user._id) {
+              props.navigation.navigate('User', { userId: userInfo.user._id });
+            } else {
+              return null;
+            }
           }}
         >
+          <View style={{ flex: 0.15 }}>
+            <FastImage
+              source={{
+                uri: userInfo.user.photo
+                  ? userInfo.user.photo
+                  : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
+              }}
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 5,
+                // marginRight: 10,
+                backgroundColor: iconColorsTable['blue1'],
+              }}
+              tintColor={userInfo.user.photo ? null : 'white'}
+            />
+          </View>
           <View
             style={{
-              flexDirection: 'column',
-              // alignItems: 'center',
-              marginBottom: 10,
-              width: '100%',
+              borderBottomWidth: 0.3,
+              borderBottomColor: baseTextColor,
+              flex: 0.85,
             }}
           >
-            <View>
-              <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 17, marginBottom: 10 }}>
-                {userInfo.launcher ? '🚀' : '🔥'}&nbsp;{userInfo.user.name}
-              </Text>
-              {renderActionButtons(userInfo)}
+            <View
+              style={{
+                flexDirection: 'column',
+                // alignItems: 'center',
+                marginBottom: 10,
+                width: '100%',
+              }}
+            >
+              <View>
+                <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 17, marginBottom: 10 }}>
+                  {userInfo.launcher ? '🚀' : '🔥'}&nbsp;{userInfo.user.name}
+                </Text>
+                {renderActionButtons(userInfo)}
+              </View>
             </View>
           </View>
-        </View>
-      </TouchableOpacity>
-    );
+        </TouchableOpacity>
+      );
+    } else {
+      // nullのuserは表示しない。
+      return null;
+    }
   };
 
   const renderMembers = () => {

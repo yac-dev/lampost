@@ -320,7 +320,7 @@ const Container = (props) => {
             >
               <TouchableOpacity
                 style={{
-                  backgroundColor: iconColorsTable['red1'],
+                  backgroundColor: backgroundColorsTable['red1'],
                   padding: 10,
                   borderRadius: 10,
                   width: 50,
@@ -337,7 +337,7 @@ const Container = (props) => {
                   });
                 }}
               >
-                <MaterialCommunityIcons name='plus' size={20} color={'white'} />
+                <MaterialCommunityIcons name='plus' size={20} color={iconColorsTable['red1']} />
               </TouchableOpacity>
 
               <Text style={{ color: 'white', textAlign: 'center' }}>Post</Text>
@@ -353,7 +353,7 @@ const Container = (props) => {
             >
               <TouchableOpacity
                 style={{
-                  backgroundColor: iconColorsTable['blue1'],
+                  backgroundColor: backgroundColorsTable['blue1'],
                   padding: 10,
                   borderRadius: 10,
                   width: 50,
@@ -366,7 +366,7 @@ const Container = (props) => {
                   props.navigation.navigate('Invite my friends', { libraryId: props.route.params.libraryId })
                 }
               >
-                <MaterialCommunityIcons name='human-greeting-variant' size={20} color={'white'} />
+                <MaterialCommunityIcons name='human-greeting-variant' size={20} color={iconColorsTable['blue1']} />
               </TouchableOpacity>
 
               <Text style={{ color: 'white', textAlign: 'center' }}>Invite</Text>
@@ -382,7 +382,7 @@ const Container = (props) => {
             >
               <TouchableOpacity
                 style={{
-                  backgroundColor: iconColorsTable['yellow1'],
+                  backgroundColor: backgroundColorsTable['yellow1'],
                   padding: 10,
                   borderRadius: 10,
                   width: 50,
@@ -393,7 +393,7 @@ const Container = (props) => {
                 }}
                 onPress={() => props.navigation.navigate('Members', { libraryId: props.route.params.libraryId })}
               >
-                <MaterialCommunityIcons name='account-group' size={20} color={'white'} />
+                <MaterialCommunityIcons name='account-group' size={20} color={iconColorsTable['yellow1']} />
               </TouchableOpacity>
               <Text style={{ color: 'white', textAlign: 'center' }}>Members</Text>
             </View>
@@ -408,7 +408,7 @@ const Container = (props) => {
             >
               <TouchableOpacity
                 style={{
-                  backgroundColor: iconColorsTable['green1'],
+                  backgroundColor: backgroundColorsTable['green1'],
                   padding: 10,
                   borderRadius: 10,
                   width: 50,
@@ -418,7 +418,7 @@ const Container = (props) => {
                   marginBottom: 5,
                 }}
               >
-                <Ionicons name='ios-albums' size={20} color={'white'} />
+                <Ionicons name='ios-albums' size={20} color={iconColorsTable['green1']} />
               </TouchableOpacity>
               <Text style={{ color: 'white', textAlign: 'center' }}>Albums</Text>
             </View>

@@ -24,7 +24,7 @@ const HomeTopTab = () => {
           // display: hide ? 'none' : 'flex',
           backgroundColor: appBottomSheetBackgroundColor,
           // borderTopWidth: 0,
-          paddingTop: 20,
+          // paddingTop: 20,
         },
         tabBarLabelStyle: {
           fontSize: 17,

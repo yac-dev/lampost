@@ -548,7 +548,7 @@ const Container = (props) => {
                 {cameraMode === 'photo' ? (
                   <TouchableOpacity
                     style={{
-                      backgroundColor: iconColorsTable['red1'],
+                      backgroundColor: backgroundColorsTable['red1'],
                       padding: 10,
                       borderRadius: 10,
                       width: 50,
@@ -559,7 +559,7 @@ const Container = (props) => {
                     }}
                     onPress={() => setCameraMode('video')}
                   >
-                    <Ionicons name='videocam' size={25} color={'white'} />
+                    <Ionicons name='videocam' size={25} color={iconColorsTable['red1']} />
                   </TouchableOpacity>
                 ) : (
                   <TouchableOpacity
@@ -592,7 +592,7 @@ const Container = (props) => {
               >
                 <TouchableOpacity
                   style={{
-                    backgroundColor: iconColorsTable['grey1'],
+                    backgroundColor: backgroundColorsTable['grey1'],
                     padding: 10,
                     borderRadius: 10,
                     width: 50,
@@ -609,7 +609,7 @@ const Container = (props) => {
                     }
                   }}
                 >
-                  <MaterialCommunityIcons name='camera-flip' size={20} color={'white'} />
+                  <MaterialCommunityIcons name='camera-flip' size={20} color={iconColorsTable['grey1']} />
                 </TouchableOpacity>
                 <Text style={{ color: 'white', textAlign: 'center' }}>Flip</Text>
               </View>
@@ -624,7 +624,7 @@ const Container = (props) => {
               >
                 <TouchableOpacity
                   style={{
-                    backgroundColor: iconColorsTable['green1'],
+                    backgroundColor: backgroundColorsTable['green1'],
                     padding: 10,
                     borderRadius: 10,
                     width: 50,
@@ -645,7 +645,7 @@ const Container = (props) => {
                     }
                   }}
                 >
-                  <Ionicons name='ios-pricetags' size={20} color={'white'} />
+                  <Ionicons name='ios-pricetags' size={20} color={iconColorsTable['green1']} />
                 </TouchableOpacity>
                 <Text style={{ color: 'white', textAlign: 'center' }}>Tag people</Text>
               </View>
@@ -660,7 +660,7 @@ const Container = (props) => {
               >
                 <TouchableOpacity
                   style={{
-                    backgroundColor: iconColorsTable['blue1'],
+                    backgroundColor: backgroundColorsTable['blue1'],
                     padding: 10,
                     borderRadius: 10,
                     width: 50,
@@ -677,7 +677,7 @@ const Container = (props) => {
                     }
                   }}
                 >
-                  <MaterialCommunityIcons name='history' size={20} color={'white'} />
+                  <MaterialCommunityIcons name='history' size={20} color={iconColorsTable['blue1']} />
                 </TouchableOpacity>
                 <Text style={{ color: 'white', textAlign: 'center' }}>Time Machine</Text>
               </View>

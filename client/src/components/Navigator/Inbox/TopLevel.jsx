@@ -16,7 +16,7 @@ const InboxTopLevelNavigator = () => {
           name='Inbox'
           component={Inbox}
           options={({ navigation }) => ({
-            headerShown: true,
+            headerShown: false,
             // headerTransparent: true,
             headerStyle: {
               backgroundColor: appBottomSheetBackgroundColor,

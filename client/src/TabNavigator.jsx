@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import GlobalContext from './GlobalContext';
 // import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -50,8 +50,15 @@ const RootNavigator = () => {
       <Tab.Screen
         name='HomeTopLevel'
         component={HomeTopLevel}
-        options={{
-          headerShown: false,
+        options={({ navigation }) => ({
+          headerShown: true,
+          headerRight: () => (
+            <TouchableOpacity style={{ marginRight: 10 }} onPress={() => navigation.navigate('Profile Top')}>
+              {/* <Ionicons name='close-circle-outline' size={30} color={'white'} /> */}
+              {/* <Text style={{ color: 'white', fontSize: 20 }}>pro</Text> */}
+              <MaterialCommunityIcons name='account-circle' size={30} color={'white'} />
+            </TouchableOpacity>
+          ),
           title: 'Home',
           headerTintColor: 'white',
           headerStyle: {
@@ -68,14 +75,21 @@ const RootNavigator = () => {
           tabBarIcon: ({ size, color, focused }) => (
             <Ionicons name='list' color={focused ? 'white' : 'rgb(102, 104, 109)'} size={size} />
           ),
-        }}
+        })}
       />
 
       <Tab.Screen
         name='DiscoverTopLevel'
         component={DiscoverTopLevel}
         options={({ navigation }) => ({
-          headerShown: false,
+          headerShown: true,
+          headerRight: () => (
+            <TouchableOpacity style={{ marginRight: 10 }} onPress={() => navigation.navigate('Profile Top')}>
+              {/* <Ionicons name='close-circle-outline' size={30} color={'white'} /> */}
+              {/* <Text style={{ color: 'white', fontSize: 20 }}>pro</Text> */}
+              <MaterialCommunityIcons name='account-circle' size={30} color={'white'} />
+            </TouchableOpacity>
+          ),
           title: 'Discover',
           headerTintColor: 'white',
           headerStyle: {
@@ -116,12 +130,20 @@ const RootNavigator = () => {
         name='InboxTopLevel'
         component={InboxTopLevel}
         options={({ navigation }) => ({
-          headerShown: false,
+          headerShown: true,
+          headerRight: () => (
+            <TouchableOpacity style={{ marginRight: 10 }} onPress={() => navigation.navigate('Profile Top')}>
+              {/* <Ionicons name='close-circle-outline' size={30} color={'white'} /> */}
+              {/* <Text style={{ color: 'white', fontSize: 20 }}>pro</Text> */}
+              <MaterialCommunityIcons name='account-circle' size={30} color={'white'} />
+            </TouchableOpacity>
+          ),
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: appBottomSheetBackgroundColor,
             borderBottomWidth: 0,
           },
+          title: 'Inbox',
           // headerTransparent: true,
           // headerLeft: () => <Button onPress={() => navigation.navigate('Add comment')}>User page</Button>,
           tabBarIcon: ({ size, color, focused }) => (
@@ -180,7 +202,7 @@ const RootNavigator = () => {
       /> */}
 
       {/* 全てのcomponent、navigatorを足さないといけないわ。Mapと全く同じように。この状態だと。mapの方のuser page routeに行く。*/}
-      <Tab.Screen
+      {/* <Tab.Screen
         name='Auth'
         component={AuthNavigator}
         options={({ navigation }) => ({
@@ -194,7 +216,7 @@ const RootNavigator = () => {
           tabBarLabel: 'Profile',
           tabBarBadgeStyle: { backgroundColor: iconColorsTable['blue1'] },
         })}
-      />
+      /> */}
 
       {/* <Tab.Screen
         name='Cal'

@@ -407,7 +407,7 @@ const Container = (props) => {
               >
                 <TouchableOpacity
                   style={{
-                    backgroundColor: iconColorsTable['red1'],
+                    backgroundColor: backgroundColorsTable['red1'],
                     padding: 10,
                     borderRadius: 10,
                     width: 50,
@@ -420,7 +420,7 @@ const Container = (props) => {
                     props.navigation.navigate('Add badges', { fromComponent: 'ADD_USER_BADGES', myBadges: userBadges })
                   }
                 >
-                  <MaterialCommunityIcons name='plus' size={20} color={'white'} />
+                  <MaterialCommunityIcons name='plus' size={20} color={iconColorsTable['red1']} />
                 </TouchableOpacity>
 
                 <Text style={{ color: 'white', textAlign: 'center' }}>Add badges</Text>
@@ -436,7 +436,7 @@ const Container = (props) => {
               >
                 <TouchableOpacity
                   style={{
-                    backgroundColor: iconColorsTable['blue1'],
+                    backgroundColor: backgroundColorsTable['blue1'],
                     padding: 10,
                     borderRadius: 10,
                     width: 50,
@@ -447,7 +447,7 @@ const Container = (props) => {
                   }}
                   onPress={() => props.navigation.navigate('My log', { userId: auth.data._id })}
                 >
-                  <MaterialCommunityIcons name='history' size={20} color={'white'} />
+                  <MaterialCommunityIcons name='history' size={20} color={iconColorsTable['blue1']} />
                 </TouchableOpacity>
 
                 <Text style={{ color: 'white', textAlign: 'center' }}>Log</Text>
@@ -463,7 +463,7 @@ const Container = (props) => {
               >
                 <TouchableOpacity
                   style={{
-                    backgroundColor: iconColorsTable['yellow1'],
+                    backgroundColor: backgroundColorsTable['yellow1'],
                     padding: 10,
                     borderRadius: 10,
                     width: 50,
@@ -474,7 +474,7 @@ const Container = (props) => {
                   }}
                   onPress={() => props.navigation.navigate('My friends')}
                 >
-                  <MaterialCommunityIcons name='human-greeting-variant' size={20} color={'white'} />
+                  <MaterialCommunityIcons name='human-greeting-variant' size={20} color={iconColorsTable['yellow1']} />
                 </TouchableOpacity>
                 <Text style={{ color: 'white', textAlign: 'center' }}>Friends</Text>
               </View>
@@ -489,7 +489,7 @@ const Container = (props) => {
               >
                 <TouchableOpacity
                   style={{
-                    backgroundColor: iconColorsTable['violet1'],
+                    backgroundColor: backgroundColorsTable['violet1'],
                     padding: 10,
                     borderRadius: 10,
                     width: 50,
@@ -500,7 +500,7 @@ const Container = (props) => {
                   }}
                   onPress={() => props.navigation.navigate('Assets', { userId: auth.data._id })}
                 >
-                  <Ionicons name='camera' size={20} color={'white'} />
+                  <Ionicons name='camera' size={20} color={iconColorsTable['violet1']} />
                 </TouchableOpacity>
                 <Text style={{ color: 'white', textAlign: 'center' }}>Snaps</Text>
               </View>

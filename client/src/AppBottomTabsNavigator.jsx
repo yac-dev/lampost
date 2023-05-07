@@ -413,20 +413,25 @@ const AppStack = (props) => {
                 headerTransparent: true,
               })}
             />
-            {/* <Stack.Screen
-              name='Profile'
+            <Stack.Screen
+              name='Profile Top'
               component={AuthNavigator}
               options={({ navigation }) => ({
+                headerTintColor: 'white',
+                headerStyle: {
+                  backgroundColor: appBottomSheetBackgroundColor,
+                  borderBottomWidth: 0,
+                },
                 headerLeft: () => (
                   <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
                   </TouchableOpacity>
                 ),
                 headerShown: true,
-                title: '',
-                headerTransparent: true,
+                title: 'Profile',
+                // headerTransparent: true,
               })}
-            /> */}
+            />
           </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>
