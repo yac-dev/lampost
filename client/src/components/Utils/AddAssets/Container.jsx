@@ -33,6 +33,7 @@ const Container = (props) => {
   const { auth, setLoading } = useContext(GlobalContext);
   const [assets, setAssets] = useState([]);
   const [addedAsset, setAddedAsset] = useState(null);
+  const [postedAssets, setPostedAssets] = useState({});
   const oneAssetWidth = Dimensions.get('window').width / 2;
 
   console.log(addedAsset);
@@ -41,6 +42,7 @@ const Container = (props) => {
     setLoading(true);
     const result = await lampostAPI.post(`/libraryandassetrelationships/${props.route.params.libraryId}`, {
       assetId: addedAsset._id,
+      userId: auth.data._id,
     });
     const { libraryAndAssetRelationship } = result.data;
     setLoading(false);
@@ -51,12 +53,28 @@ const Container = (props) => {
         data: addedAsset.data,
         postedAt: libraryAndAssetRelationship.createdAt,
         libraryId: libraryAndAssetRelationship.library,
+        type: addedAsset.type,
       },
+    });
+  };
+
+  const getPostedAssetsList = async () => {
+    const result = await lampostAPI.get(
+      `/libraryandassetrelationships/library/${props.route.params.libraryId}/user/${auth.data._id}`
+    );
+    const { assetIds } = result.data;
+    setPostedAssets(() => {
+      const table = {};
+      assetIds.forEach((assetId) => {
+        table[assetId] = true;
+      });
+      return table;
     });
   };
 
   useEffect(() => {
     if (props.route.params.fromComponent === 'ADD_ASSET_FOR_POSTING') {
+      getPostedAssetsList();
       props.navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity onPress={() => onPostPress()} disabled={addedAsset ? false : true}>
@@ -157,57 +175,61 @@ const Container = (props) => {
   const renderUserAssets = () => {
     if (assets.length) {
       const assetsList = assets.map((asset, index) => {
-        if (asset.type === 'photo') {
-          return (
-            <TouchableOpacity
-              style={{
-                width: oneAssetWidth,
-                height: oneAssetWidth,
-                padding: 2,
-              }}
-              onPress={() => setAddedAsset(asset)}
-              key={index}
-              disabled={disableVideo()}
-            >
-              <FastImage
-                style={{ width: '100%', height: '100%', borderRadius: 7 }}
-                source={{
-                  uri: asset.data,
-                  priority: FastImage.priority.normal,
+        if (postedAssets[asset._id]) {
+          return null;
+        } else {
+          if (asset.type === 'photo') {
+            return (
+              <TouchableOpacity
+                style={{
+                  width: oneAssetWidth,
+                  height: oneAssetWidth,
+                  padding: 2,
                 }}
-                resizeMode={FastImage.resizeMode.stretch}
-              />
-              <View style={{ position: 'absolute', top: 10, right: 10 }}>
-                <Ionicons name='camera' size={25} color={'white'} />
-              </View>
-              {renderCheck(asset)}
-              {renderDisablePhoto()}
-            </TouchableOpacity>
-          );
-        } else if (asset.type === 'video') {
-          return (
-            <TouchableOpacity
-              style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
-              onPress={() => setAddedAsset(asset)}
-              key={index}
-              disabled={disablePhoto()}
-            >
-              <Video
-                style={{ width: '100%', height: '100%', borderRadius: 7 }}
-                source={{
-                  uri: asset.data,
-                }}
-                useNativeControls={false}
-                resizeMode='stretch'
-                isLooping={false}
-              />
-              <View style={{ position: 'absolute', top: 10, right: 10 }}>
-                <Ionicons name='videocam' size={25} color={iconColorsTable[videoTypesTable[asset.effect]]} />
-              </View>
-              {renderCheck(asset)}
-              {renderDisableVideo()}
-            </TouchableOpacity>
-          );
+                onPress={() => setAddedAsset(asset)}
+                key={index}
+                disabled={disableVideo()}
+              >
+                <FastImage
+                  style={{ width: '100%', height: '100%', borderRadius: 7 }}
+                  source={{
+                    uri: asset.data,
+                    priority: FastImage.priority.normal,
+                  }}
+                  resizeMode={FastImage.resizeMode.stretch}
+                />
+                <View style={{ position: 'absolute', top: 10, right: 10 }}>
+                  <Ionicons name='camera' size={25} color={'white'} />
+                </View>
+                {renderCheck(asset)}
+                {renderDisablePhoto()}
+              </TouchableOpacity>
+            );
+          } else if (asset.type === 'video') {
+            return (
+              <TouchableOpacity
+                style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
+                onPress={() => setAddedAsset(asset)}
+                key={index}
+                disabled={disablePhoto()}
+              >
+                <Video
+                  style={{ width: '100%', height: '100%', borderRadius: 7 }}
+                  source={{
+                    uri: asset.data,
+                  }}
+                  useNativeControls={false}
+                  resizeMode='stretch'
+                  isLooping={false}
+                />
+                <View style={{ position: 'absolute', top: 10, right: 10 }}>
+                  <Ionicons name='videocam' size={25} color={iconColorsTable[videoTypesTable[asset.effect]]} />
+                </View>
+                {renderCheck(asset)}
+                {renderDisableVideo()}
+              </TouchableOpacity>
+            );
+          }
         }
       });
       return <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: 5 }}>{assetsList}</View>;

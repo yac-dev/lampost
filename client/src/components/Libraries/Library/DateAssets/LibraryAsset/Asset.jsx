@@ -7,6 +7,28 @@ import { Video } from 'expo-av';
 const Asset = () => {
   const { libraryAsset } = useContext(LibraryAssetContext);
 
+  const renderDate = (date) => {
+    const d = new Date(date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+    const dateElements = d.split('/');
+
+    return (
+      <Text
+        style={{
+          fontSize: 17,
+          color: 'orange',
+          // color: 'white',
+          fontStyle: 'italic',
+        }}
+      >
+        {dateElements[2]}&nbsp;&nbsp;{dateElements[0]}&nbsp;&nbsp;{dateElements[1]}
+      </Text>
+    );
+  };
+
   switch (libraryAsset.asset.type) {
     case 'photo':
       return (
@@ -15,7 +37,9 @@ const Asset = () => {
             style={{ width: '100%', aspectRatio: 1, borderRadius: 8 }}
             source={{ uri: libraryAsset.asset.data }}
           />
-          <Text style={{ color: 'orange', position: 'absolute', right: 10, bottom: 10 }}>{libraryAsset.createdAt}</Text>
+          <Text style={{ color: 'orange', position: 'absolute', right: 10, bottom: 10 }}>
+            {renderDate(libraryAsset.createdAt)}
+          </Text>
         </View>
       );
     case 'video':

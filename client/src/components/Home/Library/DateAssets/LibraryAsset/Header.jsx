@@ -6,6 +6,26 @@ import { iconColorsTable, baseTextColor } from '../../../../../utils/colorsTable
 
 const Header = () => {
   const { libraryAsset } = useContext(LibraryAssetContext);
+  const renderDate = (date) => {
+    const d = new Date(date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: '2-digit',
+    });
+    const dateElements = d.split('/');
+
+    return (
+      <Text
+        style={{
+          fontSize: 16,
+          color: baseTextColor,
+        }}
+      >
+        {dateElements[2]}&nbsp;&nbsp;{dateElements[0]}&nbsp;&nbsp;{dateElements[1]}
+      </Text>
+    );
+  };
+
   return (
     <View style={{ marginBottom: 15, flexDirection: 'row', alignItems: 'center' }}>
       <FastImage
@@ -21,7 +41,14 @@ const Header = () => {
         <Text style={{ color: 'white', marginBottom: 5, fontSize: 17, fontWeight: 'bold' }}>
           {libraryAsset.asset.createdBy.name}
         </Text>
-        <Text style={{ color: baseTextColor, fontSize: 16 }}>{libraryAsset.asset.meetup.title}</Text>
+        <View>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ color: baseTextColor, fontSize: 16, marginRight: 10 }}>
+              {libraryAsset.asset.meetup.title}
+            </Text>
+            {renderDate(libraryAsset.createdAt)}
+          </View>
+        </View>
       </View>
     </View>
   );

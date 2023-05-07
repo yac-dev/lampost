@@ -6,6 +6,7 @@ import { iconColorsTable, baseTextColor } from '../../../../../utils/colorsTable
 
 const Header = () => {
   const { libraryAsset } = useContext(LibraryAssetContext);
+  console.log(libraryAsset);
   return (
     <View style={{ marginBottom: 15, flexDirection: 'row', alignItems: 'center' }}>
       <FastImage

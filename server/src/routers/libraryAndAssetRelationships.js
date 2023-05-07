@@ -7,9 +7,11 @@ import {
   createReaction,
   getLibraryAssetsByMonth,
   getLibraryAssetsByDate,
+  getPostedAssets,
 } from '../controllers/libraryAndAssetRelationships';
 
 router.route('/:libraryId/assets').get(getAssetsByLibraryId);
+router.route('/library/:libraryId/user/:userId').get(getPostedAssets);
 router.route('/:libraryId').get(getLibraryAssetsByMonth).post(postAssetsByLibraryId);
 // ここのrouting、気をつけてな。
 router.route('/:libraryId/dateassets').get(getLibraryAssetsByDate);

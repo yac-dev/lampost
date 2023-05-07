@@ -74,17 +74,6 @@ const Container = (props) => {
   // {2023-5: {3: assetObj , 4: assetObj, 5: assetObj}} って感じか。
 
   useEffect(() => {
-    props.navigation.setOptions({
-      title: props.route.params.libraryTitle,
-      // headerRight: () => (
-      //   <TouchableOpacity onPress={() => onPostPress()} disabled={addedAsset ? false : true}>
-      //     <Text style={{ color: addedAsset ? 'white' : screenSectionBackgroundColor, fontSize: 20 }}>Post</Text>
-      //   </TouchableOpacity>
-      // ),
-    });
-  }, []);
-
-  useEffect(() => {
     if (props.route.params?.addedAsset) {
       const month = new Date().getMonth() + 1;
       const year = new Date().getFullYear();
@@ -95,6 +84,7 @@ const Container = (props) => {
           marked: true,
           thumbnail: props.route.params.addedAsset.data,
           libraryId: props.route.params.addedAsset.libraryId,
+          type: props.route.params.addedAsset.type,
         };
         setAssetsTable((previous) => {
           return {
@@ -121,6 +111,15 @@ const Container = (props) => {
     const year = new Date().getFullYear();
     const key = `${year}-${month}`;
     setCurrentYearAndMonth(key);
+  }, []);
+
+  const getLibrary = async () => {
+    const result = await lampostAPI.get(`/libraries/${props.route.params.libraryId}`);
+    const { library } = result.data;
+    setLibrary(library);
+  };
+  useEffect(() => {
+    getLibrary();
   }, []);
 
   const getAssetsByYearAndMonth = async () => {
@@ -175,7 +174,13 @@ const Container = (props) => {
         {marking ? (
           <TouchableOpacity
             style={{ width: '100%', height: '100%', borderRadius: 8 }}
-            onPress={() => props.navigation.navigate('Date assets', { libraryId: marking.libraryId, date: date })}
+            onPress={() =>
+              props.navigation.navigate('Date assets', {
+                libraryId: marking.libraryId,
+                date: date,
+                reactionOptions: library.reactions,
+              })
+            }
           >
             {marking.type === 'photo' ? (
               <FastImage
@@ -226,6 +231,7 @@ const Container = (props) => {
   //   getAssetsByLibraryId();
   //   // }
   // }, []);
+  console.log(library);
 
   const handleMonthChange = (monthObj) => {
     setCurrentYearAndMonth(`${monthObj.year}-${monthObj.month}`);

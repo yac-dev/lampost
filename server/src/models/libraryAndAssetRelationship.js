@@ -9,14 +9,17 @@ const libraryAndAssetRelationshipSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Asset',
   },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+  },
   reactions: [
     {
       reaction: {
         type: mongoose.Schema.ObjectId,
         ref: 'Reaction',
       },
-      upvoted: Number,
-      users: [{ type: mongoose.Schema.ObjectId }],
+      user: { type: mongoose.Schema.ObjectId },
     },
   ],
   createdAt: Date,

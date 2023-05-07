@@ -1,17 +1,31 @@
-import React, { useContext } from 'react';
-import { View, Text } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import LibraryAssetContext from './LibraryAssetContext';
 import Header from './Header';
 import Asset from './Asset';
-import Reactions from './Reactions';
+import ReactionOptions from './ReactionOptions';
+import { iconsTable } from '../../../../../utils/icons';
+const { MaterialCommunityIcons } = iconsTable;
 
-const LibraryAssetContainer = () => {
+const LibraryAssetContainer = (props) => {
+  const [reactions, setReactions] = useState(props.libraryAsset.reactions);
+
   return (
-    <View style={{}}>
-      <Header />
-      <Asset />
-      <Reactions />
-    </View>
+    <LibraryAssetContext.Provider
+      value={{
+        libraryAsset: props.libraryAsset,
+        libraryId: props.libraryId,
+        reactionOptions: props.reactionOptions,
+        reactions,
+        setReactions,
+      }}
+    >
+      <View>
+        <Header />
+        <Asset />
+        <ReactionOptions />
+      </View>
+    </LibraryAssetContext.Provider>
   );
 };
 

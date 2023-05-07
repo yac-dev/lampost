@@ -1,6 +1,8 @@
 import LibraryAndAssetRelationship from '../models/libraryAndAssetRelationship';
 import Asset from '../models/asset';
 import Library from '../models/library';
+import Icon from '../models/icon';
+import Reaction from '../models/reaction';
 
 export const getAssetsByLibraryId = async (request, response) => {
   try {
@@ -154,14 +156,31 @@ export const getLibraryAssetsByDate = async (request, response) => {
         ],
       })
       .populate({
-        path: 'reactions',
+        path: 'reactions.reaction',
+        model: 'Reaction',
         populate: {
-          path: 'reaction',
-          populate: {
-            path: 'icon',
-          },
+          path: 'icon',
+          model: 'Icon',
         },
+      })
+      .populate({
+        path: 'reactions.user',
+        model: 'User',
+        select: 'name photo',
       });
+    // populate: [
+    //   {
+    //     path: 'reaction',
+    //     populate: {
+    //       path: 'icon',
+    //       model: Icon,
+    //     },
+    //   },
+    //   {
+    //     path: 'user',
+    //     select: 'name photo',
+    //   },
+    // ],
     response.status(200).json({
       libraryAndAssets,
     });
@@ -172,7 +191,7 @@ export const getLibraryAssetsByDate = async (request, response) => {
 
 export const postAssetsByLibraryId = async (request, response) => {
   try {
-    const { assetId } = request.body;
+    const { assetId, userId } = request.body;
     const library = await Library.findById(request.params.libraryId);
     // const libraryBadges = library.badges;
     const asset = await Asset.findById(assetId);
@@ -193,23 +212,12 @@ export const postAssetsByLibraryId = async (request, response) => {
     //   }
     //   asset.save();
     // }
-    const libraryAndAssetRelationship = new LibraryAndAssetRelationship({
+    const libraryAndAssetRelationship = await LibraryAndAssetRelationship.create({
       asset: assetId,
       library: request.params.libraryId,
+      user: userId,
       createdAt: new Date(),
     });
-    // let libraryReactions = [];
-    if (library.reactions.length) {
-      const libraryReactions = library.reactions.map((reaction) => {
-        return {
-          reaction,
-          upvoted: 0,
-          users: [],
-        };
-      });
-      libraryAndAssetRelationship.reactions = libraryReactions;
-    }
-    libraryAndAssetRelationship.save();
 
     response.status(200).json({
       libraryAndAssetRelationship,
@@ -225,19 +233,35 @@ export const createReaction = async (request, response) => {
       library: request.params.libraryId,
       asset: request.params.assetId,
     });
-    // console.log('lib and asset rel', libraryAndAssetRelationship);
-    // console.log(request.body.reactionId, request.body.userId);
-    libraryAndAssetRelationship.reactions.forEach((reactionObject) => {
-      console.log(reactionObject.reaction);
-      console.log(request.body.reactionId);
-      if (reactionObject.reaction.toString() === request.body.reactionId) {
-        reactionObject.upvoted++;
-        reactionObject.users.push(request.body.userId);
-      }
+    console.log();
+    libraryAndAssetRelationship.reactions.push({
+      reaction: request.body.reactionId,
+      user: request.body.userId,
     });
+    // libraryAndAssetRelationship.reactions.forEach((reactionObject) => {
+    //   console.log(reactionObject.reaction);
+    //   console.log(request.body.reactionId);
+    //   if (reactionObject.reaction.toString() === request.body.reactionId) {
+    //     reactionObject.upvoted++;
+    //     reactionObject.users.push(request.body.userId);
+    //   }
+    // });
     libraryAndAssetRelationship.save();
     response.status(200).json({
       libraryAndAssetRelationship,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getPostedAssets = async (request, response) => {
+  try {
+    const { libraryId, userId } = request.params;
+    const libraryAndAssetRelationship = await LibraryAndAssetRelationship.find({ library: libraryId, user: userId });
+    const assetIds = libraryAndAssetRelationship.map((relationship) => relationship.asset);
+    response.status(200).json({
+      assetIds,
     });
   } catch (error) {
     console.log(error);

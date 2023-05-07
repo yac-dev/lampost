@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { View, Text, ActivityIndicator, FlatList, SafeAreaView } from 'react-native';
 import lampostAPI from '../../../../apis/lampost';
 import { baseBackgroundColor } from '../../../../utils/colorsTable';
@@ -20,7 +20,8 @@ const cameraTypesTable = {
 const DateAssetsContainer = (props) => {
   const [libraryAssets, setLibraryAssets] = useState([]);
   const [isFetchedLibraryAssets, setIsFetchedLibraryAssets] = useState(false);
-  console.log(props.route.params.libraryId);
+  const reactionOptionsBottomSheetRef = useRef(null);
+  // console.log(props.route.params);
 
   const getLibraryAssetsByDate = async () => {
     const result = await lampostAPI.get(
@@ -34,22 +35,26 @@ const DateAssetsContainer = (props) => {
     getLibraryAssetsByDate();
   }, []);
 
-  const renderLibraryAsset = useCallback((libraryAsset) => {
+  const renderLibraryAsset = (libraryAsset) => {
     return (
-      <LibraryAssetContext.Provider value={{ libraryAsset, libraryId: props.route.params.libraryId }}>
-        <LibraryAsset />
-      </LibraryAssetContext.Provider>
+      <LibraryAsset
+        libraryAsset={libraryAsset}
+        libraryId={props.route.params.libraryId}
+        reactionOptions={props.route.params.reactionOptions}
+      />
     );
-  }, []);
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
       {isFetchedLibraryAssets ? (
-        <FlatList
-          data={libraryAssets}
-          renderItem={({ item }) => renderLibraryAsset(item)}
-          keyExtractor={(item, index) => `${item._id}-${index}`}
-        />
+        <>
+          <FlatList
+            data={libraryAssets}
+            renderItem={({ item }) => renderLibraryAsset(item)}
+            keyExtractor={(item, index) => `${item._id}-${index}`}
+          />
+        </>
       ) : (
         <ActivityIndicator />
       )}
