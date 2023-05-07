@@ -36,8 +36,10 @@ const Container = (props) => {
   };
 
   useEffect(() => {
-    getNotifications();
-  }, []);
+    if (auth.isAuthenticated) {
+      getNotifications();
+    }
+  }, [auth.isAuthenticated]);
 
   const renderDate = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
@@ -168,16 +170,36 @@ const Container = (props) => {
     }
   };
 
-  return (
-    <InboxContext.Provider
-      value={{ libraryDetailBottomSheetRef, selectedLibrary, setSelectedLibrary, navigation: props.navigation }}
-    >
-      <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
-        {isFetchedNotifications ? renderNotifications() : <ActivityIndicator />}
-        <LibraryDetailBottomSheet />
+  if (auth.isAuthenticated) {
+    return (
+      <InboxContext.Provider
+        value={{ libraryDetailBottomSheetRef, selectedLibrary, setSelectedLibrary, navigation: props.navigation }}
+      >
+        <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
+          {isFetchedNotifications ? renderNotifications() : <ActivityIndicator />}
+          <LibraryDetailBottomSheet />
+        </View>
+      </InboxContext.Provider>
+    );
+  } else {
+    return (
+      <View style={{ flex: 1, padding: 10, backgroundColor: baseBackgroundColor }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginTop: 50, textAlign: 'center' }}>
+          Please login or signup to experience complete functions
+        </Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center', marginTop: 30 }}>
+          <TouchableOpacity
+            style={{ padding: 10, backgroundColor: iconColorsTable['blue1'], borderRadius: 5, marginRight: 10 }}
+          >
+            <Text style={{ color: 'white', fontSize: 20 }}>Login</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{ padding: 10, backgroundColor: iconColorsTable['blue1'], borderRadius: 5 }}>
+            <Text style={{ color: 'white', fontSize: 20 }}>Signup</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </InboxContext.Provider>
-  );
+    );
+  }
 };
 
 export default Container;

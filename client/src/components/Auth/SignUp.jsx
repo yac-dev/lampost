@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import GlobalContext from '../../GlobalContext';
+import HomeNavigatorContext from '../Navigator/Home/HomeNavigatorContext';
 import { baseBackgroundColor, baseTextColor, iconColorsTable } from '../../utils/colorsTable';
 import FormTextInput from './FormTextInput';
 import ActionButton from '../Utils/ActionButton';
@@ -11,12 +12,13 @@ import * as SecureStore from 'expo-secure-store';
 import LoadingSpinner from '../Utils/LoadingSpinner';
 
 const SignUp = () => {
-  const { setAuth, setLoading } = useContext(GlobalContext);
+  const { setAuth, setLoading, setSnackBar } = useContext(GlobalContext);
   const [isDisabledDone, setIsDisabledDone] = useState(true);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [password, setPassword] = useState('');
+  const { topLevelHomeNavigation } = useContext(HomeNavigatorContext);
 
   useEffect(() => {
     if (name.length && email.length && isEmailValid && password.length) {
@@ -49,6 +51,13 @@ const SignUp = () => {
         };
       });
       setLoading(false);
+      setSnackBar({
+        isVisible: true,
+        barType: 'success',
+        message: 'Signed up successfully. Welcome to Lampost.',
+        duration: 5000,
+      });
+      topLevelHomeNavigation.goBack();
     } catch (error) {
       console.log(error.response.data.message);
       setLoading(false);
@@ -58,25 +67,31 @@ const SignUp = () => {
   };
 
   const validate = (text) => {
-    console.log(text);
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     if (reg.test(text) === false) {
-      console.log('Email is Not Correct');
       setEmail(text);
       setIsEmailValid(false);
       return false;
     } else {
       setEmail(text);
       setIsEmailValid(true);
-      console.log('Email is Correct');
     }
   };
 
   return (
     <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
-      <View style={{ marginBottom: 10 }}>
-        <Text style={{ color: baseTextColor }}>Please fill in your fullname, email and password.</Text>
-      </View>
+      <Text
+        style={{
+          color: 'white',
+          fontWeight: 'bold',
+          fontSize: 20,
+          marginBottom: 20,
+          textAlign: 'center',
+          marginTop: 20,
+        }}
+      >
+        Please set your fullname, email and password.
+      </Text>
       <View style={{ marginBottom: 15 }}>
         <FormTextInput
           label='Name'
@@ -113,6 +128,17 @@ const SignUp = () => {
           onActionButtonPress={() => onPressSubmit()}
           isDisabled={isDisabledDone}
         />
+      </View>
+      <View style={{ position: 'absolute', bottom: 20, alignSelf: 'center' }}>
+        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+          <Text style={{ color: baseTextColor }}>By signing up, you accept and read Lampost's&nbsp;</Text>
+          <TouchableOpacity
+            style={{ borderBottomWidth: 0.5, borderBottomColor: baseTextColor }}
+            onPress={() => topLevelHomeNavigation.navigate('Home eula')}
+          >
+            <Text style={{ color: baseTextColor }}>EULA.</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       <LoadingSpinner />
     </View>

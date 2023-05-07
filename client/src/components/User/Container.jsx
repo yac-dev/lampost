@@ -515,7 +515,7 @@ const Container = (props) => {
               >
                 <TouchableOpacity
                   style={{
-                    backgroundColor: iconColorsTable['grey1'],
+                    backgroundColor: backgroundColorsTable['grey1'],
                     padding: 10,
                     borderRadius: 10,
                     width: 50,
@@ -526,7 +526,7 @@ const Container = (props) => {
                   }}
                   onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
                 >
-                  <Ionicons name='settings' size={20} color={'white'} />
+                  <Ionicons name='settings' size={20} color={iconColorsTable['grey1']} />
                 </TouchableOpacity>
                 <Text style={{ color: 'white', textAlign: 'center' }}>Setting</Text>
               </View>
@@ -535,20 +535,17 @@ const Container = (props) => {
         )}
 
         <AppMenuBottomSheet />
-        {/* <InboxBottomSheet /> */}
         <BadgeMenuBottomSheet />
         <BadgeDetailBottomSheet />
         <AddBadgeTagsBottomSheet />
         <AddLinkBottomSheet />
         <FlagUserMenuBottomSheet />
         <ActivitiesMenuBottomSheet />
-        {/* <LeadershipBottomSheet /> */}
-        {/* <SelectedProfileImage /> */}
         <ConfirmEditProfileModal />
         <ConfirmFlagUserModal />
         <ConfirmActionButtonModal />
         <ConfirmDeleteAccount />
-        <ConfirmLogout />
+        {/* <ConfirmLogout /> */}
         <ConfirmBlockUserModal />
       </>
     );

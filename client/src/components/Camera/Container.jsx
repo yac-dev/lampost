@@ -118,6 +118,19 @@ const Container = (props) => {
     }
   };
 
+  const getAttendees = async () => {
+    const result = await lampostAPI.get(`meetupanduserrelationships/meetup/${ongoingMeetup}/users`);
+    const { meetupAttendees } = result.data;
+    console.log('you can tag these', meetupAttendees);
+    setMeetupAttendees(() => {
+      const attendeesTable = {};
+      meetupAttendees.forEach((attendee, index) => {
+        attendeesTable[attendee.user._id] = attendee;
+      });
+      return attendeesTable;
+    });
+  };
+
   // やっていることは、単純にこのmeetupがongoingかを調べるだけ。
   // const checkIsMeetupOngoing = async () => {
   //   const result = await lampostAPI.get(`/meetups/${props.route.params.meetupId}/isongoing`);
@@ -181,6 +194,7 @@ const Container = (props) => {
         message: 'Ready to use. Capture your snapshots and have fun 🔥',
         duration: 7000,
       });
+      getAttendees();
     }
   }, [ongoingMeetup]);
 
@@ -546,40 +560,60 @@ const Container = (props) => {
                 }}
               >
                 {cameraMode === 'photo' ? (
-                  <TouchableOpacity
+                  <View
                     style={{
-                      backgroundColor: backgroundColorsTable['red1'],
-                      padding: 10,
-                      borderRadius: 10,
-                      width: 50,
-                      height: 50,
+                      width: oneGridWidth,
+                      height: 80,
                       justifyContent: 'center',
                       alignItems: 'center',
-                      marginBottom: 5,
+                      // backgroundColor: 'red',
                     }}
-                    onPress={() => setCameraMode('video')}
                   >
-                    <Ionicons name='videocam' size={25} color={iconColorsTable['red1']} />
-                  </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: backgroundColorsTable['red1'],
+                        padding: 10,
+                        borderRadius: 10,
+                        width: 50,
+                        height: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginBottom: 5,
+                      }}
+                      onPress={() => setCameraMode('video')}
+                    >
+                      <Ionicons name='videocam' size={25} color={iconColorsTable['red1']} />
+                    </TouchableOpacity>
+                    <Text style={{ color: 'white', textAlign: 'center' }}>Take video</Text>
+                  </View>
                 ) : (
-                  <TouchableOpacity
+                  <View
                     style={{
-                      backgroundColor: iconColorsTable['red1'],
-                      padding: 10,
-                      borderRadius: 10,
-                      width: 50,
-                      height: 50,
+                      width: oneGridWidth,
+                      height: 80,
                       justifyContent: 'center',
                       alignItems: 'center',
-                      marginBottom: 5,
+                      // backgroundColor: 'red',
                     }}
-                    onPress={() => setCameraMode('photo')}
                   >
-                    <Ionicons name='image' size={25} color={'white'} />
-                  </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: backgroundColorsTable['red1'],
+                        padding: 10,
+                        borderRadius: 10,
+                        width: 50,
+                        height: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginBottom: 5,
+                      }}
+                      onPress={() => setCameraMode('photo')}
+                    >
+                      <Ionicons name='image' size={25} color={iconColorsTable['red1']} />
+                    </TouchableOpacity>
+                    <Text style={{ color: 'white', textAlign: 'center' }}>Take photo</Text>
+                  </View>
                 )}
-
-                <Text style={{ color: 'white', textAlign: 'center' }}>Video</Text>
               </View>
               <View
                 style={{
@@ -635,6 +669,7 @@ const Container = (props) => {
                   }}
                   onPress={() => {
                     if (ongoingMeetup) {
+                      tagPeopleBottomSheetRef.current.snapToIndex(0);
                     } else {
                       setSnackBar({
                         isVisible: true,

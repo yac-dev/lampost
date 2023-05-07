@@ -13,6 +13,9 @@ import SelectVenue from '../../Home/MyMeetups/EditMeetup/SelectVenue';
 import MeetupMembers from '../../Home/MyMeetups/Members';
 import Lounge from '../../Home/MyMeetups/Lounge/Container';
 import MeetupLocation from '../../Home/MyMeetups/MeetupLocation';
+import Login from '../../Auth/LogIn';
+import SignUp from '../../Auth/SignUp';
+import EULA from '../../Auth/EULA';
 import Report from '../../Utils/Report';
 import Members from '../../Home/MyMeetups/Members';
 // import CreateLibrary from '../Libraries/CreateLibraryBottomSheet/ContainerNew'
@@ -139,6 +142,63 @@ const TopLevelHomeNavigator = (props) => {
           />
         </Stack.Group>
         <Stack.Group screenOptions={{ presentation: 'modal', gestureEnabled: false }}>
+          <Stack.Screen
+            name='Home login'
+            component={Login}
+            options={({ navigation }) => ({
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+                </TouchableOpacity>
+              ),
+              headerTitle: 'Login',
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+            })}
+          />
+          <Stack.Screen
+            name='Home signup'
+            component={SignUp}
+            options={({ navigation }) => ({
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+                </TouchableOpacity>
+              ),
+              headerTitle: 'Signup',
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+            })}
+          />
+          <Stack.Screen
+            name='Home eula'
+            component={EULA}
+            options={({ navigation }) => ({
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+                </TouchableOpacity>
+              ),
+              headerTitle: 'EULA',
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+            })}
+          />
           <Stack.Screen
             name='Home select venue'
             component={SelectVenue}

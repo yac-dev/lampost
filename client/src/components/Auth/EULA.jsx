@@ -65,7 +65,7 @@ const EULA = () => {
   const renderConditions = () => {
     const list = conditions.map((condition, index) => {
       return (
-        <View style={{ marginBottom: 20 }}>
+        <View key={index} style={{ marginBottom: 20 }}>
           <Text style={{ color: 'white', fontSize: 20, marginBottom: 10 }}>
             {index + 1}.&nbsp;
             {condition.title}

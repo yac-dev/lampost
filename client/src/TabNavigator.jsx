@@ -29,6 +29,7 @@ const Tab = createBottomTabNavigator();
 const CameraBase = () => <View style={{ flex: 1, backgroundColor: 'red' }} />;
 
 const RootNavigator = () => {
+  const { auth } = useContext(GlobalContext);
   const { MaterialCommunityIcons, Ionicons, FontAwesome5, MaterialIcons, Entypo } = iconsTable;
   const { chatsNotificationCount } = useContext(GlobalContext);
 
@@ -52,13 +53,19 @@ const RootNavigator = () => {
         component={HomeTopLevel}
         options={({ navigation }) => ({
           headerShown: true,
-          headerRight: () => (
-            <TouchableOpacity style={{ marginRight: 10 }} onPress={() => navigation.navigate('Profile Top')}>
-              {/* <Ionicons name='close-circle-outline' size={30} color={'white'} /> */}
-              {/* <Text style={{ color: 'white', fontSize: 20 }}>pro</Text> */}
-              <MaterialCommunityIcons name='account-circle' size={30} color={'white'} />
-            </TouchableOpacity>
-          ),
+          headerRight: () => {
+            if (auth.isAuthenticated) {
+              return (
+                <TouchableOpacity style={{ marginRight: 10 }} onPress={() => navigation.navigate('Profile Top')}>
+                  {/* <Ionicons name='close-circle-outline' size={30} color={'white'} /> */}
+                  {/* <Text style={{ color: 'white', fontSize: 20 }}>pro</Text> */}
+                  <MaterialCommunityIcons name='account-circle' size={30} color={'white'} />
+                </TouchableOpacity>
+              );
+            } else {
+              return null;
+            }
+          },
           title: 'Home',
           headerTintColor: 'white',
           headerStyle: {
@@ -83,13 +90,19 @@ const RootNavigator = () => {
         component={DiscoverTopLevel}
         options={({ navigation }) => ({
           headerShown: true,
-          headerRight: () => (
-            <TouchableOpacity style={{ marginRight: 10 }} onPress={() => navigation.navigate('Profile Top')}>
-              {/* <Ionicons name='close-circle-outline' size={30} color={'white'} /> */}
-              {/* <Text style={{ color: 'white', fontSize: 20 }}>pro</Text> */}
-              <MaterialCommunityIcons name='account-circle' size={30} color={'white'} />
-            </TouchableOpacity>
-          ),
+          headerRight: () => {
+            if (auth.isAuthenticated) {
+              return (
+                <TouchableOpacity style={{ marginRight: 10 }} onPress={() => navigation.navigate('Profile Top')}>
+                  {/* <Ionicons name='close-circle-outline' size={30} color={'white'} /> */}
+                  {/* <Text style={{ color: 'white', fontSize: 20 }}>pro</Text> */}
+                  <MaterialCommunityIcons name='account-circle' size={30} color={'white'} />
+                </TouchableOpacity>
+              );
+            } else {
+              return null;
+            }
+          },
           title: 'Discover',
           headerTintColor: 'white',
           headerStyle: {
@@ -131,13 +144,19 @@ const RootNavigator = () => {
         component={InboxTopLevel}
         options={({ navigation }) => ({
           headerShown: true,
-          headerRight: () => (
-            <TouchableOpacity style={{ marginRight: 10 }} onPress={() => navigation.navigate('Profile Top')}>
-              {/* <Ionicons name='close-circle-outline' size={30} color={'white'} /> */}
-              {/* <Text style={{ color: 'white', fontSize: 20 }}>pro</Text> */}
-              <MaterialCommunityIcons name='account-circle' size={30} color={'white'} />
-            </TouchableOpacity>
-          ),
+          headerRight: () => {
+            if (auth.isAuthenticated) {
+              return (
+                <TouchableOpacity style={{ marginRight: 10 }} onPress={() => navigation.navigate('Profile Top')}>
+                  {/* <Ionicons name='close-circle-outline' size={30} color={'white'} /> */}
+                  {/* <Text style={{ color: 'white', fontSize: 20 }}>pro</Text> */}
+                  <MaterialCommunityIcons name='account-circle' size={30} color={'white'} />
+                </TouchableOpacity>
+              );
+            } else {
+              return null;
+            }
+          },
           headerTintColor: 'white',
           headerStyle: {
             backgroundColor: appBottomSheetBackgroundColor,

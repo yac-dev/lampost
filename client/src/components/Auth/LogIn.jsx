@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import lampostAPI from '../../apis/lampost';
 import GlobalContext from '../../GlobalContext';
+import HomeNavigatorContext from '../Navigator/Home/HomeNavigatorContext';
 import AuthContext from './AuthContext';
 import { View, Text, ScrollView } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
@@ -17,6 +18,7 @@ const Login = () => {
   const { setAuth, setLoading, setSnackBar } = useContext(GlobalContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { topLevelHomeNavigation } = useContext(HomeNavigatorContext);
 
   useEffect(() => {
     if (email.length && password.length) {
@@ -44,6 +46,13 @@ const Login = () => {
         };
       });
       setLoading(false);
+      setSnackBar({
+        isVisible: true,
+        barType: 'success',
+        message: 'Logged in successfully.',
+        duration: 5000,
+      });
+      topLevelHomeNavigation.goBack();
     } catch (error) {
       setLoading(false);
       setSnackBar({
@@ -58,10 +67,19 @@ const Login = () => {
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
-      <View style={{ marginBottom: 15 }}>
-        {/* <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5, color: 'white' }}>Login</Text> */}
-        <Text style={{ color: baseTextColor }}>Please type your email and password.</Text>
-      </View>
+      {/* <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 5, color: 'white' }}>Login</Text> */}
+      <Text
+        style={{
+          color: 'white',
+          fontWeight: 'bold',
+          fontSize: 20,
+          marginBottom: 40,
+          textAlign: 'center',
+          marginTop: 20,
+        }}
+      >
+        Please enter your email and password.
+      </Text>
       <View style={{ marginBottom: 15 }}>
         <FormTextInput
           label='Email'
