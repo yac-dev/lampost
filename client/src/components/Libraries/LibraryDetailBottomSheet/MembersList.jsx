@@ -34,7 +34,7 @@ const MembersList = (props) => {
           <TouchableOpacity
             style={{ flex: 0.15 }}
             onPress={() => {
-              if (auth.data._id !== user._id) {
+              if (!auth.isAuthenticated || auth.data._id !== user._id) {
                 topLevelNavigation.navigate('Library member', { userId: user._id });
               } else {
                 return null;

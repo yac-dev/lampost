@@ -9,17 +9,17 @@ export const getUser = async (request, response) => {
   try {
     const { userId } = request.body;
     const user = await User.findById(request.params.id);
-    let isBlocking = false;
-    const userBlockingRelationship = await UserBlockingRelationship.findOne({
-      user: userId,
-      blocking: request.params.id,
-    });
-    if (userBlockingRelationship) {
-      isBlocking = true;
-    }
+    // let isBlocking = false;
+    // const userBlockingRelationship = await UserBlockingRelationship.findOne({
+    //   user: userId,
+    //   blocking: request.params.id,
+    // });
+    // if (userBlockingRelationship) {
+    //   isBlocking = true;
+    // }
     response.status(200).json({
       user,
-      isBlocking,
+      // isBlocking,
     });
   } catch (error) {
     console.log(error);

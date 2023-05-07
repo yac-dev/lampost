@@ -50,7 +50,7 @@ const AttendeesContainer = (props) => {
           <TouchableOpacity
             style={{ flex: 0.15 }}
             onPress={() => {
-              if (auth.data._id !== userInfo.user._id) {
+              if (!auth.isAuthenticated || auth.data._id !== userInfo.user._id) {
                 topLevelNavigation.navigate('Meetup member', { userId: userInfo.user._id });
               } else {
                 return null;

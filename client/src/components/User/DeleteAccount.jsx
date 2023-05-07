@@ -37,6 +37,7 @@ const DeleteAccount = (props) => {
     setChatsNotificationCount(0);
     setAuth({
       data: null,
+      isAuthenticated: false,
       socket: null,
       currentLocation: null,
     });

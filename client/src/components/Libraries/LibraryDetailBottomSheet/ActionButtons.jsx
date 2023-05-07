@@ -77,7 +77,11 @@ const ActionButtons = () => {
       </View>
     );
   } else {
-    return <Text style={{ color: 'white' }}>Please login or signup to join this meetup.</Text>;
+    return (
+      <Text style={{ color: 'white', textAlign: 'center', marginBottom: 10 }}>
+        Please login or signup to join this meetup.
+      </Text>
+    );
   }
 };
 

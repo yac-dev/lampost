@@ -11,6 +11,7 @@ const Stack = createNativeStackNavigator();
 import MeetupMembers from '../../Map/MeetupDetailBottomSheet/Attendees';
 import User from '../../User/Container';
 import LibraryMembers from '../../Libraries/LibraryDetailBottomSheet/MembersList';
+import Snaps from '../../Libraries/LibraryDetailBottomSheet/SnapsList';
 import Report from '../../Utils/Report';
 
 const DiscoverNavigatorContainer = (props) => {
@@ -91,6 +92,22 @@ const DiscoverNavigatorContainer = (props) => {
             options={({ navigation }) => ({
               headerShown: true,
               title: 'User',
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+              headerTintColor: 'white',
+            })}
+          />
+          <Stack.Screen
+            name='Library snaps'
+            component={Snaps}
+            options={({ navigation }) => ({
+              headerShown: true,
+              title: 'Snaps',
               headerStyle: {
                 backgroundColor: appBottomSheetBackgroundColor,
               },

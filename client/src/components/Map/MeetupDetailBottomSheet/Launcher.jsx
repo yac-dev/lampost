@@ -20,8 +20,8 @@ const Launcher = () => {
   return (
     <TouchableOpacity
       onPress={() => {
-        if (!auth.data || auth.data._id !== selectedMeetup.launcher._id) {
-          topLevelNavigation.navigate('User', { userId: selectedLibrary.launcher._id });
+        if (!auth.isAuthenticated || auth.data._id !== selectedMeetup.launcher._id) {
+          topLevelNavigation.navigate('Meetup member', { userId: selectedMeetup.launcher._id });
         }
       }}
       style={{ padding: 5, borderRadius: 5, marginBottom: 5 }}

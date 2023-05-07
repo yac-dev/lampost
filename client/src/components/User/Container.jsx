@@ -90,11 +90,11 @@ const Container = (props) => {
   }, []);
 
   const getUser = async () => {
-    const result = await lampostAPI.post(`/users/${props.route.params.userId}`, { userId: auth.data._id });
-    const { user, isBlocking } = result.data;
+    const result = await lampostAPI.post(`/users/${props.route.params.userId}`);
+    const { user } = result.data;
     // console.log(user);
     setUser(user);
-    setIsBlocked(isBlocking);
+    // setIsBlocked(isBlocking);
     setIsFetchedUserData(true);
   }; // ここ、4回queryしているのはなぜだ？？
   useEffect(() => {
@@ -305,7 +305,9 @@ const Container = (props) => {
     return (
       <>
         <Header />
-        {isBlocked ? (
+        <View style={{ width: '100%', paddingLeft: 10, paddingRight: 10 }}></View>
+        <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
+        {/* {isBlocked ? (
           <View>
             <Text style={{ color: baseTextColor, textAlign: 'center', marginBottom: 10 }}>
               You are blocking this user now.
@@ -322,67 +324,11 @@ const Container = (props) => {
         ) : (
           <View>
             <View style={{ width: '100%', paddingLeft: 10, paddingRight: 10 }}>
-              {/* <TouchableOpacity
-                style={{
-                  width: '100%',
-                  padding: 5,
-                  borderWidth: 0.3,
-                  borderColor: baseTextColor,
-                  borderRadius: 8,
-                }}
-              >
-                <View style={{ alignSelf: 'center', flexDirection: 'row', alignItems: 'center' }}>
-                  <Entypo name='bookmark' color={baseTextColor} size={20} style={{ marginRight: 10 }} />
-                  <Text style={{ color: 'white' }}>Create index</Text>
-                </View>
-              </TouchableOpacity> */}
             </View>
             <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
           </View>
-        )}
+        )} */}
         {!auth.isAuthenticated || !isMyPage ? null : (
-          // <View
-          //   style={{
-          //     position: 'absolute',
-          //     bottom: 20,
-          //     backgroundColor: backgroundColorsTable['green1'],
-          //     borderRadius: 10,
-          //     alignSelf: 'center',
-          //     padding: 10,
-          //     flexDirection: 'row',
-          //   }}
-          // >
-          //   <TouchableOpacity
-          //     style={{
-          //       backgroundColor: iconColorsTable['green1'],
-          //       padding: 10,
-          //       flexDirection: 'row',
-          //       alignItems: 'center',
-          //       borderRadius: 10,
-          //       marginRight: 10,
-          //     }}
-          //     onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}
-          //   >
-          //     <Ionicons name='ios-apps' size={25} color={'white'} />
-          //   </TouchableOpacity>
-          //   <TouchableOpacity
-          //     onPress={() => {
-          //       badgeMenuBottomSheetRef.current.snapToIndex(0);
-          //     }}
-          //   >
-          //     <View
-          //       style={{
-          //         backgroundColor: iconColorsTable['green1'],
-          //         padding: 10,
-          //         flexDirection: 'row',
-          //         alignItems: 'center',
-          //         borderRadius: 10,
-          //       }}
-          //     >
-          //       <Ionicons name='hammer' size={25} color={'white'} />
-          //     </View>
-          //   </TouchableOpacity>
-          // </View>
           <ScrollView
             horizontal={true}
             style={{ backgroundColor: screenSectionBackgroundColor, position: 'absolute', width: '100%', bottom: 0 }}
