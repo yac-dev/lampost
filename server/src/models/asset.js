@@ -13,6 +13,9 @@ const assetSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Meetup',
   },
+  mood: {
+    type: String,
+  },
   // badges: [
   //   {
   //     type: mongoose.Schema.ObjectId,

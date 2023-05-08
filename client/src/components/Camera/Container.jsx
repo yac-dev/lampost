@@ -47,6 +47,7 @@ const Container = (props) => {
   const videoEffectBottomSheetRef = useRef(null);
   const photoEffectBottomSheetRef = useRef(null);
   const cameraRef = useRef(null);
+  const [flashMode, setFlashMode] = useState(Camera.Constants.FlashMode.off);
   const [cameraType, setCameraType] = useState(CameraType.back);
   const [cameraMode, setCameraMode] = useState('photo');
   const [photoEffect, setPhotoEffect] = useState('normal');
@@ -249,17 +250,60 @@ const Container = (props) => {
     askCameraPermission();
   }, []);
 
+  const toggleFlashMode = () => {
+    if (flashMode === Camera.Constants.FlashMode.off) {
+      setSnackBar({
+        isVisible: true,
+        barType: 'success',
+        message: 'Camera flash has been turned on.',
+        duration: 5000,
+      });
+    } else if (flashMode === Camera.Constants.FlashMode.on) {
+      setSnackBar({
+        isVisible: true,
+        barType: 'success',
+        message: 'Camera flash has been turned off.',
+        duration: 5000,
+      });
+    }
+
+    setFlashMode(
+      flashMode === Camera.Constants.FlashMode.off ? Camera.Constants.FlashMode.on : Camera.Constants.FlashMode.off
+    );
+    // なんで、これでwarningなの？？
+    // setFlashMode((previous) => {
+    //   if (previous === Camera.Constants.FlashMode.off) {
+    //     setSnackBar({
+    //       isVisible: true,
+    //       barType: 'success',
+    //       message: 'Camera flash has been turned on.',
+    //       duration: 5000,
+    //     });
+    //     return Camera.Constants.FlashMode.on;
+    //   } else {
+    //     setSnackBar({
+    //       isVisible: true,
+    //       barType: 'success',
+    //       message: 'Camera flash has been turned off.',
+    //       duration: 5000,
+    //     });
+    //     return Camera.Constants.FlashMode.off;
+    //   }
+    // });
+  };
+
   if (hasCameraPermission === undefined || hasMicrophonePermission === undefined) {
     return (
-      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        <Text style={{ color: baseTextColor }}>Accessing your camera...</Text>
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor, marginTop: 50 }}>
+        <Text style={{ color: baseTextColor, textAlign: 'center' }}>Accessing your camera...🤔</Text>
       </View>
     );
   } else if (!hasCameraPermission) {
     return (
-      <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
-        <Text style={{ color: baseTextColor }}>
-          Permission for camera not granted. Please change this in settings of your phone.
+      <View style={{ flex: 1, backgroundColor: baseBackgroundColor, marginTop: 50 }}>
+        <Text style={{ color: baseTextColor, textAlign: 'center', fontSize: 20 }}>
+          Permission for camera not granted. Please change this in settings of your phone if you wanna experience
+          Lampost's special features.
         </Text>
       </View>
     );
@@ -387,25 +431,65 @@ const Container = (props) => {
   const renderCameraButton = () => {
     if (cameraMode === 'photo') {
       return (
-        <TouchableOpacity
-          style={{ position: 'absolute', bottom: 120, alignSelf: 'center' }}
-          onPress={() => takePhoto()}
-          disabled={ongoingMeetup ? false : true}
+        <View
+          style={{ position: 'absolute', bottom: 120, alignSelf: 'center', flexDirection: 'row', alignItems: 'center' }}
         >
-          <View
+          <TouchableOpacity
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 20,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor:
+                flashMode === Camera.Constants.FlashMode.off ? 'white' : backgroundColorsTable['yellow1'],
+              marginRight: 20,
+            }}
+            onPress={() => {
+              toggleFlashMode();
+            }}
+          >
+            <MaterialCommunityIcons
+              name='lightbulb-on'
+              size={20}
+              color={flashMode === Camera.Constants.FlashMode.off ? 'black' : iconColorsTable['yellow1']}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
             style={{
               backgroundColor: 'white',
               // padding: 10,
               flexDirection: 'row',
-              borderRadius: 30,
-              width: 60,
-              height: 60,
+              borderRadius: 35,
+              width: 70,
+              height: 70,
               justifyContent: 'center',
               alignItems: 'center',
+              marginRight: 20,
             }}
-          ></View>
-          {/* {isCameraButtonReady()} */}
-        </TouchableOpacity>
+            onPress={() => takePhoto()}
+            disabled={ongoingMeetup ? false : true}
+          ></TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 20,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'white',
+            }}
+            onPress={() => {
+              if (cameraType === CameraType.back) {
+                setCameraType(CameraType.front);
+              } else {
+                setCameraType(CameraType.back);
+              }
+            }}
+          >
+            <MaterialCommunityIcons name='camera-flip' size={20} color={'black'} />
+          </TouchableOpacity>
+        </View>
       );
     } else if (cameraMode === 'video') {
       return (
@@ -628,7 +712,7 @@ const Container = (props) => {
               >
                 <TouchableOpacity
                   style={{
-                    backgroundColor: backgroundColorsTable['grey1'],
+                    backgroundColor: backgroundColorsTable['yellow1'],
                     padding: 10,
                     borderRadius: 10,
                     width: 50,
@@ -637,17 +721,17 @@ const Container = (props) => {
                     alignItems: 'center',
                     marginBottom: 5,
                   }}
-                  onPress={() => {
-                    if (cameraType === CameraType.back) {
-                      setCameraType(CameraType.front);
-                    } else {
-                      setCameraType(CameraType.back);
-                    }
-                  }}
+                  // onPress={() => {
+                  //   if (cameraMode === 'photo') {
+                  //     photoEffectBottomSheetRef.current.snapToIndex(0);
+                  //   } else if (cameraMode === 'video') {
+                  //     videoEffectBottomSheetRef.current.snapToIndex(0);
+                  //   }
+                  // }}
                 >
-                  <MaterialCommunityIcons name='camera-flip' size={20} color={iconColorsTable['grey1']} />
+                  <Text style={{ fontSize: 30 }}>😃</Text>
                 </TouchableOpacity>
-                <Text style={{ color: 'white', textAlign: 'center' }}>Flip</Text>
+                <Text style={{ color: 'white', textAlign: 'center' }}>Mood</Text>
               </View>
               <View
                 style={{

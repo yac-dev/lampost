@@ -15,13 +15,14 @@ import sharp from 'sharp';
 
 export const createPhoto = async (request, response) => {
   try {
-    const { meetupId, userId, place, type, effect, ...rest } = request.body;
+    const { meetupId, userId, place, type, mood, effect, ...rest } = request.body;
     const taggedUserIds = Object.values(rest);
     const asset = await Asset.create({
       data: `https://lampost-${process.env.NODE_ENV}.s3.us-east-2.amazonaws.com/assets/photos/${request.file.filename}`,
       type: 'photo',
       meetup: meetupId,
       effect: effect,
+      mood: mood,
       place: place,
       taggedPeople: taggedUserIds,
       createdBy: userId,
@@ -53,13 +54,14 @@ export const createPhoto = async (request, response) => {
 
 export const createVideo = async (request, response) => {
   try {
-    const { meetupId, userId, type, place, effect, duration, ...rest } = request.body;
+    const { meetupId, userId, type, place, mood, effect, duration, ...rest } = request.body;
     const taggedUserIds = Object.values(rest);
     const asset = await Asset.create({
       data: `https://lampost-${process.env.NODE_ENV}.s3.us-east-2.amazonaws.com/assets/videos/${request.file.filename}`,
       type: type,
       meetup: meetupId,
       effect: effect,
+      mood: mood,
       place: place,
       duration: duration,
       taggedPeople: taggedUserIds,
