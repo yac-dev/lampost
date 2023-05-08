@@ -15,6 +15,7 @@ import FlipCameraBottomSheet from './FlipBottomSheet';
 import TagPeopleBottomSheet from './TagPeopleBottomSheet/Container';
 import PhotoEffectBottomSheet from './PhotoEffectBottomSheet/Container';
 import VideoEffectBottomSheet from './VideoEffectBottomSheet/Container';
+import MoodBottomSheet from './MoodBottomSheet';
 import {
   appBottomSheetBackgroundColor,
   baseBackgroundColor,
@@ -46,10 +47,12 @@ const Container = (props) => {
   const tagPeopleBottomSheetRef = useRef(null);
   const videoEffectBottomSheetRef = useRef(null);
   const photoEffectBottomSheetRef = useRef(null);
+  const moodBottomSheetRef = useRef(null);
   const cameraRef = useRef(null);
   const [flashMode, setFlashMode] = useState(Camera.Constants.FlashMode.off);
   const [cameraType, setCameraType] = useState(CameraType.back);
   const [cameraMode, setCameraMode] = useState('photo');
+  const [mood, setMood] = useState('😃');
   const [photoEffect, setPhotoEffect] = useState('normal');
   const [videoEffect, setVideoEffect] = useState('normal'); // normal, black and white very old,
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
@@ -350,6 +353,7 @@ const Container = (props) => {
       formData.append('type', cameraMode); // photo
       formData.append('effect', videoEffect);
       formData.append('place', ongoingMeetup.place);
+      formData.append('mood', mood);
       formData.append('duration', durationRef.current);
       formData.append('asset', {
         name: recordedVideo.uri.split('/').pop(),
@@ -397,6 +401,7 @@ const Container = (props) => {
     formData.append('userId', auth.data._id);
     formData.append('type', cameraMode); // photo
     formData.append('place', ongoingMeetup.place);
+    formData.append('mood', mood);
     formData.append('effect', photoEffect);
     formData.append('asset', {
       name: newPhoto.uri.split('/').pop(),
@@ -547,6 +552,7 @@ const Container = (props) => {
         tagPeopleBottomSheetRef,
         videoEffectBottomSheetRef,
         photoEffectBottomSheetRef,
+        moodBottomSheetRef,
         cameraMode,
         setCameraMode,
         cameraType,
@@ -566,6 +572,8 @@ const Container = (props) => {
         setMeetupAttendees,
         currentMeetup,
         ongoingMeetup,
+        mood,
+        setMood,
       }}
     >
       <View style={{ flex: 1, backgroundColor: 'black' }}>
@@ -721,15 +729,11 @@ const Container = (props) => {
                     alignItems: 'center',
                     marginBottom: 5,
                   }}
-                  // onPress={() => {
-                  //   if (cameraMode === 'photo') {
-                  //     photoEffectBottomSheetRef.current.snapToIndex(0);
-                  //   } else if (cameraMode === 'video') {
-                  //     videoEffectBottomSheetRef.current.snapToIndex(0);
-                  //   }
-                  // }}
+                  onPress={() => {
+                    moodBottomSheetRef.current.snapToIndex(0);
+                  }}
                 >
-                  <Text style={{ fontSize: 30 }}>😃</Text>
+                  <Text style={{ fontSize: 30 }}>{mood}</Text>
                 </TouchableOpacity>
                 <Text style={{ color: 'white', textAlign: 'center' }}>Mood</Text>
               </View>
@@ -805,10 +809,8 @@ const Container = (props) => {
             </View>
           )
         ) : null}
-        <AppMenuBottomSheet />
-        {/* <TimeMachineBottomSheet /> */}
-        <CameraModeBottomSheet />
-        <FlipCameraBottomSheet />
+        {/* <AppMenuBottomSheet /> */}
+        <MoodBottomSheet />
         <TagPeopleBottomSheet />
         <PhotoEffectBottomSheet />
         <VideoEffectBottomSheet />

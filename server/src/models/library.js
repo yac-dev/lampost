@@ -38,6 +38,7 @@ const librarySchema = new mongoose.Schema({
   color: String,
   totalAssets: Number,
   totalMembers: Number,
+  mood: String,
   rate: Number,
   createdAt: Date,
   isPublic: Boolean, // true or false(private)
