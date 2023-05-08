@@ -7,6 +7,7 @@ const Stack = createNativeStackNavigator();
 import LibraryContainer from '../../Home/Library/Container';
 import DateAssets from '../../Home/Library/DateAssets/Container';
 import Members from '../../Home/Library/Members';
+import About from '../../Home/Library/About/Container';
 import User from '../../User/Container';
 import AddAssets from '../../Utils/AddAssets/Container';
 import InviteMyFriends from '../../Home/Library/InviteMyFriends';
@@ -48,7 +49,7 @@ const LibraryNavigator = () => {
         />
 
         <Stack.Screen
-          name='Members'
+          name='Home library members'
           component={Members}
           options={({ navigation }) => ({
             headerShown: true,
@@ -73,6 +74,23 @@ const LibraryNavigator = () => {
             title: '',
             headerTransparent: true,
             title: 'User',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: 'white',
+            // headerTintColor: {
+            //   color: 'white',
+            // },
+          })}
+        />
+        <Stack.Screen
+          name='Home library about'
+          component={About}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerTransparent: true,
+            title: '',
             headerTitleStyle: {
               fontWeight: 'bold',
               color: 'white',

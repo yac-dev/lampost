@@ -27,6 +27,8 @@ const Libraries = (props) => {
     }
   };
 
+  console.log(myJoinedLibraries);
+
   if (myJoinedLibraries.length) {
     const myJoinedLibrariesList = myJoinedLibraries.map((library, index) => {
       if (library.thumbnail.type === 'photo') {
@@ -71,7 +73,12 @@ const Libraries = (props) => {
                   resizeMode={FastImage.resizeMode.stretch}
                 />
               </View>
-              <Text style={{ color: 'white', fontSize: 20 }}>{library.title}</Text>
+              <View>
+                <Text style={{ color: 'white', fontSize: 20 }}>{library.title}</Text>
+                {library.isPublic ? null : (
+                  <Text style={{ color: baseTextColor, fontSize: 15, marginTop: 5 }}>Private</Text>
+                )}
+              </View>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>{renderAssetType(library)}</View>
           </TouchableOpacity>
@@ -114,7 +121,12 @@ const Libraries = (props) => {
                   isLooping={false}
                 />
               </View>
-              <Text style={{ color: 'white', fontSize: 20 }}>{library.title}</Text>
+              <View>
+                <Text style={{ color: 'white', fontSize: 20 }}>{library.title}</Text>
+                {library.isPublic ? null : (
+                  <Text style={{ color: baseTextColor, fontSize: 15, marginTop: 5 }}>Private</Text>
+                )}
+              </View>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>{renderAssetType(library)}</View>
           </TouchableOpacity>

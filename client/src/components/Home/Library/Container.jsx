@@ -397,7 +397,9 @@ const Container = (props) => {
                   alignItems: 'center',
                   marginBottom: 5,
                 }}
-                onPress={() => props.navigation.navigate('Members', { libraryId: props.route.params.libraryId })}
+                onPress={() =>
+                  props.navigation.navigate('Home library members', { libraryId: props.route.params.libraryId })
+                }
               >
                 <MaterialCommunityIcons name='account-group' size={20} color={iconColorsTable['yellow1']} />
               </TouchableOpacity>
@@ -439,7 +441,7 @@ const Container = (props) => {
             >
               <TouchableOpacity
                 style={{
-                  backgroundColor: iconColorsTable['grey1'],
+                  backgroundColor: backgroundColorsTable['grey1'],
                   padding: 10,
                   borderRadius: 10,
                   width: 50,
@@ -448,8 +450,9 @@ const Container = (props) => {
                   alignItems: 'center',
                   marginBottom: 5,
                 }}
+                onPress={() => props.navigation.navigate('Home library about', { library })}
               >
-                <Ionicons name='information-circle' size={20} color={'white'} />
+                <Ionicons name='information-circle' size={20} color={iconColorsTable['grey1']} />
               </TouchableOpacity>
               <Text style={{ color: 'white', textAlign: 'center' }}>About</Text>
             </View>

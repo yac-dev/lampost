@@ -55,7 +55,6 @@ const Reactions = () => {
     const list = selectedLibrary.reactions.map((reaction, index) => {
       return (
         <TouchableOpacity
-          key={index}
           style={{
             flexDirection: 'row',
             alignItems: 'center',
