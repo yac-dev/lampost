@@ -193,25 +193,9 @@ export const postAssetsByLibraryId = async (request, response) => {
   try {
     const { assetId, userId } = request.body;
     const library = await Library.findById(request.params.libraryId);
-    // const libraryBadges = library.badges;
-    const asset = await Asset.findById(assetId);
-    // console.log('library badgeIds', libraryBadges);
-    // console.log('asset is ', asset);
+    library.totalAssets++;
+    library.save();
 
-    // loopが動かない。lengthがないと。
-    // if (!asset.badges.length) {
-    //   asset.badges.push(...libraryBadges);
-    //   asset.save();
-    // } else {
-    //   for (let i = 0; i < libraryBadges.length; i++) {
-    //     if (asset.badges.some((badgeId) => badgeId.toString() === libraryBadges[i])) {
-    //       null;
-    //     } else {
-    //       asset.badges.push(libraryBadges[i]);
-    //     }
-    //   }
-    //   asset.save();
-    // }
     const libraryAndAssetRelationship = await LibraryAndAssetRelationship.create({
       asset: assetId,
       library: request.params.libraryId,

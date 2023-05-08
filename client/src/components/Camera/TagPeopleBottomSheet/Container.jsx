@@ -166,7 +166,7 @@ const TagPeopleBottomSheet = (props) => {
     >
       <BottomSheetView style={{ flex: 1 }}>
         <View style={{ padding: 10 }}>
-          <Text style={{ color: 'white', fontSize: 20 }}>Tap friends you wanna tag.</Text>
+          <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>Who are you with now?</Text>
         </View>
         {renderMeetupAttendees()}
       </BottomSheetView>

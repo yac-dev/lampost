@@ -14,12 +14,12 @@ const Libraries = (props) => {
 
   const renderAssetType = (library) => {
     if (library.assetType === 'photo') {
-      return <Ionicons name='image' size={20} color={'white'} style={{ marginRight: 5 }} />;
+      return <Ionicons name='image' size={20} color={'white'} />;
     } else if (library.assetType === 'video') {
-      return <Ionicons name='videocam' size={20} color={'white'} style={{ marginRight: 10 }} />;
+      return <Ionicons name='videocam' size={20} color={'white'} />;
     } else if (library.assetType === 'photoAndVideo') {
       return (
-        <View style={{ flexDirection: 'row', alignContent: 'center', marginRight: 10 }}>
+        <View style={{ flexDirection: 'column', alignContent: 'center' }}>
           <Ionicons name='image' size={20} color={'white'} style={{ marginRight: 5 }} />
           <Ionicons name='videocam' size={20} color={'white'} />
         </View>
@@ -58,8 +58,8 @@ const Libraries = (props) => {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View
                 style={{
-                  width: 70,
-                  height: 70,
+                  width: 80,
+                  height: 80,
                   marginRight: 15,
                   borderRadius: 7,
                 }}
@@ -72,15 +72,16 @@ const Libraries = (props) => {
                   }}
                   resizeMode={FastImage.resizeMode.stretch}
                 />
+                <View style={{ position: 'absolute', bottom: 0, right: 0 }}>{renderAssetType(library)}</View>
               </View>
               <View>
-                <Text style={{ color: 'white', fontSize: 20 }}>{library.title}</Text>
+                <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{library.title}</Text>
                 {library.isPublic ? null : (
                   <Text style={{ color: baseTextColor, fontSize: 15, marginTop: 5 }}>Private</Text>
                 )}
               </View>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>{renderAssetType(library)}</View>
+            <Text style={{ color: 'white', marginRight: 10 }}>{library.totalAssets}</Text>
           </TouchableOpacity>
         );
       } else if (library.thumbnail.type === 'video') {
@@ -105,8 +106,8 @@ const Libraries = (props) => {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View
                 style={{
-                  width: 70,
-                  height: 70,
+                  width: 80,
+                  height: 80,
                   marginRight: 15,
                   borderRadius: 7,
                 }}
@@ -120,15 +121,16 @@ const Libraries = (props) => {
                   resizeMode='stretch'
                   isLooping={false}
                 />
+                <View style={{ position: 'absolute', bottom: 0, right: 0 }}>{renderAssetType(library)}</View>
               </View>
               <View>
-                <Text style={{ color: 'white', fontSize: 20 }}>{library.title}</Text>
+                <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{library.title}</Text>
                 {library.isPublic ? null : (
                   <Text style={{ color: baseTextColor, fontSize: 15, marginTop: 5 }}>Private</Text>
                 )}
               </View>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>{renderAssetType(library)}</View>
+            <Text style={{ color: 'white', marginRight: 10 }}>{library.totalAssets}</Text>
           </TouchableOpacity>
         );
       }

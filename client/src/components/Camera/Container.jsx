@@ -119,7 +119,7 @@ const Container = (props) => {
   };
 
   const getAttendees = async () => {
-    const result = await lampostAPI.get(`meetupanduserrelationships/meetup/${ongoingMeetup}/users`);
+    const result = await lampostAPI.get(`meetupanduserrelationships/meetup/${ongoingMeetup._id}/users`);
     const { meetupAttendees } = result.data;
     console.log('you can tag these', meetupAttendees);
     setMeetupAttendees(() => {
@@ -166,7 +166,7 @@ const Container = (props) => {
     if (meetupList.length) {
       meetupList.forEach((meetup) => {
         if (meetup.state === 'ongoing') {
-          return setOngoingMeetup(meetup._id);
+          return setOngoingMeetup({ _id: meetup._id, title: meetup.title, place: meetup.place });
         } else {
           setSnackBar({
             isVisible: true,
@@ -301,10 +301,11 @@ const Container = (props) => {
       console.log(recordedVideo);
       setIsRecording(false);
       const formData = new FormData();
-      formData.append('meetupId', ongoingMeetup);
+      formData.append('meetupId', ongoingMeetup._id);
       formData.append('userId', auth.data._id);
       formData.append('type', cameraMode); // photo
       formData.append('effect', videoEffect);
+      formData.append('place', ongoingMeetup.place);
       formData.append('duration', durationRef.current);
       formData.append('asset', {
         name: recordedVideo.uri.split('/').pop(),
@@ -348,9 +349,10 @@ const Container = (props) => {
         formData.append(`taggedUser${i}`, taggedUserIds[i]);
       }
     }
-    formData.append('meetupId', ongoingMeetup);
+    formData.append('meetupId', ongoingMeetup._id);
     formData.append('userId', auth.data._id);
     formData.append('type', cameraMode); // photo
+    formData.append('place', ongoingMeetup.place);
     formData.append('effect', photoEffect);
     formData.append('asset', {
       name: newPhoto.uri.split('/').pop(),

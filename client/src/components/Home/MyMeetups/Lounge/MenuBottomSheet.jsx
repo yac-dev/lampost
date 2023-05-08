@@ -41,7 +41,6 @@ const MenuBottomSheet = (props) => {
             onPress={() => {
               appMenuBottomSheetRef.current.close();
               setChatType('general');
-              // sendChatBottomSheetRef.current.snapToIndex(0);
               setIsSendChatBottomSheetOpen(true);
             }}
           >

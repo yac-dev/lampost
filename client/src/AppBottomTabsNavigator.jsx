@@ -212,7 +212,7 @@ const AppStack = (props) => {
   //     setTotalUnreadChatsCount((previous) => previous + e.unreadChatsCount);
   //   });
   // };
-
+  console.log(myUpcomingMeetups);
   // upcomingのmeetupをgetしてくる
   const getMyUpcomingMeetupStates = async () => {
     const result = await lampostAPI.get(`/meetupanduserrelationships/upcoming/user/${auth.data._id}`);

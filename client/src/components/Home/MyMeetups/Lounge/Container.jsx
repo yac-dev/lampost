@@ -2,18 +2,21 @@ import React, { useEffect, useState, useRef, useContext } from 'react';
 import LoungeContext from './LoungeContext';
 import GlobalContext from '../../../../GlobalContext';
 import { connect } from 'react-redux';
-import { Touchable, View, TouchableOpacity, Text } from 'react-native';
+import { Touchable, View, TouchableOpacity, Text, Dimensions } from 'react-native';
 import { Avatar, IconButton } from 'react-native-paper';
 import lampostAPI from '../../../../apis/lampost';
 // import { io } from 'socket.io-client';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import {
   baseBackgroundColor,
   rnDefaultBackgroundColor,
   iconColorsTable,
   backgroundColorsTable,
+  sectionBackgroundColor,
+  screenSectionBackgroundColor,
 } from '../../../../utils/colorsTable';
 import MenuBottomSheet from './MenuBottomSheet';
 import SendChatBottomSheet from './SendChatBottomSheet';
@@ -24,8 +27,20 @@ import LoadingSpinner from '../../../Utils/LoadingSpinner';
 import SnackBar from '../../../Utils/SnackBar';
 
 const LoungeContainer = (props) => {
-  const { auth, setAuth, myUpcomingMeetups, setMyUpcomingMeetups, setChatsNotificationCount, routeName, setRouteName } =
-    useContext(GlobalContext);
+  const {
+    auth,
+    setAuth,
+    myUpcomingMeetups,
+    setMyUpcomingMeetups,
+    setChatsNotificationCount,
+    isIpad,
+    routeName,
+    setRouteName,
+  } = useContext(GlobalContext);
+  const oneGridWidth = isIpad ? Dimensions.get('window').width / 6 : Dimensions.get('window').width / 4;
+  const oneGridHeight = isIpad ? Dimensions.get('window').height / 7.5 : Dimensions.get('window').height / 7.5;
+  const badgeContainerWidth = oneGridWidth * 0.6;
+  const badgeIconWidth = badgeContainerWidth * 0.65;
   const [meetup, setMeetup] = useState(null);
   const [chats, setChats] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
@@ -234,7 +249,7 @@ const LoungeContainer = (props) => {
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
         <Chats />
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{
             position: 'absolute',
             bottom: 20,
@@ -253,7 +268,108 @@ const LoungeContainer = (props) => {
         >
           <Ionicons name='send' size={25} color={'white'} style={{ marginRight: 10 }} />
           <Text style={{ color: 'white' }}>Action</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+        <View
+          style={{
+            backgroundColor: screenSectionBackgroundColor,
+            position: 'absolute',
+            bottom: 0,
+            flexDirection: 'row',
+            alignItems: 'center',
+            alignSelf: 'center',
+            width: '100%',
+            paddingTop: 5,
+            paddingBottom: 5,
+          }}
+        >
+          <View
+            style={{
+              width: oneGridWidth,
+              height: 80,
+              justifyContent: 'center',
+              alignItems: 'center',
+              // backgroundColor: 'red',
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                backgroundColor: backgroundColorsTable['blue1'],
+                padding: 10,
+                borderRadius: 10,
+                width: 50,
+                height: 50,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: 5,
+              }}
+              onPress={() => {
+                setChatType('general');
+                setIsSendChatBottomSheetOpen(true);
+              }}
+            >
+              <MaterialCommunityIcons name='comment-text' size={20} color={iconColorsTable['blue1']} />
+            </TouchableOpacity>
+            <Text style={{ color: 'white', textAlign: 'center' }}>Send a chat</Text>
+          </View>
+          <View
+            style={{
+              width: oneGridWidth,
+              height: 80,
+              justifyContent: 'center',
+              alignItems: 'center',
+              // backgroundColor: 'red',
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                backgroundColor: backgroundColorsTable['yellow1'],
+                padding: 10,
+                borderRadius: 10,
+                width: 50,
+                height: 50,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: 5,
+              }}
+              onPress={() => {
+                setChatType('question');
+                setIsSendChatBottomSheetOpen(true);
+              }}
+            >
+              <AntDesign name='questioncircle' size={20} color={iconColorsTable['yellow1']} />
+            </TouchableOpacity>
+            <Text style={{ color: 'white', textAlign: 'center' }}>Ask a question</Text>
+          </View>
+          <View
+            style={{
+              width: oneGridWidth,
+              height: 80,
+              justifyContent: 'center',
+              alignItems: 'center',
+              // backgroundColor: 'red',
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                backgroundColor: backgroundColorsTable['red1'],
+                padding: 10,
+                borderRadius: 10,
+                width: 50,
+                height: 50,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: 5,
+              }}
+              onPress={() => {
+                setChatType('help');
+                setIsSendChatBottomSheetOpen(true);
+              }}
+            >
+              <AntDesign name='exclamationcircle' size={20} color={iconColorsTable['red1']} />
+            </TouchableOpacity>
+            <Text style={{ color: 'white', textAlign: 'center' }}>Help!!!</Text>
+          </View>
+        </View>
         <MenuBottomSheet />
         <SendChatBottomSheet />
       </View>
