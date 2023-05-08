@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import CreateReactionContext from './CreateReactionContext';
 import FastImage from 'react-native-fast-image';
 import {
@@ -9,6 +9,8 @@ import {
   inputBackgroundColorNew,
   rnDefaultBackgroundColor,
 } from '../../../../utils/colorsTable';
+import { iconsTable } from '../../../../utils/icons';
+const { MaterialCommunityIcons } = iconsTable;
 
 const Result = () => {
   const { creatingReaction, setCreatingReaction } = useContext(CreateReactionContext);
@@ -18,87 +20,160 @@ const Result = () => {
     <View style={{ flexDirection: 'row' }}>
       <View style={{ flex: 0.5 }}>
         <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>e.g.)</Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
           <TouchableOpacity
             style={{
               borderRadius: 5,
               backgroundColor: rnDefaultBackgroundColor,
-              marginRight: 8,
-              width: 40,
-              height: 40,
-              borderWidth: 0.7,
-              borderColor: iconColorsTable['yellow1'],
+              alignSelf: 'flex-start',
+              marginBottom: 10,
             }}
-            onPress={() => setExVotes((previous) => previous + 1)}
           >
             <View
               style={{
-                width: '100%',
-                height: '100%',
-                backgroundColor: backgroundColorsTable['yellow1'],
+                backgroundColor: backgroundColorsTable['red1'],
                 borderRadius: 5,
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderWidth: 0.7,
-                borderColor: iconColorsTable['yellow1'],
+                padding: 5,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <MaterialCommunityIcons
+                name='fire'
+                size={30}
+                color={iconColorsTable['red1']}
+                style={{ marginRight: 5 }}
+              />
+              <Text
+                style={{
+                  color: iconColorsTable['red1'],
+                  // marginRight: 5,
+                  fontSize: 17,
+                }}
+              >
+                Epic
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              borderRadius: 5,
+              backgroundColor: rnDefaultBackgroundColor,
+              alignSelf: 'flex-start',
+              marginBottom: 10,
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: backgroundColorsTable['orange1'],
+                borderRadius: 5,
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: 5,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <MaterialCommunityIcons
+                name='thumb-up'
+                size={30}
+                color={iconColorsTable['orange1']}
+                style={{ marginRight: 5 }}
+              />
+              <Text
+                style={{
+                  color: iconColorsTable['orange1'],
+                  // marginRight: 5,
+                  fontSize: 17,
+                }}
+              >
+                Nice photo
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              borderRadius: 5,
+              backgroundColor: rnDefaultBackgroundColor,
+              alignSelf: 'flex-start',
+              marginBottom: 10,
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: backgroundColorsTable['blue1'],
+                borderRadius: 5,
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: 5,
+                flexDirection: 'row',
+                alignItems: 'center',
               }}
             >
               <FastImage
-                source={{ uri: 'https://lampost-dev.s3.us-east-2.amazonaws.com/icons/a-hand-thumbs-up.png' }}
-                style={{ width: 30, height: 30 }}
-                tintColor={iconColorsTable['yellow1']}
+                source={{ uri: 'https://lampost-dev.s3.us-east-2.amazonaws.com/yao-ming-meme.png' }}
+                style={{ width: 30, height: 30, marginRight: 5 }}
+                tintColor={iconColorsTable['blue1']}
               />
-            </View>
-            <View
-              style={{
-                width: 20,
-                height: 20,
-                borderRadius: 10,
-                backgroundColor: iconColorsTable['yellow1'],
-                justifyContent: 'center',
-                alignItems: 'center',
-                position: 'absolute',
-                top: -9,
-                right: -9,
-              }}
-            >
-              <Text style={{ color: 'white', fontSize: 15 }}>{exVotes}</Text>
+              <Text
+                style={{
+                  color: iconColorsTable['blue1'],
+                  // marginRight: 5,
+                  fontSize: 17,
+                }}
+              >
+                On my gosh
+              </Text>
             </View>
           </TouchableOpacity>
-          <Text
+          <TouchableOpacity
             style={{
-              color: 'white',
-              marginRight: 5,
-              fontSize: 17,
+              borderRadius: 5,
+              backgroundColor: rnDefaultBackgroundColor,
+              alignSelf: 'flex-start',
+              marginBottom: 10,
             }}
           >
-            Nice photo
-          </Text>
-        </View>
+            <View
+              style={{
+                backgroundColor: backgroundColorsTable['green1'],
+                borderRadius: 5,
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: 5,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <FastImage
+                source={{ uri: 'https://lampost-dev.s3.us-east-2.amazonaws.com/meme-guy.png' }}
+                style={{ width: 30, height: 30, marginRight: 5 }}
+                tintColor={iconColorsTable['green1']}
+              />
+              <Text
+                style={{
+                  color: iconColorsTable['green1'],
+                  // marginRight: 5,
+                  fontSize: 17,
+                }}
+              >
+                Wow...
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </ScrollView>
       </View>
       <View style={{ flex: 0.5 }}>
-        <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>
-          Preview&nbsp;&nbsp;
-          {creatingReaction.icon && creatingReaction.comment && creatingReaction.color ? (
-            <Text style={{ color: baseTextColor, fontSize: 12 }}>Tap to try demo</Text>
-          ) : null}
-        </Text>
+        <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Preview</Text>
 
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <TouchableOpacity
             style={{
               borderRadius: 5,
-              backgroundColor: creatingReaction.upvotes ? rnDefaultBackgroundColor : inputBackgroundColorNew,
-              marginRight: 8,
+              backgroundColor: rnDefaultBackgroundColor,
             }}
-            onPress={() =>
-              setCreatingReaction((previous) => {
-                return {
-                  ...previous,
-                  upvotes: previous.upvotes + 1,
-                };
-              })
-            }
           >
             <View
               style={{
@@ -106,20 +181,20 @@ const Result = () => {
                 alignItems: 'center',
                 padding: 5,
                 borderRadius: 5,
-                backgroundColor: creatingReaction.upvotes ? backgroundColorsTable[creatingReaction.color] : null,
+                backgroundColor: backgroundColorsTable[creatingReaction.color],
               }}
             >
               {creatingReaction.icon ? (
                 <FastImage
                   source={{ uri: creatingReaction.icon.url }}
                   style={{ width: 30, height: 30, marginRight: 5 }}
-                  tintColor={creatingReaction.upvotes ? iconColorsTable[creatingReaction.color] : 'white'}
+                  tintColor={iconColorsTable[creatingReaction.color]}
                 />
               ) : null}
               {creatingReaction.comment ? (
                 <Text
                   style={{
-                    color: creatingReaction.upvotes ? iconColorsTable[creatingReaction.color] : 'white',
+                    color: iconColorsTable[creatingReaction.color],
                     marginRight: 5,
                     fontSize: 17,
                   }}
@@ -129,11 +204,6 @@ const Result = () => {
               ) : null}
             </View>
           </TouchableOpacity>
-          {creatingReaction.icon && creatingReaction.comment && creatingReaction.color ? (
-            <Text style={{ color: 'white', marginRight: 5, fontWeight: 'bold', fontSize: 17 }}>
-              {creatingReaction.upvotes}
-            </Text>
-          ) : null}
         </View>
       </View>
     </View>

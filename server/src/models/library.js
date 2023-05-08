@@ -21,7 +21,6 @@ const librarySchema = new mongoose.Schema({
   },
   isReactionAvailable: Boolean,
   assetType: String, //['video', 'photo', 'videoAndPhoto']
-  isCommentAvailable: Boolean,
   description: String,
   reactions: [
     {

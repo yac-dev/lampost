@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import LibrariesContext from '../LibrariesContext';
 import {
   screenSectionBackgroundColor,
@@ -17,9 +17,12 @@ const Reactions = () => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
 
   const renderReactionIcons = () => {
-    const list = selectedLibrary.reactions.map((reaction, index) => {
+    const list = selectedLibrary.reactions.slice(0, 2).map((reaction, index) => {
       return (
-        <View key={index} style={{ width: 40, height: 40, backgroundColor: rnDefaultBackgroundColor, borderRadius: 5 }}>
+        <View
+          key={index}
+          style={{ width: 35, height: 35, backgroundColor: rnDefaultBackgroundColor, borderRadius: 5, marginRight: 5 }}
+        >
           <View
             style={{
               width: '100%',
@@ -40,10 +43,52 @@ const Reactions = () => {
       );
     });
 
-    return <View>{list}</View>;
+    return (
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        {list}
+        {selectedLibrary.reactions.length > 2 ? <Text style={{ color: baseTextColor }}>...</Text> : null}
+      </View>
+    );
   };
 
-  const renderReactions = () => {};
+  const renderReactions = () => {
+    const list = selectedLibrary.reactions.map((reaction, index) => {
+      return (
+        <TouchableOpacity
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: rnDefaultBackgroundColor,
+            borderRadius: 8,
+            marginRight: 10,
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: backgroundColorsTable[reaction.color],
+              borderRadius: 8,
+              padding: 5,
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            <FastImage
+              source={{ uri: reaction.icon.url }}
+              style={{ width: 45, height: 45, marginRight: 5 }}
+              tintColor={iconColorsTable[reaction.color]}
+            />
+            <Text style={{ color: iconColorsTable[reaction.color], fontWeight: 'bold' }}>{reaction.comment}</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    });
+
+    return (
+      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>{list}</View>
+      </ScrollView>
+    );
+  };
 
   return (
     <View style={{ padding: 5, borderRadius: 5, marginBottom: 5 }}>
@@ -73,7 +118,7 @@ const Reactions = () => {
             renderReactionIcons()
           ) : (
             <View>
-              <MaterialIcons name='do-not-disturb-on' color={iconColorsTable['yellow1']} size={20} />
+              <Text style={{ color: baseTextColor }}>Not available</Text>
             </View>
           )}
           <TouchableOpacity onPress={() => setIsAccordionOpen((previous) => !previous)}>
@@ -88,14 +133,15 @@ const Reactions = () => {
       {isAccordionOpen ? (
         <View style={{ marginTop: 10, marginBottom: 10 }}>
           {selectedLibrary.isReactionAvailable ? (
-            <View>
-              <Text style={{ color: 'white', textAlign: 'center' }}>
-                You use these options to like/upvote each snap.
+            <View style={{ marginTop: 10 }}>
+              <Text style={{ color: 'white', textAlign: 'center', marginBottom: 10 }}>
+                You use these options to react each snap in this library.
               </Text>
+              {renderReactions()}
             </View>
           ) : (
             <Text style={{ textAlign: 'center', color: 'white' }}>
-              Just enjoy the photos and videos without any upvotes/likes!
+              Just enjoy the photos and videos without any reactions.
             </Text>
           )}
         </View>

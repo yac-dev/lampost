@@ -116,7 +116,7 @@ const MyFriends = (props) => {
       });
       return (
         <View>
-          <Text style={{ color: 'white', textAlign: 'center', marginBottom: 10 }}>
+          <Text style={{ color: 'white', marginBottom: 10, fontWeight: 'bold', fontSize: 20 }}>
             Who do you invite to your library?
           </Text>
           <ScrollView>

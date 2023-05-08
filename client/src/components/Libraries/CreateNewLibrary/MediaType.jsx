@@ -56,7 +56,7 @@ const Title = () => {
           >
             <Ionicons name='image' size={25} color={iconColorsTable['violet1']} />
           </View>
-          <Text style={{ fontWeight: 'bold', fontSize: 17, color: 'white', marginRight: 10 }}>Content type</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 17, color: 'white', marginRight: 10 }}>Snap type</Text>
         </TouchableOpacity>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Ionicons
@@ -86,18 +86,16 @@ const Title = () => {
       {accordion.assetType ? (
         <View style={{ marginTop: 10 }}>
           <Text style={{ fontSize: 13, color: baseTextColor, marginBottom: 10 }}>
-            Library for photos, videos or for both?
+            What kind of snap can you and members share in this library?
           </Text>
-          <ScrollView horizontal={true}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 5 }}>
+          <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+            <View style={{ width: '100%', padding: 5 }}>
               <TouchableOpacity
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  padding: 10,
+                  width: '100%',
+                  padding: 5,
                   backgroundColor: iconColorsTable['blue1'],
                   borderRadius: 5,
-                  marginRight: 10,
                 }}
                 onPress={() =>
                   setFormData((previous) => {
@@ -108,22 +106,27 @@ const Title = () => {
                   })
                 }
               >
-                <Ionicons name='image' color='white' size={20} style={{ marginRight: 10 }} />
-                <Text style={{ color: 'white' }}>Only photos</Text>
-                {formData.assetType === 'photo' ? (
-                  <View style={{ position: 'absolute', right: -7, top: -7 }}>
-                    <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
-                  </View>
-                ) : null}
+                <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                  <Ionicons name='image' color='white' size={20} style={{ marginRight: 10 }} />
+                  <Text style={{ color: 'white', fontSize: 17, fontWeight: 'bold' }}>Photos</Text>
+                </View>
+                <Text style={{ color: baseTextColor, textAlign: 'center' }}>
+                  You and members can share only photos.
+                </Text>
               </TouchableOpacity>
+              {formData.assetType === 'photo' ? (
+                <View style={{ position: 'absolute', right: -7, top: -7 }}>
+                  <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
+                </View>
+              ) : null}
+            </View>
+            <View style={{ width: '100%', padding: 5 }}>
               <TouchableOpacity
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  padding: 10,
+                  width: '100%',
+                  padding: 5,
                   backgroundColor: iconColorsTable['blue1'],
                   borderRadius: 5,
-                  marginRight: 10,
                 }}
                 onPress={() =>
                   setFormData((previous) => {
@@ -134,23 +137,27 @@ const Title = () => {
                   })
                 }
               >
-                <Ionicons name='videocam' color='white' size={20} style={{ marginRight: 10 }} />
-                <Text style={{ color: 'white' }}>Only videos</Text>
-                {formData.assetType === 'video' ? (
-                  <View style={{ position: 'absolute', right: -7, top: -7 }}>
-                    <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
-                  </View>
-                ) : null}
+                <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                  <Ionicons name='image' color='white' size={20} style={{ marginRight: 10 }} />
+                  <Text style={{ color: 'white', fontSize: 17, fontWeight: 'bold' }}>Videos</Text>
+                </View>
+                <Text style={{ color: baseTextColor, textAlign: 'center' }}>
+                  You and members can share only videos.
+                </Text>
               </TouchableOpacity>
+              {formData.assetType === 'video' ? (
+                <View style={{ position: 'absolute', right: -7, top: -7 }}>
+                  <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
+                </View>
+              ) : null}
+            </View>
+            <View style={{ width: '100%', padding: 5 }}>
               <TouchableOpacity
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  padding: 10,
+                  width: '100%',
+                  padding: 5,
                   backgroundColor: iconColorsTable['blue1'],
                   borderRadius: 5,
-                  marginRight: 10,
-                  alignSelf: 'flex-start',
                 }}
                 onPress={() =>
                   setFormData((previous) => {
@@ -161,19 +168,24 @@ const Title = () => {
                   })
                 }
               >
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}>
-                  <Ionicons name='image' color='white' size={20} />
-                  <Ionicons name='videocam' color='white' size={20} />
-                </View>
-                <Text style={{ color: 'white' }}>photos & videos</Text>
-                {formData.assetType === 'photoAndVideo' ? (
-                  <View style={{ position: 'absolute', right: -7, top: -7 }}>
-                    <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
+                <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}>
+                    <Ionicons name='image' color='white' size={20} style={{ marginRight: 5 }} />
+                    <Ionicons name='videocam' color='white' size={20} />
                   </View>
-                ) : null}
+                  <Text style={{ color: 'white', fontSize: 17, fontWeight: 'bold' }}>Photos & Videos</Text>
+                </View>
+                <Text style={{ color: baseTextColor, textAlign: 'center' }}>
+                  You and members can share photos and videos.
+                </Text>
               </TouchableOpacity>
+              {formData.assetType === 'photoAndVideo' ? (
+                <View style={{ position: 'absolute', right: -7, top: -7 }}>
+                  <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
+                </View>
+              ) : null}
             </View>
-          </ScrollView>
+          </View>
         </View>
       ) : null}
     </View>

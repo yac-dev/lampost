@@ -157,7 +157,7 @@ const Public = (props) => {
           >
             <MaterialCommunityIcons name='door-open' size={25} color={iconColorsTable['pink1']} />
           </View>
-          <Text style={{ fontWeight: 'bold', fontSize: 17, color: 'white', marginRight: 10 }}>Public</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 17, color: 'white', marginRight: 10 }}>Visibility</Text>
         </TouchableOpacity>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Ionicons
@@ -189,19 +189,15 @@ const Public = (props) => {
           <View
             style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}
           >
-            <Text style={{ fontSize: 13, color: baseTextColor }}>
-              Is this library open to anyone in this app or just your friends?
-            </Text>
+            <Text style={{ fontSize: 13, color: baseTextColor }}>Who can join this library?</Text>
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{ width: '100%', padding: 5 }}>
             <TouchableOpacity
               style={{
-                padding: 10,
+                padding: 5,
                 borderRadius: 5,
                 backgroundColor: iconColorsTable['blue1'],
-                marginRight: 10,
-                flexDirection: 'row',
-                alignItems: 'center',
+                width: '100%',
               }}
               onPress={() =>
                 setFormData((previous) => {
@@ -212,16 +208,18 @@ const Public = (props) => {
                 })
               }
             >
-              <Text style={{ color: 'white' }}>Open to anyone</Text>
+              <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold', fontSize: 17 }}>Public</Text>
+              <Text style={{ color: baseTextColor, textAlign: 'center' }}>Everyone can join this library.</Text>
               {renderCheckMarkForOpenToAnyone()}
             </TouchableOpacity>
+          </View>
+          <View style={{ width: '100%', padding: 5 }}>
             <TouchableOpacity
               style={{
-                padding: 10,
+                padding: 5,
                 borderRadius: 5,
                 backgroundColor: iconColorsTable['blue1'],
-                flexDirection: 'row',
-                alignItems: 'center',
+                width: '100%',
               }}
               onPress={() =>
                 setFormData((previous) => {
@@ -232,7 +230,10 @@ const Public = (props) => {
                 })
               }
             >
-              <Text style={{ color: 'white' }}>Just my friends</Text>
+              <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold', fontSize: 17 }}>Private</Text>
+              <Text style={{ textAlign: 'center', color: baseTextColor }}>
+                Only you and meetup friends can join this library.
+              </Text>
               {renderCheckMarkForJustFriends()}
             </TouchableOpacity>
           </View>

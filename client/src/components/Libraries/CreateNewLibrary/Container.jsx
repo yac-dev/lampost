@@ -26,7 +26,7 @@ const Container = (props) => {
     invitationMessage: '',
     isReactionAvailable: '',
     reactions: [],
-    isCommentAvailable: '',
+    // isCommentAvailable: '',
     asset: null,
     description: '',
   });
@@ -37,7 +37,7 @@ const Container = (props) => {
     // trust: false,
     public: false,
     reaction: false,
-    comment: false,
+    // comment: false,
     description: false,
     asset: false,
   });
@@ -48,7 +48,7 @@ const Container = (props) => {
     // trust: false,
     public: false,
     reaction: false,
-    comment: false,
+    // comment: false,
     description: false,
     asset: false,
   });
@@ -63,7 +63,7 @@ const Container = (props) => {
       invitationMessage: formData.invitationMessage,
       isReactionAvailable: formData.isReactionAvailable,
       reactions: formData.reactions,
-      isCommentAvailable: formData.isCommentAvailable,
+      // isCommentAvailable: formData.isCommentAvailable,
       asset: {
         _id: formData.asset._id,
         data: formData.asset.data,
@@ -96,7 +96,7 @@ const Container = (props) => {
             stageCleared.public &&
             // stageCleared.trust &&
             stageCleared.reaction &&
-            stageCleared.comment &&
+            // stageCleared.comment &&
             stageCleared.description &&
             stageCleared.asset
               ? false
@@ -112,7 +112,7 @@ const Container = (props) => {
                 stageCleared.public &&
                 // stageCleared.trust &&
                 stageCleared.reaction &&
-                stageCleared.comment &&
+                // stageCleared.comment &&
                 stageCleared.description &&
                 stageCleared.asset
                   ? 'white'
@@ -161,7 +161,7 @@ const Container = (props) => {
           <Public />
           {/* <Trust /> */}
           <Reactions />
-          <Comment />
+          {/* <Comment /> */}
           <UploadContent />
           <Description />
         </ScrollView>

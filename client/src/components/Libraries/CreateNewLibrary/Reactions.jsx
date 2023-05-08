@@ -10,6 +10,7 @@ import {
   sectionBackgroundColor,
   screenSectionBackgroundColor,
   disabledTextColor,
+  rnDefaultBackgroundColor,
 } from '../../../utils/colorsTable';
 import { iconsTable } from '../../../utils/icons';
 import FastImage from 'react-native-fast-image';
@@ -118,20 +119,25 @@ const Title = () => {
           >
             <View
               style={{
-                padding: 5,
-                backgroundColor: inputBackgroundColorNew,
+                backgroundColor: rnDefaultBackgroundColor,
                 borderRadius: 5,
-                marginRight: 10,
-                flexDirection: 'row',
-                alignItems: 'center',
               }}
             >
-              <FastImage
-                source={{ uri: reaction.icon.url }}
-                style={{ width: 30, height: 30, marginRight: 5 }}
-                tintColor={'white'}
-              />
-              <Text style={{ color: 'white' }}>{reaction.comment}</Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  backgroundColor: backgroundColorsTable[reaction.color],
+                  padding: 5,
+                }}
+              >
+                <FastImage
+                  source={{ uri: reaction.icon.url }}
+                  style={{ width: 30, height: 30, marginRight: 5 }}
+                  tintColor={iconColorsTable[reaction.color]}
+                />
+                <Text style={{ color: iconColorsTable[reaction.color] }}>{reaction.comment}</Text>
+              </View>
             </View>
             <TouchableOpacity
               style={{
@@ -234,66 +240,61 @@ const Title = () => {
             style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}
           >
             <Text style={{ fontSize: 13, color: baseTextColor }}>
-              Allow people to like/upvote contents of this library?
+              Allow people to react each content in this library?
             </Text>
-            {/* <TouchableOpacity
+          </View>
+          <View style={{ width: '100%', padding: 5 }}>
+            <TouchableOpacity
               onPress={() => {
-                console.log('hello');
+                setFormData((previous) => {
+                  return {
+                    ...previous,
+                    isReactionAvailable: true,
+                  };
+                });
+              }}
+              style={{
+                backgroundColor: iconColorsTable['blue1'],
+                padding: 5,
+                borderRadius: 5,
+                width: '100%',
               }}
             >
-              <Ionicons name='help-circle' size={20} color={iconColorsTable['yellow1']} />
-            </TouchableOpacity> */}
-          </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-            <View style={{ marginRight: 15 }}>
-              <TouchableOpacity
-                onPress={() => {
-                  setFormData((previous) => {
-                    return {
-                      ...previous,
-                      isReactionAvailable: true,
-                    };
-                  });
-                }}
-                style={{
-                  backgroundColor: iconColorsTable['blue1'],
-                  padding: 10,
-                  borderRadius: 5,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-              >
+              <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
                 <MaterialCommunityIcons name='thumb-up' size={20} color={'white'} style={{ marginRight: 5 }} />
-                <Text style={{ color: 'white' }}>Yes, allow</Text>
-              </TouchableOpacity>
-              {renderCheckMarkForSure()}
-            </View>
-            <View>
-              <TouchableOpacity
-                onPress={() => {
-                  setFormData((previous) => {
-                    return {
-                      ...previous,
-                      isReactionAvailable: false,
-                    };
-                  });
-                }}
-                style={{
-                  backgroundColor: iconColorsTable['red1'],
-                  padding: 10,
-                  borderRadius: 5,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-              >
-                <Foundation name='prohibited' size={20} color={'white'} style={{ marginRight: 5 }} />
-                <Text style={{ color: 'white' }}>No, disable</Text>
-              </TouchableOpacity>
-              {renderCheckMarkForTurnedOff()}
-            </View>
+                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>Yes, allow</Text>
+              </View>
+            </TouchableOpacity>
+            {renderCheckMarkForSure()}
+          </View>
+          <View style={{ width: '100%', padding: 5 }}>
+            <TouchableOpacity
+              onPress={() => {
+                setFormData((previous) => {
+                  return {
+                    ...previous,
+                    isReactionAvailable: false,
+                  };
+                });
+              }}
+              style={{
+                backgroundColor: iconColorsTable['blue1'],
+                padding: 5,
+                borderRadius: 5,
+                width: '100%',
+              }}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>No reaction</Text>
+              </View>
+              <Text style={{ color: baseTextColor, textAlign: 'center' }}>
+                By turning off, you and members can enjoy snapshoots without like/upvote❤️ feature.
+              </Text>
+            </TouchableOpacity>
+            {renderCheckMarkForTurnedOff()}
           </View>
           {formData.isReactionAvailable ? (
-            <View>
+            <View style={{ marginTop: 10 }}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -303,28 +304,31 @@ const Title = () => {
                 }}
               >
                 <Text style={{ fontSize: 13, color: baseTextColor }}>
-                  Now, please create your original like buttons.
+                  Now please create your original reaction options.
                 </Text>
-                <Text style={{ color: formData.reactions.length <= 3 ? baseTextColor : 'red', fontSize: 13 }}>
-                  {formData.reactions.length}/3
+                <Text style={{ color: formData.reactions.length <= 5 ? baseTextColor : 'red', fontSize: 13 }}>
+                  {formData.reactions.length}/5
                 </Text>
               </View>
-              <TouchableOpacity
-                style={{
-                  width: '100%',
-                  backgroundColor: iconColorsTable['blue1'],
-                  padding: 5,
-                  borderRadius: 5,
-                  marginRight: 10,
-                  marginBottom: 10,
-                }}
-                onPress={() => navigation.navigate('Create reaction')}
-              >
-                <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
-                  <MaterialCommunityIcons name='plus' color={'white'} size={20} style={{ marginRight: 5 }} />
-                  <Text style={{ color: 'white' }}>{formData.reactions.length ? 'Add more' : 'Add'}</Text>
-                </View>
-              </TouchableOpacity>
+              {formData.reactions.length >= 5 ? null : (
+                <TouchableOpacity
+                  style={{
+                    width: '100%',
+                    backgroundColor: iconColorsTable['blue1'],
+                    padding: 5,
+                    borderRadius: 5,
+                    marginRight: 10,
+                    marginBottom: 10,
+                  }}
+                  onPress={() => navigation.navigate('Create reaction')}
+                >
+                  <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                    <MaterialCommunityIcons name='plus' color={'white'} size={20} style={{ marginRight: 5 }} />
+                    <Text style={{ color: 'white' }}>{formData.reactions.length ? 'Add more' : 'Add'}</Text>
+                  </View>
+                </TouchableOpacity>
+              )}
+
               {renderReactionOptions()}
             </View>
           ) : null}

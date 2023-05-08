@@ -11,6 +11,7 @@ import CreateNewLibrary from '../../Libraries/CreateNewLibrary/Container';
 import CreateReaction from '../../Libraries/CreateNewLibrary/CreateReaction/Container';
 import IconPicker from '../../Libraries/CreateNewLibrary/CreateReaction/IconPicker';
 import MyFriends from '../../Libraries/CreateNewLibrary/MyFriends';
+import WriteDescription from '../../Libraries/CreateNewLibrary/WriteDescription';
 import Icons from '../../Libraries/CreateNewLibrary/Icons';
 import LibraryContainer from '../../Libraries/Library/Container';
 import DateAssets from '../../Libraries/Library/DateAssets/Container';
@@ -275,6 +276,25 @@ const LibraryNavigator = () => {
         <Stack.Screen
           name='My friends'
           component={MyFriends}
+          options={({ navigation }) => ({
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+              </TouchableOpacity>
+            ),
+            headerTitle: 'My friends',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          })}
+        />
+        <Stack.Screen
+          name='Write library description'
+          component={WriteDescription}
           options={({ navigation }) => ({
             headerLeft: () => (
               <TouchableOpacity onPress={() => navigation.goBack()}>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import CreateReactionContext from './CreateReactionContext';
-import { baseBackgroundColor, screenSectionBackgroundColor } from '../../../../utils/colorsTable';
+import { baseBackgroundColor, baseTextColor, screenSectionBackgroundColor } from '../../../../utils/colorsTable';
 import Icon from './Icon';
 import ShortComment from './ShortComment';
 import Color from './Color';
@@ -60,10 +60,10 @@ const Container = (props) => {
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
         <Text style={{ fontSize: 23, fontWeight: 'bold', marginBottom: 15, color: 'white' }}>📣 Note</Text>
-        <Text style={{ color: 'white', marginBottom: 10 }}>
-          On each library, we don't use traditional ❤️/👍 button to like each content. Instead, we use the like buttons
-          which are created by the library creator(you). You can make multiple original buttons (up to 3) and these are
-          only applied to this library. Be creative and member-friendly!
+        <Text style={{ color: baseTextColor, marginBottom: 10 }}>
+          In each library, we don't use traditional ❤️/👍 button to react each content. Instead, we use the original
+          button which is created by the library creator(you). You can create it by combining an icon and a short
+          comment. These are only applied to this library. Be creative and member-friendly!
         </Text>
         <Icon />
         <ShortComment />

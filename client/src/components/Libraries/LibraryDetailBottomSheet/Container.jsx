@@ -59,7 +59,7 @@ const LibraryDetailBottomSheet = (props) => {
               <Description />
               <SnapType />
               <Reactions />
-              <Comments />
+              {/* <Comments /> */}
               <Members />
               <Snaps />
             </ScrollView>

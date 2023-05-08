@@ -117,7 +117,7 @@ const UploadContent = () => {
           >
             <Ionicons name='cloud-upload' size={25} color={iconColorsTable['lightBlue1']} />
           </View>
-          <Text style={{ fontWeight: 'bold', fontSize: 17, color: 'white', marginRight: 10 }}>Upload content</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 17, color: 'white', marginRight: 10 }}>Upload snap</Text>
         </TouchableOpacity>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Ionicons
@@ -148,9 +148,7 @@ const UploadContent = () => {
         <View style={{ marginTop: 10 }}>
           <View style={{ marginBottom: 10 }}>
             <Text style={{ fontSize: 13, color: baseTextColor }}>
-              {formData.assetType
-                ? 'Please select your content you want to share.'
-                : '⚠️ Choose the content type at first.'}
+              {formData.assetType ? 'Please select your snap you want to share.' : '⚠️ Choose the snap type at first.'}
             </Text>
           </View>
           <TouchableOpacity

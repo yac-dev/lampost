@@ -23,7 +23,8 @@ import { iconsTable } from '../../../utils/icons';
 
 const Description = () => {
   const { AntDesign, Ionicons, MaterialCommunityIcons, MaterialIcons } = iconsTable;
-  const { formData, setFormData, stageCleared, setStageCleared, accordion, setAccordion } = useContext(FormContext);
+  const { formData, setFormData, stageCleared, setStageCleared, accordion, setAccordion, route, navigation } =
+    useContext(FormContext);
   const inputAccessoryViewID = 'DESCRIPTION_INPUT';
 
   useEffect(() => {
@@ -43,6 +44,17 @@ const Description = () => {
       });
     }
   }, [formData.description]);
+
+  useEffect(() => {
+    if (route.params?.description) {
+      setFormData((previous) => {
+        return {
+          ...previous,
+          description: route.params.description,
+        };
+      });
+    }
+  }, [route.params?.description]);
 
   return (
     <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 7, borderRadius: 5, marginBottom: 10 }}>
@@ -109,7 +121,24 @@ const Description = () => {
               {formData.description.length}/300
             </Text>
           </View>
-          <TextInput
+          <TouchableOpacity
+            style={{
+              padding: 5,
+              backgroundColor: iconColorsTable['blue1'],
+              borderRadius: 5,
+              marginBottom: 10,
+            }}
+            onPress={() => {
+              navigation.navigate('Write library description', { description: formData.description });
+            }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+              <AntDesign name='edit' size={20} color={'white'} style={{ marginRight: 10 }} />
+              <Text style={{ color: 'white' }}>Write</Text>
+            </View>
+          </TouchableOpacity>
+          <Text style={{ color: 'white' }}>{formData.description}</Text>
+          {/* <TextInput
             style={{
               flex: 1,
               padding: 10,
@@ -152,7 +181,7 @@ const Description = () => {
                 <Text style={{ color: 'white', padding: 10, fontWeight: 'bold' }}>Done</Text>
               </TouchableOpacity>
             </View>
-          </InputAccessoryView>
+          </InputAccessoryView> */}
         </View>
       ) : null}
     </View>
