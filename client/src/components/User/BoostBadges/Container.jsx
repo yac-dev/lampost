@@ -29,7 +29,7 @@ const BoostBadgesContainer = (props) => {
   const [growingTable, setGrowingTable] = useState({});
   const emojisPickerBottomSheetRef = useRef(null);
   const [changingEmojiBadge, setChangingEmojiBadge] = useState(null);
-  console.log(badgeDatas);
+  // console.log(badgeDatas);
 
   useEffect(() => {
     props.navigation.setOptions({

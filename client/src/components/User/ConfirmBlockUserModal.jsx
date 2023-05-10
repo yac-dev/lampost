@@ -17,7 +17,6 @@ const ConfirmBlockUserModal = (props) => {
       blockingUserId: user._id,
     };
     setLoading(true);
-    console.log(payload);
     const result = await lampostAPI.post('/userblockingrelationships/block', payload);
     setLoading(false);
     setSnackBar({

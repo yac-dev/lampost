@@ -193,7 +193,7 @@ export const postAssetsByLibraryId = async (request, response) => {
   try {
     const { assetId, userId } = request.body;
     const library = await Library.findById(request.params.libraryId);
-    const asset = await Library.findById(assetId);
+    const asset = await Asset.findById(assetId);
     library.totalAssets++;
     library.mood = asset.mood;
     library.save();

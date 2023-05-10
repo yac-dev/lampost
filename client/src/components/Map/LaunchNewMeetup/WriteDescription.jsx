@@ -77,6 +77,7 @@ const WriteDescription = (props) => {
             // padding: 10,
             // backgroundColor: 'rgb(235, 235, 235)',
             width: '100%', // ここも、下の修正に沿って80 90%に変える。
+            fontSize: 18,
           }}
           color={baseTextColor}
           ref={textInputRef}

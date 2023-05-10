@@ -17,7 +17,7 @@ const meetupSchema = new mongoose.Schema({
   ],
   title: {
     type: String,
-    maxLength: 40,
+    maxLength: 50,
   },
   startDateAndTime: Date,
   duration: Number,

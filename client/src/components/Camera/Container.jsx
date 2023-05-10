@@ -70,6 +70,7 @@ const Container = (props) => {
   const [isMeetupOngoing, setIsMeetupOngoing] = useState(false);
   const [duration, setDuration] = useState(0);
   const durationRef = useRef(null);
+  console.log(meetupAttendees);
 
   // const getMyUpcomingMeetupStates = async () => {
   //   if (auth.data.upcomingMeetups.length) {

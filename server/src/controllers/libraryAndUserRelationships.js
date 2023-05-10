@@ -42,7 +42,7 @@ export const getMyJoinedLibrary = async (request, response) => {
       .select({ library: 1 })
       .populate({
         path: 'library',
-        select: 'title color assetType isPublic totalAssets',
+        select: 'title color assetType isPublic totalAssets mood',
         populate: { path: 'thumbnail', select: 'data type' },
       });
     // [ {library: {name: 'qqqqq', description: 'hfuhoifhiqw'}, user: {'11111'} ]って面倒だからね。

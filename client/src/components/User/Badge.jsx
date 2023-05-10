@@ -34,7 +34,6 @@ const Badge = () => {
 
   const renderMojiTags = (badgeTags) => {
     const firstTwo = badgeTags.slice(0, 2);
-    console.log(firstTwo);
 
     const list = firstTwo.map((badgeTag, index) => {
       return <Text key={index}>{badgeTag.emoji}</Text>;
@@ -78,7 +77,6 @@ const Badge = () => {
         onPress={() => {
           badgeDetailBottomSheetRef.current.snapToIndex(0);
           setPressedBadgeData(userBadge);
-          console.log('hey');
         }}
       >
         <View
@@ -128,7 +126,7 @@ const Badge = () => {
       </TouchableOpacity>
 
       <Text
-        numberOfLines={1}
+        numberOfLines={2}
         style={{
           paddingLeft: 5,
           paddingRight: 5,

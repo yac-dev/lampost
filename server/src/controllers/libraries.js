@@ -87,6 +87,7 @@ export const createLibrary = async (request, response) => {
       isPublic,
       launcher: launcher._id,
       thumbnail: asset._id,
+      mood: '🔥',
       totalAssets: 1,
       totalMembers: 1,
       color: colors[Math.floor(Math.random() * colors.length)],
@@ -99,35 +100,36 @@ export const createLibrary = async (request, response) => {
       createdAt: new Date(),
     });
 
-    if (isReactionAvailable && reactions.length) {
-      const reactionOptions = reactions.map((reaction) => {
-        return {
-          library: library._id,
-          icon: reaction.icon._id,
-          comment: reaction.comment,
-          color: reaction.color,
-        };
-      });
-      const createdReactions = await Reaction.insertMany(reactionOptions);
-      const reactionIds = createdReactions.map((reaction) => reaction._id);
-      // ここでreactionのidだけ入れる。そんで、↓でsaveする。
-      library.reactions = reactionIds;
-      const reactionWithUpvote = reactionIds.map((reactionId) => {
-        return {
-          reaction: reactionId,
-          upvoted: 0,
-          users: [],
-        };
-      });
-      libraryAndAssetRelationship.reactions = reactionWithUpvote;
-    }
-    library.save();
-    libraryAndAssetRelationship.save();
+    // if (isReactionAvailable && reactions.length) {
+    //   const reactionOptions = reactions.map((reaction) => {
+    //     return {
+    //       library: library._id,
+    //       icon: reaction.icon._id,
+    //       comment: reaction.comment,
+    //       color: reaction.color,
+    //     };
+    //   });
+    //   const createdReactions = await Reaction.insertMany(reactionOptions);
+    //   const reactionIds = createdReactions.map((reaction) => reaction._id);
+    //   // ここでreactionのidだけ入れる。そんで、↓でsaveする。
+    //   library.reactions = reactionIds;
+    //   const reactionWithUpvote = reactionIds.map((reactionId) => {
+    //     return {
+    //       reaction: reactionId,
+    //       upvoted: 0,
+    //       users: [],
+    //     };
+    //   });
+    //   libraryAndAssetRelationship.reactions = reactionWithUpvote;
+    // }
+    // library.save();
+    // libraryAndAssetRelationship.save();
 
-    const libraryAndUserRelationship = await LibraryAndUserRelationship.create({
-      library: library._id,
-      user: launcher._id,
-    });
+    // const libraryAndUserRelationship = await LibraryAndUserRelationship.create({
+    //   library: library._id,
+    //   user: launcher._id,
+    //   createdAt: new Date(),
+    // });
 
     // ここで、友達たちにinvitationを送る。
     if (friendIds.length) {
@@ -152,6 +154,8 @@ export const createLibrary = async (request, response) => {
         thumbnail: { data: asset.data, type: asset.type },
         assetType: assetType,
         isPublic: library.isPublic,
+        totalAssets: 1,
+        mood: '🔥',
       },
     });
   } catch (error) {

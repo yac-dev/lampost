@@ -36,7 +36,7 @@ const SendChatBottomSheet = (props) => {
   const renderEmoji = (emoji) => {
     return (
       <TouchableOpacity style={{ padding: 10 }} onPress={() => setSendingText((previous) => previous + emoji)}>
-        <Text>{emoji}</Text>
+        <Text style={{ fontSize: 20 }}>{emoji}</Text>
       </TouchableOpacity>
     );
   };
@@ -82,7 +82,7 @@ const SendChatBottomSheet = (props) => {
   const renderTextInputPlaceHolder = () => {
     switch (chatType) {
       case 'general':
-        return 'Please type your chat message.';
+        return 'Please type a chat message.';
       case 'question':
         return 'What is your question?';
       case 'help':

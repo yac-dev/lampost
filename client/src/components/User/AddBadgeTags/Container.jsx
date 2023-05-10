@@ -108,7 +108,7 @@ const AddBadgeTagsContainer = (props) => {
         <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 22 }}>Add badge tags</Text>
       </View>
       <Text style={{ color: baseTextColor, marginBottom: 10 }}>
-        Express your badge more by using emoji and text. Your status, mood, how much you love,,, whatever you want.
+        Express your badge more by using emoji and text. Your status, mood, how much you love... whatever you want.
       </Text>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 30 }}>
         <View

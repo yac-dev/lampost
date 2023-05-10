@@ -102,7 +102,7 @@ const ActionButtons = () => {
       meetupDetailBottomSheetRef.current.close();
       setSnackBar({
         isVisible: true,
-        message: `Joined ${selectedMeetup.title} successfully. \n Don't forget to RSVP when you are ready.`,
+        message: `Joined ${selectedMeetup.title} successfully. \n Please don't forget to send RSVP to launcher when you are ready.`,
         barType: 'success',
         duration: 5000,
       });
@@ -189,7 +189,7 @@ const ActionButtons = () => {
                       color={'white'}
                       style={{ marginRight: 10 }}
                     />
-                    <Text style={{ color: 'white' }}>Join this library</Text>
+                    <Text style={{ color: 'white' }}>Join this meetup</Text>
                   </View>
                 </View>
               </TouchableOpacity>

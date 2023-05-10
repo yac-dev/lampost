@@ -112,7 +112,7 @@ const TagPeopleBottomSheet = (props) => {
 
       return (
         <BottomSheetScrollView>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>
             {/* <TouchableOpacity
               style={{
                 width: oneGridWidth,

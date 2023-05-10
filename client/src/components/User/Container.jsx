@@ -25,7 +25,6 @@ import ActionButton from '../Utils/ActionButton';
 // components
 // import Header from './Header';
 import Header from './Header/Container';
-import ActionButttons from './Header/ActionButttons';
 import Badge from './Badge';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import BadgeMenuBottomSheet from './BadgeMenuBottomSheet';
@@ -80,7 +79,7 @@ const Container = (props) => {
   const [isOpenCreateBadgeTagTextInput, setIsOpenCreateBadgeTagTextInput] = useState(false);
   // これで、自分のpageを見ているか、他人のpageを見ているかのstateを管理する。
   const [badgeIndexes, setBadgeIndexes] = useState({});
-  console.log(userBadges);
+
   useEffect(() => {
     if (auth.isAuthenticated && props.route.params.userId === auth.data._id) {
       setIsMyPage(true);
@@ -92,7 +91,6 @@ const Container = (props) => {
   const getUser = async () => {
     const result = await lampostAPI.post(`/users/${props.route.params.userId}`);
     const { user } = result.data;
-    // console.log(user);
     setUser(user);
     // setIsBlocked(isBlocking);
     setIsFetchedUserData(true);
@@ -101,12 +99,12 @@ const Container = (props) => {
     getUser();
   }, []);
 
-  useFocusEffect(
-    useCallback(() => {
-      getUser();
-      // getBadgeDatasByUserId();
-    }, [])
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     getUser();
+  //     // getBadgeDatasByUserId();
+  //   }, [])
+  // );
 
   const onUnlockUserPress = async () => {
     const payload = {
@@ -124,7 +122,6 @@ const Container = (props) => {
     });
     setIsBlocked(false);
   };
-  // console.log(badgeDatas[2]);
 
   const getBadgeDatasByUserId = async () => {
     const result = await lampostAPI.get(`/badgeanduserrelationships/${props.route.params.userId}`);
@@ -274,24 +271,6 @@ const Container = (props) => {
               <Text style={{ color: baseTextColor, textAlign: 'center', marginBottom: 10, paddingTop: 70 }}>
                 🤔 Who are you?{'\n'}Let's add some badges that are related to your interests{'\n'}from down below.
               </Text>
-              {/* <TouchableOpacity
-                style={{
-                  alignSelf: 'center',
-                  padding: 10,
-                  backgroundColor: iconColorsTable['blue1'],
-                  borderRadius: 10,
-                }}
-                onPress={() => props.navigation.navigate('Add badges', { fromComponent: 'ADD_USER_BADGES' })}
-              >
-                <Text
-                  style={{
-                    // textAlign: 'center',
-                    color: 'white',
-                  }}
-                >
-                  Add from here
-                </Text>
-              </TouchableOpacity> */}
             </View>
           ) : (
             <Text style={{ color: baseTextColor, textAlign: 'center' }}>You'll see all the badges of this user.</Text>
@@ -486,11 +465,11 @@ const Container = (props) => {
         <AddBadgeTagsBottomSheet />
         <AddLinkBottomSheet />
         <FlagUserMenuBottomSheet />
-        <ActivitiesMenuBottomSheet />
-        <ConfirmEditProfileModal />
+        {/* <ActivitiesMenuBottomSheet /> */}
+        {/* <ConfirmEditProfileModal /> */}
         <ConfirmFlagUserModal />
-        <ConfirmActionButtonModal />
-        <ConfirmDeleteAccount />
+        {/* <ConfirmActionButtonModal /> */}
+        {/* <ConfirmDeleteAccount /> */}
         {/* <ConfirmLogout /> */}
         <ConfirmBlockUserModal />
       </>

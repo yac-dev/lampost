@@ -127,9 +127,9 @@ const Meetups = (props) => {
         >
           <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
             <Ionicons size={25} name='power' color={'white'} style={{ marginRight: 5 }} />
-            <Text style={{ color: 'white' }}>Start meetup</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 18 }}>Start meetup</Text>
           </View>
-          <Text style={{ color: baseTextColor, textAlign: 'center' }}>Tap here when ready.</Text>
+          <Text style={{ color: 'white', textAlign: 'center' }}>Be sure to tap here when ready to start.</Text>
         </TouchableOpacity>
       );
     } else if (meetupAndChatsTable.state === 'ongoing') {
@@ -148,9 +148,9 @@ const Meetups = (props) => {
         >
           <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
             <Ionicons size={25} name='power' color={'white'} />
-            <Text style={{ color: 'white' }}>Finish meetup</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 18 }}>Finish meetup</Text>
           </View>
-          <Text style={{ color: baseTextColor, textAlign: 'center' }}>Tap here after your meetup ends.</Text>
+          <Text style={{ color: 'white', textAlign: 'center' }}>Be sure to tap here after your meetup ends.</Text>
         </TouchableOpacity>
       );
     }
@@ -194,8 +194,9 @@ const Meetups = (props) => {
         >
           <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
             <MaterialCommunityIcons size={25} name='email-fast' color={'white'} style={{ marginRight: 5 }} />
-            <Text style={{ color: 'white', marginRight: 5 }}>Send RSVP</Text>
+            <Text style={{ color: 'white', marginRight: 5, fontWeight: 'bold', fontSize: 18 }}>Send RSVP</Text>
           </View>
+          <Text style={{ color: 'white', textAlign: 'center' }}>Be sure to tap here if you are ready to go.</Text>
         </TouchableOpacity>
       );
     }
@@ -219,7 +220,7 @@ const Meetups = (props) => {
           >
             <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
               <Ionicons size={25} name='ios-chatbubbles' color={'white'} style={{ marginRight: 5 }} />
-              <Text style={{ color: 'white', marginRight: 5 }}>Go to lounge</Text>
+              <Text style={{ color: 'white', marginRight: 5, fontWeight: 'bold', fontSize: 18 }}>Go to lounge</Text>
             </View>
           </TouchableOpacity>
           {renderChatStats(meetup)}
@@ -234,6 +235,7 @@ const Meetups = (props) => {
               backgroundColor: iconColorsTable['blue1'],
               borderRadius: 7,
               padding: 5,
+              marginBottom: 10,
             }}
             onPress={() => {
               topLevelHomeNavigation.navigate('Home lounge', { meetupId: meetup._id });
@@ -241,7 +243,7 @@ const Meetups = (props) => {
           >
             <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
               <Ionicons size={25} name='ios-chatbubbles' color={'white'} style={{ marginRight: 5 }} />
-              <Text style={{ color: 'white', marginRight: 5 }}>Go to lounge</Text>
+              <Text style={{ color: 'white', marginRight: 5, fontWeight: 'bold', fontSize: 18 }}>Go to lounge</Text>
             </View>
           </TouchableOpacity>
           {renderChatStats(meetup)}

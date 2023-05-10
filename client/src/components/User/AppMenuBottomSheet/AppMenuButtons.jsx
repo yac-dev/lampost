@@ -18,6 +18,8 @@ import {
   baseTextColor,
 } from '../../../utils/colorsTable';
 import AppMenuButton from '../../Utils/AppMenuButton';
+import * as ImagePicker from 'expo-image-picker';
+import lampostAPI from '../../../apis/lampost';
 
 const AppButtons = (props) => {
   const {
@@ -75,11 +77,74 @@ const AppButtons = (props) => {
     // navigation.goBack();
   };
 
-  //
+  const editProfile = async () => {
+    // setIsConfirmEditProfileModalOpen(false);
+    let pickedImage = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 0,
+    });
+
+    if (!pickedImage.cancelled && pickedImage.uri) {
+      const formData = new FormData();
+      // photo fieldよりも後にmeetupIdをappendするとダメなんだよな。。。何でだろ。。。
+      formData.append('userId', auth.data._id);
+
+      formData.append('avatar', {
+        name: `user-${auth.data._id}`,
+        uri: pickedImage.uri,
+        type: 'image/jpg',
+      });
+      const result = await lampostAPI.patch(`/users/${auth.data._id}/profile`, formData, {
+        headers: { 'Content-type': 'multipart/form-data' },
+      });
+      // console.log(res);
+      // setSelectedProfileImage(result.uri);
+      const { photo } = result.data;
+      console.log('this is my photo', photo);
+      setAuth((previous) => {
+        return {
+          ...previous,
+          data: {
+            ...previous.data,
+            photo: photo,
+          },
+        };
+      });
+    }
+  };
 
   return (
     <ScrollView>
       <View>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+          onPress={() => {
+            // setIsConfirmLogoutModalOpen(true);
+            // console.log('logging out');
+            appMenuBottomSheetRef.current.close();
+            editProfile();
+          }}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={{
+                width: 40,
+                height: 40,
+                backgroundColor: backgroundColorsTable['yellow1'],
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 8,
+                marginRight: 10,
+              }}
+            >
+              <MaterialCommunityIcons name='camera-plus' color={iconColorsTable['yellow1']} size={20} />
+            </View>
+            <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>Change profile picture</Text>
+          </View>
+          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
+        </TouchableOpacity>
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {

@@ -128,11 +128,6 @@ const typesTable = {
     _id: '640eac88bb51b34346aa01df',
     // list: music,
   },
-  outdoors: {
-    _id: '64112c86cec88f566dc8b8c4',
-    // list: outdoors,
-    name: 'outdoors',
-  },
   photography: {
     _id: '64112cafcec88f566dc8b8c5',
     // list: photography,
@@ -250,25 +245,27 @@ const createIconAndBadgeAndSendToAWS = async (dirName) => {
 
 const createDatas = async () => {
   const types = [
-    'animes',
-    'apps',
-    'artsAndCrafts',
-    // 'books',
-    // 'brands',
-    // 'businessAndFinance',
-    // 'education',
-    // 'fashionAndBeauty',
-    // 'films',
-    // 'foodsAndDrinks',
-    // 'gamings',
-    // 'music',
-    // 'people',
-    // 'petsAndAnimals',
-    // 'photography',
-    // 'sportsAndOutdoors',
-    // 'tech',
-    // 'videoGames',
-    // 'writings',
+    // 'animes',
+    // 'apps',
+    // 'artsAndCrafts',
+    // 'books', // この3つの間で、なんか起きている。。。　探すか。。。
+    // 'brands', //ここ
+    // 'businessAndFinance', //ここ
+    'education',
+    'fashionAndBeauty',
+    'films',
+    'foodsAndDrinks',
+    'gamings',
+    'music',
+    'people',
+    'petsAndAnimals',
+    'photography',
+    'sportsAndOutdoors',
+    'tech',
+    'videoGames',
+    'writings',
+    'dancing',
+    'vehicles',
   ];
   for (let type of types) {
     const res = await createIconAndBadgeAndSendToAWS(type);

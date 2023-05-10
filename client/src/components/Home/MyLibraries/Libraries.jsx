@@ -81,7 +81,10 @@ const Libraries = (props) => {
                 )}
               </View>
             </View>
-            <Text style={{ color: 'white', marginRight: 10 }}>{library.totalAssets}</Text>
+            <Text style={{ color: 'white', marginRight: 10 }}>
+              {library.mood}
+              {library.totalAssets}
+            </Text>
           </TouchableOpacity>
         );
       } else if (library.thumbnail.type === 'video') {
@@ -130,7 +133,10 @@ const Libraries = (props) => {
                 )}
               </View>
             </View>
-            <Text style={{ color: 'white', marginRight: 10 }}>{library.totalAssets}</Text>
+            <Text style={{ color: 'white', marginRight: 10 }}>
+              {library.mood}
+              {library.totalAssets}
+            </Text>
           </TouchableOpacity>
         );
       }

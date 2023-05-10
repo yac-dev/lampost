@@ -9,6 +9,7 @@ const libraryAndUserRelationshipSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
   },
+  createdAt: Date,
 });
 
 const LibraryAndUserRelationship = mongoose.model('LibraryAndUserRelationship', libraryAndUserRelationshipSchema);

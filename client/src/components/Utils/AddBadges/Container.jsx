@@ -47,17 +47,21 @@ const filterTypeIdsTable = {
     _id: '640ea1b4ce9f3adbb2038625',
     name: 'petsAndAnimals',
   },
-  business: {
+  businessAndFinance: {
     _id: '640eac88bb51b34346aa01d4',
-    name: 'business',
-  },
-  finance: {
-    _id: '640eac88bb51b34346aa01d5',
-    name: 'finance',
+    name: 'businessAndFinance',
   },
   family: {
     _id: '64112c47cec88f566dc8b8c3',
     name: 'family',
+  },
+  brands: {
+    _id: '6443460443e75c808275f883',
+    name: 'brands',
+  },
+  people: {
+    _id: '6443464743e75c808275f884',
+    name: 'people',
   },
   dancing: {
     _id: '64112c19cec88f566dc8b8c2',
@@ -114,8 +118,9 @@ const filterTypeIdsTable = {
     _id: '640eac88bb51b34346aa01dc',
     name: 'vehicles',
   },
-  sports: {
+  sportsAndOutdoors: {
     _id: '640eac88bb51b34346aa01e3',
+    // list: sports,
     name: 'sports',
   },
   tech: {
@@ -532,9 +537,20 @@ const Container = (props) => {
             borderRadius: 10,
           }}
         >
-          <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', paddingLeft: 15, paddingTop: 10 }}>
-            Adding badges...
-          </Text>
+          <View
+            style={{
+              paddingLeft: 15,
+              paddingTop: 10,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>Adding badges...</Text>
+            <Text style={{ color: baseTextColor, alignSelf: 'flex-end', marginRight: 5 }}>
+              Press "Done"⬆️ to finish
+            </Text>
+          </View>
           <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
             {list}
           </ScrollView>
@@ -634,6 +650,12 @@ const Container = (props) => {
               onFilterOptionPress={() => setSelectedFilterOption('education')}
             />
             <FilterOption
+              label='Brands'
+              value='brands'
+              icon={<MaterialCommunityIcons name='star' size={25} color={'white'} style={{ marginRight: 5 }} />}
+              onFilterOptionPress={() => setSelectedFilterOption('brands')}
+            />
+            <FilterOption
               label='Fashion & Beauty'
               value='fashionAndBeauty'
               icon={<MaterialCommunityIcons name='shopping' size={25} color={'white'} style={{ marginRight: 5 }} />}
@@ -644,6 +666,12 @@ const Container = (props) => {
               value='foodsAndDrinks'
               icon={<MaterialCommunityIcons name='food' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('foodsAndDrinks')}
+            />
+            <FilterOption
+              label='People'
+              value='people'
+              icon={<MaterialCommunityIcons name='account' size={25} color={'white'} style={{ marginRight: 5 }} />}
+              onFilterOptionPress={() => setSelectedFilterOption('people')}
             />
             {/* <FilterOption
               label='Fitness & Health'
@@ -675,18 +703,18 @@ const Container = (props) => {
               icon={<Ionicons name='musical-notes' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('music')}
             />
-            <FilterOption
+            {/* <FilterOption
               label='Spirituality'
               value='spirituality'
               icon={<MaterialCommunityIcons name='ufo-outline' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('spirituality')}
-            />
-            <FilterOption
+            /> */}
+            {/* <FilterOption
               label='Family'
               value='family'
               icon={<MaterialIcons name='family-restroom' size={25} color={'white'} style={{ marginRight: 5 }} />}
               onFilterOptionPress={() => setSelectedFilterOption('family')}
-            />
+            /> */}
             <FilterOption
               label='Video games'
               value='videoGames'

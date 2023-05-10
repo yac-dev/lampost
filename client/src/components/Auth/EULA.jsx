@@ -56,7 +56,9 @@ const licenceGrantPermissions = [
 const EULA = () => {
   const renderLicenceGrantPermissons = () => {
     const list = licenceGrantPermissions.map((permisson, index) => {
-      return <Text style={{ color: baseTextColor, fontSize: 17, lineHeight: 25 }}>{`\u2022 ${permisson}`}</Text>;
+      return (
+        <Text key={index} style={{ color: baseTextColor, fontSize: 17, lineHeight: 25 }}>{`\u2022 ${permisson}`}</Text>
+      );
     });
 
     return <View style={{ paddingLeft: 15 }}>{list}</View>;

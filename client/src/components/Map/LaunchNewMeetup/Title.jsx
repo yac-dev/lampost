@@ -19,7 +19,7 @@ const Title = () => {
   const inputAccessoryViewID = 'MEETUP_TITLE_INPUT';
 
   useEffect(() => {
-    if (formData.title.length && formData.title.length <= 41) {
+    if (formData.title.length && formData.title.length <= 50) {
       setStageCleared((previous) => {
         return {
           ...previous,
@@ -37,10 +37,10 @@ const Title = () => {
   }, [formData.title]);
 
   const renderTitleLength = () => {
-    if (formData.title.length <= 40) {
-      return <Text style={{ fontSize: 13, color: baseTextColor }}>{formData.title.length}/40</Text>;
+    if (formData.title.length <= 50) {
+      return <Text style={{ fontSize: 13, color: baseTextColor }}>{formData.title.length}/50</Text>;
     } else {
-      return <Text style={{ fontSize: 13, color: 'red' }}>OOPS! {formData.title.length}/40</Text>;
+      return <Text style={{ fontSize: 13, color: 'red' }}>OOPS! {formData.title.length}/50</Text>;
     }
   };
 

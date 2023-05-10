@@ -5,7 +5,6 @@ import { baseBackgroundColor } from '../../../utils/colorsTable';
 import LinkObject from './LinkObject';
 
 const AddLinksContainer = (props) => {
-  console.log(props.route.params.badgeId);
   const [linkObjects, setLinkObjects] = useState([{ type: '', name: '', url: '' }]);
 
   return (

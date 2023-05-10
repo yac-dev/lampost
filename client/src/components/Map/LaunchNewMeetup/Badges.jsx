@@ -187,8 +187,8 @@ const Badges = () => {
         <View style={{ marginTop: 10 }}>
           <View style={{ flexDirection: 'column', marginBottom: 10 }}>
             <Text style={{ fontSize: 13, color: baseTextColor, marginBottom: 5 }}>
-              Please add some badges so attendees know what this meetup is about. The first one will be appear on the
-              map.
+              Please add some badges so attendees know what this meetup is about. Only the first one will be appear on
+              the map.
             </Text>
             {renderBadgesLength()}
           </View>

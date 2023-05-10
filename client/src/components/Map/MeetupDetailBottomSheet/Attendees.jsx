@@ -37,7 +37,7 @@ const AttendeesContainer = (props) => {
     });
 
     return (
-      <ScrollView horizontal={true}>
+      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>{list}</View>
       </ScrollView>
     );

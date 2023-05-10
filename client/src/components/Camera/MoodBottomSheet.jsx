@@ -11,14 +11,16 @@ import {
 } from '../../utils/colorsTable';
 import { emojis } from '../../utils/emojisList';
 
+const emojiOptions = ['😄', '😎', '🤔', '😍', '🤤', '😂', '😎', '🔥', '❤️', '😌'];
+
 const MoodBottomSheet = (props) => {
   const { auth, isIpad } = useContext(GlobalContext);
-  const oneGridWidth = isIpad ? Dimensions.get('window').width / 15 : Dimensions.get('window').width / 8;
+  const oneGridWidth = isIpad ? Dimensions.get('window').width / 15 : Dimensions.get('window').width / 5;
   const { mood, setMood, moodBottomSheetRef } = useContext(CameraContext);
-  const snapPoints = useMemo(() => ['60%'], []);
+  const snapPoints = useMemo(() => ['40%'], []);
 
   const renderEmojis = () => {
-    const list = emojis.map((emoji, index) => {
+    const list = emojiOptions.map((emoji, index) => {
       return (
         <View key={index} style={{ width: oneGridWidth, aspectRatio: 1, padding: 3 }}>
           <TouchableOpacity

@@ -86,7 +86,7 @@ const Link = () => {
               setAccordion((previous) => {
                 return {
                   ...previous,
-                  title: !previous.title,
+                  link: !previous.link,
                 };
               })
             }
