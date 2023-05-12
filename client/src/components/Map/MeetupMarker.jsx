@@ -2,24 +2,28 @@ import React, { useState, useContext } from 'react';
 import GlobalContext from '../../GlobalContext';
 import MapContext from './MeetupContext';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { Marker } from 'react-native-maps';
+import { Marker, Callout } from 'react-native-maps';
 import SVG from 'react-native-svg';
 import FastImage from 'react-native-fast-image';
 import lampostAPI from '../../apis/lampost';
 import { iconColorsTable, backgroundColorsTable, rnDefaultBackgroundColor } from '../../utils/colorsTable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 const MapMarker = (props) => {
   const { isIpad } = useContext(GlobalContext);
-  const { selectedMeetup, setSelectedMeetup, meetupDetailBottomSheetRef } = useContext(MapContext);
+  const { selectedMeetup, setSelectedMeetup, meetupDetailBottomSheetRef, setViewing } = useContext(MapContext);
   // const [trackView, setTrackView] = useState(true);
   const [initialRender, setInitialRender] = useState(true);
+  const [showCallout, setShowCallout] = useState(false);
 
   const getSelectedMeetup = async (meetupId) => {
     meetupDetailBottomSheetRef.current.snapToIndex(0);
     const result = await lampostAPI.get(`/meetups/${meetupId}/selected`);
     const { meetup } = result.data;
     setSelectedMeetup(meetup);
+    setShowCallout(true);
+    // setViewing(meetup.place.coordinates);
   };
 
   return (
@@ -27,7 +31,7 @@ const MapMarker = (props) => {
       key={`${props.meetup._id}-${initialRender}`}
       tracksViewChanges={false}
       coordinate={{ latitude: props.meetup.place.coordinates[1], longitude: props.meetup.place.coordinates[0] }}
-      // pinColor='black'
+      pinColor='black'
       onPress={() => {
         getSelectedMeetup(props.meetup._id);
       }}
@@ -38,6 +42,7 @@ const MapMarker = (props) => {
           aspectRatio: 1,
           backgroundColor: rnDefaultBackgroundColor,
           borderRadius: 10,
+          // marginRight: 5,
         }}
       >
         <TouchableOpacity
@@ -53,11 +58,8 @@ const MapMarker = (props) => {
           }}
         >
           <SVG width={30} height={30}>
-            {/* <Image href={{ uri: props.meetup.badge.icon }} width={'100%'} height={'100%'} /> */}
             <FastImage
-              // onLoadEnd={() => setTrackView(false)}
               onLoad={() => setInitialRender(false)}
-              // onLayout={() => setInitialRender(false)}
               style={{
                 width: '100%',
                 height: '100%',
@@ -71,6 +73,19 @@ const MapMarker = (props) => {
             />
           </SVG>
         </TouchableOpacity>
+        {selectedMeetup && selectedMeetup._id === props.meetup._id ? (
+          <View
+            style={{
+              width: 20,
+              height: 20,
+              borderRadius: 10,
+              backgroundColor: 'red',
+              position: 'absolute',
+              top: -7,
+              right: -7,
+            }}
+          ></View>
+        ) : null}
       </View>
     </Marker>
   );

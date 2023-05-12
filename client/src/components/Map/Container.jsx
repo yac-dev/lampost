@@ -86,6 +86,7 @@ const Map = (props) => {
   const [finishingMeetup, setFinishingMeetup] = useState('');
   const [RSVPingMeetup, setRSVPingMeetup] = useState(null);
   const userMenuBottomSheetRef = useRef(null);
+  const [viewing, setViewing] = useState(null);
 
   // 基本は、mapのいずれをtapしてもなにも起きないようにする。launchMeetupがtrueのときだけ、mapをtapしたらlocationをsetして、launchのformを出す。
   const setMeetupLocation = (event) => {
@@ -93,6 +94,14 @@ const Map = (props) => {
       // props.setMeetupLocation(event.nativeEvent.coordinate);
       setLaunchLocation(event.nativeEvent.coordinate);
       launchMeetupBottomSheetRef.current.snapToIndex(1);
+    } else {
+      return null;
+    }
+  };
+
+  const setViewingIcon = (event) => {
+    if (selectedMeetup) {
+      setViewing(event.nativeEvent.coordinate);
     } else {
       return null;
     }
@@ -233,6 +242,7 @@ const Map = (props) => {
     <>
       <MapContext.Provider
         value={{
+          mapRef,
           navigation: props.navigation,
           launchMeetupBottomSheetRef,
           appMenuBottomSheetRef,
@@ -270,6 +280,8 @@ const Map = (props) => {
           RSVPingMeetup,
           setRSVPingMeetup,
           userMenuBottomSheetRef,
+          viewing,
+          setViewing,
         }}
       >
         <View style={styles.container}>
@@ -279,7 +291,7 @@ const Map = (props) => {
             showsUserLocation={true}
             customMapStyle={mapStyle}
             // // showsMyLocationButton={true}
-            followsUserLocation={true}
+            // followsUserLocation={true}
             showsCompass={true}
             scrollEnabled={true}
             zoomEnabled={true}
@@ -291,20 +303,19 @@ const Map = (props) => {
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }}
-            provider='google'
+            // provider='google'
             // provider={Platform.OS === 'android' ? MapView.PROVIDER_GOOGLE : MapView.PROVIDER_DEFAULT}
           >
-            {launchLocation ? (
+            {/* {viewing ? (
               <Marker
                 tracksViewChanges={false} // これがないと、めちゃくちゃlaggyになる。
                 coordinate={{
-                  latitude: launchLocation.latitude,
-                  longitude: launchLocation.longitude,
+                  latitude: viewing[1],
+                  longitude: viewing[0],
                 }}
               >
-                <Ionicons size={35} name='pin' color={iconColorsTable['red1']} />
               </Marker>
-            ) : null}
+            ) : null} */}
             <MapMarkers />
           </MapView>
           {auth.isAuthenticated ? (

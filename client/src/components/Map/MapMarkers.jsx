@@ -13,7 +13,6 @@ import { selectMeetup } from '../../redux/actionCreators/selectItem';
 
 const MapMarkers = (props) => {
   const { meetups, selectedMeetup, setSelectedMeetup, selectedMeetupBottomSheetRef } = useContext(MapContext);
-
   // useEffect(() => {
   //   const { socket } = props.auth;
   //   if (socket) {

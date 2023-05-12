@@ -142,7 +142,7 @@ const Reactions = () => {
             </View>
           ) : (
             <Text style={{ textAlign: 'center', color: 'white' }}>
-              Just enjoy the photos and videos without any reactions.
+              Just enjoy everyone's snaps without any reactions.
             </Text>
           )}
         </View>

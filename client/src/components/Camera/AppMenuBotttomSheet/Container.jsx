@@ -10,7 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 const AppMenuBottomSheet = (props) => {
   const { auth, isIpad } = useContext(GlobalContext);
   const { appMenuBottomSheetRef, cameraMode } = useContext(CameraContext);
-  const snapPoints = useMemo(() => ['45%', '60%'], []);
+  const snapPoints = useMemo(() => ['35%'], []);
 
   const renderCameraMode = () => {
     switch (cameraMode) {

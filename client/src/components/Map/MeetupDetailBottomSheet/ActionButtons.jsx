@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Share, Alert } from 'react-native';
 import GlobalContext from '../../../GlobalContext';
 import MeetupContext from '../MeetupContext';
 import DiscoverNavigatorContext from '../../Navigator/Discover/DiscoverNavigatorContext';
@@ -10,7 +10,7 @@ const { MaterialCommunityIcons, MaterialIcons } = iconsTable;
 
 const ActionButtons = () => {
   const { auth, setLoading, myUpcomingMeetups, setMyUpcomingMeetups, setSnackBar } = useContext(GlobalContext);
-  const { selectedMeetup, meetupDetailBottomSheetRef } = useContext(MeetupContext);
+  const { selectedMeetup, meetupDetailBottomSheetRef, mapRef } = useContext(MeetupContext);
   const { topLevelNavigation } = useContext(DiscoverNavigatorContext);
 
   const validateJoinMeetup = (meetup) => {
@@ -126,6 +126,21 @@ const ActionButtons = () => {
     setLoading(false);
     meetupDetailBottomSheetRef.current.close();
     setSnackBar({ isVisible: true, message: `Left ${selectedMeetup.title}.`, barType: 'success', duration: 5000 });
+  };
+
+  const handleShare = async () => {
+    const snapshot = await mapRef.current.takeSnapshot({
+      format: 'png',
+      quality: 0.8,
+      result: 'file',
+    });
+
+    Share.share({
+      title: 'Share Map View',
+      message: 'https://apps.apple.com/us/app/lampost/id1668526833',
+      url: `file://${snapshot}`,
+      type: 'image/png',
+    });
   };
 
   if (auth.data) {

@@ -17,7 +17,7 @@ const MoodBottomSheet = (props) => {
   const { auth, isIpad } = useContext(GlobalContext);
   const oneGridWidth = isIpad ? Dimensions.get('window').width / 15 : Dimensions.get('window').width / 5;
   const { mood, setMood, moodBottomSheetRef } = useContext(CameraContext);
-  const snapPoints = useMemo(() => ['40%'], []);
+  const snapPoints = useMemo(() => ['30%'], []);
 
   const renderEmojis = () => {
     const list = emojiOptions.map((emoji, index) => {

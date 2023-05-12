@@ -23,15 +23,15 @@ const SnapType = () => {
       return <Text style={{ color: baseTextColor }}>Photo & Video</Text>;
     }
   };
-
+  // You can only share photos here.
   const renderExplanation = (assetType) => {
     if (assetType === 'photo') {
-      return <Text style={{ color: 'white', textAlign: 'center' }}>You can post only photos in this library.</Text>;
+      return <Text style={{ color: 'white', textAlign: 'center' }}>In this library, you can share only photos.</Text>;
     } else if (assetType === 'video') {
-      return <Text style={{ color: 'white', textAlign: 'center' }}>You can post only videos in this library.</Text>;
+      return <Text style={{ color: 'white', textAlign: 'center' }}>In this library, you can share only videos.</Text>;
     } else {
       return (
-        <Text style={{ color: 'white', textAlign: 'center' }}>You can post photos and videos in this library.</Text>
+        <Text style={{ color: 'white', textAlign: 'center' }}>In this library, you can share photos and videos.</Text>
       );
     }
   };

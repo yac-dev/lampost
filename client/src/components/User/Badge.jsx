@@ -69,7 +69,7 @@ const Badge = () => {
           // height: '100%',
           alignItems: 'center', // これと
           justifyContent: 'center', // これで中のimageを上下左右真ん中にする
-          borderRadius: 15,
+          borderRadius: isIpad ? 22 : 15,
           backgroundColor: rnDefaultBackgroundColor,
           borderWidth: 0.3,
           marginBottom: 5,
@@ -85,7 +85,7 @@ const Badge = () => {
             height: '100%',
             alignItems: 'center',
             justifyContent: 'center',
-            borderRadius: 15,
+            borderRadius: isIpad ? 22 : 15,
             backgroundColor: backgroundColorsTable[userBadge.badge.color],
             borderWidth: 0.3,
             borderColor: backgroundColorsTable[userBadge.badge.color],
