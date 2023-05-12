@@ -38,14 +38,14 @@ const MapMarker = (props) => {
     >
       <View
         style={{
-          width: 40,
+          width: 45,
           aspectRatio: 1,
           backgroundColor: rnDefaultBackgroundColor,
           borderRadius: 10,
           // marginRight: 5,
         }}
       >
-        <TouchableOpacity
+        <View
           style={{
             width: '100%',
             height: '100%',
@@ -57,7 +57,7 @@ const MapMarker = (props) => {
             borderWidth: 0.5,
           }}
         >
-          <SVG width={30} height={30}>
+          <SVG width={35} height={35}>
             <FastImage
               onLoad={() => setInitialRender(false)}
               style={{
@@ -72,20 +72,27 @@ const MapMarker = (props) => {
               resizeMode={FastImage.resizeMode.contain}
             />
           </SVG>
-        </TouchableOpacity>
+        </View>
         {selectedMeetup && selectedMeetup._id === props.meetup._id ? (
           <View
             style={{
-              width: 20,
-              height: 20,
-              borderRadius: 10,
+              width: 14,
+              height: 14,
+              borderRadius: 7,
               backgroundColor: 'red',
               position: 'absolute',
-              top: -7,
-              right: -7,
+              top: 0,
+              right: 0,
             }}
           ></View>
         ) : null}
+        <View style={{ position: 'absolute', bottom: 0, right: 0 }}>
+          <FastImage
+            source={{ uri: props.meetup.launcher.photo ? props.meetup.launcher.photo : '' }}
+            style={{ width: 20, height: 20, borderRadius: 5, backgroundColor: iconColorsTable['blue1'] }}
+            tintColor={props.meetup.launcher.photo ? null : 'white'}
+          />
+        </View>
       </View>
     </Marker>
   );

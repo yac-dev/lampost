@@ -1,6 +1,7 @@
 import React, { useContext, useMemo } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
 import MeetupContext from '../MeetupContext';
+import DiscoverNavigatorContext from '../../Navigator/Discover/DiscoverNavigatorContext';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import {
   appBottomSheetBackgroundColor,
@@ -11,7 +12,7 @@ import {
   screenSectionBackgroundColor,
 } from '../../../utils/colorsTable';
 import { iconsTable } from '../../../utils/icons';
-const { MaterialCommunityIcons, Feather } = iconsTable;
+const { MaterialCommunityIcons, Feather, Ionicons } = iconsTable;
 import BadgeLabels from './BadgeLabels';
 import ActionButtons from './ActionButtons';
 import Launcher from './Launcher';
@@ -23,6 +24,7 @@ import Members from './Members';
 const MeetupDetailBottomSheet = (props) => {
   const snapPoints = useMemo(() => ['65%'], []);
   const { meetupDetailBottomSheetRef, selectedMeetup, setSelectedMeetup } = useContext(MeetupContext);
+  const { topLevelNavigation } = useContext(DiscoverNavigatorContext);
 
   return (
     <GorhomBottomSheet
@@ -40,9 +42,16 @@ const MeetupDetailBottomSheet = (props) => {
         {selectedMeetup ? (
           <>
             <View style={{ marginBottom: 10 }}>
-              <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 18, marginBottom: 7 }}>
-                {selectedMeetup.title}
-              </Text>
+              <View
+                style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 7 }}
+              >
+                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 18 }}>{selectedMeetup.title}</Text>
+                <TouchableOpacity
+                  onPress={() => topLevelNavigation.navigate('Discover report', { report: selectedMeetup.title })}
+                >
+                  <Ionicons name='flag' size={15} color='white' />
+                </TouchableOpacity>
+              </View>
               <BadgeLabels />
               <ActionButtons />
             </View>

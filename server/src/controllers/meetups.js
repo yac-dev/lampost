@@ -248,7 +248,7 @@ export const finishMeetup = async (request, response) => {
 export const getMeetups = async (request, response) => {
   try {
     const meetups = await Meetup.find({ $or: [{ state: 'upcoming' }, { state: 'ongoing' }] })
-      .select({ _id: 1, place: 1, startDateAndTime: 1, badges: 1, title: 1 })
+      .select({ _id: 1, place: 1, startDateAndTime: 1, badges: 1, title: 1, launcher: 1 })
       .populate({
         path: 'badges',
         model: Badge,
@@ -258,6 +258,10 @@ export const getMeetups = async (request, response) => {
           model: Icon,
           select: { url: 1 },
         },
+      })
+      .populate({
+        path: 'launcher',
+        select: 'photo',
       });
 
     // 返すbadgeの数は一個でいい。それをどうするか。
@@ -268,6 +272,7 @@ export const getMeetups = async (request, response) => {
         startDateAndTime: meetup.startDateAndTime,
         badge: meetup.badges[0],
         title: meetup.title,
+        launcher: meetup.launcher,
       };
     });
     // .populate({

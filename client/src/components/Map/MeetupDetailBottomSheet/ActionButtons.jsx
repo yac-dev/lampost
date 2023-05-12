@@ -4,7 +4,7 @@ import GlobalContext from '../../../GlobalContext';
 import MeetupContext from '../MeetupContext';
 import DiscoverNavigatorContext from '../../Navigator/Discover/DiscoverNavigatorContext';
 import lampostAPI from '../../../apis/lampost';
-import { iconColorsTable, baseTextColor } from '../../../utils/colorsTable';
+import { iconColorsTable, baseTextColor, inputBackgroundColorNew } from '../../../utils/colorsTable';
 import { iconsTable } from '../../../utils/icons';
 const { MaterialCommunityIcons, MaterialIcons } = iconsTable;
 
@@ -128,15 +128,29 @@ const ActionButtons = () => {
     setSnackBar({ isVisible: true, message: `Left ${selectedMeetup.title}.`, barType: 'success', duration: 5000 });
   };
 
+  // <View style={{ flex: 0.5, paddingLeft: 3 }}>
+  //             <TouchableOpacity
+  //               style={{ width: '100%', backgroundColor: iconColorsTable['red1'], padding: 7, borderRadius: 5 }}
+  //               onPress={() => topLevelNavigation.navigate('Discover report', { report: selectedMeetup.title })}
+  //             >
+  //               <View style={{ alignSelf: 'center' }}>
+  //                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+  //                   <MaterialIcons name='report-problem' size={20} color={'white'} style={{ marginRight: 10 }} />
+  //                   <Text style={{ color: 'white' }}>Report</Text>
+  //                 </View>
+  //               </View>
+  //             </TouchableOpacity>
+  //           </View>
+
   const handleShare = async () => {
     const snapshot = await mapRef.current.takeSnapshot({
       format: 'png',
-      quality: 0.8,
+      quality: 1,
       result: 'file',
     });
 
     Share.share({
-      title: 'Share Map View',
+      title: 'Share meetup',
       message: 'https://apps.apple.com/us/app/lampost/id1668526833',
       url: `file://${snapshot}`,
       type: 'image/png',
@@ -147,15 +161,23 @@ const ActionButtons = () => {
     if (myUpcomingMeetups[selectedMeetup._id]?.launcher === auth.data._id) {
       // launcherが自分なら、何も表示しない。
       return (
-        <View style={{ width: '100%', backgroundColor: iconColorsTable['blue1'], borderRadius: 5, padding: 10 }}>
-          <Text style={{ color: 'white', textAlign: 'center' }}>🚀You've launched</Text>
+        <View style={{ width: '100%', padding: 5 }}>
+          <TouchableOpacity
+            onPress={() => handleShare()}
+            style={{ width: '100%', backgroundColor: iconColorsTable['blue1'], borderRadius: 5, padding: 5 }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+              <MaterialCommunityIcons name='twitter' size={20} color={'white'} style={{ marginRight: 10 }} />
+              <Text style={{ color: 'white' }}>Share</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       );
     } else {
       if (myUpcomingMeetups[selectedMeetup._id]) {
         return (
           <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center' }}>
-            <View style={{ flex: 0.5, paddingRight: 5 }}>
+            <View style={{ flex: 0.5, paddingRight: 3 }}>
               <TouchableOpacity
                 style={{ width: '100%', backgroundColor: iconColorsTable['red1'], padding: 7, borderRadius: 5 }}
                 onPress={() => leaveMeetup()}
@@ -173,15 +195,15 @@ const ActionButtons = () => {
                 </View>
               </TouchableOpacity>
             </View>
-            <View style={{ flex: 0.5, paddingLeft: 5 }}>
+            <View style={{ flex: 0.5, paddingLeft: 3 }}>
               <TouchableOpacity
-                style={{ width: '100%', backgroundColor: iconColorsTable['red1'], padding: 7, borderRadius: 5 }}
-                onPress={() => topLevelNavigation.navigate('Discover report', { report: selectedMeetup.title })}
+                style={{ width: '100%', backgroundColor: iconColorsTable['blue1'], padding: 7, borderRadius: 5 }}
+                onPress={() => handleShare()}
               >
                 <View style={{ alignSelf: 'center' }}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <MaterialIcons name='report-problem' size={20} color={'white'} style={{ marginRight: 10 }} />
-                    <Text style={{ color: 'white' }}>Report</Text>
+                    <MaterialCommunityIcons name='twitter' size={20} color={'white'} style={{ marginRight: 10 }} />
+                    <Text style={{ color: 'white' }}>Share</Text>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -191,7 +213,7 @@ const ActionButtons = () => {
       } else {
         return (
           <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center' }}>
-            <View style={{ flex: 0.5, paddingRight: 5 }}>
+            <View style={{ flex: 0.5, paddingRight: 3 }}>
               <TouchableOpacity
                 style={{ width: '100%', backgroundColor: iconColorsTable['blue1'], padding: 7, borderRadius: 5 }}
                 onPress={() => joinMeetup()}
@@ -209,15 +231,15 @@ const ActionButtons = () => {
                 </View>
               </TouchableOpacity>
             </View>
-            <View style={{ flex: 0.5, paddingLeft: 5 }}>
+            <View style={{ flex: 0.5, paddingLeft: 3 }}>
               <TouchableOpacity
-                style={{ width: '100%', backgroundColor: iconColorsTable['red1'], padding: 7, borderRadius: 5 }}
-                onPress={() => topLevelNavigation.navigate('Discover report', { report: selectedMeetup.title })}
+                style={{ width: '100%', backgroundColor: iconColorsTable['blue1'], padding: 7, borderRadius: 5 }}
+                onPress={() => handleShare()}
               >
                 <View style={{ alignSelf: 'center' }}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <MaterialIcons name='report-problem' size={20} color={'white'} style={{ marginRight: 10 }} />
-                    <Text style={{ color: 'white' }}>Report</Text>
+                    <MaterialCommunityIcons name='twitter' size={20} color={'white'} style={{ marginRight: 10 }} />
+                    <Text style={{ color: 'white' }}>Share</Text>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -228,9 +250,9 @@ const ActionButtons = () => {
     }
   } else {
     return (
-      <Text style={{ color: 'white', textAlign: 'center', marginBottom: 10 }}>
-        Please login or signup to join this meetup.
-      </Text>
+      <View style={{ backgroundColor: inputBackgroundColorNew, borderRadius: 5, padding: 10 }}>
+        <Text style={{ color: 'white', textAlign: 'center' }}>Please login or signup to join this meetup.</Text>
+      </View>
     );
   }
 };
