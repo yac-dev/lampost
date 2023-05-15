@@ -27,8 +27,6 @@ const Libraries = (props) => {
     }
   };
 
-  console.log(myJoinedLibraries);
-
   if (myJoinedLibraries.length) {
     const myJoinedLibrariesList = myJoinedLibraries.map((library, index) => {
       if (library.thumbnail.type === 'photo') {

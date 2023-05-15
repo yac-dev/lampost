@@ -5,6 +5,8 @@ import UserContext from '../UserContext';
 import GlobalContext from '../../../GlobalContext';
 import HomeNavigatorContext from '../../Navigator/Home/HomeNavigatorContext';
 import * as SecureStore from 'expo-secure-store';
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
@@ -31,6 +33,9 @@ const AppButtons = (props) => {
     setChatsNotificationCount,
     setLoading,
     setSnackBar,
+    notificationEnabled,
+    setNotificationEnabled,
+    registerForPushNotificationsAsync,
   } = useContext(GlobalContext);
   const {
     user,
@@ -41,18 +46,6 @@ const AppButtons = (props) => {
     setIsConfirmDeleteAccountModalOpen,
     badgeIndexes,
   } = useContext(UserContext);
-
-  // const logout = async () => {
-  //   await SecureStore.deleteItemAsync('secure_token');
-  //   setAuth({
-  //     data: null,
-  //     socket: null,
-  //     currentLocation: null,
-  //   });
-  //   setMyUpcomingMeetupAndChatsTable({});
-  //   setTotalUnreadChatsCount(0);
-  //   // auth.socket.disconnect();
-  // };
 
   const logout = async () => {
     await SecureStore.deleteItemAsync('secure_token');
@@ -132,6 +125,30 @@ const AppButtons = (props) => {
               style={{
                 width: 40,
                 height: 40,
+                backgroundColor: backgroundColorsTable['pink1'],
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 8,
+                marginRight: 10,
+              }}
+            >
+              <MaterialCommunityIcons name='camera-plus' color={iconColorsTable['pink1']} size={20} />
+            </View>
+            <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>Change profile picture</Text>
+          </View>
+          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+          onPress={() => {
+            appMenuBottomSheetRef.current.close();
+          }}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={{
+                width: 40,
+                height: 40,
                 backgroundColor: backgroundColorsTable['yellow1'],
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -139,11 +156,18 @@ const AppButtons = (props) => {
                 marginRight: 10,
               }}
             >
-              <MaterialCommunityIcons name='camera-plus' color={iconColorsTable['yellow1']} size={20} />
+              <Ionicons name='notifications' color={iconColorsTable['yellow1']} size={20} />
             </View>
-            <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>Change profile picture</Text>
+            <View>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>Push notification</Text>
+                <Text style={{ color: baseTextColor, marginRight: 5 }}>
+                  {notificationEnabled ? 'Turned on' : 'Turned off'}
+                </Text>
+              </View>
+              <Text style={{ color: baseTextColor }}>Go to setting of your phone to toggle.</Text>
+            </View>
           </View>
-          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
         </TouchableOpacity>
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}

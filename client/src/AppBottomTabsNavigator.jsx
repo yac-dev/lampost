@@ -38,43 +38,6 @@ Notifications.setNotificationHandler({
   handleNotification: async () => ({ shouldShowAlert: true, shouldPlaySound: false, shouldSetBadge: false }),
 });
 
-const schedulePushNotification = async () => {
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: "You've got mail! 📬",
-      body: 'Here is the notification body',
-      data: { message: 'goes here' },
-    },
-    trigger: { seconds: 10 },
-  });
-};
-
-const registerForPushNotificationsAsync = async () => {
-  let token;
-  if (Device.isDevice) {
-    const { status: existingStatus } = await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-    if (finalStatus !== 'granted') {
-      // alert('Failed to get push token for push notification!');
-      console.log('not gained push token');
-      return;
-    }
-    token = (await Notifications.getExpoPushTokenAsync({ experienceId: '@yosuke_kojima/Lampost' })).data;
-    console.log('this is a token', token);
-    // console.log(token);
-  } else {
-    alert('Must use physical device for Push Notifications');
-  }
-
-  return token;
-};
-
-const ChatBase = () => <View style={{ flex: 1, backgroundColor: 'red' }} />;
-
 const AppStack = (props) => {
   const isIpad = Platform.OS === 'ios' && (Platform.isPad || Platform.isTVOS);
   const [isFetchedAuthData, setIsFetchedAuthData] = useState(false);
@@ -85,6 +48,7 @@ const AppStack = (props) => {
     currentLocation: null,
     isInMeetup: false,
   });
+  const [notificationEnabled, setNotificationEnabled] = useState(false);
   const [appState, setAppState] = useState(AppState.currentState);
   const [loading, setLoading] = useState(false);
   const [snackBar, setSnackBar] = useState({ isVisible: false, message: '', barType: '', duration: null });
@@ -107,116 +71,135 @@ const AppStack = (props) => {
   const [friendChatsNotificationCount, setFriendChatsNotificationCount] = useState(0);
   const userMenuBottomSheetRef = useRef(null);
 
+  const registerForPushNotificationsAsync = async () => {
+    let token;
+    const data = { token, status: false };
+    if (Device.isDevice) {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        // alert('Failed to get push token for push notification!');
+        console.log('not gained push token');
+        data.status = false;
+        return data;
+      }
+      token = (await Notifications.getExpoPushTokenAsync({ experienceId: '@yosuke_kojima/Lampost' })).data;
+      console.log('this is a token', token);
+      data.token = token;
+      data.status = true;
+      // console.log(token);
+    } else {
+      alert('Must use physical device for Push Notifications');
+    }
+    // return token;
+    return data;
+  };
+
   useEffect(() => {
     if (auth.data) {
-      // if (!auth.data.pushToken) {
-      registerForPushNotificationsAsync().then(async (token) => {
-        setExpoPushToken(token);
-        const result = await lampostAPI.patch(`/users/${auth.data._id}/pushToken`, { pushToken: token });
-        const { pushToken } = result.data;
-        setAuth((previous) => {
-          return {
-            ...previous,
-            pushToken,
-          };
-        });
+      registerForPushNotificationsAsync().then(async (data) => {
+        if (data.status) {
+          setNotificationEnabled(true);
+          if (!auth.data.pushToken) {
+            const result = await lampostAPI.patch(`/users/${auth.data._id}/pushToken`, { pushToken: token });
+            const { pushToken } = result.data;
+            setExpoPushToken(data.token);
+            setAuth((previous) => {
+              return {
+                ...previous,
+                pushToken,
+              };
+            });
+          }
+        } else {
+          setNotificationEnabled(false);
+        }
       });
-      // }
     }
-    // 多分、ここでdeviceのtokenを取得して、stateに保存してくれるんだろう。
   }, [auth.data]);
 
   useEffect(() => {
     if (auth.data) {
-      // if (auth.data.pushToken) {
-      notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-        if (notification.request.content.data.notificationType === 'loungeChat') {
-          setChatsNotificationCount((previous) => previous + 1);
-          setMyUpcomingMeetups((previous) => {
-            const updating = { ...previous };
-            updating[notification.request.content.data.meetupId].unreadChatsTable[
-              notification.request.content.data.type
-            ] =
+      if (notificationEnabled) {
+        // if (auth.data.pushToken) {
+        notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+          if (notification.request.content.data.notificationType === 'loungeChat') {
+            setChatsNotificationCount((previous) => previous + 1);
+            setMyUpcomingMeetups((previous) => {
+              const updating = { ...previous };
               updating[notification.request.content.data.meetupId].unreadChatsTable[
                 notification.request.content.data.type
-              ] + 1;
-            return updating;
-          });
-        } else if (notification.request.content.data.notificationType === 'sentImpression') {
-          console.log(notification.request.content.data.notificationType);
-        } else if (notification.request.content.data.notificationType === 'friendChat') {
-          setUnreadFriendChats((previous) => {
-            const updating = { ...previous };
-            if (updating[notification.request.content.data.sender._id]) {
-              updating[notification.request.content.data.sender._id].chats.push(notification.request.content.data.chat);
+              ] =
+                updating[notification.request.content.data.meetupId].unreadChatsTable[
+                  notification.request.content.data.type
+                ] + 1;
               return updating;
-            } else {
-              // updating[notification.request.content.data.sender._id]['friend'] = notification.request.content.data.sender;
-              // updating[notification.request.content.data.sender._id]['count'] = 1
-              // return updating // これダメ。。そもそもupdating[notification.request.content.data.sender._id]がundefinedだからね。
-              const obj = {
-                friend: notification.request.content.data.sender,
-                chats: [notification.request.content.data.chat],
-                friendChatRoomId: notification.request.content.data.friendChatRoomId,
-              };
-              updating[notification.request.content.data.sender._id] = obj;
+            });
+          } else if (notification.request.content.data.notificationType === 'sentImpression') {
+            console.log(notification.request.content.data.notificationType);
+          } else if (notification.request.content.data.notificationType === 'friendChat') {
+            setUnreadFriendChats((previous) => {
+              const updating = { ...previous };
+              if (updating[notification.request.content.data.sender._id]) {
+                updating[notification.request.content.data.sender._id].chats.push(
+                  notification.request.content.data.chat
+                );
+                return updating;
+              } else {
+                // updating[notification.request.content.data.sender._id]['friend'] = notification.request.content.data.sender;
+                // updating[notification.request.content.data.sender._id]['count'] = 1
+                // return updating // これダメ。。そもそもupdating[notification.request.content.data.sender._id]がundefinedだからね。
+                const obj = {
+                  friend: notification.request.content.data.sender,
+                  chats: [notification.request.content.data.chat],
+                  friendChatRoomId: notification.request.content.data.friendChatRoomId,
+                };
+                updating[notification.request.content.data.sender._id] = obj;
+                return updating;
+              }
+            });
+            setFriendChatsNotificationCount((previous) => previous + 1);
+          } else if (notification.request.content.data.notificationType === 'meetupHasEnded') {
+            setMyUpcomingMeetups((previous) => {
+              const updating = { ...previous };
+              delete updating[notification.request.content.data.meetupId];
               return updating;
-            }
-          });
-          setFriendChatsNotificationCount((previous) => previous + 1);
-        } else if (notification.request.content.data.notificationType === 'meetupHasEnded') {
-          setMyUpcomingMeetups((previous) => {
-            const updating = { ...previous };
-            delete updating[notification.request.content.data.meetupId];
-            return updating;
-          });
-        }
-        // if (notification.request.content.data.notificationType === 'loungeChat') {
-        //   setMyUpcomingMeetupAndChatsTable((previous) => {
-        //     const updating = { ...previous };
-        //     updating[notification.request.content.data.meetupId].unreadChatsCount =
-        //       updating[notification.request.content.data.meetupId].unreadChatsCount + 1;
-        //     return updating;
-        //   });
-        //   setTotalUnreadChatsCount((previous) => previous + 1);
-        // }
-        setNotification(notification);
-        // console.log(notification);
-      });
+            });
+          }
+          // if (notification.request.content.data.notificationType === 'loungeChat') {
+          //   setMyUpcomingMeetupAndChatsTable((previous) => {
+          //     const updating = { ...previous };
+          //     updating[notification.request.content.data.meetupId].unreadChatsCount =
+          //       updating[notification.request.content.data.meetupId].unreadChatsCount + 1;
+          //     return updating;
+          //   });
+          //   setTotalUnreadChatsCount((previous) => previous + 1);
+          // }
+          setNotification(notification);
+          // console.log(notification);
+        });
 
-      responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
+        responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+          console.log(response);
+        });
 
-      return () => {
-        Notifications.removeNotificationSubscription(notificationListener.current);
-        Notifications.removeNotificationSubscription(responseListener.current);
-      };
+        return () => {
+          Notifications.removeNotificationSubscription(notificationListener.current);
+          Notifications.removeNotificationSubscription(responseListener.current);
+        };
+      }
       // }
     }
-  }, [auth.data]);
+  }, [auth.data, notificationEnabled]);
 
-  // const onAppStateChange = (nextAppState) => {
-  //   if (appState.match(/inactive|background/) && nextAppState === 'active') {
-  //     console.log('App has come to the foreground!');
-  //   }
-  //   setAppState(nextAppState);
-  // };
-
-  // const getMyUpcomingMeetupsAndLoungeChatsByMeetupIds = async () => {
-  //   const result = await lampostAPI.post(`/loungechats`, { myUpcomingMeetups: auth.data.upcomingMeetups });
-  //   const { myUpcomingMeetupAndChatsTable } = result.data;
-  //   setMyUpcomingMeetupAndChatsTable(myUpcomingMeetupAndChatsTable);
-  //   console.log('getting messages status');
-  //   const countTotalUnreads = Object.values(myUpcomingMeetupAndChatsTable).forEach((e) => {
-  //     setTotalUnreadChatsCount((previous) => previous + e.unreadChatsCount);
-  //   });
-  // };
-  // upcomingのmeetupをgetしてくる
   const getMyUpcomingMeetupStates = async () => {
     const result = await lampostAPI.get(`/meetupanduserrelationships/upcoming/user/${auth.data._id}`);
     const { myUpcomingMeetups } = result.data;
-    console.log(myUpcomingMeetups);
+    // console.log(myUpcomingMeetups);
     setMyUpcomingMeetups((previous) => {
       const updating = { ...previous };
       for (const meetupId in myUpcomingMeetups) {
@@ -354,7 +337,7 @@ const AppStack = (props) => {
         setIsPleaseLoginModalOpen,
         routeName,
         setRouteName,
-        schedulePushNotification,
+        // schedulePushNotification,
         expoPushToken,
         setExpoPushToken,
         notification,
@@ -373,6 +356,9 @@ const AppStack = (props) => {
         setFriendChatsNotificationCount,
         userMenuBottomSheetRef,
         navigation: props.navigation,
+        notificationEnabled,
+        setNotificationEnabled,
+        registerForPushNotificationsAsync,
       }}
     >
       <NavigationContainer
