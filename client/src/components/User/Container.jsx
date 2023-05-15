@@ -344,7 +344,10 @@ const Container = (props) => {
                   onPress={() =>
                     // props.navigation.navigate('Add badges', { fromComponent: 'ADD_USER_BADGES', myBadges: userBadges })
                     // badgeMenuBottomSheetRef.current.snapToIndex(0)
-                    props.navigation.navigate('Add badges', { fromComponent: 'ADD_USER_BADGES', myBadges: userBadges })
+                    props.navigation.navigate('Add badges', {
+                      fromComponent: 'ADD_USER_BADGES',
+                      myBadges: userBadges, // ここに原因がある。badgeidでのhash tableが必要になる。今は、それがまだできていない。
+                    })
                   }
                 >
                   <MaterialCommunityIcons name='plus' size={20} color={iconColorsTable['red1']} />

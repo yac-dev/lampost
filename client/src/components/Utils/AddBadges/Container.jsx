@@ -173,8 +173,6 @@ const Container = (props) => {
   const badgeContainerWidth = oneGridWidth * 0.6;
   const badgeIconWidth = badgeContainerWidth * 0.7;
 
-  console.log(addedBadges);
-
   // 基本、hash tableにdataをためて、render時にarrayに変えて表示する。
   // genreのbadgeが既にある場合は、queryしない。
   const [badges, setBadges] = useState({
@@ -239,7 +237,14 @@ const Container = (props) => {
     // ここは、user pageからここに来て、doneをpressしたら, user pageへ戻る。addしたbadgesをparamsに入れていく感じ。
     if (props.route.params.fromComponent === 'ADD_USER_BADGES') {
       setFromComponent('ADD_USER_BADGES');
-      setMyBadges(props.route.params.myBadges);
+      setMyBadges(() => {
+        const table = {};
+        const userBadges = Object.values(props.route.params.myBadges);
+        userBadges.forEach((userBadge) => {
+          table[userBadge.badge._id] = userBadge.badge;
+        });
+        return table;
+      });
       props.navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity
