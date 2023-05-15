@@ -1,6 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import { backgroundColorsTable, screenSectionBackgroundColor, iconColorsTable } from '../../../utils/colorsTable';
+import FormContext from './FormContext';
+import {
+  screenSectionBackgroundColor,
+  backgroundColorsTable,
+  iconColorsTable,
+  baseTextColor,
+  inputBackgroundColorNew,
+} from '../../../utils/colorsTable';
 import { iconsTable } from '../../../utils/icons';
 const { MaterialIcons, MaterialCommunityIcons, Entypo, Fontisto, Ionicons } = iconsTable;
 
@@ -148,6 +155,8 @@ const genreTable = {
 };
 
 const BadgeGenres = (props) => {
+  const { selectedBadgeGenre, setSelectedBadgeGenre, accordion, setAccordion } = useContext(FormContext);
+
   const renderGenres = () => {
     const list = Object.values(genreTable).map((genre, index) => {
       return (
@@ -157,14 +166,14 @@ const BadgeGenres = (props) => {
             flexDirection: 'row',
             alignItems: 'center',
             backgroundColor:
-              props.selectedBadgeGenre && props.selectedBadgeGenre.value === genre.value
+              selectedBadgeGenre && selectedBadgeGenre.value === genre.value
                 ? iconColorsTable['blue1']
                 : screenSectionBackgroundColor,
             marginRight: 10,
             padding: 5,
             borderRadius: 5,
           }}
-          onPress={() => props.setSelectedBadgeGenre(genre)}
+          onPress={() => setSelectedBadgeGenre(genre)}
         >
           {genre.icon}
           <Text style={{ color: 'white' }}>{genre.label}</Text>
@@ -178,7 +187,66 @@ const BadgeGenres = (props) => {
       </ScrollView>
     );
   };
-  return <View>{renderGenres()}</View>;
+
+  return (
+    <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 7, borderRadius: 5, marginBottom: 10 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <TouchableOpacity
+          onPress={() =>
+            setAccordion((previous) => {
+              return {
+                ...previous,
+                genre: !previous.genre,
+              };
+            })
+          }
+          style={{ flexDirection: 'row', alignItems: 'center' }}
+        >
+          <View
+            style={{
+              backgroundColor: backgroundColorsTable['yellow1'],
+              padding: 5,
+              borderRadius: 7,
+              width: 40,
+              height: 40,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginRight: 12,
+            }}
+          >
+            <Ionicons name='list' size={25} color={iconColorsTable['yellow1']} />
+          </View>
+          <Text style={{ fontWeight: 'bold', fontSize: 17, color: 'white', marginRight: 10 }}>Badge genre</Text>
+        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <TouchableOpacity
+            onPress={() =>
+              setAccordion((previous) => {
+                return {
+                  ...previous,
+                  genre: !previous.genre,
+                };
+              })
+            }
+          >
+            <MaterialCommunityIcons
+              name={accordion.genre ? 'chevron-up' : 'chevron-down'}
+              color={baseTextColor}
+              size={25}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+      {accordion.genre ? (
+        <View style={{ marginTop: 10 }}>
+          <Text style={{ color: 'white', color: baseTextColor, marginBottom: 10 }}>
+            Note that badge name should be unique.
+          </Text>
+          {renderGenres()}
+        </View>
+      ) : null}
+    </View>
+  );
 };
 
 export default BadgeGenres;

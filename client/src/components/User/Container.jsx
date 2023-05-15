@@ -342,6 +342,8 @@ const Container = (props) => {
                     marginBottom: 5,
                   }}
                   onPress={() =>
+                    // props.navigation.navigate('Add badges', { fromComponent: 'ADD_USER_BADGES', myBadges: userBadges })
+                    // badgeMenuBottomSheetRef.current.snapToIndex(0)
                     props.navigation.navigate('Add badges', { fromComponent: 'ADD_USER_BADGES', myBadges: userBadges })
                   }
                 >

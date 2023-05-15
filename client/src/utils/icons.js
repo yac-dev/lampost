@@ -7,6 +7,7 @@ import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
+// import {Simple}
 
 export const iconsTable = {
   MaterialCommunityIcons,

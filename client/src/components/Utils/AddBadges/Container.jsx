@@ -162,6 +162,7 @@ const Container = (props) => {
   const [tappedBadge, setTappedBadge] = useState(null);
   const [tappedBadgeHolders, setTappedBadgeHolders] = useState([]);
   const [selectedFilterOption, setSelectedFilterOption] = useState('artsAndCrafts');
+  const [addingBadgeAccordion, setAddingBadgeAccordion] = useState(true);
 
   const searchBadgeBottomSheetRef = useRef(null);
   const badgeDetailBottomSheetRef = useRef(null);
@@ -530,36 +531,60 @@ const Container = (props) => {
       return (
         <View
           style={{
-            height: 130,
+            height: addingBadgeAccordion ? 130 : 25,
             width: '100%',
             // padding: 10,
             backgroundColor: screenSectionBackgroundColor,
             borderRadius: 10,
           }}
         >
-          <View
-            style={{
-              paddingLeft: 15,
-              paddingTop: 10,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>Adding badges...</Text>
-            <Text style={{ color: baseTextColor, alignSelf: 'flex-end', marginRight: 5 }}>
-              Press "Done"⬆️ to finish
-            </Text>
-          </View>
-          <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
-            {list}
-          </ScrollView>
+          {addingBadgeAccordion ? (
+            <>
+              <View
+                style={{
+                  paddingLeft: 15,
+                  paddingTop: 10,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white', marginRight: 5 }}>
+                    Adding badges
+                  </Text>
+                  <Text style={{ color: baseTextColor, fontSize: 13 }}>(Press "Done"⬆️ to finish)</Text>
+                </View>
+                <TouchableOpacity onPress={() => setAddingBadgeAccordion((previous) => !previous)}>
+                  <MaterialCommunityIcons
+                    name={addingBadgeAccordion ? 'chevron-up' : 'chevron-down'}
+                    color={'white'}
+                    size={25}
+                    style={{ marginRight: 5 }}
+                  />
+                </TouchableOpacity>
+              </View>
+              <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
+                {list}
+              </ScrollView>
+            </>
+          ) : (
+            <TouchableOpacity onPress={() => setAddingBadgeAccordion((previous) => !previous)}>
+              <MaterialCommunityIcons
+                name={addingBadgeAccordion ? 'chevron-up' : 'chevron-down'}
+                color={'white'}
+                size={25}
+                style={{ marginRight: 5, alignSelf: 'flex-end' }}
+              />
+            </TouchableOpacity>
+          )}
         </View>
       );
     } else {
       return null;
     }
   };
+  // setAddingBadgeAccordion
 
   return (
     <AddBadgesContext.Provider
@@ -598,6 +623,12 @@ const Container = (props) => {
           make the unique badge.
         </Text> */}
         <View style={{ padding: 10 }}>
+          {/* <TouchableOpacity
+            style={{ marginBottom: 5, alignSelf: 'flex-end' }}
+            onPress={() => props.navigation.navigate('What is Badge')}
+          >
+            <Text style={{ color: 'white' }}>What is badge by the way?</Text>
+          </TouchableOpacity> */}
           <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
             <FilterOption
               label='Arts & Crafts'

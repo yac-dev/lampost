@@ -1,6 +1,12 @@
 import express from 'express';
 import cors from 'cors';
 import './databases/mongoose';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // routers
 // import { globalErrorHandler } from './controllers/globalErrors';
@@ -31,10 +37,11 @@ import notificationsRouter from './routers/notifications';
 
 // import postsRouter from './routers/posts';
 // import usersRouter from './routers/users';
-
+console.log(__dirname);
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use('/badgeImages', express.static(path.join(__dirname, '..', 'badgeImages')));
 
 app.get('/', (request, response) => {
   response.send('Hello guest');

@@ -36,6 +36,7 @@ import MeetupAssets from '../User/Meetups/Assets/Container';
 import Impressions from '../User/Meetups/Impressions/Container';
 // import Asset from '../User/Assets/Asset/Container';
 import AddBadges from '../Utils/AddBadges/Container';
+import WhatIsBadge from '../Utils/WhatIsBadge';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
 import DeleteAccount from '../User/DeleteAccount';
 import MyFriends from '../User/MyFriends/Container';
@@ -352,6 +353,26 @@ const Auth = (props) => {
                 </TouchableOpacity>
               ),
               headerTitle: 'Choose an icon',
+              headerStyle: {
+                backgroundColor: appBottomSheetBackgroundColor,
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                color: 'white',
+              },
+              headerTintColor: 'white',
+            })}
+          />
+          <Stack.Screen
+            name='What is Badge'
+            component={WhatIsBadge}
+            options={({ navigation }) => ({
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+                </TouchableOpacity>
+              ),
+              headerTitle: 'What is Badge?',
               headerStyle: {
                 backgroundColor: appBottomSheetBackgroundColor,
               },
