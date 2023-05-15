@@ -39,6 +39,28 @@ const Container = (props) => {
     genre: false,
   });
 
+  const onClose = async () => {
+    if (folderName) {
+      setLoading(true);
+      const result = await lampostAPI.post('/badges/imagefolder', { folderName });
+      setLoading(false);
+      props.navigation.goBack();
+    } else {
+      props.navigation.goBack();
+    }
+  };
+  console.log(folderName);
+
+  useEffect(() => {
+    props.navigation.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity onPress={() => onClose()}>
+          <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, [folderName]);
+
   useEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (

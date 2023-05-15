@@ -294,3 +294,18 @@ export const createIconFromScratch = async (request, response) => {
     });
   }
 };
+
+export const deleteBadgeImageFolder = async (request, response) => {
+  try {
+    console.log(request.body);
+    fs.rmSync(path.join(__dirname, '..', '..', './badgeImages', request.body.folderName), {
+      recursive: true,
+      force: true,
+    });
+    response.status(200).json({
+      message: 'success',
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

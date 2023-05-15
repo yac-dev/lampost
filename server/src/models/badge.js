@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import uniqueValidator from 'mongoose-unique-validator';
 
 const badgeSchema = new mongoose.Schema({
   icon: {
@@ -8,8 +9,7 @@ const badgeSchema = new mongoose.Schema({
   name: {
     type: String,
     unique: true,
-    // trim: true,
-    // uniqueCaseInsensitive: true,
+    uniqueCaseInsensitive: true,
   },
   color: {
     type: String,
@@ -23,6 +23,8 @@ const badgeSchema = new mongoose.Schema({
 
 // badgeSchema.set('toJSON', { virtuals: true });
 // badgeSchema.set('toObject', { virtuals: true });
+
+badgeSchema.plugin(uniqueValidator, { message: 'Name already exists.' });
 
 const Badge = mongoose.model('Badge', badgeSchema);
 export default Badge;

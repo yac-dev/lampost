@@ -8,10 +8,12 @@ import {
   createBadge,
   createIconPreview,
   createIconFromScratch,
+  deleteBadgeImageFolder,
 } from '../controllers/badges';
 import multer from '../middlewares/multerForCreatingIcon';
 
 router.route('/').post(createBadge);
+router.route('/imagefolder').post(deleteBadgeImageFolder);
 router.route('/fromscratch').post(createIconFromScratch);
 router.route('/rolls').get(getBadgesByRolls);
 router.route('/icons').get(getIcons);

@@ -291,11 +291,11 @@ const Auth = (props) => {
             name='Create badge'
             component={CreateBadge}
             options={({ navigation }) => ({
-              headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
-                </TouchableOpacity>
-              ),
+              // headerLeft: () => (
+              //   <TouchableOpacity onPress={() => navigation.goBack()}>
+              //     <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+              //   </TouchableOpacity>
+              // ),
               headerStyle: {
                 backgroundColor: appBottomSheetBackgroundColor,
               },
