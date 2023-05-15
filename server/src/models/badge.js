@@ -8,6 +8,8 @@ const badgeSchema = new mongoose.Schema({
   name: {
     type: String,
     unique: true,
+    // trim: true,
+    // uniqueCaseInsensitive: true,
   },
   color: {
     type: String,

@@ -135,6 +135,11 @@ export const getIcons = async (request, response) => {
 export const createBadge = async (request, response) => {
   try {
     const { iconId, name, color, userId, badgeTypeId } = request.body;
+    const badgeNameExists = await Badge.findOne({ name });
+    if (badgeNameExists) {
+      // return  errorを出す。
+      throw new Error('Badge name already exista');
+    }
     const badge = await Badge.create({
       icon: iconId,
       name,
@@ -152,7 +157,10 @@ export const createBadge = async (request, response) => {
       badgeType: badgeTypeId,
     });
   } catch (error) {
-    console.log(error);
+    console.log(error.message, error.name);
+    response.status(400).send({
+      message: 'OOPS! badge name already exists',
+    });
   }
 };
 
@@ -247,6 +255,11 @@ export const createIconPreview = async (request, response) => {
 export const createIconFromScratch = async (request, response) => {
   try {
     const { name, color, folderName, userId } = request.body;
+    const badgeNameExists = await Badge.findOne({ name });
+    if (badgeNameExists) {
+      // return  errorを出す。
+      throw new Error('Badge name already exista');
+    }
     const imagePath = path.join(__dirname, '..', '..', './badgeImages', folderName, 'transparented.png');
     const fileStream = fs.createReadStream(imagePath);
 
@@ -275,6 +288,9 @@ export const createIconFromScratch = async (request, response) => {
       force: true,
     });
   } catch (error) {
-    console.log(error);
+    console.log(error.message, error.name);
+    response.status(400).send({
+      message: 'OOPS! badge name already exists',
+    });
   }
 };

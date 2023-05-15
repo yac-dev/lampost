@@ -64,45 +64,65 @@ const Container = (props) => {
   }, [badgeIcon, badgeNameTextInput, badgeColor, selectedBadgeGenre]);
   const onDonePress = async () => {
     if (chooseIconOrCreateIcon === 'choose') {
-      setLoading(true);
-      const payload = {
-        iconId: badgeIcon._id,
-        name: badgeNameTextInput,
-        color: badgeColor,
-        userId: auth.data._id,
-        badgeTypeId: selectedBadgeGenre._id,
-        // folderNameがあれば、それもここに追加するように。
-      };
-      const result = await lampostAPI.post('/badges', payload);
-      const { badge } = result.data;
-      const createdBadge = {
-        _id: badge._id,
-        icon: { _id: badgeIcon._id, url: badgeIcon.url },
-        name: badge.name,
-        color: badge.color,
-      };
-      setLoading(false);
-      // apiで帰ってきたidを使って、add badgesに送ろう。
-      props.navigation.navigate('Add badges', { createdBadge });
+      try {
+        setLoading(true);
+        const payload = {
+          iconId: badgeIcon._id,
+          name: badgeNameTextInput,
+          color: badgeColor,
+          userId: auth.data._id,
+          badgeTypeId: selectedBadgeGenre._id,
+          // folderNameがあれば、それもここに追加するように。
+        };
+        const result = await lampostAPI.post('/badges', payload);
+        const { badge } = result.data;
+        const createdBadge = {
+          _id: badge._id,
+          icon: { _id: badgeIcon._id, url: badgeIcon.url },
+          name: badge.name,
+          color: badge.color,
+        };
+        setLoading(false);
+        // apiで帰ってきたidを使って、add badgesに送ろう。
+        props.navigation.navigate('Add badges', { createdBadge });
+      } catch (error) {
+        setLoading(false);
+        setSnackBar({
+          isVisible: true,
+          message: 'Failed to create. This badge name is already exists.',
+          barType: 'error',
+          duration: 5000,
+        });
+      }
     } else if (chooseIconOrCreateIcon === 'create') {
-      setLoading(true);
-      const payload = {
-        folderName,
-        color: badgeColor,
-        userId: auth.data._id,
-        badgeTypeId: selectedBadgeGenre._id,
-      };
-      const result = await lampostAPI.post('/badges/fromscratch', payload);
-      const { badge } = result.data;
-      const createdBadge = {
-        _id: badge._id,
-        icon: { _id: badgeIcon._id, url: badgeIcon.url },
-        name: badge.name,
-        color: badge.color,
-      };
-      setLoading(false);
-      // apiで帰ってきたidを使って、add badgesに送ろう。
-      props.navigation.navigate('Add badges', { createdBadge });
+      try {
+        setLoading(true);
+        const payload = {
+          folderName,
+          color: badgeColor,
+          userId: auth.data._id,
+          badgeTypeId: selectedBadgeGenre._id,
+        };
+        const result = await lampostAPI.post('/badges/fromscratch', payload);
+        const { badge } = result.data;
+        const createdBadge = {
+          _id: badge._id,
+          icon: { _id: badgeIcon._id, url: badgeIcon.url },
+          name: badge.name,
+          color: badge.color,
+        };
+        setLoading(false);
+        // apiで帰ってきたidを使って、add badgesに送ろう。
+        props.navigation.navigate('Add badges', { createdBadge });
+      } catch (error) {
+        setLoading(false);
+        setSnackBar({
+          isVisible: true,
+          message: 'Failed to create. This badge name is already exists.',
+          barType: 'error',
+          duration: 5000,
+        });
+      }
     }
   };
 
