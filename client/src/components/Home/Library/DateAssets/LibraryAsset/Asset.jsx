@@ -15,26 +15,6 @@ const { MaterialCommunityIcons } = iconsTable;
 const Asset = () => {
   const { libraryAsset, reactions } = useContext(LibraryAssetContext);
 
-  const renderDate = (date) => {
-    const d = new Date(date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: '2-digit',
-    });
-    const dateElements = d.split('/');
-
-    return (
-      <Text
-        style={{
-          fontSize: 16,
-          color: baseTextColor,
-        }}
-      >
-        {dateElements[2]}&nbsp;&nbsp;{dateElements[0]}&nbsp;&nbsp;{dateElements[1]}
-      </Text>
-    );
-  };
-
   const renderReactions = () => {
     if (reactions.length) {
       const list = reactions.map((reactionObject, index) => {
@@ -46,7 +26,7 @@ const Asset = () => {
                   ? reactionObject.user.photo
                   : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
               }}
-              style={{ width: 50, height: 50, backgroundColor: iconColorsTable['blue1'], borderRadius: 5 }}
+              style={{ width: 50, height: 50, backgroundColor: iconColorsTable['blue1'], borderRadius: 12 }}
               tintColor={reactionObject.user.photo ? null : 'white'}
             />
             <View
@@ -57,7 +37,7 @@ const Asset = () => {
                 right: -10,
                 bottom: -10,
                 backgroundColor: rnDefaultBackgroundColor,
-                borderRadius: 5,
+                borderRadius: 10,
               }}
             >
               <View
@@ -66,7 +46,7 @@ const Asset = () => {
                   height: '100%',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  borderRadius: 5,
+                  borderRadius: 10,
                   backgroundColor: backgroundColorsTable[reactionObject.reaction.color],
                 }}
               >
@@ -100,24 +80,12 @@ const Asset = () => {
             style={{ width: '100%', aspectRatio: 1, borderRadius: 8 }}
             source={{ uri: libraryAsset.asset.data }}
           />
-          <View style={{ position: 'absolute', top: 10, right: 10 }}>
-            <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-              <Text style={{ color: 'white', fontSize: 16 }}>{libraryAsset.asset.meetup.title}</Text>
-              {/* {renderDate(libraryAsset.createdAt)} */}
-            </View>
-          </View>
           {renderReactions()}
         </View>
       );
     case 'video':
       return (
         <View style={{ width: '100%', marginBottom: 5 }}>
-          <View style={{ position: 'absolute', top: 0, right: 0 }}>
-            <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-              <Text style={{ color: 'white', fontSize: 16 }}>{libraryAsset.asset.meetup.title}</Text>
-              {/* {renderDate(libraryAsset.createdAt)} */}
-            </View>
-          </View>
           <Video
             style={{ width: '100%', height: 400, borderRadius: 8 }}
             source={{
