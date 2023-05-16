@@ -90,6 +90,21 @@ export const uploadAvatar = async (fileName) => {
   await unlinkFile(filePath);
 };
 
+export const uploadLoungeChatImage = async (fileName) => {
+  const __dirname = path.resolve();
+  const filePath = path.join(__dirname, 'loungeChatImages', fileName);
+  const fileStream = fs.createReadStream(filePath);
+
+  const uploadParams = {
+    Bucket: process.env.AWS_S3BUCKET_NAME,
+    Body: fileStream,
+    Key: `loungeChatImages/${fileName}`,
+  };
+  await s3.upload(uploadParams).promise();
+
+  await unlinkFile(filePath);
+};
+
 export const uploadThumbnail = async (fileName) => {
   const __dirname = path.resolve();
   const filePath = path.join(__dirname, 'avatars', fileName);

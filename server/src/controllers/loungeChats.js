@@ -3,6 +3,7 @@ import Meetup from '../models/meetup';
 import MeetupAndUserRelationship from '../models/meetupAndUserRelationship';
 import { Expo } from 'expo-server-sdk';
 const expo = new Expo();
+import { uploadLoungeChatImage } from '../services/s3';
 
 // export const getMyLoungeStatus = async (request, response) => {
 //   try {
@@ -228,6 +229,78 @@ export const createLoungeChat = async (request, response) => {
               content: replyTo.content,
             }
           : null,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const sendImage = async (request, response) => {
+  try {
+    const { meetupTitle, meetupId, userName, userPhoto, userId, filename } = request.body;
+    const loungeChat = await LoungeChat.create({
+      type: 'image',
+      imageUrl: `https://lampost-${process.env.NODE_ENV}.s3.us-east-2.amazonaws.com/loungeChatImages/${request.file.filename}`,
+      user: userId,
+      meetup: meetupId,
+      createdAt: new Date(),
+      replyTo: null,
+    });
+    // ここでawsに上げなきゃいけない。
+
+    const meetupAndUserRelationships = await MeetupAndUserRelationship.find({
+      meetup: meetupId,
+      user: { $ne: userId },
+    })
+      .populate({ path: 'user' })
+      .select({ pushToken: 1 });
+    const membersPushTokens = meetupAndUserRelationships.map((rel) => {
+      return rel.user.pushToken;
+    });
+
+    const notificationData = {
+      notificationType: 'loungeChat',
+      meetupId: meetupId,
+      type: 'image',
+    };
+
+    const chunks = expo.chunkPushNotifications(
+      membersPushTokens.map((token) => ({
+        to: token,
+        sound: 'default',
+        data: notificationData,
+        title: meetupTitle,
+        body: 'Image was sent.',
+      }))
+    );
+
+    const tickets = [];
+
+    for (let chunk of chunks) {
+      try {
+        let receipts = await expo.sendPushNotificationsAsync(chunk);
+        tickets.push(...receipts);
+        console.log('Push notifications sent:', receipts);
+      } catch (error) {
+        console.error('Error sending push notification:', error);
+      }
+    }
+
+    await uploadLoungeChatImage(request.file.filename);
+
+    response.status(201).json({
+      loungeChatObject: {
+        meetup: loungeChat.meetup,
+        user: {
+          _id: userId,
+          name: userName,
+          photo: userPhoto,
+        },
+        type: loungeChat.type,
+        imageUrl: loungeChat.imageUrl,
+        createdAt: loungeChat.createdAt,
+        replyTo: null,
       },
     });
   } catch (error) {

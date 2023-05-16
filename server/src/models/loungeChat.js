@@ -12,6 +12,7 @@ const loungeChatSchema = new mongoose.Schema({
   content: {
     type: Object, // string, binary data
   },
+  imageUrl: String,
   replyTo: {
     // どのchat objectに対して付随するか、ってだけ。
     type: mongoose.Schema.Types.ObjectId,
@@ -19,7 +20,7 @@ const loungeChatSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['general', 'reply', 'question', 'help', 'image', 'announcement', 'edited'], // launchedは、portでのchat用ね。
+    enum: ['general', 'reply', 'question', 'help', 'image', 'edited'], // launchedは、portでのchat用ね。
   },
   createdAt: {
     type: Date,

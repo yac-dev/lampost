@@ -24,6 +24,7 @@ const chatTypeTable = {
   question: iconColorsTable['yellow1'],
   reply: iconColorsTable['green1'],
   edited: iconColorsTable['red1'],
+  image: iconColorsTable['pink1'],
 };
 
 const Chats = (props) => {
@@ -54,6 +55,8 @@ const Chats = (props) => {
         return <AntDesign name='questioncircle' size={15} color={'white'} />;
       case 'edited':
         return <Entypo name='megaphone' size={15} color={'white'} />;
+      case 'image':
+        return <Ionicons name='image' size={15} color={'white'} />;
       default:
         return null;
     }
@@ -165,7 +168,11 @@ const Chats = (props) => {
                   </Text>
                   {renderDate(chat.createdAt)}
                 </View>
-                <Text style={{ fontSize: 15, marginBottom: 10, color: baseTextColor }}>{chat.content}</Text>
+                {chat.type === 'image' ? (
+                  <Image source={{ uri: chat.imageUrl }} style={{ width: 150, height: 200, marginBottom: 10 }} />
+                ) : (
+                  <Text style={{ fontSize: 15, marginBottom: 10, color: baseTextColor }}>{chat.content}</Text>
+                )}
                 {chat.replyTo ? (
                   <View style={{ paddingLeft: 15, marginBottom: 10 }}>
                     <View>

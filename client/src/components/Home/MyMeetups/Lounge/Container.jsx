@@ -25,6 +25,7 @@ import Chats from './Chats';
 import ConfirmRSVPModal from './ConfirmRSVPModal';
 import LoadingSpinner from '../../../Utils/LoadingSpinner';
 import SnackBar from '../../../Utils/SnackBar';
+import * as ImagePicker from 'expo-image-picker';
 
 const LoungeContainer = (props) => {
   const {
@@ -36,6 +37,8 @@ const LoungeContainer = (props) => {
     isIpad,
     routeName,
     setRouteName,
+    setLoading,
+    setSnackBar,
   } = useContext(GlobalContext);
   const oneGridWidth = isIpad ? Dimensions.get('window').width / 6 : Dimensions.get('window').width / 4;
   const oneGridHeight = isIpad ? Dimensions.get('window').height / 7.5 : Dimensions.get('window').height / 7.5;
@@ -66,12 +69,42 @@ const LoungeContainer = (props) => {
     setChats(loungeChats);
   };
 
-  const getRSVPState = async () => {
-    const result = await lampostAPI.get(
-      `/meetupanduserrelationships/meetup/${props.route.params.meetupId}/user/${auth.data._id}/rsvp`
-    );
-    const { rsvp } = result.data;
-    setIsRSVPed(rsvp);
+  // const getRSVPState = async () => {
+  //   const result = await lampostAPI.get(
+  //     `/meetupanduserrelationships/meetup/${props.route.params.meetupId}/user/${auth.data._id}/rsvp`
+  //   );
+  //   const { rsvp } = result.data;
+  //   setIsRSVPed(rsvp);
+  // };
+
+  const sendImage = async () => {
+    let pickedImage = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 0,
+    });
+
+    if (!pickedImage.cancelled && pickedImage.uri) {
+      const formData = new FormData();
+      // photo fieldよりも後にmeetupIdをappendするとダメなんだよな。。。何でだろ。。。
+      formData.append('type', 'image');
+      formData.append('userId', auth.data._id);
+      formData.append('userName', auth.data.name);
+      formData.append('userPhoto', auth.data.photo);
+      formData.append('meetupTitle', meetup.title);
+      formData.append('meetupId', meetup._id);
+      formData.append('loungeChatImage', {
+        name: `user-${auth.data._id}`,
+        uri: pickedImage.uri,
+        type: 'image/jpg',
+      });
+      setLoading(true);
+      const result = await lampostAPI.post('/loungechats/image', formData, {
+        headers: { 'Content-type': 'multipart/form-data' },
+      });
+      const { loungeChatObject } = result.data;
+      setChats((previous) => [...previous, loungeChatObject]);
+      setLoading(false);
+    }
   };
 
   const getSelectedMeetup = async () => {
@@ -82,7 +115,7 @@ const LoungeContainer = (props) => {
   useEffect(() => {
     getLoungeChatsByMeetupId();
     getSelectedMeetup();
-    getRSVPState();
+    // getRSVPState();
   }, []);
   // loungechatsも、apiで持ってくる必要がる。
 
@@ -369,9 +402,39 @@ const LoungeContainer = (props) => {
             </TouchableOpacity>
             <Text style={{ color: 'white', textAlign: 'center' }}>Help!!!</Text>
           </View>
+          <View
+            style={{
+              width: oneGridWidth,
+              height: 80,
+              justifyContent: 'center',
+              alignItems: 'center',
+              // backgroundColor: 'red',
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                backgroundColor: backgroundColorsTable['pink1'],
+                padding: 10,
+                borderRadius: 10,
+                width: 50,
+                height: 50,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: 5,
+              }}
+              onPress={() => {
+                // setChatType('image');
+                sendImage();
+              }}
+            >
+              <Ionicons name='image' size={20} color={iconColorsTable['pink1']} />
+            </TouchableOpacity>
+            <Text style={{ color: 'white', textAlign: 'center' }}>Send an image</Text>
+          </View>
         </View>
         <MenuBottomSheet />
         <SendChatBottomSheet />
+        <LoadingSpinner textContent={'Please wait till the image is sent.'} />
       </View>
     </LoungeContext.Provider>
   );

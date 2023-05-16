@@ -260,7 +260,7 @@ const Container = (props) => {
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
         <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 5, color: 'white' }}>Create badge</Text>
         <Text style={{ color: baseTextColor, marginBottom: 25 }}>
-          Couldn't find your topic? Then create a new badge and share it with everyone.
+          Then create a new badge and share it with everyone.
         </Text>
         <Icon />
         <BadgeName />

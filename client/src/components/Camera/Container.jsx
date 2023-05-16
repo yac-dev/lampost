@@ -817,7 +817,7 @@ const Container = (props) => {
         <VideoEffectBottomSheet />
         <WarningModal />
         <SnackBar />
-        <LoadingSpinner textContent={'😎😎😎'} />
+        <LoadingSpinner textContent={`${mood}${mood}${mood}`} />
       </View>
     </CameraContext.Provider>
   );
