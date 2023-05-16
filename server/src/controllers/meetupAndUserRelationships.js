@@ -196,7 +196,7 @@ export const getMyUpcomingMeetups = async (request, response) => {
       user: request.params.userId,
     }).populate({
       path: 'meetup',
-      select: '_id title startDateAndTime state launcher place',
+      select: '_id title startDateAndTime state launcher place fee',
     });
     // .populate({
     //   path: 'meetup',
@@ -218,6 +218,7 @@ export const getMyUpcomingMeetups = async (request, response) => {
           state: meetup.state,
           launcher: meetup.launcher,
           place: meetup.place,
+          fee: meetup.fee,
         };
       });
     }

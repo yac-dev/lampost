@@ -24,15 +24,15 @@ const Asset = (props) => {
   const win = Dimensions.get('window');
   const [asset, setAsset] = useState(null);
 
-  const getAsset = async () => {
-    const result = await lampostAPI.get(`/assets/${props.route.params.assetId}`);
-    const { asset } = result.data;
-    setAsset(asset);
-  };
-  useEffect(() => {
-    getAsset();
-  }, []);
-  console.log(asset);
+  // const getAsset = async () => {
+  //   const result = await lampostAPI.get(`/assets/${props.route.params.assetId}`);
+  //   const { asset } = result.data;
+  //   setAsset(asset);
+  // };
+  // useEffect(() => {
+  //   getAsset();
+  // }, []);
+  // console.log(asset);
 
   const renderTaggedPeople = () => {
     if (asset.taggedPeople.length) {
@@ -86,56 +86,6 @@ const Asset = (props) => {
             style={{ width: '100%', height: '100%', borderRadius: 10 }}
             source={{ uri: props.route.params.assetData }}
           />
-          {asset ? (
-            <View style={{ position: 'absolute', bottom: 90, alignSelf: 'center' }}>
-              <Text
-                style={{
-                  color: 'white',
-                  fontWeight: 'bold',
-                  fontSize: 20,
-                  marginBottom: 5,
-                  fontStyle: 'italic',
-                }}
-              >
-                {asset.meetup.title}
-              </Text>
-              <Text style={{ color: 'orange', fontStyle: 'italic', alignSelf: 'center' }}>
-                {renderDate(asset.createdAt)}
-              </Text>
-            </View>
-          ) : null}
-          {asset ? (
-            <View
-              style={{
-                flexDirection: 'row',
-                position: 'absolute',
-                bottom: 25,
-                alignSelf: 'center',
-                paddingLeft: 10,
-                paddingRight: 10,
-              }}
-            >
-              <ScrollView
-                horizontal={true}
-                style={{ paddingTop: 10 }}
-                contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
-              >
-                <View>
-                  <FastImage
-                    style={{ width: 40, height: 40, borderRadius: 5, marginRight: 13 }}
-                    source={{ uri: asset.createdBy.photo }}
-                  />
-                  <MaterialCommunityIcons
-                    name='camera'
-                    size={20}
-                    color={'white'}
-                    style={{ position: 'absolute', top: -8, right: 3 }}
-                  />
-                </View>
-                {renderTaggedPeople()}
-              </ScrollView>
-            </View>
-          ) : null}
         </View>
       );
     } else if (props.route.params.assetType === 'video') {
@@ -150,56 +100,6 @@ const Asset = (props) => {
             resizeMode='stretch'
             isLooping={true}
           />
-          {asset ? (
-            <View style={{ position: 'absolute', bottom: 90, alignSelf: 'center' }}>
-              <Text
-                style={{
-                  color: 'white',
-                  fontWeight: 'bold',
-                  fontSize: 20,
-                  marginBottom: 5,
-                  fontStyle: 'italic',
-                }}
-              >
-                {asset.meetup.title}
-              </Text>
-              <Text style={{ color: 'orange', fontStyle: 'italic', alignSelf: 'center' }}>
-                {renderDate(asset.createdAt)}
-              </Text>
-            </View>
-          ) : null}
-          {asset ? (
-            <View
-              style={{
-                flexDirection: 'row',
-                position: 'absolute',
-                bottom: 25,
-                alignSelf: 'center',
-                paddingLeft: 10,
-                paddingRight: 10,
-              }}
-            >
-              <ScrollView
-                horizontal={true}
-                style={{ paddingTop: 10 }}
-                contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
-              >
-                <View>
-                  <FastImage
-                    style={{ width: 40, height: 40, borderRadius: 5, marginRight: 13 }}
-                    source={{ uri: asset.createdBy.photo }}
-                  />
-                  <MaterialCommunityIcons
-                    name='camera'
-                    size={20}
-                    color={'white'}
-                    style={{ position: 'absolute', top: -8, right: 3 }}
-                  />
-                </View>
-                {renderTaggedPeople()}
-              </ScrollView>
-            </View>
-          ) : null}
         </View>
       );
     }

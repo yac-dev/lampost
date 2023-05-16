@@ -7,6 +7,7 @@ const Stack = createNativeStackNavigator();
 import LibraryContainer from '../../Home/Library/Container';
 import DateAssets from '../../Home/Library/DateAssets/Container';
 import Members from '../../Home/Library/Members';
+import TaggedPeople from '../../Home/Library/DateAssets/LibraryAsset/TaggedPeople';
 import About from '../../Home/Library/About/Container';
 import User from '../../User/Container';
 import AddAssets from '../../Utils/AddAssets/Container';
@@ -73,7 +74,24 @@ const LibraryNavigator = () => {
             headerShown: true,
             title: '',
             headerTransparent: true,
-            title: 'User',
+            title: 'Member',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: 'white',
+            // headerTintColor: {
+            //   color: 'white',
+            // },
+          })}
+        />
+        <Stack.Screen
+          name='Home library tagged people'
+          component={TaggedPeople}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerTransparent: true,
+            title: 'Tagged',
             headerTitleStyle: {
               fontWeight: 'bold',
               color: 'white',

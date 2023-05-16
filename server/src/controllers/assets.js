@@ -1,6 +1,7 @@
 import Asset from '../models/asset';
 import Meetup from '../models/meetup';
 import User from '../models/user';
+import Icon from '../models/icon';
 import fs from 'fs';
 import path from 'path';
 import { exec } from 'child_process';
@@ -89,7 +90,6 @@ export const getUserAssets = async (request, response) => {
   try {
     console.log(request.body.userId);
     const assets = await Asset.find({ createdBy: request.params.userId });
-    console.log(assets);
     response.status(200).json({
       assets,
     });
@@ -120,6 +120,28 @@ export const getMeetupAssets = async (request, response) => {
     const assets = await Asset.find({ meetup: request.params.meetupId }).select({ type: 1, effect: 1, data: 1 });
     response.status(200).json({
       assets,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getTaggedPeople = async (request, response) => {
+  try {
+    const users = await User.find({ _id: { $in: request.body.taggedPeople } })
+      .select({ name: 1, photo: 1, topBadges: 1, _id: 1 })
+      .populate({
+        path: 'topBadges',
+        populate: {
+          path: 'badge',
+          populate: {
+            path: 'icon',
+            model: Icon,
+          },
+        },
+      });
+    response.status(200).json({
+      users,
     });
   } catch (error) {
     console.log(error);

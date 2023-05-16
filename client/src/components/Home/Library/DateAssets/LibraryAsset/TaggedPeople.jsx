@@ -1,28 +1,25 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, ActivityIndicator, FlatList, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
-import GlobalContext from '../../../GlobalContext';
-import LibraryContext from './LibraryContext';
-import lampostAPI from '../../../apis/lampost';
-import { baseBackgroundColor, baseTextColor, iconColorsTable } from '../../../utils/colorsTable';
-import UserInfo from '../../Utils/UserInfo';
-import BadgeLabel from '../../Utils/BadgeLabel';
+import GlobalContext from '../../../../../GlobalContext';
 import FastImage from 'react-native-fast-image';
+import lampostAPI from '../../../../../apis/lampost';
+import { baseBackgroundColor, iconColorsTable, baseTextColor } from '../../../../../utils/colorsTable';
+import BadgeLabel from '../../../../Utils/BadgeLabel';
 
-const Members = (props) => {
+const TaggedPeople = (props) => {
   const { auth } = useContext(GlobalContext);
-  const [members, setMembers] = useState([]);
-  const [isFetchedMembers, setIsFetchedMembers] = useState(false);
-  // const { navigation } = useContext(LibraryContext);
+  const [users, setUsers] = useState([]);
+  const [isFetchedUsers, setIsFetchedUsers] = useState(false);
 
-  const getMembersByLibraryId = async () => {
-    const result = await lampostAPI.get(`/libraryanduserrelationships/users/${props.route.params.libraryId}`);
+  const getTaggedPeople = async () => {
+    const result = await lampostAPI.post('/assets/taggedpeople', { taggedPeople: props.route.params.taggedPeople });
     const { users } = result.data;
-    setMembers(users);
-    setIsFetchedMembers(true);
+    setUsers(users);
+    setIsFetchedUsers(true);
   };
 
   useEffect(() => {
-    getMembersByLibraryId();
+    getTaggedPeople();
   }, []);
 
   const renderTopBadges = (user) => {
@@ -120,13 +117,13 @@ const Members = (props) => {
     );
   };
 
-  const renderMembers = () => {
-    if (!members.length) {
+  const renderUsers = () => {
+    if (!users.length) {
       return <Text style={{ color: baseTextColor }}>You'll see all those who joined this meetup.</Text>;
     } else {
       return (
         <FlatList
-          data={members}
+          data={users}
           renderItem={({ item }) => renderUser(item)}
           keyExtractor={(item, index) => `${item._id}-${index}`}
         />
@@ -137,10 +134,10 @@ const Members = (props) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
       <View style={{ paddingLeft: 10, paddingRight: 10 }}>
-        {!isFetchedMembers ? <ActivityIndicator textContent={'🧒👨🏽‍🦳👨🏾‍🦱🙋'} /> : renderMembers()}
+        {!isFetchedUsers ? <ActivityIndicator textContent={'🧒👨🏽‍🦳👨🏾‍🦱🙋'} /> : renderUsers()}
       </View>
     </SafeAreaView>
   );
 };
 
-export default Members;
+export default TaggedPeople;

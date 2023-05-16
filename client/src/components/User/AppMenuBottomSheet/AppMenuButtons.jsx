@@ -80,6 +80,7 @@ const AppButtons = (props) => {
     });
 
     if (!pickedImage.cancelled && pickedImage.uri) {
+      setLoading(true);
       const formData = new FormData();
       // photo fieldよりも後にmeetupIdをappendするとダメなんだよな。。。何でだろ。。。
       formData.append('userId', auth.data._id);
@@ -94,6 +95,7 @@ const AppButtons = (props) => {
       });
       // console.log(res);
       // setSelectedProfileImage(result.uri);
+      setLoading(false);
       const { photo } = result.data;
       console.log('this is my photo', photo);
       setAuth((previous) => {

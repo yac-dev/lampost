@@ -38,6 +38,7 @@ const DateAssetsContainer = (props) => {
   const renderLibraryAsset = (libraryAsset) => {
     return (
       <LibraryAsset
+        navigation={props.navigation}
         libraryAsset={libraryAsset}
         libraryId={props.route.params.libraryId}
         reactionOptions={props.route.params.reactionOptions}

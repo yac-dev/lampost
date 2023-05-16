@@ -211,6 +211,7 @@ const AppStack = (props) => {
           launcher: myUpcomingMeetups[meetupId].launcher,
           place: myUpcomingMeetups[meetupId].place,
           duration: myUpcomingMeetups[meetupId].duration,
+          fee: myUpcomingMeetups[meetupId].fee,
           isRSVPed: myUpcomingMeetups[meetupId].isRSVPed,
           unreadChatsTable: {
             general: 0,
@@ -218,6 +219,7 @@ const AppStack = (props) => {
             question: 0,
             help: 0,
             edited: 0,
+            image: 0,
           },
         };
       }

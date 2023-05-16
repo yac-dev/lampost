@@ -143,7 +143,7 @@ export const getLibraryAssetsByDate = async (request, response) => {
     })
       .populate({
         path: 'asset',
-        select: 'data type meetup createdBy createdAt',
+        select: 'data type meetup createdBy createdAt mood taggedPeople',
         populate: [
           {
             path: 'meetup',
@@ -152,6 +152,10 @@ export const getLibraryAssetsByDate = async (request, response) => {
           {
             path: 'createdBy',
             select: 'name photo',
+          },
+          {
+            path: 'taggedPeople',
+            select: 'photo',
           },
         ],
       })

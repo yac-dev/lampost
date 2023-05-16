@@ -96,6 +96,7 @@ export const getUnreadLoungeChats = async (request, response) => {
           question: 0,
           help: 0,
           edited: 0,
+          image: 0,
         };
         chatsTable[chat.meetup][chat.type]++;
       } else {

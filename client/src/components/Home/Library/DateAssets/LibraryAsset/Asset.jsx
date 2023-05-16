@@ -4,11 +4,36 @@ import LibraryAssetContext from './LibraryAssetContext';
 import FastImage from 'react-native-fast-image';
 import { Video } from 'expo-av';
 import { iconsTable } from '../../../../../utils/icons';
-import { iconColorsTable, backgroundColorsTable, rnDefaultBackgroundColor } from '../../../../../utils/colorsTable';
+import {
+  iconColorsTable,
+  backgroundColorsTable,
+  rnDefaultBackgroundColor,
+  baseTextColor,
+} from '../../../../../utils/colorsTable';
 const { MaterialCommunityIcons } = iconsTable;
 
 const Asset = () => {
   const { libraryAsset, reactions } = useContext(LibraryAssetContext);
+
+  const renderDate = (date) => {
+    const d = new Date(date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: '2-digit',
+    });
+    const dateElements = d.split('/');
+
+    return (
+      <Text
+        style={{
+          fontSize: 16,
+          color: baseTextColor,
+        }}
+      >
+        {dateElements[2]}&nbsp;&nbsp;{dateElements[0]}&nbsp;&nbsp;{dateElements[1]}
+      </Text>
+    );
+  };
 
   const renderReactions = () => {
     if (reactions.length) {
@@ -75,12 +100,24 @@ const Asset = () => {
             style={{ width: '100%', aspectRatio: 1, borderRadius: 8 }}
             source={{ uri: libraryAsset.asset.data }}
           />
+          <View style={{ position: 'absolute', top: 10, right: 10 }}>
+            <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+              <Text style={{ color: 'white', fontSize: 16 }}>{libraryAsset.asset.meetup.title}</Text>
+              {/* {renderDate(libraryAsset.createdAt)} */}
+            </View>
+          </View>
           {renderReactions()}
         </View>
       );
     case 'video':
       return (
         <View style={{ width: '100%', marginBottom: 5 }}>
+          <View style={{ position: 'absolute', top: 0, right: 0 }}>
+            <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+              <Text style={{ color: 'white', fontSize: 16 }}>{libraryAsset.asset.meetup.title}</Text>
+              {/* {renderDate(libraryAsset.createdAt)} */}
+            </View>
+          </View>
           <Video
             style={{ width: '100%', height: 400, borderRadius: 8 }}
             source={{

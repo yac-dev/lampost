@@ -13,6 +13,7 @@ const LibraryAssetContainer = (props) => {
   return (
     <LibraryAssetContext.Provider
       value={{
+        navigation: props.navigation,
         libraryAsset: props.libraryAsset,
         libraryId: props.libraryId,
         reactionOptions: props.reactionOptions,

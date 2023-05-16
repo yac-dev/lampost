@@ -92,6 +92,7 @@ const Auth = (props) => {
             name='Assets'
             component={Assets}
             options={{
+              title: 'Snaps',
               headerStyle: {
                 backgroundColor: appBottomSheetBackgroundColor,
               },
@@ -107,6 +108,7 @@ const Auth = (props) => {
             name='Asset'
             component={Asset}
             options={{
+              title: 'Snap',
               headerTransparent: true,
               // headerStyle: {
               //   backgroundColor: appBottomSheetBackgroundColor,

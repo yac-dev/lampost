@@ -275,12 +275,15 @@ const Meetups = (props) => {
                   flexDirection: 'row',
                   alignItems: 'center',
                 }}
-                onPress={() => getMeetup(meetup._id)}
+                // onPress={() => getMeetup(meetup._id)}
               >
                 {renderDate(meetup.startDateAndTime)}
                 <View>
-                  <Text style={{ fontWeight: 'bold', fontSize: 18, color: 'white' }}>{meetup.title}</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 18, color: 'white', marginBottom: 5 }}>
+                    {meetup.title}
+                  </Text>
                   {renderTime(meetup.startDateAndTime)}
+                  <Text style={{ color: 'white' }}>$&nbsp;{meetup.fee ? meetup.fee : 'Free'}</Text>
                 </View>
               </TouchableOpacity>
               {meetup.isRSVPed ? (

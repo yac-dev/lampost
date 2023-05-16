@@ -106,9 +106,8 @@ export const editProfilePhoto = async (request, response) => {
     const user = await User.findById(request.params.id);
     user.photo = `https://lampost-${process.env.NODE_ENV}.s3.us-east-2.amazonaws.com/avatars/${request.file.filename}`;
     user.save();
-    uploadAvatar(request.file.filename);
-    console.log('this is the body data', request.body);
-    console.log('this is the file name', request.file.filename);
+    await uploadAvatar(request.file.filename);
+
     response.status(200).json({
       photo: user.photo,
     });

@@ -4,6 +4,7 @@ import { iconColorsTable } from '../../../utils/colorsTable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 const chatIconTable = {
   general: {
@@ -25,6 +26,9 @@ const chatIconTable = {
   edited: {
     icon: <Entypo name='megaphone' size={15} color={'white'} style={{ marginRight: 3 }} />,
     backgroundColor: iconColorsTable['red1'],
+  },
+  image: {
+    icon: <Ionicons name='image' size={15} color={'white'} style={{ marginRight: 3 }} />,
   },
 };
 

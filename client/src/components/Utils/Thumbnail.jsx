@@ -26,9 +26,9 @@ const Thumbnail = (props) => {
 
   if (props.asset.type === 'photo') {
     return (
-      <View
+      <TouchableOpacity
         style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
-        // onPress={() => props.onAssetPress()}
+        onPress={() => props.onAssetPress()}
       >
         <FastImage
           style={{ width: '100%', height: '100%', borderRadius: 7 }}
@@ -44,13 +44,13 @@ const Thumbnail = (props) => {
         <View style={{ position: 'absolute', top: 10, right: 10 }}>
           <Ionicons name='camera' size={25} color={'white'} />
         </View>
-      </View>
+      </TouchableOpacity>
     );
   } else if (props.asset.type === 'video') {
     return (
-      <View
+      <TouchableOpacity
         style={{ width: oneAssetWidth, height: oneAssetWidth, padding: 2 }}
-        // onPress={() => props.onAssetPress()}
+        onPress={() => props.onAssetPress()}
       >
         <Video
           style={{ width: '100%', height: '100%', borderRadius: 7 }}
@@ -66,7 +66,7 @@ const Thumbnail = (props) => {
         <View style={{ position: 'absolute', top: 10, right: 10 }}>
           <Ionicons name='videocam' size={25} color={iconColorsTable[videoTypesTable[props.asset.effect]]} />
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 };
