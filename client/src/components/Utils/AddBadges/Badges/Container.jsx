@@ -30,7 +30,7 @@ const Container = () => {
   // } else {
   //   return <Text style={{ color: baseTextColor }}>Now loading badges...</Text>;
   // }
-  return <ScrollView contentContainerStyle={{ paddingBottom: 0 }}>{renderBadges()}</ScrollView>;
+  return <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>{renderBadges()}</ScrollView>;
 };
 
 export default Container;

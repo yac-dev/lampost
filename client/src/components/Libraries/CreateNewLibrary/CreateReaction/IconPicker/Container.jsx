@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
-import GlobalContext from '../../../GlobalContext';
+import GlobalContext from '../../../../../GlobalContext';
 import IconPickerContext from './IconPickerContext';
 import FastImage from 'react-native-fast-image';
-import lampostAPI from '../../../apis/lampost';
+import lampostAPI from '../../../../../apis/lampost';
 import {
-  baseBackgroundColor,
-  rnDefaultBackgroundColor,
+  backgroundColorsTable,
   screenSectionBackgroundColor,
-} from '../../../utils/colorsTable';
+  rnDefaultBackgroundColor,
+  baseBackgroundColor,
+} from '../../../../../utils/colorsTable';
 import FilterOptionTab from './FilterOptionTab';
-import { iconsTable } from '../../../utils/icons';
+import { iconsTable } from '../../../../../utils/icons';
 const { MaterialCommunityIcons, Ionicons, MaterialIcons, Entypo, Fontisto } = iconsTable;
 
 const filterTypeIdsTable = {
@@ -176,7 +177,7 @@ const Container = (props) => {
     props.navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
-          onPress={() => props.navigation.navigate({ name: 'Create badge', params: { selectedIcon }, merge: true })}
+          onPress={() => props.navigation.navigate({ name: 'Create reaction', params: { selectedIcon }, merge: true })}
           disabled={selectedIcon ? false : true}
         >
           <Text
@@ -376,7 +377,7 @@ const Container = (props) => {
             <FilterOptionTab
               label='Brands'
               value='brands'
-              icon={<MaterialCommunityIcons name='star' size={25} color={'white'} />}
+              icon={<MaterialCommunityIcons name='heart' size={25} color={'white'} />}
               onFilterOptionPress={() => setSelectedFilterOption('brands')}
             />
             <FilterOptionTab
@@ -394,7 +395,7 @@ const Container = (props) => {
             <FilterOptionTab
               label='People'
               value='people'
-              icon={<MaterialCommunityIcons name='account' size={25} color={'white'} />}
+              icon={<MaterialCommunityIcons name='head' size={25} color={'white'} />}
               onFilterOptionPress={() => setSelectedFilterOption('people')}
             />
             <FilterOptionTab

@@ -175,10 +175,10 @@ const Icon = () => {
             </View>
           ) : (
             <View>
-              <Text style={{ color: baseTextColor, marginBottom: 10 }}>
-                You can create an icon from an image. This function will remove any background objects and then genrate
-                simple looking and cutomizable icon image. Please select the original image such as logos, any
-                characters, iconic people etc and then crop it.
+              <Text style={{ color: baseTextColor, marginBottom: 10, fontSize: 13 }}>
+                You can create an icon from your own image. Please select the original image from your phone and crop
+                it. This function will remove all background objects of your photo and then genrate a simple looking and
+                cutomizable icon image.
               </Text>
               <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
                 <FastImage
