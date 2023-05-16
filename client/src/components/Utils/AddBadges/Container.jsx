@@ -801,10 +801,10 @@ const Container = (props) => {
         {props.route.params.fromComponent === 'ADD_USER_BADGES' ? (
           <View style={{ paddingLeft: 10, paddingRight: 10, width: '100%' }}>
             <TouchableOpacity
-              style={{ backgroundColor: iconColorsTable['blue1'], padding: 10, borderRadius: 7 }}
+              style={{ backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 7 }}
               onPress={() => props.navigation.navigate('Create badge')}
             >
-              <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 18, textAlign: 'center' }}>Create new?</Text>
+              <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, textAlign: 'center' }}>Create new?</Text>
               <Text style={{ color: 'white', fontSize: 12 }}>
                 Could't find your topics above? Let's create your original one here.
               </Text>

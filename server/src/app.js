@@ -28,6 +28,7 @@ import meetupAndUserRelationshipsRouter from './routers/meetupAndUserRelationshi
 import friendRelationshipsRouter from './routers/friendRelationships';
 import libraryAndUserRelationshipsRouter from './routers/libraryAndUserRelationships';
 import badgeTypeAndBadgeRelationshipsRouter from './routers/badgeTypeAndBadgeRelationships';
+import iconAndIconTypeRelationshipsRouter from './routers/iconAndIconTypeRelationships';
 import libraryAndAssetRelationshipsRouter from './routers/libraryAndAssetRelationships';
 import loungeChatsRouter from './routers/loungeChats';
 import friendChatsRouter from './routers/friendChats';
@@ -64,6 +65,7 @@ app.use('/api/libraryanduserrelationships', libraryAndUserRelationshipsRouter);
 app.use('/api/meetupanduserrelationships', meetupAndUserRelationshipsRouter);
 app.use('/api/friendrelationships', friendRelationshipsRouter);
 app.use('/api/badgetypeandbadgerelationships', badgeTypeAndBadgeRelationshipsRouter);
+app.use('/api/iconandicontyperelationships', iconAndIconTypeRelationshipsRouter);
 app.use('/api/libraryandassetrelationships', libraryAndAssetRelationshipsRouter);
 app.use('/api/loungechats', loungeChatsRouter);
 app.use('/api/friendchats', friendChatsRouter);

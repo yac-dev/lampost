@@ -8,7 +8,7 @@ const FilterOption = (props) => {
   return (
     <TouchableOpacity
       style={{
-        padding: 10,
+        padding: 5,
         backgroundColor: selectedFilterOption === props.value ? iconColorsTable['blue1'] : screenSectionBackgroundColor,
         justifyContent: 'center',
         borderRadius: 7,
