@@ -4,7 +4,6 @@ import { View, Text, TouchableOpacity, Image, Touchable } from 'react-native';
 import GlobalContext from '../../../GlobalContext';
 import FormContext from './FormContext';
 import * as ImagePicker from 'expo-image-picker';
-import SVG from 'react-native-svg';
 import {
   screenSectionBackgroundColor,
   backgroundColorsTable,

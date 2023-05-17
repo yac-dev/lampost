@@ -30,6 +30,7 @@ import AddBadges from '../../Utils/AddBadges/Container';
 import AddAssets from '../../Utils/AddAssets/Container';
 import ReportLibrary from '../../Libraries/ReportLibrary';
 import ReportAsset from '../../Utils/ReportAsset';
+import CreateCustomReactionIcon from '../../Libraries/CreateNewLibrary/CreateCustomReactionIcon';
 
 const LibraryNavigator = () => {
   const { auth } = useContext(GlobalContext);
@@ -304,6 +305,25 @@ const LibraryNavigator = () => {
               </TouchableOpacity>
             ),
             headerTitle: 'Image icon',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          })}
+        />
+        <Stack.Screen
+          name='Create custom reaction icon'
+          component={CreateCustomReactionIcon}
+          options={({ navigation }) => ({
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+              </TouchableOpacity>
+            ),
+            headerTitle: 'Create custom icon',
             headerStyle: {
               backgroundColor: appBottomSheetBackgroundColor,
             },

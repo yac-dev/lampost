@@ -23,45 +23,60 @@ const Reactions = (props) => {
       userId: auth.data._id,
     });
     setLoading(false);
-    setReactions((previous) => [
-      ...previous,
-      {
-        reaction: { icon: reactionObject.icon, color: reactionObject.color },
-        user: { _id: auth.data._id, photo: auth.data.photo },
-      },
-    ]);
+    setReactions((previous) => {
+      const updating = [...previous];
+      if (reactionObject.iconType === 'emoji') {
+        updating.push({
+          reaction: { iconType: 'emoji', emoji: reactionObject.emoji },
+          user: { _id: auth.data._id, photo: auth.data.photo },
+        });
+        return updating;
+      } else if (reactionObject.iconType === 'reactionIcon') {
+        updating.push({
+          reaction: { iconType: 'reactionIcon', reactionIcon: { url: reactionObject.reactionIcon.url } },
+          user: { _id: auth.data._id, photo: auth.data.photo },
+        });
+        return updating;
+      }
+    });
   };
 
   const renderReactionOption = (reactionObject) => {
-    return (
-      <TouchableOpacity
-        style={{
-          backgroundColor: rnDefaultBackgroundColor,
-          marginRight: 15,
-          borderRadius: 8,
-        }}
-        onPress={() => createReaction(reactionObject)}
-      >
-        <View
+    if (reactionObject.iconType === 'emoji') {
+      return (
+        <TouchableOpacity
           style={{
-            flexDirection: 'row',
+            width: 45,
+            height: 45,
+            borderRadius: 10,
+            justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: backgroundColorsTable[reactionObject.color],
-            borderRadius: 5,
-            padding: 5,
+            backgroundColor: inputBackgroundColorNew,
+            marginRight: 10,
           }}
+          onPress={() => createReaction(reactionObject)}
         >
-          <FastImage
-            source={{ uri: reactionObject.icon.url }}
-            style={{ width: 35, height: 35, marginRight: 5 }}
-            tintColor={iconColorsTable[reactionObject.color]}
-          />
-          <Text style={{ color: 'white', fontSize: 15, color: iconColorsTable[reactionObject.color] }}>
-            {reactionObject.comment}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    );
+          <Text style={{ fontSize: 30 }}>{reactionObject.emoji}</Text>
+        </TouchableOpacity>
+      );
+    } else if (reactionObject.iconType === 'reactionIcon') {
+      return (
+        <TouchableOpacity
+          style={{
+            width: 45,
+            height: 45,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: inputBackgroundColorNew,
+            marginRight: 10,
+          }}
+          onPress={() => createReaction(reactionObject)}
+        >
+          <FastImage source={{ uri: reactionObject.reactionIcon.url }} style={{ width: 35, height: 35 }} />
+        </TouchableOpacity>
+      );
+    }
   };
 
   const renderReactionOptions = () => {

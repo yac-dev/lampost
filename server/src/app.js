@@ -44,6 +44,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/badgeImages', express.static(path.join(__dirname, '..', 'badgeImages')));
+app.use('/reactionIconImages', express.static(path.join(__dirname, '..', 'reactionIconImages')));
 
 app.get('/', (request, response) => {
   response.send('Hello guest');

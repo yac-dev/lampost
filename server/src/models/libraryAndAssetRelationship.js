@@ -20,6 +20,7 @@ const libraryAndAssetRelationshipSchema = new mongoose.Schema({
         ref: 'Reaction',
       },
       user: { type: mongoose.Schema.ObjectId },
+      comment: String,
     },
   ],
   createdAt: Date,

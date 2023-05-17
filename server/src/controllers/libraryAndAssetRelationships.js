@@ -163,8 +163,8 @@ export const getLibraryAssetsByDate = async (request, response) => {
         path: 'reactions.reaction',
         model: 'Reaction',
         populate: {
-          path: 'icon',
-          model: 'Icon',
+          path: 'reactionIcon',
+          model: 'ReactionIcon',
         },
       })
       .populate({

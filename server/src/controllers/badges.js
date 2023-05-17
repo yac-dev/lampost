@@ -266,7 +266,7 @@ export const createIconFromScratch = async (request, response) => {
     const uploadParams = {
       Bucket: process.env.AWS_S3BUCKET_NAME,
       Body: fileStream,
-      Key: `assets/icons/${name}`,
+      Key: `icons/${name}`,
     };
     await s3.upload(uploadParams).promise();
     console.log('icon image Uploaded');

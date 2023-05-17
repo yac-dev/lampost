@@ -103,6 +103,20 @@ const Reactions = (props) => {
     }
   }, [route.params?.selectedReactionIcon]);
 
+  useEffect(() => {
+    if (route.params?.createdReactionIcon) {
+      setFormData((previous) => {
+        return {
+          ...previous,
+          reactions: [
+            ...previous.reactions,
+            { iconType: 'reactionIcon', reactionIcon: route.params.createdReactionIcon },
+          ],
+        };
+      });
+    }
+  }, [route.params?.createdReactionIcon]);
+
   const renderCheckMarkForSure = () => {
     if (typeof formData.isReactionAvailable === 'boolean') {
       if (formData.isReactionAvailable) {
@@ -142,28 +156,30 @@ const Reactions = (props) => {
       const list = formData.reactions.map((reaction, index) => {
         if (reaction.iconType === 'emoji') {
           return (
-            <View
+            <TouchableOpacity
+              style={{
+                width: 45,
+                height: 45,
+                borderRadius: 7,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: inputBackgroundColorNew,
+                marginRight: 10,
+              }}
               key={index}
-              style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}
             >
-              <TouchableOpacity
-                style={{
-                  borderRadius: 7,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  backgroundColor: inputBackgroundColorNew,
-                  padding: 7,
-                }}
-              >
-                <Text style={{ fontSize: 30 }}>{reaction.emoji}</Text>
-              </TouchableOpacity>
+              <Text style={{ fontSize: 30 }}>{reaction.emoji}</Text>
               <TouchableOpacity
                 style={{
                   backgroundColor: iconColorsTable['red1'],
-                  padding: 10,
-                  borderRadius: 5,
-                  flexDirection: 'row',
+                  borderRadius: 10,
+                  justifyContent: 'center',
                   alignItems: 'center',
+                  width: 20,
+                  height: 20,
+                  position: 'absolute',
+                  right: -5,
+                  top: -5,
                 }}
                 onPress={() => {
                   setFormData((previous) => {
@@ -173,38 +189,38 @@ const Reactions = (props) => {
                     updating.reactions = removedOptions;
                     return updating;
                   });
-                  console.log('remove');
                 }}
               >
-                <MaterialCommunityIcons name='minus' color={'white'} size={20} style={{ marginRight: 5 }} />
-                <Text style={{ color: 'white' }}>Remove</Text>
+                <MaterialCommunityIcons name='minus' color={'white'} size={15} />
               </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
           );
         } else if (reaction.iconType === 'reactionIcon') {
           return (
-            <View
+            <TouchableOpacity
+              style={{
+                width: 45,
+                height: 45,
+                borderRadius: 7,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: inputBackgroundColorNew,
+                marginRight: 10,
+              }}
               key={index}
-              style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}
             >
-              <TouchableOpacity
-                style={{
-                  borderRadius: 7,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  backgroundColor: inputBackgroundColorNew,
-                  padding: 7,
-                }}
-              >
-                <FastImage source={{ uri: reaction.reactionIcon.url }} style={{ width: 30, height: 30 }} />
-              </TouchableOpacity>
+              <FastImage source={{ uri: reaction.reactionIcon.url }} style={{ width: 30, height: 30 }} />
               <TouchableOpacity
                 style={{
                   backgroundColor: iconColorsTable['red1'],
-                  padding: 10,
-                  borderRadius: 5,
-                  flexDirection: 'row',
+                  borderRadius: 10,
+                  justifyContent: 'center',
                   alignItems: 'center',
+                  width: 20,
+                  height: 20,
+                  position: 'absolute',
+                  right: -5,
+                  top: -5,
                 }}
                 onPress={() => {
                   setFormData((previous) => {
@@ -214,28 +230,22 @@ const Reactions = (props) => {
                     updating.reactions = removedOptions;
                     return updating;
                   });
-                  console.log('remove');
                 }}
               >
-                <MaterialCommunityIcons name='minus' color={'white'} size={20} style={{ marginRight: 5 }} />
-                <Text style={{ color: 'white' }}>Remove</Text>
+                <MaterialCommunityIcons name='minus' color={'white'} size={15} />
               </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
           );
         }
       });
 
-      return <View>{list}</View>;
+      return (
+        <ScrollView horizontal={true} style={{ paddingTop: 10 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>{list}</View>
+        </ScrollView>
+      );
     } else {
       return null;
-    }
-  };
-
-  const renderReactionOptionsLength = () => {
-    if (formData.reactionOptions.length <= 3) {
-      return <Text style={{ color: baseTextColor, fontSize: 13 }}>{formData.reactionOptions}/3</Text>;
-    } else {
-      return <Text style={{ color: 'red', fontSize: 13 }}>{formData.reactionOptions}/3</Text>;
     }
   };
 
@@ -363,9 +373,7 @@ const Reactions = (props) => {
                   marginBottom: 10,
                 }}
               >
-                <Text style={{ fontSize: 13, color: baseTextColor }}>
-                  Now please create your original reaction options.
-                </Text>
+                <Text style={{ fontSize: 13, color: baseTextColor }}>Please select reaction options.</Text>
                 <Text style={{ color: formData.reactions.length <= 5 ? baseTextColor : 'red', fontSize: 13 }}>
                   {formData.reactions.length}/6
                 </Text>
@@ -400,6 +408,21 @@ const Reactions = (props) => {
                     <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
                       <MaterialCommunityIcons name='plus' color={'white'} size={20} style={{ marginRight: 5 }} />
                       <Text style={{ color: 'white' }}>Add image icon</Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: iconColorsTable['blue1'],
+                      padding: 5,
+                      borderRadius: 5,
+                      marginRight: 10,
+                      marginBottom: 10,
+                    }}
+                    onPress={() => navigation.navigate('Create custom reaction icon')}
+                  >
+                    <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                      <MaterialCommunityIcons name='plus' color={'white'} size={20} style={{ marginRight: 5 }} />
+                      <Text style={{ color: 'white' }}>Add custom</Text>
                     </View>
                   </TouchableOpacity>
                 </View>

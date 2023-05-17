@@ -26,37 +26,19 @@ const Asset = () => {
                   ? reactionObject.user.photo
                   : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
               }}
-              style={{ width: 50, height: 50, backgroundColor: iconColorsTable['blue1'], borderRadius: 12 }}
+              style={{ width: 45, height: 45, backgroundColor: iconColorsTable['blue1'], borderRadius: 12 }}
               tintColor={reactionObject.user.photo ? null : 'white'}
             />
-            <View
-              style={{
-                width: 30,
-                height: 30,
-                position: 'absolute',
-                right: -10,
-                bottom: -10,
-                backgroundColor: rnDefaultBackgroundColor,
-                borderRadius: 10,
-              }}
-            >
-              <View
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: 10,
-                  backgroundColor: backgroundColorsTable[reactionObject.reaction.color],
-                }}
-              >
-                <FastImage
-                  source={{ uri: reactionObject.reaction.icon.url }}
-                  style={{ width: 25, height: 25 }}
-                  tintColor={iconColorsTable[reactionObject.reaction.color]}
-                />
-              </View>
-            </View>
+            {reactionObject.reaction.iconType === 'emoji' ? (
+              <Text style={{ fontSize: 30, position: 'absolute', right: -10, bottom: -10 }}>
+                {reactionObject.reaction.emoji}
+              </Text>
+            ) : (
+              <FastImage
+                style={{ position: 'absolute', right: -10, bottom: -10, width: 30, height: 30 }}
+                source={{ uri: reactionObject.reaction.reactionIcon.url }}
+              />
+            )}
           </View>
         );
       });
