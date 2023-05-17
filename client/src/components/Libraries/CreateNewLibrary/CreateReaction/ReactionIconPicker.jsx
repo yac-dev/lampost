@@ -1,9 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, ScrollView, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
 import GlobalContext from '../../../../GlobalContext';
-import { baseBackgroundColor, inputBackgroundColorNew, disabledTextColor } from '../../../../utils/colorsTable';
+import {
+  baseBackgroundColor,
+  inputBackgroundColorNew,
+  disabledTextColor,
+  iconColorsTable,
+} from '../../../../utils/colorsTable';
 import lampostAPI from '../../../../apis/lampost';
 import FastImage from 'react-native-fast-image';
+import { iconsTable } from '../../../../utils/icons';
+const { MaterialCommunityIcons } = iconsTable;
 
 const ReactionIconPicker = (props) => {
   const { isIpad } = useContext(GlobalContext);
@@ -22,6 +29,13 @@ const ReactionIconPicker = (props) => {
   useEffect(() => {
     getReactionIcons();
   }, []);
+
+  useEffect(() => {
+    if (props.route.params?.createdReactionIcon) {
+      setReactionIcons((previous) => [...previous, props.route.params.createdReactionIcon]);
+      setSelectedReactionIcon(props.route.params.createdReactionIcon);
+    }
+  }, [props.route.params?.createdReactionIcon]);
 
   useEffect(() => {
     props.navigation.setOptions({
@@ -84,8 +98,8 @@ const ReactionIconPicker = (props) => {
           {selectedReactionIcon ? (
             <View
               style={{
-                width: 50,
-                height: 50,
+                width: 100,
+                height: 100,
                 backgroundColor: inputBackgroundColorNew,
                 borderRadius: 8,
                 marginTop: 10,
@@ -95,9 +109,21 @@ const ReactionIconPicker = (props) => {
                 alignItems: 'center',
               }}
             >
-              <FastImage source={{ uri: selectedReactionIcon.url }} style={{ width: 35, height: 35 }} />
+              <FastImage source={{ uri: selectedReactionIcon.url }} style={{ width: 80, height: 80 }} />
             </View>
           ) : null}
+          <View style={{ width: '100%', paddingLeft: 10, paddingRight: 10 }}>
+            <TouchableOpacity
+              style={{ width: '100%', backgroundColor: iconColorsTable['blue1'], borderRadius: 5, padding: 10 }}
+              onPress={() => props.navigation.navigate('Create custom reaction icon')}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                <MaterialCommunityIcons name='plus' color={'white'} size={20} style={{ marginRight: 10 }} />
+                <Text style={{ color: 'white', fontWeight: 'bold' }}>Create new</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
           {renderReactionIcons()}
         </View>
       ) : (

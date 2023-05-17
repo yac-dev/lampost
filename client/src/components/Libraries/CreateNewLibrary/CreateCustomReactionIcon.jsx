@@ -17,11 +17,11 @@ const CreateCustomReactionIcon = (props) => {
 
   // doneで、画像をawsに送るのか。画像もfolderから消してね。
   const onDonePress = async () => {
-    setLoading(false);
+    setLoading(true);
     const result = await lampostAPI.post('/reactionicons', { fileName });
     const { reactionIcon } = result.data;
-    setLoading(true);
-    props.navigation.navigate('Create new library', { createdReactionIcon: reactionIcon });
+    setLoading(false);
+    props.navigation.navigate('Reaction icon picker', { createdReactionIcon: reactionIcon });
   };
 
   useEffect(() => {
@@ -77,8 +77,8 @@ const CreateCustomReactionIcon = (props) => {
   return (
     <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
       <Text style={{ color: 'white', marginBottom: 10 }}>
-        You can create an image icon. Please send an image file from your phone. This function remove all background
-        objects and then generate an image icon.
+        You can create an image icon easily and quickly. {'\n'}Please send an image file from your phone. This function
+        remove all background objects and then generate an image icon.
       </Text>
       <TouchableOpacity
         style={{
@@ -99,15 +99,15 @@ const CreateCustomReactionIcon = (props) => {
             borderRadius: 12,
             justifyContent: 'center',
             alignItems: 'center',
-            width: 65,
-            height: 65,
+            width: 100,
+            height: 100,
             alignSelf: 'center',
           }}
         >
           <Image
             style={{
-              width: 50,
-              height: 50,
+              width: 80,
+              height: 80,
             }}
             source={{
               uri: `http://192.168.11.30:3500/reactionIconImages/removed-${fileName}.png`,

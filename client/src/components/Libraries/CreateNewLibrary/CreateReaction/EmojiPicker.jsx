@@ -66,8 +66,8 @@ const EmojiPicker = (props) => {
     <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>
       <View
         style={{
-          width: 50,
-          height: 50,
+          width: 100,
+          height: 100,
           backgroundColor: inputBackgroundColorNew,
           borderRadius: 8,
           marginTop: 10,
@@ -77,7 +77,7 @@ const EmojiPicker = (props) => {
           alignItems: 'center',
         }}
       >
-        <Text style={{ fontSize: 40 }}>{selectedEmoji}</Text>
+        <Text style={{ fontSize: 80 }}>{selectedEmoji}</Text>
       </View>
       {renderEmojis()}
     </View>

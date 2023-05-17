@@ -63,7 +63,7 @@ const Reactions = (props) => {
         };
       });
     }
-  }, [formData.isReactionAvailable, formData.reactions]);
+  }, [formData.isReactionAvailable, formData.reactions.length]);
 
   // [{iconType: 'emoji', emoji: '😎', comment: 'Cool'},
   //  {iconType: 'reactionIcon', reactionIcon: {url: '', name: ''}, comment:""}]
@@ -310,7 +310,7 @@ const Reactions = (props) => {
             style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}
           >
             <Text style={{ fontSize: 13, color: baseTextColor }}>
-              Allow people to react each content in this library?
+              Allow people to react(❤️, 👍 etc) each content in this library?
             </Text>
           </View>
           <View style={{ width: '100%', padding: 5 }}>
@@ -358,7 +358,7 @@ const Reactions = (props) => {
                 <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>No reaction</Text>
               </View>
               <Text style={{ color: baseTextColor, textAlign: 'center' }}>
-                By turning off, you and members can enjoy snapshoots without like/upvote❤️ feature.
+                By turning off, you and members can enjoy snapshoots without any reactions.
               </Text>
             </TouchableOpacity>
             {renderCheckMarkForTurnedOff()}
@@ -373,58 +373,44 @@ const Reactions = (props) => {
                   marginBottom: 10,
                 }}
               >
-                <Text style={{ fontSize: 13, color: baseTextColor }}>Please select reaction options.</Text>
-                <Text style={{ color: formData.reactions.length <= 5 ? baseTextColor : 'red', fontSize: 13 }}>
+                <Text style={{ fontSize: 13, color: baseTextColor }}>Please select at most 6 reaction options.</Text>
+                <Text style={{ color: formData.reactions.length <= 6 ? baseTextColor : 'red', fontSize: 13 }}>
                   {formData.reactions.length}/6
                 </Text>
               </View>
               {formData.reactions.length >= 6 ? null : (
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <TouchableOpacity
+                <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', marginBottom: 10 }}>
+                  <View
                     style={{
-                      backgroundColor: iconColorsTable['blue1'],
-                      padding: 5,
-                      borderRadius: 5,
-                      marginRight: 10,
-                      marginBottom: 10,
+                      flex: 0.5,
                     }}
-                    onPress={() => navigation.navigate('Emoji picker')}
                   >
-                    <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
-                      <MaterialCommunityIcons name='plus' color={'white'} size={20} style={{ marginRight: 5 }} />
-                      <Text style={{ color: 'white' }}>Add emoji</Text>
-                    </View>
-                  </TouchableOpacity>
-                  <TouchableOpacity
+                    <TouchableOpacity
+                      style={{ backgroundColor: iconColorsTable['blue1'], borderRadius: 5 }}
+                      onPress={() => navigation.navigate('Emoji picker')}
+                    >
+                      <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center', padding: 5 }}>
+                        <MaterialCommunityIcons name='plus' color={'white'} size={20} style={{ marginRight: 5 }} />
+                        <Text style={{ color: 'white' }}>Add emoji</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                  <Text style={{ color: 'white', paddingLeft: 5, paddingRight: 5 }}>Or</Text>
+                  <View
                     style={{
-                      backgroundColor: iconColorsTable['blue1'],
-                      padding: 5,
-                      borderRadius: 5,
-                      marginRight: 10,
-                      marginBottom: 10,
+                      flex: 0.5,
                     }}
-                    onPress={() => navigation.navigate('Reaction icon picker')}
                   >
-                    <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
-                      <MaterialCommunityIcons name='plus' color={'white'} size={20} style={{ marginRight: 5 }} />
-                      <Text style={{ color: 'white' }}>Add image icon</Text>
-                    </View>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: iconColorsTable['blue1'],
-                      padding: 5,
-                      borderRadius: 5,
-                      marginRight: 10,
-                      marginBottom: 10,
-                    }}
-                    onPress={() => navigation.navigate('Create custom reaction icon')}
-                  >
-                    <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
-                      <MaterialCommunityIcons name='plus' color={'white'} size={20} style={{ marginRight: 5 }} />
-                      <Text style={{ color: 'white' }}>Add custom</Text>
-                    </View>
-                  </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{ backgroundColor: iconColorsTable['blue1'], borderRadius: 5 }}
+                      onPress={() => navigation.navigate('Reaction icon picker')}
+                    >
+                      <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center', padding: 5 }}>
+                        <Ionicons name='image' color={'white'} size={20} style={{ marginRight: 5 }} />
+                        <Text style={{ color: 'white' }}>Add image icon</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               )}
 
