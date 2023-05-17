@@ -121,7 +121,7 @@ const Report = (props) => {
       // contentContainerStyle={{ paddingBottom: 30 }}
     >
       <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', marginBottom: 20 }}>
-        What's wrong with "{props.route.params.report}"?
+        What's wrong with {props.route.params.report}?
       </Text>
       <Text style={{ color: baseTextColor, marginBottom: 10 }}>Please choose a issue option down below.</Text>
       {renderReportIssueOptions()}

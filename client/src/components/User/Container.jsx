@@ -485,14 +485,14 @@ const Container = (props) => {
         <BadgeDetailBottomSheet />
         <AddBadgeTagsBottomSheet />
         <AddLinkBottomSheet />
-        <FlagUserMenuBottomSheet />
+        {/* <FlagUserMenuBottomSheet /> */}
         {/* <ActivitiesMenuBottomSheet /> */}
         {/* <ConfirmEditProfileModal /> */}
-        <ConfirmFlagUserModal />
+        {/* <ConfirmFlagUserModal /> */}
         {/* <ConfirmActionButtonModal /> */}
         {/* <ConfirmDeleteAccount /> */}
         {/* <ConfirmLogout /> */}
-        <ConfirmBlockUserModal />
+        {/* <ConfirmBlockUserModal /> */}
       </>
     );
   };

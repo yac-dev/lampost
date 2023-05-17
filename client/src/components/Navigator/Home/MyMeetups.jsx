@@ -136,25 +136,6 @@ const HomeMyMeetupsNavigator = () => {
             },
           })}
         />
-        <Stack.Screen
-          name='Lounge report'
-          component={Report}
-          options={({ navigation }) => ({
-            headerLeft: () => (
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
-              </TouchableOpacity>
-            ),
-            headerTitle: 'Report',
-            headerStyle: {
-              backgroundColor: appBottomSheetBackgroundColor,
-            },
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              color: 'white',
-            },
-          })}
-        />
       </Stack.Group>
     </Stack.Navigator>
   );

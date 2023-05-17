@@ -6,6 +6,8 @@ import { getFocusedRouteNameFromRoute, NavigationContainer } from '@react-naviga
 const Stack = createNativeStackNavigator();
 import Members from '../../Home/MyMeetups/Members';
 import User from '../../User/Container';
+import Report from '../../Utils/Report';
+import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 
 import { iconsTable } from '../../../utils/icons';
 const { Ionicons } = iconsTable;
@@ -48,7 +50,27 @@ const MembersNavigator = () => {
           })}
         />
       </Stack.Group>
-      <Stack.Group screenOptions={{ presentation: 'modal', gestureEnabled: false }}></Stack.Group>
+      <Stack.Group screenOptions={{ presentation: 'modal', gestureEnabled: false }}>
+        <Stack.Screen
+          name='Report meetup member'
+          component={Report}
+          options={({ navigation }) => ({
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+              </TouchableOpacity>
+            ),
+            headerTitle: 'Report',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          })}
+        />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useState, useEffect, useContext, useCallback, useRef } from 'react';
 import { View, Text, ActivityIndicator, FlatList, TouchableOpacity, ScrollView } from 'react-native';
 import GlobalContext from '../../../GlobalContext';
 import lampostAPI from '../../../apis/lampost';
@@ -13,12 +13,14 @@ import BadgeLabel from '../../Utils/BadgeLabel';
 import { iconsTable } from '../../../utils/icons';
 import HomeNavigatorContext from '../../Navigator/Home/HomeNavigatorContext';
 import FastImage from 'react-native-fast-image';
+import FlagMenuBottomSheet from './FlagMenuBottomSheet';
 
 const AttendeesContainer = (props) => {
-  const { MaterialCommunityIcons, Ionicons } = iconsTable;
+  const { MaterialCommunityIcons, Ionicons, Feather } = iconsTable;
   const { auth, setSnackBar } = useContext(GlobalContext);
   const [isFetchedAttendees, setIsFetchedAttendees] = useState(false);
   const [fetchedAttendees, setFetchedAttendees] = useState([]);
+  const flagMenuBottomSheetRef = useRef(null);
   const { topLevelHomeNavigation } = useContext(HomeNavigatorContext);
 
   console.log(props.route.params);
@@ -181,9 +183,21 @@ const AttendeesContainer = (props) => {
           >
             {userInfo ? (
               <View>
-                <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 17, marginBottom: 10 }}>
-                  {userInfo.launcher ? '🚀' : userInfo.rsvped ? '🔥' : null}&nbsp;{userInfo.user.name}
-                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: 10,
+                  }}
+                >
+                  <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 17 }}>
+                    {userInfo.launcher ? '🚀' : userInfo.rsvped ? '🔥' : null}&nbsp;{userInfo.user.name}
+                  </Text>
+                  <TouchableOpacity onPress={() => flagMenuBottomSheetRef.current.snapToIndex(0)}>
+                    <Feather name='more-horizontal' size={20} color={baseTextColor} />
+                  </TouchableOpacity>
+                </View>
                 {renderTopBadges(userInfo)}
               </View>
             ) : (
@@ -204,6 +218,7 @@ const AttendeesContainer = (props) => {
           data={fetchedAttendees}
           renderItem={({ item }) => renderUser(item)}
           keyExtractor={(item, index) => `${item._id}-${index}`}
+          showsVerticalScrollIndicator={false}
         />
       );
     }
@@ -212,6 +227,10 @@ const AttendeesContainer = (props) => {
   return (
     <View style={{ flex: 1, backgroundColor: baseBackgroundColor, paddingLeft: 10, paddingRight: 10, paddingTop: 10 }}>
       {!isFetchedAttendees ? <ActivityIndicator /> : renderMembers()}
+      <FlagMenuBottomSheet
+        flagMenuBottomSheetRef={flagMenuBottomSheetRef}
+        topLevelHomeNavigation={topLevelHomeNavigation}
+      />
     </View>
   );
 };

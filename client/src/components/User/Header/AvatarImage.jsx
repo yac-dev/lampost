@@ -100,14 +100,7 @@ const AvatarImage = () => {
           <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0 }} onPress={() => editProfile()}>
             <MaterialCommunityIcons name='camera-plus' size={20} color={baseTextColor} />
           </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            style={{ position: 'absolute', bottom: 0, right: 0 }}
-            onPress={() => flagUserMenuBottomSheetRef.current.snapToIndex(0)}
-          >
-            <MaterialCommunityIcons name='flag' size={20} color={baseTextColor} />
-          </TouchableOpacity>
-        )}
+        ) : null}
       </View>
     </View>
   );

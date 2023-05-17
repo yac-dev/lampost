@@ -29,7 +29,7 @@ const FlagUserMenuBottomSheet = () => {
       handleIndicatorStyle={{ backgroundColor: 'white' }}
       // onClose={() => onSelectedItemBottomSheetClose()}
     >
-      <BottomSheetView style={{ paddingLeft: 20, paddingRight: 20, flex: 1 }}>
+      <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}
           onPress={() => {
