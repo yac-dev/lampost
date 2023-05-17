@@ -75,7 +75,7 @@ const AvatarImage = () => {
       <View
         style={{
           backgroundColor: iconColorsTable['blue1'],
-          borderRadius: isIpad ? 20 : 10,
+          borderRadius: isIpad ? 22 : 12,
           width: '100%',
           aspectRatio: 1,
           alignItems: 'center',
@@ -87,7 +87,7 @@ const AvatarImage = () => {
           style={{
             width: '100%',
             height: '100%',
-            borderRadius: isIpad ? 20 : 10,
+            borderRadius: isIpad ? 22 : 12,
           }}
           source={{
             uri: user.photo ? user.photo : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',

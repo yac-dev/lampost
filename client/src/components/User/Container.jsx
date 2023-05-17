@@ -58,6 +58,8 @@ const Container = (props) => {
   const [pressedBadgeData, setPressedBadgeData] = useState(null);
   const [isMyPage, setIsMyPage] = useState();
   const [isBlocked, setIsBlocked] = useState(false);
+  const [isFollowingUser, setIsFollowingUser] = useState(false);
+  const [isFetchedIsFollowingUser, setIsFetchedIsFollowingUser] = useState(false);
   const [isConfirmEditProfileModalOpen, setIsConfirmEditProfileModalOpen] = useState(false);
   const [isConfirmDeleteAccountModalOpen, setIsConfirmDeleteAccountModalOpen] = useState(false);
   const [isConfirmFlagUserModalOpen, setIsConfirmFlagUserModalOpen] = useState(false);
@@ -87,6 +89,21 @@ const Container = (props) => {
       setIsMyPage(false);
     }
   }, []);
+
+  // isMyPageの時は、isFollowingはいらん。
+  const getIsFollowing = async () => {
+    const result = await lampostAPI.get(
+      `/followrelationships/followee/${props.route.params.userId}/follower/${auth.data._id}`
+    );
+    const { isFollowing } = result.data;
+    setIsFollowingUser(isFollowing);
+    setIsFetchedIsFollowingUser(true);
+  };
+  useEffect(() => {
+    if (!isMyPage) {
+      getIsFollowing();
+    }
+  }, [isMyPage]);
 
   const getUser = async () => {
     const result = await lampostAPI.post(`/users/${props.route.params.userId}`);
@@ -284,7 +301,6 @@ const Container = (props) => {
     return (
       <>
         <Header />
-        <View style={{ width: '100%', paddingLeft: 10, paddingRight: 10 }}></View>
         <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>{renderBadges()}</ScrollView>
         {/* {isBlocked ? (
           <View>
@@ -526,6 +542,10 @@ const Container = (props) => {
         setIsConfirmBlockUserModalOpen,
         badgeIndexes,
         setBadgeIndexes,
+        isFollowingUser,
+        setIsFollowingUser,
+        isFetchedIsFollowingUser,
+        setIsFetchedIsFollowingUser,
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor }}>

@@ -18,7 +18,7 @@ import FastImage from 'react-native-fast-image';
 
 const TagPeopleBottomSheet = (props) => {
   const { auth, isIpad } = useContext(GlobalContext);
-  const { tagPeopleBottomSheetRef, taggedPeople, setTaggedPeople, meetupAttendees, setMeetupAttendees } =
+  const { tagPeopleBottomSheetRef, taggedPeople, setTaggedPeople, meetupAttendees, setMeetupAttendees, mood } =
     useContext(CameraContext);
   const oneGridWidth = isIpad ? Dimensions.get('window').width / 6 : Dimensions.get('window').width / 3;
   const oneGridHeight = isIpad ? Dimensions.get('window').height / 7.5 : Dimensions.get('window').height / 6;
@@ -30,7 +30,7 @@ const TagPeopleBottomSheet = (props) => {
     if (taggedPeople[attendee.user._id]) {
       return (
         <View style={{ position: 'absolute', top: -15, right: -10 }}>
-          <Ionicons name='pricetag' color={iconColorsTable['lightGreen1']} size={20} />
+          <Text style={{ fontSize: 22 }}>{mood}</Text>
         </View>
       );
     } else {

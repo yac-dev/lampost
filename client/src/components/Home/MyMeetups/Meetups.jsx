@@ -268,7 +268,7 @@ const Meetups = (props) => {
             }}
           >
             <View
-              style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 5 }}
+              style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 15 }}
             >
               <TouchableOpacity
                 style={{
@@ -286,38 +286,45 @@ const Meetups = (props) => {
                   <Text style={{ color: 'white' }}>$&nbsp;{meetup.fee ? meetup.fee : 'Free'}</Text>
                 </View>
               </TouchableOpacity>
-              {meetup.isRSVPed ? (
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Ionicons
-                    name='checkmark-circle'
+              <View style={{ flexDirection: 'column' }}>
+                {meetup.isRSVPed ? (
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Ionicons
+                      name='checkmark-circle'
+                      size={20}
+                      color={iconColorsTable['green1']}
+                      style={{ marginRight: 5 }}
+                    />
+                    <Text style={{ color: 'white' }}>RSVPed</Text>
+                  </View>
+                ) : null}
+                <TouchableOpacity
+                  style={{
+                    marginRight: 5,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    alignSelf: 'flex-end',
+                    marginBottom: 13,
+                  }}
+                  onPress={() => {
+                    setMenuMenu({
+                      _id: meetup._id,
+                      launcher: meetup.launcher,
+                      place: meetup.place,
+                    });
+                    moreMenuBottomSheetRef.current.snapToIndex(0);
+                  }}
+                >
+                  <MaterialCommunityIcons
+                    name='chevron-down'
                     size={20}
-                    color={iconColorsTable['green1']}
+                    color={baseTextColor}
                     style={{ marginRight: 5 }}
                   />
-                  <Text style={{ color: 'white' }}>RSVPed</Text>
-                </View>
-              ) : null}
+                  <Text style={{ color: baseTextColor }}>More</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-            <TouchableOpacity
-              style={{
-                marginRight: 5,
-                flexDirection: 'row',
-                alignItems: 'center',
-                alignSelf: 'flex-end',
-                marginBottom: 13,
-              }}
-              onPress={() => {
-                setMenuMenu({
-                  _id: meetup._id,
-                  launcher: meetup.launcher,
-                  place: meetup.place,
-                });
-                moreMenuBottomSheetRef.current.snapToIndex(0);
-              }}
-            >
-              <MaterialCommunityIcons name='chevron-down' size={20} color={baseTextColor} style={{ marginRight: 5 }} />
-              <Text style={{ color: baseTextColor }}>More</Text>
-            </TouchableOpacity>
             {renderActionButtons(meetup)}
           </View>
         );

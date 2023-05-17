@@ -27,21 +27,19 @@ const Stats = () => {
           borderRadius: 5,
         }}
       >
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View>
-            <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>Trust</Text>
-            <Text
-              style={{
-                color: 'white',
-                fontSize: 27,
-                fontWeight: 'bold',
-                color: 'white',
-                textAlign: 'center',
-              }}
-            >
-              {user.fame}
-            </Text>
-          </View>
+        <View>
+          <Text style={{ color: baseTextColor, fontWeight: 'bold' }}>Trust</Text>
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 27,
+              fontWeight: 'bold',
+              color: 'white',
+              textAlign: 'center',
+            }}
+          >
+            {user.fame}
+          </Text>
         </View>
       </View>
     );
