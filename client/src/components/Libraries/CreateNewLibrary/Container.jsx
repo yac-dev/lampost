@@ -128,17 +128,6 @@ const Container = (props) => {
     });
   }, [stageCleared]);
 
-  useEffect(() => {
-    if (props.route.params?.reaction) {
-      setFormData((previous) => {
-        return {
-          ...previous,
-          reactions: [...previous.reactions, props.route.params.reaction],
-        };
-      });
-    }
-  }, [props.route.params?.reaction]);
-
   return (
     <FormContext.Provider
       value={{

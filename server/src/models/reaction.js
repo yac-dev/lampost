@@ -6,8 +6,15 @@ const reactionSchema = new mongoose.Schema({
     ref: 'Library',
   },
   icon: {
+    //emotion iconっていうのがまた別で必要になるかもな。。。
     type: mongoose.Schema.ObjectId,
     ref: 'Icon',
+  },
+  iconType: String, // emoji or reactionIcon
+  emoji: String, //　だから、emojiを使うか、iconを使うか、そのどちらかになる。
+  reactionIcon: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'ReactionIcon',
   },
   comment: {
     type: String,

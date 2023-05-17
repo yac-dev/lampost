@@ -24,144 +24,80 @@ const Result = () => {
           <TouchableOpacity
             style={{
               borderRadius: 5,
-              backgroundColor: rnDefaultBackgroundColor,
+              backgroundColor: inputBackgroundColorNew,
               alignSelf: 'flex-start',
+              flexDirection: 'row',
+              alignItems: 'center',
               marginBottom: 10,
+              padding: 7,
             }}
           >
-            <View
-              style={{
-                backgroundColor: backgroundColorsTable['red1'],
-                borderRadius: 5,
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: 5,
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
-            >
-              <MaterialCommunityIcons
-                name='fire'
-                size={30}
-                color={iconColorsTable['red1']}
-                style={{ marginRight: 5 }}
-              />
-              <Text
-                style={{
-                  color: iconColorsTable['red1'],
-                  // marginRight: 5,
-                  fontSize: 17,
-                }}
-              >
-                Epic
-              </Text>
-            </View>
+            <Text style={{ fontSize: 23, marginRight: 5 }}>😆</Text>
+            <Text style={{ color: 'white' }}>Nice photo</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{
               borderRadius: 5,
-              backgroundColor: rnDefaultBackgroundColor,
+              backgroundColor: inputBackgroundColorNew,
               alignSelf: 'flex-start',
+              flexDirection: 'row',
+              alignItems: 'center',
               marginBottom: 10,
+              padding: 7,
             }}
           >
-            <View
-              style={{
-                backgroundColor: backgroundColorsTable['orange1'],
-                borderRadius: 5,
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: 5,
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
-            >
-              <MaterialCommunityIcons
-                name='thumb-up'
-                size={30}
-                color={iconColorsTable['orange1']}
-                style={{ marginRight: 5 }}
-              />
-              <Text
-                style={{
-                  color: iconColorsTable['orange1'],
-                  // marginRight: 5,
-                  fontSize: 17,
-                }}
-              >
-                Nice photo
-              </Text>
-            </View>
+            <Text style={{ fontSize: 23, marginRight: 5 }}>👍</Text>
+            <Text style={{ color: 'white' }}>Wel done</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{
               borderRadius: 5,
-              backgroundColor: rnDefaultBackgroundColor,
+              backgroundColor: inputBackgroundColorNew,
               alignSelf: 'flex-start',
               marginBottom: 10,
+              flexDirection: 'row',
+              alignItems: 'center',
+              padding: 7,
             }}
           >
-            <View
+            <FastImage
+              source={{ uri: 'https://lampost-dev.s3.us-east-2.amazonaws.com/reactionIcons/elon-wtf.png' }}
+              style={{ width: 30, height: 30, marginRight: 5 }}
+            />
+            <Text
               style={{
-                backgroundColor: backgroundColorsTable['blue1'],
-                borderRadius: 5,
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: 5,
-                flexDirection: 'row',
-                alignItems: 'center',
+                color: 'white',
+                // marginRight: 5,
+                fontSize: 17,
               }}
             >
-              <FastImage
-                source={{ uri: 'https://lampost-dev.s3.us-east-2.amazonaws.com/yao-ming-meme.png' }}
-                style={{ width: 30, height: 30, marginRight: 5 }}
-                tintColor={iconColorsTable['blue1']}
-              />
-              <Text
-                style={{
-                  color: iconColorsTable['blue1'],
-                  // marginRight: 5,
-                  fontSize: 17,
-                }}
-              >
-                On my gosh
-              </Text>
-            </View>
+              Wow...
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{
               borderRadius: 5,
-              backgroundColor: rnDefaultBackgroundColor,
+              backgroundColor: inputBackgroundColorNew,
               alignSelf: 'flex-start',
               marginBottom: 10,
+              flexDirection: 'row',
+              alignItems: 'center',
+              padding: 7,
             }}
           >
-            <View
+            <FastImage
+              source={{ uri: 'https://lampost-dev.s3.us-east-2.amazonaws.com/reactionIcons/oh-meme-guy.png' }}
+              style={{ width: 30, height: 30, marginRight: 5 }}
+            />
+            <Text
               style={{
-                backgroundColor: backgroundColorsTable['green1'],
-                borderRadius: 5,
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: 5,
-                flexDirection: 'row',
-                alignItems: 'center',
+                color: 'white',
+                // marginRight: 5,
+                fontSize: 17,
               }}
             >
-              <FastImage
-                source={{ uri: 'https://lampost-dev.s3.us-east-2.amazonaws.com/meme-guy.png' }}
-                style={{ width: 30, height: 30, marginRight: 5 }}
-                tintColor={iconColorsTable['green1']}
-              />
-              <Text
-                style={{
-                  color: iconColorsTable['green1'],
-                  // marginRight: 5,
-                  fontSize: 17,
-                }}
-              >
-                Wow...
-              </Text>
-            </View>
+              Oh...
+            </Text>
           </TouchableOpacity>
         </ScrollView>
       </View>

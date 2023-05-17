@@ -10,6 +10,8 @@ import Container from '../../Libraries/Container';
 import CreateNewLibrary from '../../Libraries/CreateNewLibrary/Container';
 import CreateReaction from '../../Libraries/CreateNewLibrary/CreateReaction/Container';
 import IconPicker from '../../Libraries/CreateNewLibrary/CreateReaction/IconPicker/Container';
+import EmojiPicker from '../../Libraries/CreateNewLibrary/CreateReaction/EmojiPicker';
+import ReactionIconPicker from '../../Libraries/CreateNewLibrary/CreateReaction/ReactionIconPicker';
 import MyFriends from '../../Libraries/CreateNewLibrary/MyFriends';
 import WriteDescription from '../../Libraries/CreateNewLibrary/WriteDescription';
 import Icons from '../../Libraries/CreateNewLibrary/Icons';
@@ -264,6 +266,44 @@ const LibraryNavigator = () => {
               </TouchableOpacity>
             ),
             headerTitle: 'Icon picker',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          })}
+        />
+        <Stack.Screen
+          name='Emoji picker'
+          component={EmojiPicker}
+          options={({ navigation }) => ({
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+              </TouchableOpacity>
+            ),
+            headerTitle: 'Emoji picker',
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          })}
+        />
+        <Stack.Screen
+          name='Reaction icon picker'
+          component={ReactionIconPicker}
+          options={({ navigation }) => ({
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+              </TouchableOpacity>
+            ),
+            headerTitle: 'Image icon',
             headerStyle: {
               backgroundColor: appBottomSheetBackgroundColor,
             },

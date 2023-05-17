@@ -16,26 +16,100 @@ import FastImage from 'react-native-fast-image';
 import lampostAPI from '../../../../apis/lampost';
 
 const Icon = () => {
-  const { accordion, setAccordion, creatingReaction, setCreatingReaction, navigation, route } =
-    useContext(CreateReactionContext);
+  const {
+    accordion,
+    setAccordion,
+    creatingReaction,
+    setCreatingReaction,
+    navigation,
+    route,
+    iconType,
+    setIconType,
+    currentlySelectedTab,
+    setCurrentlySelectedTab,
+    selectedEmoji,
+    setSelectedEmoji,
+    selectedReactionIcon,
+    setSelectedReactionIcon,
+  } = useContext(CreateReactionContext);
   const { MaterialCommunityIcons, Ionicons } = iconsTable;
   const [icons, setIcons] = useState([]);
   const [isIconsFetched, setIsIconFetched] = useState(false);
 
-  // const getIcons = async () => {
-  //   const result = await lampostAPI.get('/badges/icons');
-  //   const { icons } = result.data;
-  //   setIcons(() => {
-  //     const datas = [];
-  //     icons.forEach((icon) => datas.push(icon.Key));
-  //     return datas;
-  //   });
-  //   setIsIconFetched(true);
-  // };
-
-  // useEffect(() => {
-  //   getIcons();
-  // }, []);
+  const switchRendering = () => {
+    switch (currentlySelectedTab) {
+      case 'emoji':
+        return (
+          <View style={{ marginTop: 10 }}>
+            <Text style={{ color: baseTextColor }}>Please choose an emoji.</Text>
+            <TouchableOpacity
+              style={{
+                width: 45,
+                height: 45,
+                justifyContent: 'center',
+                alignItems: 'center',
+                alignSelf: 'center',
+                backgroundColor: inputBackgroundColorNew,
+                borderRadius: 7,
+              }}
+              onPress={() => navigation.navigate('Emoji picker')}
+            >
+              {selectedEmoji ? (
+                <Text style={{ fontSize: 25 }}>{selectedEmoji}</Text>
+              ) : (
+                <MaterialCommunityIcons name='plus' color={'white'} size={20} />
+              )}
+            </TouchableOpacity>
+          </View>
+        );
+      case 'iconImage':
+        return (
+          <View style={{ marginTop: 10 }}>
+            <Text style={{ color: baseTextColor }}>Please choose an icon image.</Text>
+            <TouchableOpacity
+              style={{
+                width: 45,
+                height: 45,
+                justifyContent: 'center',
+                alignItems: 'center',
+                alignSelf: 'center',
+                backgroundColor: inputBackgroundColorNew,
+                borderRadius: 7,
+              }}
+              onPress={() => navigation.navigate('Reaction icon picker')}
+            >
+              {selectedReactionIcon ? (
+                <FastImage source={{ uri: selectedReactionIcon.url }} style={{ width: 35, height: 35 }} />
+              ) : (
+                <MaterialCommunityIcons name='plus' color={'white'} size={20} />
+              )}
+            </TouchableOpacity>
+          </View>
+        );
+      case 'custom':
+        return (
+          <View style={{ marginTop: 10 }}>
+            <Text style={{ color: baseTextColor }}>Please select an original image.</Text>
+            <TouchableOpacity
+              style={{
+                width: 45,
+                height: 45,
+                justifyContent: 'center',
+                alignItems: 'center',
+                alignSelf: 'center',
+                backgroundColor: inputBackgroundColorNew,
+                borderRadius: 7,
+              }}
+              onPress={() => navigation.navigate('Reaction icon picker')}
+            >
+              <MaterialCommunityIcons name='plus' color={'white'} size={20} />
+            </TouchableOpacity>
+          </View>
+        );
+      default:
+        return null;
+    }
+  };
 
   useEffect(() => {
     if (route.params?.selectedIcon) {
@@ -47,6 +121,18 @@ const Icon = () => {
       });
     }
   }, [route.params?.selectedIcon]);
+
+  useEffect(() => {
+    if (route.params?.selectedEmoji) {
+      setSelectedEmoji(route.params.selectedEmoji);
+    }
+  }, [route.params?.selectedEmoji]);
+
+  useEffect(() => {
+    if (route.params?.selectedReactionIcon) {
+      setSelectedReactionIcon(route.params.selectedReactionIcon);
+    }
+  }, [route.params?.selectedReactionIcon]);
 
   return (
     <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 7, borderRadius: 5, marginBottom: 10 }}>
@@ -79,6 +165,7 @@ const Icon = () => {
           <Text style={{ fontWeight: 'bold', fontSize: 17, color: 'white', marginRight: 10 }}>Icon</Text>
         </TouchableOpacity>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={{ color: baseTextColor }}>{currentlySelectedTab}</Text>
           <TouchableOpacity
             onPress={() =>
               setAccordion((previous) => {
@@ -99,89 +186,37 @@ const Icon = () => {
       </View>
       {accordion.icon ? (
         <View style={{ marginTop: 10 }}>
-          <View
-            style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}
-          >
-            <Text style={{ fontSize: 13, color: baseTextColor }}>Please choose an icon.</Text>
-            {/* <TouchableOpacity
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderBottomWidth: 0.3,
-                borderBottomColor: 'white',
+          <Text style={{ color: baseTextColor, marginBottom: 10 }}>What kind of icon you wanna use?</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <TouchableOpacity
+              onPress={() => {
+                setIconType('emoji');
+                setCurrentlySelectedTab('emoji');
               }}
+              style={{ backgroundColor: iconColorsTable['blue1'], borderRadius: 5, padding: 7 }}
             >
-              <Text style={{ color: 'white' }}>Powered by icons8.com</Text>
-            </TouchableOpacity> */}
+              <Text>Emoji</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setIconType('reactionIcon');
+                setCurrentlySelectedTab('iconImage');
+              }}
+              style={{ backgroundColor: iconColorsTable['blue1'], borderRadius: 5, padding: 7 }}
+            >
+              <Text>Icon image</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setIconType('reactionIcon');
+                setCurrentlySelectedTab('custom');
+              }}
+              style={{ backgroundColor: iconColorsTable['blue1'], borderRadius: 5, padding: 7 }}
+            >
+              <Text>Custom</Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={{
-              width: 60,
-              height: 60,
-              justifyContent: 'center',
-              alignItems: 'center',
-              alignSelf: 'center',
-              backgroundColor: rnDefaultBackgroundColor,
-              borderRadius: 5,
-            }}
-            onPress={() => navigation.navigate('Icon picker')}
-          >
-            {creatingReaction.icon ? (
-              <FastImage source={{ uri: creatingReaction.icon.url }} style={{ width: 40, height: 40 }} />
-            ) : (
-              <MaterialCommunityIcons name='plus' color={'black'} size={40} />
-            )}
-          </TouchableOpacity>
-          {/* {isIconsFetched ? (
-            <ScrollView contentContainerStyle={{ paddingBottom: 250 }} showsVerticalScrollIndicator={false}>
-              {icons.map((icon, index) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() =>
-                      setCreatingReaction((previous) => {
-                        return {
-                          ...previous,
-                          icon: `https://lampost-dev.s3.us-east-2.amazonaws.com/${icon}`,
-                        };
-                      })
-                    }
-                    key={index}
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      marginBottom: 7,
-                      justifyContent: 'space-between',
-                    }}
-                  >
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <View
-                        style={{
-                          width: 40,
-                          height: 40,
-                          backgroundColor: rnDefaultBackgroundColor,
-                          borderRadius: 8,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          marginRight: 10,
-                        }}
-                      >
-                        <FastImage
-                          source={{ uri: `https://lampost-dev.s3.us-east-2.amazonaws.com/${icon}` }}
-                          style={{ width: 30, height: 30, color: 'black' }}
-                        />
-                      </View>
-                      <Text style={{ color: 'white', fontSize: 18 }}>
-                        {icon.split('/').join(',').split('.').join(',').split(',')[1]}
-                      </Text>
-                    </View>
-                    {creatingReaction.icon === `https://lampost-dev.s3.us-east-2.amazonaws.com/${icon}` ? (
-                      <Ionicons name='checkmark-circle' color={iconColorsTable['green1']} size={25} />
-                    ) : null}
-                  </TouchableOpacity>
-                );
-              })}
-            </ScrollView>
-          ) : null} */}
+          {switchRendering()}
         </View>
       ) : null}
     </View>

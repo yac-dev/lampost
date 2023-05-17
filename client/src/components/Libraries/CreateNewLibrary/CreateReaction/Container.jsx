@@ -9,26 +9,37 @@ import Result from './Result';
 
 const Container = (props) => {
   const [creatingReaction, setCreatingReaction] = useState({ icon: null, comment: '', color: '', upvotes: 0 });
+  const [iconType, setIconType] = useState('emoji');
+  const [currentlySelectedTab, setCurrentlySelectedTab] = useState('emoji');
+  const [selectedEmoji, setSelectedEmoji] = useState('');
+  const [selectedReactionIcon, setSelectedReactionIcon] = useState(null);
+  const [customedReactionIcon, setCustomedReactionIcon] = useState(null);
+  const [comment, setComment] = useState('');
   const [accordion, setAccordion] = useState({
     icon: false,
     color: false,
   });
   console.log(creatingReaction);
 
+  // emojiなら、selectedEmojiかつshort commentがあること。
+  // reactionIconなら, selectedIconかつshort commentがあること。
   useEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
           onPress={() => onDonePress()}
-          disabled={creatingReaction.icon && creatingReaction.comment && creatingReaction.color ? false : true}
+          disabled={
+            (iconType === 'emoji' && selectedEmoji && comment && comment.length <= 15) ||
+            (iconType === 'reactionIcon' && selectedReactionIcon && comment && comment.length <= 15)
+              ? false
+              : true
+          }
         >
           <Text
             style={{
               color:
-                creatingReaction.icon &&
-                creatingReaction.comment &&
-                creatingReaction.comment.length <= 15 &&
-                creatingReaction.color
+                (iconType === 'emoji' && selectedEmoji && comment && comment.length <= 15) ||
+                (iconType === 'reactionIcon' && selectedReactionIcon && comment && comment.length <= 15)
                   ? 'white'
                   : screenSectionBackgroundColor,
               fontSize: 20,
@@ -40,10 +51,21 @@ const Container = (props) => {
         </TouchableOpacity>
       ),
     });
-  }, [creatingReaction]);
+  }, [iconType, selectedEmoji, selectedReactionIcon, comment]);
+
   const onDonePress = () => {
+    const payload = {};
+    if (iconType === 'emoji') {
+      payload.iconType = 'emoji';
+      payload.emoji = selectedEmoji;
+      payload.comment = comment;
+    } else if (iconType === 'reactionIcon') {
+      payload.iconType = 'reactionIcon';
+      payload.reactionIcon = selectedReactionIcon;
+      payload.comment = comment;
+    }
     props.navigation.navigate('Create new library', {
-      reaction: { icon: creatingReaction.icon, comment: creatingReaction.comment, color: creatingReaction.color },
+      reaction: payload,
     });
   };
 
@@ -56,6 +78,18 @@ const Container = (props) => {
         setAccordion,
         navigation: props.navigation,
         route: props.route,
+        iconType,
+        setIconType,
+        currentlySelectedTab,
+        setCurrentlySelectedTab,
+        selectedEmoji,
+        setSelectedEmoji,
+        selectedReactionIcon,
+        setSelectedReactionIcon,
+        customedReactionIcon,
+        setCustomedReactionIcon,
+        comment,
+        setComment,
       }}
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
@@ -67,7 +101,7 @@ const Container = (props) => {
         </Text>
         <Icon />
         <ShortComment />
-        <Color />
+        {/* <Color /> */}
         <Result />
       </View>
     </CreateReactionContext.Provider>

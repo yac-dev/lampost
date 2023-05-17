@@ -12,7 +12,8 @@ import { iconsTable } from '../../../../utils/icons';
 
 const ShortComment = () => {
   const { MaterialCommunityIcons } = iconsTable;
-  const { accordion, setAccordion, creatingReaction, setCreatingReaction } = useContext(CreateReactionContext);
+  const { accordion, setAccordion, creatingReaction, setCreatingReaction, comment, setComment } =
+    useContext(CreateReactionContext);
 
   return (
     <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 7, borderRadius: 5, marginBottom: 10 }}>
@@ -72,7 +73,7 @@ const ShortComment = () => {
             <Text
               style={{ color: creatingReaction.comment.length <= 15 ? baseTextColor : 'red', alignSelf: 'flex-end' }}
             >
-              {creatingReaction.comment.length}/15
+              {comment.length}/15
             </Text>
           </View>
           <TextInput
@@ -84,14 +85,9 @@ const ShortComment = () => {
               backgroundColor: inputBackgroundColorNew,
               borderRadius: 5,
             }}
-            value={creatingReaction.comment}
+            value={comment}
             onChangeText={(text) => {
-              setCreatingReaction((previous) => {
-                return {
-                  ...previous,
-                  comment: text,
-                };
-              });
+              setComment(text);
             }}
           />
         </View>

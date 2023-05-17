@@ -8,6 +8,7 @@ import User from '../models/user';
 import Reaction from '../models/reaction';
 import Notification from '../models/notification';
 import Icon from '../models/icon';
+import ReactionIcon from '../models/reactionIcon';
 
 const colors = ['red1', 'blue1', 'yellow1', 'violet1', 'green1', 'lightBlue1'];
 
@@ -45,8 +46,8 @@ export const getLibrary = async (request, response) => {
       .populate({
         path: 'reactions',
         populate: {
-          path: 'icon',
-          model: Icon,
+          path: 'reactionIcon',
+          model: ReactionIcon,
         },
       });
 
@@ -102,12 +103,19 @@ export const createLibrary = async (request, response) => {
 
     if (isReactionAvailable && reactions.length) {
       const reactionOptions = reactions.map((reaction) => {
-        return {
-          library: library._id,
-          icon: reaction.icon._id,
-          comment: reaction.comment,
-          color: reaction.color,
-        };
+        if (reaction.iconType === 'emoji') {
+          return {
+            library: library._id,
+            iconType: 'emoji',
+            emoji: reaction.emoji,
+          };
+        } else if (reaction.iconType === 'reactionIcon') {
+          return {
+            library: library._id,
+            iconType: 'reactionIcon',
+            reactionIcon: reaction.reactionIcon._id,
+          };
+        }
       });
       const createdReactions = await Reaction.insertMany(reactionOptions);
       const reactionIds = createdReactions.map((reaction) => reaction._id);
