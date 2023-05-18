@@ -1,5 +1,6 @@
 import Badge from '../models/badge';
 import Icon from '../models/icon';
+import IconAndIconTypeRelationship from '../models/iconAndIconTypeRelationship';
 import BadgeAndBadgeTypeRelationship from '../models/badgeAndBadgeTypeRelationship';
 import BadgeAndUserRelationship from '../models/badgeAndUserRelationship';
 import User from '../models/user';
@@ -9,6 +10,7 @@ import path from 'path';
 import gm from 'gm';
 import sharp from 'sharp';
 // VUk2Brw8Dx6dzqpFFNuRCjNe
+import axios from 'axios';
 import FormData from 'form-data';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
@@ -135,11 +137,11 @@ export const getIcons = async (request, response) => {
 export const createBadge = async (request, response) => {
   try {
     const { iconId, name, color, userId, badgeTypeId } = request.body;
-    const badgeNameExists = await Badge.findOne({ name });
-    if (badgeNameExists) {
-      // return  errorを出す。
-      throw new Error('Badge name already exista');
-    }
+    // const badgeNameExists = await Badge.findOne({ name });
+    // if (badgeNameExists) {
+    //   // return  errorを出す。
+    //   throw new Error('Badge name already exista');
+    // }
     const badge = await Badge.create({
       icon: iconId,
       name,
@@ -164,12 +166,13 @@ export const createBadge = async (request, response) => {
   }
 };
 
-const executeRemoveBg = async () => {
+const executeRemoveBg = async (dir) => {
   return new Promise((resolve, reject) => {
-    const inputPath = 'originalImage.png';
+    const inputFilePath = path.join(dir, 'original.png');
+    const outputFilePath = path.join(dir, 'removed.png');
     const formData = new FormData();
     formData.append('size', 'auto');
-    formData.append('image_file', fs.createReadStream(inputPath), path.basename(inputPath));
+    formData.append('image_file', fs.createReadStream(inputFilePath), path.basename(inputFilePath));
     axios({
       method: 'post',
       url: 'https://api.remove.bg/v1.0/removebg',
@@ -183,7 +186,7 @@ const executeRemoveBg = async () => {
     })
       .then((response) => {
         if (response.status != 200) return console.error('Error:', response.status, response.statusText);
-        fs.writeFileSync('removedBG.png', response.data);
+        fs.writeFileSync(outputFilePath, response.data);
         resolve('success');
       })
       .catch((error) => {
@@ -193,7 +196,7 @@ const executeRemoveBg = async () => {
 };
 
 const execureThreshhold = async (dir) => {
-  const inputFilePath = path.join(dir, 'original.png');
+  const inputFilePath = path.join(dir, 'removed.png');
   const outputFilePath = path.join(dir, 'threshholded.png');
   return new Promise((resolve, reject) => {
     sharp(inputFilePath)
@@ -241,8 +244,9 @@ export const createIconPreview = async (request, response) => {
       });
     }
     const dir = path.join(__dirname, '..', '..', './badgeImages', request.body.folderName);
-    const res1 = await execureThreshhold(dir);
-    const res2 = await executeTransparent(dir);
+    const res1 = await executeRemoveBg(dir);
+    const res2 = await execureThreshhold(dir);
+    const res3 = await executeTransparent(dir);
     // const imageData = fs.readFileSync(path.join(dir, 'transparented.png'));
     response.status(200).json({
       message: 'success',
@@ -254,12 +258,12 @@ export const createIconPreview = async (request, response) => {
 
 export const createIconFromScratch = async (request, response) => {
   try {
-    const { name, color, folderName, userId } = request.body;
-    const badgeNameExists = await Badge.findOne({ name });
-    if (badgeNameExists) {
-      // return  errorを出す。
-      throw new Error('Badge name already exista');
-    }
+    const { name, color, folderName, userId, badgeTypeId } = request.body;
+    // const badgeNameExists = await Badge.findOne({ name });
+    // if (badgeNameExists) {
+    //   // return  errorを出す。
+    //   throw new Error('Badge name already exista');
+    // }
     const imagePath = path.join(__dirname, '..', '..', './badgeImages', folderName, 'transparented.png');
     const fileStream = fs.createReadStream(imagePath);
 
@@ -271,7 +275,12 @@ export const createIconFromScratch = async (request, response) => {
     await s3.upload(uploadParams).promise();
     console.log('icon image Uploaded');
     const icon = await Icon.create({
-      url: `https://lampost-${process.env.NODE_ENV}.s3.us-east-2.amazonaws.com/assets/icons/${name}`,
+      url: `https://lampost-${process.env.NODE_ENV}.s3.us-east-2.amazonaws.com/icons/${name}`,
+      name: name,
+    });
+    const iconAndIconTypeRelationship = await IconAndIconTypeRelationship.create({
+      icon: icon._id,
+      iconType: badgeTypeId,
     });
     // const icontypeをここで
     const badge = await Badge.create({
@@ -282,10 +291,25 @@ export const createIconFromScratch = async (request, response) => {
       createdAt: new Date(),
     });
     // const badgeのtypeをここで。
+    const badgeAndBadgeTypeRelationship = await BadgeAndBadgeTypeRelationship.create({
+      badge: badge._id,
+      badgeType: badgeTypeId,
+    });
 
     fs.rmSync(path.join(__dirname, '..', '..', './badgeImages', folderName), {
       recursive: true,
       force: true,
+    });
+    response.status(201).json({
+      badge: {
+        _id: badge._id,
+        icon: {
+          _id: icon._id,
+          url: icon.url,
+        },
+        color: badge.color,
+        name: badge.name,
+      },
     });
   } catch (error) {
     console.log(error.message, error.name);

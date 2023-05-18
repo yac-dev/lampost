@@ -19,10 +19,11 @@ import BadgeColor from './BadgeColor';
 import BadgeGenres from './BadgeGenres';
 import lampostAPI from '../../../apis/lampost';
 import LoadingSpinner from '../../Utils/LoadingSpinner';
+import SnackBar from '../../Utils/SnackBar';
 
 // iconをfetchしてきて、
 const Container = (props) => {
-  const { auth, setLoading } = useContext(GlobalContext);
+  const { auth, setLoading, setSnackBar } = useContext(GlobalContext);
   const { MaterialCommunityIcons, Ionicons } = iconsTable;
   const [chooseIconOrCreateIcon, setChooseIconOrCreateIcon] = useState('choose');
   const [selectedBadgeGenre, setSelectedBadgeGenre] = useState(null);
@@ -38,6 +39,7 @@ const Container = (props) => {
     color: false,
     genre: false,
   });
+  console.log(badgeIcon);
 
   const onClose = async () => {
     if (folderName) {
@@ -61,21 +63,31 @@ const Container = (props) => {
     });
   }, [folderName]);
 
+  const onDoneValidation = () => {
+    if (chooseIconOrCreateIcon === 'choose') {
+      if (badgeIcon && badgeNameTextInput && badgeColor && selectedBadgeGenre) {
+        return false;
+      } else {
+        return true;
+      }
+    } else if (chooseIconOrCreateIcon === 'create') {
+      if (folderName && badgeNameTextInput && badgeColor && selectedBadgeGenre) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  };
+
   useEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity
-          onPress={() => onDonePress()}
-          disabled={badgeIcon && badgeNameTextInput && badgeColor && selectedBadgeGenre ? false : true}
-        >
+        <TouchableOpacity onPress={() => onDonePress()} disabled={onDoneValidation()}>
           <Text
             style={{
-              color:
-                badgeIcon && badgeNameTextInput && badgeColor && selectedBadgeGenre
-                  ? 'white'
-                  : screenSectionBackgroundColor,
+              color: onDoneValidation() ? screenSectionBackgroundColor : 'white',
               fontSize: 20,
-              fontWeight: badgeIcon && badgeNameTextInput && badgeColor && selectedBadgeGenre ? 'bold' : null,
+              fontWeight: 'bold',
             }}
           >
             Done
@@ -83,7 +95,8 @@ const Container = (props) => {
         </TouchableOpacity>
       ),
     });
-  }, [badgeIcon, badgeNameTextInput, badgeColor, selectedBadgeGenre]);
+  }, [badgeIcon, badgeNameTextInput, badgeColor, selectedBadgeGenre, folderName]);
+
   const onDonePress = async () => {
     if (chooseIconOrCreateIcon === 'choose') {
       try {
@@ -111,9 +124,9 @@ const Container = (props) => {
         setLoading(false);
         setSnackBar({
           isVisible: true,
-          message: 'Failed to create. This badge name is already exists.',
+          message: 'Failed to create. This badge name already exists. It should be unique.',
           barType: 'error',
-          duration: 5000,
+          duration: 7000,
         });
       }
     } else if (chooseIconOrCreateIcon === 'create') {
@@ -121,26 +134,29 @@ const Container = (props) => {
         setLoading(true);
         const payload = {
           folderName,
+          name: badgeNameTextInput,
           color: badgeColor,
           userId: auth.data._id,
           badgeTypeId: selectedBadgeGenre._id,
         };
         const result = await lampostAPI.post('/badges/fromscratch', payload);
         const { badge } = result.data;
-        const createdBadge = {
-          _id: badge._id,
-          icon: { _id: badgeIcon._id, url: badgeIcon.url },
-          name: badge.name,
-          color: badge.color,
-        };
+        // badgeIconって何のこと言っているんだ。
+        // const createdBadge = {
+        //   _id: badge._id,
+        //   icon: { _id: badgeIcon._id, url: badgeIcon.url },
+        //   name: badge.name,
+        //   color: badge.color,
+        // };
         setLoading(false);
         // apiで帰ってきたidを使って、add badgesに送ろう。
-        props.navigation.navigate('Add badges', { createdBadge });
+        // { name: 'Add badge tags', params: { selectedEmoji }, merge: true }
+        props.navigation.navigate({ name: 'Add badges', params: { createdBadge: badge }, merge: true });
       } catch (error) {
         setLoading(false);
         setSnackBar({
           isVisible: true,
-          message: 'Failed to create. This badge name is already exists.',
+          message: 'Failed to create. This badge name is already exists. Badge name should be unique.',
           barType: 'error',
           duration: 5000,
         });
@@ -259,8 +275,8 @@ const Container = (props) => {
     >
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
         <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 5, color: 'white' }}>Create badge</Text>
-        <Text style={{ color: baseTextColor, marginBottom: 25 }}>
-          Then create a new badge and share it with everyone.
+        <Text style={{ color: baseTextColor, marginBottom: 15 }}>
+          Couldn't find your topics? Then create a new badge and share it with everyone.
         </Text>
         <Icon />
         <BadgeName />
@@ -286,6 +302,7 @@ const Container = (props) => {
         </View> */}
 
         <LoadingSpinner />
+        <SnackBar />
       </View>
     </FormContext.Provider>
   );

@@ -18,7 +18,7 @@ import lampostAPI from '../../../apis/lampost';
 const { MaterialCommunityIcons, FontAwesome5, Ionicons } = iconsTable;
 
 const Icon = () => {
-  const { auth, setLoading } = useContext(GlobalContext);
+  const { auth, setLoading, setSnackBar } = useContext(GlobalContext);
   const {
     accordion,
     setAccordion,
@@ -117,7 +117,7 @@ const Icon = () => {
             style={{ width: '100%', flexDirection: 'row', alignItems: 'center', marginBottom: 20, alignSelf: 'center' }}
           >
             <TouchableOpacity
-              style={{ flex: 0.5, paddingRight: 3 }}
+              style={{ flex: 0.5, paddingRight: 5 }}
               onPress={() => setChooseIconOrCreateIcon('choose')}
             >
               <View style={{ width: '100%', backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 5 }}>
@@ -133,9 +133,9 @@ const Icon = () => {
               </View>
             </TouchableOpacity>
             <Text style={{ color: 'white' }}>Or</Text>
-            <TouchableOpacity style={{ flex: 0.5, paddingLeft: 3 }} onPress={() => setChooseIconOrCreateIcon('create')}>
+            <TouchableOpacity style={{ flex: 0.5, paddingLeft: 5 }} onPress={() => setChooseIconOrCreateIcon('create')}>
               <View style={{ width: '100%', backgroundColor: iconColorsTable['blue1'], padding: 5, borderRadius: 5 }}>
-                <Text style={{ textAlign: 'center', color: 'white', fontWeight: 'bold' }}>Create(Easy😏)</Text>
+                <Text style={{ textAlign: 'center', color: 'white', fontWeight: 'bold' }}>Custom (Easy😎)</Text>
                 {chooseIconOrCreateIcon === 'create' ? (
                   <Ionicons
                     name='checkmark-circle'
