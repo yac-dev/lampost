@@ -13,10 +13,10 @@ import {
   rnDefaultBackgroundColor,
 } from '../../../utils/colorsTable';
 import { Feather } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
 const HeaderContainer = () => {
-  const { auth, isIpad } = useContext(GlobalContext);
+  const { auth, isIpad, setLoading, setSnackBar } = useContext(GlobalContext);
   const {
     activitiesMenuBottomSheetRef,
     user,
@@ -28,11 +28,27 @@ const HeaderContainer = () => {
     setIsFetchedIsFollowingUser,
   } = useContext(UserContext);
 
-  const followUser = () => {
+  const followUser = async () => {
     if (isFollowingUser) {
       return null;
     } else {
+      const payload = {
+        followeeId: user._id,
+        user: {
+          _id: auth.data._id,
+          name: auth.data.name,
+        },
+      };
+      setLoading(true);
+      const result = await lampostAPI.post('/followrelationships', payload);
       setIsFollowingUser(true);
+      setLoading(false);
+      setSnackBar({
+        isVisible: true,
+        barType: 'success',
+        message: `Started supporting this launcher.`,
+        duration: 5000,
+      });
     }
   };
 
@@ -54,7 +70,16 @@ const HeaderContainer = () => {
                 onPress={() => followUser()}
               >
                 <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
-                  {isFollowingUser ? null : <MaterialCommunityIcons name='plus' color={'white'} size={20} />}
+                  {isFollowingUser ? (
+                    <MaterialCommunityIcons
+                      name='account-multiple-check'
+                      color={'white'}
+                      size={20}
+                      style={{ marginRight: 5 }}
+                    />
+                  ) : (
+                    <MaterialIcons name='group-add' color={'white'} size={20} style={{ marginRight: 5 }} />
+                  )}
                   <Text style={{ color: 'white', fontWeight: 'bold' }}>
                     {isFollowingUser ? 'Following now' : 'Follow'}
                   </Text>

@@ -20,7 +20,7 @@ const Reactions = () => {
     const list = selectedLibrary.reactions.slice(0, 2).map((reaction, index) => {
       if (reaction.iconType === 'emoji') {
         return (
-          <Text key={index} style={{ fontSize: 30 }}>
+          <Text key={index} style={{ fontSize: 35 }}>
             {reaction.emoji}
           </Text>
         );
@@ -41,7 +41,7 @@ const Reactions = () => {
     const list = selectedLibrary.reactions.map((reaction, index) => {
       if (reaction.iconType === 'emoji') {
         return (
-          <Text key={index} style={{ fontSize: 30 }}>
+          <Text key={index} style={{ fontSize: 35 }}>
             {reaction.emoji}
           </Text>
         );

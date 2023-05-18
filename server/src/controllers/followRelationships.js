@@ -20,7 +20,7 @@ export const createFollowRelationship = async (request, response) => {
     const notificationMessage = {
       to: launcher.pushToken,
       data: { notificationType: 'patronRelationship' },
-      title: `${user.name} started supporting you.`,
+      title: `${user.name} started following you.`,
       // body: `"${content}" from ${user.name}`,
     };
 

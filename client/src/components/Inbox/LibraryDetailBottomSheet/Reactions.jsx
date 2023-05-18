@@ -16,26 +16,15 @@ const Reactions = () => {
 
   const renderReactionIcons = () => {
     const list = selectedLibrary.reactions.slice(0, 2).map((reaction, index) => {
-      return (
-        <View key={index} style={{ width: 35, height: 35, backgroundColor: rnDefaultBackgroundColor, borderRadius: 5 }}>
-          <View
-            style={{
-              width: '100%',
-              height: '100%',
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: backgroundColorsTable[reaction.color],
-              borderRadius: 5,
-            }}
-          >
-            <FastImage
-              source={{ uri: reaction.icon.url }}
-              style={{ width: 30, height: 30 }}
-              tintColor={iconColorsTable[reaction.color]}
-            />
-          </View>
-        </View>
-      );
+      if (reaction.iconType === 'emoji') {
+        return (
+          <Text key={index} style={{ fontSize: 35 }}>
+            {reaction.emoji}
+          </Text>
+        );
+      } else if (reaction.iconType === 'reactionIcon') {
+        return <FastImage key={index} source={{ uri: reaction.reactionIcon.url }} style={{ width: 35, height: 35 }} />;
+      }
     });
 
     return (
@@ -48,40 +37,20 @@ const Reactions = () => {
 
   const renderReactions = () => {
     const list = selectedLibrary.reactions.map((reaction, index) => {
-      return (
-        <TouchableOpacity
-          key={index}
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            backgroundColor: rnDefaultBackgroundColor,
-            borderRadius: 8,
-            marginRight: 10,
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: backgroundColorsTable[reaction.color],
-              borderRadius: 8,
-              padding: 5,
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}
-          >
-            <FastImage
-              source={{ uri: reaction.icon.url }}
-              style={{ width: 45, height: 45, marginRight: 5 }}
-              tintColor={iconColorsTable[reaction.color]}
-            />
-            <Text style={{ color: iconColorsTable[reaction.color], fontWeight: 'bold' }}>{reaction.comment}</Text>
-          </View>
-        </TouchableOpacity>
-      );
+      if (reaction.iconType === 'emoji') {
+        return (
+          <Text key={index} style={{ fontSize: 35 }}>
+            {reaction.emoji}
+          </Text>
+        );
+      } else if (reaction.iconType === 'reactionIcon') {
+        return <FastImage key={index} source={{ uri: reaction.reactionIcon.url }} style={{ width: 35, height: 35 }} />;
+      }
     });
 
     return (
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>{list}</View>
+        <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>{list}</View>
       </ScrollView>
     );
   };

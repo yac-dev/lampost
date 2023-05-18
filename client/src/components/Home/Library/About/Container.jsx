@@ -90,8 +90,8 @@ const About = (props) => {
           />
           <Text style={{ color: 'white' }}>{props.route.params.library.launcher.name}</Text>
         </View>
-        <Text style={{ color: 'white', marginBottom: 10, fontWeight: 'bold', fontSize: 17 }}>Available reactions</Text>
-        {renderReactions()}
+        {/* <Text style={{ color: 'white', marginBottom: 10, fontWeight: 'bold', fontSize: 17 }}>Available reactions</Text>
+        {renderReactions()} */}
       </View>
     </SafeAreaView>
   );
