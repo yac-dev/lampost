@@ -391,7 +391,7 @@ const Reactions = (props) => {
                     >
                       <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center', padding: 5 }}>
                         <MaterialCommunityIcons name='plus' color={'white'} size={20} style={{ marginRight: 5 }} />
-                        <Text style={{ color: 'white' }}>Add emoji</Text>
+                        <Text style={{ color: 'white' }}>Normal emoji</Text>
                       </View>
                     </TouchableOpacity>
                   </View>
@@ -406,8 +406,8 @@ const Reactions = (props) => {
                       onPress={() => navigation.navigate('Reaction icon picker')}
                     >
                       <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center', padding: 5 }}>
-                        <Ionicons name='image' color={'white'} size={20} style={{ marginRight: 5 }} />
-                        <Text style={{ color: 'white' }}>Add image icon</Text>
+                        <MaterialCommunityIcons name='plus' color={'white'} size={20} style={{ marginRight: 5 }} />
+                        <Text style={{ color: 'white' }}>Special emoji</Text>
                       </View>
                     </TouchableOpacity>
                   </View>

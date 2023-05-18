@@ -25,7 +25,7 @@ const Info = (props) => {
   // };
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 20 }}>
+    <ScrollView style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
       <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 10, marginBottom: 20, borderRadius: 10 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
           <Ionicons name='logo-javascript' size={25} color={'yellow'} style={{ marginRight: 10 }} />
@@ -75,8 +75,8 @@ const Info = (props) => {
           <Text style={{ color: 'white', fontSize: 23 }}>Developer</Text>
         </View>
         <Text style={{ color: baseTextColor, marginBottom: 5 }}>
-          Hello folks. I'm Yosuke Kojima, founded Lampost. Thank you for joining here. Feel free to ask me if you have
-          any questions or found any issues 😃
+          I'm Yosuke Kojima, founded Lampost. Thank you for joining here. Feel free to ask me if you have any questions
+          or found any issues 😃
         </Text>
         <View>
           <View>

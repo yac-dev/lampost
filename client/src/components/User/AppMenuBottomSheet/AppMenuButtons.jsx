@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Share } from 'react-native';
 import UserContext from '../UserContext';
 import GlobalContext from '../../../GlobalContext';
 import HomeNavigatorContext from '../../Navigator/Home/HomeNavigatorContext';
@@ -110,6 +110,13 @@ const AppButtons = (props) => {
     }
   };
 
+  const handleShare = async () => {
+    Share.share({
+      title: 'Share meetup',
+      message: 'https://apps.apple.com/us/app/lampost/id1668526833',
+    });
+  };
+
   return (
     <ScrollView>
       <View>
@@ -140,6 +147,57 @@ const AppButtons = (props) => {
           </View>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
         </TouchableOpacity>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+          onPress={() => {
+            appMenuBottomSheetRef.current.close();
+            handleShare();
+          }}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={{
+                width: 40,
+                height: 40,
+                backgroundColor: backgroundColorsTable['lightBlue1'],
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 8,
+                marginRight: 10,
+              }}
+            >
+              <MaterialCommunityIcons name='facebook' color={iconColorsTable['lightBlue1']} size={20} />
+            </View>
+            <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>Share Lampost</Text>
+          </View>
+          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+          onPress={() => {
+            appMenuBottomSheetRef.current.close();
+            navigation.navigate('About Lampost');
+          }}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={{
+                width: 40,
+                height: 40,
+                backgroundColor: backgroundColorsTable['orange1'],
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 8,
+                marginRight: 10,
+              }}
+            >
+              <Ionicons name='information' color={iconColorsTable['orange1']} size={20} />
+            </View>
+            <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>About Lampost</Text>
+          </View>
+          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
+        </TouchableOpacity>
+
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
