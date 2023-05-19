@@ -4,6 +4,8 @@ import lampostAPI from '../../../../apis/lampost';
 import { baseBackgroundColor } from '../../../../utils/colorsTable';
 import LibraryAssetContext from './LibraryAsset/LibraryAssetContext';
 import LibraryAsset from './LibraryAsset/Container';
+import SnackBar from '../../../Utils/SnackBar';
+import LoadingSpinner from '../../../Utils/LoadingSpinner';
 
 const videoTypesTable = {
   normal: 'none',
@@ -42,6 +44,7 @@ const DateAssetsContainer = (props) => {
         libraryAsset={libraryAsset}
         libraryId={props.route.params.libraryId}
         reactionOptions={props.route.params.reactionOptions}
+        isCommentAvailable={props.route.params.isCommentAvailable}
       />
     );
   };
@@ -59,6 +62,8 @@ const DateAssetsContainer = (props) => {
       ) : (
         <ActivityIndicator />
       )}
+      <SnackBar />
+      <LoadingSpinner />
     </SafeAreaView>
   );
 };

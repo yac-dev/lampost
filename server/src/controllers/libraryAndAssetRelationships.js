@@ -245,6 +245,29 @@ export const createReaction = async (request, response) => {
   }
 };
 
+export const createComment = async (request, response) => {
+  try {
+    const { libraryId, assetId } = request.params;
+    const { userId, comment } = request.body;
+    const libraryAndAssetRelationship = await LibraryAndAssetRelationship.findOne({
+      library: libraryId,
+      asset: assetId,
+    });
+    console.log(comment);
+    libraryAndAssetRelationship.reactions.forEach((reactionObject) => {
+      if (reactionObject.user.toString() === userId) {
+        reactionObject.comment = comment;
+      }
+    });
+    libraryAndAssetRelationship.save();
+    response.status(201).json({
+      libraryAndAssetRelationship,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getPostedAssets = async (request, response) => {
   try {
     const { libraryId, userId } = request.params;

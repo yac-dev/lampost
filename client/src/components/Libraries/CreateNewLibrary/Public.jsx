@@ -232,7 +232,7 @@ const Public = (props) => {
             >
               <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold', fontSize: 17 }}>Private</Text>
               <Text style={{ textAlign: 'center', color: baseTextColor }}>
-                Only you and meetup friends can join this library.
+                Only you and invited people can join this library.
               </Text>
               {renderCheckMarkForJustFriends()}
             </TouchableOpacity>

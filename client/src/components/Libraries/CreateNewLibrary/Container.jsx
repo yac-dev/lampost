@@ -26,7 +26,7 @@ const Container = (props) => {
     invitationMessage: '',
     isReactionAvailable: '',
     reactions: [],
-    // isCommentAvailable: '',
+    isCommentAvailable: false,
     asset: null,
     description: '',
   });
@@ -63,7 +63,7 @@ const Container = (props) => {
       invitationMessage: formData.invitationMessage,
       isReactionAvailable: formData.isReactionAvailable,
       reactions: formData.reactions,
-      // isCommentAvailable: formData.isCommentAvailable,
+      isCommentAvailable: formData.isCommentAvailable,
       asset: {
         _id: formData.asset._id,
         data: formData.asset.data,

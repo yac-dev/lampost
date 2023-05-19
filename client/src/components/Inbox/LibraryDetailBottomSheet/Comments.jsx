@@ -39,7 +39,7 @@ const Comments = () => {
         </TouchableOpacity>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Text style={{ color: baseTextColor }}>
-            {selectedLibrary.isCommentAvailable ? 'Available' : 'Not avaibale'}
+            {selectedLibrary.isCommentAvailable ? 'Available' : 'Turned off'}
           </Text>
           <TouchableOpacity onPress={() => setIsAccordionOpen((previous) => !previous)}>
             <MaterialCommunityIcons
@@ -54,8 +54,8 @@ const Comments = () => {
         <View style={{ marginTop: 10, marginBottom: 10 }}>
           <Text style={{ color: 'white', textAlign: 'center' }}>
             {selectedLibrary.isCommentAvailable
-              ? 'Enjoy giving some feedbacks each other.'
-              : 'Comments are turned off in this library.'}
+              ? 'Enjoy giving some comments on each other.'
+              : 'Comment feature is turned off in this library.'}
           </Text>
         </View>
       ) : null}

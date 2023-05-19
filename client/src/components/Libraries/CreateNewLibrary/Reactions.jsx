@@ -240,7 +240,7 @@ const Reactions = (props) => {
       });
 
       return (
-        <ScrollView horizontal={true} style={{ paddingTop: 10 }}>
+        <ScrollView horizontal={true} style={{ paddingTop: 10, marginBottom: 10 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>{list}</View>
         </ScrollView>
       );
@@ -415,6 +415,62 @@ const Reactions = (props) => {
               )}
 
               {renderReactionOptions()}
+              <Text style={{ color: baseTextColor, marginBottom: 10 }}>Allow people to comment on each content?</Text>
+              <View style={{ width: '100%', padding: 5 }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setFormData((previous) => {
+                      return {
+                        ...previous,
+                        isCommentAvailable: false,
+                      };
+                    });
+                  }}
+                  style={{
+                    backgroundColor: iconColorsTable['blue1'],
+                    padding: 5,
+                    borderRadius: 5,
+                    width: '100%',
+                  }}
+                >
+                  <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>No</Text>
+                  </View>
+                  <Text style={{ color: baseTextColor, textAlign: 'center' }}>Comment feature will be turned off.</Text>
+                </TouchableOpacity>
+                {formData.isCommentAvailable ? null : (
+                  <View style={{ position: 'absolute', right: -7, top: -7 }}>
+                    <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
+                  </View>
+                )}
+              </View>
+              <View style={{ width: '100%', padding: 5 }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setFormData((previous) => {
+                      return {
+                        ...previous,
+                        isCommentAvailable: true,
+                      };
+                    });
+                  }}
+                  style={{
+                    backgroundColor: iconColorsTable['blue1'],
+                    padding: 5,
+                    borderRadius: 5,
+                    width: '100%',
+                  }}
+                >
+                  <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>Yes</Text>
+                  </View>
+                </TouchableOpacity>
+                {formData.isCommentAvailable ? (
+                  <View style={{ position: 'absolute', right: -7, top: -7 }}>
+                    <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
+                  </View>
+                ) : null}
+              </View>
             </View>
           ) : null}
         </View>

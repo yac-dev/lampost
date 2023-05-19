@@ -8,6 +8,7 @@ import {
   getLibraryAssetsByMonth,
   getLibraryAssetsByDate,
   getPostedAssets,
+  createComment,
 } from '../controllers/libraryAndAssetRelationships';
 
 router.route('/:libraryId/assets').get(getAssetsByLibraryId);
@@ -16,5 +17,6 @@ router.route('/:libraryId').get(getLibraryAssetsByMonth).post(postAssetsByLibrar
 // ここのrouting、気をつけてな。
 router.route('/:libraryId/dateassets').get(getLibraryAssetsByDate);
 router.route('/:libraryId/:assetId').get(getAsset).post(createReaction);
+router.route('/:libraryId/:assetId/comment').post(createComment);
 
 export default router;

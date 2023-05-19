@@ -17,6 +17,7 @@ const LibraryAssetContainer = (props) => {
         libraryAsset: props.libraryAsset,
         libraryId: props.libraryId,
         reactionOptions: props.reactionOptions,
+        isCommentAvailable: props.isCommentAvailable,
         reactions,
         setReactions,
       }}

@@ -11,7 +11,7 @@ import {
 } from '../../utils/colorsTable';
 import { emojis } from '../../utils/emojisList';
 
-const emojiOptions = ['😄', '😎', '🤔', '😍', '🤤', '😂', '😎', '🔥', '❤️', '😌'];
+const emojiOptions = ['😄', '😎', '🤔', '😮', '🤤', '😂', '🤪', '😌', '🔥', '❤️'];
 
 const MoodBottomSheet = (props) => {
   const { auth, isIpad } = useContext(GlobalContext);

@@ -3,7 +3,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import GlobalContext from '../../GlobalContext';
 import CameraContext from './CameraContext';
-import { Text, View, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, Dimensions, Platform } from 'react-native';
+import { PinchGestureHandler, State } from 'react-native-gesture-handler';
 import lampostAPI from '../../apis/lampost';
 import { Camera, CameraType } from 'expo-camera';
 import LoadingSpinner from '../Utils/LoadingSpinner';
@@ -49,6 +50,7 @@ const Container = (props) => {
   const photoEffectBottomSheetRef = useRef(null);
   const moodBottomSheetRef = useRef(null);
   const cameraRef = useRef(null);
+  const [zoomLevel, setZoomLevel] = useState(0);
   const [flashMode, setFlashMode] = useState(Camera.Constants.FlashMode.off);
   const [cameraType, setCameraType] = useState(CameraType.back);
   const [cameraMode, setCameraMode] = useState('photo');
@@ -70,7 +72,7 @@ const Container = (props) => {
   const [isMeetupOngoing, setIsMeetupOngoing] = useState(false);
   const [duration, setDuration] = useState(0);
   const durationRef = useRef(null);
-  console.log(meetupAttendees);
+  // console.log(meetupAttendees);
 
   // const getMyUpcomingMeetupStates = async () => {
   //   if (auth.data.upcomingMeetups.length) {
@@ -542,6 +544,21 @@ const Container = (props) => {
     }
   };
 
+  const handlePinch = (event) => {
+    var scale = event.nativeEvent.scale;
+    var velocity = event.nativeEvent.velocity / 20;
+
+    let newZoom =
+      velocity > 0
+        ? zoomLevel + scale * velocity * (Platform.OS === 'ios' ? 0.01 : 25)
+        : zoomLevel - scale * Math.abs(velocity) * (Platform.OS === 'ios' ? 0.02 : 50);
+
+    if (newZoom < 0) newZoom = 0;
+    else if (newZoom > 0.5) newZoom = 0.5;
+
+    setZoomLevel(newZoom);
+  };
+
   // recordingとtakingの時は、buttonをdisableにしないといかん。
   return (
     <CameraContext.Provider
@@ -578,31 +595,37 @@ const Container = (props) => {
       }}
     >
       <View style={{ flex: 1, backgroundColor: 'black' }}>
-        <View
-          style={{
-            flex: cameraMode === 'photo' ? null : 1,
-            width: cameraMode === 'photo' ? '100%' : null,
-            paddingTop: cameraMode === 'photo' ? 70 : null,
-            // alignItems: 'center',
-            // justifyContent: 'center',
-          }}
+        <PinchGestureHandler
+          onGestureEvent={(event) => handlePinch(event)}
+          // onHandlerStateChange={(event) => handlePinchStateChange(event)}
         >
-          <Camera
+          <View
             style={{
               flex: cameraMode === 'photo' ? null : 1,
               width: cameraMode === 'photo' ? '100%' : null,
-              aspectRatio: cameraMode === 'photo' ? 1 : null,
+              paddingTop: cameraMode === 'photo' ? 70 : null,
+              // alignItems: 'center',
+              // justifyContent: 'center',
             }}
-            flashMode={'off'}
-            ref={cameraRef}
-            type={cameraType}
-            whiteBalance={photoEffect}
-            ratio={'1:1'}
-            // videoQuality='480p'
           >
-            {renderTimer()}
-          </Camera>
-        </View>
+            <Camera
+              style={{
+                flex: cameraMode === 'photo' ? null : 1,
+                width: cameraMode === 'photo' ? '100%' : null,
+                aspectRatio: cameraMode === 'photo' ? 3 / 4 : null,
+              }}
+              flashMode={'off'}
+              ref={cameraRef}
+              type={cameraType}
+              whiteBalance={photoEffect}
+              ratio={'1:1'}
+              zoom={zoomLevel}
+              // videoQuality='480p'
+            >
+              {renderTimer()}
+            </Camera>
+          </View>
+        </PinchGestureHandler>
         {renderCameraButton()}
         {auth.isAuthenticated ? (
           // <View
@@ -773,7 +796,7 @@ const Container = (props) => {
                 >
                   <Ionicons name='ios-pricetags' size={20} color={iconColorsTable['green1']} />
                 </TouchableOpacity>
-                <Text style={{ color: 'white', textAlign: 'center' }}>Tag people</Text>
+                <Text style={{ color: 'white', textAlign: 'center' }}>Tag members</Text>
               </View>
               <View
                 style={{

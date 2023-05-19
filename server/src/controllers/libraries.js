@@ -71,6 +71,7 @@ export const createLibrary = async (request, response) => {
       assetType,
       isPublic,
       isReactionAvailable,
+      isCommentAvailable,
       reactions,
       description,
       asset,
@@ -121,6 +122,11 @@ export const createLibrary = async (request, response) => {
       const reactionIds = createdReactions.map((reaction) => reaction._id);
       // ここでreactionのidだけ入れる。そんで、↓でsaveする。
       library.reactions = reactionIds;
+    }
+    if (isReactionAvailable && isCommentAvailable) {
+      library.isCommentAvailable = true;
+    } else {
+      library.isCommentAvailable = false;
     }
     library.save();
     libraryAndAssetRelationship.save();

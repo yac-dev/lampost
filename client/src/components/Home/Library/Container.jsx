@@ -179,6 +179,7 @@ const Container = (props) => {
                 libraryId: marking.libraryId,
                 date: date,
                 reactionOptions: library.reactions,
+                isCommentAvailable: library.isCommentAvailable,
               })
             }
           >
