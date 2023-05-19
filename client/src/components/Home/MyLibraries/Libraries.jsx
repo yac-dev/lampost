@@ -27,116 +27,120 @@ const Libraries = (props) => {
     }
   };
 
+  console.log(myJoinedLibraries);
   if (myJoinedLibraries.length) {
     const myJoinedLibrariesList = myJoinedLibraries.map((library, index) => {
-      if (library.thumbnail.type === 'photo') {
-        return (
-          <TouchableOpacity
-            key={index}
-            style={{
-              paddingTop: 10,
-              paddingBottom: 10,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-            onPress={() => {
-              // myLibrariesBottomSheetRef.current.close();
-              // navigation.navigate('Library', { libraryId: library._id, libraryAssetType: library.assetType });
-              props.navigation.navigate('LibraryNavigator', {
-                screen: 'Library',
-                params: { libraryId: library._id, libraryAssetType: library.assetType, libraryTitle: library.title },
-              });
-              // screen: 'expeFormOneScreen',
-              //   params: {
-              //     currentItem: someValue
-              //   },
-            }}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <View
-                style={{
-                  width: 80,
-                  height: 80,
-                  marginRight: 15,
-                  borderRadius: 7,
-                }}
-              >
-                <FastImage
-                  style={{ width: '100%', height: '100%', borderRadius: 7 }}
-                  source={{
-                    uri: library.thumbnail.data,
-                    priority: FastImage.priority.normal,
+      if (library) {
+        // まあいいかこれで。null対策 server側で一応全部除くようにはしているけど。
+        if (library.thumbnail.type === 'photo') {
+          return (
+            <TouchableOpacity
+              key={index}
+              style={{
+                paddingTop: 10,
+                paddingBottom: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+              onPress={() => {
+                // myLibrariesBottomSheetRef.current.close();
+                // navigation.navigate('Library', { libraryId: library._id, libraryAssetType: library.assetType });
+                props.navigation.navigate('LibraryNavigator', {
+                  screen: 'Library',
+                  params: { libraryId: library._id, libraryAssetType: library.assetType, libraryTitle: library.title },
+                });
+                // screen: 'expeFormOneScreen',
+                //   params: {
+                //     currentItem: someValue
+                //   },
+              }}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View
+                  style={{
+                    width: 80,
+                    height: 80,
+                    marginRight: 15,
+                    borderRadius: 7,
                   }}
-                  resizeMode={FastImage.resizeMode.stretch}
-                />
-                <View style={{ position: 'absolute', bottom: 0, right: 0 }}>{renderAssetType(library)}</View>
+                >
+                  <FastImage
+                    style={{ width: '100%', height: '100%', borderRadius: 7 }}
+                    source={{
+                      uri: library.thumbnail.data,
+                      priority: FastImage.priority.normal,
+                    }}
+                    resizeMode={FastImage.resizeMode.stretch}
+                  />
+                  <View style={{ position: 'absolute', bottom: 0, right: 0 }}>{renderAssetType(library)}</View>
+                </View>
+                <View>
+                  <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{library.title}</Text>
+                  {library.isPublic ? null : (
+                    <Text style={{ color: baseTextColor, fontSize: 15, marginTop: 5 }}>Private</Text>
+                  )}
+                </View>
               </View>
-              <View>
-                <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{library.title}</Text>
-                {library.isPublic ? null : (
-                  <Text style={{ color: baseTextColor, fontSize: 15, marginTop: 5 }}>Private</Text>
-                )}
-              </View>
-            </View>
-            <Text style={{ color: 'white', marginRight: 10 }}>
-              {library.mood}
-              {library.totalAssets}
-            </Text>
-          </TouchableOpacity>
-        );
-      } else if (library.thumbnail.type === 'video') {
-        return (
-          <TouchableOpacity
-            key={index}
-            style={{
-              paddingTop: 10,
-              paddingBottom: 10,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-            onPress={() => {
-              // myLibrariesBottomSheetRef.current.close();
-              props.navigation.navigate('LibraryNavigator', {
-                screen: 'Library',
-                params: { libraryId: library._id, libraryAssetType: library.assetType, libraryTitle: library.title },
-              });
-            }}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <View
-                style={{
-                  width: 80,
-                  height: 80,
-                  marginRight: 15,
-                  borderRadius: 7,
-                }}
-              >
-                <Video
-                  style={{ width: '100%', height: '100%', borderRadius: 7 }}
-                  source={{
-                    uri: library.thumbnail.data,
+              <Text style={{ color: 'white', marginRight: 10 }}>
+                {library.mood}
+                {library.totalAssets}
+              </Text>
+            </TouchableOpacity>
+          );
+        } else if (library.thumbnail.type === 'video') {
+          return (
+            <TouchableOpacity
+              key={index}
+              style={{
+                paddingTop: 10,
+                paddingBottom: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+              onPress={() => {
+                // myLibrariesBottomSheetRef.current.close();
+                props.navigation.navigate('LibraryNavigator', {
+                  screen: 'Library',
+                  params: { libraryId: library._id, libraryAssetType: library.assetType, libraryTitle: library.title },
+                });
+              }}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View
+                  style={{
+                    width: 80,
+                    height: 80,
+                    marginRight: 15,
+                    borderRadius: 7,
                   }}
-                  useNativeControls={false}
-                  resizeMode='stretch'
-                  isLooping={false}
-                />
-                <View style={{ position: 'absolute', bottom: 0, right: 0 }}>{renderAssetType(library)}</View>
+                >
+                  <Video
+                    style={{ width: '100%', height: '100%', borderRadius: 7 }}
+                    source={{
+                      uri: library.thumbnail.data,
+                    }}
+                    useNativeControls={false}
+                    resizeMode='stretch'
+                    isLooping={false}
+                  />
+                  <View style={{ position: 'absolute', bottom: 0, right: 0 }}>{renderAssetType(library)}</View>
+                </View>
+                <View>
+                  <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{library.title}</Text>
+                  {library.isPublic ? null : (
+                    <Text style={{ color: baseTextColor, fontSize: 15, marginTop: 5 }}>Private</Text>
+                  )}
+                </View>
               </View>
-              <View>
-                <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{library.title}</Text>
-                {library.isPublic ? null : (
-                  <Text style={{ color: baseTextColor, fontSize: 15, marginTop: 5 }}>Private</Text>
-                )}
-              </View>
-            </View>
-            <Text style={{ color: 'white', marginRight: 10 }}>
-              {library.mood}
-              {library.totalAssets}
-            </Text>
-          </TouchableOpacity>
-        );
+              <Text style={{ color: 'white', marginRight: 10 }}>
+                {library.mood}
+                {library.totalAssets}
+              </Text>
+            </TouchableOpacity>
+          );
+        }
       }
     });
 

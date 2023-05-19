@@ -129,15 +129,17 @@ const Container = (props) => {
     const { libraryAssets } = result.data;
     const table = {};
     libraryAssets.forEach((libraryAsset) => {
-      const date = new Date(libraryAsset.createdAt).toISOString().substring(0, 10);
-      // const dayOfMonth = date.getDate();
-      if (!table[date]) {
-        table[date] = {
-          marked: true,
-          thumbnail: libraryAsset.asset.data,
-          libraryId: libraryAsset.library,
-          type: libraryAsset.asset.type,
-        };
+      if (libraryAsset.asset && libraryAsset.asset.createdBy) {
+        const date = new Date(libraryAsset.createdAt).toISOString().substring(0, 10);
+        // const dayOfMonth = date.getDate();
+        if (!table[date]) {
+          table[date] = {
+            marked: true,
+            thumbnail: libraryAsset.asset.data,
+            libraryId: libraryAsset.library,
+            type: libraryAsset.asset.type,
+          };
+        }
       }
     });
     setAssetsTable((previous) => {

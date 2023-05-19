@@ -18,7 +18,6 @@ const Reactions = (props) => {
     useContext(LibraryAssetContext);
   const [commentTextInput, setCommentTextInput] = useState('');
 
-  console.log(reactionOptions);
   const createReaction = async (reactionObject) => {
     setLoading(true);
     const result = await lampostAPI.post(`/libraryandassetrelationships/${libraryId}/${libraryAsset.asset._id}`, {
@@ -45,40 +44,44 @@ const Reactions = (props) => {
   };
 
   const renderReactionOption = (reactionObject) => {
-    if (reactionObject.iconType === 'emoji') {
-      return (
-        <TouchableOpacity
-          style={{
-            width: 45,
-            height: 45,
-            borderRadius: 10,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: inputBackgroundColorNew,
-            marginRight: 10,
-          }}
-          onPress={() => createReaction(reactionObject)}
-        >
-          <Text style={{ fontSize: 30 }}>{reactionObject.emoji}</Text>
-        </TouchableOpacity>
-      );
-    } else if (reactionObject.iconType === 'reactionIcon') {
-      return (
-        <TouchableOpacity
-          style={{
-            width: 45,
-            height: 45,
-            borderRadius: 10,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: inputBackgroundColorNew,
-            marginRight: 10,
-          }}
-          onPress={() => createReaction(reactionObject)}
-        >
-          <FastImage source={{ uri: reactionObject.reactionIcon.url }} style={{ width: 35, height: 35 }} />
-        </TouchableOpacity>
-      );
+    if (reactionObject.reaction) {
+      if (reactionObject.iconType === 'emoji') {
+        return (
+          <TouchableOpacity
+            style={{
+              width: 45,
+              height: 45,
+              borderRadius: 10,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: inputBackgroundColorNew,
+              marginRight: 10,
+            }}
+            onPress={() => createReaction(reactionObject)}
+          >
+            <Text style={{ fontSize: 30 }}>{reactionObject.emoji}</Text>
+          </TouchableOpacity>
+        );
+      } else if (reactionObject.iconType === 'reactionIcon') {
+        return (
+          <TouchableOpacity
+            style={{
+              width: 45,
+              height: 45,
+              borderRadius: 10,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: inputBackgroundColorNew,
+              marginRight: 10,
+            }}
+            onPress={() => createReaction(reactionObject)}
+          >
+            <FastImage source={{ uri: reactionObject.reactionIcon.url }} style={{ width: 35, height: 35 }} />
+          </TouchableOpacity>
+        );
+      }
+    } else {
+      return null;
     }
   };
 

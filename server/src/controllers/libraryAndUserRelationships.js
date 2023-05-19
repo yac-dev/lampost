@@ -45,10 +45,13 @@ export const getMyJoinedLibrary = async (request, response) => {
         select: 'title color assetType isPublic totalAssets mood',
         populate: { path: 'thumbnail', select: 'data type' },
       });
-    // [ {library: {name: 'qqqqq', description: 'hfuhoifhiqw'}, user: {'11111'} ]って面倒だからね。
-    // 少なくとも、relationshipをまんま渡すのはやだわ。ごっちゃになる。
-    const myJoinedLibraries = myJoinedLibrariesRelationships.map((libraryRelationship) => {
-      return libraryRelationship.library;
+
+    const myJoinedLibraries = [];
+    // 最終的に、libraryがnullなやつをここで返さない。
+    myJoinedLibrariesRelationships.forEach((libraryRelationship) => {
+      if (libraryRelationship.library) {
+        myJoinedLibraries.push(libraryRelationship.library);
+      }
     });
 
     response.status(200).json({
@@ -75,8 +78,12 @@ export const getUsersByLibraryId = async (request, response) => {
         },
       },
     });
-    const users = libraryAndUserRelationships.map((relationship) => {
-      return relationship.user;
+    const users = [];
+    // userがnullなやつをここで返さない。
+    libraryAndUserRelationships.forEach((relationship) => {
+      if (relationship.user) {
+        users.push(relationship.user);
+      }
     });
 
     response.status(200).json({

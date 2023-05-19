@@ -27,7 +27,11 @@ const Members = (props) => {
 
   const renderTopBadges = (user) => {
     const list = user.topBadges.map((userBadge, index) => {
-      return <BadgeLabel key={index} badge={userBadge.badge} />;
+      if (userBadge.badge) {
+        return <BadgeLabel key={index} badge={userBadge.badge} />;
+      } else {
+        return null;
+      }
     });
 
     return (
@@ -38,9 +42,9 @@ const Members = (props) => {
   };
 
   const renderUser = (user) => {
-    return (
-      <View style={{ flexDirection: 'row', marginBottom: 15 }}>
-        {user ? ( // null 対策
+    if (user) {
+      return (
+        <View style={{ flexDirection: 'row', marginBottom: 15 }}>
           <TouchableOpacity
             style={{ flex: 0.15 }}
             onPress={() => {
@@ -65,36 +69,21 @@ const Members = (props) => {
               tintColor={user.photo ? null : 'white'}
             />
           </TouchableOpacity>
-        ) : (
           <View
             style={{
-              flex: 0.15,
-              borderRadius: 5,
-              backgroundColor: iconColorsTable['blue1'],
-              alignItems: 'center',
-              justifyContent: 'center',
+              borderBottomWidth: 0.3,
+              borderBottomColor: baseTextColor,
+              flex: 0.85,
             }}
           >
-            <MaterialCommunityIcons name='ghost' size={20} color='white' />
-          </View>
-        )}
-
-        <View
-          style={{
-            borderBottomWidth: 0.3,
-            borderBottomColor: baseTextColor,
-            flex: 0.85,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: 'column',
-              // alignItems: 'center',
-              marginBottom: 10,
-              width: '100%',
-            }}
-          >
-            {user ? (
+            <View
+              style={{
+                flexDirection: 'column',
+                // alignItems: 'center',
+                marginBottom: 10,
+                width: '100%',
+              }}
+            >
               <View>
                 <TouchableOpacity
                   onPress={() => {
@@ -111,13 +100,13 @@ const Members = (props) => {
                 </TouchableOpacity>
                 {renderTopBadges(user)}
               </View>
-            ) : (
-              <Text style={{ color: 'white', fontSize: 20 }}>This user doesn't exist</Text>
-            )}
+            </View>
           </View>
         </View>
-      </View>
-    );
+      );
+    } else {
+      return null;
+    }
   };
 
   const renderMembers = () => {

@@ -18,29 +18,33 @@ const Asset = () => {
   const renderReactions = () => {
     if (reactions.length) {
       const list = reactions.map((reactionObject, index) => {
-        return (
-          <View key={index} style={{ marginRight: 15 }}>
-            <FastImage
-              source={{
-                uri: reactionObject.user.photo
-                  ? reactionObject.user.photo
-                  : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
-              }}
-              style={{ width: 45, height: 45, backgroundColor: iconColorsTable['blue1'], borderRadius: 12 }}
-              tintColor={reactionObject.user.photo ? null : 'white'}
-            />
-            {reactionObject.reaction.iconType === 'emoji' ? (
-              <Text style={{ fontSize: 30, position: 'absolute', right: -10, bottom: -10 }}>
-                {reactionObject.reaction.emoji}
-              </Text>
-            ) : (
+        if (reactionObject.reaction && reactionObject.user) {
+          return (
+            <View key={index} style={{ marginRight: 15 }}>
               <FastImage
-                style={{ position: 'absolute', right: -10, bottom: -10, width: 30, height: 30 }}
-                source={{ uri: reactionObject.reaction.reactionIcon.url }}
+                source={{
+                  uri: reactionObject.user.photo
+                    ? reactionObject.user.photo
+                    : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
+                }}
+                style={{ width: 45, height: 45, backgroundColor: iconColorsTable['blue1'], borderRadius: 12 }}
+                tintColor={reactionObject.user.photo ? null : 'white'}
               />
-            )}
-          </View>
-        );
+              {reactionObject.reaction.iconType === 'emoji' ? (
+                <Text style={{ fontSize: 30, position: 'absolute', right: -10, bottom: -10 }}>
+                  {reactionObject.reaction.emoji}
+                </Text>
+              ) : (
+                <FastImage
+                  style={{ position: 'absolute', right: -10, bottom: -10, width: 30, height: 30 }}
+                  source={{ uri: reactionObject.reaction.reactionIcon.url }}
+                />
+              )}
+            </View>
+          );
+        } else {
+          return null;
+        }
       });
 
       return (

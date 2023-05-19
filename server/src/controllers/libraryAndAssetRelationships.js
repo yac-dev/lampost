@@ -109,6 +109,7 @@ export const getLibraryAssetsByMonth = async (request, response) => {
     const endDate = new Date(Date.UTC(year, month, 1));
     console.log(startDate, endDate);
 
+    // const libraryAssets = [];
     const libraryAssets = await LibraryAndAssetRelationship.find({
       library: request.params.libraryId,
       createdAt: { $gte: startDate, $lt: endDate },
@@ -116,6 +117,10 @@ export const getLibraryAssetsByMonth = async (request, response) => {
       path: 'asset',
       select: 'data createdAt type',
     });
+
+    // list.forEach((relationship) => {
+    //   if(relationship.asset)
+    // })
     console.log(libraryAssets);
 
     response.status(200).json({
