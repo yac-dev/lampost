@@ -16,14 +16,24 @@ const Reactions = () => {
 
   const renderReactionIcons = () => {
     const list = selectedLibrary.reactions.slice(0, 2).map((reaction, index) => {
-      if (reaction.iconType === 'emoji') {
-        return (
-          <Text key={index} style={{ fontSize: 35 }}>
-            {reaction.emoji}
-          </Text>
-        );
-      } else if (reaction.iconType === 'reactionIcon') {
-        return <FastImage key={index} source={{ uri: reaction.reactionIcon.url }} style={{ width: 35, height: 35 }} />;
+      if (reaction) {
+        if (reaction.iconType === 'emoji') {
+          return (
+            <Text key={index} style={{ fontSize: 35 }}>
+              {reaction.emoji}
+            </Text>
+          );
+        } else if (reaction.iconType === 'reactionIcon') {
+          if (reaction.reactionIcon) {
+            return (
+              <FastImage key={index} source={{ uri: reaction.reactionIcon.url }} style={{ width: 35, height: 35 }} />
+            );
+          } else {
+            return null;
+          }
+        }
+      } else {
+        return null;
       }
     });
 
@@ -37,14 +47,24 @@ const Reactions = () => {
 
   const renderReactions = () => {
     const list = selectedLibrary.reactions.map((reaction, index) => {
-      if (reaction.iconType === 'emoji') {
-        return (
-          <Text key={index} style={{ fontSize: 35 }}>
-            {reaction.emoji}
-          </Text>
-        );
-      } else if (reaction.iconType === 'reactionIcon') {
-        return <FastImage key={index} source={{ uri: reaction.reactionIcon.url }} style={{ width: 35, height: 35 }} />;
+      if (reaction) {
+        if (reaction.iconType === 'emoji') {
+          return (
+            <Text key={index} style={{ fontSize: 35 }}>
+              {reaction.emoji}
+            </Text>
+          );
+        } else if (reaction.iconType === 'reactionIcon') {
+          if (reaction.reactionIcon) {
+            return (
+              <FastImage key={index} source={{ uri: reaction.reactionIcon.url }} style={{ width: 35, height: 35 }} />
+            );
+          } else {
+            return null;
+          }
+        }
+      } else {
+        return null;
       }
     });
 

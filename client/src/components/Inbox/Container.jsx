@@ -110,22 +110,23 @@ const Container = (props) => {
                 flexWrap: 'wrap',
               }}
             >
-              <FastImage
-                source={{
-                  uri: notification.from.photo
-                    ? notification.from.photo
-                    : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
-                }}
-                tintColor={notification.from.photo ? null : 'white'}
-                style={{
-                  width: 20,
-                  height: 20,
-                  borderRadius: 5,
-                  backgroundColor: iconColorsTable['blue1'],
-                  marginRight: 10,
-                }}
-              />
-
+              {notification.from ? (
+                <FastImage
+                  source={{
+                    uri: notification.from.photo
+                      ? notification.from.photo
+                      : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
+                  }}
+                  tintColor={notification.from.photo ? null : 'white'}
+                  style={{
+                    width: 20,
+                    height: 20,
+                    borderRadius: 5,
+                    backgroundColor: iconColorsTable['blue1'],
+                    marginRight: 10,
+                  }}
+                />
+              ) : null}
               <Text style={{ color: 'white', flex: 1, fontSize: 13 }}>{notification.message}</Text>
             </View>
           </View>

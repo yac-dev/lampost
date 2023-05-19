@@ -176,32 +176,6 @@ const AppButtons = (props) => {
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
             appMenuBottomSheetRef.current.close();
-            navigation.navigate('About Lampost');
-          }}
-        >
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View
-              style={{
-                width: 40,
-                height: 40,
-                backgroundColor: backgroundColorsTable['orange1'],
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 8,
-                marginRight: 10,
-              }}
-            >
-              <Ionicons name='information' color={iconColorsTable['orange1']} size={20} />
-            </View>
-            <Text style={{ color: 'white', fontSize: 17, marginRight: 10 }}>About Lampost</Text>
-          </View>
-          <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={20} />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
-          onPress={() => {
-            appMenuBottomSheetRef.current.close();
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>

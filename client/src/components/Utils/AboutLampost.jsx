@@ -110,6 +110,14 @@ const Info = (props) => {
               </View>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+              <Fontisto name='medium' size={20} color='white' style={{ marginRight: 10 }} />
+              <View style={{ borderBottomColor: baseTextColor, borderBottomWidth: 0.3 }}>
+                <TouchableOpacity onPress={() => openURL('https://www.linkedin.com/in/yosuke-kojima-268044213')}>
+                  <Text style={{ color: baseTextColor }}>https://medium.com/@yabbee0828</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
               <AntDesign name='twitter' size={20} color='#1596CA' style={{ marginRight: 10 }} />
               <View style={{ borderBottomColor: baseTextColor, borderBottomWidth: 0.3 }}>
                 <TouchableOpacity onPress={() => openURL('https://twitter.com/LampostTech')}>

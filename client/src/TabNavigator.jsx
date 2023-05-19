@@ -66,6 +66,15 @@ const RootNavigator = () => {
               return null;
             }
           },
+          headerLeft: () => {
+            return (
+              <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => navigation.navigate('About Lampost')}>
+                {/* <Ionicons name='close-circle-outline' size={30} color={'white'} /> */}
+                {/* <Text style={{ color: 'white', fontSize: 20 }}>pro</Text> */}
+                <MaterialCommunityIcons name='information' size={25} color={'white'} />
+              </TouchableOpacity>
+            );
+          },
           title: 'Home',
           headerTintColor: 'white',
           headerStyle: {

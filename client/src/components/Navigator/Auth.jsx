@@ -31,7 +31,6 @@ import CreateBadgesIndex from '../User/CreateBadgesIndex/Container';
 // import Meetup from '../User/Meetups/Meetup/Container';
 import Assets from '../User/Assets/Container';
 // import Asset from '../Utils/Asset';
-import AboutLampost from '../Utils/AboutLampost';
 import Asset from '../User/Meetups/Assets/Asset';
 import MeetupAssets from '../User/Meetups/Assets/Container';
 import Impressions from '../User/Meetups/Impressions/Container';
@@ -308,25 +307,6 @@ const Auth = (props) => {
           />
         </Stack.Group>
         <Stack.Group screenOptions={{ presentation: 'modal', gestureEnabled: false }}>
-          <Stack.Screen
-            name='About Lampost'
-            component={AboutLampost}
-            options={({ navigation }) => ({
-              headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
-                </TouchableOpacity>
-              ),
-              headerStyle: {
-                backgroundColor: appBottomSheetBackgroundColor,
-              },
-              headerTitleStyle: {
-                fontWeight: 'bold',
-                color: 'white',
-              },
-              headerTintColor: 'white',
-            })}
-          />
           <Stack.Screen
             name='Create badges index'
             component={CreateBadgesIndex}

@@ -26,6 +26,7 @@ import PleaseLoginModal from './components/Utils/PleaseLoginModal';
 import SnackBar from './components/Utils/SnackBar';
 import Camera from './components/Camera/Container';
 import TabNavigator from './TabNavigator';
+import AboutLampost from './components/Utils/AboutLampost';
 import UserMenuBottomSheet from './components/UserMenuBottomSheet';
 const ref = createNavigationContainerRef();
 const Tab = createBottomTabNavigator();
@@ -416,6 +417,27 @@ const AppStack = (props) => {
                 ),
                 headerShown: true,
                 title: 'Profile',
+                // headerTransparent: true,
+              })}
+            />
+          </Stack.Group>
+          <Stack.Group screenOptions={{ presentation: 'modal', gestureEnabled: false }}>
+            <Stack.Screen
+              name='About Lampost'
+              component={AboutLampost}
+              options={({ navigation }) => ({
+                headerLeft: () => (
+                  <TouchableOpacity onPress={() => navigation.goBack()}>
+                    {/* <Ionicons name='close-circle-outline' size={30} color={'white'} /> */}
+                    <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+                  </TouchableOpacity>
+                ),
+                headerShown: true,
+                title: 'About Lampost',
+                headerStyle: {
+                  backgroundColor: appBottomSheetBackgroundColor,
+                  borderBottomWidth: 0,
+                },
                 // headerTransparent: true,
               })}
             />

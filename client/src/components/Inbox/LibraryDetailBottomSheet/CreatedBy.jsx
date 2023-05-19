@@ -23,6 +23,7 @@ const CreatedBy = () => {
         }
       }}
       style={{ padding: 5, borderRadius: 5, marginBottom: 5 }}
+      disabled={selectedLibrary.launcher ? false : true}
     >
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -44,7 +45,7 @@ const CreatedBy = () => {
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Text numberOfLines={1} style={{ color: baseTextColor, fontSize: 15 }}>
-            {selectedLibrary.launcher.name}
+            {selectedLibrary.launcher ? selectedLibrary.launcher.name : 'This account was deleted...'}
           </Text>
           <MaterialCommunityIcons name='chevron-right' color={baseTextColor} size={25} />
         </View>
