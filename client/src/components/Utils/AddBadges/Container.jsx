@@ -212,10 +212,13 @@ const Container = (props) => {
     const { badges } = result.data;
     setBadges((previous) => {
       const updating = { ...previous };
-      updating[selectedFilterOption] = badges;
+      badges.forEach((badge) => {
+        if (badge) {
+          updating[selectedFilterOption].push(badge);
+        }
+      });
       return updating;
     });
-    console.log(badges);
   };
 
   useEffect(() => {
@@ -471,15 +474,17 @@ const Container = (props) => {
                   borderColor: backgroundColorsTable[badge.color],
                 }}
               >
-                <FastImage
-                  style={{ height: badgeIconWidth, width: badgeIconWidth }}
-                  source={{
-                    uri: badge.icon.url,
-                    priority: FastImage.priority.normal,
-                  }}
-                  tintColor={iconColorsTable[badge.color]}
-                  resizeMode={FastImage.resizeMode.contain}
-                />
+                {badge.icon ? (
+                  <FastImage
+                    style={{ height: badgeIconWidth, width: badgeIconWidth }}
+                    source={{
+                      uri: badge.icon.url,
+                      priority: FastImage.priority.normal,
+                    }}
+                    tintColor={iconColorsTable[badge.color]}
+                    resizeMode={FastImage.resizeMode.contain}
+                  />
+                ) : null}
                 <TouchableOpacity
                   style={{
                     backgroundColor: iconColorsTable['red1'],

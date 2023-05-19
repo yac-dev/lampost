@@ -202,7 +202,11 @@ const Container = (props) => {
     console.log(icons);
     setIcons((previous) => {
       const updating = { ...previous };
-      updating[selectedFilterOption] = icons;
+      icons.forEach((icon) => {
+        if (icon) {
+          updating[selectedFilterOption].push(icon);
+        }
+      });
       return updating;
     });
   };

@@ -66,11 +66,17 @@ const LogContainer = (props) => {
     meetupAndUserRelationships.forEach((relationship) => {
       const date = new Date(relationship.createdAt).toISOString().substring(0, 10);
       // const dayOfMonth = date.getDate();
-      if (!table[date]) {
-        table[date] = {
-          marked: true,
-          badge: { icon: relationship.meetup.badges[0].icon, color: relationship.meetup.badges[0].color },
-        };
+      if (relationship.meetup) {
+        if (!table[date]) {
+          if (!relationship.meetup.badges[0] || !relationship.meetup.badges[0].icon) {
+            table[date] = { marked: true, badge: null };
+          } else {
+            table[date] = {
+              marked: true,
+              badge: { icon: relationship.meetup.badges[0].icon, color: relationship.meetup.badges[0].color },
+            };
+          }
+        }
       }
     });
     setMeetupsTable((previous) => {
@@ -140,22 +146,30 @@ const LogContainer = (props) => {
                 selectedDateBottomSheetRef.current.snapToIndex(0);
               }}
             >
-              <View
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  backgroundColor: backgroundColorsTable[marking.badge.color],
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: 7,
-                }}
-              >
-                <FastImage
-                  style={{ width: 30, height: 30 }}
-                  source={{ uri: marking.badge.icon.url }}
-                  tintColor={iconColorsTable[marking.badge.color]}
-                />
-              </View>
+              {marking.badge ? (
+                <View
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: backgroundColorsTable[marking.badge.color],
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 7,
+                  }}
+                >
+                  {marking.badge.icon ? (
+                    <FastImage
+                      style={{ width: 30, height: 30 }}
+                      source={{ uri: marking.badge.icon.url }}
+                      tintColor={iconColorsTable[marking.badge.color]}
+                    />
+                  ) : (
+                    <Text style={{ fontSize: 30 }}>🔥</Text>
+                  )}
+                </View>
+              ) : (
+                <Text style={{ fontSize: 30 }}>🔥</Text>
+              )}
             </TouchableOpacity>
           </View>
         ) : null}

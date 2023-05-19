@@ -37,7 +37,7 @@ const CreatedBy = () => {
             <Text style={{ fontWeight: 'bold', fontSize: 15, color: 'white' }}>Created by</Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ color: baseTextColor, fontSize: 15 }}>This account was deleted...</Text>
+            <Text style={{ color: baseTextColor, fontSize: 15 }}>There is no leader now...</Text>
           </View>
         </View>
       </View>

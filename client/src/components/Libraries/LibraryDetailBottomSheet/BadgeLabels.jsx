@@ -8,7 +8,11 @@ const BadgeLabels = () => {
 
   const renderBadges = () => {
     const badgesList = selectedLibrary.badges.map((badge, index) => {
-      return <BadgeLabel key={index} badge={badge} />;
+      if (badge) {
+        return <BadgeLabel key={index} badge={badge} />;
+      } else {
+        return null;
+      }
     });
     return <View style={{ flexDirection: 'row' }}>{badgesList}</View>;
   };

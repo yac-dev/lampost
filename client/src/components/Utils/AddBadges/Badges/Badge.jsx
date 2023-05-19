@@ -261,15 +261,17 @@ const Badge = (props) => {
               borderColor: backgroundColorsTable[badge.color],
             }}
           >
-            <FastImage
-              style={{ height: badgeIconWidth, width: badgeIconWidth }}
-              source={{
-                uri: badge.icon.url,
-                priority: FastImage.priority.normal,
-              }}
-              tintColor={iconColorsTable[badge.color]}
-              resizeMode={FastImage.resizeMode.contain}
-            />
+            {badge.icon ? (
+              <FastImage
+                style={{ height: badgeIconWidth, width: badgeIconWidth }}
+                source={{
+                  uri: badge.icon.url,
+                  priority: FastImage.priority.normal,
+                }}
+                tintColor={iconColorsTable[badge.color]}
+                resizeMode={FastImage.resizeMode.contain}
+              />
+            ) : null}
           </View>
         </TouchableOpacity>
         <Text

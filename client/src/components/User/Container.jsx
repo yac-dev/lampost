@@ -147,7 +147,9 @@ const Container = (props) => {
       setUserBadges(() => {
         const userBadgesTable = {};
         badgeAndUserRelationships.forEach((badgeAndUserRelationship) => {
-          userBadgesTable[badgeAndUserRelationship._id] = badgeAndUserRelationship;
+          if (badgeAndUserRelationship.badge) {
+            userBadgesTable[badgeAndUserRelationship._id] = badgeAndUserRelationship;
+          }
           // userBadgesTable[badgeData.badge._id] = badgeData;
         });
         return userBadgesTable;
@@ -156,54 +158,9 @@ const Container = (props) => {
     setIsFetchedUserBadges(true);
   };
 
-  // indiesだけを、create indexに持ってくる感じかな。
-  const getBadgeIndexes = async () => {
-    const result = await lampostAPI.get(`/badgeindexes/${props.route.params.userId}`);
-    const { badgeIndexes } = result.data;
-    // badge indexesがあれば。
-    if (badgeIndexes.length) {
-      const copiedUserBadges = { ...userBadges };
-      setBadgeIndexes(() => {
-        const table = {};
-        badgeIndexes.forEach((badgeIndex) => {
-          table[badgeIndex.title] = {
-            title: badgeIndex.title,
-            userBadges: badgeIndex.userBadges.map((userBadgeId) => {
-              const val = copiedUserBadges[userBadgeId];
-              delete copiedUserBadges[userBadgeId];
-              return val;
-            }),
-          };
-        });
-        table['indies'] = {
-          title: '',
-          userBadges: Object.values(copiedUserBadges),
-        };
-        return table;
-      });
-    } else {
-      const copiedUserBadges = { ...userBadges };
-      setBadgeIndexes(() => {
-        const table = {
-          indies: {
-            title: '',
-            userBadges: Object.values(copiedUserBadges),
-          },
-        };
-        return table;
-      });
-    }
-  };
-
   useEffect(() => {
     getBadgeDatasByUserId();
   }, []);
-
-  useEffect(() => {
-    if (isFetchedUserBadges) {
-      getBadgeIndexes();
-    }
-  }, [isFetchedUserBadges]);
 
   // これ、もういらない。useFocusにしたから。
   useEffect(() => {

@@ -91,15 +91,17 @@ const Badge = () => {
             borderColor: backgroundColorsTable[userBadge.badge.color],
           }}
         >
-          <FastImage
-            style={{ height: badgeIconWidth, width: badgeIconWidth }}
-            source={{
-              uri: userBadge.badge.icon.url,
-              priority: FastImage.priority.normal,
-            }}
-            tintColor={iconColorsTable[userBadge.badge.color]}
-            resizeMode={FastImage.resizeMode.contain}
-          />
+          {userBadge.badge.icon ? (
+            <FastImage
+              style={{ height: badgeIconWidth, width: badgeIconWidth }}
+              source={{
+                uri: userBadge.badge.icon.url,
+                priority: FastImage.priority.normal,
+              }}
+              tintColor={iconColorsTable[userBadge.badge.color]}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+          ) : null}
           {userBadge.badgeTags.length ? (
             <View
               style={{

@@ -36,15 +36,17 @@ const BadgeLabel = (props) => {
             justifyContent: 'center', // これで中のimageを上下左右真ん中にする
           }}
         >
-          <FastImage
-            style={{ width: 17, height: 17 }}
-            source={{
-              uri: props.badge.icon.url,
-              priority: FastImage.priority.normal,
-            }}
-            tintColor={iconColorsTable[props.badge.color]}
-            resizeMode={FastImage.resizeMode.contain}
-          />
+          {props.badge.icon ? (
+            <FastImage
+              style={{ width: 17, height: 17 }}
+              source={{
+                uri: props.badge.icon.url,
+                priority: FastImage.priority.normal,
+              }}
+              tintColor={iconColorsTable[props.badge.color]}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+          ) : null}
         </View>
         <Text style={{ color: iconColorsTable[props.badge.color], fontSize: 15 }}>{props.badge.name}</Text>
       </TouchableOpacity>
