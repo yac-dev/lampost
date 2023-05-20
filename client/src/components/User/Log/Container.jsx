@@ -62,6 +62,7 @@ const LogContainer = (props) => {
       `/meetupanduserrelationships/user/${props.route.params.userId}?yearAndMonth=${currentYearAndMonth}`
     );
     const { meetupAndUserRelationships } = result.data;
+    console.log(meetupAndUserRelationships);
     const table = {};
     meetupAndUserRelationships.forEach((relationship) => {
       const date = new Date(relationship.createdAt).toISOString().substring(0, 10);
@@ -139,7 +140,7 @@ const LogContainer = (props) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 backgroundColor: rnDefaultBackgroundColor,
-                borderRadius: 7,
+                borderRadius: 12,
               }}
               onPress={() => {
                 setSelectedDate(date.dateString);
@@ -154,7 +155,7 @@ const LogContainer = (props) => {
                     backgroundColor: backgroundColorsTable[marking.badge.color],
                     justifyContent: 'center',
                     alignItems: 'center',
-                    borderRadius: 7,
+                    borderRadius: 12,
                   }}
                 >
                   {marking.badge.icon ? (

@@ -11,7 +11,7 @@ const expo = new Expo();
 // impressionを書くのと同時に、meetup launcherのfameを3 * emojiのlength分上げて、かつimpressionを書いたmemberのbadgeのexperienceを3づつあげる。
 export const createImpressionByMember = async (request, response) => {
   try {
-    const { meetupId, user, content, emojis, launcherId } = request.body;
+    const { meetupId, user, content, emojis, launcherId, totalPoint } = request.body;
     const impression = await Impression.create({
       meetup: meetupId,
       user: user._id,
@@ -19,31 +19,20 @@ export const createImpressionByMember = async (request, response) => {
       emojis,
       createdAt: Date.now(),
     });
-    // 1, launcherのfameを上げる。
-    const emojisMultiple = emojis.length ? emojis.length : 1;
-    const launcher = await User.findById(launcherId);
-    const upvote = 3 * emojisMultiple;
-    launcher.fame = launcher.fame + upvote;
-    launcher.save();
-    // 2, launcherにnotificationを送る。
-    const notificationMessage = {
-      to: launcher.pushToken,
-      data: { notificationType: 'sentImpression' },
-      title: `${user.name} wrote an impression 🔥`,
-      body: content,
-    };
-    const impressionWriter = await User.findById(user._id);
-    impressionWriter.experience = impressionWriter.experience + 10;
-    impressionWriter.save();
-    sendPushNotification(launcher.pushToken, notificationMessage);
-    // 3, 書いたmemberのbadge experienceを上げる。
-    const meetup = await Meetup.findById(meetupId);
-    const badgeAndUserTable = meetup.badges.map((badgeId) => {
-      return {
-        badge: badgeId,
-        user: user._id,
+    if (launcherId) {
+      const launcher = await User.findById(launcherId);
+      // launcherが蒸発している場合がある。
+      launcher.fame = launcher.fame + totalPoint;
+      launcher.save();
+      // 2, launcherにnotificationを送る。
+      const notificationMessage = {
+        to: launcher.pushToken,
+        data: { notificationType: 'sentImpression' },
+        title: `${user.name} wrote an impression 🔥`,
+        body: content,
       };
-    });
+      sendPushNotification(launcher.pushToken, notificationMessage);
+    }
     const meetupAndUserRelationship = await MeetupAndUserRelationship.findOne({ meetup: meetupId, user: user._id });
     meetupAndUserRelationship.impression = impression._id;
     meetupAndUserRelationship.save();
@@ -75,20 +64,18 @@ export const createImpressionByLauncher = async (request, response) => {
     const meetupAndUserRelationships = await MeetupAndUserRelationship.find({ meetup: meetupId, rsvp: true })
       .populate({ path: 'user' })
       .select({ pushToken: 1 });
-    const membersPushTokens = meetupAndUserRelationships.map((rel) => {
-      return rel.user.pushToken;
+    // ここ、削除されたuserの部分をskipするようにせんといかん。な。
+    const pushTokens = [];
+    meetupAndUserRelationships.forEach((rel) => {
+      if (rel.user) {
+        pushTokens.push(rel.user.pushToken);
+      }
     });
     // const membersPushTokens = meetupMembers.map((user) => {
     //   return user.pushToken;
     // });
-
-    console.log(membersPushTokens);
-    const meetup = await Meetup.findById(meetupId);
-    meetup.representation = impression._id;
-    meetup.save();
-
     const chunks = expo.chunkPushNotifications(
-      membersPushTokens.map((token) => ({
+      pushTokens.map((token) => ({
         to: token,
         sound: 'default',
         data: { notificationType: 'sentImpression' },

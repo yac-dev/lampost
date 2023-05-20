@@ -60,11 +60,16 @@ const AttendedContainer = (props) => {
   //   setIsSupportingLauncher(isSupporting);
   // };
   const getIsFollowing = async () => {
-    const result = await lampostAPI.get(
-      `/followrelationships/followee/${props.route.params.launcherId}/follower/${auth.data._id}`
-    );
-    const { isFollowing } = result.data;
-    setIsFollowingLauncher(isFollowing);
+    if (props.route.params.launcherId) {
+      // launcherが蒸発している場合は、api送らない。
+      const result = await lampostAPI.get(
+        `/followrelationships/followee/${props.route.params.launcherId}/follower/${auth.data._id}`
+      );
+      const { isFollowing } = result.data;
+      setIsFollowingLauncher(isFollowing);
+    } else {
+      return null;
+    }
   };
   useEffect(() => {
     getMyFriends();
@@ -122,7 +127,7 @@ const AttendedContainer = (props) => {
     } else {
       if (userInfo.launcher) {
         return (
-          <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', marginBottom: 7 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%' }}>
             <TouchableOpacity style={{ flex: 0.5, borderRadius: 5, paddingRight: 2 }} onPress={() => followLauncher()}>
               <View
                 style={{
@@ -152,7 +157,7 @@ const AttendedContainer = (props) => {
                 }}
               >
                 <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
-                  <MaterialCommunityIcons name='account-multiple' size={20} color={'white'} />
+                  <MaterialCommunityIcons name='human-greeting-variant' size={20} color={'white'} />
                   <Text style={{ color: 'white' }}>
                     {myFriends[userInfo.user._id] ? 'Already friended' : 'Be friends'}
                   </Text>
@@ -163,7 +168,7 @@ const AttendedContainer = (props) => {
         );
       } else {
         return (
-          <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', marginBottom: 7 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%' }}>
             <TouchableOpacity
               style={{ flex: 1, borderRadius: 5, paddingLeft: 2 }}
               disabled={myFriends[userInfo.user._id] ? true : false}
@@ -238,7 +243,7 @@ const AttendedContainer = (props) => {
             >
               <View>
                 <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 17, marginBottom: 10 }}>
-                  {userInfo.launcher ? '🚀' : '🔥'}&nbsp;{userInfo.user.name}
+                  {userInfo.launcher ? '🚀' : ''}&nbsp;{userInfo.user.name}
                 </Text>
                 {renderActionButtons(userInfo)}
               </View>

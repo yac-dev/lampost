@@ -34,8 +34,10 @@ export const createFriendRelationship = async (request, response) => {
     sendPushNotification(user.pushToken, notificationMessage);
 
     const launcher = await User.findById(launcherId);
-    launcher.fame = launcher.fame + 7;
-    launcher.save();
+    if (launcher) {
+      launcher.fame = launcher.fame + 7;
+      launcher.save();
+    }
 
     response.status(201).json({
       friendId,
