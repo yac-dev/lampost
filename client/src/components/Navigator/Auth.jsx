@@ -14,33 +14,20 @@ import AddBadgeTags from '../User/AddBadgeTags/Container';
 import EmojiPicker from '../User/AddBadgeTags/EmojiPicker';
 import IconPicker from '../Utils/IconPicker/Container';
 import CreateBadge from '../User/CreateBadge/Container';
-import AddLink from '../User/AddLink';
-// import AddLinks from '../User/AddLink/Container';
 
 import User from '../User/Container';
-// import Launched from '../User/LaunchedMeetups/Container';
-// import LaunchedMeetup from '../User/LaunchedMeetups/LaunchedMeetup/Container';
-import Patrons from '../User/Patrons/Container';
-// import Activities from '../User/Activities/Container';
-// import Activity from '../User/Meetups/Activity/Container';
 import Meetups from '../User/Meetups/Container';
 import Attended from '../User/Meetups/Attended/Container';
-import ClapFriend from '../User/Meetups/Attended/ClapFriend/Container';
-import BoostBadges from '../User/BoostBadges/Container';
-import CreateBadgesIndex from '../User/CreateBadgesIndex/Container';
-// import Meetup from '../User/Meetups/Meetup/Container';
 import Assets from '../User/Assets/Container';
 // import Asset from '../Utils/Asset';
 import Asset from '../User/Meetups/Assets/Asset';
 import MeetupAssets from '../User/Meetups/Assets/Container';
 import Impressions from '../User/Meetups/Impressions/Container';
-// import Asset from '../User/Assets/Asset/Container';
 import AddBadges from '../Utils/AddBadges/Container';
-import WhatIsBadge from '../Utils/WhatIsBadge';
+// import WhatIsBadge from '../Utils/WhatIsBadge';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../utils/colorsTable';
 import DeleteAccount from '../User/DeleteAccount';
 import MyFriends from '../User/MyFriends/Container';
-import FriendChatRoom from '../User/MyFriends/FriendChatRoom/Container';
 import LogContainer from '../User/Log/Container';
 
 const Auth = (props) => {
@@ -73,21 +60,6 @@ const Auth = (props) => {
           >
             {/*  これまた、別でuserhomeのcomponentがひちようだわな。connectionなりで、違うuser pageに飛んでいくから。*/}
           </Stack.Screen>
-          <Stack.Screen
-            name='Patrons'
-            component={Patrons}
-            options={{
-              headerStyle: {
-                backgroundColor: appBottomSheetBackgroundColor,
-              },
-              headerTitleStyle: {
-                fontWeight: 'bold',
-                color: 'white',
-              },
-              headerTintColor: 'white',
-              // headerTintColor: 'white',
-            }}
-          />
           <Stack.Screen
             name='Assets'
             component={Assets}
@@ -237,21 +209,6 @@ const Auth = (props) => {
               headerTintColor: 'white',
             }}
           />
-          {/* <Stack.Screen
-          // attendedとmeetup assetsと、impressions
-            name='Meetup'
-            component={Meetup}
-            options={{
-              headerStyle: {
-                backgroundColor: appBottomSheetBackgroundColor,
-              },
-              headerTitleStyle: {
-                fontWeight: 'bold',
-                color: 'white',
-              },
-              // headerTintColor: 'white',
-            }}
-          /> */}
         </Stack.Group>
         <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
           <Stack.Screen
@@ -308,25 +265,6 @@ const Auth = (props) => {
         </Stack.Group>
         <Stack.Group screenOptions={{ presentation: 'modal', gestureEnabled: false }}>
           <Stack.Screen
-            name='Create badges index'
-            component={CreateBadgesIndex}
-            options={({ navigation }) => ({
-              headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
-                </TouchableOpacity>
-              ),
-              headerStyle: {
-                backgroundColor: appBottomSheetBackgroundColor,
-              },
-              headerTitleStyle: {
-                fontWeight: 'bold',
-                color: 'white',
-              },
-              headerTintColor: 'white',
-            })}
-          />
-          <Stack.Screen
             name='Emoji picker'
             component={EmojiPicker}
             options={({ navigation }) => ({
@@ -355,26 +293,6 @@ const Auth = (props) => {
                 </TouchableOpacity>
               ),
               headerTitle: 'Choose an icon',
-              headerStyle: {
-                backgroundColor: appBottomSheetBackgroundColor,
-              },
-              headerTitleStyle: {
-                fontWeight: 'bold',
-                color: 'white',
-              },
-              headerTintColor: 'white',
-            })}
-          />
-          <Stack.Screen
-            name='What is Badge'
-            component={WhatIsBadge}
-            options={({ navigation }) => ({
-              headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
-                </TouchableOpacity>
-              ),
-              headerTitle: 'What is Badge?',
               headerStyle: {
                 backgroundColor: appBottomSheetBackgroundColor,
               },

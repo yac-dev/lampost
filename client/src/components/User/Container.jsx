@@ -13,34 +13,16 @@ import {
   baseTextColor,
   iconColorsTable,
   screenSectionBackgroundColor,
-  sectionBackgroundColor,
-  rnDefaultBackgroundColor,
   backgroundColorsTable,
   inputBackgroundColorNew,
 } from '../../utils/colorsTable';
 import { iconsTable } from '../../utils/icons';
-import { Provider as PaperProvider } from 'react-native-paper';
-import ActionButton from '../Utils/ActionButton';
-
-// components
-// import Header from './Header';
 import Header from './Header/Container';
 import Badge from './Badge';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
-import BadgeMenuBottomSheet from './BadgeMenuBottomSheet';
-import InboxBottomSheet from './InboxBottomSheet/Container';
 import BadgeDetailBottomSheet from './BadgeDetailBottomSheet/Container';
-import AddBadgeTagsBottomSheet from './AddBadgeTagsBottomSheet/Container';
-import AddLinkBottomSheet from './AddLinkBottomSheet/Container';
-import ConfirmEditProfileModal from './ConfirmEditProfileModal';
-import ConfirmFlagUserModal from './ConfirmFlagUserModal';
-import ConfirmDeleteAccount from './ConfirmDeleteAccount';
-import ConfirmActionButtonModal from './ConfirmActionButtonModal';
-import ConfirmLogout from './ConfirmLogout';
-import ConfirmBlockUserModal from './ConfirmBlockUserModal';
-import FlagUserMenuBottomSheet from './FlagUserMenuBottomSheet';
-import ActivitiesMenuBottomSheet from './ActivitiesMenuBottomSheet';
-import LeadershipBottomSheet from './LeadershipBottomSheet';
+// import AddBadgeTagsBottomSheet from './AddBadgeTagsBottomSheet/Container';
+// import AddLinkBottomSheet from './AddLinkBottomSheet/Container';
 
 // badgeを取ってきて、skillも取ってくる。subscriberの数も返すし、connectionの数も返す。
 const Container = (props) => {
@@ -437,19 +419,10 @@ const Container = (props) => {
           </ScrollView>
         )}
 
-        <AppMenuBottomSheet />
-        <BadgeMenuBottomSheet />
+        {/* <AppMenuBottomSheet /> */}
+        {/* <BadgeMenuBottomSheet /> */}
         <BadgeDetailBottomSheet />
-        <AddBadgeTagsBottomSheet />
-        <AddLinkBottomSheet />
-        {/* <FlagUserMenuBottomSheet /> */}
-        {/* <ActivitiesMenuBottomSheet /> */}
-        {/* <ConfirmEditProfileModal /> */}
-        {/* <ConfirmFlagUserModal /> */}
-        {/* <ConfirmActionButtonModal /> */}
-        {/* <ConfirmDeleteAccount /> */}
-        {/* <ConfirmLogout /> */}
-        {/* <ConfirmBlockUserModal /> */}
+        {/* <AddBadgeTagsBottomSheet /> */}
       </>
     );
   };
