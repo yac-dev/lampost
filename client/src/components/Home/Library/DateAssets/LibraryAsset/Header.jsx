@@ -71,10 +71,10 @@ const Header = () => {
   // userが消されている場合は、そのassetをもう表示しない。
   if (libraryAsset.asset.createdBy) {
     return (
-      <View style={{ marginBottom: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+      <View style={{ marginBottom: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <TouchableOpacity
-            style={{ width: 60, height: 70, justifyContent: 'center', alignItems: 'center', marginRight: 10 }}
+            style={{ marginRight: 10 }}
             onPress={() => {
               if (auth.data._id !== libraryAsset.asset.createdBy._id) {
                 navigation.navigate('Home library member', { userId: libraryAsset.asset.createdBy._id });
@@ -83,39 +83,32 @@ const Header = () => {
               }
             }}
           >
-            <View style={{ marginBottom: 5 }}>
-              <FastImage
-                style={{
-                  width: 50,
-                  height: 50,
-                  borderRadius: 12,
-                  backgroundColor: iconColorsTable['blue1'],
-                }}
-                source={{
-                  uri: libraryAsset.asset.createdBy.photo
-                    ? libraryAsset.asset.createdBy.photo
-                    : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
-                }}
-                tintColor={libraryAsset.asset.createdBy.photo ? null : 'white'}
-              />
-              <Text style={{ position: 'absolute', bottom: -5, right: -5, fontSize: 18 }}>
-                {libraryAsset.asset.mood}
-              </Text>
-            </View>
-            <Text numberOfLines={1} style={{ color: 'white', textAlign: 'center', fontSize: 12, fontWeight: 'bold' }}>
-              {libraryAsset.asset.createdBy.name}
-            </Text>
+            <FastImage
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: 12,
+                backgroundColor: iconColorsTable['blue1'],
+              }}
+              source={{
+                uri: libraryAsset.asset.createdBy.photo
+                  ? libraryAsset.asset.createdBy.photo
+                  : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
+              }}
+              tintColor={libraryAsset.asset.createdBy.photo ? null : 'white'}
+            />
           </TouchableOpacity>
           <View>
+            <Text numberOfLines={1} style={{ color: 'white', fontSize: 17, fontWeight: 'bold' }}>
+              {libraryAsset.asset.createdBy.name}
+            </Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 0 }}>
-              <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
-                {libraryAsset.asset.meetup.title}
-              </Text>
+              <Text style={{ color: baseTextColor, fontSize: 15 }}>{libraryAsset.asset.meetup.title}</Text>
               <Text style={{ color: baseTextColor, fontSize: 15 }}>{renderDate(libraryAsset.asset.createdAt)}</Text>
             </View>
-            {renderTaggedPeople()}
           </View>
         </View>
+        {renderTaggedPeople()}
       </View>
     );
   } else {

@@ -10,7 +10,7 @@ const MyImpression = () => {
 
   return (
     <TouchableOpacity
-      style={{ padding: 20 }}
+      style={{ marginBottom: 10 }}
       onPress={() => {
         selectedDateBottomSheetRef.current.close();
         navigation.navigate('Impressions', {
@@ -19,25 +19,25 @@ const MyImpression = () => {
         });
       }}
     >
-      <Text style={{ color: 'white', fontSize: 17, textAlign: 'center' }}>
-        {meetupObject.impression ? (
-          <View>
-            <View style={{ marginBottom: 10 }}>
-              <FlatList
-                horizontal={true}
-                data={meetupObject.impression.emojis}
-                renderItem={({ item }) => {
-                  return <Text style={{ marginRight: 5 }}>{item}</Text>;
-                }}
-                keyExtractor={(item, index) => `${item}-${index}`}
-              />
-            </View>
-            <Text style={{ color: 'white' }}>{meetupObject.impression.content}</Text>
+      {meetupObject.impression ? (
+        <View>
+          <View style={{ marginBottom: 10 }}>
+            <FlatList
+              horizontal={true}
+              data={meetupObject.impression.emojis}
+              renderItem={({ item }) => {
+                return <Text style={{ fontSize: 25 }}>{item}</Text>;
+              }}
+              keyExtractor={(item, index) => `${item}-${index}`}
+            />
           </View>
-        ) : (
-          '🤔 What are your thought on this meetup?'
-        )}
-      </Text>
+          <Text style={{ color: 'white' }}>{meetupObject.impression.content}</Text>
+        </View>
+      ) : (
+        <Text style={{ color: 'white', fontSize: 17, textAlign: 'center' }}>
+          🤔 What are your thought on this meetup?
+        </Text>
+      )}
     </TouchableOpacity>
   );
 };

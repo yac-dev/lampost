@@ -67,6 +67,8 @@ const Asset = () => {
             source={{ uri: libraryAsset.asset.data }}
           />
           {renderReactions()}
+
+          {/* <Text style={{ position: 'absolute', top: 10, right: 10, fontSize: 30 }}>{libraryAsset.asset.mood}</Text> */}
         </View>
       );
     case 'video':
@@ -83,6 +85,7 @@ const Asset = () => {
             isLooping={false}
           />
           {renderReactions()}
+          {/* <Text style={{ position: 'absolute', top: 10, right: 10, fontSize: 30 }}>{libraryAsset.asset.mood}</Text> */}
         </View>
       );
     default:

@@ -178,7 +178,7 @@ const Chats = (props) => {
                     <View>
                       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
                         <Text style={{ color: iconColorsTable['blue1'], marginRight: 5 }}>
-                          @ {chat.replyTo.user.name}
+                          {chat.replyTo.user ? `@ ${chat.replyTo.user.name}` : 'This account was deleted'}
                         </Text>
                         {renderDate(chat.replyTo.createdAt)}
                       </View>

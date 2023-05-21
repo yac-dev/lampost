@@ -22,7 +22,7 @@ const LibraryAssetContainer = (props) => {
         setReactions,
       }}
     >
-      <View>
+      <View style={{ marginBottom: 20 }}>
         <Header />
         <Asset />
         <ReactionOptions />

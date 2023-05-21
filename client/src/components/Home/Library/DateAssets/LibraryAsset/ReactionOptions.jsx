@@ -42,9 +42,10 @@ const Reactions = (props) => {
       }
     });
   };
+  console.log(reactionOptions);
 
   const renderReactionOption = (reactionObject) => {
-    if (reactionObject.reaction) {
+    if (reactionObject) {
       if (reactionObject.iconType === 'emoji') {
         return (
           <TouchableOpacity

@@ -98,7 +98,7 @@ const Container = (props) => {
         setSnackBar({
           isVisible: true,
           barType: 'success',
-          message: 'Success',
+          message: 'Your snap has been posted successfully.',
           duration: 5000,
         });
       }
@@ -129,18 +129,18 @@ const Container = (props) => {
     const { libraryAssets } = result.data;
     const table = {};
     libraryAssets.forEach((libraryAsset) => {
-      if (libraryAsset.asset && libraryAsset.asset.createdBy) {
-        const date = new Date(libraryAsset.createdAt).toISOString().substring(0, 10);
-        // const dayOfMonth = date.getDate();
-        if (!table[date]) {
-          table[date] = {
-            marked: true,
-            thumbnail: libraryAsset.asset.data,
-            libraryId: libraryAsset.library,
-            type: libraryAsset.asset.type,
-          };
-        }
+      // if (libraryAsset.asset && libraryAsset.asset.createdBy) {
+      const date = new Date(libraryAsset.createdAt).toISOString().substring(0, 10);
+      // const dayOfMonth = date.getDate();
+      if (!table[date]) {
+        table[date] = {
+          marked: true,
+          thumbnail: libraryAsset.asset.data,
+          libraryId: libraryAsset.library,
+          type: libraryAsset.asset.type,
+        };
       }
+      // }
     });
     setAssetsTable((previous) => {
       return {
