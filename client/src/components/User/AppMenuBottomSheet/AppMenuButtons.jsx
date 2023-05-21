@@ -13,13 +13,7 @@ import { Entypo } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
-import {
-  iconColorsTable,
-  backgroundColorsTable,
-  sectionBackgroundColor,
-  baseTextColor,
-} from '../../../utils/colorsTable';
-import AppMenuButton from '../../Utils/AppMenuButton';
+import { iconColorsTable, backgroundColorsTable, baseTextColor } from '../../../utils/colorsTable';
 import * as ImagePicker from 'expo-image-picker';
 import lampostAPI from '../../../apis/lampost';
 

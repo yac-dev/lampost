@@ -15,10 +15,7 @@ import AuthNavigator from './components/Navigator/Auth';
 // import DiscoverNavigatorContainer from './components/Navigator/Discover/Container';
 // import DiscoverTopTab from './components/Navigator/DiscoverTopTab';
 import LoadingSpinner from './components/Utils/LoadingSpinner';
-import NotAvailableModal from './components/Utils/NotAvailableModal';
-import PleaseLoginModal from './components/Utils/PleaseLoginModal';
 import SnackBar from './components/Utils/SnackBar';
-import Camera from './components/Camera/Container';
 import { iconsTable } from './utils/icons';
 import { appBottomSheetBackgroundColor, iconColorsTable, backgroundColorsTable } from './utils/colorsTable';
 
