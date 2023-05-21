@@ -54,28 +54,7 @@ const HeaderContainer = () => {
 
   const renderFollowButton = () => {
     if (isMyPage || !auth.isAuthenticated) {
-      return (
-        <View style={{ width: '100%', paddingLeft: 10, paddingRight: 10 }}>
-          <TouchableOpacity
-            style={{
-              width: '100%',
-              backgroundColor: iconColorsTable['blue1'],
-              borderRadius: 5,
-              padding: 7,
-            }}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
-              <MaterialCommunityIcons
-                name='account-multiple-check'
-                color={'white'}
-                size={20}
-                style={{ marginRight: 5 }}
-              />
-              <Text style={{ color: 'white', fontWeight: 'bold' }}>Follow</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      );
+      return null;
     } else {
       if (user.launcher) {
         return (

@@ -28,12 +28,14 @@ export const joinMeetup = async (request, response) => {
     // user.save();
     // notificationを送る。
     const launcher = await User.findById(meetup.launcher);
-    const notificationMessage = {
-      to: launcher.pushToken,
-      data: { notificationType: 'joinedMeeetup' },
-      title: `${user.name} joined ${meetup.title}`,
-    };
-    sendPushNotification(launcher.pushToken, notificationMessage);
+    if (launcher) {
+      const notificationMessage = {
+        to: launcher.pushToken,
+        data: { notificationType: 'joinedMeeetup' },
+        title: `${user.name} joined ${meetup.title}`,
+      };
+      sendPushNotification(launcher.pushToken, notificationMessage);
+    }
 
     response.status(200).json({
       meetup: {
@@ -307,7 +309,6 @@ export const rsvp = async (request, response) => {
       };
     });
     const user = await User.findById(userId);
-    user.experience = user.experience + 20;
     user.save();
     // [{badge: 2, user: 3, badge: 4, user:3, badge: 10, user: 3}] // これに一致するbadgeAndUserRelationshipを一つずつ見つけて、それを+10upvotteする感じか。その後に、userBadgePassionのmodelも作っていく感じか。
     // for (const table of badgeAndUserTable) {
@@ -345,12 +346,16 @@ export const sendStartNotification = async (request, response) => {
       .populate({ path: 'user' })
       .select({ pushToken: 1 });
 
-    const membersPushTokens = meetupAndUserRelationships.map((rel) => {
-      return rel.user.pushToken;
+    const pushTokens = [];
+
+    meetupAndUserRelationships.forEach((rel) => {
+      if(rel.user){
+        pushTokens.push(rel.user.pushToken)
+      }
     });
 
     const chunks = expo.chunkPushNotifications(
-      membersPushTokens.map((token) => ({
+      pushTokens.map((token) => ({
         to: token,
         sound: 'default',
         data: { notificationType: 'startMeetup' },
@@ -384,12 +389,16 @@ export const sendFinishNotification = async (request, response) => {
     const meetupAndUserRelationships = await MeetupAndUserRelationship.find({ meetup: meetupId, rsvp: true })
       .populate({ path: 'user' })
       .select({ pushToken: 1 });
-    const membersPushTokens = meetupAndUserRelationships.map((rel) => {
-      return rel.user.pushToken;
+
+      const pushTokens = [];
+    meetupAndUserRelationships.forEach((rel) => {
+      if(rel.user){
+        pushTokens.push(rel.user.pushToken)
+      }
     });
 
     const chunks = expo.chunkPushNotifications(
-      membersPushTokens.map((token) => ({
+      pushTokens.map((token) => ({
         to: token,
         sound: 'default',
         data: { notificationType: 'meetupHasEnded', meetupId },

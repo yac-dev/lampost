@@ -128,7 +128,6 @@ export const createMeetup = async (request, response) => {
     if (!user.launcher) {
       user.launcher = true;
     }
-    user.experience = user.experience + 50;
     user.save();
     meetup.save();
     const meetupAndUserRelationship = await MeetupAndUserRelationship.create({
@@ -667,8 +666,12 @@ export const updateMeetup = async (request, response) => {
     })
       .populate({ path: 'user' })
       .select({ pushToken: 1 });
-    const membersPushTokens = meetupAndUserRelationships.map((rel) => {
-      return rel.user.pushToken;
+
+    const pushTokens = [];
+    meetupAndUserRelationships.forEach((rel) => {
+      if(rel.user){
+        pushTokens.push(rel.user.pushToken)
+      }
     });
 
     const notificationBodyMessage = `Please check the following information.\n${venue ? '🗺Venue' : null} ${
@@ -676,7 +679,7 @@ export const updateMeetup = async (request, response) => {
     } ${duration ? '⏳Duration' : null}`;
 
     const chunks = expo.chunkPushNotifications(
-      membersPushTokens.map((token) => ({
+      pushTokens.map((token) => ({
         to: token,
         sound: 'default',
         // data: { notificationType: 'loungeChat', meetupId: request.params.id, type: 'edited' },

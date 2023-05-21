@@ -40,11 +40,14 @@ export const sendMeetupLaunchNotificationToFollowers = async (request, response)
     const followRelationships = await FollowRelationship.find({ launcher: launcher._id })
       .populate({ path: 'follower' })
       .select({ pushToken: 1 });
-    const membersPushTokens = followRelationships.map((rel) => {
-      return rel.follower.pushToken;
+    const pushTokens = [];
+    followRelationships.forEach((rel) => {
+      if (rel.user) {
+        pushTokens.push(rel.follower.pushToken);
+      }
     });
     const chunks = expo.chunkPushNotifications(
-      membersPushTokens.map((token) => ({
+      pushTokens.map((token) => ({
         to: token,
         sound: 'default',
         data: { notificationType: 'launchedhMeetup' },
