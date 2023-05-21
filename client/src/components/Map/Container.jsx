@@ -9,7 +9,7 @@ import MapView, { Marker } from 'react-native-maps';
 import { iconColorsTable } from '../../utils/colorsTable';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import MapMarkers from './MapMarkers';
-import AppMenusBottomSheet from './AppMenuBottomSheet/Container';
+import AppMenusBottomSheet from './AppMenuBottomSheet';
 import MeetupDetailBottomSheet from './MeetupDetailBottomSheet/Container';
 
 // utils
