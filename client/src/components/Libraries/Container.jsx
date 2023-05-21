@@ -17,7 +17,7 @@ import BadgeLabel from '../Utils/BadgeLabel';
 import { Ionicons } from '@expo/vector-icons';
 
 import Library from './Library';
-import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
+import AppMenuBottomSheet from './AppMenuBottomSheet';
 import LibraryDetailBottomSheet from './LibraryDetailBottomSheet/Container';
 
 // authenticatedの場合が必要か。

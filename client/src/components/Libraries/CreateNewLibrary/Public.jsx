@@ -19,8 +19,6 @@ const Public = (props) => {
   const { formData, setFormData, stageCleared, setStageCleared, accordion, setAccordion, navigation, route } =
     useContext(FormContext);
 
-  console.log(formData.friends);
-
   useEffect(() => {
     if (typeof formData.isPublic === 'boolean') {
       setStageCleared((previous) => {

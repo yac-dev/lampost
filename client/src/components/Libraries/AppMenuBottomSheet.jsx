@@ -1,31 +1,38 @@
-import React, { useContext } from 'react';
-import GlobalContext from '../../../GlobalContext';
-import LibrariesContext from '../LibrariesContext';
-import { connect } from 'react-redux';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Foundation } from '@expo/vector-icons';
+import React, { useContext, useMemo } from 'react';
+import LibrariesContext from './LibrariesContext';
+import { View, Text, TouchableOpacity } from 'react-native';
+import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import {
-  iconColorsTable,
+  appBottomSheetBackgroundColor,
   backgroundColorsTable,
-  sectionBackgroundColor,
+  iconColorsTable,
   baseTextColor,
-} from '../../../utils/colorsTable';
-import AppButton from '../../Utils/AppMenuButton';
+} from '../../utils/colorsTable';
+import { iconsTable } from '../../utils/icons';
+const { MaterialCommunityIcons, Foundation } = iconsTable;
 
-const AppButtons = (props) => {
-  const { auth, setIsNotAvailableModalOpen } = useContext(GlobalContext);
-  const { appMenuBottomSheetRef, createLibraryBottomSheetRef, navigation } = useContext(LibrariesContext);
+const AppMenuBottomSheet = (props) => {
+  const snapPoints = useMemo(() => ['30%', '50%'], []);
+  const { appMenuBottomSheetRef, navigation } = useContext(LibrariesContext);
 
-  if (auth.data) {
-    return (
-      <View style={{ marginBottom: 20 }}>
+  return (
+    <GorhomBottomSheet
+      index={-1}
+      enableOverDrag={true}
+      ref={appMenuBottomSheetRef}
+      snapPoints={snapPoints}
+      backdropComponent={(backdropProps) => (
+        <BottomSheetBackdrop {...backdropProps} appearsOnIndex={0} disappearsOnIndex={-1} />
+      )}
+      enablePanDownToClose={true}
+      backgroundStyle={{ backgroundColor: appBottomSheetBackgroundColor }}
+      handleIndicatorStyle={{ backgroundColor: 'white' }}
+    >
+      <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
         <TouchableOpacity
           style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
           onPress={() => {
             appMenuBottomSheetRef.current.close();
-            // createLibraryBottomSheetRef.current.snapToIndex(0);
             navigation.navigate('Create new library');
           }}
         >
@@ -76,19 +83,9 @@ const AppButtons = (props) => {
           </View>
           <Foundation name='prohibited' color={iconColorsTable['red1']} size={25} />
         </TouchableOpacity>
-      </View>
-    );
-  } else {
-    return (
-      <Text style={{ color: baseTextColor }}>
-        Please login or signup if you want to post assets or create a library.
-      </Text>
-    );
-  }
+      </BottomSheetView>
+    </GorhomBottomSheet>
+  );
 };
 
-const mapStateToProps = (state) => {
-  return { auth: state.auth };
-};
-
-export default connect(mapStateToProps)(AppButtons);
+export default AppMenuBottomSheet;

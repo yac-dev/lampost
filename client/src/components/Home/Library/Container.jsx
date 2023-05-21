@@ -19,13 +19,7 @@ import { LocaleConfig } from 'react-native-calendars';
 import AppMenuBottomSheet from './Menu';
 import LoadingSpinner from '../../Utils/LoadingSpinner';
 import SnackBar from '../../Utils/SnackBar';
-// import AlbumsBottomSheet from './AlbumsBottomSheet/Container';
-// import MembersBottomSheet from './MembersBottomSheet';
-import Header from './Header';
-import BadgeLabels from './BadgeLabels';
-import Description from './Description';
 import ConfirmLeaveLibrary from './ConfirmLeaveLibrary';
-import ConfirmPostAssetModal from './ConfirmPostAssetModal';
 
 LocaleConfig.locales['en'] = {
   monthNames: [

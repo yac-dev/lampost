@@ -1,6 +1,6 @@
 import React, { useContext, useMemo, useEffect } from 'react';
-import GlobalContext from '../../../GlobalContext';
-import CameraContext from '../CameraContext';
+import GlobalContext from '../../GlobalContext';
+import CameraContext from './CameraContext';
 import { View, Text, TouchableOpacity, ScrollView, Image, Dimensions } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import {
@@ -8,7 +8,7 @@ import {
   baseTextColor,
   iconColorsTable,
   backgroundColorsTable,
-} from '../../../utils/colorsTable';
+} from '../../utils/colorsTable';
 // import AddAssetEffect from './AddAssetEffectMenu/Container';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';

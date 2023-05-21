@@ -8,28 +8,20 @@ import lampostAPI from '../../apis/lampost';
 import { Camera, CameraType } from 'expo-camera';
 import LoadingSpinner from '../Utils/LoadingSpinner';
 import SnackBar from '../Utils/SnackBar';
-import AppMenuBottomSheet from './AppMenuBotttomSheet/Container';
-import TagPeopleBottomSheet from './TagPeopleBottomSheet/Container';
-import PhotoEffectBottomSheet from './PhotoEffectBottomSheet/Container';
-import VideoEffectBottomSheet from './VideoEffectBottomSheet/Container';
+import TagMembersBottomSheet from './TagMembersBottomSheet';
+import PhotoEffectBottomSheet from './PhotoEffectBottomSheet';
+import VideoEffectBottomSheet from './VideoEffectBottomSheet';
 import MoodBottomSheet from './MoodBottomSheet';
 import {
   appBottomSheetBackgroundColor,
   baseBackgroundColor,
   baseTextColor,
-  rnDefaultBackgroundColor,
   iconColorsTable,
   backgroundColorsTable,
-  inputBackgroundColorNew,
-  screenSectionBackgroundColor,
   sectionBackgroundColor,
 } from '../../utils/colorsTable';
-import { Ionicons } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import WarningModal from './WarningModal';
-import { Video } from 'expo-av';
-import FastImage from 'react-native-fast-image';
+import { iconsTable } from '../../utils/icons';
+const { MaterialCommunityIcons, MaterialIcons, Ionicons } = iconsTable;
 
 const Container = (props) => {
   const { auth, setAuth, setSnackBar, myUpcomingMeetups, setLoading, isIpad } = useContext(GlobalContext);
@@ -37,10 +29,6 @@ const Container = (props) => {
   const oneGridHeight = isIpad ? Dimensions.get('window').height / 7.5 : Dimensions.get('window').height / 7.5;
   const badgeContainerWidth = oneGridWidth * 0.6;
   const badgeIconWidth = badgeContainerWidth * 0.65;
-  const appMenuBottomSheetRef = useRef(null);
-  const timeMachineBottomSheetRef = useRef(null);
-  const cameraModeBottomSheetRef = useRef(null);
-  const flipBottomSheetRef = useRef(null);
   const tagPeopleBottomSheetRef = useRef(null);
   const videoEffectBottomSheetRef = useRef(null);
   const photoEffectBottomSheetRef = useRef(null);
@@ -89,38 +77,6 @@ const Container = (props) => {
     }
   };
 
-  const renderTaggedPeople = () => {
-    const taggedPeopleList = Object.values(taggedPeople);
-    if (taggedPeopleList.length) {
-      const list = taggedPeopleList.map((attendee, index) => {
-        return (
-          <FastImage
-            key={index}
-            source={{
-              uri: attendee.user.photo
-                ? attendee.user.photo
-                : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
-            }}
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 7,
-              backgroundColor: iconColorsTable['blue1'],
-              marginRight: 10,
-            }}
-            tintColor={attendee.user.photo ? null : 'white'}
-          />
-        );
-      });
-
-      return (
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>{list}</View>
-        </ScrollView>
-      );
-    }
-  };
-
   const getAttendees = async () => {
     const result = await lampostAPI.get(`meetupanduserrelationships/meetup/${ongoingMeetup._id}/users`);
     const { meetupAttendees } = result.data;
@@ -134,34 +90,6 @@ const Container = (props) => {
     });
   };
 
-  // やっていることは、単純にこのmeetupがongoingかを調べるだけ。
-  // const checkIsMeetupOngoing = async () => {
-  //   const result = await lampostAPI.get(`/meetups/${props.route.params.meetupId}/isongoing`);
-  //   const { isMeetupOngoing } = result.data;
-  //   setIsMeetupOngoing(isMeetupOngoing);
-  // };
-
-  // というか、useEffectの方がいいかね。。。
-  // 今のmeetupをここでdetectする感じ。
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     // loadMe();
-  //     const meetupList = Object.values(myUpcomingMeetups);
-  //     if (meetupList.length) {
-  //       meetupList.forEach((meetup) => {
-  //         if (meetup.state === 'ongoing') {
-  //           return setCurrentMeetup(meetup._id);
-  //         }
-  //       });
-  //     }
-  //     // for (const meetup in myUpcomingMeetups) {
-  //     //   if (myUpcomingMeetups[meetup].state === 'ongoing') {
-  //     //     return setCurrentMeetup(meetup);
-  //     //   }
-  //     //   // console.log(myUpcomingMeetups[meetup]);
-  //     // }
-  //   }, [])
-  // );
   // 60秒経ったら終わり。
   useEffect(() => {
     // console.log('camera compo');
@@ -310,22 +238,6 @@ const Container = (props) => {
       </View>
     );
   }
-
-  const isCameraButtonReady = () => {
-    if (ongoingMeetup) {
-      return (
-        <View style={{ position: 'absolute', right: -7, top: -7 }}>
-          <Text>👍</Text>
-        </View>
-      );
-    } else {
-      return (
-        <View style={{ position: 'absolute', right: -5, top: -5 }}>
-          <Text>🚫</Text>
-        </View>
-      );
-    }
-  };
 
   const videoButton = () => {
     if (isRecording) {
@@ -559,10 +471,6 @@ const Container = (props) => {
   return (
     <CameraContext.Provider
       value={{
-        appMenuBottomSheetRef,
-        timeMachineBottomSheetRef,
-        cameraModeBottomSheetRef,
-        flipBottomSheetRef,
         tagPeopleBottomSheetRef,
         videoEffectBottomSheetRef,
         photoEffectBottomSheetRef,
@@ -831,10 +739,9 @@ const Container = (props) => {
         ) : null}
         {/* <AppMenuBottomSheet /> */}
         <MoodBottomSheet />
-        <TagPeopleBottomSheet />
+        <TagMembersBottomSheet />
         <PhotoEffectBottomSheet />
         <VideoEffectBottomSheet />
-        <WarningModal />
         <SnackBar />
         <LoadingSpinner textContent={`${mood}${mood}${mood}`} />
       </View>

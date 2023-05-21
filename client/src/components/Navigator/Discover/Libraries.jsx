@@ -15,16 +15,16 @@ import ReactionIconPicker from '../../Libraries/CreateNewLibrary/CreateReaction/
 import MyFriends from '../../Libraries/CreateNewLibrary/MyFriends';
 import WriteDescription from '../../Libraries/CreateNewLibrary/WriteDescription';
 import Icons from '../../Libraries/CreateNewLibrary/Icons';
-import LibraryContainer from '../../Libraries/Library/Container';
-import DateAssets from '../../Libraries/Library/DateAssets/Container';
+// import LibraryContainer from '../../Libraries/Library/Container';
+// import DateAssets from '../../Libraries/Library/DateAssets/Container';
 import AuthNavigator from '../Auth';
 import User from '../../User/Container';
 // import Description from '../../Libraries/LibraryOverviewBottomSheet/Description';
 // import Members from '../../Libraries/LibraryOverviewBottomSheet/Members';
 // import Assets from '../../Libraries/LibraryOverviewBottomSheet/Assets';
-import Logs from '../../User/Logs/Container';
-import Asset from '../../Libraries/Library/Asset/Container';
-import LibraryMembers from '../../Libraries/Library/Members';
+// import Logs from '../../User/Logs/Container';
+// import Asset from '../../Libraries/Library/Asset/Container';
+// import LibraryMembers from '../../Libraries/Library/Members';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 import AddBadges from '../../Utils/AddBadges/Container';
 import AddAssets from '../../Utils/AddAssets/Container';
@@ -107,7 +107,7 @@ const LibraryNavigator = () => {
             },
           })}
         /> */}
-        <Stack.Screen
+        {/* <Stack.Screen
           name='Library'
           component={LibraryContainer}
           options={({ navigation }) => ({
@@ -168,7 +168,7 @@ const LibraryNavigator = () => {
               color: 'white',
             },
           })}
-        />
+        /> */}
 
         <Stack.Screen
           name='Report asset'
@@ -214,7 +214,7 @@ const LibraryNavigator = () => {
             headerTintColor: 'white',
           })}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name='Logs'
           component={Logs}
           options={{
@@ -227,7 +227,7 @@ const LibraryNavigator = () => {
             },
             headerTintColor: 'white',
           }}
-        />
+        /> */}
         {/* <Stack.Screen
           name='Roll'
           component={RollContainer}

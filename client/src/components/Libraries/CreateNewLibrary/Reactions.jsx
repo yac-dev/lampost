@@ -133,8 +133,6 @@ const Reactions = (props) => {
     }
   };
 
-  console.log(formData);
-
   const renderCheckMarkForTurnedOff = () => {
     if (typeof formData.isReactionAvailable === 'boolean') {
       if (formData.isReactionAvailable) {

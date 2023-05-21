@@ -1,6 +1,6 @@
 import React, { useContext, useMemo, useEffect } from 'react';
-import GlobalContext from '../../../GlobalContext';
-import CameraContext from '../CameraContext';
+import GlobalContext from '../../GlobalContext';
+import CameraContext from './CameraContext';
 import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import GorhomBottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import {
@@ -8,23 +8,23 @@ import {
   baseTextColor,
   iconColorsTable,
   backgroundColorsTable,
-} from '../../../utils/colorsTable';
+} from '../../utils/colorsTable';
 // import AddAssetEffect from './AddAssetEffectMenu/Container';
 import { Ionicons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
-import { iconsTable } from '../../../utils/icons';
+import { iconsTable } from '../../utils/icons';
 
 const AppMenuBottomSheet = (props) => {
   const { MaterialCommunityIcons, Ionicons } = iconsTable;
   const { auth, isIpad } = useContext(GlobalContext);
-  const { appMenuBottomSheetRef, videoEffectBottomSheetRef, videoEffect, setVideoEffect } = useContext(CameraContext);
+  const { appMenuBottomSheetRef, photoEffectBottomSheetRef, photoEffect, setPhotoEffect } = useContext(CameraContext);
   const snapPoints = useMemo(() => ['50%'], []);
 
   return (
     <GorhomBottomSheet
       index={-1}
       enableOverDrag={true}
-      ref={videoEffectBottomSheetRef}
+      ref={photoEffectBottomSheetRef}
       snapPoints={snapPoints}
       backdropComponent={(backdropProps) => (
         <BottomSheetBackdrop {...backdropProps} appearsOnIndex={0} disappearsOnIndex={-1} />
@@ -37,14 +37,14 @@ const AppMenuBottomSheet = (props) => {
     >
       <BottomSheetView style={{ paddingLeft: 10, paddingRight: 10, flex: 1 }}>
         <Text style={{ color: baseTextColor, marginBottom: 15 }}>
-          Note: Video effect will be applied after recording.
+          Note: Photo effect will be added after taking picture.
         </Text>
         <View>
           <ScrollView contentContainerStyle={{ paddingBottom: 50 }} showsVerticalScrollIndicator={false}>
             <TouchableOpacity
               style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
               onPress={() => {
-                setVideoEffect('normal');
+                setPhotoEffect('normal');
               }}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -59,69 +59,17 @@ const AppMenuBottomSheet = (props) => {
                     marginRight: 10,
                   }}
                 >
-                  <Ionicons name='videocam' size={20} color={iconColorsTable['blue1']} />
+                  <Ionicons name='image' size={20} color={iconColorsTable['blue1']} />
                 </View>
                 <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>2023 normal</Text>
               </View>
-              {videoEffect === 'normal' ? (
+              {photoEffect === 'normal' ? (
                 <Ionicons name='checkmark-circle' size={25} color={iconColorsTable['green1']} />
               ) : null}
             </TouchableOpacity>
             <TouchableOpacity
               style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
-              onPress={() => setVideoEffect('ocean')}
-            >
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View
-                  style={{
-                    width: 40,
-                    height: 40,
-                    backgroundColor: backgroundColorsTable['lightBlue1'],
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: 8,
-                    marginRight: 10,
-                  }}
-                >
-                  <MaterialCommunityIcons name='video-vintage' size={20} color={iconColorsTable['lightBlue1']} />
-                </View>
-                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>
-                  8mm Ocean film
-                </Text>
-              </View>
-              {videoEffect === 'ocean' ? (
-                <Ionicons name='checkmark-circle' size={25} color={iconColorsTable['green1']} />
-              ) : null}
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
-              onPress={() => setVideoEffect('olive')}
-            >
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View
-                  style={{
-                    width: 40,
-                    height: 40,
-                    backgroundColor: backgroundColorsTable['lightGreen1'],
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: 8,
-                    marginRight: 10,
-                  }}
-                >
-                  <MaterialCommunityIcons name='video-vintage' size={20} color={iconColorsTable['lightGreen1']} />
-                </View>
-                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>
-                  8mm Olive film
-                </Text>
-              </View>
-              {videoEffect === 'olive' ? (
-                <Ionicons name='checkmark-circle' size={25} color={iconColorsTable['green1']} />
-              ) : null}
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
-              onPress={() => setVideoEffect('camel')}
+              onPress={() => setPhotoEffect('rose')}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View
@@ -137,17 +85,63 @@ const AppMenuBottomSheet = (props) => {
                 >
                   <MaterialCommunityIcons name='video-vintage' size={20} color={iconColorsTable['pink1']} />
                 </View>
-                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>
-                  8mm Camel film
-                </Text>
+                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>1980's rose</Text>
               </View>
-              {videoEffect === 'camel' ? (
+              {photoEffect === 'rose' ? (
                 <Ionicons name='checkmark-circle' size={25} color={iconColorsTable['green1']} />
               ) : null}
             </TouchableOpacity>
             <TouchableOpacity
               style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
-              onPress={() => setVideoEffect('sepia')}
+              onPress={() => setPhotoEffect('ocean')}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View
+                  style={{
+                    width: 40,
+                    height: 40,
+                    backgroundColor: backgroundColorsTable['lightBlue1'],
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 8,
+                    marginRight: 10,
+                  }}
+                >
+                  <MaterialCommunityIcons name='video-vintage' size={20} color={iconColorsTable['lightBlue1']} />
+                </View>
+                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>1980's ocean</Text>
+              </View>
+              {photoEffect === 'ocean' ? (
+                <Ionicons name='checkmark-circle' size={25} color={iconColorsTable['green1']} />
+              ) : null}
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+              onPress={() => setPhotoEffect('olive')}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View
+                  style={{
+                    width: 40,
+                    height: 40,
+                    backgroundColor: backgroundColorsTable['lightGreen1'],
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 8,
+                    marginRight: 10,
+                  }}
+                >
+                  <MaterialCommunityIcons name='video-vintage' size={20} color={iconColorsTable['lightGreen1']} />
+                </View>
+                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>1980's olive</Text>
+              </View>
+              {photoEffect === 'olive' ? (
+                <Ionicons name='checkmark-circle' size={25} color={iconColorsTable['green1']} />
+              ) : null}
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, justifyContent: 'space-between' }}
+              onPress={() => setPhotoEffect('dandelion')}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View
@@ -164,10 +158,10 @@ const AppMenuBottomSheet = (props) => {
                   <MaterialCommunityIcons name='video-vintage' size={20} color={iconColorsTable['yellow1']} />
                 </View>
                 <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, marginRight: 10 }}>
-                  8mm Sepia film
+                  1980's dandelion
                 </Text>
               </View>
-              {videoEffect === 'sepia' ? (
+              {photoEffect === 'dandelion' ? (
                 <Ionicons name='checkmark-circle' size={25} color={iconColorsTable['green1']} />
               ) : null}
             </TouchableOpacity>
