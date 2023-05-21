@@ -27,7 +27,6 @@ import SnackBar from './components/Utils/SnackBar';
 import Camera from './components/Camera/Container';
 import TabNavigator from './TabNavigator';
 import AboutLampost from './components/Utils/AboutLampost';
-import UserMenuBottomSheet from './components/UserMenuBottomSheet';
 const ref = createNavigationContainerRef();
 const Tab = createBottomTabNavigator();
 // ac

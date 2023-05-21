@@ -32,7 +32,6 @@ import WriteDescription from '../../Map/LaunchNewMeetup/WriteDescription';
 import EditMeetup from '../../Map/EditMeetup/Container';
 import SelectVenue from '../../Map/EditMeetup/SelectVenue';
 import SelectVenueForLaunch from '../../Map/LaunchNewMeetup/SelectVenueForLaunch';
-import UserMenuBottomSheet from '../../UserMenuBottomSheet';
 import AuthNavigator from '../Auth';
 import { appBottomSheetBackgroundColor, iconColorsTable } from '../../../utils/colorsTable';
 import { iconsTable } from '../../../utils/icons';

@@ -21,7 +21,6 @@ import SnackBar from './components/Utils/SnackBar';
 import Camera from './components/Camera/Container';
 import { iconsTable } from './utils/icons';
 import { appBottomSheetBackgroundColor, iconColorsTable, backgroundColorsTable } from './utils/colorsTable';
-import Cal from './components/Schedule/Container';
 
 // const ref = createNavigationContainerRef();
 const Tab = createBottomTabNavigator();

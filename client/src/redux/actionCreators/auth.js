@@ -75,12 +75,6 @@ export const getCurrentLocation = () => async (dispatch, getState) => {
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
     };
-    //   setPosition((previous) => ({
-    //     ...previous,
-    //     latitude: location.coords.latitude,
-    //     longitude: location.coords.longitude,
-    //   }));
-    // })
     dispatch({
       type: 'GET_CURRENT_LOCATION',
       payload: coordsData,
