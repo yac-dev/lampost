@@ -19,9 +19,9 @@ import LibraryContainer from '../../Libraries/Library/Container';
 import DateAssets from '../../Libraries/Library/DateAssets/Container';
 import AuthNavigator from '../Auth';
 import User from '../../User/Container';
-import Description from '../../Libraries/LibraryOverviewBottomSheet/Description';
-import Members from '../../Libraries/LibraryOverviewBottomSheet/Members';
-import Assets from '../../Libraries/LibraryOverviewBottomSheet/Assets';
+// import Description from '../../Libraries/LibraryOverviewBottomSheet/Description';
+// import Members from '../../Libraries/LibraryOverviewBottomSheet/Members';
+// import Assets from '../../Libraries/LibraryOverviewBottomSheet/Assets';
 import Logs from '../../User/Logs/Container';
 import Asset from '../../Libraries/Library/Asset/Container';
 import LibraryMembers from '../../Libraries/Library/Members';
@@ -56,7 +56,7 @@ const LibraryNavigator = () => {
             },
           })}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name='Description'
           component={Description}
           options={({ navigation }) => ({
@@ -72,8 +72,8 @@ const LibraryNavigator = () => {
               color: 'white',
             },
           })}
-        />
-        <Stack.Screen
+        /> */}
+        {/* <Stack.Screen
           name='Members'
           component={Members}
           options={({ navigation }) => ({
@@ -106,7 +106,7 @@ const LibraryNavigator = () => {
               color: 'white',
             },
           })}
-        />
+        /> */}
         <Stack.Screen
           name='Library'
           component={LibraryContainer}

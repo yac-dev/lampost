@@ -32,8 +32,6 @@ const AttendeesContainer = (props) => {
     setIsFetchedAttendees(true);
   };
 
-  console.log(fetchedAttendees);
-
   const onUserNamePress = (user) => {
     if (!auth.data) {
       setSnackBar({

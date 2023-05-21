@@ -14,19 +14,11 @@ import {
 } from '../../utils/colorsTable';
 
 import BadgeLabel from '../Utils/BadgeLabel';
-import FastImage from 'react-native-fast-image';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
 import Library from './Library';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
-import MyLibrariesBottomSheet from './MyLibrariesBottomSheet/Container';
-import CreateLibraryBottomSheet from './CreateLibraryBottomSheet/Container';
-import LibraryOverviewBottomSheet from './LibraryOverviewBottomSheet/Container';
 import LibraryDetailBottomSheet from './LibraryDetailBottomSheet/Container';
-// import InfoDetailBottomSheet from './InfoDetailBottomSheet/Container';
-import ConfirmCancelCreatingLibraryModal from './ConfirmCancelCreatingLibraryModal';
 
 // authenticatedの場合が必要か。
 const Container = (props) => {
@@ -238,31 +230,11 @@ const Container = (props) => {
         ) : null}
 
         <AppMenuBottomSheet />
-        {/* <MyLibrariesBottomSheet /> */}
-        {/* <CreateLibraryBottomSheet /> */}
         <LibraryDetailBottomSheet />
-        <ConfirmCancelCreatingLibraryModal />
+        {/* <ConfirmCancelCreatingLibraryModal /> */}
       </View>
     </LibrariesContext.Provider>
   );
 };
 
 export default Container;
-
-{
-  /* <TouchableOpacity
-  key={index}
-  style={{ borderBottomWidth: 0.6, padding: 20, borderBottomColor: baseBorderColor }}
-  onPress={() => selectLibrary(library._id)}
->
-  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
-    <Text style={{ fontWeight: 'bold', fontSize: 17, color: baseTextColor }}>{library.name}</Text>
-    <Text>Launched at Sep 14 2022</Text>
-  </View>
-  <ScrollView style={{ marginBottom: 15 }} horizontal={true}>
-    {renderBadgeLabels(library.badges)}
-  </ScrollView>
-  <Text style={{ color: baseTextColor, marginBottom: 15 }}>{library.description}</Text>
-  <Text style={{ alignSelf: 'flex-end', color: baseTextColor }}>Launched by {library.launcher.name}</Text>
-</TouchableOpacity>; */
-}

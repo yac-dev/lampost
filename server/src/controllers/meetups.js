@@ -669,8 +669,8 @@ export const updateMeetup = async (request, response) => {
 
     const pushTokens = [];
     meetupAndUserRelationships.forEach((rel) => {
-      if(rel.user){
-        pushTokens.push(rel.user.pushToken)
+      if (rel.user) {
+        pushTokens.push(rel.user.pushToken);
       }
     });
 

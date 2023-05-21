@@ -32,7 +32,6 @@ const Asset = (props) => {
   const [libraryAndAssetRelationship, setLibraryAndAssetRelationship] = useState(null);
   const [reactions, setReactions] = useState([]);
 
-  console.log(libraryAndAssetRelationship);
   const getAsset = async () => {
     const result = await lampostAPI.get(
       `/libraryandassetrelationships/${props.route.params.libraryId}/${props.route.params.asset._id}`

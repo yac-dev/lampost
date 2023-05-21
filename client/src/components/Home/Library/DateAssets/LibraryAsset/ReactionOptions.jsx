@@ -42,7 +42,6 @@ const Reactions = (props) => {
       }
     });
   };
-  console.log(reactionOptions);
 
   const renderReactionOption = (reactionObject) => {
     if (reactionObject) {

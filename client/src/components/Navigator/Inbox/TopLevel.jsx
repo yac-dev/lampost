@@ -5,8 +5,8 @@ import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
 const Stack = createNativeStackNavigator();
 import Inbox from '../../Inbox/Container';
 import User from '../../User/Container';
-import LibraryMembers from '../../Libraries/LibraryOverviewBottomSheet/Members';
-import LibrarySnaps from '../../Libraries/LibraryOverviewBottomSheet/Assets';
+// import LibraryMembers from '../../Libraries/LibraryOverviewBottomSheet/Members';
+// import LibrarySnaps from '../../Libraries/LibraryOverviewBottomSheet/Assets';
 
 const InboxTopLevelNavigator = () => {
   return (
@@ -48,7 +48,7 @@ const InboxTopLevelNavigator = () => {
             // headerLeft: () => <Button onPress={() => navigation.navigate('My page/Memoirs')}>User page</Button>,
           })}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name='Library members'
           component={LibraryMembers}
           options={({ navigation }) => ({
@@ -83,7 +83,7 @@ const InboxTopLevelNavigator = () => {
             headerTintColor: 'white',
             // headerLeft: () => <Button onPress={() => navigation.navigate('My page/Memoirs')}>User page</Button>,
           })}
-        />
+        /> */}
       </Stack.Group>
       {/* <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
         <Stack.Screen

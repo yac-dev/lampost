@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import GlobalContext from '../../GlobalContext';
 import CameraContext from './CameraContext';
@@ -10,9 +9,6 @@ import { Camera, CameraType } from 'expo-camera';
 import LoadingSpinner from '../Utils/LoadingSpinner';
 import SnackBar from '../Utils/SnackBar';
 import AppMenuBottomSheet from './AppMenuBotttomSheet/Container';
-// import TimeMachineBottomSheet from './TimeMachineBottomSheet/Container';
-import CameraModeBottomSheet from './ChangeModeBottomSheet/Container';
-import FlipCameraBottomSheet from './FlipBottomSheet';
 import TagPeopleBottomSheet from './TagPeopleBottomSheet/Container';
 import PhotoEffectBottomSheet from './PhotoEffectBottomSheet/Container';
 import VideoEffectBottomSheet from './VideoEffectBottomSheet/Container';
