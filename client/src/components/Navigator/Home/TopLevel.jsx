@@ -29,7 +29,6 @@ import AuthNavigator from '../Auth';
 import User from '../../User/Container';
 // import Description from '../../Libraries/LibraryOverviewBottomSheet/Description';
 // import Assets from '../../Libraries/LibraryOverviewBottomSheet/Assets';
-import Logs from '../../User/Logs/Container';
 // import Asset from '../../Libraries/Library/Asset/Container';
 // import LibraryMembers from '../../Libraries/Library/Members';
 import { baseBackgroundColor, appBottomSheetBackgroundColor } from '../../../utils/colorsTable';

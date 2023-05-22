@@ -202,7 +202,6 @@ const ActionButtons = () => {
               >
                 <View style={{ alignSelf: 'center' }}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <MaterialCommunityIcons name='discord' size={20} color={'white'} style={{ marginRight: 5 }} />
                     <MaterialCommunityIcons name='twitter' size={20} color={'white'} style={{ marginRight: 10 }} />
                     <Text style={{ color: 'white' }}>Share</Text>
                   </View>
@@ -239,7 +238,6 @@ const ActionButtons = () => {
               >
                 <View style={{ alignSelf: 'center' }}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <MaterialCommunityIcons name='discord' size={20} color={'white'} style={{ marginRight: 5 }} />
                     <MaterialCommunityIcons name='twitter' size={20} color={'white'} style={{ marginRight: 10 }} />
                     <Text style={{ color: 'white' }}>Share</Text>
                   </View>

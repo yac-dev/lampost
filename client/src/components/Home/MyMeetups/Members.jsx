@@ -23,14 +23,14 @@ const AttendeesContainer = (props) => {
   const flagMenuBottomSheetRef = useRef(null);
   const { topLevelHomeNavigation } = useContext(HomeNavigatorContext);
 
-  console.log(props.route.params);
-
   const getMeetupAttendees = async () => {
     const result = await lampostAPI.get(`/meetupanduserrelationships/meetup/${props.route.params.meetupId}/users`);
     const { meetupAttendees } = result.data;
     setFetchedAttendees(meetupAttendees);
     setIsFetchedAttendees(true);
   };
+
+  console.log(fetchedAttendees);
 
   const onUserNamePress = (user) => {
     if (!auth.data) {
@@ -53,64 +53,13 @@ const AttendeesContainer = (props) => {
     getMeetupAttendees();
   }, []);
 
-  // const renderSubInfo = (userObject) => {
-  //   if (userObject.launcher) {
-  //     return (
-  //       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-  //         <MaterialCommunityIcons
-  //           name='rocket-launch'
-  //           size={20}
-  //           color={iconColorsTable['red1']}
-  //           style={{ marginRight: 5 }}
-  //         />
-  //         <Text style={{ color: 'white' }}>Launcher</Text>
-  //       </View>
-  //     );
-  //   } else {
-  //     if (userObject.rsvp) {
-  //       return (
-  //         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-  //           <Ionicons name='checkmark-circle' color={iconColorsTable['green1']} size={20} style={{ marginRight: 5 }} />
-  //           <Text style={{ color: 'white' }}>RSVPed</Text>
-  //         </View>
-  //       );
-  //     } else {
-  //       return null;
-  //     }
-  //   }
-  // };
-
-  // const renderUser = useCallback((user) => {
-  //   return (
-  //     <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
-  //       <FastImage
-  //         source={{
-  //           uri: user.photo ? user.photo : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
-  //         }}
-  //         style={{ width: 35, height: 35, borderRadius: 5, marginRight: 10, backgroundColor: iconColorsTable['blue1'] }}
-  //         tintColor={user.photo ? null : 'white'}
-  //       />
-  //       <View style={{ borderWidth: 0.3, borderBottomColor: 'red' }}>
-  //         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-  //           <View>
-  //             <Text style={{ fontWeight: 'bold', color: 'white', marginBottom: 7 }}>{user.name}</Text>
-  //             <Text style={{ color: 'white', marginBottom: 7 }}>status</Text>
-  //           </View>
-  //           <TouchableOpacity>
-  //             <Text>Button</Text>
-  //           </TouchableOpacity>
-  //         </View>
-  //         <View>
-  //           <Text>badges</Text>
-  //         </View>
-  //       </View>
-  //     </TouchableOpacity>
-  //   );
-  // }, []);
-
   const renderTopBadges = (userInfo) => {
     const list = userInfo.user.topBadges.map((userBadge, index) => {
-      return <BadgeLabel key={index} badge={userBadge.badge} />;
+      if (userBadge.badge) {
+        return <BadgeLabel key={index} badge={userBadge.badge} />;
+      } else {
+        return null;
+      }
     });
 
     return (
@@ -120,10 +69,22 @@ const AttendeesContainer = (props) => {
     );
   };
 
+  const renderUserState = useCallback((userInfo) => {
+    if (userInfo.launcher) {
+      return <Text style={{ position: 'absolute', right: 5, bottom: 0 }}>🚀</Text>;
+    } else {
+      if (userInfo.rsvp) {
+        return <Text style={{ position: 'absolute', right: 5, bottom: 0 }}>👍</Text>;
+      } else {
+        return null;
+      }
+    }
+  }, []);
+
   const renderUser = (userInfo) => {
-    return (
-      <View style={{ flexDirection: 'row', marginBottom: 15 }}>
-        {userInfo ? ( // null 対策
+    if (userInfo.user) {
+      return (
+        <View style={{ flexDirection: 'row', marginBottom: 15 }}>
           <TouchableOpacity
             style={{ flex: 0.15 }}
             onPress={() => {
@@ -134,52 +95,41 @@ const AttendeesContainer = (props) => {
               }
             }}
           >
-            <FastImage
-              source={{
-                uri: userInfo.user.photo
-                  ? userInfo.user.photo
-                  : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
-              }}
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 5,
-                // marginRight: 10,
-                backgroundColor: iconColorsTable['blue1'],
-              }}
-              tintColor={userInfo.user.photo ? null : 'white'}
-            />
+            <View>
+              <FastImage
+                source={{
+                  uri: userInfo.user.photo
+                    ? userInfo.user.photo
+                    : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
+                }}
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 5,
+                  // marginRight: 10,
+                  backgroundColor: iconColorsTable['blue1'],
+                }}
+                tintColor={userInfo.user.photo ? null : 'white'}
+              />
+              {renderUserState(userInfo)}
+            </View>
           </TouchableOpacity>
-        ) : (
-          <View
-            style={{
-              flex: 0.15,
-              borderRadius: 5,
-              backgroundColor: iconColorsTable['blue1'],
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <MaterialCommunityIcons name='ghost' size={20} color='white' />
-          </View>
-        )}
 
-        <View
-          style={{
-            borderBottomWidth: 0.3,
-            borderBottomColor: baseTextColor,
-            flex: 0.85,
-          }}
-        >
           <View
             style={{
-              flexDirection: 'column',
-              // alignItems: 'center',
-              marginBottom: 10,
-              width: '100%',
+              borderBottomWidth: 0.3,
+              borderBottomColor: baseTextColor,
+              flex: 0.85,
             }}
           >
-            {userInfo ? (
+            <View
+              style={{
+                flexDirection: 'column',
+                // alignItems: 'center',
+                marginBottom: 10,
+                width: '100%',
+              }}
+            >
               <View>
                 <View
                   style={{
@@ -189,22 +139,20 @@ const AttendeesContainer = (props) => {
                     marginBottom: 10,
                   }}
                 >
-                  <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 17 }}>
-                    {userInfo.launcher ? '🚀' : userInfo.rsvped ? '🔥' : null}&nbsp;{userInfo.user.name}
-                  </Text>
+                  <Text style={{ fontWeight: 'bold', color: 'white', fontSize: 17 }}>{userInfo.user.name}</Text>
                   <TouchableOpacity onPress={() => flagMenuBottomSheetRef.current.snapToIndex(0)}>
                     <Feather name='more-horizontal' size={20} color={baseTextColor} />
                   </TouchableOpacity>
                 </View>
                 {renderTopBadges(userInfo)}
               </View>
-            ) : (
-              <Text style={{ color: 'white', fontSize: 20 }}>This user doesn't exist</Text>
-            )}
+            </View>
           </View>
         </View>
-      </View>
-    );
+      );
+    } else {
+      return null;
+    }
   };
 
   const renderMembers = () => {
