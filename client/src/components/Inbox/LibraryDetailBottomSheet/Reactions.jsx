@@ -102,9 +102,7 @@ const Reactions = () => {
           {selectedLibrary.isReactionAvailable ? (
             renderReactionIcons()
           ) : (
-            <View>
-              <MaterialIcons name='do-not-disturb-on' color={iconColorsTable['yellow1']} size={20} />
-            </View>
+            <Text style={{ color: baseTextColor }}>Turned off</Text>
           )}
           <TouchableOpacity onPress={() => setIsAccordionOpen((previous) => !previous)}>
             <MaterialCommunityIcons

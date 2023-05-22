@@ -21,7 +21,7 @@ const InviteMyFriends = (props) => {
   const [selectedFriends, setSelectedFriends] = useState({});
   const [isFetchedMyFriends, setIsFetchedMyFriends] = useState(false);
   const [invitationMessageTextInput, setInvitationMessageTextInput] = useState('');
-
+  console.log(myFriends);
   useEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
@@ -88,57 +88,59 @@ const InviteMyFriends = (props) => {
   const renderMyFriends = () => {
     if (Object.values(myFriends).length) {
       const list = Object.values(myFriends).map((myFriend, index) => {
-        return (
-          <TouchableOpacity
-            key={index}
-            style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
-            onPress={() => {
-              if (selectedFriends[myFriend._id]) {
-                setSelectedFriends((previous) => {
-                  const updating = { ...previous };
-                  delete updating[myFriend._id];
-                  return updating;
-                });
-              } else {
-                setSelectedFriends((previous) => {
-                  return {
-                    ...previous,
-                    [myFriend._id]: myFriend,
-                  };
-                });
-              }
-            }}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <FastImage
-                source={{
-                  uri: myFriend.friend.photo
-                    ? myFriend.friend.photo
-                    : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
-                }}
-                style={{
-                  width: 50,
-                  height: 50,
-                  borderRadius: 5,
-                  marginRight: 10,
-                  backgroundColor: iconColorsTable['blue1'],
-                }}
-                tintColor={'white'}
-              />
-              <Text style={{ color: 'white', fontSize: 17 }}>{myFriend.friend.name}</Text>
-            </View>
-            {selectedFriends[myFriend._id] ? (
-              <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
-            ) : null}
-          </TouchableOpacity>
-        );
+        if (myFriend.friend) {
+          return (
+            <TouchableOpacity
+              key={index}
+              style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
+              onPress={() => {
+                if (selectedFriends[myFriend._id]) {
+                  setSelectedFriends((previous) => {
+                    const updating = { ...previous };
+                    delete updating[myFriend._id];
+                    return updating;
+                  });
+                } else {
+                  setSelectedFriends((previous) => {
+                    return {
+                      ...previous,
+                      [myFriend._id]: myFriend,
+                    };
+                  });
+                }
+              }}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <FastImage
+                  source={{
+                    uri: myFriend.friend.photo
+                      ? myFriend.friend.photo
+                      : 'https://lampost-dev.s3.us-east-2.amazonaws.com/avatars/default.png',
+                  }}
+                  style={{
+                    width: 50,
+                    height: 50,
+                    borderRadius: 12,
+                    marginRight: 10,
+                    backgroundColor: iconColorsTable['blue1'],
+                  }}
+                  tintColor={myFriend.friend.photo ? null : iconColorsTable['blue1']}
+                />
+                <Text style={{ color: 'white', fontSize: 17 }}>{myFriend.friend.name}</Text>
+              </View>
+              {selectedFriends[myFriend._id] ? (
+                <Ionicons name='checkmark-circle' size={20} color={iconColorsTable['green1']} />
+              ) : null}
+            </TouchableOpacity>
+          );
+        } else {
+          return null;
+        }
       });
       return (
-        <View>
-          <ScrollView>
-            <View>{list}</View>
-          </ScrollView>
-        </View>
+        <ScrollView>
+          <View>{list}</View>
+        </ScrollView>
       );
     } else {
       return (

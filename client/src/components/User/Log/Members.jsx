@@ -1,22 +1,16 @@
 import React, { useState, useEffect, useContext, useRef, useCallback } from 'react';
 import { View, Text, FlatList, ActivityIndicator, ScrollView, TouchableOpacity } from 'react-native';
-import GlobalContext from '../../../../GlobalContext';
-import lampostAPI from '../../../../apis/lampost';
-import {
-  baseTextColor,
-  baseBackgroundColor,
-  iconColorsTable,
-  screenSectionBackgroundColor,
-} from '../../../../utils/colorsTable';
+import GlobalContext from '../../../GlobalContext';
+import lampostAPI from '../../../apis/lampost';
+import { baseTextColor, baseBackgroundColor, iconColorsTable } from '../../../utils/colorsTable';
 import FastImage from 'react-native-fast-image';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
-import AttendedContext from './AttendedContext';
-import UserInfo from '../../../Utils/UserInfo';
-import ActionButtonBottomSheet from './ActionButtonBottomSheet';
+import UserInfo from '../../Utils/UserInfo';
+import LoadingSpinner from '../../Utils/LoadingSpinner';
 
 const AttendedContainer = (props) => {
-  const { auth, setLoading } = useContext(GlobalContext);
+  const { auth, setLoading, setSnackBar } = useContext(GlobalContext);
   const [isFetchedAttended, setIsFetchedAttended] = useState(false);
   const [fetchedAttended, setFetchedAttended] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -52,13 +46,6 @@ const AttendedContainer = (props) => {
     });
   };
 
-  // const getIsSupportingLauncher = async () => {
-  //   const result = await lampostAPI.get(
-  //     `/launcherandpatronrelationships/launcher/${props.route.params.launcherId}/patron/${auth.data._id}`
-  //   );
-  //   const { isSupporting } = result.data;
-  //   setIsSupportingLauncher(isSupporting);
-  // };
   const getIsFollowing = async () => {
     if (props.route.params.launcherId) {
       // launcherが蒸発している場合は、api送らない。
@@ -79,7 +66,7 @@ const AttendedContainer = (props) => {
   const addFriend = async (user) => {
     const payload = {
       friendId: user._id,
-      launcherId,
+      launcherId: props.route.params.launcherId,
     };
     setLoading(true);
     const result = await lampostAPI.post(`/friendrelationships/${auth.data._id}`, payload);
@@ -92,12 +79,12 @@ const AttendedContainer = (props) => {
       };
     });
     setLoading(false);
-    setSnackBar({
-      isVisible: true,
-      barType: 'success',
-      message: `Became friend with ${user.name}`,
-      duration: 5000,
-    });
+    // setSnackBar({
+    //   isVisible: true,
+    //   barType: 'success',
+    //   message: `Became friend with ${user.name}`,
+    //   duration: 5000,
+    // });
   };
 
   const followLauncher = async () => {
@@ -272,28 +259,10 @@ const AttendedContainer = (props) => {
   };
 
   return (
-    <AttendedContext.Provider
-      value={{
-        launcherId: props.route.params.launcherId,
-        navigation: props.navigation,
-        selectedUser,
-        setSelectedUser,
-        actionButtonBottomSheetRef,
-        myFriends,
-        setMyFriends,
-        isSupportingLauncher,
-        setIsSupportingLauncher,
-        isFollowingLauncher,
-        setIsFollowingLauncher,
-      }}
-    >
-      <View
-        style={{ backgroundColor: baseBackgroundColor, flex: 1, paddingLeft: 10, paddingRight: 10, paddingTop: 10 }}
-      >
-        {isFetchedAttended ? renderMembers() : <ActivityIndicator />}
-        <ActionButtonBottomSheet />
-      </View>
-    </AttendedContext.Provider>
+    <View style={{ backgroundColor: baseBackgroundColor, flex: 1, paddingLeft: 10, paddingRight: 10, paddingTop: 10 }}>
+      {isFetchedAttended ? renderMembers() : <ActivityIndicator />}
+      <LoadingSpinner />
+    </View>
   );
 };
 

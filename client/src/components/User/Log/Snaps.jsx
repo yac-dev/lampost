@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { View, Text, ActivityIndicator, ScrollView, FlatList, Dimensions, TouchableOpacity } from 'react-native';
-import GlobalContext from '../../../../GlobalContext';
-import { baseBackgroundColor, iconColorsTable } from '../../../../utils/colorsTable';
-import lampostAPI from '../../../../apis/lampost';
+import GlobalContext from '../../../GlobalContext';
+import { baseBackgroundColor, iconColorsTable } from '../../../utils/colorsTable';
+import lampostAPI from '../../../apis/lampost';
 import FastImage from 'react-native-fast-image';
 import { Video } from 'expo-av';
-import Thumbnail from '../../../Utils/Thumbnail';
-import { iconsTable } from '../../../../utils/icons';
+import Thumbnail from '../../Utils/Thumbnail';
+import { iconsTable } from '../../../utils/icons';
 
 const videoTypesTable = {
   normal: 'none',

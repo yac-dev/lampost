@@ -17,11 +17,11 @@ import CreateBadge from '../User/CreateBadge/Container';
 
 import User from '../User/Container';
 import Meetups from '../User/Meetups/Container';
-import Attended from '../User/Meetups/Attended/Container';
+import Attended from '../User/Log/Members';
 import Assets from '../User/Assets/Container';
 // import Asset from '../Utils/Asset';
 import Asset from '../User/Meetups/Assets/Asset';
-import MeetupAssets from '../User/Meetups/Assets/Container';
+import MeetupAssets from '../User/Log/Snaps';
 import Impressions from '../User/Meetups/Impressions/Container';
 import AddBadges from '../Utils/AddBadges/Container';
 // import WhatIsBadge from '../Utils/WhatIsBadge';
