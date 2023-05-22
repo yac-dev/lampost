@@ -103,7 +103,9 @@ const Header = () => {
               {libraryAsset.asset.createdBy.name}
             </Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 0 }}>
-              <Text style={{ color: baseTextColor, fontSize: 15 }}>{libraryAsset.asset.meetup.title}</Text>
+              <Text style={{ color: baseTextColor, fontSize: 15 }}>
+                {libraryAsset.asset.meetup ? libraryAsset.asset.meetup.title : 'OOPS...'}
+              </Text>
               <Text style={{ color: baseTextColor, fontSize: 15 }}>{renderDate(libraryAsset.asset.createdAt)}</Text>
             </View>
           </View>

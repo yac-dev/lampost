@@ -16,7 +16,13 @@ const ConfirmRSVP = (props) => {
     const result = await lampostAPI.patch(
       `/meetupanduserrelationships/meetup/${RSVPingMeetup._id}/user/${auth.data._id}/rsvp`,
       {
+        meetup: RSVPingMeetup,
+        user: {
+          _id: auth.data._id,
+          name: auth.data.name,
+        },
         rsvp: true,
+        launcherId: RSVPingMeetup.launcherId,
       }
     );
     const { rsvp } = result.data;

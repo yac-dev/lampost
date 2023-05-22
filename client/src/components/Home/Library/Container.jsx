@@ -98,7 +98,6 @@ const Container = (props) => {
       }
     }
   }, [props.route.params?.addedAsset]);
-  console.log(assetsTable);
 
   useEffect(() => {
     const month = new Date().getMonth() + 1;
@@ -152,7 +151,6 @@ const Container = (props) => {
       }
     }
   }, [currentYearAndMonth]);
-  // console.log(assetsTable);
 
   const DayComponent = ({ date, marking }) => {
     return (
@@ -206,29 +204,6 @@ const Container = (props) => {
       </View>
     );
   };
-
-  // const getLibrary = async () => {
-  //   const result = await lampostAPI.get(`/libraries/${props.route.params.libraryId}`);
-  //   const { library } = result.data;
-  //   setLibrary(library);
-  //   setIsFetchedLibrary(true);
-  // };
-  // useEffect(() => {
-  //   getLibrary();
-  // }, []);
-
-  // const getAssetsByLibraryId = async () => {
-  //   const result = await lampostAPI.get(`/libraryandassetrelationships/${props.route.params.libraryId}`);
-  //   const { assets } = result.data;
-  //   setAssets(assets);
-  //   setIsFetchedAssets(true);
-  // };
-  // useEffect(() => {
-  //   // if (library) {
-  //   getAssetsByLibraryId();
-  //   // }
-  // }, []);
-  console.log(library);
 
   const handleMonthChange = (monthObj) => {
     setCurrentYearAndMonth(`${monthObj.year}-${monthObj.month}`);

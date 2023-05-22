@@ -212,15 +212,16 @@ export const getMyUpcomingMeetups = async (request, response) => {
 
       const myUpcomingMeetupsArr = myUpcomingMeetupAndUserRelationships.map((relationship) => relationship.meetup);
 
-      myUpcomingMeetupsArr.forEach((meetup) => {
-        myUpcomingMeetups[meetup._id] = {
-          _id: meetup._id,
-          title: meetup.title,
-          startDateAndTime: meetup.startDateAndTime,
-          state: meetup.state,
-          launcher: meetup.launcher,
-          place: meetup.place,
-          fee: meetup.fee,
+      myUpcomingMeetupAndUserRelationships.forEach((relationship) => {
+        myUpcomingMeetups[relationship.meetup._id] = {
+          _id: relationship.meetup._id,
+          title: relationship.meetup.title,
+          startDateAndTime: relationship.meetup.startDateAndTime,
+          state: relationship.meetup.state,
+          launcher: relationship.meetup.launcher,
+          place: relationship.meetup.place,
+          fee: relationship.meetup.fee,
+          isRSVPed: relationship.rsvp,
         };
       });
     }
@@ -298,31 +299,19 @@ export const checkRSVPState = async (request, response) => {
 export const rsvp = async (request, response) => {
   try {
     const { meetupId, userId } = request.params;
-    const meetupAndUserRelationship = await MeetupAndUserRelationship.findOne({ meetup: meetupId, user: userId });
+    const { meetup, user, launcherId } = request.body;
+    const meetupAndUserRelationship = await MeetupAndUserRelationship.findOne({ meetup: meetup._id, user: user._id });
     meetupAndUserRelationship.rsvp = true;
     meetupAndUserRelationship.save();
-    const meetup = await Meetup.findById(meetupId).select({ badges: 1 });
-    const badgeAndUserTable = meetup.badges.map((badgeId) => {
-      return {
-        badge: badgeId,
-        user: userId,
+    if (launcherId) {
+      const launcher = await User.findById(launcherId);
+      const notificationMessage = {
+        to: launcher.pushToken,
+        data: { notificationType: 'rsvped' },
+        title: `${user.name} rsvped ${meetup.title}`,
       };
-    });
-    const user = await User.findById(userId);
-    user.save();
-    // [{badge: 2, user: 3, badge: 4, user:3, badge: 10, user: 3}] // これに一致するbadgeAndUserRelationshipを一つずつ見つけて、それを+10upvotteする感じか。その後に、userBadgePassionのmodelも作っていく感じか。
-    // for (const table of badgeAndUserTable) {
-    //   const badgeAndUserRelationship = await BadgeAndUserRelationship.findOne({ badge: table.badge, user: table.user });
-    //   if (badgeAndUserRelationship) {
-    //     badgeAndUserRelationship.totalExperience = badgeAndUserRelationship.totalExperience + 10;
-    //     await badgeAndUserRelationship.save();
-    //     const userBadgeExperience = await UserBadgeExperience.create({
-    //       badgeAndUserRelationship: badgeAndUserRelationship._id,
-    //       type: 'meetupRSVP',
-    //       experience: 10,
-    //     });
-    //   }
-    // }
+      sendPushNotification(launcher.pushToken, notificationMessage);
+    }
 
     response.status(200).json({
       message: 'success',
@@ -349,8 +338,8 @@ export const sendStartNotification = async (request, response) => {
     const pushTokens = [];
 
     meetupAndUserRelationships.forEach((rel) => {
-      if(rel.user){
-        pushTokens.push(rel.user.pushToken)
+      if (rel.user) {
+        pushTokens.push(rel.user.pushToken);
       }
     });
 
@@ -390,10 +379,10 @@ export const sendFinishNotification = async (request, response) => {
       .populate({ path: 'user' })
       .select({ pushToken: 1 });
 
-      const pushTokens = [];
+    const pushTokens = [];
     meetupAndUserRelationships.forEach((rel) => {
-      if(rel.user){
-        pushTokens.push(rel.user.pushToken)
+      if (rel.user) {
+        pushTokens.push(rel.user.pushToken);
       }
     });
 

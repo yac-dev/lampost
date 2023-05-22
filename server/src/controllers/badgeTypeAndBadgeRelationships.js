@@ -27,7 +27,7 @@ export const getBadgesByType = async (request, response) => {
         model: Icon,
       },
     });
-    console.log(badgeAndBadgeTypeRelationships);
+
     const badges = badgeAndBadgeTypeRelationships.map((relationship) => {
       return relationship.badge;
     });

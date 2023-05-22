@@ -321,7 +321,7 @@ const Container = (props) => {
               >
                 <TouchableOpacity
                   style={{
-                    backgroundColor: backgroundColorsTable['blue1'],
+                    backgroundColor: backgroundColorsTable['yellow1'],
                     padding: 10,
                     borderRadius: 10,
                     width: 50,
@@ -332,7 +332,7 @@ const Container = (props) => {
                   }}
                   onPress={() => props.navigation.navigate('My log', { userId: auth.data._id })}
                 >
-                  <MaterialCommunityIcons name='history' size={20} color={iconColorsTable['blue1']} />
+                  <Entypo name='feather' size={20} color={iconColorsTable['yellow1']} />
                 </TouchableOpacity>
 
                 <Text style={{ color: 'white', textAlign: 'center' }}>Log</Text>
@@ -348,7 +348,7 @@ const Container = (props) => {
               >
                 <TouchableOpacity
                   style={{
-                    backgroundColor: backgroundColorsTable['yellow1'],
+                    backgroundColor: backgroundColorsTable['blue1'],
                     padding: 10,
                     borderRadius: 10,
                     width: 50,
@@ -359,7 +359,7 @@ const Container = (props) => {
                   }}
                   onPress={() => props.navigation.navigate('My friends')}
                 >
-                  <MaterialCommunityIcons name='human-greeting-variant' size={20} color={iconColorsTable['yellow1']} />
+                  <MaterialCommunityIcons name='human-greeting-variant' size={20} color={iconColorsTable['blue1']} />
                 </TouchableOpacity>
                 <Text style={{ color: 'white', textAlign: 'center' }}>Friends</Text>
               </View>

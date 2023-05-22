@@ -13,7 +13,7 @@ import { iconsTable } from '../../../utils/icons';
 import ChatStatus from './ChatStatus';
 const { Ionicons, MaterialCommunityIcons } = iconsTable;
 
-const Meetups = (props) => {
+const Meetups = () => {
   const { auth, myUpcomingMeetups } = useContext(GlobalContext);
   const {
     setMenuMenu,
@@ -26,6 +26,8 @@ const Meetups = (props) => {
     setRSVPingMeetup,
   } = useContext(MyMeetupsContext);
   const { topLevelHomeNavigation } = useContext(HomeNavigatorContext);
+
+  console.log(myUpcomingMeetups);
 
   const renderTime = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
@@ -186,7 +188,11 @@ const Meetups = (props) => {
             marginBottom: 10,
           }}
           onPress={() => {
-            setRSVPingMeetup({ _id: meetup._id, title: meetup.title });
+            setRSVPingMeetup({
+              _id: meetup._id,
+              title: meetup.title,
+              launcherId: meetup.launcher ? meetup.launcher : null,
+            });
             setIsRSVPConfirmationModalOpen(true);
           }}
         >
@@ -284,17 +290,7 @@ const Meetups = (props) => {
                 </View>
               </TouchableOpacity>
               <View style={{ flexDirection: 'column' }}>
-                {meetup.isRSVPed ? (
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Ionicons
-                      name='checkmark-circle'
-                      size={20}
-                      color={iconColorsTable['green1']}
-                      style={{ marginRight: 5 }}
-                    />
-                    <Text style={{ color: 'white' }}>RSVPed</Text>
-                  </View>
-                ) : null}
+                {meetup.isRSVPed ? <Text style={{ color: 'white', marginBottom: 5 }}>👍&nbsp;RSVPed</Text> : null}
                 <TouchableOpacity
                   style={{
                     marginRight: 5,

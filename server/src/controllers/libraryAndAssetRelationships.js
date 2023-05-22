@@ -54,30 +54,6 @@ export const getAsset = async (request, response) => {
           path: 'reaction',
         },
       });
-    // .populate({
-    //   path: 'reactions',
-    //   populate: {
-    //     path: 'reaction',
-    //   },
-    // });
-    // const asset = await Asset.findById(request.params.assetId).populate([
-    //   {
-    //     path: 'createdBy',
-    //     select: 'name photo',
-    //   },
-    //   {
-    //     path: 'meetup',
-    //     select: 'title',
-    //   },
-    //   {
-    //     path: 'taggedPeople',
-    //     select: 'name photo',
-    //   },
-    //   {
-    //     path: 'badges',
-    //     select: 'name icon color',
-    //   },
-    // ]);
 
     response.status(200).json({
       libraryAndAssetRelationship,
@@ -103,11 +79,9 @@ export const getLibraryAssetsByMonth = async (request, response) => {
     const { yearAndMonth } = request.query;
     const year = yearAndMonth.split('-')[0];
     const month = yearAndMonth.split('-')[1];
-    console.log(yearAndMonth, year, month);
 
     const startDate = new Date(Date.UTC(year, month - 1, 1));
     const endDate = new Date(Date.UTC(year, month, 1));
-    console.log(startDate, endDate);
 
     // const libraryAssets = [];
     const libraryAssets = await LibraryAndAssetRelationship.find({
@@ -117,11 +91,6 @@ export const getLibraryAssetsByMonth = async (request, response) => {
       path: 'asset',
       select: 'data createdAt type',
     });
-
-    // list.forEach((relationship) => {
-    //   if(relationship.asset)
-    // })
-    console.log(libraryAssets);
 
     response.status(200).json({
       libraryAssets,
@@ -138,10 +107,8 @@ export const getLibraryAssetsByDate = async (request, response) => {
     const year = datestring.split('-')[0];
     const month = datestring.split('-')[1];
     const day = datestring.split('-')[2];
-    console.log(year, month, day);
     const startDate = new Date(Date.UTC(year, month - 1, day, 0));
     const endDate = new Date(Date.UTC(year, month - 1, day, 23, 59));
-    console.log(startDate, endDate);
     const libraryAndAssets = await LibraryAndAssetRelationship.find({
       library: request.params.libraryId,
       createdAt: { $gte: startDate, $lt: endDate },
@@ -177,19 +144,7 @@ export const getLibraryAssetsByDate = async (request, response) => {
         model: 'User',
         select: 'name photo',
       });
-    // populate: [
-    //   {
-    //     path: 'reaction',
-    //     populate: {
-    //       path: 'icon',
-    //       model: Icon,
-    //     },
-    //   },
-    //   {
-    //     path: 'user',
-    //     select: 'name photo',
-    //   },
-    // ],
+
     response.status(200).json({
       libraryAndAssets,
     });

@@ -35,6 +35,7 @@ export const getLibrary = async (request, response) => {
       .populate({
         path: 'launcher',
         model: User,
+        select: '_id name photo',
       })
       .populate({
         path: 'badges',
@@ -50,8 +51,6 @@ export const getLibrary = async (request, response) => {
           model: ReactionIcon,
         },
       });
-
-    console.log(library);
     response.status(200).json({
       library,
     });
