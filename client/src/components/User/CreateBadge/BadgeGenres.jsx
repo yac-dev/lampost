@@ -239,9 +239,7 @@ const BadgeGenres = (props) => {
       </View>
       {accordion.genre ? (
         <View style={{ marginTop: 10 }}>
-          <Text style={{ color: 'white', color: baseTextColor, marginBottom: 10 }}>
-            Note that badge name should be unique.
-          </Text>
+          <Text style={{ color: 'white', color: baseTextColor, marginBottom: 10 }}>Please select a badge genre.</Text>
           {renderGenres()}
         </View>
       ) : null}

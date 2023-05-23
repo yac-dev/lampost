@@ -335,7 +335,7 @@ const Container = (props) => {
                   <Entypo name='feather' size={20} color={iconColorsTable['yellow1']} />
                 </TouchableOpacity>
 
-                <Text style={{ color: 'white', textAlign: 'center' }}>Log</Text>
+                <Text style={{ color: 'white', textAlign: 'center' }}>History</Text>
               </View>
               <View
                 style={{

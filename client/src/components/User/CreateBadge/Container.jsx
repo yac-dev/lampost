@@ -34,8 +34,8 @@ const Container = (props) => {
   const [creatingImagePath, setCreatingImagePath] = useState('');
   const [sent, setSent] = useState(false);
   const [accordion, setAccordion] = useState({
-    icon: true,
-    name: false,
+    name: true,
+    icon: false,
     color: false,
     genre: false,
   });
@@ -276,10 +276,10 @@ const Container = (props) => {
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
         <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 5, color: 'white' }}>Create badge</Text>
         <Text style={{ color: baseTextColor, marginBottom: 15 }}>
-          Couldn't find your topics? Then create a new badge and share it with everyone.
+          Couldn't find your topic? Then create a new badge and share it with everyone.
         </Text>
-        <Icon />
         <BadgeName />
+        <Icon />
         <BadgeColor />
         <BadgeGenres />
         <View style={{ alignSelf: 'center', marginTop: 10 }}>

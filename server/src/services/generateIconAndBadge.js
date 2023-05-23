@@ -243,14 +243,15 @@ const createIconAndBadgeAndSendToAWS = async (dirName) => {
   });
 };
 
+// 同じbadge名が混ざっている。。。
 const createDatas = async () => {
   const types = [
-    // 'animes',
-    // 'apps',
-    // 'artsAndCrafts',
-    // 'books', // この3つの間で、なんか起きている。。。　探すか。。。
-    // 'brands', //ここ
-    // 'businessAndFinance', //ここ
+    'animes',
+    'apps',
+    'artsAndCrafts',
+    'books', // この3つの間で、なんか起きている。。。　探すか。。。
+    'brands', //ここ
+    'businessAndFinance', //ここ
     'education',
     'fashionAndBeauty',
     'films',

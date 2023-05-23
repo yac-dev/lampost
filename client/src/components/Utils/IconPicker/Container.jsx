@@ -199,7 +199,6 @@ const Container = (props) => {
       `/iconandicontyperelationships/${filterTypeIdsTable[selectedFilterOption]['_id']}`
     );
     const { icons } = result.data;
-    console.log(icons);
     setIcons((previous) => {
       const updating = { ...previous };
       icons.forEach((icon) => {

@@ -290,7 +290,11 @@ const Meetups = () => {
                 </View>
               </TouchableOpacity>
               <View style={{ flexDirection: 'column' }}>
-                {meetup.isRSVPed ? <Text style={{ color: 'white', marginBottom: 5 }}>👍&nbsp;RSVPed</Text> : null}
+                {meetup.launcher === auth.data._id ? (
+                  <Text style={{ color: 'white', marginBottom: 5 }}>🚀&nbsp;Launched</Text>
+                ) : meetup.isRSVPed ? (
+                  <Text>👍&nbsp;RSVPed</Text>
+                ) : null}
                 <TouchableOpacity
                   style={{
                     marginRight: 5,
