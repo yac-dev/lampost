@@ -9,6 +9,7 @@ import {
 } from '../../../utils/colorsTable';
 import * as ImagePicker from 'expo-image-picker';
 import lampostAPI from '../../../apis/lampost';
+import apiURL from '../../../apis/baseURL';
 import LoadingSpinner from '../../Utils/LoadingSpinner';
 
 const CreateCustomReactionIcon = (props) => {
@@ -110,7 +111,7 @@ const CreateCustomReactionIcon = (props) => {
               height: 80,
             }}
             source={{
-              uri: `http://192.168.11.30:3500/reactionIconImages/removed-${fileName}.png`,
+              uri: `${apiURL}/reactionIconImages/removed-${fileName}.png`,
               // priority: FastImage.priority.normal,
             }}
           />

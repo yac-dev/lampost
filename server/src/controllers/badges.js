@@ -187,6 +187,7 @@ const executeRemoveBg = async (dir) => {
       .then((response) => {
         if (response.status != 200) return console.error('Error:', response.status, response.statusText);
         fs.writeFileSync(outputFilePath, response.data);
+        console.log('removed', outputFilePath);
         resolve('success');
       })
       .catch((error) => {
@@ -197,7 +198,9 @@ const executeRemoveBg = async (dir) => {
 
 const execureThreshhold = async (dir) => {
   const inputFilePath = path.join(dir, 'removed.png');
+  console.log('now threshholding', inputFilePath);
   const outputFilePath = path.join(dir, 'threshholded.png');
+
   return new Promise((resolve, reject) => {
     sharp(inputFilePath)
       .threshold(105)
@@ -205,6 +208,7 @@ const execureThreshhold = async (dir) => {
         if (err) {
           throw err;
         }
+        console.log('now threshholded', outputFilePath);
         resolve(outputFilePath);
       });
   });
@@ -212,6 +216,7 @@ const execureThreshhold = async (dir) => {
 // fileのpathを使わないといけないな。
 const executeTransparent = async (dir) => {
   const inputFilePath = path.join(dir, 'threshholded.png');
+  console.log('start transparent', inputFilePath);
   const outputfilePath = path.join(dir, 'transparented.png');
   return new Promise((resolve, reject) => {
     // Import the image
@@ -223,6 +228,8 @@ const executeTransparent = async (dir) => {
         if (!err) {
           console.log('done');
           resolve(outputfilePath);
+        } else {
+          console.log(err);
         }
       });
   });

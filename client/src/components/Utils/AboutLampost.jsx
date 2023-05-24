@@ -28,14 +28,17 @@ const Info = (props) => {
     <ScrollView style={{ flex: 1, backgroundColor: baseBackgroundColor, padding: 10 }}>
       <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 10, marginBottom: 20, borderRadius: 10 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-          <Ionicons name='logo-javascript' size={25} color={'yellow'} style={{ marginRight: 10 }} />
-          <Ionicons name='logo-nodejs' size={25} color={'green'} style={{ marginRight: 10 }} />
-          <Ionicons name='logo-react' size={25} color={'violet'} style={{ marginRight: 10 }} />
-          <Text style={{ color: 'white', fontSize: 23 }}>Tech stack</Text>
+          <Text style={{ color: 'white', fontSize: 23 }}>How to use Lampost</Text>
         </View>
-        <Text style={{ color: baseTextColor, marginBottom: 10 }}>
-          Lampost 1.0.0 is fully built in JavaScript technology and its libraries.
-        </Text>
+        <Text style={{ color: baseTextColor, marginBottom: 10 }}>Please visit here to check how Lampost works.</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+          <Fontisto name='medium' size={20} color='white' style={{ marginRight: 10 }} />
+          <View style={{ borderBottomColor: baseTextColor, borderBottomWidth: 0.3 }}>
+            <TouchableOpacity onPress={() => openURL('https://medium.com/@yabbee0828')}>
+              <Text style={{ color: baseTextColor }}>https://medium.com/@yabbee0828</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
 
       <View style={{ backgroundColor: screenSectionBackgroundColor, padding: 10, marginBottom: 20, borderRadius: 10 }}>
@@ -53,7 +56,7 @@ const Info = (props) => {
             </View>
           </View>
           <Text style={{ color: baseTextColor }}>
-            Lampost is using a lot of fancy and lovely looking icons. Some of them are powered by Icons8.
+            Lampost is using a lot of nice looking icons. Some of them are powered by Icons8.
           </Text>
         </View>
         <View>
@@ -75,8 +78,7 @@ const Info = (props) => {
           <Text style={{ color: 'white', fontSize: 23 }}>Developer</Text>
         </View>
         <Text style={{ color: baseTextColor, marginBottom: 5 }}>
-          I'm Yosuke Kojima, founded Lampost. Thank you for joining here. Feel free to ask me if you have any questions
-          or found any issues 😃
+          Thank you for joining here. Feel free to ask me if you have any questions or found any issues 😃
         </Text>
         <View>
           <View>
@@ -106,14 +108,6 @@ const Info = (props) => {
               <View style={{ borderBottomColor: baseTextColor, borderBottomWidth: 0.3 }}>
                 <TouchableOpacity onPress={() => openURL('https://www.linkedin.com/in/yosuke-kojima-268044213')}>
                   <Text style={{ color: baseTextColor }}>https://www.linkedin.com/in/yosuke-kojima-268044213</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-              <Fontisto name='medium' size={20} color='white' style={{ marginRight: 10 }} />
-              <View style={{ borderBottomColor: baseTextColor, borderBottomWidth: 0.3 }}>
-                <TouchableOpacity onPress={() => openURL('https://www.linkedin.com/in/yosuke-kojima-268044213')}>
-                  <Text style={{ color: baseTextColor }}>https://medium.com/@yabbee0828</Text>
                 </TouchableOpacity>
               </View>
             </View>

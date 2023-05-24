@@ -15,6 +15,7 @@ import {
 import { iconsTable } from '../../../utils/icons';
 import FastImage from 'react-native-fast-image';
 import lampostAPI from '../../../apis/lampost';
+import apiURL from '../../../apis/baseURL';
 const { MaterialCommunityIcons, FontAwesome5, Ionicons } = iconsTable;
 
 const Icon = () => {
@@ -230,7 +231,7 @@ const Icon = () => {
                       height: 80,
                     }}
                     source={{
-                      uri: `http://192.168.11.30:3500/badgeImages/${folderName}/transparented.png`,
+                      uri: `${apiURL}/badgeImages/${folderName}/transparented.png`,
                       // priority: FastImage.priority.normal,
                     }}
                     tintColor={'black'}

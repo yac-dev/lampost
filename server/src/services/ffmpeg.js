@@ -46,14 +46,19 @@ export const generateThumbnail = (inputFilePath, assetId) => {
 export const execFps = (inputFilePath, assetId) => {
   console.log('started fps conversion');
   const outputFilePath = path.join(__dirname, '..', '..', 'tmp', assetId, 'fps.mp4');
-  const fpsCommand = `ffmpeg -i ${inputFilePath} -filter:v fps=fps=12 ${outputFilePath}`;
+  const fpsCommand = `ffmpeg -i ${inputFilePath} -filter:v fps=fps=12 -loglevel debug ${outputFilePath}`;
   return new Promise((resolve, reject) => {
-    exec(fpsCommand, (err, stdout, stderr) => {
-      if (err) console.log('Error ', err);
-      else {
+    const childProcess = exec(fpsCommand, (err, stdout, stderr) => {
+      if (err) {
+        // console.error('Error:', err);
+        // console.error('stderr:', stderr);
+      } else {
         resolve(outputFilePath);
       }
     });
+
+    // childProcess.stdout.pipe(process.stdout);
+    // childProcess.stderr.pipe(process.stderr);
   });
 };
 
@@ -106,26 +111,31 @@ export const execGrain = (inputFilePath, assetId, duration, lastFileName) => {
 };
 
 // assetのeffect(oliveとか)をsecond argに、third argにassetidに入れる。
-export const AddEffect = (inputFileName, effectType, assetId, duration) => {
+export const AddEffect = async (inputFileName, effectType, assetId, duration) => {
   // const date = Date.now();
   const inputFilePath = path.join(__dirname, '..', '..', 'assets', 'videos', inputFileName);
   const tmpDirName = path.join(__dirname, '..', '..', 'tmp', assetId); // このdirectoryにexecしたvideoを貯めて、最終的に捨てる。
   const dir = fs.mkdirSync(tmpDirName); // ここで、asset用のdirを作る。
   // const inputFilePath = `/Users/yosuke/Desktop/ffmpeg_playground/inputs/${inputFileName}`;
   // execNoise(inputFilePath, date, color).then((outputFilePath) => {
-  execFps(inputFilePath, assetId).then((outputFilePath) => {
-    execVintage(outputFilePath, assetId, effectType).then((outputFilePath) => {
-      execBlur(outputFilePath, assetId).then((outputFilePath) => {
-        execGrain(outputFilePath, assetId, duration, inputFileName).then(() => {
-          uploadEffectedVideo(inputFileName, assetId);
-          // ここでs3にuploadする。
-          // upload終わったら、消すっていう感じかな。
-          // aws uploadの中で消せばいいか。
-          // fs.rmSync(tmpDirName, { recursive: true, force: true });
-        });
-      });
-    });
-  });
+  // const res1 = await execFps(inputFilePath, assetId);
+  const res2 = await execVintage(inputFilePath, assetId, effectType);
+  const res3 = await execBlur(res2, assetId);
+  const res4 = await execGrain(res3, assetId, duration, inputFileName);
+  const res5 = await uploadEffectedVideo(inputFileName, assetId);
+  // execFps(inputFilePath, assetId).then((outputFilePath) => {
+  //   execVintage(outputFilePath, assetId, effectType).then((outputFilePath) => {
+  //     execBlur(outputFilePath, assetId).then((outputFilePath) => {
+  //       execGrain(outputFilePath, assetId, duration, inputFileName).then(() => {
+  //         uploadEffectedVideo(inputFileName, assetId);
+  //         // ここでs3にuploadする。
+  //         // upload終わったら、消すっていう感じかな。
+  //         // aws uploadの中で消せばいいか。
+  //         // fs.rmSync(tmpDirName, { recursive: true, force: true });
+  //       });
+  //     });
+  //   });
+  // });
 };
 
 const vintageTest = (inputFileName, color) => {

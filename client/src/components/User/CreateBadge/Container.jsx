@@ -18,6 +18,7 @@ import BadgeName from './BadgeName';
 import BadgeColor from './BadgeColor';
 import BadgeGenres from './BadgeGenres';
 import lampostAPI from '../../../apis/lampost';
+import apiURL from '../../../apis/baseURL';
 import LoadingSpinner from '../../Utils/LoadingSpinner';
 import SnackBar from '../../Utils/SnackBar';
 
@@ -233,7 +234,7 @@ const Container = (props) => {
                     height: 45,
                   }}
                   source={{
-                    uri: `http://192.168.11.30:3500/badgeImages/${folderName}/transparented.png`,
+                    uri: `${apiURL}/badgeImages/${folderName}/transparented.png`,
                     // priority: FastImage.priority.normal,
                   }}
                   tintColor={badgeColor ? iconColorsTable[badgeColor] : 'black'}
