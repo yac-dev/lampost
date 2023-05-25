@@ -48,7 +48,7 @@ const Container = (props) => {
   const [hasMicrophonePermission, setHasMicrophonePermission] = useState();
   const [isRecording, setIsRecording] = useState(false);
   const [video, setVideo] = useState();
-  const [videoLength, setVideoLength] = useState(60); // time machineの時だけ、1分にする。
+  const [videoLength, setVideoLength] = useState(180); // time machineの時だけ、1分にする。
   const [havingMeetup, setHavingMeetup] = useState(false);
   const [currentMeetup, setCurrentMeetup] = useState(null);
   const [ongoingMeetup, setOngoingMeetup] = useState(null);
@@ -248,43 +248,56 @@ const Container = (props) => {
     }
   };
 
-  const recordVideo = () => {
+  const recordVideo = async () => {
     setIsRecording(true);
     const options = {
       quality: '1080p',
-      maxDuration: 60,
+      maxDuration: 180,
       mute: false,
     };
-    cameraRef.current.recordAsync(options).then(async (recordedVideo) => {
-      setVideo(recordedVideo);
-      console.log(recordedVideo);
-      setIsRecording(false);
-      const formData = new FormData();
-      formData.append('meetupId', ongoingMeetup._id);
-      formData.append('userId', auth.data._id);
-      formData.append('type', cameraMode); // photo
-      formData.append('effect', videoEffect);
-      formData.append('place', ongoingMeetup.place);
-      formData.append('mood', mood);
-      formData.append('duration', durationRef.current);
-      formData.append('asset', {
-        name: recordedVideo.uri.split('/').pop(),
-        uri: recordedVideo.uri,
-        type: 'video/mov',
-      });
-      console.log(formData);
-      // ここでapi requestを送る感じか。
-      const result = await lampostAPI.post(`/assets/videos`, formData, {
-        headers: { 'Content-type': 'multipart/form-data' },
-      });
-      setDuration(0);
-      setSnackBar({
-        isVisible: true,
-        message: 'Nice shot 📸',
-        barType: 'success',
-        duration: 1500,
-      });
+
+    const recordedVideo = await cameraRef.current.recordAsync(options);
+    setDuration(0);
+    // setIsRecording(false);
+    props.navigation.navigate('Tag members', {
+      video: recordedVideo,
+      members: meetupAttendees,
+      mood,
+      cameraMode,
+      ongoingMeetup,
+      duration: durationRef.current,
     });
+
+    // .then(async (recordedVideo) => {
+    // setVideo(recordedVideo);
+    // console.log(recordedVideo);
+    // setIsRecording(false);
+    // const formData = new FormData();
+    // formData.append('meetupId', ongoingMeetup._id);
+    // formData.append('userId', auth.data._id);
+    // formData.append('type', cameraMode); // photo
+    // formData.append('effect', videoEffect);
+    // formData.append('place', ongoingMeetup.place);
+    // formData.append('mood', mood);
+    // formData.append('duration', durationRef.current);
+    // formData.append('asset', {
+    //   name: recordedVideo.uri.split('/').pop(),
+    //   uri: recordedVideo.uri,
+    //   type: 'video/mov',
+    // });
+    // console.log(formData);
+    // // ここでapi requestを送る感じか。
+    // const result = await lampostAPI.post(`/assets/videos`, formData, {
+    //   headers: { 'Content-type': 'multipart/form-data' },
+    // });
+    // setDuration(0);
+    // setSnackBar({
+    //   isVisible: true,
+    //   message: 'Nice shot 📸',
+    //   barType: 'success',
+    //   duration: 1500,
+    // });
+    // });
   };
 
   const stopRecording = async () => {
@@ -356,6 +369,21 @@ const Container = (props) => {
         >
           <TouchableOpacity
             style={{
+              backgroundColor: 'white',
+              // padding: 10,
+              flexDirection: 'row',
+              borderRadius: 35,
+              width: 70,
+              height: 70,
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginRight: 20,
+            }}
+            onPress={() => takePhoto()}
+            disabled={ongoingMeetup ? false : true}
+          ></TouchableOpacity>
+          {/* <TouchableOpacity
+            style={{
               width: 40,
               height: 40,
               borderRadius: 20,
@@ -375,21 +403,7 @@ const Container = (props) => {
               color={flashMode === Camera.Constants.FlashMode.off ? 'black' : iconColorsTable['yellow1']}
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              backgroundColor: 'white',
-              // padding: 10,
-              flexDirection: 'row',
-              borderRadius: 35,
-              width: 70,
-              height: 70,
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginRight: 20,
-            }}
-            onPress={() => takePhoto()}
-            disabled={ongoingMeetup ? false : true}
-          ></TouchableOpacity>
+          
           <TouchableOpacity
             style={{
               width: 40,
@@ -408,7 +422,7 @@ const Container = (props) => {
             }}
           >
             <MaterialCommunityIcons name='camera-flip' size={20} color={'black'} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       );
     } else if (cameraMode === 'video') {
@@ -652,7 +666,91 @@ const Container = (props) => {
               >
                 <TouchableOpacity
                   style={{
+                    backgroundColor: backgroundColorsTable['green1'],
+                    padding: 10,
+                    borderRadius: 10,
+                    width: 50,
+                    height: 50,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                  onPress={() => {
+                    // if (ongoingMeetup) {
+                    //   tagPeopleBottomSheetRef.current.snapToIndex(0);
+                    // } else {
+                    //   setSnackBar({
+                    //     isVisible: true,
+                    //     barType: 'warning',
+                    //     message: 'OOPS. Tagging people is only available during the meetup.',
+                    //     duration: 5000,
+                    //   });
+                    // }
+                    if (cameraType === CameraType.back) {
+                      setCameraType(CameraType.front);
+                    } else {
+                      setCameraType(CameraType.back);
+                    }
+                  }}
+                >
+                  {/* <Ionicons name='ios-pricetags' size={20} color={iconColorsTable['green1']} /> */}
+                  <MaterialCommunityIcons name='camera-flip' size={20} color={iconColorsTable['green1']} />
+                </TouchableOpacity>
+                <Text style={{ color: 'white', textAlign: 'center' }}>Flip</Text>
+              </View>
+              <View
+                style={{
+                  width: oneGridWidth,
+                  height: 80,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  // backgroundColor: 'red',
+                }}
+              >
+                <TouchableOpacity
+                  style={{
                     backgroundColor: backgroundColorsTable['yellow1'],
+                    padding: 10,
+                    borderRadius: 10,
+                    width: 50,
+                    height: 50,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                  onPress={() => {
+                    // if (cameraMode === 'photo') {
+                    //   photoEffectBottomSheetRef.current.snapToIndex(0);
+                    // } else if (cameraMode === 'video') {
+                    //   videoEffectBottomSheetRef.current.snapToIndex(0);
+                    // }
+                    toggleFlashMode();
+                  }}
+                >
+                  {/* lightbulb-off */}
+                  {/* <MaterialCommunityIcons name='history' size={20} color={iconColorsTable['yellow1']} /> */}
+                  <MaterialCommunityIcons
+                    name={flashMode === Camera.Constants.FlashMode.off ? 'lightbulb-off' : 'lightbulb-on'}
+                    size={20}
+                    color={iconColorsTable['yellow1']}
+                  />
+                </TouchableOpacity>
+                <Text style={{ color: 'white', textAlign: 'center' }}>
+                  {flashMode === Camera.Constants.FlashMode.off ? 'Flash off' : 'Flash on'}
+                </Text>
+              </View>
+              <View
+                style={{
+                  width: oneGridWidth,
+                  height: 80,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  // backgroundColor: 'red',
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: backgroundColorsTable['orange1'],
                     padding: 10,
                     borderRadius: 10,
                     width: 50,
@@ -668,75 +766,6 @@ const Container = (props) => {
                   <Text style={{ fontSize: 30 }}>{mood}</Text>
                 </TouchableOpacity>
                 <Text style={{ color: 'white', textAlign: 'center' }}>Mood</Text>
-              </View>
-              <View
-                style={{
-                  width: oneGridWidth,
-                  height: 80,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  // backgroundColor: 'red',
-                }}
-              >
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: backgroundColorsTable['green1'],
-                    padding: 10,
-                    borderRadius: 10,
-                    width: 50,
-                    height: 50,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginBottom: 5,
-                  }}
-                  onPress={() => {
-                    if (ongoingMeetup) {
-                      tagPeopleBottomSheetRef.current.snapToIndex(0);
-                    } else {
-                      setSnackBar({
-                        isVisible: true,
-                        barType: 'warning',
-                        message: 'OOPS. Tagging people is only available during the meetup.',
-                        duration: 5000,
-                      });
-                    }
-                  }}
-                >
-                  <Ionicons name='ios-pricetags' size={20} color={iconColorsTable['green1']} />
-                </TouchableOpacity>
-                <Text style={{ color: 'white', textAlign: 'center' }}>Tag members</Text>
-              </View>
-              <View
-                style={{
-                  width: oneGridWidth,
-                  height: 80,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  // backgroundColor: 'red',
-                }}
-              >
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: backgroundColorsTable['blue1'],
-                    padding: 10,
-                    borderRadius: 10,
-                    width: 50,
-                    height: 50,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginBottom: 5,
-                  }}
-                  onPress={() => {
-                    if (cameraMode === 'photo') {
-                      photoEffectBottomSheetRef.current.snapToIndex(0);
-                    } else if (cameraMode === 'video') {
-                      videoEffectBottomSheetRef.current.snapToIndex(0);
-                    }
-                  }}
-                >
-                  <MaterialCommunityIcons name='history' size={20} color={iconColorsTable['blue1']} />
-                </TouchableOpacity>
-                <Text style={{ color: 'white', textAlign: 'center' }}>Time Machine</Text>
               </View>
             </View>
           )

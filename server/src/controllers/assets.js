@@ -32,6 +32,25 @@ const createMembersPhoto = async (memberIds, fileName, meetupId, mood, place, cr
   }
 };
 
+const createMembersVideo = async (memberIds, fileName, meetupId, mood, place, createdUserId, duration) => {
+  for (let userId of memberIds) {
+    const includedCreator = [...memberIds, createdUserId];
+    const removedMe = includedCreator.filter((element) => element !== userId);
+
+    const asset = await Asset.create({
+      data: `https://lampost-${process.env.NODE_ENV}.s3.us-east-2.amazonaws.com/assets/photos/${fileName}`,
+      type: 'video',
+      meetup: meetupId,
+      mood: mood,
+      place: place,
+      duration: duration,
+      taggedPeople: removedMe,
+      createdBy: userId,
+      createdAt: new Date(),
+    });
+  }
+};
+
 export const createPhoto = async (request, response) => {
   try {
     // const { meetupId, userId, place, type, mood, effect, ...rest } = request.body;
@@ -56,7 +75,6 @@ export const createPhoto = async (request, response) => {
       // これ、撮った人も含めないといかんな。
       createMembersPhoto(parsedPeople, request.file.filename, meetupId, mood, place, userId);
     }
-
     response.status(200).json({
       message: 'success',
     });
@@ -70,26 +88,34 @@ export const createPhoto = async (request, response) => {
 
 export const createVideo = async (request, response) => {
   try {
-    const { meetupId, userId, type, place, mood, effect, duration, ...rest } = request.body;
-    const taggedUserIds = Object.values(rest);
+    // const { meetupId, userId, type, place, mood, effect, duration, ...rest } = request.body;
+    const { meetupId, userId, type, place, mood, duration, taggedPeople } = request.body;
+    const parsedPeople = JSON.parse(taggedPeople);
+    const parsedPlace = JSON.parse(place);
+    // const taggedUserIds = Object.values(rest);
     const asset = await Asset.create({
       data: `https://lampost-${process.env.NODE_ENV}.s3.us-east-2.amazonaws.com/assets/videos/${request.file.filename}`,
-      type: type,
+      type: 'video',
       meetup: meetupId,
-      effect: effect,
       mood: mood,
-      place: place,
+      place: parsedPlace,
       duration: duration,
-      taggedPeople: taggedUserIds,
+      taggedPeople: parsedPeople,
       createdBy: userId,
       createdAt: new Date(),
     });
-    // これ、何？？effectのconditionではなくて？？？
-    if (effect !== 'normal') {
-      AddEffect(request.file.filename, effect, asset._id.toString(), asset.duration);
-    } else {
-      uploadNormalVideo(request.file.filename);
+    uploadNormalVideo(request.file.filename);
+
+    if (parsedPeople.length) {
+      // これ、撮った人も含めないといかんな。
+      createMembersVideo(parsedPeople, request.file.filename, meetupId, mood, place, userId, duration);
     }
+
+    // if (effect !== 'normal') {
+    //   AddEffect(request.file.filename, effect, asset._id.toString(), asset.duration);
+    // } else {
+    //   uploadNormalVideo(request.file.filename);
+    // }
     // asset idを使ってfolderを作りましょう。
     //  ここで、ffmpegを動かす。
     // uploadVideo(request.file.filename);
