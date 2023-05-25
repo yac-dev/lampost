@@ -12,6 +12,8 @@ import LaunchNewMeetup from '../../Map/LaunchNewMeetup/Container';
 import WriteDescription from '../../Map/LaunchNewMeetup/WriteDescription';
 import SelectVenueForLaunch from '../../Map/LaunchNewMeetup/SelectVenueForLaunch';
 import { appBottomSheetBackgroundColor } from '../../../utils/colorsTable';
+import CreateBadge from '../../User/CreateBadge/Container';
+import IconPicker from '../../Utils/IconPicker/Container';
 
 const MapNavigator = (props) => {
   return (
@@ -120,6 +122,25 @@ const MapNavigator = (props) => {
             },
           })}
         />
+        <Stack.Screen
+          name='Icon picker'
+          component={IconPicker}
+          options={({ navigation }) => ({
+            title: 'Icon picker',
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
+              </TouchableOpacity>
+            ),
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          })}
+        />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'fullScreenModal' }}>
         <Stack.Screen
@@ -143,6 +164,24 @@ const MapNavigator = (props) => {
         <Stack.Screen
           name='Add badges'
           component={AddBadges}
+          options={({ navigation }) => ({
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={{ color: 'white', fontSize: 20 }}>Cancel</Text>
+              </TouchableOpacity>
+            ),
+            headerStyle: {
+              backgroundColor: appBottomSheetBackgroundColor,
+            },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+          })}
+        />
+        <Stack.Screen
+          name='Create badge'
+          component={CreateBadge}
           options={({ navigation }) => ({
             headerLeft: () => (
               <TouchableOpacity onPress={() => navigation.goBack()}>

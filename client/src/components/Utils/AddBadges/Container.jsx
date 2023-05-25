@@ -785,7 +785,7 @@ const Container = (props) => {
             alignItems: 'center',
           }}
         >
-          {props.route.params.fromComponent === 'ADD_USER_BADGES' ? (
+          {props.route.params.fromComponent === 'ADD_USER_BADGES' || 'ADD_MEETUP_BADGES' ? (
             <TouchableOpacity
               style={{
                 backgroundColor: backgroundColorsTable['red1'],

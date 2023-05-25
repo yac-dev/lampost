@@ -80,6 +80,7 @@ const Container = (props) => {
     }
   };
 
+  // from componentが必要だね。
   useEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (

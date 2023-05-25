@@ -5,6 +5,8 @@ import {
   baseBackgroundColor,
   appBottomSheetBackgroundColor,
   screenSectionBackgroundColor,
+  iconColorsTable,
+  backgroundColorsTable,
 } from '../../utils/colorsTable';
 import FastImage from 'react-native-fast-image';
 import { Video } from 'expo-av';
@@ -147,7 +149,7 @@ const Container = (props) => {
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
-                  marginBottom: 10,
+                  marginBottom: 15,
                   justifyContent: 'space-between',
                 }}
                 onPress={() => {
@@ -193,7 +195,7 @@ const Container = (props) => {
           return (
             <TouchableOpacity
               key={index}
-              style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, justifyContent: 'space-between' }}
+              style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15, justifyContent: 'space-between' }}
               onPress={() => {
                 if (taggedMembers[userData.user._id]) {
                   setTaggedMembers((previous) => {
