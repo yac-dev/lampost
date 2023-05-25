@@ -14,32 +14,47 @@ import { AddEffect } from '../services/ffmpeg';
 import { addPhotoEffect } from '../services/sharp';
 import sharp from 'sharp';
 
+const createMembersPhoto = async (memberIds, fileName, meetupId, mood, place, createdUserId) => {
+  for (let userId of memberIds) {
+    const includedCreator = [...memberIds, createdUserId];
+    const removedMe = includedCreator.filter((element) => element !== userId);
+
+    const asset = await Asset.create({
+      data: `https://lampost-${process.env.NODE_ENV}.s3.us-east-2.amazonaws.com/assets/photos/${fileName}`,
+      type: 'photo',
+      meetup: meetupId,
+      mood: mood,
+      place: place,
+      taggedPeople: removedMe,
+      createdBy: userId,
+      createdAt: new Date(),
+    });
+  }
+};
+
 export const createPhoto = async (request, response) => {
   try {
-    const { meetupId, userId, place, type, mood, effect, ...rest } = request.body;
-    const taggedUserIds = Object.values(rest);
+    // const { meetupId, userId, place, type, mood, effect, ...rest } = request.body;
+    const { meetupId, userId, place, type, mood, taggedPeople } = request.body;
+    const parsedPeople = JSON.parse(taggedPeople);
+    const parsedPlace = JSON.parse(place);
+    console.log(parsedPeople);
+    console.log(parsedPlace);
     const asset = await Asset.create({
       data: `https://lampost-${process.env.NODE_ENV}.s3.us-east-2.amazonaws.com/assets/photos/${request.file.filename}`,
       type: 'photo',
       meetup: meetupId,
-      effect: effect,
       mood: mood,
-      place: place,
-      taggedPeople: taggedUserIds,
+      place: parsedPlace,
+      taggedPeople: parsedPeople,
       createdBy: userId,
       createdAt: new Date(),
     });
-    // ここでsharpを動かすわけだが、、、
-    const meetup = await Meetup.findById(meetupId);
-    if (meetup.topPhotos.length <= 2) {
-      meetup.topPhotos.push(asset._id);
-      meetup.save();
-    }
+    uploadPhoto(request.file.filename);
 
-    if (effect === 'normal') {
-      uploadPhoto(request.file.filename);
-    } else {
-      addPhotoEffect(request.file.filename, effect);
+    if (parsedPeople.length) {
+      // これ、撮った人も含めないといかんな。
+      createMembersPhoto(parsedPeople, request.file.filename, meetupId, mood, place, userId);
     }
 
     response.status(200).json({
@@ -48,7 +63,7 @@ export const createPhoto = async (request, response) => {
   } catch (error) {
     console.log('this is the api error', error);
     response.status(400).json({
-      message: 'Error happend camera',
+      message: 'Error happend on camera',
     });
   }
 };

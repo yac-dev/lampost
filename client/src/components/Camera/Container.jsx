@@ -38,6 +38,7 @@ const Container = (props) => {
   const [flashMode, setFlashMode] = useState(Camera.Constants.FlashMode.off);
   const [cameraType, setCameraType] = useState(CameraType.back);
   const [cameraMode, setCameraMode] = useState('photo');
+  const [newPhoto, setNewPhoto] = useState(null);
   const [mood, setMood] = useState('😃');
   const [photoEffect, setPhotoEffect] = useState('normal');
   const [videoEffect, setVideoEffect] = useState('normal'); // normal, black and white very old,
@@ -300,46 +301,49 @@ const Container = (props) => {
     };
     setLoading(true);
     let newPhoto = await cameraRef.current.takePictureAsync(options);
-    const formData = new FormData();
-    // photo fieldよりも後にmeetupIdをappendするとダメなんだよな。。。何でだろ。。。
-    const taggedUserIds = Object.keys(taggedPeople);
-    if (taggedUserIds.length) {
-      for (var i = 0; i < taggedUserIds.length; i++) {
-        formData.append(`taggedUser${i}`, taggedUserIds[i]);
-      }
-    }
-    formData.append('meetupId', ongoingMeetup._id);
-    formData.append('userId', auth.data._id);
-    formData.append('type', cameraMode); // photo
-    formData.append('place', ongoingMeetup.place);
-    formData.append('mood', mood);
-    formData.append('effect', photoEffect);
-    formData.append('asset', {
-      name: newPhoto.uri.split('/').pop(),
-      uri: newPhoto.uri,
-      type: 'image/jpg',
+    setLoading(false);
+    props.navigation.navigate('Tag members', {
+      photo: newPhoto,
+      members: meetupAttendees,
+      mood,
+      cameraMode,
+      ongoingMeetup,
     });
-    // userIdを使ってまず、userのmeetup中かを調べる。
-    // console.log(formData);
-    try {
-      const result = await lampostAPI.post(`/assets/photos`, formData, {
-        headers: { 'Content-type': 'multipart/form-data' },
-      });
-      setLoading(false);
-      setSnackBar({
-        isVisible: true,
-        message: 'Nice shot 📸',
-        barType: 'success',
-        duration: 1500,
-      });
-    } catch (error) {
-      console.log(error);
-      console.log(error.response.data);
-    }
-    // } else {
-    //   setIsWarningModalOpen(true);
-    //   setWarningMessage('Camera is only available during the meetup.');
+    // const formData = new FormData();
+    // // photo fieldよりも後にmeetupIdをappendするとダメなんだよな。。。何でだろ。。。
+    // const taggedUserIds = Object.keys(taggedPeople);
+    // if (taggedUserIds.length) {
+    //   for (var i = 0; i < taggedUserIds.length; i++) {
+    //     formData.append(`taggedUser${i}`, taggedUserIds[i]);
+    //   }
     // }
+    // formData.append('meetupId', ongoingMeetup._id);
+    // formData.append('userId', auth.data._id);
+    // formData.append('type', cameraMode); // photo
+    // formData.append('place', ongoingMeetup.place);
+    // formData.append('mood', mood);
+    // formData.append('effect', photoEffect);
+    // formData.append('asset', {
+    //   name: newPhoto.uri.split('/').pop(),
+    //   uri: newPhoto.uri,
+    //   type: 'image/jpg',
+    // });
+    // // userIdを使ってまず、userのmeetup中かを調べる。
+    // // console.log(formData);
+    // try {
+    //   const result = await lampostAPI.post(`/assets/photos`, formData, {
+    //     headers: { 'Content-type': 'multipart/form-data' },
+    //   });
+    //   setLoading(false);
+    //   setSnackBar({
+    //     isVisible: true,
+    //     message: 'Nice shot 📸',
+    //     barType: 'success',
+    //     duration: 1500,
+    //   });
+    // } catch (error) {
+    //   console.log(error);
+    //   console.log(error.response.data);
     // }
   };
   // incandescent, cloudy, sunny, shadow, fluorescent, auto

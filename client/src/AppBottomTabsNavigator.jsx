@@ -23,6 +23,7 @@ import AuthNavigator from './components/Navigator/Auth';
 import LoadingSpinner from './components/Utils/LoadingSpinner';
 import SnackBar from './components/Utils/SnackBar';
 import Camera from './components/Camera/Container';
+import TagMembers from './components/Camera/TagMembers/Container';
 import TabNavigator from './TabNavigator';
 import AboutLampost from './components/Utils/AboutLampost';
 const ref = createNavigationContainerRef();
@@ -422,6 +423,25 @@ const AppStack = (props) => {
             <Stack.Screen
               name='About Lampost'
               component={AboutLampost}
+              options={({ navigation }) => ({
+                headerLeft: () => (
+                  <TouchableOpacity onPress={() => navigation.goBack()}>
+                    {/* <Ionicons name='close-circle-outline' size={30} color={'white'} /> */}
+                    <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+                  </TouchableOpacity>
+                ),
+                headerShown: true,
+                title: 'About Lampost',
+                headerStyle: {
+                  backgroundColor: appBottomSheetBackgroundColor,
+                  borderBottomWidth: 0,
+                },
+                // headerTransparent: true,
+              })}
+            />
+            <Stack.Screen
+              name='Tag members'
+              component={TagMembers}
               options={({ navigation }) => ({
                 headerLeft: () => (
                   <TouchableOpacity onPress={() => navigation.goBack()}>

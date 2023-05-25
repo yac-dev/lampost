@@ -9,6 +9,7 @@ import HomeTopTabsNavigator from './components/Navigator/Home/TopTabsNavigator';
 import HomeTopLevel from './components/Navigator/Home/TopLevel';
 import DiscoverTopLevel from './components/Navigator/Discover/TopLevel';
 import InboxTopLevel from './components/Navigator/Inbox/TopLevel';
+import CameraNavigator from './components/Navigator/Camera';
 // import HomeTopTab from './components/Navigator/HomeTopTab';
 // import HomeNavigator from './components/Navigator/Home';
 import AuthNavigator from './components/Navigator/Auth';
@@ -128,7 +129,7 @@ const RootNavigator = () => {
 
       <Tab.Screen
         name='Camera'
-        component={CameraBase}
+        component={CameraNavigator}
         options={{
           headerShown: false,
           tabBarLabel: 'Camera',
@@ -139,7 +140,7 @@ const RootNavigator = () => {
         listeners={({ navigation }) => ({
           tabPress: (event) => {
             event.preventDefault();
-            navigation.navigate('CameraNew'); // <-- Here you put the name where the chat component is declared
+            navigation.navigate('CameraNew');
           },
         })}
       />
