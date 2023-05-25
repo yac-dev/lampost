@@ -190,6 +190,7 @@ const Container = (props) => {
                 source={{
                   uri: marking.thumbnail,
                 }}
+                shouldPlay={true}
                 useNativeControls={false}
                 resizeMode='stretch'
                 isLooping={false}

@@ -1,17 +1,16 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import * as SecureStore from 'expo-secure-store';
-import GlobalContext from '../../GlobalContext';
-import CameraContext from './CameraContext';
 import { Text, View, TouchableOpacity, ScrollView, Dimensions, Platform } from 'react-native';
 import { PinchGestureHandler, State } from 'react-native-gesture-handler';
+import GlobalContext from '../../GlobalContext';
+import CameraContext from './CameraContext';
 import lampostAPI from '../../apis/lampost';
 import { Camera, CameraType } from 'expo-camera';
+import * as SecureStore from 'expo-secure-store';
+import Timer from './Timer';
+import Shutter from './Shutter';
+import MoodBottomSheet from './MoodBottomSheet';
 import LoadingSpinner from '../Utils/LoadingSpinner';
 import SnackBar from '../Utils/SnackBar';
-import TagMembersBottomSheet from './TagMembersBottomSheet';
-import PhotoEffectBottomSheet from './PhotoEffectBottomSheet';
-import VideoEffectBottomSheet from './VideoEffectBottomSheet';
-import MoodBottomSheet from './MoodBottomSheet';
 import {
   appBottomSheetBackgroundColor,
   baseBackgroundColor,
@@ -57,26 +56,6 @@ const Container = (props) => {
   const [isMeetupOngoing, setIsMeetupOngoing] = useState(false);
   const [duration, setDuration] = useState(0);
   const durationRef = useRef(null);
-  // console.log(meetupAttendees);
-
-  // const getMyUpcomingMeetupStates = async () => {
-  //   if (auth.data.upcomingMeetups.length) {
-  //     const result = await lampostAPI.post('/meetups/mymeetupstates', { upcomingMeetupIds: auth.data.upcomingMeetups });
-  //     const { myUpcomingMeetups } = result.data;
-  //     setIsFetchedMyUpcomingMeetups(true);
-  //   }
-  // };
-
-  const loadMe = async () => {
-    const jwtToken = await SecureStore.getItemAsync('secure_token');
-    if (jwtToken) {
-      const result = await lampostAPI.get('/auth/loadMe', { headers: { authorization: `Bearer ${jwtToken}` } });
-      const { user } = result.data;
-      setAuth((previous) => {
-        return { ...previous, data: user };
-      });
-    }
-  };
 
   const getAttendees = async () => {
     const result = await lampostAPI.get(`meetupanduserrelationships/meetup/${ongoingMeetup._id}/users`);
@@ -130,31 +109,6 @@ const Container = (props) => {
     }
   }, [ongoingMeetup]);
 
-  const renderTimer = () => {
-    if (cameraMode === 'video') {
-      const rest = videoLength - duration;
-      return (
-        <View
-          style={{
-            backgroundColor: appBottomSheetBackgroundColor,
-            position: 'absolute',
-            top: 20,
-            alignSelf: 'center',
-            padding: 10,
-            flexDirection: 'row',
-            alignItems: 'center',
-            borderRadius: 10,
-          }}
-        >
-          <MaterialIcons name='hourglass-top' size={25} color='white' />
-          <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{rest}</Text>
-        </View>
-      );
-    } else {
-      return null;
-    }
-  };
-
   useEffect(() => {
     let interval;
     if (isRecording) {
@@ -201,279 +155,28 @@ const Container = (props) => {
     setFlashMode(
       flashMode === Camera.Constants.FlashMode.off ? Camera.Constants.FlashMode.on : Camera.Constants.FlashMode.off
     );
-    // なんで、これでwarningなの？？
-    // setFlashMode((previous) => {
-    //   if (previous === Camera.Constants.FlashMode.off) {
-    //     setSnackBar({
-    //       isVisible: true,
-    //       barType: 'success',
-    //       message: 'Camera flash has been turned on.',
-    //       duration: 5000,
-    //     });
-    //     return Camera.Constants.FlashMode.on;
-    //   } else {
-    //     setSnackBar({
-    //       isVisible: true,
-    //       barType: 'success',
-    //       message: 'Camera flash has been turned off.',
-    //       duration: 5000,
-    //     });
-    //     return Camera.Constants.FlashMode.off;
-    //   }
-    // });
   };
 
   if (hasCameraPermission === undefined || hasMicrophonePermission === undefined) {
     return (
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor, marginTop: 50 }}>
-        <Text style={{ color: baseTextColor, textAlign: 'center' }}>Accessing your camera...🤔</Text>
+        <Text style={{ color: baseTextColor, textAlign: 'center', fontSize: 20 }}>Accessing your camera...🤔</Text>
       </View>
     );
   } else if (!hasCameraPermission) {
     return (
       <View style={{ flex: 1, backgroundColor: baseBackgroundColor, marginTop: 50 }}>
         <Text style={{ color: baseTextColor, textAlign: 'center', fontSize: 20 }}>
-          Permission for camera not granted. Please change this in settings of your phone if you wanna experience
-          Lampost's special features.
+          Permission for camera not granted. Please go to Settings of your phone to experience Lampost's special
+          features.
         </Text>
       </View>
     );
   }
 
-  const videoButton = () => {
-    if (isRecording) {
-      stopRecording();
-    } else {
-      recordVideo();
-    }
-  };
-
-  const recordVideo = async () => {
-    setIsRecording(true);
-    const options = {
-      quality: '1080p',
-      maxDuration: 180,
-      mute: false,
-    };
-
-    const recordedVideo = await cameraRef.current.recordAsync(options);
-    setDuration(0);
-    // setIsRecording(false);
-    props.navigation.navigate('Tag members', {
-      video: recordedVideo,
-      members: meetupAttendees,
-      mood,
-      cameraMode,
-      ongoingMeetup,
-      duration: durationRef.current,
-    });
-
-    // .then(async (recordedVideo) => {
-    // setVideo(recordedVideo);
-    // console.log(recordedVideo);
-    // setIsRecording(false);
-    // const formData = new FormData();
-    // formData.append('meetupId', ongoingMeetup._id);
-    // formData.append('userId', auth.data._id);
-    // formData.append('type', cameraMode); // photo
-    // formData.append('effect', videoEffect);
-    // formData.append('place', ongoingMeetup.place);
-    // formData.append('mood', mood);
-    // formData.append('duration', durationRef.current);
-    // formData.append('asset', {
-    //   name: recordedVideo.uri.split('/').pop(),
-    //   uri: recordedVideo.uri,
-    //   type: 'video/mov',
-    // });
-    // console.log(formData);
-    // // ここでapi requestを送る感じか。
-    // const result = await lampostAPI.post(`/assets/videos`, formData, {
-    //   headers: { 'Content-type': 'multipart/form-data' },
-    // });
-    // setDuration(0);
-    // setSnackBar({
-    //   isVisible: true,
-    //   message: 'Nice shot 📸',
-    //   barType: 'success',
-    //   duration: 1500,
-    // });
-    // });
-  };
-
-  const stopRecording = async () => {
-    setIsRecording(false);
-    cameraRef.current.stopRecording();
-  };
-
-  // 基本的に、10秒以内の動画は保存しないようにする
-  let takePhoto = async () => {
-    let options = {
-      quality: 1,
-      base64: true,
-      exif: false,
-    };
-    setLoading(true);
-    let newPhoto = await cameraRef.current.takePictureAsync(options);
-    setLoading(false);
-    props.navigation.navigate('Tag members', {
-      photo: newPhoto,
-      members: meetupAttendees,
-      mood,
-      cameraMode,
-      ongoingMeetup,
-    });
-    // const formData = new FormData();
-    // // photo fieldよりも後にmeetupIdをappendするとダメなんだよな。。。何でだろ。。。
-    // const taggedUserIds = Object.keys(taggedPeople);
-    // if (taggedUserIds.length) {
-    //   for (var i = 0; i < taggedUserIds.length; i++) {
-    //     formData.append(`taggedUser${i}`, taggedUserIds[i]);
-    //   }
-    // }
-    // formData.append('meetupId', ongoingMeetup._id);
-    // formData.append('userId', auth.data._id);
-    // formData.append('type', cameraMode); // photo
-    // formData.append('place', ongoingMeetup.place);
-    // formData.append('mood', mood);
-    // formData.append('effect', photoEffect);
-    // formData.append('asset', {
-    //   name: newPhoto.uri.split('/').pop(),
-    //   uri: newPhoto.uri,
-    //   type: 'image/jpg',
-    // });
-    // // userIdを使ってまず、userのmeetup中かを調べる。
-    // // console.log(formData);
-    // try {
-    //   const result = await lampostAPI.post(`/assets/photos`, formData, {
-    //     headers: { 'Content-type': 'multipart/form-data' },
-    //   });
-    //   setLoading(false);
-    //   setSnackBar({
-    //     isVisible: true,
-    //     message: 'Nice shot 📸',
-    //     barType: 'success',
-    //     duration: 1500,
-    //   });
-    // } catch (error) {
-    //   console.log(error);
-    //   console.log(error.response.data);
-    // }
-  };
-  // incandescent, cloudy, sunny, shadow, fluorescent, auto
-
-  const renderCameraButton = () => {
-    if (cameraMode === 'photo') {
-      return (
-        <View
-          style={{ position: 'absolute', bottom: 120, alignSelf: 'center', flexDirection: 'row', alignItems: 'center' }}
-        >
-          <TouchableOpacity
-            style={{
-              backgroundColor: 'white',
-              // padding: 10,
-              flexDirection: 'row',
-              borderRadius: 35,
-              width: 70,
-              height: 70,
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginRight: 20,
-            }}
-            onPress={() => takePhoto()}
-            disabled={ongoingMeetup ? false : true}
-          ></TouchableOpacity>
-          {/* <TouchableOpacity
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 20,
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor:
-                flashMode === Camera.Constants.FlashMode.off ? 'white' : backgroundColorsTable['yellow1'],
-              marginRight: 20,
-            }}
-            onPress={() => {
-              toggleFlashMode();
-            }}
-          >
-            <MaterialCommunityIcons
-              name='lightbulb-on'
-              size={20}
-              color={flashMode === Camera.Constants.FlashMode.off ? 'black' : iconColorsTable['yellow1']}
-            />
-          </TouchableOpacity>
-          
-          <TouchableOpacity
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 20,
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'white',
-            }}
-            onPress={() => {
-              if (cameraType === CameraType.back) {
-                setCameraType(CameraType.front);
-              } else {
-                setCameraType(CameraType.back);
-              }
-            }}
-          >
-            <MaterialCommunityIcons name='camera-flip' size={20} color={'black'} />
-          </TouchableOpacity> */}
-        </View>
-      );
-    } else if (cameraMode === 'video') {
-      return (
-        <TouchableOpacity
-          style={{ position: 'absolute', bottom: 120, alignSelf: 'center' }}
-          onPress={() => videoButton()}
-          disabled={ongoingMeetup ? false : true}
-        >
-          {isRecording ? (
-            // <Text style={{ color: 'white' }}>Recording</Text>
-            // <Ionicons name='stop-circle' color={'white'} size={25} />
-            <View
-              style={{
-                backgroundColor: 'white',
-                padding: 10,
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: 60,
-                height: 60,
-                borderRadius: 30,
-              }}
-            >
-              <Text style={{ color: 'black', fontSize: 18 }}>Stop</Text>
-            </View>
-          ) : (
-            // <MaterialCommunityIcons name='record-rec' size={25} color='white' />
-            <View
-              style={{
-                backgroundColor: 'white',
-                padding: 10,
-                width: 60,
-                height: 60,
-                borderRadius: 30,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <Text style={{ color: 'black', fontSize: 18 }}>Start</Text>
-            </View>
-          )}
-          {/* {isCameraButtonReady()} */}
-        </TouchableOpacity>
-      );
-    }
-  };
-
   const handlePinch = (event) => {
     var scale = event.nativeEvent.scale;
     var velocity = event.nativeEvent.velocity / 20;
-
     let newZoom =
       velocity > 0
         ? zoomLevel + scale * velocity * (Platform.OS === 'ios' ? 0.01 : 25)
@@ -481,11 +184,9 @@ const Container = (props) => {
 
     if (newZoom < 0) newZoom = 0;
     else if (newZoom > 0.5) newZoom = 0.5;
-
     setZoomLevel(newZoom);
   };
 
-  // recordingとtakingの時は、buttonをdisableにしないといかん。
   return (
     <CameraContext.Provider
       value={{
@@ -494,6 +195,7 @@ const Container = (props) => {
         photoEffectBottomSheetRef,
         moodBottomSheetRef,
         cameraMode,
+        cameraRef,
         setCameraMode,
         cameraType,
         setCameraType,
@@ -514,6 +216,13 @@ const Container = (props) => {
         ongoingMeetup,
         mood,
         setMood,
+        isRecording,
+        setIsRecording,
+        duration,
+        setDuration,
+        durationRef,
+        videoLength,
+        navigation: props.navigation,
       }}
     >
       <View style={{ flex: 1, backgroundColor: 'black' }}>
@@ -544,38 +253,13 @@ const Container = (props) => {
               zoom={zoomLevel}
               // videoQuality='480p'
             >
-              {renderTimer()}
+              <Timer />
             </Camera>
           </View>
         </PinchGestureHandler>
-        {renderCameraButton()}
+        <Shutter />
+        {/* <Timer /> */}
         {auth.isAuthenticated ? (
-          // <View
-          //   style={{
-          //     backgroundColor: backgroundColorsTable['violet1'],
-          //     position: 'absolute',
-          //     bottom: 20,
-          //     borderRadius: 10,
-          //     padding: 10,
-          //     flexDirection: 'row',
-          //     alignItems: 'center',
-          //     alignSelf: 'center',
-          //   }}
-          // >
-          //   <TouchableOpacity style={{}} onPress={() => appMenuBottomSheetRef.current.snapToIndex(0)}>
-          //     <View
-          //       style={{
-          //         backgroundColor: iconColorsTable['violet1'],
-          //         padding: 10,
-          //         flexDirection: 'row',
-          //         alignItems: 'center',
-          //         borderRadius: 10,
-          //       }}
-          //     >
-          //       <Ionicons name='ios-apps' size={25} color={'white'} />
-          //     </View>
-          //   </TouchableOpacity>
-          // </View>
           isRecording ? null : (
             <View
               style={{
@@ -676,16 +360,6 @@ const Container = (props) => {
                     marginBottom: 5,
                   }}
                   onPress={() => {
-                    // if (ongoingMeetup) {
-                    //   tagPeopleBottomSheetRef.current.snapToIndex(0);
-                    // } else {
-                    //   setSnackBar({
-                    //     isVisible: true,
-                    //     barType: 'warning',
-                    //     message: 'OOPS. Tagging people is only available during the meetup.',
-                    //     duration: 5000,
-                    //   });
-                    // }
                     if (cameraType === CameraType.back) {
                       setCameraType(CameraType.front);
                     } else {
@@ -709,7 +383,7 @@ const Container = (props) => {
               >
                 <TouchableOpacity
                   style={{
-                    backgroundColor: backgroundColorsTable['yellow1'],
+                    backgroundColor: backgroundColorsTable['blue1'],
                     padding: 10,
                     borderRadius: 10,
                     width: 50,
@@ -732,7 +406,7 @@ const Container = (props) => {
                   <MaterialCommunityIcons
                     name={flashMode === Camera.Constants.FlashMode.off ? 'lightbulb-off' : 'lightbulb-on'}
                     size={20}
-                    color={iconColorsTable['yellow1']}
+                    color={iconColorsTable['blue1']}
                   />
                 </TouchableOpacity>
                 <Text style={{ color: 'white', textAlign: 'center' }}>
@@ -750,7 +424,7 @@ const Container = (props) => {
               >
                 <TouchableOpacity
                   style={{
-                    backgroundColor: backgroundColorsTable['orange1'],
+                    backgroundColor: backgroundColorsTable['yellow1'],
                     padding: 10,
                     borderRadius: 10,
                     width: 50,
@@ -770,11 +444,7 @@ const Container = (props) => {
             </View>
           )
         ) : null}
-        {/* <AppMenuBottomSheet /> */}
         <MoodBottomSheet />
-        <TagMembersBottomSheet />
-        <PhotoEffectBottomSheet />
-        <VideoEffectBottomSheet />
         <SnackBar />
         <LoadingSpinner textContent={`${mood}${mood}${mood}`} />
       </View>

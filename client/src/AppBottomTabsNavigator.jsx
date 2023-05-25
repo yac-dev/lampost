@@ -23,7 +23,7 @@ import AuthNavigator from './components/Navigator/Auth';
 import LoadingSpinner from './components/Utils/LoadingSpinner';
 import SnackBar from './components/Utils/SnackBar';
 import Camera from './components/Camera/Container';
-import TagMembers from './components/Camera/TagMembers/Container';
+import TagMembers from './components/Camera/TagMembers';
 import TabNavigator from './TabNavigator';
 import AboutLampost from './components/Utils/AboutLampost';
 const ref = createNavigationContainerRef();
@@ -450,7 +450,12 @@ const AppStack = (props) => {
                   </TouchableOpacity>
                 ),
                 headerShown: true,
-                title: 'About Lampost',
+                title: 'Tag members?',
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                  color: 'white',
+                },
+                headerTintColor: 'white',
                 headerStyle: {
                   backgroundColor: appBottomSheetBackgroundColor,
                   borderBottomWidth: 0,

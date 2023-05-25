@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 
 import Camera from '../Camera/Container';
-import TagMembers from '../Camera/TagMembers/Container';
+import TagMembers from '../Camera/TagMembers';
 
 const CameraNavigator = () => {
   return (
