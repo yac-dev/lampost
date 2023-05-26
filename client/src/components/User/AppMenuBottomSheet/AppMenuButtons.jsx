@@ -91,7 +91,6 @@ const AppButtons = (props) => {
       // setSelectedProfileImage(result.uri);
       setLoading(false);
       const { photo } = result.data;
-      console.log('this is my photo', photo);
       setAuth((previous) => {
         return {
           ...previous,
@@ -100,6 +99,12 @@ const AppButtons = (props) => {
             photo: photo,
           },
         };
+      });
+      setSnackBar({
+        isVisible: true,
+        barType: 'success',
+        message: 'Profile picture has been updated.',
+        duration: 3000,
       });
     }
   };

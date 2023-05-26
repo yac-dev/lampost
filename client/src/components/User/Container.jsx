@@ -21,6 +21,8 @@ import Header from './Header/Container';
 import Badge from './Badge';
 import AppMenuBottomSheet from './AppMenuBottomSheet/Container';
 import BadgeDetailBottomSheet from './BadgeDetailBottomSheet/Container';
+import LoadingSpinner from '../Utils/LoadingSpinner';
+import SnackBar from '../Utils/SnackBar';
 // import AddBadgeTagsBottomSheet from './AddBadgeTagsBottomSheet/Container';
 // import AddLinkBottomSheet from './AddLinkBottomSheet/Container';
 
@@ -210,29 +212,33 @@ const Container = (props) => {
 
   const renderBadges = () => {
     const userBadgesList = Object.values(userBadges);
-    if (userBadgesList.length) {
-      const badgesList = userBadgesList.map((userBadge, index) => {
+    if (isFetchedUserBadges) {
+      if (userBadgesList.length) {
+        const badgesList = userBadgesList.map((userBadge, index) => {
+          return (
+            <BadgeContext.Provider value={{ userBadge }} key={index}>
+              <Badge />
+            </BadgeContext.Provider>
+          );
+        });
+        return <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{badgesList}</View>;
+      } else {
         return (
-          <BadgeContext.Provider value={{ userBadge }} key={index}>
-            <Badge />
-          </BadgeContext.Provider>
+          <View>
+            {auth.data && user._id === auth.data._id ? (
+              <View>
+                <Text style={{ color: baseTextColor, textAlign: 'center', marginBottom: 10, paddingTop: 70 }}>
+                  🤔 Who are you?{'\n'}Let's add some badges that are related to your interests{'\n'}from down below.
+                </Text>
+              </View>
+            ) : (
+              <Text style={{ color: baseTextColor, textAlign: 'center' }}>You'll see all the badges of this user.</Text>
+            )}
+          </View>
         );
-      });
-      return <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{badgesList}</View>;
+      }
     } else {
-      return (
-        <View>
-          {auth.data && user._id === auth.data._id ? (
-            <View>
-              <Text style={{ color: baseTextColor, textAlign: 'center', marginBottom: 10, paddingTop: 70 }}>
-                🤔 Who are you?{'\n'}Let's add some badges that are related to your interests{'\n'}from down below.
-              </Text>
-            </View>
-          ) : (
-            <Text style={{ color: baseTextColor, textAlign: 'center' }}>You'll see all the badges of this user.</Text>
-          )}
-        </View>
-      );
+      return <ActivityIndicator />;
     }
   };
 
@@ -422,6 +428,8 @@ const Container = (props) => {
         <AppMenuBottomSheet />
         {/* <BadgeMenuBottomSheet /> */}
         <BadgeDetailBottomSheet />
+        <LoadingSpinner />
+        <SnackBar />
         {/* <AddBadgeTagsBottomSheet /> */}
       </>
     );
