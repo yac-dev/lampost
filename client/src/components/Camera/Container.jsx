@@ -37,6 +37,7 @@ const Container = (props) => {
   const [flashMode, setFlashMode] = useState(Camera.Constants.FlashMode.off);
   const [cameraType, setCameraType] = useState(CameraType.back);
   const [cameraMode, setCameraMode] = useState('photo');
+  const [isFriendCam, setIsFriendCam] = useState(false);
   const [newPhoto, setNewPhoto] = useState(null);
   const [mood, setMood] = useState('😃');
   const [photoEffect, setPhotoEffect] = useState('normal');
@@ -60,7 +61,6 @@ const Container = (props) => {
   const getAttendees = async () => {
     const result = await lampostAPI.get(`meetupanduserrelationships/meetup/${ongoingMeetup._id}/users`);
     const { meetupAttendees } = result.data;
-    console.log('you can tag these', meetupAttendees);
     setMeetupAttendees(() => {
       const attendeesTable = {};
       meetupAttendees.forEach((attendee, index) => {
@@ -223,6 +223,7 @@ const Container = (props) => {
         durationRef,
         videoLength,
         navigation: props.navigation,
+        isFriendCam,
       }}
     >
       <View style={{ flex: 1, backgroundColor: 'black' }}>
@@ -254,6 +255,7 @@ const Container = (props) => {
               // videoQuality='480p'
             >
               <Timer />
+              {/* <RenderFriendCam /> */}
             </Camera>
           </View>
         </PinchGestureHandler>
@@ -295,7 +297,7 @@ const Container = (props) => {
                   >
                     <TouchableOpacity
                       style={{
-                        backgroundColor: backgroundColorsTable['red1'],
+                        backgroundColor: backgroundColorsTable['blue1'],
                         padding: 10,
                         borderRadius: 10,
                         width: 50,
@@ -306,7 +308,7 @@ const Container = (props) => {
                       }}
                       onPress={() => setCameraMode('video')}
                     >
-                      <Ionicons name='videocam' size={25} color={iconColorsTable['red1']} />
+                      <Ionicons name='videocam' size={25} color={iconColorsTable['blue1']} />
                     </TouchableOpacity>
                     <Text style={{ color: 'white', textAlign: 'center' }}>Take video</Text>
                   </View>
@@ -322,7 +324,7 @@ const Container = (props) => {
                   >
                     <TouchableOpacity
                       style={{
-                        backgroundColor: backgroundColorsTable['red1'],
+                        backgroundColor: backgroundColorsTable['blue1'],
                         padding: 10,
                         borderRadius: 10,
                         width: 50,
@@ -333,7 +335,7 @@ const Container = (props) => {
                       }}
                       onPress={() => setCameraMode('photo')}
                     >
-                      <Ionicons name='image' size={25} color={iconColorsTable['red1']} />
+                      <Ionicons name='image' size={25} color={iconColorsTable['blue1']} />
                     </TouchableOpacity>
                     <Text style={{ color: 'white', textAlign: 'center' }}>Take photo</Text>
                   </View>
@@ -359,6 +361,7 @@ const Container = (props) => {
                     alignItems: 'center',
                     marginBottom: 5,
                   }}
+                  disabled={isFriendCam ? true : false}
                   onPress={() => {
                     if (cameraType === CameraType.back) {
                       setCameraType(CameraType.front);
@@ -369,10 +372,11 @@ const Container = (props) => {
                 >
                   {/* <Ionicons name='ios-pricetags' size={20} color={iconColorsTable['green1']} /> */}
                   <MaterialCommunityIcons name='camera-flip' size={20} color={iconColorsTable['green1']} />
+                  {isFriendCam ? <Text style={{ position: 'absolute', right: -5, top: -5 }}>🚫</Text> : null}
                 </TouchableOpacity>
                 <Text style={{ color: 'white', textAlign: 'center' }}>Flip</Text>
               </View>
-              <View
+              {/* <View
                 style={{
                   width: oneGridWidth,
                   height: 80,
@@ -393,16 +397,9 @@ const Container = (props) => {
                     marginBottom: 5,
                   }}
                   onPress={() => {
-                    // if (cameraMode === 'photo') {
-                    //   photoEffectBottomSheetRef.current.snapToIndex(0);
-                    // } else if (cameraMode === 'video') {
-                    //   videoEffectBottomSheetRef.current.snapToIndex(0);
-                    // }
                     toggleFlashMode();
                   }}
                 >
-                  {/* lightbulb-off */}
-                  {/* <MaterialCommunityIcons name='history' size={20} color={iconColorsTable['yellow1']} /> */}
                   <MaterialCommunityIcons
                     name={flashMode === Camera.Constants.FlashMode.off ? 'lightbulb-off' : 'lightbulb-on'}
                     size={20}
@@ -412,6 +409,56 @@ const Container = (props) => {
                 <Text style={{ color: 'white', textAlign: 'center' }}>
                   {flashMode === Camera.Constants.FlashMode.off ? 'Flash off' : 'Flash on'}
                 </Text>
+              </View> */}
+              <View
+                style={{
+                  width: oneGridWidth,
+                  height: 80,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  // backgroundColor: 'red',
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: backgroundColorsTable['red1'],
+                    padding: 10,
+                    borderRadius: 10,
+                    width: 50,
+                    height: 50,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginBottom: 5,
+                  }}
+                  onPress={() => {
+                    if (isFriendCam) {
+                      setSnackBar({
+                        isVisible: true,
+                        barType: 'success',
+                        message: 'Reverted to normal cam.',
+                        duration: 3000,
+                      });
+                    } else {
+                      setSnackBar({
+                        isVisible: true,
+                        barType: 'success',
+                        message: `Friend cam has been turned on.${'\n'}Whose photo/video do you take?`,
+                        duration: 5000,
+                      });
+                    }
+                    setIsFriendCam((previous) => !previous);
+                    if (cameraType === CameraType.front) {
+                      setCameraType(CameraType.back);
+                    }
+                  }}
+                >
+                  {isFriendCam ? (
+                    <Ionicons name='camera' size={25} color={iconColorsTable['red1']} />
+                  ) : (
+                    <MaterialCommunityIcons name='heart' size={25} color={iconColorsTable['red1']} />
+                  )}
+                </TouchableOpacity>
+                <Text style={{ color: 'white', textAlign: 'center' }}>{isFriendCam ? 'Normal cam' : 'Friend cam'}</Text>
               </View>
               <View
                 style={{

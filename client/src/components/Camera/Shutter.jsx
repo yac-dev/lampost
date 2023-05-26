@@ -2,6 +2,9 @@ import React, { useContext } from 'react';
 import GlobalContext from '../../GlobalContext';
 import CameraContext from './CameraContext';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { iconsTable } from '../../utils/icons';
+import { backgroundColorsTable, iconColorsTable } from '../../utils/colorsTable';
+const { MaterialIcons, MaterialCommunityIcons } = iconsTable;
 
 const Shutter = () => {
   const { auth, setLoading } = useContext(GlobalContext);
@@ -17,6 +20,7 @@ const Shutter = () => {
     duration,
     setDuration,
     durationRef,
+    isFriendCam,
   } = useContext(CameraContext);
 
   const startRecording = async () => {
@@ -30,14 +34,25 @@ const Shutter = () => {
     const recordedVideo = await cameraRef.current.recordAsync(options);
     setDuration(0);
     setIsRecording(false);
-    navigation.navigate('Tag members', {
-      video: recordedVideo,
-      members: meetupAttendees,
-      mood,
-      cameraMode,
-      ongoingMeetup,
-      duration: durationRef.current,
-    });
+    if (isFriendCam) {
+      navigation.navigate('Whose snap', {
+        video: recordedVideo,
+        members: meetupAttendees,
+        mood,
+        cameraMode,
+        ongoingMeetup,
+        duration: durationRef.current,
+      });
+    } else {
+      navigation.navigate('Tag members', {
+        video: recordedVideo,
+        members: meetupAttendees,
+        mood,
+        cameraMode,
+        ongoingMeetup,
+        duration: durationRef.current,
+      });
+    }
 
     // .then(async (recordedVideo) => {
     // setVideo(recordedVideo);
@@ -86,13 +101,23 @@ const Shutter = () => {
     setLoading(true);
     let newPhoto = await cameraRef.current.takePictureAsync(options);
     setLoading(false);
-    navigation.navigate('Tag members', {
-      photo: newPhoto,
-      members: meetupAttendees,
-      mood,
-      cameraMode,
-      ongoingMeetup,
-    });
+    if (isFriendCam) {
+      navigation.navigate('Whose snap', {
+        photo: newPhoto,
+        members: meetupAttendees,
+        mood,
+        cameraMode,
+        ongoingMeetup,
+      });
+    } else {
+      navigation.navigate('Tag members', {
+        photo: newPhoto,
+        members: meetupAttendees,
+        mood,
+        cameraMode,
+        ongoingMeetup,
+      });
+    }
     // const formData = new FormData();
     // // photo fieldよりも後にmeetupIdをappendするとダメなんだよな。。。何でだろ。。。
     // const taggedUserIds = Object.keys(taggedPeople);
@@ -138,7 +163,7 @@ const Shutter = () => {
       >
         <TouchableOpacity
           style={{
-            backgroundColor: 'white',
+            backgroundColor: isFriendCam ? backgroundColorsTable['red1'] : 'white',
             flexDirection: 'row',
             borderRadius: 38,
             width: 76,
@@ -148,7 +173,9 @@ const Shutter = () => {
           }}
           onPress={() => takePhoto()}
           disabled={ongoingMeetup ? false : true}
-        ></TouchableOpacity>
+        >
+          {isFriendCam ? <MaterialCommunityIcons name='heart' size={40} color={iconColorsTable['red1']} /> : null}
+        </TouchableOpacity>
       </View>
     );
   } else if (cameraMode === 'video') {
@@ -167,7 +194,7 @@ const Shutter = () => {
         {isRecording ? (
           <View
             style={{
-              backgroundColor: 'white',
+              backgroundColor: isFriendCam ? backgroundColorsTable['red1'] : 'white',
               padding: 10,
               justifyContent: 'center',
               alignItems: 'center',
@@ -176,12 +203,13 @@ const Shutter = () => {
               borderRadius: 38,
             }}
           >
-            <Text style={{ color: 'black', fontSize: 18 }}>Stop</Text>
+            {isFriendCam ? <MaterialCommunityIcons name='heart' size={40} color={iconColorsTable['red1']} /> : null}
+            <Text style={{ color: isFriendCam ? iconColorsTable['red1'] : 'black', fontSize: 18 }}>Stop</Text>
           </View>
         ) : (
           <View
             style={{
-              backgroundColor: 'white',
+              backgroundColor: isFriendCam ? backgroundColorsTable['red1'] : 'white',
               padding: 10,
               width: 76,
               height: 76,
@@ -190,7 +218,8 @@ const Shutter = () => {
               alignItems: 'center',
             }}
           >
-            <Text style={{ color: 'black', fontSize: 18 }}>Start</Text>
+            {isFriendCam ? <MaterialCommunityIcons name='heart' size={40} color={iconColorsTable['red1']} /> : null}
+            <Text style={{ color: isFriendCam ? iconColorsTable['red1'] : 'black', fontSize: 18 }}>Start</Text>
           </View>
         )}
       </TouchableOpacity>

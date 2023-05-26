@@ -16,7 +16,7 @@ const emojiOptions = ['😄', '😎', '🤔', '😮', '🤤', '😂', '🤪', '�
 const MoodBottomSheet = (props) => {
   const { auth, isIpad } = useContext(GlobalContext);
   const oneGridWidth = isIpad ? Dimensions.get('window').width / 15 : Dimensions.get('window').width / 5;
-  const { mood, setMood, moodBottomSheetRef } = useContext(CameraContext);
+  const { mood, setMood, moodBottomSheetRef, isFriendCam } = useContext(CameraContext);
   const snapPoints = useMemo(() => ['30%'], []);
 
   const renderEmojis = () => {
@@ -67,7 +67,7 @@ const MoodBottomSheet = (props) => {
     >
       <BottomSheetView style={{ flex: 1 }}>
         <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, marginLeft: 10, marginBottom: 20 }}>
-          How are you feeling now?
+          {isFriendCam ? "What's going on with your friend?" : 'How are you feeling?'}
         </Text>
         {renderEmojis()}
       </BottomSheetView>

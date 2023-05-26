@@ -21,7 +21,6 @@ const InviteMyFriends = (props) => {
   const [selectedFriends, setSelectedFriends] = useState({});
   const [isFetchedMyFriends, setIsFetchedMyFriends] = useState(false);
   const [invitationMessageTextInput, setInvitationMessageTextInput] = useState('');
-  console.log(myFriends);
   useEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (

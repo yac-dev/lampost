@@ -71,10 +71,10 @@ export const createPhoto = async (request, response) => {
     });
     uploadPhoto(request.file.filename);
 
-    if (parsedPeople.length) {
-      // これ、撮った人も含めないといかんな。
-      createMembersPhoto(parsedPeople, request.file.filename, meetupId, mood, place, userId);
-    }
+    // if (parsedPeople.length) {
+    //   // これ、撮った人も含めないといかんな。
+    //   createMembersPhoto(parsedPeople, request.file.filename, meetupId, mood, place, userId);
+    // }
     response.status(200).json({
       message: 'success',
     });
@@ -106,10 +106,10 @@ export const createVideo = async (request, response) => {
     });
     uploadNormalVideo(request.file.filename);
 
-    if (parsedPeople.length) {
-      // これ、撮った人も含めないといかんな。
-      createMembersVideo(parsedPeople, request.file.filename, meetupId, mood, place, userId, duration);
-    }
+    // if (parsedPeople.length) {
+    //   // これ、撮った人も含めないといかんな。
+    //   createMembersVideo(parsedPeople, request.file.filename, meetupId, mood, place, userId, duration);
+    // }
 
     // if (effect !== 'normal') {
     //   AddEffect(request.file.filename, effect, asset._id.toString(), asset.duration);
@@ -126,6 +126,8 @@ export const createVideo = async (request, response) => {
     console.log(error);
   }
 };
+
+// friend用のphoto, videoを作ると。
 
 export const getUserAssets = async (request, response) => {
   try {

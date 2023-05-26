@@ -40,7 +40,6 @@ const Container = (props) => {
     color: false,
     genre: false,
   });
-  console.log(badgeIcon);
 
   const onClose = async () => {
     if (folderName) {
@@ -52,7 +51,6 @@ const Container = (props) => {
       props.navigation.goBack();
     }
   };
-  console.log(folderName);
 
   useEffect(() => {
     props.navigation.setOptions({

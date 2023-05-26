@@ -24,6 +24,7 @@ import LoadingSpinner from './components/Utils/LoadingSpinner';
 import SnackBar from './components/Utils/SnackBar';
 import Camera from './components/Camera/Container';
 import TagMembers from './components/Camera/TagMembers';
+import WhoseSnap from './components/Camera/WhoseSnap';
 import TabNavigator from './TabNavigator';
 import AboutLampost from './components/Utils/AboutLampost';
 const ref = createNavigationContainerRef();
@@ -454,6 +455,30 @@ const AppStack = (props) => {
                 ),
                 headerShown: true,
                 title: 'Tag members?',
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                  color: 'white',
+                },
+                headerTintColor: 'white',
+                headerStyle: {
+                  backgroundColor: appBottomSheetBackgroundColor,
+                  borderBottomWidth: 0,
+                },
+                // headerTransparent: true,
+              })}
+            />
+            <Stack.Screen
+              name='Whose snap'
+              component={WhoseSnap}
+              options={({ navigation }) => ({
+                headerLeft: () => (
+                  <TouchableOpacity onPress={() => navigation.goBack()}>
+                    {/* <Ionicons name='close-circle-outline' size={30} color={'white'} /> */}
+                    <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
+                  </TouchableOpacity>
+                ),
+                headerShown: true,
+                title: 'Whose?',
                 headerTitleStyle: {
                   fontWeight: 'bold',
                   color: 'white',
