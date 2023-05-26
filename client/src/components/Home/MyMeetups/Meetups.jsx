@@ -27,8 +27,6 @@ const Meetups = () => {
   } = useContext(MyMeetupsContext);
   const { topLevelHomeNavigation } = useContext(HomeNavigatorContext);
 
-  console.log(myUpcomingMeetups);
-
   const renderTime = (date) => {
     const d = new Date(date).toLocaleDateString('en-US', {
       hour: '2-digit',

@@ -7,13 +7,15 @@ import lampostAPI from '../../../apis/lampost';
 import Libraries from './Libraries';
 
 const Container = (props) => {
-  const { auth, setMyJoinedLibraries, isFetchedAuthData } = useContext(GlobalContext);
+  const { auth, setMyJoinedLibraries, isFetchedMyJoinedLibraries, setIsFetchedMyJoinedLibraries } =
+    useContext(GlobalContext);
   const { topLevelHomeNavigation } = useContext(HomeNavigatorContext);
 
   const getMyJoinedLibraries = async () => {
     const result = await lampostAPI.get(`/libraryanduserrelationships/${auth.data._id}`);
     const { myJoinedLibraries } = result.data;
     setMyJoinedLibraries(myJoinedLibraries);
+    setIsFetchedMyJoinedLibraries(true);
   };
 
   useEffect(() => {
@@ -23,7 +25,7 @@ const Container = (props) => {
   }, [auth.isAuthenticated]);
 
   if (auth.isAuthenticated) {
-    if (isFetchedAuthData) {
+    if (isFetchedMyJoinedLibraries) {
       return (
         <View style={{ flex: 1, padding: 10, backgroundColor: baseBackgroundColor }}>
           <Libraries navigation={props.navigation} />

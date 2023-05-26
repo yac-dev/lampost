@@ -11,7 +11,7 @@ import ConfirmFinishMeetup from './ConfirmFinishMeetup';
 import ConfirmRSVP from './ConfirmRSVP';
 
 const Container = (props) => {
-  const { auth, isFetchedAuthData } = useContext(GlobalContext);
+  const { auth, isFetchedAuthData, myUpcomingMeetups, isFetchedMyUpcomingMeetups } = useContext(GlobalContext);
   const [isStartMeetupConfirmationModalOpen, setIsStartMeetupConfirmationModalOpen] = useState(false);
   const [startingMeetup, setStartingMeetup] = useState(null);
   const [isFinishMeetupConfirmationModalOpen, setIsFinishMeetupConfirmationModalOpen] = useState(false);
@@ -26,7 +26,7 @@ const Container = (props) => {
   //   if(props.route){}
   // },[])
   if (auth.isAuthenticated) {
-    if (isFetchedAuthData) {
+    if (isFetchedMyUpcomingMeetups) {
       return (
         <MyMeetupsContext.Provider
           value={{

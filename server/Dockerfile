@@ -1,11 +1,8 @@
-FROM jrottenberg/ffmpeg:4.4-alpine AS FFmpeg
-FROM node:16-alpine
+FROM node:16.16.0
 
-COPY --from=FFmpeg / /
-
-RUN apk update && apk add --no-cache \
+RUN apt-get update && apt-get install -y \
     imagemagick \
-    graphicsmagick 
+    graphicsmagick
 
 WORKDIR /app
 

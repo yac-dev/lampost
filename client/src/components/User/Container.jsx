@@ -419,7 +419,7 @@ const Container = (props) => {
           </ScrollView>
         )}
 
-        {/* <AppMenuBottomSheet /> */}
+        <AppMenuBottomSheet />
         {/* <BadgeMenuBottomSheet /> */}
         <BadgeDetailBottomSheet />
         {/* <AddBadgeTagsBottomSheet /> */}

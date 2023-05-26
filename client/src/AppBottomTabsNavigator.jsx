@@ -65,6 +65,7 @@ const AppStack = (props) => {
   const [myJoinedLibraries, setMyJoinedLibraries] = useState([]);
   const [selectedLibraryDetailComponent, setSelectedLibraryDetailComponent] = useState('');
   const [isFetchedMyUpcomingMeetups, setIsFetchedMyUpcomingMeetups] = useState(false);
+  const [isFetchedMyJoinedLibraries, setIsFetchedMyJoinedLibraries] = useState(false);
   const [hasNotification, setHasNotification] = useState(false);
   const [unreadFriendChats, setUnreadFriendChats] = useState({});
   const [friendChatsNotificationCount, setFriendChatsNotificationCount] = useState(0);
@@ -99,12 +100,12 @@ const AppStack = (props) => {
   };
 
   useEffect(() => {
-    if (auth.data) {
+    if (auth.isAuthenticated) {
       registerForPushNotificationsAsync().then(async (data) => {
         if (data.status) {
           setNotificationEnabled(true);
           if (!auth.data.pushToken) {
-            const result = await lampostAPI.patch(`/users/${auth.data._id}/pushToken`, { pushToken: token });
+            const result = await lampostAPI.patch(`/users/${auth.data._id}/pushToken`, { pushToken: data.token });
             const { pushToken } = result.data;
             setExpoPushToken(data.token);
             setAuth((previous) => {
@@ -119,10 +120,10 @@ const AppStack = (props) => {
         }
       });
     }
-  }, [auth.data]);
+  }, [auth.isAuthenticated]);
 
   useEffect(() => {
-    if (auth.data) {
+    if (auth.isAuthenticated) {
       if (notificationEnabled) {
         // if (auth.data.pushToken) {
         notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
@@ -193,7 +194,7 @@ const AppStack = (props) => {
       }
       // }
     }
-  }, [auth.data, notificationEnabled]);
+  }, [auth.isAuthenticated, notificationEnabled]);
 
   const getMyUpcomingMeetupStates = async () => {
     const result = await lampostAPI.get(`/meetupanduserrelationships/upcoming/user/${auth.data._id}`);
@@ -271,7 +272,7 @@ const AppStack = (props) => {
   useEffect(() => {
     if (isFetchedMyUpcomingMeetups) {
       getUnreadChats();
-      setIsFetchedMyUpcomingMeetups(false);
+      // setIsFetchedMyUpcomingMeetups(false);
     }
   }, [isFetchedMyUpcomingMeetups]);
 
@@ -315,7 +316,6 @@ const AppStack = (props) => {
         return { ...previous, data: user, isAuthenticated: true };
       });
     }
-    setIsFetchedAuthData(true);
   };
   useEffect(() => {
     loadMe();
@@ -360,6 +360,9 @@ const AppStack = (props) => {
         notificationEnabled,
         setNotificationEnabled,
         registerForPushNotificationsAsync,
+        isFetchedMyUpcomingMeetups,
+        isFetchedMyJoinedLibraries,
+        setIsFetchedMyJoinedLibraries,
       }}
     >
       <NavigationContainer
