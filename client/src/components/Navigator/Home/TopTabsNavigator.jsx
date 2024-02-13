@@ -13,7 +13,7 @@ const HomeTopTab = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        // lazy: true,
+        lazy: true,
         headerShown: true,
         headerTransparent: true,
         headerStyle: {

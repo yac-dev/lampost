@@ -17,7 +17,7 @@
     <key>CFBundlePackageType</key>
     <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.0.9</string>
+    <string>1.0.12</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleURLTypes</key>
@@ -36,7 +36,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>26</string>
+    <string>29</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>NSAppTransportSecurity</key>
@@ -67,17 +67,17 @@
       </dict>
     </dict>
     <key>NSCameraUsageDescription</key>
-    <string>By allowing it, the photos and videos which were taken here are gonna be stored on the lampost's cloud server directly. You can access them whenever you want and can post them on the "Library". Let's shoot your special moments and share them!</string>
+    <string>It is required to allow camera access to experience Lampost camera. The camera is only available during the meetup time to capture fun moments. The photos and videos you took will be stored on Lampost's cloud server. You can access them from your Profile page at any time and share them in a unique system provided by Lampost called "Library".</string>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>It is helpful when you go to meetup place and check the directions. Lampost never collects your location data.</string>
+    <string>It is helpful when you check the directions of meetup venue. Lampost never collects your location data.</string>
     <key>NSLocationAlwaysUsageDescription</key>
-    <string>It is helpful when you go to meetup place and check the directions. Lampost never collects your location data.</string>
+    <string>It is helpful when you check the directions of meetup venue. Lampost never collects your location data.</string>
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string>It is helpful when you go to meetup place and check the directions. Lampost never collects your location data.</string>
+    <string>It is helpful when you check the directions of meetup venue. Lampost never collects your location data.</string>
     <key>NSMicrophoneUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) to access your microphone</string>
+    <string>It is required to allow microphone access if you take video footage using Lampost camera. You can only take videos during the meetup time. The videos you took will be stored on Lampost's cloud server. You can access them from your Profile page at any time and share them in a unique system provided by Lampost called "Library".</string>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>By allowing it, you can upload your pictures and set your profile image.</string>
+    <string>It is required to allow library access to set your profile picture.</string>
     <key>UILaunchStoryboardName</key>
     <string>SplashScreen</string>
     <key>UIRequiredDeviceCapabilities</key>
